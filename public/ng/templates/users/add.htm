@@ -1,0 +1,41 @@
+<page-header title="مستخدم جديد" pretitle="المستخدمون"></page-header>
+
+<form class="row">
+    
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">الاسم</label>
+            <input type="text" class="form-control" ng-class="(createUser.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="user.name" ng-change="createUser.errors.name = null" placeholder="الاسم ..">
+            <div ng-show="createUser.errors.name != null" class="invalid-feedback">{{ createUser.errors.name[0] }}</div>
+            <!--<input-error>{{ createUser.errors.name }}</input-error>-->
+        </div>
+    </div>
+    
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="email">البريد الالكتروني</label>
+            <input type="email" class="form-control" ng-class="(createUser.errors.email != null) ? 'is-invalid' : ''" id="email" ng-model="user.email" ng-change="createUser.errors.email = null" placeholder="البريد الالكتروني .." autofocus="off" autocomplete="off">
+            <div ng-show="createUser.errors.email != null" class="invalid-feedback">{{ createUser.errors.email[0] }}</div>
+        </div>
+    </div>
+    
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="password">كلمة المرور</label>
+            <input type="password" class="form-control" ng-class="(createUser.errors.password != null) ? 'is-invalid' : ''" id="password" ng-model="user.password" ng-change="createUser.errors.password = ''" placeholder="كلمة المرور .." autofocus="off" autocomplete="off" required>
+            <div ng-show="createUser.errors.password != null" class="invalid-feedback">{{ createUser.errors.email[0] }}</div>
+        </div>
+    </div>
+    
+    <div class="col-12">
+        <button type="button" class="btn btn-primary" ng-click="createUser.send();" ng-disabled="createUser.sending">
+            <i ng-hide="createUser.sending" class="fe fe-plus"></i>
+            <div ng-show="createUser.sending" class="spinner-border spinner-border-sm" role="status"><span class="sr-only">Loading...</span></div>
+            &nbsp; اضافة المستخدم
+        </button>
+        
+    </div>
+    
+</form>
+
+<!--<form-button icon="" spinner-show="" ng-click=""></form-button>-->

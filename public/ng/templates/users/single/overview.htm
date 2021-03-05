@@ -1,0 +1,46 @@
+<page-header-template url="users/single/header.htm"></page-header-template>
+
+
+<div class="row">
+    <div class="col-12 col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-header-title">
+                    معلومات المستخدم
+                </h4>
+            </div>
+            
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">الاسم</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ user.name }}</h4>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">البريد الالكتروني</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ user.email }}</h4>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<card>
+    <card-header title=""></card-header>
+    <card-body>
+        <card-row-item name="الاسم">{{ user.name }}</card-row-item>
+        <hr>
+        <card-row-item name="البريد الالكتروني">{{ user.email }}</card-row-item>
+    </card-body>
+</card>-->
