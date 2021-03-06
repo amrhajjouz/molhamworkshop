@@ -1,5 +1,5 @@
-function homeControllerInit ($page) {
-    return 'ControllerInit';
+function homeControllerInit () {
+    return ;
 }
 
 function homeController ($scope, $http, $location, $init) {

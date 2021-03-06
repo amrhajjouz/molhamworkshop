@@ -25,4 +25,9 @@ Route::middleware('auth')->group(function ()  {
     Route::get('/users', 'UserController@list');
     Route::post('/users', 'UserController@store');
     Route::get('/users/{id}', 'UserController@retrieve');
+    
+});
+
+Route::fallback(function () {
+    return ['error' => 'Route not found!'];
 });

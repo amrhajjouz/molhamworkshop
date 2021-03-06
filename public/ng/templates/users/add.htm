@@ -1,13 +1,12 @@
 <page-header title="مستخدم جديد" pretitle="المستخدمون"></page-header>
 
-<form class="row">
+<form class="row" name="myForm" request="createUser">
     
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="name">الاسم</label>
             <input type="text" class="form-control" ng-class="(createUser.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="user.name" ng-change="createUser.errors.name = null" placeholder="الاسم ..">
             <div ng-show="createUser.errors.name != null" class="invalid-feedback">{{ createUser.errors.name[0] }}</div>
-            <!--<input-error>{{ createUser.errors.name }}</input-error>-->
         </div>
     </div>
     
@@ -27,15 +26,8 @@
         </div>
     </div>
     
-    <div class="col-12">
-        <button type="button" class="btn btn-primary" ng-click="createUser.send();" ng-disabled="createUser.sending">
-            <i ng-hide="createUser.sending" class="fe fe-plus"></i>
-            <div ng-show="createUser.sending" class="spinner-border spinner-border-sm" role="status"><span class="sr-only">Loading...</span></div>
-            &nbsp; اضافة المستخدم
-        </button>
-        
-    </div>
+    <div class="col-12">        
+        <submit-button form="myForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>  
     
 </form>
-
-<!--<form-button icon="" spinner-show="" ng-click=""></form-button>-->

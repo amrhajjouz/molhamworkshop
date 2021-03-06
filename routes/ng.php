@@ -12,10 +12,7 @@ return [
     'profile.info' => ['/profile/info', 'profile/profileInfoController', 'profile.info'],
     'profile.password' => ['/profile/password', 'profile/profilePasswordController', 'profile.password'],
     
-    // Volunteers Routes
-    'volunteers' => ['/volunteers', 'listVolunteersController', 'volunteers.list'],
-    'volunteers.add' => ['/volunteers/add',  'addVolunteerController', 'volunteers.add'],
-    
+    // Users Routes
     'users.add' => ['users/add', 'users/addUserController', 'users.add'],
     'users.overview' => ['users/:id', 'users/overviewUserController', 'users.single.overview'],
     'users.edit' => ['users/:id/edit', 'users/editUserController', 'users.single.edit'],

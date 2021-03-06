@@ -156,6 +156,7 @@
             $rootScope.$location = $location;
             $rootScope.$page = $page;
             $rootScope.sidenavLoaded = false;
+            $rootScope.currentTemplateDirectory = '';
             
             $rootScope.$r = function (name, params = null) {
                 
@@ -245,6 +246,8 @@
                 
                 $('#page-content').hide();
                 
+                $rootScope.currentTemplateDirectory = angular.copy($rootScope.$page.templateDirectory);
+                
                 $timeout(function () {
                     if ($page.headerTemplate != null || $page.includedTemplate != null) {
                         $rootScope.$watch(function () {
@@ -272,7 +275,6 @@
                         $('#page-sidebar').removeClass('d-none').show();
                 }
                 
-                $('.nav-link').removeClass('active');                
                 
                 if ($('#page-spinner').is(":visible")) {
                     
@@ -290,6 +292,12 @@
                     alignItemsPageCenterIfRequired();
                     hidePageSidenavIfRequired();
                 }
+                
+                $(function () {
+                    //$('.nav-link').removeClass('active');
+                    $('[data-toggle=dropdown]').dropdown();
+                    $('[data-toggle=tooltip]').tooltip();
+                });
                 
             });
             
@@ -344,9 +352,9 @@
                     params : '=',
                 },
                 replace : true,
-                template : '<li class="nav-item"><a href="@{{ url }}" class="nav-link @{{ itemActiveClass }}" style="white-space: nowrap;" ng-transclude></a></li>',
+                template : '<li class="nav-item"><a href="@{{ itemUrl }}" class="nav-link @{{ itemActiveClass }}" style="white-space: nowrap;" ng-transclude></a></li>',
                 link : function (scope, element, attrs, ctrls, transclude) {
-                    scope.url = $rootScope.$r(scope.route, scope.params);
+                    scope.itemUrl = $rootScope.$r(scope.route, scope.params);
                     scope.itemActiveClass = ($page.routeName == scope.route) ? 'active' : '';
                 }
             };
@@ -386,7 +394,7 @@
             };
         });
         
-        app.directive('includeHeader', function ($page) {
+        app.directive('includeHeader', function ($page, $rootScope) {
             
             return {
                 
@@ -395,9 +403,10 @@
                 link : function (scope, element, attrs, ctrls, transclude) {
                     
                     scope.headerTemplateUrl = function () {
-                        return '{{ env('APP_URL') }}/ng/templates/' + $page.templateDirectory + '/header.htm' + '?t={{ time() }}';
+                        //alert($rootScope.currentTemplateDirectory);
+                        return '{{ env('APP_URL') }}/ng/templates/' + $rootScope.currentTemplateDirectory + '/header.htm' + '?t={{ time() }}';
                     };
-                    $page.headerTemplate = {url: attrs.url, loaded: false};
+                    $page.headerTemplate = {loaded: false};
                 },
                 
                 template: '<ng-include src="headerTemplateUrl()" onload="$page.headerTemplate.loaded = true;$page.checkTemplates();"><ng-include>',
@@ -517,7 +526,7 @@
                             }, function (response) {
                                 _this.handleResponse(response);
                                 _this.abort(q);
-                                if (appDebug) console.log(response);
+                                if (appDebug) console.error(response.data);
                                 q.resolve(response);
                             });
                             
@@ -545,7 +554,7 @@
                         
                         abort : function (q) {
                             if ($page.loading && this.error != '') {
-                                if (this.response.statusText == 'OK') console.log(this.response);
+                                if (this.response.statusText == 'OK') console.error(this.response.data);
                                 q.reject('abort');
                             }
                         }

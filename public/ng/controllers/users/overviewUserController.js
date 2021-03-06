@@ -1,6 +1,6 @@
-function overviewUserControllerInit ($http, $page, $apiRequest) {
+function overviewUserControllerInit ($page, $apiRequest) {
     
-    return $apiRequest.config('users/' + $page.routeParams.id).getData();  
+    return $apiRequest.config('userssdasdsad' + $page.routeParams.id).getData();
 }
 
 function overviewUserController ($scope, $page, $apiRequest, $init) {

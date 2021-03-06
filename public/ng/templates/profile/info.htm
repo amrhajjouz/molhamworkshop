@@ -1,6 +1,6 @@
 <include-header/>
 
-<div class="row">
+<form class="row" name="myForm" request="updateProfile">
     
     <div class="col-12 alert alert-danger fade show" role="alert" ng-show="updateProfile.error != ''">
         {{ updateProfile.error }}
@@ -20,12 +20,8 @@
         </div>
     </div>
     
-    <div class="col-12">
-        <button type="button" class="btn btn-primary" ng-click="updateProfile.send();">
-            <i ng-hide="updateProfile.sending" class="fe fe-edit"></i>
-            <div ng-show="updateProfile.sending" class="spinner-border spinner-border-sm" role="status"><span class="sr-only">Loading...</span></div>
-            &nbsp; تغيير المعلومات
-        </button>
-    </div>
+    <div class="col-12">        
+        <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>  
 
-</div>
+</form>
