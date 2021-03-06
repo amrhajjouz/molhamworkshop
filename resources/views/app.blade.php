@@ -33,7 +33,7 @@
         top: 0;
         left: 0;
         width: 0px;
-        height: 4px;
+        height: 3px;
         z-index: 9999;
         box-shadow: 0px 0px 15px 0px #eee;
         border-radius: 100px;
@@ -61,7 +61,7 @@
         <div class="container-fluid">
             
             <!-- Toggler -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             
@@ -88,9 +88,9 @@
             </div>
             
             <!-- Collapse -->
-            <div class="collapse navbar-collapse" id="sidebarCollapse">
+            <div class="collapse navbar-collapse" id="sidenavCollapse">
                 
-                @include('sidebar')
+                @include('sidenav')
                 
             </div>
             <!-- / .navbar-collapse -->
@@ -155,6 +155,7 @@
             
             $rootScope.$location = $location;
             $rootScope.$page = $page;
+            $rootScope.sidenavLoaded = false;
             
             $rootScope.$r = function (name, params = null) {
                 
@@ -254,24 +255,40 @@
                     } else $('#page-content').fadeIn();
                 });
                 
-                if ($rootScope.$page.alignItemsCenter) {
-                    $('body').addClass('d-flex align-items-center');
-                    $('#page-content').addClass('container-fluid');
-                } else {
-                    $('body').removeClass('d-flex align-items-center');
-                    $('#page-content').removeClass('container-fluid');
+                var alignItemsPageCenterIfRequired = function () {
+                    if ($rootScope.$page.alignItemsCenter) {
+                        $('body').addClass('d-flex align-items-center');
+                        $('#page-content').addClass('container-fluid');
+                    } else {
+                        $('body').removeClass('d-flex align-items-center');
+                        $('#page-content').removeClass('container-fluid');
+                    }
                 }
                 
-                if ($rootScope.$page.sidenavHidden)
-                    $('#page-sidebar').addClass('d-none').hide();
-                else
-                    $('#page-sidebar').removeClass('d-none').show();
+                var hidePageSidenavIfRequired = function () {
+                    if ($rootScope.$page.sidenavHidden)
+                        $('#page-sidebar').addClass('d-none').hide();
+                    else
+                        $('#page-sidebar').removeClass('d-none').show();
+                }
                 
                 $('.nav-link').removeClass('active');                
                 
                 if ($('#page-spinner').is(":visible")) {
-                    $('#page-spinner').addClass('d-none');
-                    $('#page-content').removeClass('d-none');
+                    
+                    $rootScope.$watch(function () {
+                        return $rootScope.sidenavLoaded; 
+                    }, function (newValue, oldValue) {
+                        if (newValue) {
+                            $('#page-spinner').addClass('d-none');
+                            $('#page-content').removeClass('d-none');
+                            alignItemsPageCenterIfRequired();
+                            hidePageSidenavIfRequired();
+                        }
+                    });
+                } else {
+                    alignItemsPageCenterIfRequired();
+                    hidePageSidenavIfRequired();
                 }
                 
             });
@@ -279,7 +296,7 @@
             $rootScope.$on("$routeChangeError", function(evt, current, previous, rejection) {
                 clearInterval(loadingBarInterval);
                 $rootScope.$page.loading = false;
-                if (!appDebug) $location.url('/404'); else console.log(rejection);
+                if (!appDebug) $location.url('/404'); else console.error(rejection);
             });
             
         });
@@ -316,25 +333,6 @@
                 template: '<div class="header mb-5"><div class="header-body"><div class="row align-items-center"><div class="col"><ul id="volunteer-tabs" class="nav nav-tabs nav-overflow header-tabs" ng-transclude></ul></div></div></div></div>',
             };
         });
-
-        
-        app.directive('includedTemplate', function ($page) {
-            
-            return {
-                
-                restrict: 'E',
-                
-                link : function (scope, element, attrs, ctrls, transclude) {
-                    
-                    scope.includedTemplateUrl = function () {
-                        return '{{ env('APP_URL') }}/ng/templates/' + attrs.url + '?t={{ time() }}';
-                    };
-                    $page.includedTemplate = {url: attrs.url, loaded: false};
-                },
-                
-                template: '<ng-include src="includedTemplateUrl()" onload="$page.includedTemplate.loaded = true;$page.checkTemplates();"><ng-include>',
-            };
-        });
         
         app.directive('pageNavItem', function ($rootScope, $page) {
             
@@ -354,7 +352,41 @@
             };
         });
         
-        app.directive('pageHeaderTemplate', function ($page) {
+        app.directive('includeSidenav', function () {
+            
+            return {
+                
+                restrict: 'E',
+                
+                link : function (scope, element, attrs, ctrls, transclude) {
+                    scope.sidenavTemplateUrl = function () {
+                        return '{{ env('APP_URL') }}/ng/templates/basics/sidenav.htm?t={{ time() }}';
+                    };
+                },
+                
+                template: '<ng-include src="sidenavTemplateUrl()" onload="sidenavLoaded = true;"><ng-include>',
+            };
+        });
+        
+        app.directive('includeTemplate', function ($page) {
+            
+            return {
+                
+                restrict: 'E',
+                
+                link : function (scope, element, attrs, ctrls, transclude) {
+                    scope.includedTemplateUrl = function () {
+                        var templatePath = attrs.url.replace('.', '/') + '.htm';
+                        return '{{ env('APP_URL') }}/ng/templates/' + templatePath  + '?t={{ time() }}';
+                    };
+                    $page.includedTemplate = {url: attrs.url, loaded: false};
+                },
+                
+                template: '<ng-include src="includedTemplateUrl()" onload="$page.includedTemplate.loaded = true;$page.checkTemplates();"><ng-include>',
+            };
+        });
+        
+        app.directive('includeHeader', function ($page) {
             
             return {
                 
@@ -363,7 +395,7 @@
                 link : function (scope, element, attrs, ctrls, transclude) {
                     
                     scope.headerTemplateUrl = function () {
-                        return '{{ env('APP_URL') }}/ng/templates/' + attrs.url + '?t={{ time() }}';
+                        return '{{ env('APP_URL') }}/ng/templates/' + $page.templateDirectory + '/header.htm' + '?t={{ time() }}';
                     };
                     $page.headerTemplate = {url: attrs.url, loaded: false};
                 },
@@ -423,7 +455,7 @@
         
         app.service('$page', function($location, $route) {
             
-            var initProperties = {routeName : null, controllerName : null, prevUrl : null, currentUrl : null, title : '', alignItemsCenter : false, sidenavHidden : false, loading : false, headerTemplate : null, includedTemplate : null, templatesLoaded : false, sendingHttpRequest : false};
+            var initProperties = {routeName : null, routeParams : {}, controllerName : null, templateDirectory: '', prevUrl : null, currentUrl : null, title : '', alignItemsCenter : false, sidenavHidden : false, sidenavLoaded : false, loading : false, headerTemplate : null, includedTemplate : null, templatesLoaded : false, sendingHttpRequest : false};
             var initPropertiesKeys = Object.keys(initProperties);
             for(i=0; i<initPropertiesKeys.length; i++) this[initPropertiesKeys[i]] = initProperties[initPropertiesKeys[i]];
             
@@ -534,7 +566,7 @@
                 reloadOnSearch : false,
                 reloadOnUrl : false,
                 resolve : {
-                    $currentRoute : function ($page, $route) { $page.set({routeName : "{{ $r['name'] }}", routeParams : $route.current.params, controllerName : "{{ $r['controller_name'] }}"}); },
+                    $currentRoute : function ($page, $route) { $page.set({routeName : "{{ $r['name'] }}", routeParams : $route.current.params, controllerName : "{{ $r['controller_name'] }}", templateDirectory : "{{ $r['template_directory'] }}"}); },
                     $init : eval("{{ $r['controller_name'] . 'Init' }}"),
                     /*delay: function($q, $defer) {
                         var delay = $q.defer();

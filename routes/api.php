@@ -16,7 +16,6 @@ use Illuminate\Http\Request;
 Route::middleware('auth')->group(function ()  {
     
     Route::get('/auth', function (Request $request) {
-        sleep(3);
         return $request->user();
     });
     

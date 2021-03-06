@@ -1,31 +1,84 @@
-<page-header-template url="profile/header.htm"></page-header-template>
+<page-header title="قائمة المستخدمين" pretitle="المستخدمون">
+    <a href="{{ $r('users.add') }}" class="btn btn-primary">
+        <i class="fe fe-plus"></i>&nbsp; مستخدم جديد
+    </a>
+</page-header>
 
-<div class="row">
-    
-    <div class="col-12 alert alert-danger fade show" role="alert" ng-show="updateProfile.error != ''">
-        {{ updateProfile.error }}
-    </div>
-    
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="name">الاسم</label>
-            <input type="text" class="form-control" id="name" ng-model="profile.name" ng-init="profile.name = auth.name" ng-change="updateProfile.error = ''" placeholder="الاسم الخاص بالحساب ..">
-        </div>
-    </div>
-    
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="email">البريد الالكتروني</label>
-            <input type="email" class="form-control" id="email" ng-model="profile.email" ng-init="profile.email = auth.email" ng-change="updateProfile.error = ''" placeholder="البريد الالكتروني الخاص بالحساب .." autofocus="off" autocomplete="off">
-        </div>
-    </div>
-    
-    <div class="col-12">
-        <button type="button" class="btn btn-primary" ng-click="updateProfile.send();">
-            <i ng-hide="updateProfile.sending" class="fe fe-edit"></i>
-            <div ng-show="updateProfile.sending" class="spinner-border spinner-border-sm" role="status"><span class="sr-only">Loading...</span></div>
-            &nbsp; تغيير المعلومات
-        </button>
-    </div>
-
+<div class="text-center h4 mt-4 mb-4">
+    العدد الكلي : {{ users.length }}
 </div>
+
+<div class="card">
+    <div class="card-header">
+
+        <div class="row align-items-center">
+
+            <div class="col">
+                <div class="input-group input-group-flush input-group-merge"> 
+                    <input type="search" ng-model="search" class="form-control form-control-prepended search" placeholder="اكتب كلمة للبحث ثم اضغط Enter  ...">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <span class="fe fe-search"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-auto">
+
+                <!-- Button -->
+                <button class="btn btn-sm btn-white" type="button">
+                    <i class="fe fe-sliders"></i>
+                </button>
+                
+                <button class="btn btn-sm btn-white" type="button">
+                    <i class="fe fe-download"></i>
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-sm card-table">
+            <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th class="text-center">الاسم</th>
+                    <th class="text-center">البريد الالكتروني</th>
+                    <th class="text-center">خيارات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-show="users.length == 0">
+                    <td colspan="10" class="text-center">
+                        <div class="pt-3 pb-2 h4" ng-show="volunteers.length == 0">لا يوجد أية عناصر في هذه القائمة</div>
+                    </td>
+                </tr>
+
+                <tr ng-repeat="u in users | filter : search">
+                    <td class="align-middle text-center">{{ u.id }}</td>
+                    <td class="align-middle text-center">{{ u.name }}</td>
+                    <td class="align-middle text-center">{{ u.email }}</td>
+                    
+                    <td class="align-middle text-center h2">
+                        <div class="dropdown">
+                            <a href="javascript:;" class="color-black mr-2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ $r('users.overview', {id:u.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+
+<script>
+    $('[data-toggle=dropdown]').dropdown();
+</script>

@@ -19,7 +19,7 @@ class UserController extends Controller {
     public function store (StoreUserRequest $request) {
         
         try {
-            sleep(2);
+            
             $data = $request->validated();            
             
             if ($request->has('id')) {
@@ -41,6 +41,17 @@ class UserController extends Controller {
         try {
             
             return App\User::findOrFail($id);            
+            
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+    
+    public function list (Request $request) {
+        
+        try {
+            
+            return App\User::all();            
             
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];

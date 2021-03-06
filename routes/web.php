@@ -19,5 +19,5 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
 Route::post('register', 'Auth\RegisterController@register');
 
-Route::middleware('auth')->get('{url?}', 'HomeController@index')->where('url', '.*')->name('home');
+Route::middleware('auth')->get('{url?}', 'SpaController@index')->where('url', '.*')->name('home');
 

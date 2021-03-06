@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class SpaController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -33,7 +33,10 @@ class HomeController extends Controller
                 $controller_exploded_by_slash = explode('/', $r[1]);
                 $controller_name = end($controller_exploded_by_slash);
                 $template_path = str_replace('.', '/', $r[2]) . '.htm';
-                $routes[] = ['name' => $route_name, 'url' =>  $route_url , 'controller_name' => $controller_name, 'controller_path' => $controller_path, 'template_id' => $r[2], 'template_path' => $template_path];
+                $template_id_exploded = explode('.', $r[2]);
+                array_pop($template_id_exploded);
+                $template_directory = implode('/', $template_id_exploded); //(count($a) > 0) ? implode('/', $a) : '';
+                $routes[] = ['name' => $route_name, 'url' =>  $route_url , 'controller_name' => $controller_name, 'controller_path' => $controller_path, 'template_directory' => $template_directory, 'template_id' => $r[2], 'template_path' => $template_path];
             }
             
             $routes = collect($routes);
