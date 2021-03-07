@@ -526,7 +526,6 @@
                             }, function (response) {
                                 _this.handleResponse(response);
                                 _this.abort(q);
-                                if (appDebug) console.error(response.data);
                                 q.resolve(response);
                             });
                             
@@ -553,9 +552,9 @@
                         },
                         
                         abort : function (q) {
-                            if ($page.loading && this.error != '') {
-                                if (this.response.statusText == 'OK') console.error(this.response.data);
-                                q.reject('abort');
+                            if (this.error != '') {
+                                if ($page.loading) q.reject(this.response.data);
+                                if (appDebug && this.response.statusText == 'OK') console.error(this.response.data);
                             }
                         }
                     };
