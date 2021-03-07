@@ -297,6 +297,9 @@
                     //$('.nav-link').removeClass('active');
                     $('[data-toggle=dropdown]').dropdown();
                     $('[data-toggle=tooltip]').tooltip();
+                    $('[data-toggle="collapse"]').click(function(e) {
+                        $('.collapse').collapse('hide');
+                    });
                 });
                 
             });
@@ -423,7 +426,7 @@
                     form : '=',
                 },
                 replace : true,
-                template : '<button class="btn btn-primary" ng-click="form.request.send();form.$submitted = true;" ng-disabled="form.$invalid || form.request.sending || form.$submitted"><i ng-hide="form.request.sending || (!form.request.sending && form.$submitted && !form.request.error)" class="@{{ icon }}"></i><div ng-show="form.request.sending" class="spinner-border spinner-border-sm" role="status"></div><i ng-show="!form.request.sending && form.$submitted && !form.request.error" class="fa fa-check"></i>&nbsp; <span ng-transclude></span></button>',
+                template : '<button class="btn btn-primary" ng-click="form.request.send();form.$submitted = true;" ng-disabled="form.$invalid || form.$pristine || form.request.sending || form.$submitted"><i ng-hide="form.request.sending || (!form.request.sending && form.$submitted && !form.request.error)" class="@{{ icon }}"></i><div ng-show="form.request.sending" class="spinner-border spinner-border-sm" role="status"></div><i ng-show="!form.request.sending && form.$submitted && !form.request.error" class="fa fa-check"></i>&nbsp; <span ng-transclude></span></button>',
             };
         });
         
@@ -562,6 +565,11 @@
             };
         });
         
+        for (i=0; i<routes.length; i++) {
+            if (typeof window[routes[i].controller_name + 'Init'] == 'undefined') window[routes[i].controller_name + 'Init'] = function(){ return null; }; 
+            if (appDebug && typeof window[routes[i].controller_name] == 'undefined') console.error(routes[i].controller_name + ' is undefined!');
+        }
+        
         app.config(function($routeProvider, $locationProvider) {
             
             <?php foreach ($routes as $r) : ?>
@@ -602,10 +610,6 @@
             <?php endforeach; ?>
             
             $locationProvider.html5Mode(true);
-        });
-        
-        $('[data-toggle="collapse"]').click(function(e) {
-            $('.collapse').collapse('hide');
         });
         
     </script>

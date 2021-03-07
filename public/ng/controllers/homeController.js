@@ -1,11 +1,3 @@
-function homeControllerInit () {
-    return ;
-}
-
-function homeController ($scope, $http, $location, $init) {
+function homeController ($scope, $init) {
     
-    $scope.target = $init;
-    $scope.fn = function () {
-        alert('fnfn!');
-    }
 }

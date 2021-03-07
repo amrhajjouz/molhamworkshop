@@ -1,8 +1,3 @@
-function addUserControllerInit () {
-    
-    return ;
-}
-
 function addUserController ($scope, $location, $apiRequest) {
     
     $scope.user = {};

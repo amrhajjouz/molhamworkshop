@@ -1,5 +1,4 @@
-function overviewUserControllerInit ($page, $apiRequest) {
-    
+function overviewUserControllerInit ($apiRequest, $page) {
     return $apiRequest.config('users/' + $page.routeParams.id).getData();
 }
 
