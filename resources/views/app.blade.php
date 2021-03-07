@@ -79,7 +79,7 @@
                     <!-- Toggle -->
                     <a href="#">
                         <div class="avatar avatar-sm avatar-online">
-                            <img src="{{ asset('img/avatars/profiles/avatar-1.jpg') }}" class="avatar-img rounded-circle" alt="...">
+                            <img src="{{ asset('img/avatar.png') }}" class="avatar-img rounded-circle" alt="...">
                         </div>
                     </a>
                     
@@ -89,9 +89,7 @@
             
             <!-- Collapse -->
             <div class="collapse navbar-collapse" id="sidenavCollapse">
-                
                 @include('sidenav')
-                
             </div>
             <!-- / .navbar-collapse -->
             
@@ -115,10 +113,7 @@
             </div>
         </div>
     </div>
-    <!-- End Photo Viewer Modal -->
-    
-    <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>-->
+    <!-- End Photo Viewer Modal -->    
     
     <script src="{{ asset('libs/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>

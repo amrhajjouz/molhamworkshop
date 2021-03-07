@@ -30,14 +30,14 @@
     <div class="dropup text-center">
 
         <!-- Toggle -->
-        <a href="#" class="">
+        <a href="{{ $r('profile.info') }}">
             <div class="avatar avatar-sm avatar-online mb-2">
                 <img src="<?php print asset('img/avatar.png'); ?>" class="auth-avatar avatar-img rounded-circle" alt="...">
             </div>
         </a>
 
         <h4 class="auth-name card-title mt-1 mb-1"><?php print Auth::user()->name; ?></h4>
-        <p class="auth-role card-text small text-muted"><?php print Auth::user()->name ; ?></p>
+        <p class="auth-role card-text small text-muted" dir="ltr">@<?php print substr(Auth::user()->email, 0, strpos(Auth::user()->email, '@')) ; ?></p>
     </div>
 
 </div>
