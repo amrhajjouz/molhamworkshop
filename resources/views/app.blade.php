@@ -235,6 +235,7 @@
             });
             
             $rootScope.$on('$routeChangeSuccess', function() {
+                loadingBarWidthPercantage = 0;
                 clearInterval(loadingBarInterval);
                 $('#loading-bar').addClass('w-100');
                 setTimeout(function ($rootScope) {
@@ -305,6 +306,7 @@
             });
             
             $rootScope.$on("$routeChangeError", function(evt, current, previous, rejection) {
+                loadingBarWidthPercantage = 0;
                 clearInterval(loadingBarInterval);
                 $rootScope.$page.loading = false;
                 if (!appDebug) $location.url('/404'); else console.error(rejection);
@@ -584,11 +586,6 @@
                 resolve : {
                     $currentRoute : function ($page, $route) { $page.set({routeName : "{{ $r['name'] }}", routeParams : $route.current.params, controllerName : "{{ $r['controller_name'] }}", templateDirectory : "{{ $r['template_directory'] }}"}); },
                     $init : eval("{{ $r['controller_name'] . 'Init' }}"),
-                    /*delay: function($q, $defer) {
-                        var delay = $q.defer();
-                        $defer(delay.resolve, 500);
-                        return delay.promise;
-                    },*/
                 },
             });
             
