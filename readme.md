@@ -1,17 +1,17 @@
 # Installation
 
- - set your `APP_URL` and DB configuraton in `.env` file
+- Set your `APP_URL` and DB configuraton in `.env` file
  - Type this in terminal for DB Migrating and Seeding:
 
 	   php artisan migrate
 	   php artisan db:seed
 
- - give read and write permession to the your web server for storage, cache directories: 
+ - Give read and write permession to the your web server for storage, cache directories: 
 
 	   sudo chgrp -R www-data storage bootstrap/cache
 	   sudo chmod -R ug+rwx storage bootstrap/cache
 
- - login to admin account via: `APP_URL/login` with the following info:
+ - Login to admin account via: `APP_URL/login` with the following info:
 
 	   email: admin@admin.com
 	   password: 12345678 
@@ -21,5 +21,19 @@
 
     ├── public
     │   ├── ng
-    │   │   ├── controllers             #AngularJS SPA controllers
-    │   │   └── templates               #AngularJS SPA templates
+    │   │   ├── controllers             #AngularJS SPA controllers (.js files)
+    │   │   └── templates               #AngularJS SPA templates (.htm file)
+
+
+# SPA Routes
+
+Configuration for SPA routes in the file: `routes/ng.php`
+
+this file returns an array which represents all routes.
+
+The route structure as the following:
+
+    {routeName} => [{Url}, {controllerPath}, {templatePath}]
+
+- `controllerPath`: must be written without .js extension
+- `templatePath`: must be written without .htm extension and separated with (.), not slashes
