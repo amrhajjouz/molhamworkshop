@@ -577,7 +577,7 @@
                 controller: eval("{{ $r['controller_name'] }}"),
                 controllerAs: "{{ $r['controller_name'] }}",
                 reloadOnSearch : false,
-                reloadOnUrl : false,
+                reloadOnUrl : true,
                 resolve : {
                     $currentRoute : function ($page, $route) { $page.set({routeName : "{{ $r['name'] }}", routeParams : $route.current.params, controllerName : "{{ $r['controller_name'] }}", templateDirectory : "{{ $r['template_directory'] }}"}); },
                     $init : eval("{{ $r['controller_name'] . 'Init' }}"),

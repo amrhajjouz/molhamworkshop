@@ -24,7 +24,7 @@
 <div class="mt-auto"></div>
 
 <!-- User (md) -->
-<div class="navbar-user d-none d-md-flex" id="sidebarUser">
+<div class="navbar-user d-none d-md-flex" id="sidenavUser">
 
     <!-- Dropup -->
     <div class="dropup text-center">

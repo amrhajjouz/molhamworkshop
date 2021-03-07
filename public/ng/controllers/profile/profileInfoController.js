@@ -14,6 +14,6 @@ function profileInfoController ($scope, $init, $apiRequest) {
         data : $scope.profile,
     }, function (response, data) {
         $('.auth-name').text($scope.profile.name);
-    });    
+    });
     
 }
