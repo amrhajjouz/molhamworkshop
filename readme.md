@@ -19,4 +19,7 @@
 
 # SPA Files
 
-saddsasda
+    ├── public
+    │   ├── ng
+    │   │   ├── controllers             #AngularJS SPA controllers
+    │   │   └── templates               #AngularJS SPA templates
