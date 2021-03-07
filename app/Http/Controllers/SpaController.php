@@ -25,8 +25,7 @@ class SpaController extends Controller
     {
         try {
             
-            if ($request->is('api/*'))
-                return response()->json(['error' => 'API Route not found'], 500);
+            if ($request->is('api/*')) return response()->json(['error' => 'API Route not found'], 500);
             
             $app_url =  (env('APP_URL')[strlen(env('APP_URL')) - 1] == '/') ? substr(env('APP_URL'), 0, strlen(env('APP_URL'))-1) : env('APP_URL');
             $routes = [];
@@ -46,16 +45,16 @@ class SpaController extends Controller
             
             foreach ($routes as $r) {
                 if ($routes->where('controller_name', $r['controller_name'])->where('controller_path', '!=', $r['controller_path'])->count() > 0)
-                    return 'AngularJS Configuration Error: ' . $r['controller_name'] . ' must be a unique name for only one controller !';
+                    return response()->json(['error' => 'AngularJS Configuration Error: ' . $r['controller_name'] . ' must be a unique name for only one controller !'], 500);
                 if (!file_exists(public_path() . '/ng/controllers/' . $r['controller_path']))
-                    return 'AngularJS Configuration Error: controller file of ' . $r['controller_name'] . ' is not found !';
+                    return response()->json(['error' => 'AngularJS Configuration Error: controller file of ' . $r['controller_name'] . ' is not found !'], 500);
                 if (!file_exists(public_path() . '/ng/templates/' . $r['template_path']))
-                    return 'AngularJS Configuration Error: template file ' . $r['template_path'] . ' is not found !';
+                    return response()->json(['error' => 'AngularJS Configuration Error: template file ' . $r['template_path'] . ' is not found !'], 500);
             }
             
             return view('app', ['routes' => collect($routes), 'app_url' => $app_url, 'api_url' => $app_url . '/api/']);
         } catch (\Exception $e) {
-            return $e->getMessage();
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 }

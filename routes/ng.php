@@ -6,7 +6,7 @@ return [
     
     // Basic Routes
     'home' => ['/', 'homeController', 'home'],
-    '404' => ['/404', 'notFoundController', 'basics.404'],
+    '404' => ['/404', 'basics/notFoundController', 'basics.404'],
     
     // Profile Routes
     'profile.info' => ['/profile/info', 'profile/profileInfoController', 'profile.info'],
