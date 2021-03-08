@@ -145,45 +145,46 @@
         var routes = JSON.parse(("{{ $routes->toJson() }}").replace(/&quot;/g,'"'));
         var app = angular.module("app", ["ngRoute"]);
         
-        app.run(function ($rootScope, $location, $page, $compile, $timeout) {
+        function $r (name, params = null) {
+            
+            for (i=0; i<routes.length; i++) {
+                if (name == routes[i].name) {
+                    var routePath = routes[i].url;
+                    if (routePath.indexOf(':') != -1) {
+                        if (params != null && typeof(params) == 'object') {
+                            var paramsKeys = Object.keys(params).sort(function(a, b) {
+                                return b.length - a.length;
+                            });
+                            for (j=0; j<paramsKeys.length; j++) {
+                                if (routePath.indexOf(':' + paramsKeys[j]) != -1) {
+                                    routePath = routePath.replace(new RegExp(':' + paramsKeys[j], 'g'), params[paramsKeys[j]]);
+                                }
+                            }
+                            if (routePath.indexOf(':') != -1) {
+                                if (appDebug) console.error('Route (' + routes[i].name + ') has unset params');
+                                return appUrl;
+                            }
+                        } else {
+                            if (appDebug) console.error('Undefined Params for Route (' + routes[i].name + ')');
+                            return appUrl;
+                        }
+                    }
+                    return appUrl + routePath;
+                }
+            }
+            if (appDebug) console.error('Route (' + name + ') is undefined');
+            return appUrl;
+        }
+        
+        
+        app.run(function ($rootScope, $location, $page, $timeout) {
             
             $rootScope.$location = $location;
             $rootScope.$page = $page;
             $rootScope.sidenavLoaded = false;
             $rootScope.currentTemplateDirectory = '';
-            
-            $rootScope.$r = function (name, params = null) {
-                
-                for (i=0; i<routes.length; i++) {
-                    if (name == routes[i].name) {
-                        var routePath = routes[i].url;
-                        if (routePath.indexOf(':') != -1) {
-                            if (params != null && typeof(params) == 'object') {
-                                var paramsKeys = Object.keys(params).sort(function(a, b) {
-                                    return b.length - a.length;
-                                });
-                                for (j=0; j<paramsKeys.length; j++) {
-                                    if (routePath.indexOf(':' + paramsKeys[j]) != -1) {
-                                        //routePath = routePath.replace(':' + paramsKeys[j], params[paramsKeys[j]]);
-                                        routePath = routePath.replace(new RegExp(':' + paramsKeys[j], 'g'), params[paramsKeys[j]]);
-                                    }
-                                }
-                                if (routePath.indexOf(':') != -1) {
-                                    console.error('Route (' + routes[i].name + ') has unset params');
-                                    return appUrl + '/#';
-                                }
-                            } else {
-                                console.error('Undefined Params for Route (' + routes[i].name + ')');
-                                return appUrl + '/#';
-                            }
-                        }
-                        
-                        return appUrl + routePath;
-                    }
-                }
-                //console.error('Route (' + name + ') is undefined');
-                return appUrl;
-            }
+            $rootScope.$r = $r;
+            alert($rootScope.$r('404'));
             
             // refresh page if navagate to the current url
             /*document.addEventListener('click', function (e) {
@@ -494,7 +495,7 @@
                 $route.reload();
             }
             
-        });        
+        });
         
         app.factory('$apiRequest', function($http, $q, $page) {
             
