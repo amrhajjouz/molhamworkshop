@@ -96,7 +96,7 @@
         </div>
     </nav>
 
-    <div id="page-content" class="main-content py-6 d-none">
+    <div id="page-content" class="main-content py-md-6 py-3 d-none">
         <div class="row justify-content-center mx-0">
             <div class="col-lg-11" ng-view></div>
         </div>
