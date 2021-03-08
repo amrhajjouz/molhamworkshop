@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 abstract class BaseModel extends Model {
 
     protected $guarded = [];
-
+    
     public static function Table(){
         return with(new static)->getTable();
     }

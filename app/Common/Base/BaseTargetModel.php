@@ -4,8 +4,7 @@ namespace App\Common\Base;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth; 
-// use App\Core\Facades\ContextConfig;
-// use App\Core\Models\{Post, Config};
+use App\Models\{Target};
 use App\Facades\Helper;
 
 abstract class BaseTargetModel extends Model {
@@ -26,7 +25,7 @@ abstract class BaseTargetModel extends Model {
     //     return $this;
     // }
     
-    // public function getModelAttribute(){
+    // public function getModelTypeAttribute(){
     //     $rec = \App\Models\ModelLevel::where('name',self::Table())
     //             ->first();
     //     return $rec;
@@ -47,7 +46,7 @@ abstract class BaseTargetModel extends Model {
             
             do {
                 $reference = Helper::generateRandomString(15);
-            } while ($referenceExist = Target::where('reference' , $reference)->exists());
+            } while (Target::where('reference' , $reference)->exists());
             
 
             
