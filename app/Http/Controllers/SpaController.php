@@ -21,10 +21,10 @@ class SpaController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index (Request $request, $url = null)
+    public function index (Request $request , $url = null)
     {
         try {
-            $a = 'test';
+            
             if ($request->is('api/*')) return response()->json(['error' => 'API Route not found'], 500);
             
             $app_url =  url('');
