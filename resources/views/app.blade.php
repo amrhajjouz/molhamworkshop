@@ -176,15 +176,13 @@
             return appUrl;
         }
         
-        
-        app.run(function ($rootScope, $location, $page, $timeout) {
+        app.run(function ($rootScope, $location, $page, $timeout, $promisses) {
             
             $rootScope.$location = $location;
             $rootScope.$page = $page;
             $rootScope.sidenavLoaded = false;
             $rootScope.currentTemplateDirectory = '';
-            $rootScope.$r = $r;
-            alert($rootScope.$r('404'));
+            $rootScope.$r = $r;            
             
             // refresh page if navagate to the current url
             /*document.addEventListener('click', function (e) {
@@ -558,6 +556,14 @@
                         }
                     };
                 }
+            };
+        });
+        
+        app.factory('$promisses', function($q) {
+            return function (g) {
+                return $q.all(g).then(function(data) {
+                    return data;
+                });
             };
         });
         
