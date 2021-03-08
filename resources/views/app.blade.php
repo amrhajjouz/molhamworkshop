@@ -293,9 +293,9 @@
                     //$('.nav-link').removeClass('active');
                     $('[data-toggle=dropdown]').dropdown();
                     $('[data-toggle=tooltip]').tooltip();
-                    $('[data-toggle="collapse"]').click(function(e) {
+                    /*$('[data-toggle="collapse"]').click(function(e) {
                         $('.collapse').collapse('hide');
-                    });
+                    });*/
                 });
                 
             });
