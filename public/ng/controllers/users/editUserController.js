@@ -7,7 +7,7 @@ function editUserController ($scope, $page, $apiRequest, $init) {
     $scope.user = $init;
     
     $scope.updateUser = $apiRequest.config({
-        method : 'POST',
+        method : 'PUT',
         url : 'users',
         data : $scope.user,
     }, function (response, data) {

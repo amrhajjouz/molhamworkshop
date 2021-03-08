@@ -5,7 +5,7 @@ namespace App\Http\Requests\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreUserRequest extends FormRequest
+class CreateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,10 +26,9 @@ class StoreUserRequest extends FormRequest
     {
         
         return [
-            'id' => ['exists:users'],
-            'name' => ['required_without:id' ,'string', 'between:3,20'],
-            'email' => ['required_without:id', 'email', ($this->has('id'))  ? Rule::unique('users', 'email')->ignore($this->input('id')) : 'unique:users,email'],
-            'password' => ['required_without:id', 'string', 'min:8'],
+            'name' => ['required' ,'string', 'between:3,20'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:8'],
         ];
     }
     
