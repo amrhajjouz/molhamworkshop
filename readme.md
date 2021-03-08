@@ -21,8 +21,8 @@
 
     ├── public
     │   ├── ng
-    │   │   ├── controllers             #AngularJS SPA controllers (.js files)
-    │   │   └── templates               #AngularJS SPA templates (.htm file)
+    │   │   ├── controllers             #AngularJS SPA controllers (only .js files)
+    │   │   └── templates               #AngularJS SPA templates (only .htm files)
 
 
 # SPA Routes
