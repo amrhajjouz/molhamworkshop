@@ -24,7 +24,7 @@
     
     <base href="{{ $app_url }}/">
     
-    <title>ورشة عمل فريق ملهم @{{ ($page.title != '') ? ' - ' + $page.title : '' }}</title>
+    <title>ورشة عمل فريق ملهم</title>
     
     <style>
     
@@ -142,6 +142,7 @@
         var appUrl = "{{ $app_url }}";
         var apiUrl = "{{ $api_url }}";
         var appDebug = {{ env('APP_DEBUG') }};
+        var appTitle = $('title').text();
         var routes = JSON.parse(("{{ $routes->toJson() }}").replace(/&quot;/g,'"'));
         var app = angular.module("app", ["ngRoute"]);
         
@@ -211,6 +212,15 @@
                 }
             });
             
+            $rootScope.$watch(function () {
+                return $page.title;
+            }, function (newTitle, oldTitle) {
+                if (newTitle != '')
+                    $('title').text(appTitle + ' - ' + newTitle);
+                else
+                    $('title').text(appTitle);
+            });
+            
             $rootScope.$on('$routeChangeStart', function () {
                 $page.resetConfig();
                 $rootScope.$page.loading = true;
@@ -231,6 +241,9 @@
             });
             
             $rootScope.$on('$routeChangeSuccess', function() {
+                
+
+                
                 loadingBarWidthPercantage = 0;
                 clearInterval(loadingBarInterval);
                 $('#loading-bar').addClass('w-100');
