@@ -297,7 +297,6 @@
                         $('.collapse').collapse('hide');
                     });*/
                 });
-                
             });
             
             $rootScope.$on("$routeChangeError", function(evt, current, previous, rejection) {
