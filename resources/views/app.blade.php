@@ -144,7 +144,7 @@
         var appDebug = {{ env('APP_DEBUG') }};
         var routes = JSON.parse(("{{ $routes->toJson() }}").replace(/&quot;/g,'"'));
         var app = angular.module("app", ["ngRoute"]);
-        alert(appUrl);
+        
         app.run(function ($rootScope, $location, $page, $compile, $timeout) {
             
             $rootScope.$location = $location;
