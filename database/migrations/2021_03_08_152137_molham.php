@@ -39,16 +39,17 @@ class Molham extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->index();
+            $table->string('created_for')->index();
             $table->timestamps();
         });
 
         Schema::create('targets', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('refrence')->unique();
+            $table->string('reference')->unique();
             $table->string('model_type')->index();
             $table->bigInteger('model_id')->index();
-            $table->bigInteger('section_id')->index();
-            $table->bigInteger('category_id')->index();
+            $table->bigInteger('section_id')->index()->nullable();
+            $table->bigInteger('category_id')->index()->nullable();
             $table->integer('required')->index()->default(0);
             $table->integer('received')->index()->default(0);
             $table->integer('left')->index()->default(0);

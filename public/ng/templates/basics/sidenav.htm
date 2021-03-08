@@ -25,5 +25,25 @@
             </ul>
         </div>
     </li>
+   
+    <li class="nav-item">
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#cases-navs" role="button" aria-expanded="false">
+            <i class="fe fe-cases"></i>الحالات
+        </a>
+        <div class="collapse" id="cases-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('cases.add') }}" class="nav-link">
+                        حالة جديدة
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('cases') }}" class="nav-link">
+                        قائمة الحالات
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
     
 </ul>

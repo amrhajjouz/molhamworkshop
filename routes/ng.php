@@ -17,4 +17,10 @@ return [
     'users.overview' => ['users/:id', 'users/overviewUserController', 'users.single.overview'],
     'users.edit' => ['users/:id/edit', 'users/editUserController', 'users.single.edit'],
     'users' => ['users', 'users/listUsersController', 'users.list'],
+    
+    // Cases Routes
+    'cases.add' => ['cases/add', 'cases/addCaseController', 'cases.add'],
+    'cases.overview' => ['cases/:id', 'cases/overviewCasesController', 'cases.single.overview'],
+    'cases.edit' => ['cases/:id/edit', 'cases/editCaseController', 'cases.single.edit'],
+    'cases' => ['cases', 'cases/listCasesController', 'cases.list'],
 ];

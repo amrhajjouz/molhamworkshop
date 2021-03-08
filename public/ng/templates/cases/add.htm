@@ -1,0 +1,37 @@
+<page-header title="حالة جديدة" pretitle="الحالات"></page-header>
+
+<form class="row" name="createCaseForm" request="createCase">
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">اسم المستفيد</label>
+            <input type="text" class="form-control"
+                ng-class="(createCase.errors.beneficiary_name != null) ? 'is-invalid' : ''" id="beneficiary_name"
+                ng-model="object.beneficiary_name" ng-change="createCase.errors.beneficiary_name = null"
+                placeholder="الاسم.." required>
+            <div ng-show="createCase.errors.beneficiary_name != null" class="invalid-feedback">
+                {{ createCase.errors.beneficiary_name[0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">الدولة</label>
+            <select class="form-control" ng-model="object.country_id"
+                ng-class="(createCase.errors.country_id != null) ? 'is-invalid' : ''" id="country_id"
+                ng-change="createCase.errors.country_id = null"
+                ng-options="country.id as country.name for country in countries"
+                placeholder="يرجى اختيار دولة.." required
+                >
+            </select>
+            <div ng-show="createCase.errors.country_id != null" class="invalid-feedback">
+                {{ createCase.errors.country_id[0] }}</div>
+        </div>
+    </div>
+
+
+
+    <div class="col-12">
+        <submit-button form="createCaseForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+
+</form>

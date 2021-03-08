@@ -61,7 +61,7 @@ abstract class BaseTargetModel extends Model {
            
             $this->target_id = $target->id;
             
-            parent::save();
+            return parent::save();
         }else{
             // TODO : on update
         }

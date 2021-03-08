@@ -20,6 +20,7 @@ class UserController extends Controller {
         
         try {
             
+            $data = $request->all();
             // Create User
             $user = User::create($data);
             

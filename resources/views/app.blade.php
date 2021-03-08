@@ -145,7 +145,7 @@
         var appTitle = $('title').text();
         var routes = JSON.parse(("{{ $routes->toJson() }}").replace(/&quot;/g,'"'));
         var app = angular.module("app", ["ngRoute"]);
-        
+        console.log({routes})
         function $r (name, params = null, withBaseAppUrl = true) {
             
             var routeUrlPrefix = (withBaseAppUrl) ? appUrl : '';
@@ -179,7 +179,7 @@
             return appUrl;
         }
         
-        app.run(function ($rootScope, $location, $page, $timeout, $promisses) {
+        app.run(function ($rootScope, $location, $page, $timeout) {
             
             $rootScope.$location = $location;
             $rootScope.$page = $page;
@@ -578,7 +578,7 @@
             };
         });
         
-        app.factory('$promisses', function($q) {
+        app.factory('$promises', function($q) {
             return function (g) {
                 return $q.all(g).then(function(data) {
                     return data;
