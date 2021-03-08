@@ -3,19 +3,18 @@
 - Set your DB configuraton in your `.env` file
 - Type this in terminal for DB Migrating and Seeding:
 
-	   php artisan migrate
-	   php artisan db:seed
+    php artisan migrate
+    php artisan db:seed
 
 - For non Windows users, give read and write permession to the your web server for storage, cache directories: 
 
-        sudo chgrp -R www-data storage bootstrap/cache
-        sudo chmod -R ug+rwx storage bootstrap/cache
+    sudo chgrp -R www-data storage bootstrap/cache
+    sudo chmod -R ug+rwx storage bootstrap/cache
 
 - Login to admin account via: `APP_URL/login` with the following info:
-
-        email: admin@admin.com
-        password: 12345678 
-       
+    
+    email: admin@admin.com
+    password: 12345678    
 
 # SPA Files
 
