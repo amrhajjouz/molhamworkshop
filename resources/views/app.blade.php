@@ -164,7 +164,8 @@
                                 });
                                 for (j=0; j<paramsKeys.length; j++) {
                                     if (routePath.indexOf(':' + paramsKeys[j]) != -1) {
-                                        routePath = routePath.replaceAll(':' + paramsKeys[j], params[paramsKeys[j]]);
+                                        //routePath = routePath.replace(':' + paramsKeys[j], params[paramsKeys[j]]);
+                                        routePath = routePath.replace(new RegExp(':' + paramsKeys[j], 'g'), params[paramsKeys[j]]);
                                     }
                                 }
                                 if (routePath.indexOf(':') != -1) {
