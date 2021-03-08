@@ -25,7 +25,9 @@ class SpaController extends Controller
     {
         try {
             
-            return $request->secure();
+            if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') { 
+                return 'https';
+            }
             
             if ($request->is('api/*')) return response()->json(['error' => 'API Route not found'], 500);
             
