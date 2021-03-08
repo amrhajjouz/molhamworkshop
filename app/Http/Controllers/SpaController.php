@@ -21,7 +21,7 @@ class SpaController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index ($url = null, Request $request)
+    public function index (Request $request, $url = null)
     {
         try {
             
