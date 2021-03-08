@@ -179,7 +179,7 @@
             return appUrl;
         }
         
-        app.run(function ($rootScope, $location, $page, $timeout, $promisses) {
+        app.run(function ($rootScope, $location, $page, $timeout) {
             
             $rootScope.$location = $location;
             $rootScope.$page = $page;
@@ -241,9 +241,6 @@
             });
             
             $rootScope.$on('$routeChangeSuccess', function() {
-                
-
-                
                 loadingBarWidthPercantage = 0;
                 clearInterval(loadingBarInterval);
                 $('#loading-bar').addClass('w-100');
@@ -578,7 +575,7 @@
             };
         });
         
-        app.factory('$promisses', function($q) {
+        app.factory('$promises', function($q) {
             return function (g) {
                 return $q.all(g).then(function(data) {
                     return data;
