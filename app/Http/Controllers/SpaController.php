@@ -25,13 +25,9 @@ class SpaController extends Controller
     {
         try {
             
-            if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') { 
-                return 'https';
-            }
-            
             if ($request->is('api/*')) return response()->json(['error' => 'API Route not found'], 500);
             
-            $app_url =  url('');
+            $app_url =  secure_url('');
             $routes = [];
             foreach(include(base_path('routes/ng.php')) as $route_name => $r) {
                 $route_url = ($r[0][0] == '/') ? $r[0] : '/' . $r[0];
