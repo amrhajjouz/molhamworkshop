@@ -1,4 +1,4 @@
-function addUserController ($scope, $location, $apiRequest) {
+function addUserController ($scope, $location, $apiRequest, $page) {
     
     $scope.user = {};
     
@@ -7,7 +7,7 @@ function addUserController ($scope, $location, $apiRequest) {
         url: 'users',
         data: $scope.user,
     }, function (response, data) {
-        alert(data.id);
+        $page.navigate('users.overview', {id: data.id});
     });
     
 }

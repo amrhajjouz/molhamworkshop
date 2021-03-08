@@ -145,7 +145,9 @@
         var routes = JSON.parse(("{{ $routes->toJson() }}").replace(/&quot;/g,'"'));
         var app = angular.module("app", ["ngRoute"]);
         
-        function $r (name, params = null) {
+        function $r (name, params = null, withBaseAppUrl = true) {
+            
+            var routeUrlPrefix = (withBaseAppUrl) ? appUrl : '';
             
             for (i=0; i<routes.length; i++) {
                 if (name == routes[i].name) {
@@ -162,14 +164,14 @@
                             }
                             if (routePath.indexOf(':') != -1) {
                                 if (appDebug) console.error('Route (' + routes[i].name + ') has unset params');
-                                return appUrl;
+                                return routeUrlPrefix;
                             }
                         } else {
                             if (appDebug) console.error('Undefined Params for Route (' + routes[i].name + ')');
                             return appUrl;
                         }
                     }
-                    return appUrl + routePath;
+                    return routeUrlPrefix + routePath;
                 }
             }
             if (appDebug) console.error('Route (' + name + ') is undefined');
@@ -493,6 +495,10 @@
                 $route.reload();
             }
             
+            this.navigate = function (routeName, routePath = null) {
+                $location.url($r(routeName, routePath, false));
+            }
+            
         });
         
         app.factory('$apiRequest', function($http, $q, $page) {
@@ -511,14 +517,14 @@
                         
                         send : function (returnData = false) {
                             
-                            var q = $q.defer(); this.sending = true; this.response = 'aa'; this.data = null; this.error = ''; this.errors = {}; var _this = this;
+                            var q = $q.defer(); this.sending = true; this.response = ''; this.data = null; this.error = ''; this.errors = {}; var _this = this;
                             
                             $page.sendingHttpRequest = true; 
                             
                             $http(config).then(function (response) {
                                 _this.handleResponse(response);
                                 _this.abort(q);
-                                if (successCallback != null && typeof successCallback == 'function') successCallback(response, response.data);
+                                if (_this.error == '' && successCallback != null && typeof successCallback == 'function') successCallback(response, response.data);
                                 if (returnData) q.resolve(response.data); else q.resolve(response);
                             }, function (response) {
                                 _this.handleResponse(response);

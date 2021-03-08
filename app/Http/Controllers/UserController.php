@@ -21,7 +21,7 @@ class UserController extends Controller {
         try {
             
             // Create User
-            $user = User::create($data);
+            $user = User::create($request->validated());
             
             return response()->json($user);
             
