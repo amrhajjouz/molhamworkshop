@@ -37,3 +37,4 @@ The route structure as the following:
 
 - `controllerPath`: must be written without .js extension
 - `templatePath`: must be written without .htm extension and separated with (.), not slashes
+
