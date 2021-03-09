@@ -212,15 +212,6 @@
                 }
             });
             
-            $rootScope.$watch(function () {
-                return $page.title;
-            }, function (newTitle, oldTitle) {
-                if (newTitle != '')
-                    $('title').text(appTitle + ' - ' + newTitle);
-                else
-                    $('title').text(appTitle);
-            });
-            
             $rootScope.$on('$routeChangeStart', function () {
                 $page.resetConfig();
                 $rootScope.$page.loading = true;
@@ -241,9 +232,6 @@
             });
             
             $rootScope.$on('$routeChangeSuccess', function() {
-                
-
-                
                 loadingBarWidthPercantage = 0;
                 clearInterval(loadingBarInterval);
                 $('#loading-bar').addClass('w-100');
@@ -263,10 +251,23 @@
                         $rootScope.$watch(function () {
                             return $page.templatesLoaded;
                         }, function (newValue, oldValue) {
-                            if (newValue) $('#page-content').fadeIn();
+                            if (newValue) {
+                                $('#page-content').fadeIn();
+                                updatePageTitle();
+                            }
                         });
-                    } else $('#page-content').fadeIn();
+                    } else {
+                        $('#page-content').fadeIn();
+                        updatePageTitle();
+                    }
                 });
+                
+                var updatePageTitle = function () {
+                    if ($page.title != '')
+                        $('title').text(appTitle + ' - ' + $page.title);
+                    else
+                        $('title').text(appTitle);
+                };
                 
                 var alignItemsPageCenterIfRequired = function () {
                     if ($rootScope.$page.alignItemsCenter) {
@@ -276,14 +277,14 @@
                         $('body').removeClass('d-flex align-items-center');
                         $('#page-content').removeClass('container-fluid');
                     }
-                }
+                };
                 
                 var hidePageSidenavIfRequired = function () {
                     if ($rootScope.$page.sidenavHidden)
                         $('#page-sidebar').addClass('d-none').hide();
                     else
                         $('#page-sidebar').removeClass('d-none').show();
-                }
+                };
                 
                 
                 if ($('#page-spinner').is(":visible")) {

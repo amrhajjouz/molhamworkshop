@@ -28,7 +28,7 @@
    
     <li class="nav-item">
         <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#cases-navs" role="button" aria-expanded="false">
-            <i class="fe fe-cases"></i>الحالات
+            <i class="fe fe-command"></i>الحالات
         </a>
         <div class="collapse" id="cases-navs">
             <ul class="nav nav-sm flex-column">
@@ -40,6 +40,26 @@
                 <li class="nav-item">
                     <a href="{{ $r('cases') }}" class="nav-link">
                         قائمة الحالات
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+  
+    <li class="nav-item">
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#campaign-navs" role="button" aria-expanded="false">
+            <i class="fe fe-volume-1"></i>الحملات 
+        </a>
+        <div class="collapse" id="campaign-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('cases.add') }}" class="nav-link">
+                        حملة جديدة
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('cases') }}" class="nav-link">
+                        قائمة الحملات
                     </a>
                 </li>
             </ul>

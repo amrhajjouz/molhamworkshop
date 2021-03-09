@@ -1,0 +1,64 @@
+<include-header/>
+
+<div class="row">
+    <div class="col-12 col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-header-title">
+                    معلومات الحالة
+                </h4>
+            </div>
+            
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">الاسم</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ object.beneficiary_name }}</h4>
+                    </div>
+                </div>
+                
+                <hr>
+                 <div class="row align-items-center">
+                     <div class="col">
+                         <h4 class="mb-0 text-muted">الدولة</h4>
+                     </div>
+                     <div class="col-auto">
+                         <h4>{{ object.country.name }}</h4>
+                     </div>
+                 </div>
+                <hr>
+                 <div class="row align-items-center">
+                     <div class="col">
+                         <h4 class="mb-0 text-muted">الدولة</h4>
+                     </div>
+                     <div class="col-auto">
+                         <h4>{{ object.country.name }}</h4>
+                     </div>
+                 </div>
+                <hr>
+                 <div class="row align-items-center">
+                     <div class="col">
+                         <h4 class="mb-0 text-muted">تم تأمينها</h4>
+                     </div>
+                     <div class="col-auto">
+                         <h4 ng-if="object.funded">نعم</h4>
+                         <h4 ng-if="!object.funded">لا</h4>
+                     </div>
+                 </div>
+                <hr>
+                 <div class="row align-items-center">
+                     <div class="col">
+                         <h4 class="mb-0 text-muted">تم الغاؤها</h4>
+                     </div>
+                     <div class="col-auto">
+                         <h4 ng-if="object.cancelled">نعم</h4>
+                         <h4 ng-if="!object.cancelled">لا</h4>
+                     </div>
+                 </div>
+
+            </div>
+        </div>
+    </div>
+</div>
