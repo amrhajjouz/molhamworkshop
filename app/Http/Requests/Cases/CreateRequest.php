@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Case;
+namespace App\Http\Requests\Cases;
 
 use Illuminate\Validation\Rule;
 use App\Common\Base\BaseRequest;

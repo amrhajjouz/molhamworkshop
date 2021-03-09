@@ -7,7 +7,7 @@ use App\Common\Traits\{HasRetrieve};
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\Case\{CreateRequest , UpdateRequest};
+use App\Http\Requests\Cases\{CreateRequest , UpdateRequest};
 use App\Facades\Helper;
 
 use App\Models\{User , Cases};
@@ -67,7 +67,7 @@ class CaseController extends BaseController {
         
         try {
             
-            return response()->json(User::all());            
+            return response()->json(Cases::all());            
             
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
