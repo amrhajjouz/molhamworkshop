@@ -1,8 +1,8 @@
 function listCampaignsControllerInit($apiRequest) {
-    return $apiRequest.config("cases").getData();
+    return $apiRequest.config("campaigns").getData();
 }
 
 function listCampaignsController($scope, $init) {
     
-    $scope.users = $init;
+    $scope.campaigns = $init;
 }

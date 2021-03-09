@@ -29,4 +29,17 @@ class BaseRequest extends FormRequest
         ];
     }
     
+
+        public function messages()
+        {
+        return [
+            'id.required' => 'حقل المعرف مطلوب',
+            'id.exists' => 'العنصر غير موجود',
+            'name.required' => 'حقل الاسم مطلوب',
+            'name.between' => 'حقل الاسم يجب أن يكون بين 3-100',
+            'funded.required' => 'حقل تم تأمينها مطلوب',
+
+        ];
+        }
+
 }

@@ -10,7 +10,7 @@
                 ng-class="(updateCase.errors.beneficiary_name != null) ? 'is-invalid' : ''"
                 id="beneficiary_name"
                 ng-model="object.beneficiary_name"
-                ng-change="createCase.errors.beneficiary_name = null"
+                ng-change="updateCase.errors.beneficiary_name = null"
                 placeholder="الاسم.."
                 required
             />
@@ -18,7 +18,7 @@
                 ng-show="updateCase.errors.beneficiary_name != null"
                 class="invalid-feedback"
             >
-                {{ createCase.errors.beneficiary_name[0] }}
+                {{ updateCase.errors.beneficiary_name[0] }}
             </div>
         </div>
     </div>

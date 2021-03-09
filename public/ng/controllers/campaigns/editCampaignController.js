@@ -2,26 +2,25 @@
 
 async function editCampaignControllerInit($http, $page, $apiRequest) {
     const object = await $apiRequest
-        .config("cases/" + $page.routeParams.id)
+        .config("campaigns/" + $page.routeParams.id)
         .getData();
 
-    const countries = await $apiRequest.config("countries").getData();
+    // const countries = await $apiRequest.config("countries").getData();
 
-    const init = {
-        object: object,
-        countries: countries,
-    };
-    return init;
+    // const init = {
+    //     object: object,
+    //     countries: countries,
+    // };
+    return object;
 }
 
 function editCampaignController($scope, $page, $apiRequest, $init) {
-    $scope.object = $init.object;
-    $scope.countries = $init.countries;
+    $scope.object = $init;
 
-    $scope.updateCase = $apiRequest.config(
+    $scope.updateCampaign = $apiRequest.config(
         {
             method: "PUT",
-            url: "cases",
+            url: "campaigns",
             data: $scope.object,
         },
         function (response, data) {}

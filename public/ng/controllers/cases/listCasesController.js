@@ -4,5 +4,5 @@ function listCasesControllerInit($apiRequest) {
 
 function listCasesController($scope, $init) {
     
-    $scope.users = $init;
+    $scope.cases = $init;
 }

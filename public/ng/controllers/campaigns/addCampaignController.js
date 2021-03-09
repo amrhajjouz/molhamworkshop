@@ -20,7 +20,7 @@ function addCampaignController($scope, $location, $apiRequest, $page, $init) {
             data: $scope.object,
         },
         function (response, data) {
-            $page.navigate("cases.overview", { id: data.id });
+            $page.navigate("campaigns.overview", { id: data.id });
         }
     );
 }

@@ -7,10 +7,15 @@ use Illuminate\Support\Facades\{Validator};
 use Schema;
 use Illuminate\Routing\Controller;
 use App\Models\User;
+use App\Exceptions\APIException;
 
 class BaseController extends Controller
 {
 
+
+        protected function _exception($msg, $code = null){
+        throw new APIException($msg, $code);
+        }
     protected function _response($data , $meta = null){
 
         

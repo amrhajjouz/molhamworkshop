@@ -66,6 +66,7 @@ class Molham extends Migration
 
         Schema::create('campaigns', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('target_id')->index()->nullable();
             $table->string('name')->index();
             $table->boolean('funded')->index()->default(0);
             $table->timestamps();

@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\ProfileController;
-use App\Http\Controllers\{UserController , CaseController , CountryController};
+use App\Http\Controllers\{UserController , CaseController , CountryController , CampaignController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,5 +39,13 @@ Route::middleware('auth')->group(function ()  {
     Route::post('/cases', [CaseController::class, 'create']);
     Route::put('/cases', [CaseController::class, 'update']);
     Route::get('/cases/{id}', [CaseController::class, 'retrieve']);
+   
+   
+    //////////////////  CAMPAIGNS //////////////
+
+    Route::get('/campaigns', [CampaignController::class, 'list']);
+    Route::post('/campaigns', [CampaignController::class, 'create']);
+    Route::put('/campaigns', [CampaignController::class, 'update']);
+    Route::get('/campaigns/{id}', [CampaignController::class, 'retrieve']);
     
 });
