@@ -24,9 +24,9 @@ return [
     'cases.edit' => ['cases/:id/edit', 'cases/editCaseController', 'cases.single.edit'],
     'cases' => ['cases', 'cases/listCasesController', 'cases.list'],
     
-    // Campaign Routes
-    'cases.add' => ['Campaigns/add', 'Campaigns/addCampaignController', 'Campaigns.add'],
-    'Campaigns.overview' => ['Campaigns/:id', 'Campaigns/overviewCampaignsController', 'Campaigns.single.overview'],
-    'Campaigns.edit' => ['Campaigns/:id/edit', 'Campaigns/editCampaignController', 'Campaigns.single.edit'],
-    'Campaigns' => ['Campaigns', 'Campaigns/listCampaignsController', 'Campaigns.list'],
+    // // Campaign Routes
+    // 'cases.add' => ['Campaigns/add', 'Campaigns/addCampaignController', 'Campaigns.add'],
+    // 'Campaigns.overview' => ['Campaigns/:id', 'Campaigns/overviewCampaignsController', 'Campaigns.single.overview'],
+    // 'Campaigns.edit' => ['Campaigns/:id/edit', 'Campaigns/editCampaignController', 'Campaigns.single.edit'],
+    // 'Campaigns' => ['Campaigns', 'Campaigns/listCampaignsController', 'Campaigns.list'],
 ];

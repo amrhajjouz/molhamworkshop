@@ -1,23 +1,22 @@
-async function addCampaignControllerInit($apiRequest) {
+// async function addCampaignControllerInit($apiRequest) {
     
-    let countries = await $apiRequest.config("countries").getData();
+//     let countries = await $apiRequest.config("countries").getData();
 
-    let init = {
-        countries: countries,
-    };
+//     let init = {
+//         countries: countries,
+//     };
 
-    return init;
-}
+//     return init;
+// }
 
 
 function addCampaignController($scope, $location, $apiRequest, $page, $init) {
     $scope.object = {};
-    $scope.countries = $init.countries;
 
-    $scope.createCase = $apiRequest.config(
+    $scope.createCampaign = $apiRequest.config(
         {
             method: "POST",
-            url: "cases",
+            url: "campaigns",
             data: $scope.object,
         },
         function (response, data) {
