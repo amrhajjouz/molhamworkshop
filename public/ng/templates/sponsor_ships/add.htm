@@ -1,0 +1,49 @@
+<page-header title="كفالة جديدة" pretitle="الكفالات"></page-header>
+
+<form class="row" name="createSponsorShipsForm" request="createSponsorShips">
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">اسم المستفيد</label>
+            <input type="text" class="form-control"
+                ng-class="(createSponsorShips.errors.beneficiary_name != null) ? 'is-invalid' : ''"
+                id="beneficiary_name" ng-model="object.beneficiary_name"
+                ng-change="createSponsorShips.errors.beneficiary_name = null" placeholder="الاسم.." required>
+            <div ng-show="createSponsorShips.errors.beneficiary_name != null" class="invalid-feedback">
+                {{ createSponsorShips.errors.beneficiary_name[0] }}</div>
+        </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <div class="form-group">
+                <label for="name">تاريخ ميلاد المستفيد</label>
+                <input type="date" class="form-control"
+                    ng-class="(createSponsorShips.errors.beneficiary_birthdate != null) ? 'is-invalid' : ''"
+                    id="beneficiary_birthdate" ng-model="object.beneficiary_birthdate"
+                    ng-change="createSponsorShips.errors.beneficiary_birthdate = null" placeholder="الاسم.." required>
+                <div ng-show="createSponsorShips.errors.beneficiary_birthdate != null" class="invalid-feedback">
+                    {{ createSponsorShips.errors.beneficiary_birthdate[0] }}</div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <div class="form-group">
+                <label for="name">الدولة</label>
+                <select class="form-control" ng-model="object.country_id"
+                    ng-class="(createSponsorShips.errors.country_id != null) ? 'is-invalid' : ''" id="country_id"
+                    ng-change="createSponsorShips.errors.country_id = null"
+                    ng-options="country.id as country.name for country in countries" placeholder="يرجى اختيار دولة.."
+                    required>
+                </select>
+                <div ng-show="createSponsorShips.errors.country_id != null" class="invalid-feedback">
+                    {{ createSponsorShips.errors.country_id[0] }}</div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-12">
+        <submit-button form="createSponsorShipsForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+
+</form>

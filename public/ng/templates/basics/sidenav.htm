@@ -53,13 +53,33 @@
         <div class="collapse" id="campaign-navs">
             <ul class="nav nav-sm flex-column">
                 <li class="nav-item">
-                    <a href="{{ $r('campaigns.add') }}" class="nav-link">
+                    <a href="{{ $r('sponsor_ships.add') }}" class="nav-link">
                         حملة جديدة
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ $r('campaigns') }}" class="nav-link">
+                    <a href="{{ $r('sponsor_ships') }}" class="nav-link">
                         قائمة الحملات
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#sponsor_ships-navs" role="button" aria-expanded="false">
+            <i class="fe fe-dollar-sign"></i>الكفالات 
+        </a>
+        <div class="collapse" id="sponsor_ships-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('sponsor_ships.add') }}" class="nav-link">
+                        كفالة جديدة
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('sponsor_ships') }}" class="nav-link">
+                        قائمة الكفالات
                     </a>
                 </li>
             </ul>

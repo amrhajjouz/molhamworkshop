@@ -82,6 +82,16 @@ class Molham extends Migration
             $table->boolean('cancelled')->index()->default(0);
             $table->timestamps();
         });
+       
+        Schema::create('sponsor_ships', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('target_id')->index()->nullable();
+            $table->bigInteger('country_id')->index();
+            $table->string('beneficiary_name')->index();
+            $table->string('beneficiary_birthdate')->index();
+            $table->boolean('sponsored')->index()->default(0);
+            $table->timestamps();
+        });
     }
 
     /**
@@ -98,5 +108,6 @@ class Molham extends Migration
         Schema::dropIfExists('target');
         Schema::dropIfExists('cases');
         Schema::dropIfExists('campaigns');
+        Schema::dropIfExists('sponsor_ships');
     }
 }

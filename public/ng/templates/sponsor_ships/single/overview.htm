@@ -1,0 +1,52 @@
+<include-header />
+
+<div class="row">
+    <div class="col-12 col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-header-title">معلومات الكفالة</h4>
+            </div>
+
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">الاسم</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ object.beneficiary_name }}</h4>
+                    </div>
+                </div>
+
+                <hr />
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">تاريخ الميلاد</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ object.beneficiary_birthdate }}</h4>
+                    </div>
+                </div>
+
+                <hr />
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">الدولة</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ object.country.name }}</h4>
+                    </div>
+                </div>
+                <hr />
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">تم كفالتها</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4 ng-if="object.sponsored">نعم</h4>
+                        <h4 ng-if="!object.sponsored">لا</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

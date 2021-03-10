@@ -1,0 +1,97 @@
+<include-header />
+
+<form class="row" name="updateSponsorShipsForm" request="updateSponsorShips">
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">اسم المستفيد</label>
+            <input
+                type="text"
+                class="form-control"
+                ng-class="(updateSponsorShips.errors.beneficiary_name != null) ? 'is-invalid' : ''"
+                id="beneficiary_name"
+                ng-model="object.beneficiary_name"
+                ng-change="updateSponsorShips.errors.beneficiary_name = null"
+                placeholder="الاسم.."
+                required
+            />
+            <div
+                ng-show="updateSponsorShips.errors.beneficiary_name != null"
+                class="invalid-feedback"
+            >
+                {{ updateSponsorShips.errors.beneficiary_name[0] }}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">تاريخ ميلاد المستفيد</label>
+            <input
+                type="date"
+                class="form-control"
+                ng-class="(updateSponsorShips.errors.beneficiary_birthdate != null) ? 'is-invalid' : ''"
+                id="beneficiary_birthdate"
+                ng-model="object.beneficiary_birthdate"
+                ng-change="updateSponsorShips.errors.beneficiary_birthdate = null"
+                placeholder="تاريخ الميلاد.."
+                required
+            />
+            <div
+                ng-show="updateSponsorShips.errors.beneficiary_birthdate != null"
+                class="invalid-feedback"
+            >
+                {{ updateSponsorShips.errors.beneficiary_birthdate[0] }}
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">تاريخ ميلاد المستفيد</label>
+            <input type="date" class="form-control"
+                ng-class="(createSponsorShips.errors.beneficiary_birthdate != null) ? 'is-invalid' : ''"
+                id="beneficiary_birthdate" ng-model="object.beneficiary_birthdate"
+                ng-change="createSponsorShips.errors.beneficiary_birthdate = null" placeholder="الاسم.." required>
+            <div ng-show="createSponsorShips.errors.beneficiary_birthdate != null" class="invalid-feedback">
+                {{ createSponsorShips.errors.beneficiary_birthdate[0] }}</div>
+        </div>
+    </div> -->
+
+
+
+
+
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">الدولة</label>
+            <select
+                class="form-control"
+                ng-model="object.country_id"
+                ng-class="(updateSponsorShips.errors.country_id != null) ? 'is-invalid' : ''"
+                id="country_id"
+                ng-change="updateSponsorShips.errors.country_id = null"
+                ng-options="country.id as country.name for country in countries"
+                placeholder="يرجى اختيار دولة.."
+                required
+            ></select>
+            <div
+                ng-show="updateSponsorShips.errors.country_id != null"
+                class="invalid-feedback"
+            >
+                {{ updateSponsorShips.errors.country_id[0] }}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-md-6">
+       <div class="custom-control custom-switch">
+           <input type="checkbox" class="custom-control-input" id="sponsored" ng-model="object.sponsored">
+           <label class="custom-control-label"  for="sponsored">تم كفالتها</label>
+       </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="updateSponsorShipsForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+</form>

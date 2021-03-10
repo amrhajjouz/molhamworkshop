@@ -38,6 +38,11 @@ class BaseRequest extends FormRequest
             'name.required' => 'حقل الاسم مطلوب',
             'name.between' => 'حقل الاسم يجب أن يكون بين 3-100',
             'funded.required' => 'حقل تم تأمينها مطلوب',
+            'beneficiary_name.required' => 'حقل اسم المستفيد',
+            'beneficiary_name.between' => 'حقل اسم المستفيد يجب أن يكون بين 3-100',
+            'beneficiary_birthdate.required' => 'حقل تاريخ ميلاد المستفيد مطلوب',
+            'beneficiary_birthdate.before' => 'حقل تاريخ ميلاد المستفيد يجب أن يكون أصغر من اليوم    ',
+            'sponsored.required' => 'حقل تم كفالتها مطلوب',
 
         ];
         }
