@@ -1,0 +1,75 @@
+<page-header title="طالب جديد" pretitle="الطلاب"></page-header>
+
+<form class="row" name="createStudentForm" request="createStudent">
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">اسم الطالب</label>
+            <input type="text" class="form-control"
+                ng-class="(createStudent.errors.name != null) ? 'is-invalid' : ''" id="name"
+                ng-model="object.name" ng-change="createStudent.errors.name = null"
+                placeholder="الاسم.." required>
+            <div ng-show="createStudent.errors.name != null" class="invalid-feedback">
+                {{ createStudent.errors.name[0] }}</div>
+        </div>
+    </div>
+   
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">الدولة</label>
+            <select class="form-control" ng-model="object.country_id"
+                ng-class="(createStudent.errors.country_id != null) ? 'is-invalid' : ''" id="country_id"
+                ng-change="createStudent.errors.country_id = null"
+                ng-options="country.id as country.name for country in countries"
+                placeholder="يرجى اختيار دولة.." required
+                >
+            </select>
+            <div ng-show="createStudent.errors.country_id != null" class="invalid-feedback">
+                {{ createStudent.errors.country_id[0] }}</div>
+        </div>
+    </div>
+<div class="col-12 col-md-6">
+    <div class="form-group">
+        <label for="semesters_count">عدد الفصول</label>
+        <input type="number" class="form-control"
+            ng-class="(createStudent.errors.semesters_count != null) ? 'is-invalid' : ''" id="semesters_count"
+            min="1"
+            ng-model="object.semesters_count" ng-change="createStudent.errors.semesters_count = null" required>
+        <div ng-show="createStudent.errors.semesters_count != null" class="invalid-feedback">
+            {{ createStudent.errors.semesters_count[0] }}</div>
+    </div>
+</div>
+ <div class="col-12 col-md-6">
+     <div class="form-group">
+         <label for="current_semester">الفصل الحالي</label>
+         <input type="number" class="form-control"
+             ng-class="(createStudent.errors.current_semester != null) ? 'is-invalid' : '' object.semesters_count ==
+             null ? 'disabled':'' "
+             id="current_semester" ng-model="object.current_semester" ng-change="createStudent.errors.current_semester = null"
+             required
+             max="{{object.semesters_count}}"
+             min="1"
+             ng-disabled="object.semesters_count == null"
+             >
+         <div ng-show="createStudent.errors.current_semester != null" class="invalid-feedback">
+             {{ createStudent.errors.current_semester[0] }}</div>
+     </div>
+ </div>
+ 
+ <div class="col-12 col-md-6">
+     <div class="form-group">
+         <label for="required">المبلغ المطلوب لكل فصل</label>
+         <input type="number" class="form-control" ng-class="(createStudent.errors.required != null) ? 'is-invalid' : ''"
+             id="required" ng-model="object.target['required']" ng-change="createStudent.errors.required = null"
+             required>
+         <div ng-show="createStudent.errors.required != null" class="invalid-feedback">
+             {{ createStudent.errors.required[0] }}</div>
+     </div>
+ </div>
+ 
+
+    <div class="col-12">
+        <submit-button form="createStudentForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+
+</form>

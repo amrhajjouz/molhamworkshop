@@ -1,0 +1,84 @@
+<include-header />
+
+<form class="row" name="updateStudentForm" request="updateStudent">
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">اسم الطالب</label>
+            <input type="text" class="form-control" ng-class="(updateStudent.errors.name != null) ? 'is-invalid' : ''"
+                id="name" ng-model="object.name" ng-change="updateStudent.errors.name = null" placeholder="الاسم.."
+                required />
+
+            <div ng-show="updateStudent.errors.name != null" class="invalid-feedback">
+                {{ updateStudent.errors.name[0] }}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">الدولة</label>
+            <select class="form-control" ng-model="object.country_id"
+                ng-class="(updateStudent.errors.country_id != null) ? 'is-invalid' : ''" id="country_id"
+                ng-change="updateStudent.errors.country_id = null"
+                ng-options="country.id as country.name for country in countries" placeholder="يرجى اختيار دولة.."
+                required></select>
+            <div ng-show="updateStudent.errors.country_id != null" class="invalid-feedback">
+                {{ updateStudent.errors.country_id[0] }}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="semesters_count">عدد الفصول</label>
+            <input type="number" class="form-control"
+                ng-class="(updateStudent.errors.semesters_count != null) ? 'is-invalid' : ''" id="semesters_count"
+                ng-model="object.semesters_count" ng-change="updateStudent.errors.semesters_count = null"
+                 required
+                 max="{{ object.semesters_count }}"
+                 min="1" ng-disabled="object.semesters_count == null"
+                />
+
+            <div ng-show="updateStudent.errors.semesters_count != null" class="invalid-feedback">
+                {{ updateStudent.errors.semesters_count[0] }}
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="current_semester">الفصل الحالي</label>
+            <input type="number" class="form-control"
+                ng-class="(updateStudent.errors.current_semester != null) ? 'is-invalid' : ''" id="current_semester"
+                ng-model="object.current_semester" ng-change="updateStudent.errors.current_semester = null"
+                required
+                 max="{{ object.semesters_count }}"
+                 min="1" ng-disabled="object.semesters_count == null"
+                />
+
+            <div ng-show="updateStudent.errors.current_semester != null" class="invalid-feedback">
+                {{ updateStudent.errors.current_semester[0] }}
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="object.target['required']">المبلغ المطلوب لكل فصل</label>
+            <input type="number" class="form-control"
+                ng-class="(updateStudent.errors.object.target['required'] != null) ? 'is-invalid' : ''" id="object.target['required']"
+                ng-model="object.target['required']" ng-change="updateStudent.errors.object.target['required'] = null"
+                 required
+                />
+
+            <div ng-show="updateStudent.errors.object.target['required'] != null" class="invalid-feedback">
+                {{ updateStudent.errors.object.target['required'][0] }}
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-12">
+        <submit-button form="updateStudentForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+</form>

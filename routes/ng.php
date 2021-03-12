@@ -31,10 +31,16 @@ return [
     'campaigns' => ['campaigns', 'campaigns/listCampaignsController', 'campaigns.list'],
  
     ////////////////////// SponsorShip Routes    ///////////////////
-  
     'sponsor_ships.add' => ['sponsor_ships/add', 'sponsor_ships/addSponsorShipsController', 'sponsor_ships.add'],
     'sponsor_ships.overview' => ['sponsor_ships/:id', 'sponsor_ships/overviewSponsorShipsController', 'sponsor_ships.single.overview'],
     'sponsor_ships.edit' => ['sponsor_ships/:id/edit', 'sponsor_ships/editSponsorShipsController', 'sponsor_ships.single.edit'],
     'sponsor_ships' => ['sponsor_ships', 'sponsor_ships/listsSponsorShipsController', 'sponsor_ships.list'],
+ 
+    ////////////////////// Students Routes    ///////////////////
+    'students.add' => ['students/add', 'students/addStudentsController', 'students.add'],
+    'students.overview' => ['students/:id', 'students/overviewStudentsController', 'students.single.overview'],
+    'students.edit' => ['students/:id/edit', 'students/editStudentsController', 'students.single.edit'],
+    'students' => ['students', 'students/listStudentsController', 'students.list'],
+
    ];
 

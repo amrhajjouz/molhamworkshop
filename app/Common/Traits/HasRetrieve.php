@@ -10,6 +10,7 @@ trait HasRetrieve{
 
 
     public function retrieve(Request $request , $id){
+        
         try{
             $class_name = $this->model;
             
@@ -18,7 +19,6 @@ trait HasRetrieve{
             if(method_exists($object , 'transform')){
                 return $this->_response($object->transform());
             }else{
-                // dd($object );
                 return $this->_response($object);
             }
         } catch (\Exception $e) {

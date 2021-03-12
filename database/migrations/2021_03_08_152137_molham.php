@@ -92,6 +92,21 @@ class Molham extends Migration
             $table->boolean('sponsored')->index()->default(0);
             $table->timestamps();
         });
+     
+        Schema::create('students', function (Blueprint $table) {
+
+            $table->bigIncrements('id');
+            $table->bigInteger('target_id')->index()->nullable();
+            $table->bigInteger('country_id')->index();
+            $table->string('name')->index();
+            $table->integer('semesters_count')->index()->default(1);
+            $table->integer('current_semester')->index()->default(1);
+            $table->integer('semesters_funded' )->index()->default(0);
+            $table->integer('semesters_left' )->index()->default(0);
+            $table->enum('status' , ['paused' , 'not_funded' , 'currently_funded' ,'fully_funded'])->index()->default('not_funded');
+
+            $table->timestamps();
+        });
     }
 
     /**
@@ -109,5 +124,6 @@ class Molham extends Migration
         Schema::dropIfExists('cases');
         Schema::dropIfExists('campaigns');
         Schema::dropIfExists('sponsor_ships');
+        Schema::dropIfExists('students');
     }
 }

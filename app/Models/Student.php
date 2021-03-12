@@ -1,0 +1,122 @@
+<?php
+
+namespace App\Models;
+
+use App\Models\Country;
+
+use App\Common\Base\BaseTargetModel;
+
+class Student extends BaseTargetModel
+{
+     protected $table = 'students';
+     protected $guarded = ["semesters_funded", "semesters_left"];
+     protected $model_path = '\App\Models\Student';
+
+     const PAUSED = 'paused';
+     const NOT_FOUNDED = 'not_funded';
+     const CURRENTLY_FUNDED = 'currently_founded';
+     const FULLY_FUNDED = 'fully_funded';
+
+     public function parent()
+     {
+          return $this->belongsTo('App\Models\Target', 'target_id', 'id');
+     }
+
+     public function country()
+     {
+          return $this->belongsTo(Country::class, 'country_id', 'id');
+     }
+
+     public function transform()
+     {
+          $obj = $this->toArray();
+          return (object)array_merge($obj, [
+               'country' => [
+                    'name' => $this->country->name
+               ],
+               'target' => [
+                    'required' => $this->parent->required
+               ],
+          ]);
+     }
+
+     public function getStatusAttribute($status)
+     {
+          $return = null;
+
+          switch ($status) {
+
+               case self::PAUSED:
+                    $return = 'منتهية';
+                    break;
+               case self::NOT_FOUNDED:
+                    $return = 'غير مؤمنة';
+                    break;
+               case self::CURRENTLY_FUNDED:
+                    $return = 'مؤمنة جزئيا';
+                    break;
+               case self::FULLY_FUNDED:
+                    $return = 'تم تأمينها';
+                    break;
+               default:
+                    $return = $status;
+                    break;
+          }
+
+          return $return;
+     }
+
+     public function save($options = [])
+     {
+          $newRecord = !($this->exists);
+          if (isset($this->target) && is_array($this->target)) {
+               $options = $this->target;
+          }
+
+          if ($this->target) {
+               unset($this->target);
+          }
+          parent::save($options);
+          //create
+          if ($newRecord) {
+               $this->status = self::NOT_FOUNDED;
+          } else {
+               if ($this->semesters_funded >= $this->semesters_count) {
+                    $this->status = self::FULLY_FUNDED;
+               }
+               //update
+          }
+
+          $this->semesters_left = $this->semesters_count - $this->current_semester;
+          $this->semesters_funded = $this->semesters_count - $this->current_semester;
+
+          $this->status = self::PAUSED;
+
+
+          return parent::save($options);
+     }
+
+     public function set_not_funded()
+     {
+          $this->status = self::NOT_FOUNDED;
+          $this->save();
+     }
+
+     public function set_paused()
+     {
+          $this->status = self::PAUSED;
+          $this->save();
+     }
+
+     public function set_currently_funded()
+     {
+          $this->status = self::CURRENTLY_FUNDED;
+          $this->save();
+     }
+
+     public function set_fully_funded()
+     {
+          $this->status = self::FULLY_FUNDED;
+          $this->save();
+     }
+}

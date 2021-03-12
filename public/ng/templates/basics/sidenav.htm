@@ -85,5 +85,25 @@
             </ul>
         </div>
     </li>
+  
+    <li class="nav-item">
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#students-navs" role="button" aria-expanded="false">
+            <i class="fe fe-user"></i>الطلاب 
+        </a>
+        <div class="collapse" id="students-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('students.add') }}" class="nav-link">
+                       طالب جديد
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('students') }}" class="nav-link">
+                        قائمة الطلاب
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
     
 </ul>

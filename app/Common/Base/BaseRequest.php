@@ -43,6 +43,10 @@ class BaseRequest extends FormRequest
             'beneficiary_birthdate.required' => 'حقل تاريخ ميلاد المستفيد مطلوب',
             'beneficiary_birthdate.before' => 'حقل تاريخ ميلاد المستفيد يجب أن يكون أصغر من اليوم    ',
             'sponsored.required' => 'حقل تم كفالتها مطلوب',
+            'current_semester.required' => 'حقل الفصل الحالي مطلوب',
+            'current_semester.numeric' => 'حقل الفصل الحالي يجب أن يكون رقم',
+            // 'semesters_left.required' => 'حقل الفصل الحالي مطلوب',
+            // 'semesters_left.numeric' => 'حقل الفصل الحالي يجب أن يكون رقم',
 
         ];
         }

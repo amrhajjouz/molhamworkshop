@@ -7,7 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\{Target};
 use App\Facades\Helper;
 
+
 abstract class BaseTargetModel extends Model {
+    
+    protected $model_path;
     
     // abstract function target();
     
@@ -34,10 +37,13 @@ abstract class BaseTargetModel extends Model {
     
     
     public function save(array $options = []){
-        
         $newRecord = ! ( $this->exists );
-        
-        parent::save();
+
+        if($this->target){
+            unset($this->target);
+        }
+
+        parent::save($options);
         
         if($newRecord){
             
@@ -50,20 +56,39 @@ abstract class BaseTargetModel extends Model {
             
 
             
+            
            $target = new \App\Models\Target();
             
            $target->model_id = $this->id;
-           $target->model_type = self::Table();
-           $target->reference = $reference;
 
+           if(isset($this->model_path)){
+               $target->model_type = $this->model_path;
+           }else{
+               $target->model_type = self::Table();
+           }
+           $target->reference = $reference;
+         
+           if(isset($options["required"])){
+               $target->required = $options["required"];
+           }
+           
            $target->save();
             
            
             $this->target_id = $target->id;
             
             return parent::save();
+            
         }else{
-            // TODO : on update
+
+            $target = $this->parent;
+            
+            if(isset($options["required"])){
+                $target->required = $options["required"];
+            }
+            
+            
+            $target->save();
         }
         
         

@@ -2,7 +2,8 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\ProfileController;
-use App\Http\Controllers\{UserController , CaseController , CountryController , CampaignController , SponsorShipController};
+use App\Http\Controllers\{UserController , CaseController , CountryController , CampaignController ,
+SponsorShipController , StudentController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,5 +52,11 @@ Route::middleware('auth')->group(function ()  {
     Route::post('/sponsor_ships', [SponsorShipController::class, 'create']);
     Route::put('/sponsor_ships', [SponsorShipController::class, 'update']);
     Route::get('/sponsor_ships/{id}', [SponsorShipController::class, 'retrieve']);
+   
+    //////////////////  Students //////////////
+    Route::get('/students', [StudentController::class, 'list']);
+    Route::post('/students', [StudentController::class, 'create']);
+    Route::put('/students', [StudentController::class, 'update']);
+    Route::get('/students/{id}', [StudentController::class, 'retrieve']);
     
 });
