@@ -24,7 +24,6 @@ class CreateRequest extends BaseRequest
      */
     public function rules()
     {
-        
         return [
             'beneficiary_name' => ['required' ,'string', 'between:3,100'],
             'country_id' => ['required' ,'numeric'],

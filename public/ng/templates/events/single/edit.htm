@@ -1,0 +1,90 @@
+<include-header />
+{{object}}
+<form class="row" name="updateEventForm" request="updateEvent">
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="date">تاريخ الحدث</label>
+            <input type="date" class="form-control" ng-class="(updateEvent.errors.date != null) ? 'is-invalid' : ''"
+                id="date" ng-model="object.date" ng-change="updateEvent.errors.date = null"
+                required />
+
+            <div ng-show="updateEvent.errors.date != null" class="invalid-feedback">
+                {{ updateEvent.errors.date[0] }}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="object.target['required']">المبلغ المطلوب</label>
+            <input type="number" class="form-control"
+            ng-class="(updateEvent.errors.object.target['required'] != null) ? 'is-invalid' : ''" id="object.target['required']"
+            ng-model="object.target['required']" ng-change="updateEvent.errors.object.target['required'] = null"
+            required
+            />
+            
+            <div ng-show="updateEvent.errors.object.target['required'] != null" class="invalid-feedback">
+                {{ updateEvent.errors.object.target['required'][0] }}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="youtube_video_url">رابط الفيديو يوتيوب</label>
+            <input type="text" class="form-control"
+            ng-class="(updateEvent.errors.object.youtube_video_url != null) ? 'is-invalid' : ''" id="object.youtube_video_url"
+            ng-model="object.youtube_video_url" ng-change="updateEvent.errors.object.youtube_video_url = null"
+            placeholder="رابط الفيديو على يوتيوب"
+            />
+            
+            <div ng-show="updateEvent.errors.object.youtube_video_url != null" class="invalid-feedback">
+                {{ updateEvent.errors.object.youtube_video_url[0] }}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="implementation_date">تاريخ تنفيذ الحدث</label>
+            <input type="date" class="form-control" ng-class="(updateEvent.errors.implementation_date != null) ? 'is-invalid' : ''"
+                id="implementation_date" ng-model="object.implementation_date"
+                ng-change="updateEvent.errors.implementation_date = null"
+                                ng-disabled="!object.implemented">
+
+
+            <div ng-show="updateEvent.errors.implementation_date != null" class="invalid-feedback">
+                {{ updateEvent.errors.implementation_date[0] }}
+            </div>
+        </div>
+    </div>
+    
+      <div class="col-6 col-md-6 mb-5">
+          <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="verified" ng-model="object.verified">
+              <label class="custom-control-label" for="verified">مؤكد</label>
+          </div>
+      </div>
+
+      <div class="col-6 col-md-6 mb-5">
+          <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="public_visibility"
+                  ng-model="object.public_visibility">
+              <label class="custom-control-label" for="public_visibility">متاح للعامة</label>
+          </div>
+      </div>
+
+      <div class="col-6 col-md-6 mb-5">
+          <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="implemented" ng-model="object.implemented">
+              <label class="custom-control-label" for="implemented">تم تنفيذه</label>
+          </div>
+      </div>
+      
+    
+    
+    <div class="col-12">
+        <submit-button form="updateEventForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+</form>

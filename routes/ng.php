@@ -41,6 +41,12 @@ return [
     'students.overview' => ['students/:id', 'students/overviewStudentsController', 'students.single.overview'],
     'students.edit' => ['students/:id/edit', 'students/editStudentsController', 'students.single.edit'],
     'students' => ['students', 'students/listStudentsController', 'students.list'],
+ 
+    /////////////////////////// Events Routes    ///////////////////
+    'events.add' => ['events/add', 'events/addEventsController', 'events.add'],
+    'events.overview' => ['events/:id', 'events/overviewEventsController', 'events.single.overview'],
+    'events.edit' => ['events/:id/edit', 'events/editEventsController', 'events.single.edit'],
+    'events' => ['events', 'events/listEventsController', 'events.list'],
 
    ];
 

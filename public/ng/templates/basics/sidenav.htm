@@ -53,12 +53,12 @@
         <div class="collapse" id="campaign-navs">
             <ul class="nav nav-sm flex-column">
                 <li class="nav-item">
-                    <a href="{{ $r('sponsor_ships.add') }}" class="nav-link">
+                    <a href="{{ $r('campaigns.add') }}" class="nav-link">
                         حملة جديدة
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ $r('sponsor_ships') }}" class="nav-link">
+                    <a href="{{ $r('campaigns') }}" class="nav-link">
                         قائمة الحملات
                     </a>
                 </li>
@@ -100,6 +100,26 @@
                 <li class="nav-item">
                     <a href="{{ $r('students') }}" class="nav-link">
                         قائمة الطلاب
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+  
+    <li class="nav-item">
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#events-navs" role="button" aria-expanded="false">
+            <i class="fe fe-user"></i>الأحداث 
+        </a>
+        <div class="collapse" id="events-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('events.add') }}" class="nav-link">
+                       حدث جديد
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('events') }}" class="nav-link">
+                        قائمة الأحداث
                     </a>
                 </li>
             </ul>

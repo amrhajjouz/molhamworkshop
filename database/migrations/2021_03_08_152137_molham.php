@@ -46,8 +46,8 @@ class Molham extends Migration
         Schema::create('targets', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('reference')->unique();
-            $table->string('model_type')->index();
-            $table->bigInteger('model_id')->index();
+            $table->string('purpose_type')->index();
+            $table->bigInteger('purpose_id')->index();
             $table->bigInteger('section_id')->index()->nullable();
             $table->bigInteger('category_id')->index()->nullable();
             $table->integer('required')->index()->default(0);
@@ -94,7 +94,6 @@ class Molham extends Migration
         });
      
         Schema::create('students', function (Blueprint $table) {
-
             $table->bigIncrements('id');
             $table->bigInteger('target_id')->index()->nullable();
             $table->bigInteger('country_id')->index();
@@ -107,6 +106,21 @@ class Molham extends Migration
 
             $table->timestamps();
         });
+       
+        Schema::create('events', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('target_id')->index()->nullable();
+            $table->date('date')->index();
+            $table->boolean('verified' )->index()->default(0);
+            $table->boolean('public_visibility')->index()->default(0);
+            $table->boolean('implemented')->index()->default(0);
+            $table->date('implementation_date')->index()->nullable();
+            $table->string('youtube_video_url')->index()->nullable();
+
+            $table->timestamps();
+        });
+     
+
     }
 
     /**
@@ -125,5 +139,6 @@ class Molham extends Migration
         Schema::dropIfExists('campaigns');
         Schema::dropIfExists('sponsor_ships');
         Schema::dropIfExists('students');
+        Schema::dropIfExists('events');
     }
 }

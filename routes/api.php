@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\{UserController , CaseController , CountryController , CampaignController ,
-SponsorShipController , StudentController};
+SponsorShipController , StudentController , EventController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -58,5 +58,11 @@ Route::middleware('auth')->group(function ()  {
     Route::post('/students', [StudentController::class, 'create']);
     Route::put('/students', [StudentController::class, 'update']);
     Route::get('/students/{id}', [StudentController::class, 'retrieve']);
+    
+    //////////////////  Events //////////////
+    Route::get('/events', [EventController::class, 'list']);
+    Route::post('/events', [EventController::class, 'create']);
+    Route::put('/events', [EventController::class, 'update']);
+    Route::get('/events/{id}', [EventController::class, 'retrieve']);
     
 });

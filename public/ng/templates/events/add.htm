@@ -1,0 +1,81 @@
+<page-header title="حدث جديد" pretitle="الأحداث"></page-header>
+
+
+
+<form class="row" name="createEventForm" request="createEvent">
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="date">تاريخ الحدث</label>
+            <input type="date" class="form-control" ng-class="(createEvent.errors.date != null) ? 'is-invalid' : ''"
+                id="date" ng-model="object.date" ng-change="createEvent.errors.date = null" placeholder="الاسم.."
+                required
+                >
+            <div ng-show="createEvent.errors.date != null" class="invalid-feedback">
+                {{ createEvent.errors.date[0] }}</div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="required">المبلغ المطلوب</label>
+            <input type="number" class="form-control"
+                ng-class="(createEvent.errors.required != null) ? 'is-invalid' : ''" id="required"
+                ng-model="object.target['required']" ng-change="createEvent.errors.required = null" required>
+            <div ng-show="createEvent.errors.required != null" class="invalid-feedback">
+                {{ createEvent.errors.required[0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">رابط الفيديو يوتيوب</label>
+            <input type="text" class="form-control"
+                ng-class="(createEvent.errors.youtube_video_url != null) ? 'is-invalid' : ''" id="youtube_video_url"
+                ng-model="object.youtube_video_url" ng-change="createEvent.errors.youtube_video_url = null"
+                placeholder="رابط الفيديو على يوتيوب.." >
+            <div ng-show="createEvent.errors.youtube_video_url != null" class="invalid-feedback">
+                {{ createEvent.errors.youtube_video_url[0] }}</div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">تاريخ التنفيذ</label>
+            <input type="date" class="form-control"
+                ng-class="(createEvent.errors.implementation_date != null) ? 'is-invalid' : ''" id="implementation_date"
+                ng-model="object.implementation_date" ng-change="createEvent.errors.implementation_date = null"
+                ng-disabled="!object.implemented">
+            <div ng-show="createEvent.errors.implementation_date != null" class="invalid-feedback">
+                {{ createEvent.errors.implementation_date[0] }}</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-6 mb-5">
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="verified" ng-model="object.verified">
+            <label class="custom-control-label" for="verified">مؤكد</label>
+        </div>
+    </div>
+
+    <div class="col-6 col-md-6 mb-5">
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="public_visibility"
+                ng-model="object.public_visibility">
+            <label class="custom-control-label" for="public_visibility">متاح للعامة</label>
+        </div>
+    </div>
+
+    <div class="col-6 col-md-6 mb-5">
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="implemented" ng-model="object.implemented">
+            <label class="custom-control-label" for="implemented">تم تنفيذه</label>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="col-12">
+        <submit-button form="createEventForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+
+</form>

@@ -45,6 +45,11 @@ class BaseRequest extends FormRequest
             'sponsored.required' => 'حقل تم كفالتها مطلوب',
             'current_semester.required' => 'حقل الفصل الحالي مطلوب',
             'current_semester.numeric' => 'حقل الفصل الحالي يجب أن يكون رقم',
+            'date.required' => 'حقل التاريخ مطلوب',
+            'public_visibility.required' => 'حقل إظهار للعامة مطلوب',
+            'implemented.required' => 'حقل تم التنفيذ مطلوب',
+            'implemented_date.required' => 'حقل تاريخ التنفيذ مطلوب',
+            'youtube_video_url.required' => 'حقل رابط الفيديو',
             // 'semesters_left.required' => 'حقل الفصل الحالي مطلوب',
             // 'semesters_left.numeric' => 'حقل الفصل الحالي يجب أن يكون رقم',
 

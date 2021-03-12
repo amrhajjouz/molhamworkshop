@@ -49,6 +49,7 @@ class CampaignController extends BaseController {
             $data = $request->validated();
 
             unset($data['id']);
+            // dd($data);
             $object->update($data);
             
             return $this->_response($object);
