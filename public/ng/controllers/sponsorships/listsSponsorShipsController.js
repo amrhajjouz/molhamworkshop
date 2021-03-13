@@ -1,8 +1,8 @@
 function listsSponsorShipsControllerInit($apiRequest) {
-    return $apiRequest.config("sponsor_ships").getData();
+    return $apiRequest.config("sponsorships").getData();
 }
 
 function listsSponsorShipsController($scope, $init) {
     
-    $scope.sponsor_ships = $init;
+    $scope.sponsorships = $init;
 }

@@ -120,7 +120,14 @@ class Molham extends Migration
             $table->timestamps();
         });
      
+        Schema::create('fundraisers', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('target_id')->index()->nullable();
+            $table->boolean('verified' )->index()->default(0);
+            $table->boolean('public_visibility')->index()->default(0);
 
+            $table->timestamps();
+        });
     }
 
     /**
@@ -140,5 +147,6 @@ class Molham extends Migration
         Schema::dropIfExists('sponsor_ships');
         Schema::dropIfExists('students');
         Schema::dropIfExists('events');
+        Schema::dropIfExists('fundraisers');
     }
 }

@@ -1,10 +1,10 @@
 <page-header title="قائمة الكفالات" pretitle="الكفالات">
-    <a href="{{ $r('sponsor_ships.add') }}" class="btn btn-primary">
-        <i class="fe fe-plus"></i>&nbsp; حالة جديدة
+    <a href="{{ $r('sponsorships.add') }}" class="btn btn-primary">
+        <i class="fe fe-plus"></i>&nbsp; كفالة جديدة
     </a>
 </page-header>
 
-<div class="text-center h4 mt-4 mb-4">العدد الكلي : {{ sponsor_ships.length }}</div>
+<div class="text-center h4 mt-4 mb-4">العدد الكلي : {{ sponsorships.length }}</div>
 
 <div class="card">
     <div class="card-header">
@@ -48,14 +48,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-show="sponsor_ships.length == 0">
+                <tr ng-show="sponsorships.length == 0">
                     <td colspan="10" class="text-center">
                         <div class="pt-3 pb-2 h4" ng-show="volunteers.length == 0">
                             لا يوجد أية عناصر في هذه القائمة
                         </div>
                     </td>
                 </tr>
-                <tr ng-repeat="item in sponsor_ships | filter : search">
+                <tr ng-repeat="item in sponsorships | filter : search">
                     <td class="align-middle text-center">{{ item.id }}</td>
                     <td class="align-middle text-center">{{ item.beneficiary_name }}</td>
                     <td class="align-middle text-center">{{ item.country.name }}</td>
@@ -71,10 +71,10 @@
                                 aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical"></i></a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item"
-                                    href="{{ $r('sponsor_ships.overview', {id: item.id}) }}"><i
+                                    href="{{ $r('sponsorships.overview', {id: item.id}) }}"><i
                                         class="fe fe-eye"></i> نظرة عامة</a>
                                 <a class="dropdown-item"
-                                    href="{{ $r('sponsor_ships.edit', {id: item.id}) }}"><i
+                                    href="{{ $r('sponsorships.edit', {id: item.id}) }}"><i
                                         class="fe fe-edit-2"></i> تعديل</a>
                             </div>
                         </div>

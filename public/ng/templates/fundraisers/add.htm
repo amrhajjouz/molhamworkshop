@@ -1,0 +1,39 @@
+<page-header title="إضافة حملة جمع تبرعات جديدة" pretitle="حملات جمع التبرعات"></page-header>
+
+<form class="row" name="createFundraiserForm" request="createFundraiser">
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="required">المبلغ المطلوب</label>
+            <input type="number" class="form-control"
+                ng-class="(createFundraiser.errors.required != null) ? 'is-invalid' : ''" id="required"
+                ng-model="object.target['required']" ng-change="createFundraiser.errors.required = null" required>
+            <div ng-show="createFundraiser.errors.required != null" class="invalid-feedback">
+                {{ createFundraiser.errors.required[0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-6 col-md-6 mt-5 pr-5">
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="verified" ng-model="object.verified">
+            <label class="custom-control-label" for="verified">مؤكد</label>
+        </div>
+    </div>
+
+    <div class="col-6 col-md-6 mb-5 mt-3">
+        <div class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="public_visibility"
+                ng-model="object.public_visibility">
+            <label class="custom-control-label" for="public_visibility">متاح للعامة</label>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="col-12">
+        <submit-button form="createFundraiserForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+
+</form>

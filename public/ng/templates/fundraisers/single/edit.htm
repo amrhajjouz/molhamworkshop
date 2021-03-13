@@ -1,0 +1,39 @@
+<include-header />
+<form class="row" name="updateEventForm" request="updateEvent">
+    
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="object.target['required']">المبلغ المطلوب</label>
+            <input type="number" class="form-control"
+            ng-class="(updateEvent.errors.object.target['required'] != null) ? 'is-invalid' : ''" id="object.target['required']"
+            ng-model="object.target['required']" ng-change="updateEvent.errors.object.target['required'] = null"
+            required
+            />
+            
+            <div ng-show="updateEvent.errors.object.target['required'] != null" class="invalid-feedback">
+                {{ updateEvent.errors.object.target['required'][0] }}
+            </div>
+        </div>
+    </div>
+    
+    
+      <div class="col-6 col-md-6 mb-5">
+          <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="verified" ng-model="object.verified">
+              <label class="custom-control-label" for="verified">مؤكد</label>
+          </div>
+      </div>
+
+      <div class="col-6 col-md-6 mb-5">
+          <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="public_visibility"
+                  ng-model="object.public_visibility">
+              <label class="custom-control-label" for="public_visibility">متاح للعامة</label>
+          </div>
+      </div>
+
+    
+    <div class="col-12">
+        <submit-button form="updateEventForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+</form>

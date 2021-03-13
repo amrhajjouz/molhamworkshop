@@ -90,6 +90,12 @@ abstract class BaseTargetModel extends Model {
         }
         
     }
+
+      public function parent()
+      {
+            return $this->belongsTo('App\Models\Target', 'target_id', 'id');
+      }
+
     
     public function delete(array $options = []){
         

@@ -10,7 +10,7 @@ class Cases extends BaseTargetModel
 {
      protected $table = 'cases';
      protected $guarded = [];
-     // protected $dateFormat = 'U';
+     protected $model_path = '\App\Models\Cases';
 
 
      public function country(){

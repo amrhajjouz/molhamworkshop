@@ -17,11 +17,11 @@ function addSponsorShipsController($scope, $location, $apiRequest, $page, $init)
     $scope.createSponsorShips = $apiRequest.config(
         {
             method: "POST",
-            url: "sponsor_ships",
+            url: "sponsorships",
             data: $scope.object,
         },
         function (response, data) {
-            $page.navigate("sponsor_ships.overview", { id: data.id });
+            $page.navigate("sponsorships.overview", { id: data.id });
         }
     );
 }

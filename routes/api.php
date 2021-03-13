@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\{UserController , CaseController , CountryController , CampaignController ,
-SponsorShipController , StudentController , EventController};
+SponsorShipController , StudentController , EventController , FundraiserController};
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,10 +48,10 @@ Route::middleware('auth')->group(function ()  {
     Route::get('/campaigns/{id}', [CampaignController::class, 'retrieve']);
     
     //////////////////  SponsorShips //////////////
-    Route::get('/sponsor_ships', [SponsorShipController::class, 'list']);
-    Route::post('/sponsor_ships', [SponsorShipController::class, 'create']);
-    Route::put('/sponsor_ships', [SponsorShipController::class, 'update']);
-    Route::get('/sponsor_ships/{id}', [SponsorShipController::class, 'retrieve']);
+    Route::get('/sponsorships', [SponsorShipController::class, 'list']);
+    Route::post('/sponsorships', [SponsorShipController::class, 'create']);
+    Route::put('/sponsorships', [SponsorShipController::class, 'update']);
+    Route::get('/sponsorships/{id}', [SponsorShipController::class, 'retrieve']);
    
     //////////////////  Students //////////////
     Route::get('/students', [StudentController::class, 'list']);
@@ -64,5 +64,11 @@ Route::middleware('auth')->group(function ()  {
     Route::post('/events', [EventController::class, 'create']);
     Route::put('/events', [EventController::class, 'update']);
     Route::get('/events/{id}', [EventController::class, 'retrieve']);
+    
+    ////////////////// Fundraiser // //////////////
+    Route::get('/fundraisers', [FundraiserController::class, 'list']);
+    Route::post('/fundraisers', [FundraiserController::class, 'create']);
+    Route::put('/fundraisers', [FundraiserController::class, 'update']);
+    Route::get('/fundraisers/{id}', [FundraiserController::class, 'retrieve']);
     
 });

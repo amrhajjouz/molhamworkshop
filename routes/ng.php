@@ -31,10 +31,10 @@ return [
     'campaigns' => ['campaigns', 'campaigns/listCampaignsController', 'campaigns.list'],
  
     ////////////////////// SponsorShip Routes    ///////////////////
-    'sponsor_ships.add' => ['sponsor_ships/add', 'sponsor_ships/addSponsorShipsController', 'sponsor_ships.add'],
-    'sponsor_ships.overview' => ['sponsor_ships/:id', 'sponsor_ships/overviewSponsorShipsController', 'sponsor_ships.single.overview'],
-    'sponsor_ships.edit' => ['sponsor_ships/:id/edit', 'sponsor_ships/editSponsorShipsController', 'sponsor_ships.single.edit'],
-    'sponsor_ships' => ['sponsor_ships', 'sponsor_ships/listsSponsorShipsController', 'sponsor_ships.list'],
+    'sponsorships.add' => ['sponsorships/add', 'sponsorships/addSponsorShipsController', 'sponsorships.add'],
+    'sponsorships.overview' => ['sponsorships/:id', 'sponsorships/overviewSponsorShipsController', 'sponsorships.single.overview'],
+    'sponsorships.edit' => ['sponsorships/:id/edit', 'sponsorships/editSponsorShipsController', 'sponsorships.single.edit'],
+    'sponsorships' => ['sponsorships', 'sponsorships/listsSponsorShipsController', 'sponsorships.list'],
  
     ////////////////////// Students Routes    ///////////////////
     'students.add' => ['students/add', 'students/addStudentsController', 'students.add'],
@@ -47,6 +47,12 @@ return [
     'events.overview' => ['events/:id', 'events/overviewEventsController', 'events.single.overview'],
     'events.edit' => ['events/:id/edit', 'events/editEventsController', 'events.single.edit'],
     'events' => ['events', 'events/listEventsController', 'events.list'],
+  
+    /////////////////////////// Fundraisers Routes    ///////////////////
+    'fundraisers.add' => ['fundraisers/add', 'fundraisers/addFundraisersController', 'fundraisers.add'],
+    'fundraisers.overview' => ['fundraisers/:id', 'fundraisers/overviewFundraisersController', 'fundraisers.single.overview'],
+    'fundraisers.edit' => ['fundraisers/:id/edit', 'fundraisers/editFundraisersController', 'fundraisers.single.edit'],
+    'fundraisers' => ['fundraisers', 'fundraisers/listFundraisersController', 'fundraisers.list'],
 
    ];
 

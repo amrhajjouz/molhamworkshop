@@ -2,7 +2,7 @@
 
 async function editSponsorShipsControllerInit($http, $page, $apiRequest) {
     const object = await $apiRequest
-        .config("sponsor_ships/" + $page.routeParams.id)
+        .config("sponsorships/" + $page.routeParams.id)
         .getData();
     object.beneficiary_birthdate = new Date(object.beneficiary_birthdate);
 
@@ -22,7 +22,7 @@ function editSponsorShipsController($scope, $page, $apiRequest, $init) {
     $scope.updateSponsorShips = $apiRequest.config(
         {
             method: "PUT",
-            url: "sponsor_ships",
+            url: "sponsorships",
             data: $scope.object,
         },
         function (response, data) {}

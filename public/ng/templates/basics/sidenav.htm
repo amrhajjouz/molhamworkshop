@@ -67,18 +67,18 @@
     </li>
     
     <li class="nav-item">
-        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#sponsor_ships-navs" role="button" aria-expanded="false">
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#sponsorships-navs" role="button" aria-expanded="false">
             <i class="fe fe-dollar-sign"></i>الكفالات 
         </a>
-        <div class="collapse" id="sponsor_ships-navs">
+        <div class="collapse" id="sponsorships-navs">
             <ul class="nav nav-sm flex-column">
                 <li class="nav-item">
-                    <a href="{{ $r('sponsor_ships.add') }}" class="nav-link">
+                    <a href="{{ $r('sponsorships.add') }}" class="nav-link">
                         كفالة جديدة
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ $r('sponsor_ships') }}" class="nav-link">
+                    <a href="{{ $r('sponsorships') }}" class="nav-link">
                         قائمة الكفالات
                     </a>
                 </li>
@@ -88,7 +88,7 @@
   
     <li class="nav-item">
         <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#students-navs" role="button" aria-expanded="false">
-            <i class="fe fe-user"></i>الطلاب 
+            <i class="fe fe-book"></i>الطلاب 
         </a>
         <div class="collapse" id="students-navs">
             <ul class="nav nav-sm flex-column">
@@ -108,7 +108,7 @@
   
     <li class="nav-item">
         <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#events-navs" role="button" aria-expanded="false">
-            <i class="fe fe-user"></i>الأحداث 
+            <i class="fe fe-radio"></i>الأحداث 
         </a>
         <div class="collapse" id="events-navs">
             <ul class="nav nav-sm flex-column">
@@ -120,6 +120,26 @@
                 <li class="nav-item">
                     <a href="{{ $r('events') }}" class="nav-link">
                         قائمة الأحداث
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+   
+    <li class="nav-item">
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#fundraisers-navs" role="button" aria-expanded="false">
+            <i class="fe fe-shopping-bag"></i>حملات جمع التبرعات 
+        </a>
+        <div class="collapse" id="fundraisers-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('fundraisers.add') }}" class="nav-link">
+                       حملة جديد
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('fundraisers') }}" class="nav-link">
+                        قائمة حملات جمع التبرعات
                     </a>
                 </li>
             </ul>

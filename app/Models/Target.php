@@ -16,7 +16,7 @@ class Target extends BaseModel
      
 
 
-    //  $class = \\App\\Models\\ucfirst($this->model_type);
+    //  $class = \\App\\Models\\ucfirst($this->model_type); 
 
     //  return $class::find($this->instance_id);
 

@@ -14,11 +14,11 @@ class SponsorShip extends BaseTargetModel
      protected $casts = [
           'sponsored' => 'boolean',
      ];
+     protected $model_path = '\App\Models\SponsorShip';
 
 
      public function getBeneficiaryBirthdateAttribute($beneficiary_birthdate){
           return date('Y/m/d' , strtotime($beneficiary_birthdate));
-          // return "2018-07-22";
      }
      
 
