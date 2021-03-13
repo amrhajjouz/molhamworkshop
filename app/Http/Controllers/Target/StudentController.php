@@ -22,17 +22,15 @@ class StudentController extends BaseController {
     public function create ( CreateRequest $request) {
         try {
             $data = $request->validated();
-            
             $object = new $this->model();
             $object->name = $data['name'];
-            $object->target = $data['target'];
             $object->country_id = $data['country_id'];
             $object->semesters_count = $data['semesters_count'];
             $object->current_semester = $data['current_semester'];
             // $object->semesters_funded = $data['semesters_funded'];
             // $object->semesters_left = $data['semesters_left'];
             // $object->status = $data['status'];
-            $object->save();
+            $object->save($data['target']);
             
             
             return $this->_response($object);
@@ -52,14 +50,14 @@ class StudentController extends BaseController {
             $data = $request->validated();
             // dd($data);
              $object->name = $data['name'];
-             $object->target = $data['target'];
+            //  $object->target = $data['target'];
              $object->country_id = $data['country_id'];
              $object->semesters_count = $data['semesters_count'];
              $object->current_semester = $data['current_semester'];
 
-             $object->save();
+             $object->save($data['target']);
             
-            return $this->_response($object);
+            return $this->_response($object->transform());
 
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
@@ -77,7 +75,7 @@ class StudentController extends BaseController {
                 $result[] = $object->transform();
             }
             
-            return response()->json($result);
+            return $this->_response($result);
             
         } catch (\Exception $e) {
             

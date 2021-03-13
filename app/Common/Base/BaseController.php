@@ -14,12 +14,13 @@ class BaseController extends Controller
 
 
         protected function _exception($msg, $code = null){
-        throw new APIException($msg, $code);
+            throw new APIException($msg, $code);
         }
     protected function _response($data , $meta = null){
 
         
         if(!is_null($meta)){
+           
             return response()->json( [
                 'data' => $data ,
                 'meta' => $meta ,

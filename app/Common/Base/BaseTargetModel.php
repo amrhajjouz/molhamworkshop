@@ -51,9 +51,8 @@ abstract class BaseTargetModel extends Model {
     
     public function save(array $options = []){
         $newRecord = ! ( $this->exists );
-
-
         parent::save($options);
+        
         
         if($newRecord){
             
@@ -81,6 +80,7 @@ abstract class BaseTargetModel extends Model {
             //       $target->$item = $options[$item];
             //     }
             // }
+
            
             $target->fill($options);//
             switch (get_class($this)) {
@@ -89,6 +89,9 @@ abstract class BaseTargetModel extends Model {
                     break;
                 case "App\Models\Sponsorship":
                     $target = $this->beforeSaveSponsorship($target);
+                    break;
+                case "App\Models\Student":
+                    $target = $this->beforeSaveStudent($target);
                     break;
                 
                 default:
@@ -172,6 +175,14 @@ abstract class BaseTargetModel extends Model {
             //كفالة يتيم
             }
         }
+        return $target;
+    }
+  
+    private function beforeSaveStudent(Target $target){
+        //التعليم
+        $target->section_id = 5;
+        $target->beneficiaries_count = 1;
+
         return $target;
     }
     

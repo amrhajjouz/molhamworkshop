@@ -28,15 +28,24 @@ class Student extends BaseTargetModel
      }
 
      public function transform()
-     {
+     {    
+
           $obj = $this->toArray();
+          $target = $this->parent->toArray();
+
+          unset($obj['parent']);
+          
           return (object)array_merge($obj, [
                'country' => [
                     'name' => $this->country->name
                ],
                'target' => [
-                    'required' => $this->parent->required
-               ],
+                    'required' => $target['required'],
+                    'visible' => $target['visible'],
+                    'documented' => $target['documented'],
+                    'archived' => $target['archived'],
+
+               ]
           ]);
      }
 
@@ -69,13 +78,6 @@ class Student extends BaseTargetModel
      public function save($options = [])
      {
           $newRecord = !($this->exists);
-          if (isset($this->target) && is_array($this->target)) {
-               $options = $this->target;
-          }
-
-          if ($this->target) {
-               unset($this->target);
-          }
           parent::save($options);
           //create
           if ($newRecord) {
@@ -90,7 +92,6 @@ class Student extends BaseTargetModel
           $this->semesters_left = $this->semesters_count - $this->current_semester;
           $this->semesters_funded = $this->semesters_count - $this->current_semester;
 
-          $this->status = self::PAUSED;
 
 
           return parent::save($options);

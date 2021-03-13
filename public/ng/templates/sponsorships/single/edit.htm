@@ -86,13 +86,24 @@
 
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="name">عدد المستفيدين</label>
+            <label for="beneficiaries_count">عدد المستفيدين</label>
             <input type="number" class="form-control"
                 ng-class="(updateSponsorShips.errors.beneficiaries_count != null) ? 'is-invalid' : ''" id="beneficiaries_count"
                 ng-model="object.target['beneficiaries_count']" ng-change="updateSponsorShips.errors.beneficiaries_count = null"
                 placeholder="عدد المستفيدين.." required>
             <div ng-show="updateSponsorShips.errors.beneficiaries_count != null" class="invalid-feedback">
                 {{ updateSponsorShips.errors.beneficiaries_count[0] }}</div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="required">المبلغ المطلوب شهريا</label>
+            <input type="number" class="form-control"
+                ng-class="(updateSponsorShips.errors.required != null) ? 'is-invalid' : ''" id="required"
+                ng-model="object.target['required']" ng-change="updateSponsorShips.errors.required = null"
+                placeholder="عدد المستفيدين.." required>
+            <div ng-show="updateSponsorShips.errors.required != null" class="invalid-feedback">
+                {{ updateSponsorShips.errors.required[0] }}</div>
         </div>
     </div>
 

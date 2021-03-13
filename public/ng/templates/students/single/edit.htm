@@ -76,6 +76,45 @@
         </div>
     </div>
 
+<div class="col-12 col-md-6">
+    <div class="form-group">
+        <label for="archived">مؤرشفة</label>
+        <select class="form-control" ng-model="object.target.archived"
+            ng-class="(updateStudent.errors.archived != null) ? 'is-invalid' : ''" id="archived"
+            ng-change="updateStudent.errors.target.archived = null" required>
+            <option ng-value="true">نعم</option>
+            <option ng-value="false">لا</option>
+        </select>
+        <div ng-show="updateStudent.errors.archived != null" class="invalid-feedback">
+            {{ updateStudent.errors.archived[0] }}</div>
+    </div>
+</div>
+<div class="col-12 col-md-6">
+    <div class="form-group">
+        <label for="documented">موثقة</label>
+        <select class="form-control" ng-model="object.target.documented"
+            ng-class="(updateStudent.errors.documented != null) ? 'is-invalid' : ''" id="documented"
+            ng-change="updateStudent.errors.target.documented = null" required>
+            <option ng-value="true">نعم</option>
+            <option ng-value="false">لا</option>
+        </select>
+        <div ng-show="updateStudent.errors.documented != null" class="invalid-feedback">
+            {{ updateStudent.errors.documented[0] }}</div>
+    </div>
+</div>
+<div class="col-12 col-md-6">
+    <div class="form-group">
+        <label for="visible">ظاهرة</label>
+        <select class="form-control" ng-model="object.target.visible"
+            ng-class="(updateStudent.errors.visible != null) ? 'is-invalid' : ''" id="visible"
+            ng-change="updateStudent.errors.target.visible = null" required>
+            <option ng-value="true">نعم</option>
+            <option ng-value="false">لا</option>
+        </select>
+        <div ng-show="updateStudent.errors.visible != null" class="invalid-feedback">
+            {{ updateStudent.errors.visible[0] }}</div>
+    </div>
+</div>
 
 
     <div class="col-12">

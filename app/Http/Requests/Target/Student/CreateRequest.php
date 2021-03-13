@@ -33,7 +33,7 @@ class CreateRequest extends BaseRequest
             // 'semesters_funded' => ['required' ,'numeric'],
             // 'semesters_left' => ['required' ,'numeric'],
             'current_semester' => ['required' ,'numeric'],
-            'target' => ['nullable'],
+            'target' => ['required' , 'array'],
         ];
     }
 

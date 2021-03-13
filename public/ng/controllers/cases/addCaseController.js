@@ -16,8 +16,8 @@ async function addCaseControllerInit($apiRequest) {
     return init;
 }
 
-
 function addCaseController($scope, $location, $apiRequest, $page, $init) {
+    
     $scope.statuses = [
         { id: "funded", name: "تم كفالتها" },
         { id: "unfunded", name: "غير مكفولة" },
@@ -25,6 +25,7 @@ function addCaseController($scope, $location, $apiRequest, $page, $init) {
         { id: "spent", name: "تم صرفها" },
     ];
 
+   
     $scope.object = {
         target: {
             required: 0,
