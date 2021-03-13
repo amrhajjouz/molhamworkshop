@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\ProfileController;
-use App\Http\Controllers\{UserController, CountryController, CategoryController};
+use App\Http\Controllers\{UserController, CountryController, CategoryController , SectionController};
 use App\Http\Controllers\Target\{
     CaseController,
     CampaignController,
@@ -41,6 +41,9 @@ Route::middleware('auth')->group(function () {
 
     ////////////////// COUNTRY //////////////
     Route::get('/countries', [CountryController::class, 'list']);
+   
+    ////////////////// COUNTRY //////////////
+    Route::get('/sections', [SectionController::class, 'list']);
    
     ////////////////// CATEGORY //////////////
     Route::get('/categories', [CategoryController::class, 'list']);

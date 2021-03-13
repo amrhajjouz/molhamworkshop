@@ -1,17 +1,20 @@
-// async function addCampaignControllerInit($apiRequest) {
+async function addCampaignControllerInit($apiRequest) {
     
-//     let countries = await $apiRequest.config("countries").getData();
+    let sections = await $apiRequest.config("sections").getData();
+    sections.push({id:null , name:"اختر قسم"})
 
-//     let init = {
-//         countries: countries,
-//     };
+    let init = {
+        sections: sections,
+    };
 
-//     return init;
-// }
+
+    return init;
+}
 
 
 function addCampaignController($scope, $location, $apiRequest, $page, $init) {
     $scope.object = {};
+    $scope.sections = $init.sections;
 
     $scope.createCampaign = $apiRequest.config(
         {

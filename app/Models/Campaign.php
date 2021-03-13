@@ -1,24 +1,26 @@
 <?php
 
 namespace App\Models;
-use App\Common\Traits\HasTarget;
 
 use App\Common\Base\BaseTargetModel;
 
 class Campaign extends BaseTargetModel
 {
-     use HasTarget;
+     
      protected $table = 'campaigns';
      protected $guarded = [];
      protected $model_path = '\App\Models\Campaign';
+     protected $casts = [
+          'funded' => 'boolean'
+     ];
 
+     public function save($options =[]){
+          return parent::save($options);
+     }
+     
+     
 
      
 
-     public function getFundedAttribute($data)
-     {
-          if($data) return true;
-          return false;
-     }    
     
 }    
