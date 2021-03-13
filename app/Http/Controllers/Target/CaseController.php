@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Target;
 
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Cases\{CreateRequest , UpdateRequest};
+use App\Http\Requests\Target\Cases\{CreateRequest , UpdateRequest};
 use App\Facades\Helper;
 
 use App\Models\{User , Cases};
 
 class CaseController extends BaseController {
-    
+     
     use HasRetrieve;
 
     public function __construct () {
@@ -23,15 +23,17 @@ class CaseController extends BaseController {
         try {
             
 
-            $data = $request->all();
-
+            $data = $request->validated();
+            
             $object = new $this->model();
             $object->beneficiary_name = $data['beneficiary_name'];
             $object->serial_number =Helper::getCaseSerialNumber();
             $object->country_id = $data['country_id'];
-            $object->funded = 0;
-            $object->cancelled = 0;
-            $object->save();
+            $object->status = $data['status'];
+            // $object->funded = 0;
+            // $object->cancelled = 0;
+
+            $object->save($request->target);
 
             
             return $this->_response($object);
@@ -45,12 +47,15 @@ class CaseController extends BaseController {
         
         try {
             
-            $object = $this->model::findOrFail($request->id);
-            
             $data = $request->validated();
 
-            unset($data['id']);
-            $object->update($data);
+            $object = $this->model::findOrFail($request->id);
+            $object->beneficiary_name = $data['beneficiary_name'];
+            $object->serial_number =Helper::getCaseSerialNumber();
+            $object->country_id = $data['country_id'];
+            $object->status = $data['status'];
+            
+            $object->save($data['target']);
             
             return $this->_response($object);
 

@@ -1,10 +1,18 @@
 <?php
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Auth\ProfileController;
-use App\Http\Controllers\{UserController , CaseController , CountryController , CampaignController ,
-SponsorShipController , StudentController , EventController , FundraiserController};
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\ProfileController;
+use App\Http\Controllers\{UserController, CountryController, CategoryController};
+use App\Http\Controllers\Target\{
+    CaseController,
+    CampaignController,
+    SponsorshipController,
+    StudentController,
+    EventController,
+    FundraiserController
+};
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,58 +25,60 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth')->group(function ()  {
-    
+Route::middleware('auth')->group(function () {
+
     Route::get('/auth', function (Request $request) {
         return $request->user();
     });
-    
+
     Route::post('/profile', [ProfileController::class, 'update_info']);
     Route::post('/profile/password', [ProfileController::class, 'change_password']);
-    
+
     Route::get('/users', [UserController::class, 'list']);
     Route::post('/users', [UserController::class, 'create']);
     Route::put('/users', [UserController::class, 'update']);
     Route::get('/users/{id}', [UserController::class, 'retrieve']);
-    
+
     ////////////////// COUNTRY //////////////
     Route::get('/countries', [CountryController::class, 'list']);
+   
+    ////////////////// CATEGORY //////////////
+    Route::get('/categories', [CategoryController::class, 'list']);
 
     //////////////////CASES //////////////
     Route::get('/cases', [CaseController::class, 'list']);
     Route::post('/cases', [CaseController::class, 'create']);
     Route::put('/cases', [CaseController::class, 'update']);
     Route::get('/cases/{id}', [CaseController::class, 'retrieve']);
-   
-   
+
+
     //////////////////  CAMPAIGNS //////////////
     Route::get('/campaigns', [CampaignController::class, 'list']);
     Route::post('/campaigns', [CampaignController::class, 'create']);
     Route::put('/campaigns', [CampaignController::class, 'update']);
     Route::get('/campaigns/{id}', [CampaignController::class, 'retrieve']);
-    
+
     //////////////////  SponsorShips //////////////
-    Route::get('/sponsorships', [SponsorShipController::class, 'list']);
-    Route::post('/sponsorships', [SponsorShipController::class, 'create']);
-    Route::put('/sponsorships', [SponsorShipController::class, 'update']);
-    Route::get('/sponsorships/{id}', [SponsorShipController::class, 'retrieve']);
-   
+    Route::get('/sponsorships', [SponsorshipController::class, 'list']);
+    Route::post('/sponsorships', [SponsorshipController::class, 'create']);
+    Route::put('/sponsorships', [SponsorshipController::class, 'update']);
+    Route::get('/sponsorships/{id}', [SponsorshipController::class, 'retrieve']);
+
     //////////////////  Students //////////////
     Route::get('/students', [StudentController::class, 'list']);
     Route::post('/students', [StudentController::class, 'create']);
     Route::put('/students', [StudentController::class, 'update']);
     Route::get('/students/{id}', [StudentController::class, 'retrieve']);
-    
+
     //////////////////  Events //////////////
     Route::get('/events', [EventController::class, 'list']);
     Route::post('/events', [EventController::class, 'create']);
     Route::put('/events', [EventController::class, 'update']);
     Route::get('/events/{id}', [EventController::class, 'retrieve']);
-    
+
     ////////////////// Fundraiser // //////////////
     Route::get('/fundraisers', [FundraiserController::class, 'list']);
     Route::post('/fundraisers', [FundraiserController::class, 'create']);
     Route::put('/fundraisers', [FundraiserController::class, 'update']);
     Route::get('/fundraisers/{id}', [FundraiserController::class, 'retrieve']);
-    
 });

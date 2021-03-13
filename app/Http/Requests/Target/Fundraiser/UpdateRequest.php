@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Fundraisers;
+namespace App\Http\Requests\Target\Fundraiser;
 
-use Illuminate\Validation\Rule;
 use App\Common\Base\BaseRequest;
 
-class CreateRequest extends BaseRequest
+class UpdateRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,15 +23,12 @@ class CreateRequest extends BaseRequest
      */
     public function rules()
     {
-        
         return [
+            'id' => ['required', 'exists:events'],
             'public_visibility' => ['required' , 'boolean'],
             'verified' => ['required' , 'boolean'],
             'target' => ['required' , 'array'],
         ];
     }
-
-
-    
     
 }

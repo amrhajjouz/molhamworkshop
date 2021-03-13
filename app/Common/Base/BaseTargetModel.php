@@ -6,11 +6,25 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth; 
 use App\Models\{Target};
 use App\Facades\Helper;
+use PDO;
 
 abstract class BaseTargetModel extends Model {
     
     protected $model_path;
     
+    const targetAttributes = [
+        'required' , 
+        'received' ,
+        'left' ,
+        'left_to_complete' ,
+        'spent' ,
+        'beneficiaries_count' ,
+        'archived' ,
+        'documented' ,
+        'visible' ,
+        'posted' ,
+    ];
+
     // abstract function target();
     
     public static function Table(){
@@ -36,11 +50,9 @@ abstract class BaseTargetModel extends Model {
     
     
     public function save(array $options = []){
+
         $newRecord = ! ( $this->exists );
 
-        if($this->target){
-            unset($this->target);
-        }
 
         parent::save($options);
         
@@ -53,27 +65,40 @@ abstract class BaseTargetModel extends Model {
                 $reference = Helper::generateRandomString(15);
             } while (Target::where('reference' , $reference)->exists());
             
-
-            
             
            $target = new \App\Models\Target();
-            
            $target->purpose_id = $this->id;
-
+           
            if(isset($this->model_path)){
                $target->purpose_type = $this->model_path;
-           }else{
-               $target->purpose_type = self::Table();
-           }
-           $target->reference = $reference;
-         
-           if(isset($options["required"])){
-               $target->required = $options["required"];
-           }
-           
-           $target->save();
+            }else{
+                $target->purpose_type = self::Table();
+            }
+            $target->reference = $reference;
             
-           
+            
+            // foreach(self::targetAttributes as $item){
+            //   if(in_array($item , $options )){
+            //       $target->$item = $options[$item];
+            //     }
+            // }
+            $target->fill($options);//
+            switch (get_class($this)) {
+                case "App\Models\Cases":
+                    $target = $this->beforeSaveCase($target);
+                    break;
+                
+                default:
+                    # code...
+                    break; 
+            }
+
+            // dd($target);
+                        // dd(self::targetAttributes , $options ,$options[$item] , $item , $target);;
+            $target->save();
+            
+            // dd($target);
+            
             $this->target_id = $target->id;
             
             return parent::save();
@@ -82,9 +107,16 @@ abstract class BaseTargetModel extends Model {
 
             $target = $this->parent;
             
-            if(isset($options["required"])){
-                $target->required = $options["required"];
-            }
+             $target->fill($options);//
+             switch (get_class($this)) {
+             case "App\Models\Cases":
+             $target = $this->beforeSaveCase($target);
+             break;
+
+             default:
+             # code...
+             break;
+             }
             
             $target->save();
         }
@@ -95,6 +127,7 @@ abstract class BaseTargetModel extends Model {
       {
             return $this->belongsTo('App\Models\Target', 'target_id', 'id');
       }
+    
 
     
     public function delete(array $options = []){
@@ -105,5 +138,21 @@ abstract class BaseTargetModel extends Model {
         
     }
     
+    //return Target
+    private function beforeSaveCase(Target $target){
+
+        if(isset($target->category_id)){
+            if($target->category_id== 4){
+                // طبية 
+                $target->section_id = 1 ;
+                
+            }elseif($target->category_id== 5){
+                $target->section_id = 2 ;
+                //انسانية
+            }
+        }
+
+        return $target;
+    }
     
 }

@@ -1,5 +1,6 @@
 <page-header title="حالة جديدة" pretitle="الحالات"></page-header>
 
+{{object}}
 <form class="row" name="createCaseForm" request="createCase">
     <div class="col-12 col-md-6">
         <div class="form-group">
@@ -12,10 +13,22 @@
                 {{ createCase.errors.beneficiary_name[0] }}</div>
         </div>
     </div>
-
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="name">الدولة</label>
+            <label for="name">عدد المستفيدين</label>
+            <input type="number" class="form-control"
+                ng-class="(createCase.errors.beneficiaries_count != null) ? 'is-invalid' : ''" id="beneficiaries_count"
+                ng-model="object.target['beneficiaries_count']" ng-change="createCase.errors.beneficiaries_count = null"
+                required min="0"
+                >
+            <div ng-show="createCase.errors.beneficiaries_count != null" class="invalid-feedback">
+                {{ createCase.errors.beneficiaries_count[0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">  
+            <label for="country_id">الدولة</label>
             <select class="form-control" ng-model="object.country_id"
                 ng-class="(createCase.errors.country_id != null) ? 'is-invalid' : ''" id="country_id"
                 ng-change="createCase.errors.country_id = null"
@@ -27,7 +40,63 @@
                 {{ createCase.errors.country_id[0] }}</div>
         </div>
     </div>
+   
+    <div class="col-12 col-md-6">
+        <div class="form-group">  
+            <label for="status">الحالة</label>
+            <select class="form-control" ng-model="object.status"
+                ng-class="(createCase.errors.status != null) ? 'is-invalid' : ''" id="status"
+                ng-change="createCase.errors.status = null"
+                ng-options="status.id as status.name for status in statuses"
+                required
+                >
+            </select>
+            <div ng-show="createCase.errors.status != null" class="invalid-feedback">
+                {{ createCase.errors.status[0] }}</div>
+        </div>
+    </div>
+    
+    <div class="col-12 col-md-6">
+        <div class="form-group">  
+            <label for="visible">ظاهرة</label>
+            <select class="form-control" ng-model="object.target.visible"
+                ng-class="(createCase.errors.visible != null) ? 'is-invalid' : ''" id="visible"
+                ng-change="createCase.errors.target.visible = null"
+                required
+                >
+                <option  ng-value="true">نعم</option>
+                <option  ng-value="false">لا</option>
+            </select>
+            <div ng-show="createCase.errors.country_id != null" class="invalid-feedback">
+                {{ createCase.errors.country_id[0] }}</div>
+        </div>
+    </div>
 
+     <div class="col-12 col-md-6">
+         <div class="form-group">
+             <label for="name">المبلغ المطلوب</label>
+             <input type="number" class="form-control"
+                 ng-class="(createCase.errors.required != null) ? 'is-invalid' : ''" id="required"
+                 ng-model="object.target['required']" ng-change="createCase.errors.required = null"
+                 placeholder="الاسم.." required
+                 min="0">
+             <div ng-show="createCase.errors.required != null" class="invalid-feedback">
+                 {{ createCase.errors.required[0] }}</div>
+         </div>
+     </div>
+     <div class="col-12 col-md-6">
+         <div class="form-group">
+             <label for="category_id">الصنف</label>
+             <select class="form-control" ng-model="object.target.category_id"
+                 ng-class="(createCase.errors.category_id != null) ? 'is-invalid' : ''" id="category_id"
+                 ng-change="createCase.errors.category_id = null"
+                 ng-options="category.id as category.name for category in categories" placeholder="يرجى اختيار صنف.."
+                 >
+             </select>
+             <div ng-show="createCase.errors.category_id != null" class="invalid-feedback">
+                 {{ createCase.errors.category_id[0] }}</div>
+         </div>
+     </div>
 
 
     <div class="col-12">

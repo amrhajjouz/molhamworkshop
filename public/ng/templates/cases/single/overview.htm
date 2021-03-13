@@ -29,21 +29,61 @@
                 <hr />
                 <div class="row align-items-center">
                     <div class="col">
-                        <h4 class="mb-0 text-muted">تم تأمينها</h4>
+                        <h4 class="mb-0 text-muted">المبلغ المطلوب</h4>
                     </div>
                     <div class="col-auto">
-                        <h4 ng-if="object.funded">نعم</h4>
-                        <h4 ng-if="!object.funded">لا</h4>
+                        <h4>{{ object.target.required }}</h4>
                     </div>
                 </div>
                 <hr />
                 <div class="row align-items-center">
                     <div class="col">
-                        <h4 class="mb-0 text-muted">تم الغاؤها</h4>
+                        <h4 class="mb-0 text-muted">عدد المستفيدين</h4>
                     </div>
                     <div class="col-auto">
-                        <h4 ng-if="object.cancelled">نعم</h4>
-                        <h4 ng-if="!object.cancelled">لا</h4>
+                        <h4>{{ object.target.beneficiaries_count }}</h4>
+                    </div>
+                </div>
+                <hr />
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">تمت أرشفتها </h4>
+                    </div>
+                    <div class="col-auto">
+                         <h4 ng-if="object.target.archived">نعم</h4>
+                         <h4 ng-if="!object.target.archived">لا</h4>
+                    </div>
+                </div>
+                <hr />
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">تم توثيقها </h4>
+                    </div>
+                    <div class="col-auto">
+                          <h4 ng-if="object.target.documented">نعم</h4>
+                          <h4 ng-if="!object.target.documented">لا</h4>
+                    </div>
+                </div>
+                <hr />
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">ظاهرة </h4>
+                    </div>
+                    <div class="col-auto">
+                          <h4 ng-if="object.target.visible">نعم</h4>
+                          <h4 ng-if="!object.target.visible">لا</h4>
+                    </div>
+                </div>
+                <hr />
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">الحالة</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4 ng-if="object.status == 'spent'">spent</h4>
+                        <h4 ng-if="object.status == 'funded'">مؤمنة</h4>
+                        <h4 ng-if="object.status == 'unfunded'">غير مؤمنة</h4>
+                        <h4 ng-if="object.status == 'canceled'">ملغاة</h4>
                     </div>
                 </div>
             </div>

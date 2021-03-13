@@ -43,8 +43,7 @@
                     <th class="text-center">#</th>
                     <th class="text-center">الاسم</th>
                     <th class="text-center">الدولة</th>
-                    <th class="text-center">تم تأمينها</th>
-                    <th class="text-center">تم إلغاؤها</th>
+                    <th class="text-center">الحالة</th>
                     <th class="text-center">خيارات</th>
                 </tr>
             </thead>
@@ -62,18 +61,11 @@
                     <td class="align-middle text-center">{{ item.beneficiary_name }}</td>
                     <td class="align-middle text-center">{{ item.country.name }}</td>
                     <td class="align-middle text-center">
-                        <span class="badge badge-soft-success" ng-if="item.funded">
-                            <i class="fe fe-check"></i>
-
+                        <span class="badge badge-soft-info" ng-if="item.status =='unfunded'"><i class="fe fe-x"></i>غير مكفولة</span>
+                        <span class="badge badge-soft-success" ng-if="item.status =='funded'"><i class="fe fe-check"></i>تم كفالتها</span>
+                        <span class="badge badge-soft-danger" ng-if="item.status =='canceled'"><i class="fe fe-x"></i>ملغاة</span>
+                        <span class="badge badge-soft-secondary" ng-if="item.status =='spent'"><i class="fe fe-check"></i>تم صرفها</span>
                         </span>
-                        <span class="badge badge-soft-danger" ng-if="!item.funded"> <i class="fe fe-x"></i></span>
-                    </td>
-                    <td class="align-middle text-center">
-                        <span class="badge badge-soft-success" ng-if="item.cancelled">
-                            <i class="fe fe-check"></i>
-
-                        </span>
-                        <span class="badge badge-soft-danger" ng-if="!item.cancelled"><i class="fe fe-x"></i></span>
                     </td>
 
                     <td class="align-middle text-center h2">

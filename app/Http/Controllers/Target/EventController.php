@@ -1,33 +1,39 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Target;
 
 use Illuminate\Http\Request;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
-use App\Http\Requests\Fundraisers\{CreateRequest , UpdateRequest};
-use App\Models\{Fundraiser};
+use App\Http\Requests\Target\Event\{CreateRequest , UpdateRequest};
+use App\Models\{Event};
 
-class FundraiserController extends BaseController {
+class EventController extends BaseController {
     
     use HasRetrieve;
 
     public function __construct () {
-
         $this->middleware('auth');
-        $this->model = \App\Models\Fundraiser::class;
+        $this->model = \App\Models\Event::class;
     }
     
     public function create ( CreateRequest $request) {
         try {
             $data = $request->validated();
-
             $object = new $this->model();
 
+            $object->date = date('Y/m/d' , strtotime($data['date']));
             $object->verified = $data['verified'];
             $object->public_visibility = $data['public_visibility'];
+            $object->implemented = $data['implemented'];
+            if($data['implementation_date']){
+                $object->implementation_date = date('Y/m/d' , strtotime($data['implementation_date']));
+            }
+            $object->youtube_video_url = $data['youtube_video_url'];
 
+            // $object->target = $data['target'];
             $object->save($data['target']);
+            // $object->save($data['target']);
             
             return $this->_response($object->transform());
             
@@ -44,9 +50,16 @@ class FundraiserController extends BaseController {
             $object = $this->model::findOrFail($request->id);
             
             $data = $request->validated();
+            $object->date = date('Y/m/d' , strtotime($data['date']));
             $object->verified = $data['verified'];
             $object->public_visibility = $data['public_visibility'];
-            
+            $object->implemented = $data['implemented'];
+            if($data['implementation_date']){
+                $object->implementation_date = date('Y/m/d' , strtotime($data['implementation_date']));
+            }
+            $object->youtube_video_url = $data['youtube_video_url'];
+
+            // $object->target = $data['target'];
             $object->save($data['target']);
             
             return $this->_response($object->transform());
@@ -59,12 +72,18 @@ class FundraiserController extends BaseController {
     public function list (Request $request) {
         
         try {
+            $result =[];
             $data = $this->model::all();
-            
-            return $this->_response($data);
 
+            // foreach($data as $object){
+            //     $result[] = $object->transform();
+            // }
+            
+            return response()->json($data);
+            
         } catch (\Exception $e) {
-            throw $this->_exception($e->getMessage());
+            
+            return ['error' => $e->getMessage()];
         }
     }
     

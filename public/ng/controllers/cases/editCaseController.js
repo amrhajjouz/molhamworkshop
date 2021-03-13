@@ -18,6 +18,13 @@ function editCaseController($scope, $page, $apiRequest, $init) {
     $scope.object = $init.object;
     $scope.countries = $init.countries;
 
+    $scope.statuses = [
+        { id: "funded", name: "تم كفالتها" },
+        { id: "unfunded", name: "غير مكفولة" },
+        { id: "canceled", name: "ملغاة" },
+        { id: "spent", name: "تم صرفها" },
+    ];
+
     $scope.updateCase = $apiRequest.config(
         {
             method: "PUT",

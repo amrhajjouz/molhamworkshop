@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Target\Controllers;
 
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\Campaigns\{CreateRequest , UpdateRequest};
+use App\Http\Requests\Target\Campaigns\{CreateRequest , UpdateRequest};
 use App\Facades\Helper;
 
 use App\Models\{User , Campaign};

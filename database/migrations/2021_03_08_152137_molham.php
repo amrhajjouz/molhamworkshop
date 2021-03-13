@@ -58,7 +58,7 @@ class Molham extends Migration
             $table->integer('beneficiaries_count')->index()->default(0);
             $table->boolean('archived')->index()->default(0);
             $table->boolean('documented')->index()->default(0);
-            $table->boolean('hidden')->index()->default(0);
+            $table->boolean('visible')->index()->default(1);
             $table->boolean('posted')->index()->default(0);
             $table->timestamps();
         });
@@ -78,12 +78,14 @@ class Molham extends Migration
             $table->bigInteger('country_id')->index();
             $table->string('beneficiary_name')->index();
             $table->integer('serial_number')->index()->default(0);
-            $table->boolean('funded')->index()->default(0);
-            $table->boolean('cancelled')->index()->default(0);
+            // $table->boolean('funded')->index()->default(0);
+            // $table->boolean('cancelled')->index()->default(0);
+            $table->enum('status' , ['funded' , 'unfunded' , 'canceled','spent'])->index()->default('unfunded');
+
             $table->timestamps();
         });
        
-        Schema::create('sponsor_ships', function (Blueprint $table) {
+        Schema::create('sponsorships', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('target_id')->index()->nullable();
             $table->bigInteger('country_id')->index();

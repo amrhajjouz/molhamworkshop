@@ -3,7 +3,7 @@
 
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="date">تاريخ الحدث</label>
+            <label for="date">تاريخ المناسبة</label>
             <input type="date" class="form-control" ng-class="(updateEvent.errors.date != null) ? 'is-invalid' : ''"
                 id="date" ng-model="object.date" ng-change="updateEvent.errors.date = null"
                 required />
@@ -46,7 +46,7 @@
 
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="implementation_date">تاريخ تنفيذ الحدث</label>
+            <label for="implementation_date">تاريخ تنفيذ المناسبة</label>
             <input type="date" class="form-control" ng-class="(updateEvent.errors.implementation_date != null) ? 'is-invalid' : ''"
                 id="implementation_date" ng-model="object.implementation_date"
                 ng-change="updateEvent.errors.implementation_date = null"

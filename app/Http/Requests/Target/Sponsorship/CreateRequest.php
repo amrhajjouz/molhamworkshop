@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Cases;
+namespace App\Http\Requests\Target\Sponsorship;
 
 use Illuminate\Validation\Rule;
 use App\Common\Base\BaseRequest;
@@ -24,9 +24,12 @@ class CreateRequest extends BaseRequest
      */
     public function rules()
     {
+        
         return [
             'beneficiary_name' => ['required' ,'string', 'between:3,100'],
+            'beneficiary_birthdate' => ['required' ,'date' ,"before:tomorrow"],
             'country_id' => ['required' ,'numeric'],
+            'sponsored' => ['nullable' ,'boolean'],
         ];
     }
     

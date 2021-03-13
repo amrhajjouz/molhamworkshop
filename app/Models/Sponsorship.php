@@ -6,15 +6,15 @@ use App\Models\Country;
 
 use App\Common\Base\BaseTargetModel;
 
-class SponsorShip extends BaseTargetModel
+class Sponsorship extends BaseTargetModel
 {
-     protected $table = 'sponsor_ships';
+     protected $table = 'sponsorships';
      protected $guarded = [];
 
      protected $casts = [
           'sponsored' => 'boolean',
      ];
-     protected $model_path = '\App\Models\SponsorShip';
+     protected $model_path = '\App\Models\Sponsorship';
 
 
      public function getBeneficiaryBirthdateAttribute($beneficiary_birthdate){

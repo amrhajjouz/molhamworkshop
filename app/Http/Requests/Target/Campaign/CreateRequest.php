@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Requests\Events;
+namespace App\Http\Requests\Target\Campaigns;
 
 use Illuminate\Validation\Rule;
 use App\Common\Base\BaseRequest;
-use Illuminate\Validation\Rules\RequiredIf;
 
 class CreateRequest extends BaseRequest
 {
@@ -27,17 +26,8 @@ class CreateRequest extends BaseRequest
     {
         
         return [
-            'date' => ['required'],
-            'public_visibility' => ['required' , 'boolean'],
-            'verified' => ['nullable'],
-            'implemented' => ['nullable' ,'boolean'],
-            'implementation_date' => [new RequiredIf($this->implemented ==true)],
-            'youtube_video_url' => ['nullable' ,'string'],
-            'target' => ['required' , 'array'],
+            'name' => ['required' ,'string', 'between:3,100'],
         ];
     }
-
-
-    
     
 }

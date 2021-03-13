@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Students;
+namespace App\Http\Requests\Target\Cases;
 
 use Illuminate\Validation\Rule;
 use App\Common\Base\BaseRequest;
@@ -24,20 +24,12 @@ class CreateRequest extends BaseRequest
      */
     public function rules()
     {
-        
         return [
-            'name' => ['required' ,'string', 'between:3,100'],
+            'beneficiary_name' => ['required' ,'string', 'between:3,100'],
             'country_id' => ['required' ,'numeric'],
-            'status' => ['nullable' ,'string'],
-            'semesters_count' => ['required' ,'numeric'],
-            // 'semesters_funded' => ['required' ,'numeric'],
-            // 'semesters_left' => ['required' ,'numeric'],
-            'current_semester' => ['required' ,'numeric'],
-            'target' => ['nullable'],
+            'target' => ['required' ,'array'],
+            'status' => ['required'],
         ];
     }
-
-
-    
     
 }

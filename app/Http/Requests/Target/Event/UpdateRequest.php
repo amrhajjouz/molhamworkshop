@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Events;
+namespace App\Http\Requests\Target\Event;
 
 use App\Common\Base\BaseRequest;
 use Illuminate\Validation\Rule;

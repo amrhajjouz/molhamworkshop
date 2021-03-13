@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Target;
 
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Students\{CreateRequest , UpdateRequest};
+use App\Http\Requests\Target\Student\{CreateRequest , UpdateRequest};
 use App\Facades\Helper;
 
 use App\Models\{User , Student};

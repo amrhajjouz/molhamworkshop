@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Students;
+namespace App\Http\Requests\Target\Sponsorship;
 
 use App\Common\Base\BaseRequest;
 use Illuminate\Validation\Rule;
@@ -24,18 +24,15 @@ class UpdateRequest extends BaseRequest
      */
     public function rules()
     {
-        
         return [
-            'id' => ['required', 'exists:students'],
-            'name' => ['required' ,'string', 'between:3,100'],
+            'id' => ['required', 'exists:sponsor_ships'],
+            'beneficiary_name' => ['required' ,'string', 'between:3,100'],
+            'beneficiary_birthdate' => ['required' ,'string', 'between:3,100'],
             'country_id' => ['required' ,'numeric'],
-            'status' => ['nullable' ,'string'],
-            'semesters_count' => ['required' ,'numeric'],
-            // 'semesters_funded' => ['required' ,'numeric'],
-            // 'semesters_left' => ['required' ,'numeric'],
-            'current_semester' => ['required' ,'numeric'],
-            'target' => ['nullable'],
+            'sponsored' => ['required' ,'boolean'],
         ];
     }
+
+
     
 }

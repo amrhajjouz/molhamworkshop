@@ -1,9 +1,16 @@
 async function addCaseControllerInit($apiRequest) {
     
-    let countries =await  $apiRequest.config("countries").getData();
+    let countries = await $apiRequest.config("countries").getData();
+    let categories = await $apiRequest.config("categories?created_for=Cases").getData();
+
+    categories.push({
+        id:null , name:"غير مصنفة"
+    })
+    countries.push({ id: null, name: "يرجى اختيار دولة.." });
 
     let init = {
         countries: countries,
+        categories: categories,
     };
 
     return init;
@@ -11,8 +18,27 @@ async function addCaseControllerInit($apiRequest) {
 
 
 function addCaseController($scope, $location, $apiRequest, $page, $init) {
-    $scope.object = {};
+    $scope.statuses = [
+        { id: "funded", name: "تم كفالتها" },
+        { id: "unfunded", name: "غير مكفولة" },
+        { id: "canceled", name: "ملغاة" },
+        { id: "spent", name: "تم صرفها" },
+    ];
+
+    $scope.object = {
+        target: {
+            required: 0,
+            visible: true,
+            documented: false,
+            archived: false,
+            beneficiaries_count: 0,
+            category_id: null,
+        },
+        status:'unfunded'
+    };
+
     $scope.countries = $init.countries;
+    $scope.categories = $init.categories;
 
     $scope.createCase = $apiRequest.config(
         {

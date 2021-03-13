@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Target;
 
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\SponsorShip\{CreateRequest , UpdateRequest};
+use App\Http\Requests\Target\Sponsorship\{CreateRequest , UpdateRequest};
 use App\Facades\Helper;
 
-use App\Models\{User  , SponsorShip};
+use App\Models\{User , Sponsorship};
 
 class SponsorShipController extends BaseController {
     
@@ -16,7 +16,7 @@ class SponsorShipController extends BaseController {
 
     public function __construct () {
         $this->middleware('auth');
-        $this->model = \App\Models\SponsorShip::class;
+        $this->model = \App\Models\Sponsorship::class;
     }
     
     public function create ( CreateRequest $request) {

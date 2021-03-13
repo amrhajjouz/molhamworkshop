@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Requests\Cases;
+namespace App\Http\Requests\Target\Cases;
+
 
 use App\Common\Base\BaseRequest;
 use Illuminate\Validation\Rule;
@@ -29,8 +30,9 @@ class UpdateRequest extends BaseRequest
             'id' => ['required', 'exists:cases'],
             'beneficiary_name' => ['required' ,'string', 'between:3,100'],
             'country_id' => ['required' ,'numeric'],
-            'funded' => ['required'],
-            'cancelled' => ['required'],
+            'status' => ['required'],
+            'target' => ['required'],
+            // 'cancelled' => ['required'],
         ];
     }
     
