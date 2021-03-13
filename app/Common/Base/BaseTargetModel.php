@@ -87,6 +87,9 @@ abstract class BaseTargetModel extends Model {
                 case "App\Models\Cases":
                     $target = $this->beforeSaveCase($target);
                     break;
+                case "App\Models\Sponsorship":
+                    $target = $this->beforeSaveSponsorship($target);
+                    break;
                 
                 default:
                     # code...
@@ -151,6 +154,24 @@ abstract class BaseTargetModel extends Model {
             }
         }
 
+        return $target;
+    }
+
+    private function beforeSaveSponsorship(Target $target){
+
+        if(isset($target->category_id)){
+            if($target->category_id== 2){
+                // طبية 
+                $target->section_id = 1 ;
+                
+            }elseif($target->category_id== 3){
+                $target->section_id = 2 ;
+                //الاسرة
+            }elseif($target->category_id== 1){
+                $target->section_id = 4 ;
+            //كفالة يتيم
+            }
+        }
         return $target;
     }
     

@@ -30,6 +30,8 @@ class CreateRequest extends BaseRequest
             'beneficiary_birthdate' => ['required' ,'date' ,"before:tomorrow"],
             'country_id' => ['required' ,'numeric'],
             'sponsored' => ['nullable' ,'boolean'],
+            'target' => ['required' ,'array'],
+            
         ];
     }
     

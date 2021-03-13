@@ -1,9 +1,16 @@
 async function addSponsorShipsControllerInit($apiRequest) {
     
     let countries =await  $apiRequest.config("countries").getData();
+    let categories =await  $apiRequest.config("categories?created_for=Sponsorships").getData();
+    
+    categories.push({
+        id: null,
+        name: "غير مصنفة",
+    });
 
     let init = {
         countries: countries,
+        categories: categories,
     };
 
     return init;
@@ -11,8 +18,18 @@ async function addSponsorShipsControllerInit($apiRequest) {
 
 
 function addSponsorShipsController($scope, $location, $apiRequest, $page, $init) {
-    $scope.object = {};
+    $scope.object = {  
+         target: {
+            required: 0,
+            visible: true,
+            documented: false,
+            archived: false,
+            beneficiaries_count: 0,
+            category_id: null,
+        },
+    };
     $scope.countries = $init.countries;
+    $scope.categories = $init.categories;
 
     $scope.createSponsorShips = $apiRequest.config(
         {

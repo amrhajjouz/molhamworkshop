@@ -64,13 +64,13 @@ class DatabaseSeeder extends Seeder
 
         ////////////////////CATEGORY ////////////////
         $categories = [
-            'SponserShip'=>[
+            'Sponsorships'=>[
                 ' كفالة يتيم' , 'طبية' , ' كفالة عائلة'
             ],
             'Cases' =>[
                 'طبية' , 'انسانية'
             ],
-            'Campaign'=>[
+            'Campaigns'=>[
                 'طبية' , 'اغاثية' , 'تعليم' , 'مأوى'
             ]
         ];

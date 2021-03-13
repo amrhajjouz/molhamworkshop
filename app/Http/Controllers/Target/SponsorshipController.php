@@ -29,7 +29,8 @@ class SponsorShipController extends BaseController {
             $object->beneficiary_birthdate =  $data['beneficiary_birthdate'];
             $object->country_id = $data['country_id'];
             $object->sponsored = 0;
-            $object->save();
+           
+            $object->save( $data['target']);
 
             return $this->_response($object);
         } catch (\Exception $e) {
@@ -49,7 +50,7 @@ class SponsorShipController extends BaseController {
             $object->country_id = $data['country_id'];
             $object->sponsored = $data['sponsored'];
             
-            $object->save();
+            $object->save($data['target']);
             
             return $this->_response($object);
         } catch (\Exception $e) {
