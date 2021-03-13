@@ -50,7 +50,6 @@ abstract class BaseTargetModel extends Model {
     
     
     public function save(array $options = []){
-
         $newRecord = ! ( $this->exists );
 
 
@@ -82,6 +81,7 @@ abstract class BaseTargetModel extends Model {
             //       $target->$item = $options[$item];
             //     }
             // }
+           
             $target->fill($options);//
             switch (get_class($this)) {
                 case "App\Models\Cases":
@@ -97,7 +97,6 @@ abstract class BaseTargetModel extends Model {
                         // dd(self::targetAttributes , $options ,$options[$item] , $item , $target);;
             $target->save();
             
-            // dd($target);
             
             $this->target_id = $target->id;
             

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Target\Campaigns;
+namespace App\Http\Requests\Target\Campaign;
 
 use Illuminate\Validation\Rule;
 use App\Common\Base\BaseRequest;
@@ -27,6 +27,7 @@ class CreateRequest extends BaseRequest
         
         return [
             'name' => ['required' ,'string', 'between:3,100'],
+            'target' => ['required' ,'array'],
         ];
     }
     

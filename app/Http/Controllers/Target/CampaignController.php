@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Target\Controllers;
+namespace App\Http\Controllers\Target;
 
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\Target\Campaigns\{CreateRequest , UpdateRequest};
+use App\Http\Requests\Target\Campaign\{CreateRequest , UpdateRequest};
 use App\Facades\Helper;
 
 use App\Models\{User , Campaign};
@@ -29,13 +29,13 @@ class CampaignController extends BaseController {
             $object = new $this->model();
             $object->name = $data['name'];
             $object->funded = 0;
-            $object->save();
+            $object->save($data['target']);
 
             return $this->_response($object);
             
         } catch (\Exception $e) {
             
-            return ['error' => $e->getMessage()];
+           throw $this->_exception($e->getMessage());
         }
     }
     
@@ -48,14 +48,15 @@ class CampaignController extends BaseController {
             
             $data = $request->validated();
 
-            unset($data['id']);
-            // dd($data);
-            $object->update($data);
-            
+            $object->name = $data['name'];
+            $object->funded = $data['funded'];
+
+            $object->save($data['target']);
+
             return $this->_response($object);
 
         } catch (\Exception $e) {
-            return ['error' => $e->getMessage()];
+            throw $this->_exception($e->getMessage());
         }
     }
     
@@ -65,7 +66,7 @@ class CampaignController extends BaseController {
         try {
             return response()->json($this->model::all());            
         } catch (\Exception $e) {
-            return ['error' => $e->getMessage()];
+            throw $this->_exception($e->getMessage());
         }
     }
     

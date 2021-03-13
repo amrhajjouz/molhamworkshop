@@ -13,7 +13,18 @@ async function addCampaignControllerInit($apiRequest) {
 
 
 function addCampaignController($scope, $location, $apiRequest, $page, $init) {
-    $scope.object = {};
+    $scope.object = {
+        target: {
+            beneficiaries_count: 0,
+            required: 0,
+            visible: true,
+
+            documented: false,
+            archived: false,
+            section_id: null,
+        },
+        funded:false
+    };;
     $scope.sections = $init.sections;
 
     $scope.createCampaign = $apiRequest.config(
