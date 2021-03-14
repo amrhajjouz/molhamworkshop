@@ -4,17 +4,20 @@ async function editFundraisersControllerInit($http, $page, $apiRequest) {
         .config("fundraisers/" + $page.routeParams.id)
         .getData();
 
+  let sections = await $apiRequest.config("sections").getData();
 
     const init = {
         object: object,
+        sections: sections,
     };
     return init;
 }
 
 function editFundraisersController($scope, $page, $apiRequest, $init) {
     $scope.object = $init.object;
+    $scope.sections = $init.sections;
 
-    $scope.updateEvent = $apiRequest.config(
+    $scope.updateFundraiser = $apiRequest.config(
         {
             method: "PUT",
             url: "fundraisers",

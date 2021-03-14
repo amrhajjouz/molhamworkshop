@@ -1,5 +1,4 @@
 <page-header title="حملة جديدة" pretitle="الحملات"></page-header>
-{{object}}
 <form class="row" name="createCampaignForm" request="createCampaign">
     <div class="col-12 col-md-6">
         <div class="form-group">
@@ -50,7 +49,7 @@
         </div>
         <div class="col-12 col-md-6">
             <div class="form-group">
-                <label for="section_id">الصنف</label>
+                <label for="section_id">القسم</label>
                 <select class="form-control" ng-model="object.target.section_id"
                     ng-class="(createCampaign.errors.section_id != null) ? 'is-invalid' : ''" id="section_id"
                     ng-change="createCampaign.errors.section_id = null"

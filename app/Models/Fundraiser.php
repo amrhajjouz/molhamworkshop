@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use App\Common\Base\BaseTargetModel;
+use PDO;
 
 class Fundraiser extends BaseTargetModel
 {
@@ -20,12 +21,23 @@ class Fundraiser extends BaseTargetModel
      public function transform()
      {
           $obj = $this->toArray();
-          $parent = $this->parent;
+          $parent = $this->parent->toArray();
+          $section = $this->parent->section;
+          if($section){
+               unset($section->create_at);
+               unset($section->update_at);
+          }
+
           unset( $obj['parent']);
           return (object)array_merge($obj, [
                'target' => [
-                    'required' => $parent->required
+                    'required' => $parent['required'],
+                    'documented' => $parent['documented'],
+                    'archived' => $parent['archived'],
+                    'visible' => $parent['visible'],
+                    'section_id' => $parent['section_id'],
                ],
+               'section'=>$section
           ]);
      }
 
