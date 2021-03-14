@@ -31,9 +31,7 @@ class EventController extends BaseController {
             }
             $object->youtube_video_url = $data['youtube_video_url'];
 
-            // $object->target = $data['target'];
             $object->save($data['target']);
-            // $object->save($data['target']);
             
             return $this->_response($object->transform());
             
@@ -59,7 +57,6 @@ class EventController extends BaseController {
             }
             $object->youtube_video_url = $data['youtube_video_url'];
 
-            // $object->target = $data['target'];
             $object->save($data['target']);
             
             return $this->_response($object->transform());

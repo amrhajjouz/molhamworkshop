@@ -53,9 +53,7 @@ abstract class BaseTargetModel extends Model {
         $newRecord = ! ( $this->exists );
         parent::save($options);
         
-        
         if($newRecord){
-            
             // Create Target 
             $reference = Helper::generateRandomString(15);
             
@@ -92,6 +90,9 @@ abstract class BaseTargetModel extends Model {
                     break;
                 case "App\Models\Student":
                     $target = $this->beforeSaveStudent($target);
+                    break;
+                case "App\Models\Event":
+                    $target = $this->beforeSaveEvent($target);
                     break;
                 
                 default:
@@ -182,6 +183,13 @@ abstract class BaseTargetModel extends Model {
         //التعليم
         $target->section_id = 5;
         $target->beneficiaries_count = 1;
+
+        return $target;
+    }
+   
+    private function beforeSaveEvent(Target $target){
+        //الحماية
+        $target->section_id = 4;
 
         return $target;
     }

@@ -22,36 +22,26 @@ class Event extends BaseTargetModel
 
      public function transform()
      {
+
           $obj = $this->toArray();
-          $parent = $this->parent;
+
+          $target = $this->parent->toArray();
+
           unset( $obj['parent']);
           return (object)array_merge($obj, [
                'target' => [
-                    'required' => $parent->required
-               ],
+                    'required' => $target['required'],
+                    'visible' => $target['visible'],
+                    'beneficiaries_count' => $target['beneficiaries_count'],
+                    'documented' => $target['documented'],
+                    'archived' => $target['archived'],
+
+               ]
           ]);
      }
 
      public function save($options = [])
      {    
-          // dd($options);
-          $newRecord = !($this->exists);
-
-          // if (isset($this->target) && is_array($this->target)) {
-          //      $options = $this->target;
-          // }
-
-          // if ($this->target) {
-          //      unset($this->target);
-          // }
-
-          parent::save($options);
-          //create
-          if ($newRecord) {
-
-          } else {
-
-          }
 
           return parent::save($options);
      }

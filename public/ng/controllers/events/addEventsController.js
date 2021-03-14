@@ -16,6 +16,10 @@ function addEventsController($scope, $location, $apiRequest, $page, $init) {
         youtube_video_url: null,
         target: {
             required: 0,
+            visible: true,
+            documented: false,
+            archived: false,
+            beneficiaries_count: 0,
         },
     };
 

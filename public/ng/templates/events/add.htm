@@ -15,17 +15,7 @@
                 {{ createEvent.errors.date[0] }}</div>
         </div>
     </div>
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="required">المبلغ المطلوب</label>
-            <input type="number" class="form-control"
-                ng-class="(createEvent.errors.required != null) ? 'is-invalid' : ''" id="required"
-                ng-model="object.target['required']" ng-change="createEvent.errors.required = null" required>
-            <div ng-show="createEvent.errors.required != null" class="invalid-feedback">
-                {{ createEvent.errors.required[0] }}</div>
-        </div>
-    </div>
-
+    
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="name">رابط الفيديو يوتيوب</label>
@@ -37,6 +27,19 @@
                 {{ createEvent.errors.youtube_video_url[0] }}</div>
         </div>
     </div>
+<div class="col-12 col-md-6">
+    <div class="form-group">
+        <label for="implemented">تم تنفيذه</label>
+        <select class="form-control" ng-model="object.implemented"
+            ng-class="(createEvent.errors.implemented != null) ? 'is-invalid' : ''" id="implemented"
+            ng-change="createEvent.errors.implemented = null" required>
+            <option ng-value="true">نعم</option>
+            <option ng-value="false">لا</option>
+        </select>
+        <div ng-show="createEvent.errors.implemented != null" class="invalid-feedback">
+            {{ createEvent.errors.implemented[0] }}</div>
+    </div>
+</div>
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="name">تاريخ التنفيذ</label>
@@ -48,27 +51,72 @@
                 {{ createEvent.errors.implementation_date[0] }}</div>
         </div>
     </div>
-    <div class="col-6 col-md-6 mb-5">
-        <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="verified" ng-model="object.verified">
-            <label class="custom-control-label" for="verified">مؤكد</label>
+<div class="col-12 col-md-6">
+    <div class="form-group">
+        <label for="beneficiaries_count">عدد المستفيدين</label>
+        <input type="number" class="form-control"
+            ng-class="(createEvent.errors.beneficiaries_count != null) ? 'is-invalid' : ''" id="beneficiaries_count"
+            ng-model="object.target['beneficiaries_count']" ng-change="createEvent.errors.beneficiaries_count = null"
+            required min="0">
+        <div ng-show="createEvent.errors.beneficiaries_count != null" class="invalid-feedback">
+            {{ createEvent.errors.beneficiaries_count[0] }}</div>
+    </div>
+</div>
+     <div class="col-12 col-md-6">
+         <div class="form-group">
+             <label for="public_visibility">متاح للعامة</label>
+             <select class="form-control" ng-model="object.public_visibility"
+                 ng-class="(createEvent.errors.public_visibility != null) ? 'is-invalid' : ''" id="public_visibility"
+                 ng-change="createEvent.errors.public_visibility = null" required>
+                 <option ng-value="true">نعم</option>
+                 <option ng-value="false">لا</option>
+             </select>
+             <div ng-show="createEvent.errors.public_visibility != null" class="invalid-feedback">
+                 {{ createEvent.errors.public_visibility[0] }}</div>
+         </div>
+     </div>
+
+    
+     <div class="col-12 col-md-6">
+         <div class="form-group">
+             <label for="verified">مؤكد</label>
+             <select class="form-control" ng-model="object.verified"
+                 ng-class="(createEvent.errors.verified != null) ? 'is-invalid' : ''" id="verified"
+                 ng-change="createEvent.errors.verified = null" required>
+                 <option ng-value="true">نعم</option>
+                 <option ng-value="false">لا</option>
+             </select>
+             <div ng-show="createEvent.errors.country_id != null" class="invalid-feedback">
+                 {{ createEvent.errors.country_id[0] }}</div>
+         </div>
+     </div>
+
+ <div class="col-12 col-md-6">
+     <div class="form-group">
+         <label for="visible">ظاهر</label>
+         <select class="form-control" ng-model="object.target.visible"
+             ng-class="(createEvent.errors.visible != null) ? 'is-invalid' : ''" id="visible"
+             ng-change="createEvent.errors.target.visible = null" required>
+             <option ng-value="true">نعم</option>
+             <option ng-value="false">لا</option>
+         </select>
+         <div ng-show="createEvent.errors.visible != null" class="invalid-feedback">
+             {{ createEvent.errors.visible[0] }}</div>
+     </div>
+ </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="required">المبلغ المطلوب</label>
+            <input type="number" class="form-control"
+                ng-class="(createEvent.errors.required != null) ? 'is-invalid' : ''" id="required"
+                ng-model="object.target['required']" ng-change="createEvent.errors.required = null" required>
+            <div ng-show="createEvent.errors.required != null" class="invalid-feedback">
+                {{ createEvent.errors.required[0] }}</div>
         </div>
     </div>
 
-    <div class="col-6 col-md-6 mb-5">
-        <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="public_visibility"
-                ng-model="object.public_visibility">
-            <label class="custom-control-label" for="public_visibility">متاح للعامة</label>
-        </div>
-    </div>
 
-    <div class="col-6 col-md-6 mb-5">
-        <div class="custom-control custom-switch">
-            <input type="checkbox" class="custom-control-input" id="implemented" ng-model="object.implemented">
-            <label class="custom-control-label" for="implemented">تم تنفيذه</label>
-        </div>
-    </div>
 
 
     <div class="col-12">
