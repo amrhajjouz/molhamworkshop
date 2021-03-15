@@ -179,13 +179,16 @@
             return appUrl;
         }
         
-        app.run(function ($rootScope, $location, $page, $timeout) {
+        app.run(function ($rootScope, $location, $page, $timeout, $datalist) {
             
             $rootScope.$location = $location;
             $rootScope.$page = $page;
             $rootScope.sidenavLoaded = false;
             $rootScope.currentTemplateDirectory = '';
-            $rootScope.$r = $r;            
+            $rootScope.$r = $r;
+            
+            let dl = $datalist('users', true).load();
+            console.log(dl);
             
             // refresh page if navagate to the current url
             /*document.addEventListener('click', function (e) {
@@ -440,6 +443,112 @@
             };
         });
         
+        
+        app.directive('datatableItemActionsList', function ($rootScope, $page) {
+            
+            return {
+                restrict: 'E',
+                transclude: true,
+                scope : {},
+                replace : true,
+                template : '<div class="dropdown"><a href="javascript:;" class="color-black mr-2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical"></i></a><div class="dropdown-menu" aria-labelledby="navbarDropdown" ng-transclude></div></div>',
+            };
+        });
+        
+        app.directive('datatableItemAction', function ($rootScope, $page) {
+            
+            return {
+                restrict: 'E',
+                transclude: true,
+                scope : {},
+                replace : true,
+                template : '<a class="dropdown-item" ng-transclude></a>',
+            };
+        });
+        
+        app.directive('datatableHead', function ($rootScope, $page) {
+            
+            return {
+                restrict: 'E',
+                transclude: true,
+                scope : {},
+                replace : false,
+                template : '<thead><tr ng-transclude></tr></thead>',
+            };
+        });
+        
+        app.directive('datatableItemBody', function ($rootScope, $page) {
+            
+            return {
+                restrict: 'E',
+                transclude: true,
+                scope : {},
+                replace : false,
+                template : '<tbody><tr ng-repeat="u in users" ng-transclude></tr></tbody>',
+            };
+        });
+        
+        app.directive('datatable', function ($rootScope, $page) {
+            
+            return {
+                restrict: 'E',
+                transclude: true,
+                scope : {
+                    datalist: '=',
+                },
+                replace : true,
+                link : function (scope, element, attrs) {
+                    var tablesElements = element[0].getElementsByTagName('table');
+                    if (tablesElements.length > 0) {
+                        for (i=0; i<tablesElements.length; i++) {
+                            tablesElements[i].classList.add('table');
+                            tablesElements[i].classList.add('table-sm');
+                            tablesElements[i].classList.add('card-table');
+                        }
+                    }
+                },
+                template : '<div>' +
+                                '<div class="text-center h4 mt-4 mb-4">العدد الكلي : @{{ datalist.length }}</div>' +
+                                '<div class="card">' +
+                                    '<div class="card-header">' +
+                                        '<div class="row align-items-center">' +
+                                            '<div class="col">' +
+                                                '<div class="input-group input-group-flush input-group-merge">' +
+                                                    '<input type="search" ng-model="search" class="form-control form-control-prepended search" placeholder="اكتب كلمة للبحث ثم اضغط Enter  ...">'+
+                                                    '<div class="input-group-prepend">' +
+                                                        '<div class="input-group-text">' +
+                                                            '<span class="fe fe-search"></span>' +
+                                                        '</div>' +
+                                                    '</div>' +
+                                                '</div>'+
+                                            '</div>'+
+                                            '<div class="col-auto">' +
+                                                '<button class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top" title="خيارات الفلترة والعرض">' +
+                                                    '<i class="fe fe-sliders"></i>' +
+                                                '</button> ' +
+                                                '<button class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top" title="تصدير القائمة الى ملف CSV">' +
+                                                    '<i class="fe fe-download"></i>' +
+                                                '</button>' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="table-responsive">' +
+                                        '<ng-transclude></ng-transclude>' +
+                                        '<table>' +
+                                            '<tbody ng-show="datalist.length == 0">' +
+                                                '<tr>' +
+                                                    '<td class="text-center">' +
+                                                        '<div class="pt-3 pb-2 h4" ng-show="datalist.length == 0">لا يوجد أية عناصر في هذه القائمة</div>' +
+                                                    '</td>' +
+                                                '</tr>' +
+                                            '</tbody>' +
+                                        '</table>' +
+                                    '</div>' +
+                                '</div>'+
+                            '</div>'
+            };
+        });
+        
         app.directive('request', function ($timeout) {
             
             return {
@@ -575,6 +684,71 @@
                             }
                         }
                     };
+                }
+            };
+        });
+        
+        app.factory('$datalist', function($apiRequest) {
+            
+            return function (path, changeRouteOnLoad) {
+                
+                return {
+                    
+                    // Flags
+                    searching: false,
+                    filtering: false,
+                    loading: false,
+                    
+                    filters: {},
+                    search_query: '',
+                    query: {},
+                    params: {},
+                    path: path,
+                    data: [],
+                    currentPage: 1,
+                    nextPageUrl: null,
+                    prevPageUrl: null,
+                    firstPageUrl: null,
+                    lastPage: null,
+                    lastPageUrl: null,
+                    perPage: null,
+                    from: null,
+                    to: null,
+                    total: null,
+                    
+                    load : async function () {
+                        // send request to path?params&query
+                        return this;
+                    },
+                    
+                    search : async function () {
+                        // add search_query to params if not empty or null
+                        // remove search_query from params if empty or null
+                        // send request to path?params
+                        return ;
+                    }, 
+                    
+                    filter : async function () {
+                        // merge filters with params
+                        // send request to path?params
+                        return ;
+                    },
+                    
+                    nextPage : async function () {
+                        // send request to nextPageUrl
+                        return ;
+                    },
+                    
+                    prevPage : async function () {
+                        // send request to prevPageUrl
+                        return ;
+                    },
+                    
+                    page : async function (p) {
+                        // check page validity
+                        // send request to path?params&page=p
+                        return ;
+                    },
                 }
             };
         });

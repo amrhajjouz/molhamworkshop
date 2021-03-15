@@ -63,7 +63,9 @@ class UserController extends Controller {
         
         try {
             
-            return response()->json(User::all());            
+            $users = User::paginate(1);
+            //$users->appends(['sort' => 'votes']);
+            return response()->json($users);            
             
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
