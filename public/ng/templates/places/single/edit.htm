@@ -33,8 +33,7 @@
                    <select class="form-control" ng-model="object.country_id"
                        ng-class="(updatePlace.errors.country_id != null) ? 'is-invalid' : ''" id="country_id"
                        ng-change="updatePlace.errors.country_id = null"
-                       ng-options="country.id as country.name for country in countries" placeholder="يرجى اختيار دولة.."
-                       required>
+                       ng-options="country.id as country.name for country in countries" placeholder="يرجى اختيار دولة..">
                    </select>
                    <div ng-show="updatePlace.errors.country_id != null" class="invalid-feedback">
                        {{ updatePlace.errors.country_id[0] }}</div>

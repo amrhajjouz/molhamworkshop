@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Common\Base\{BaseController};
-use App\Common\Traits\{HasList , HasRetrieve};
+use App\Common\Traits\{HasList, HasRetrieve};
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\Place\{CreateRequest , UpdateRequest};
+use App\Http\Requests\Place\{CreateRequest, UpdateRequest};
 use App\Models\{User, Place};
+use App\Facades\Helper;
 
 class PlaceController extends BaseController
 {
-    use HasList ,HasRetrieve ;
+    use HasList, HasRetrieve;
 
     public function __construct()
     {
@@ -38,7 +39,7 @@ class PlaceController extends BaseController
 
             return $this->_response($object);
         } catch (\Exception $e) {
-            throw $this->_exception( $e->getMessage());
+            throw $this->_exception($e->getMessage());
         }
     }
 
@@ -73,17 +74,21 @@ class PlaceController extends BaseController
             $data = $this->model::all();
 
             foreach ($data as $object) {
-                $result[] = $object->transform();
+                $obj = (object) $object->toArray();
+                // $obj = (object) $object->transform();
+                $obj->long_name = Helper::getFullNamePlace($object);
+
+                
+                $result[] = $obj;
             }
 
             return response()->json($result);
         } catch (\Exception $e) {
 
             throw $this->_exception($e->getMessage());
-
         }
     }
-   
+
     public function search(Request $request)
     {
 
@@ -92,16 +97,16 @@ class PlaceController extends BaseController
             $result = [];
             $data = null;
 
-            if($request->has('q')){
+            if ($request->has('q')) {
 
-                $places = $this->model::where('name' , 'like' , "%". $request->q . "%" )->take(10)->get();
-            }else{
+                $places = $this->model::where('name', 'like', "%" . $request->q . "%")->take(10)->get();
+            } else {
 
                 $places = $this->model::take(10)->get();
             }
 
             foreach ($places as $place) {
-                
+
                 $obj = new \stdClass();
                 $obj->id = $place->id;
                 $obj->name = $place->name;
@@ -114,23 +119,27 @@ class PlaceController extends BaseController
         } catch (\Exception $e) {
 
             throw $this->_exception($e->getMessage());
-
         }
-
     }
 
-    private function search_transform(Place $place){
-        
+    private function search_transform(Place $place)
+    {
+
         $obj = new \stdClass();
         $obj->id = $place->id;
         $obj->name = $place->name;
-        
+
         $parent = $place->parent;
 
-         if($parent){
-             $obj->name .=  '-'  . $parent->name;
-         }
+        if ($parent) {
+            $obj->name .=  '-'  . $parent->name;
+        }
 
-         return $obj;
+        return $obj;
     }
+
+    // public function beforeListResponse($response)
+    // {
+    //     dd(2);
+    // }
 }

@@ -13,10 +13,18 @@ trait HasList
     {
         try {
             $class_name = $this->model;
-            return $this->_response($class_name::all());
+            $response = $class_name::all();
+            
+            $response = $this->beforeListResponse($response);
+
+            return $this->_response($response);
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
             // return ['error' => $e->getMessage()];
         }
+    }
+
+    protected function beforeListResponse($lists){
+        return $lists;
     }
 }

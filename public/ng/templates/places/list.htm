@@ -42,6 +42,7 @@
                 <tr>
                     <th class="text-center">#</th>
                     <th class="text-center">الاسم</th>
+                    <th class="text-center">الاسم الكامل</th>
                     <th class="text-center">النوع</th>
                     <th class="text-center">خيارات</th>
                 </tr>
@@ -57,6 +58,7 @@
                 <tr ng-repeat="item in places | filter : search">
                     <td class="align-middle text-center">{{ item.id }}</td>
                     <td class="align-middle text-center">{{ item.name }}</td>
+                    <td class="align-middle text-center">{{ item.long_name }}</td>
                     <td class="align-middle text-center">{{ item.type }}</td>
                      <td class="align-middle text-center h2">
                          <div class="dropdown">
