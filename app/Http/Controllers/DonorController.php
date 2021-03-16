@@ -6,12 +6,17 @@ namespace App\Http\Controllers;
   use App\Models\Donor;
  use Illuminate\Http\Request;
  use App\Http\Requests\Donor\CreateDonorRequest;
-class DonorController extends Controller
+ use Illuminate\Support\Facades\Hash;
+
+ class DonorController extends Controller
 {
 
-    public function create (CreateDonorRequest $request) {
+    public function create (CreateDonorRequest $request)
+    {
         try {
-            $donor = Donor::create($request->validated());
+            $data = $request->validated();
+            $data["password"] = Hash::make($request->password);
+            $donor = Donor::create($data);
             return response()->json($donor);
 
         } catch (\Exception $e) {
@@ -19,10 +24,15 @@ class DonorController extends Controller
         }
     }
 
-    public function update (UpdateDonorRequest $request) {
+    public function update (UpdateDonorRequest $request)
+    {
         try {
             $donor = Donor::findOrFail($request->id);
             $input = $request->validated();
+            if(isset($input["password"])){
+                $input["password"] = Hash::make($request->password);
+            }
+
             $donor->update($input);
             return response()->json($donor);
         } catch (\Exception $e) {
@@ -30,7 +40,8 @@ class DonorController extends Controller
         }
     }
 
-    public function retrieve ($id) {
+    public function retrieve ($id)
+    {
         try {
             return response()->json(Donor::findOrFail($id));
         } catch (\Exception $e) {
@@ -38,7 +49,7 @@ class DonorController extends Controller
         }
     }
 
-    public function list (Request $request) {
+    public function list () {
         try {
             return response()->json(Donor::all());
         } catch (\Exception $e) {

@@ -27,9 +27,9 @@ class UpdateDonorRequest extends FormRequest
             'name' => ['required' ,'string', 'between:3,30'],
             'email' => ['required' , 'email' , 'unique:donors,email,'.$this->input('id')],
             'password' => ['string', 'min:8'],
-            'phone' => ['required' ,'string', 'between:5,20'],
-            'whatsapp_number' => ['required' ,'string', 'between:5,20'],
-            'swish_number' => ['required' ,'string', 'max:20'],
+            'phone' => ['string', 'between:5,20'],
+            'whatsapp_number' => ['string', 'between:5,20'],
+            'swish_number' => ['string', 'max:20'],
         ];
     }
 }

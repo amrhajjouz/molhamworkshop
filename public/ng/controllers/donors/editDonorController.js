@@ -1,4 +1,4 @@
-function editDonorControllerInit ($http, $page, $apiRequest) {
+function editDonorControllerInit ($page, $apiRequest) {
     return $apiRequest.config('donors/' + $page.routeParams.id).getData();
 }
 function editDonorController ($scope, $page, $apiRequest, $init) {

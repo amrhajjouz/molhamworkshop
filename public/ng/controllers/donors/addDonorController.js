@@ -1,4 +1,4 @@
-function addDonorController ($scope, $location, $apiRequest, $page) {
+function addDonorController ($scope, $apiRequest, $page) {
 
     $scope.donor = {};
 

@@ -18,9 +18,9 @@ class CreateDonorTable extends Migration
             $table->string("name",30);
             $table->string("email",155);
             $table->text("password");
-            $table->string("phone",20);
-            $table->string("swish_number",20);
-            $table->string("whatsapp_number",20);
+            $table->string("phone",20)->nullable();
+            $table->string("swish_number",20)->nullable();;
+            $table->string("whatsapp_number",20)->nullable();
             $table->boolean("subscribed_to_newsletter")->default(false);
             $table->boolean("verified")->default(false);
             $table->boolean("blocked")->default(false);
