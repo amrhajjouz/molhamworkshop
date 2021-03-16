@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SpaController;
+use App\Http\Controllers\{SpaController , MohamdController};
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +14,8 @@ use App\Http\Controllers\SpaController;
 |
 */
 
+
 require __DIR__.'/auth.php';
+Route::get('mohamd',[MohamdController::class, 'test']);
 
 Route::middleware('auth')->get('{url?}', [SpaController::class, 'index'])->where('url', '.*')->name('home');

@@ -30,11 +30,11 @@ class StudentController extends BaseController {
             // $object->semesters_funded = $data['semesters_funded'];
             // $object->semesters_left = $data['semesters_left'];
             // $object->status = $data['status'];
-            $object->save($data['target']);
+            $options = ['target' => $request->target , "places" => $request->places ];
+            $object->save($options);
             
             
             return $this->_response($object);
-            
         } catch (\Exception $e) {
 
             throw $this->_exception($e->getMessage());
@@ -51,12 +51,14 @@ class StudentController extends BaseController {
             // dd($data);
              $object->name = $data['name'];
             //  $object->target = $data['target'];
-             $object->country_id = $data['country_id'];
-             $object->semesters_count = $data['semesters_count'];
-             $object->current_semester = $data['current_semester'];
+            $object->country_id = $data['country_id'];
+            $object->semesters_count = $data['semesters_count'];
+            $object->current_semester = $data['current_semester'];
 
-             $object->save($data['target']);
-            
+            $options = ['target' => $request->target , "places" => $request->places ];
+
+            $object->save($options);
+
             return $this->_response($object->transform());
 
         } catch (\Exception $e) {

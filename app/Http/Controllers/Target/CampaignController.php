@@ -29,7 +29,10 @@ class CampaignController extends BaseController {
             $object = new $this->model();
             $object->name = $data['name'];
             $object->funded = 0;
-            $object->save($data['target']);
+            
+            $options = ['target' => $request->target, "places" => $request->places];
+
+            $object->save($options);
 
             return $this->_response($object);
             
@@ -51,7 +54,10 @@ class CampaignController extends BaseController {
             $object->name = $data['name'];
             $object->funded = $data['funded'];
 
-            $object->save($data['target']);
+
+            $options = ['target' => $request->target , "places" => $request->places ];
+
+            $object->save($options);
 
             return $this->_response($object);
 

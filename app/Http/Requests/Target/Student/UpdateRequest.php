@@ -16,7 +16,7 @@ class UpdateRequest extends BaseRequest
     {
         return true;
     }
-    
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,18 +24,18 @@ class UpdateRequest extends BaseRequest
      */
     public function rules()
     {
-        
+
         return [
             'id' => ['required', 'exists:students'],
-            'name' => ['required' ,'string', 'between:3,100'],
-            'country_id' => ['required' ,'numeric'],
-            'status' => ['nullable' ,'string'],
-            'semesters_count' => ['required' ,'numeric'],
+            'name' => ['required', 'string', 'between:3,100'],
+            'country_id' => ['required', 'numeric'],
+            'status' => ['nullable', 'string'],
+            'semesters_count' => ['required', 'numeric'],
             // 'semesters_funded' => ['required' ,'numeric'],
             // 'semesters_left' => ['required' ,'numeric'],
-            'current_semester' => ['required' ,'numeric'],
+            'current_semester' => ['required', 'numeric'],
             'target' => ['nullable'],
+            'places' => ['nullable', 'array'],
         ];
     }
-    
 }

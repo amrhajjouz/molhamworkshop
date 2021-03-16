@@ -12,7 +12,7 @@ class Fundraiser extends BaseTargetModel
      protected $table = 'fundraisers';
      protected $guarded = [];
      protected $model_path = '\App\Models\Fundraiser';
-
+     protected $has_places = false;
      protected $casts = [
           'verified' => 'boolean',
           'public_visibility' => 'boolean',

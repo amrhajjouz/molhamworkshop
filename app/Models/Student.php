@@ -11,6 +11,7 @@ class Student extends BaseTargetModel
      protected $table = 'students';
      protected $guarded = ["semesters_funded", "semesters_left"];
      protected $model_path = '\App\Models\Student';
+     protected $has_places = true;
 
      const PAUSED = 'paused';
      const NOT_FOUNDED = 'not_funded';
@@ -32,6 +33,20 @@ class Student extends BaseTargetModel
 
           $obj = $this->toArray();
           $target = $this->parent->toArray();
+          $places = $this->places;
+          $_places = [];
+
+          if ($places) {
+               foreach ($places as $item) {
+                    $_place = (object)[
+                         'id' => $item->id,
+                         'name' => $item->name,
+                         'type' => $item->type,
+                    ];
+
+                    $_places[] = $_place;
+               }
+          }
 
           unset($obj['parent']);
           
@@ -45,7 +60,8 @@ class Student extends BaseTargetModel
                     'documented' => $target['documented'],
                     'archived' => $target['archived'],
 
-               ]
+               ],
+               "places" => $_places
           ]);
      }
 

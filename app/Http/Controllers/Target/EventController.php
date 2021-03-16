@@ -5,83 +5,89 @@ namespace App\Http\Controllers\Target;
 use Illuminate\Http\Request;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
-use App\Http\Requests\Target\Event\{CreateRequest , UpdateRequest};
+use App\Http\Requests\Target\Event\{CreateRequest, UpdateRequest};
 use App\Models\{Event};
 
-class EventController extends BaseController {
-    
+class EventController extends BaseController
+{
+
     use HasRetrieve;
 
-    public function __construct () {
+    public function __construct()
+    {
         $this->middleware('auth');
         $this->model = \App\Models\Event::class;
     }
-    
-    public function create ( CreateRequest $request) {
+
+    public function create(CreateRequest $request)
+    {
         try {
             $data = $request->validated();
             $object = new $this->model();
 
-            $object->date = date('Y/m/d' , strtotime($data['date']));
+            $object->date = date('Y/m/d', strtotime($data['date']));
             $object->verified = $data['verified'];
             $object->public_visibility = $data['public_visibility'];
             $object->implemented = $data['implemented'];
-            if($data['implementation_date']){
-                $object->implementation_date = date('Y/m/d' , strtotime($data['implementation_date']));
+            if ($data['implementation_date']) {
+                $object->implementation_date = date('Y/m/d', strtotime($data['implementation_date']));
             }
             $object->youtube_video_url = $data['youtube_video_url'];
 
-            $object->save($data['target']);
-            
+            $options = ['target' => $request->target, "places" => $request->places];
+
+            $object->save($options);
+
             return $this->_response($object->transform());
-            
         } catch (\Exception $e) {
 
             throw $this->_exception($e->getMessage());
         }
     }
-    
-    public function update(UpdateRequest $request) {
-        
+
+    public function update(UpdateRequest $request)
+    {
+
         try {
-            
+
             $object = $this->model::findOrFail($request->id);
-            
+
             $data = $request->validated();
-            $object->date = date('Y/m/d' , strtotime($data['date']));
+            $object->date = date('Y/m/d', strtotime($data['date']));
             $object->verified = $data['verified'];
             $object->public_visibility = $data['public_visibility'];
             $object->implemented = $data['implemented'];
-            if($data['implementation_date']){
-                $object->implementation_date = date('Y/m/d' , strtotime($data['implementation_date']));
+            if ($data['implementation_date']) {
+                $object->implementation_date = date('Y/m/d', strtotime($data['implementation_date']));
             }
             $object->youtube_video_url = $data['youtube_video_url'];
 
-            $object->save($data['target']);
-            
-            return $this->_response($object->transform());
+            $options = ['target' => $request->target, "places" => $request->places];
 
+
+            $object->save($options);
+
+            return $this->_response($object->transform());
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
         }
     }
-    
-    public function list (Request $request) {
-        
+
+    public function list(Request $request)
+    {
+
         try {
-            $result =[];
+            $result = [];
             $data = $this->model::all();
 
             // foreach($data as $object){
             //     $result[] = $object->transform();
             // }
-            
+
             return response()->json($data);
-            
         } catch (\Exception $e) {
-            
+
             return ['error' => $e->getMessage()];
         }
     }
-    
 }

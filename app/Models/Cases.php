@@ -11,7 +11,7 @@ class Cases extends BaseTargetModel
      protected $table = 'cases';
      protected $guarded = [];
      protected $model_path = '\App\Models\Cases';
-
+     protected $has_places = true;
 
      public function country()
      {
@@ -25,7 +25,20 @@ class Cases extends BaseTargetModel
           $target = $this->parent->toArray();
           $section = $this->parent->section;
           $category = $this->parent->category;
-          
+          $places = $this->places;
+          $_places = [];
+     
+          if($places){
+               foreach ($places as $item) {
+                    $_place = (object)[
+                         'id' => $item->id,
+                         'name' => $item->name,
+                         'type' => $item->type,
+                    ];
+
+                    $_places [] = $_place;
+               }
+          }
           $response =  (object)array_merge($obj, [
                'country' => [
                     'name' => $this->country->name
@@ -38,7 +51,8 @@ class Cases extends BaseTargetModel
                     'archived' => $target['archived'],
                     'section_id' => $target['section_id'],
 
-               ]
+               ],
+               "places" => $_places
           ]);
           
           if($section){

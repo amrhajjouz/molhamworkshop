@@ -53,6 +53,13 @@ return [
     'fundraisers.overview' => ['fundraisers/:id', 'fundraisers/overviewFundraisersController', 'fundraisers.single.overview'],
     'fundraisers.edit' => ['fundraisers/:id/edit', 'fundraisers/editFundraisersController', 'fundraisers.single.edit'],
     'fundraisers' => ['fundraisers', 'fundraisers/listFundraisersController', 'fundraisers.list'],
-
+   
+    /////////////////////// Places /////////////////////////
+    
+    'places.add' => ['places/add', 'places/addPlacesController', 'places.add'],
+    'places.overview' => ['places/:id', 'places/overviewPlacesController', 'places.single.overview'],
+    'places.edit' => ['places/:id/edit', 'places/editPlacesController', 'places.single.edit'],
+    'places' => ['places', 'places/listPlacesController', 'places.list'],
+    
    ];
 

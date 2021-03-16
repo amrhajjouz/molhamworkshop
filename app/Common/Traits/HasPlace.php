@@ -6,12 +6,12 @@ use Illuminate\Support\Facades\Auth;
 /*
 * used this trait in models that extends from Base target and return relation
 */
-trait HasTarget
+trait HasPlace
 {
 
 
-  public function parent()
-  {
-    return $this->belongsTo('App\Models\Target', 'target_id', 'id');
-  }
+ public function places()
+ {
+   return $this->morphToMany('App\Models\Place', 'placeable');
+ }
 }

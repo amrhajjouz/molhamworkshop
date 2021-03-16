@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use App\Models\{User , Country , Cases , Section , Category};
+use App\Models\{User , Country , Cases , Section , Category , Place};
 
 class DatabaseSeeder extends Seeder
 {
@@ -43,12 +43,6 @@ class DatabaseSeeder extends Seeder
         }
 
 
-        //////////////// CASES ///////////
-        $case = new Cases;
-            $case ->country_id = 1;
-            $case->beneficiary_name = "test name";
-            $case->serial_number = "234323";
-            $case->save();
 
         ////////////////// SECTION /////////////////
 
@@ -84,5 +78,17 @@ class DatabaseSeeder extends Seeder
              
             }
         }
+
+        /////////////////////// Place /////////////////////////
+        Place::create([
+            'name' => 'سراقب' , 
+            'type' => 'city' , 
+        ]);
+        
+        Place::create([
+            'name' => 'بنش' , 
+            'type' => 'city' , 
+        ]);
+        
     }
 }

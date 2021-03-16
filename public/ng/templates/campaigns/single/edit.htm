@@ -99,7 +99,19 @@
                   {{ updateCampaign.errors.funded[0] }}</div>
           </div>
       </div>
- 
+ <div class="col-12 col-md-6">
+          <div class="form-group">
+              <label for="place">المكان</label>
+              <select class="form-control" ng-model="object.places[0].id"
+                  ng-class="(updateCampaign.errors.places[0] != null) ? 'is-invalid' : ''" id="places[0]"
+                  ng-change="updateCampaign.errors.places[0] = null"
+                  ng-options="place.id as place.name for place in places" placeholder="يرجى اختيار مكان.."
+                  required>
+              </select>
+              <div ng-show="updateCampaign.errors.places[0] != null" class="invalid-feedback">
+                  {{ updateCampaign.errors.places[0][0] }}</div>
+          </div>
+      </div>
     <div class="col-12">
         <submit-button form="updateCampaignForm" icon="fe fe-edit">تعديل</submit-button>
     </div>

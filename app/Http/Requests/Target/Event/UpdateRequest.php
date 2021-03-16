@@ -34,6 +34,7 @@ class UpdateRequest extends BaseRequest
              'implementation_date' => [new RequiredIf($this->implemented ==true)],
              'youtube_video_url' => ['nullable' ,'string'],
              'target' => ['required' , 'array'],
+            'places' => ['nullable', 'array'],
         ];
     }
     

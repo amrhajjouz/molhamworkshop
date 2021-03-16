@@ -130,6 +130,24 @@ class Molham extends Migration
 
             $table->timestamps();
         });
+     
+        Schema::create('places', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('parent_id')->index()->nullable();
+            $table->bigInteger('country_id')->index()->nullable();
+            $table->string('name')->index()->nullable();
+            $table->enum('type' ,['province' , 'city' ,'village' , 'district' ] )->index()->default('city');
+
+            $table->timestamps();
+        });
+       
+        Schema::create('placeables', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('place_id')->index();
+            $table->string('placeable_type')->index();
+            $table->bigInteger('placeable_id')->index();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -150,5 +168,7 @@ class Molham extends Migration
         Schema::dropIfExists('students');
         Schema::dropIfExists('events');
         Schema::dropIfExists('fundraisers');
+        Schema::dropIfExists('places');
+        Schema::dropIfExists('placeables');
     }
 }

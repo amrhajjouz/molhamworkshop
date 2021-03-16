@@ -6,18 +6,26 @@ async function editCaseControllerInit($http, $page, $apiRequest) {
         .getData();
 
     const countries = await $apiRequest.config("countries").getData();
+    
+    const places = await $apiRequest.config("places").getData();
 
-    const init = {
-        object: object,
+    let init = {
         countries: countries,
+        object: object,
+        places: places,
     };
+
     return init;
 }
 
 function editCaseController($scope, $page, $apiRequest, $init) {
+
     $scope.object = $init.object;
     $scope.countries = $init.countries;
-
+    $scope.places = $init.places;
+    
+    if(!$scope.object.places) $scope.object.places = [];
+    
     $scope.statuses = [
         { id: "funded", name: "تم كفالتها" },
         { id: "unfunded", name: "غير مكفولة" },

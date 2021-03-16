@@ -63,7 +63,7 @@
             <label for="required">المبلغ المطلوب لكل فصل</label>
             <input type="number" class="form-control"
                 ng-class="(createStudent.errors.required != null) ? 'is-invalid' : ''" id="required"
-                ng-model="object.target['required']" ng-change="createStudent.errors.required = null" required>
+                ng-model="object.target['required']" ng-change="createStudent.errors.required = null" required min="0">
             <div ng-show="createStudent.errors.required != null" class="invalid-feedback">
                 {{ createStudent.errors.required[0] }}</div>
         </div>
@@ -82,6 +82,21 @@
                 {{ createStudent.errors.country_id[0] }}</div>
         </div>
     </div>
+
+
+      <div class="col-12 col-md-6">
+          <div class="form-group">
+              <label for="name">المكان</label>
+              <select class="form-control" ng-model="object.places[0]"
+                  ng-class="(createStudent.errors.places[0] != null) ? 'is-invalid' : ''" id="places[0]"
+                  ng-change="createStudent.errors.places[0] = null"
+                  ng-options="place.id as place.name for place in places" placeholder="يرجى اختيار مكان.."
+                  required>
+              </select>
+              <div ng-show="createStudent.errors.places[0] != null" class="invalid-feedback">
+                  {{ createStudent.errors.places[0][0] }}</div>
+          </div>
+      </div>
 
 
     <div class="col-12">

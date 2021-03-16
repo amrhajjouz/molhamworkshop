@@ -4,18 +4,22 @@ async function editCampaignControllerInit($http, $page, $apiRequest) {
     const object = await $apiRequest
         .config("campaigns/" + $page.routeParams.id)
         .getData();
-
+    
+    const places = await $apiRequest.config("places").getData();
     // const countries = await $apiRequest.config("countries").getData();
 
-    // const init = {
-    //     object: object,
-    //     countries: countries,
-    // };
-    return object;
+    const init = {
+        object: object,
+        places: places,
+    };
+
+    return init;
 }
 
 function editCampaignController($scope, $page, $apiRequest, $init) {
-    $scope.object = $init;
+    $scope.object = $init.object;
+    $scope.places = $init.places;
+    if (!$scope.object.places) $scope.object.places = [];
 
     $scope.updateCampaign = $apiRequest.config(
         {

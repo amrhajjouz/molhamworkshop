@@ -49,29 +49,28 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception) {
 
 
-    if ($exception instanceof APIException || $exception instanceof ModelNotFoundException ) {
+    // if ($exception instanceof APIException || $exception instanceof ModelNotFoundException ) {
 
-        $errors = array();
+    //     $errors = array();
 
-        if( is_array( json_decode($exception->getMessage()) ) ){
-            foreach( json_decode($exception->getMessage()) as $key=>$value){
-            $errors[] = [
-            'status' =>false ,
-            'error' => $value ,
-            ];
-        }
+    //     if( is_array( json_decode($exception->getMessage()) ) ){
+    //         foreach( json_decode($exception->getMessage()) as $key=>$value){
+    //         $errors[] = [
+    //         'status' =>false ,
+    //         'error' => $value ,
+    //         ];
+    //     }
 
-        } else {
-            $errors = [
-                'status' =>false ,
-                'error' => $exception->getMessage()
-            ];
-        }
+    //     } else {
+    //         $errors = [
+    //             'status' =>false ,
+    //             'error' => $exception->getMessage()
+    //         ];
+    //     }
 
-        return response()->json($errors)->setStatusCode(500);
+    //     return response()->json($errors)->setStatusCode(500);
 
-    }
-
+    // }
 
 
     return parent::render($request, $exception);

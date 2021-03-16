@@ -7,10 +7,12 @@ async function editSponsorShipsControllerInit($http, $page, $apiRequest) {
     object.beneficiary_birthdate = new Date(object.beneficiary_birthdate);
 
     const countries = await $apiRequest.config("countries").getData();
+    const places = await $apiRequest.config("places").getData();
 
     const init = {
         object: object,
         countries: countries,
+        places: places,
     };
     return init;
 }
@@ -18,6 +20,7 @@ async function editSponsorShipsControllerInit($http, $page, $apiRequest) {
 function editSponsorShipsController($scope, $page, $apiRequest, $init) {
     $scope.object = $init.object;
     $scope.countries = $init.countries;
+    $scope.places = $init.places;
 
     $scope.updateSponsorShips = $apiRequest.config(
         {

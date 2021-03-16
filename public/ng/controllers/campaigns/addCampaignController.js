@@ -1,10 +1,13 @@
 async function addCampaignControllerInit($apiRequest) {
     
-    let sections = await $apiRequest.config("sections").getData();
+    const sections = await $apiRequest.config("sections").getData();
     sections.push({id:null , name:"اختر قسم"})
 
-    let init = {
+    const places = await $apiRequest.config("places").getData();
+
+    const init = {
         sections: sections,
+        places: places,
     };
 
 
@@ -23,9 +26,11 @@ function addCampaignController($scope, $location, $apiRequest, $page, $init) {
             archived: false,
             section_id: null,
         },
+        places:[],
         funded:false
     };;
     $scope.sections = $init.sections;
+    $scope.places = $init.places;
 
     $scope.createCampaign = $apiRequest.config(
         {

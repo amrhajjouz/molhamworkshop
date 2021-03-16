@@ -32,8 +32,8 @@ class CaseController extends BaseController {
             $object->status = $data['status'];
             // $object->funded = 0;
             // $object->cancelled = 0;
-
-            $object->save($request->target);
+            $options = ['target' => $request->target , "places" => $request->places ];
+            $object->save($options);
 
             
             return $this->_response($object);
@@ -55,7 +55,11 @@ class CaseController extends BaseController {
             $object->country_id = $data['country_id'];
             $object->status = $data['status'];
             
-            $object->save($data['target']);
+
+            $options = ['target' => $request->target , "places" => $request->places ];
+
+
+            $object->save($options);
             
             return $this->_response($object);
 

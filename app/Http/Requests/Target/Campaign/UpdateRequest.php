@@ -31,6 +31,7 @@ class UpdateRequest extends BaseRequest
             'name' => ['required' ,'string', 'between:3,100'],
             'funded' => ['required'],
             'target' => ['required' , 'array'],
+            'places' => ['nullable', 'array'],
         ];
     }
 

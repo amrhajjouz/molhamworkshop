@@ -1,0 +1,49 @@
+<include-header />
+
+<form class="row" name="updatePlaceForm" request="updatePlace">
+      <div class="col-12 col-md-6">
+          <div class="form-group">
+              <label for="name">اسم المكان</label>
+              <input type="text" class="form-control" ng-class="(updatePlace.errors.name != null) ? 'is-invalid' : ''"
+                  id="name" ng-model="object.name" ng-change="updatePlace.errors.name = null" placeholder="الاسم.."
+                  required>
+              <div ng-show="updatePlace.errors.name != null" class="invalid-feedback">
+                  {{ updatePlace.errors.name[0] }}</div>
+          </div>
+      </div>
+
+ 
+
+      <div class="col-12 col-md-6">
+          <div class="form-group">
+              <label for="type">النوع</label>
+              <select class="form-control" ng-model="object.type"
+                  ng-class="(updatePlace.errors.type != null) ? 'is-invalid' : ''" id="type"
+                  ng-change="updatePlace.errors.type = null" ng-options="type.id as type.name for type in types"
+                  placeholder="يرجى اختيار نوع..">
+              </select>
+              <div ng-show="updatePlace.errors.type != null" class="invalid-feedback">
+                  {{ updatePlace.errors.type[0] }}</div>
+          </div>
+      </div>
+
+           <div class="col-12 col-md-6" ng-show="object.type == 'province'">
+               <div class="form-group">
+                   <label for="name">الدولة</label>
+                   <select class="form-control" ng-model="object.country_id"
+                       ng-class="(updatePlace.errors.country_id != null) ? 'is-invalid' : ''" id="country_id"
+                       ng-change="updatePlace.errors.country_id = null"
+                       ng-options="country.id as country.name for country in countries" placeholder="يرجى اختيار دولة.."
+                       required>
+                   </select>
+                   <div ng-show="updatePlace.errors.country_id != null" class="invalid-feedback">
+                       {{ updatePlace.errors.country_id[0] }}</div>
+               </div>
+           </div>
+
+
+
+    <div class="col-12">
+        <submit-button form="updatePlaceForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+</form>

@@ -29,6 +29,8 @@ class CreateRequest extends BaseRequest
             'country_id' => ['required' ,'numeric'],
             'target' => ['required' ,'array'],
             'status' => ['required'],
+            'places' => ['nullable' , 'array'],
+
         ];
     }
     

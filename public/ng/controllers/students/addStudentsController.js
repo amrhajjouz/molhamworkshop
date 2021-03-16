@@ -2,9 +2,11 @@ async function addStudentsControllerInit($apiRequest) {
     
     
     let countries =await  $apiRequest.config("countries").getData();
+    let places = await $apiRequest.config("places").getData();
 
     let init = {
         countries: countries,
+        places: places,
     };
 
     return init;
@@ -23,9 +25,11 @@ function addStudentsController($scope, $location, $apiRequest, $page, $init) {
             archived: false,
             beneficiaries_count: 1,
         },
+        places: [],
     };
 
     $scope.countries = $init.countries;
+    $scope.places = $init.places;
 
     $scope.semesters = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     $scope.availableSemester = [1];

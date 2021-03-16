@@ -44,4 +44,6 @@ class Helper{
         // dd($year , $month , $casesInThisMonth);
         return $serialNumber;
     }
+
+
 }

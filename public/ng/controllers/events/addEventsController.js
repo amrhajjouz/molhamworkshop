@@ -1,13 +1,18 @@
 async function addEventsControllerInit($apiRequest) {
 
+    const places = await $apiRequest.config("places").getData();
+
     let init = {
+        places: places,
     };
 
     return init;
 }
 
-
 function addEventsController($scope, $location, $apiRequest, $page, $init) {
+
+    $scope.places = $init.places;
+
     $scope.object = {
         public_visibility: false,
         verified: false,
@@ -21,8 +26,8 @@ function addEventsController($scope, $location, $apiRequest, $page, $init) {
             archived: false,
             beneficiaries_count: 0,
         },
+        places:[]
     };
-
 
     $scope.createEvent = $apiRequest.config(
         {

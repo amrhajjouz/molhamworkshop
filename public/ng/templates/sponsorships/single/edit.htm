@@ -147,7 +147,19 @@
                   {{ updateSponsorShips.errors.visible[0] }}</div>
           </div>
       </div>
-
+<div class="col-12 col-md-6">
+          <div class="form-group">
+              <label for="place">المكان</label>
+              <select class="form-control" ng-model="object.places[0].id"
+                  ng-class="(updateSponsorShips.errors.places[0] != null) ? 'is-invalid' : ''" id="places[0]"
+                  ng-change="updateSponsorShips.errors.places[0] = null"
+                  ng-options="place.id as place.name for place in places" placeholder="يرجى اختيار مكان.."
+                  required>
+              </select>
+              <div ng-show="updateSponsorShips.errors.places[0] != null" class="invalid-feedback">
+                  {{ updateSponsorShips.errors.places[0][0] }}</div>
+          </div>
+      </div>
 
 
     <div class="col-12">

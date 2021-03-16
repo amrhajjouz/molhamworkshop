@@ -2,17 +2,19 @@
 
 namespace App\Models;
 
-use App\Common\Traits\HasTarget;
+// use App\Common\Traits\HasTarget;
 
 use App\Common\Base\BaseTargetModel;
 
 class Event extends BaseTargetModel
 {
-     use HasTarget;
+     
+     // use HasTarget;
 
      protected $table = 'events';
      protected $guarded = [];
      protected $model_path = '\App\Models\Event';
+     protected $has_places = true;
 
      protected $casts = [
           'verified' => 'boolean',
@@ -26,7 +28,20 @@ class Event extends BaseTargetModel
           $obj = $this->toArray();
 
           $target = $this->parent->toArray();
+          $places = $this->places;
+          $_places = [];
 
+          if ($places) {
+               foreach ($places as $item) {
+                    $_place = (object)[
+                         'id' => $item->id,
+                         'name' => $item->name,
+                         'type' => $item->type,
+                    ];
+
+                    $_places[] = $_place;
+               }
+          }
           unset( $obj['parent']);
           return (object)array_merge($obj, [
                'target' => [
@@ -36,7 +51,8 @@ class Event extends BaseTargetModel
                     'documented' => $target['documented'],
                     'archived' => $target['archived'],
 
-               ]
+               ],
+               'places' => $_places
           ]);
      }
 

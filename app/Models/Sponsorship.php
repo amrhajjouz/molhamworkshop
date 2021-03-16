@@ -10,6 +10,7 @@ class Sponsorship extends BaseTargetModel
 {
      protected $table = 'sponsorships';
      protected $guarded = [];
+     protected $has_places = true;
 
      protected $casts = [
           'sponsored' => 'boolean',
@@ -46,6 +47,21 @@ class Sponsorship extends BaseTargetModel
 
           unset($this->parent);
 
+          $places = $this->places;
+          $_places = [];
+
+          if ($places) {
+               foreach ($places as $item) {
+                    $_place = (object)[
+                         'id' => $item->id,
+                         'name' => $item->name,
+                         'type' => $item->type,
+                    ];
+
+                    $_places[] = $_place;
+               }
+          }
+
           $obj = $this->toArray();
           
           return (object)array_merge($obj , [ 
@@ -60,6 +76,7 @@ class Sponsorship extends BaseTargetModel
                     'archived' => $target['archived'],
                     'section_id' => $target['section_id'],
                ],
+                "places" => $_places,
                'section' =>$section,
                'category' =>$category,
           ]);
