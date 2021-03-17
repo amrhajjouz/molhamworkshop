@@ -39,7 +39,31 @@
                        {{ updatePlace.errors.country_id[0] }}</div>
                </div>
            </div>
+    <div class="col-12 col-md-6" ng-show="!['province' , 'city'].includes(object.type) && object.type != 'city'">
+            <div class="form-group">
+                <label for="parent_type">نوع المكان الذي تتبع له</label>
+                <select class="form-control" ng-model="object.parent_type"
+                    ng-class="(createPlace.errors.parent_type != null) ? 'is-invalid' : ''" id="parent_type"
+                    ng-change="handleChangeParentType()">
+                    <option  ng-value="'city'">مدينة</option>
+                    <option  ng-value="'province'">محافظة</option>
+                </select>
+            </div>
+        </div>
 
+
+        <div class="col-12 col-md-6" ng-show="object.type=='city' || object.type != 'province' && object.parent_type" >
+            <div class="form-group">
+                <label for="parent_id">المكان الذي تتبع له</label>
+                <select class="form-control" ng-model="object.parent_id"
+                    ng-class="(createPlace.errors.parent_id != null) ? 'is-invalid' : ''" id="parent_id"
+                    ng-change="createPlace.errors.parent_id = null"
+                    ng-options="item.id as item.name for item in parentPlaces" >
+                </select>
+                <div ng-show="createPlace.errors.parent_id != null" class="invalid-feedback">
+                    {{ createPlace.errors.parent_id[0] }}</div>
+            </div>
+        </div>
 
 
     <div class="col-12">
