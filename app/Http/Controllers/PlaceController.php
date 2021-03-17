@@ -97,20 +97,36 @@ class PlaceController extends BaseController
             $result = [];
             $data = null;
 
-            if ($request->has('q')) {
+            $places = $this->model::where(function($q) use($request){
+                if($request->has('type')){
+                    $q->where('type' , $request->type);
+                }
 
-                $places = $this->model::where('name', 'like', "%" . $request->q . "%")->take(10)->get();
-            } else {
+                if ($request->has('q')) {
 
-                $places = $this->model::take(10)->get();
-            }
+                    $q->where('name', 'like', "%" . $request->q . "%");
+                }
+
+            })
+            ->take(10)
+            ->get();
+
+
+            // dd($places);
+            // if ($request->has('q')) {
+
+            //     $places = $this->model::where('name', 'like', "%" . $request->q . "%")->take(10)->get();
+            // } else {
+
+            //     $places = $this->model::take(10)->get();
+            // }
 
             foreach ($places as $place) {
 
                 $obj = new \stdClass();
                 $obj->id = $place->id;
                 $obj->name = $place->name;
-
+                
 
                 $result[] = $this->search_transform($place);
             }
@@ -127,13 +143,13 @@ class PlaceController extends BaseController
 
         $obj = new \stdClass();
         $obj->id = $place->id;
-        $obj->name = $place->name;
+        $obj->name = Helper::getFullNamePlace($place);
 
-        $parent = $place->parent;
+        // $parent = $place->parent;
 
-        if ($parent) {
-            $obj->name .=  '-'  . $parent->name;
-        }
+        // if ($parent) {
+        //     $obj->name .=  '-'  . $parent->name;
+        // }
 
         return $obj;
     }
