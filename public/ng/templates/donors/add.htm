@@ -34,14 +34,14 @@
 
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="swish_number">swish number</label>
+            <label for="swish_number">رقم السويش</label>
             <input type="text" class="form-control" ng-class="(createDonor.errors.swish_number != null) ? 'is-invalid' : ''" id="swish_number" ng-model="donor.swish_number" ng-change="createDonor.errors.swish_number = null" placeholder="Swish number" autofocus="off" autocomplete="off" required>
             <div ng-show="createDonor.errors.swish_number != null" class="invalid-feedback">{{ createDonor.errors.swish_number[0] }}</div>
         </div>
     </div>
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="whatsapp_number">Whatsapp number</label>
+            <label for="whatsapp_number">رقم الواتس اب</label>
             <input type="text" class="form-control" ng-class="(createDonor.errors.whatsapp_number != null) ? 'is-invalid' : ''" id="whatsapp_number" ng-model="donor.whatsapp_number" ng-change="createDonor.errors.whatsapp_number = null" placeholder="Whatsapp number" autofocus="off" autocomplete="off" required>
             <div ng-show="createDonor.errors.whatsapp_number != null" class="invalid-feedback">{{ createDonor.errors.whatsapp_number[0] }}</div>
         </div>
