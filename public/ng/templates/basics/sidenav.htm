@@ -1,5 +1,4 @@
 <ul class="navbar-nav">
-
     <li class="nav-item">
         <a id="home-nav" class="nav-link" href="{{ $r('home') }}">
             <i class="fe fe-home"></i> البداية
@@ -7,7 +6,14 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#users-navs" role="button" aria-expanded="false">
+        <a
+            class="nav-link"
+            href="javascript:;"
+            data-toggle="collapse"
+            data-target="#users-navs"
+            role="button"
+            aria-expanded="false"
+        >
             <i class="fe fe-users"></i> المستخدمون
         </a>
         <div class="collapse" id="users-navs">
@@ -25,9 +31,16 @@
             </ul>
         </div>
     </li>
-   
+
     <li class="nav-item">
-        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#cases-navs" role="button" aria-expanded="false">
+        <a
+            class="nav-link"
+            href="javascript:;"
+            data-toggle="collapse"
+            data-target="#cases-navs"
+            role="button"
+            aria-expanded="false"
+        >
             <i class="fe fe-command"></i>الحالات
         </a>
         <div class="collapse" id="cases-navs">
@@ -45,10 +58,43 @@
             </ul>
         </div>
     </li>
-  
     <li class="nav-item">
-        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#campaign-navs" role="button" aria-expanded="false">
-            <i class="fe fe-volume-1"></i>الحملات 
+        <a
+            class="nav-link"
+            href="javascript:;"
+            data-toggle="collapse"
+            data-target="#donors-navs"
+            role="button"
+            aria-expanded="false"
+        >
+            <i class="fe fe-book"></i> المتبرعون
+        </a>
+        <div class="collapse" id="donors-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('donors.add') }}" class="nav-link">
+                        متبرع جديد
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('donors') }}" class="nav-link">
+                        قائمة المتبرعين
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+
+    <li class="nav-item">
+        <a
+            class="nav-link"
+            href="javascript:;"
+            data-toggle="collapse"
+            data-target="#campaign-navs"
+            role="button"
+            aria-expanded="false"
+        >
+            <i class="fe fe-volume-1"></i>الحملات
         </a>
         <div class="collapse" id="campaign-navs">
             <ul class="nav nav-sm flex-column">
@@ -65,10 +111,17 @@
             </ul>
         </div>
     </li>
-    
+
     <li class="nav-item">
-        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#sponsorships-navs" role="button" aria-expanded="false">
-            <i class="fe fe-dollar-sign"></i>الكفالات 
+        <a
+            class="nav-link"
+            href="javascript:;"
+            data-toggle="collapse"
+            data-target="#sponsorships-navs"
+            role="button"
+            aria-expanded="false"
+        >
+            <i class="fe fe-dollar-sign"></i>الكفالات
         </a>
         <div class="collapse" id="sponsorships-navs">
             <ul class="nav nav-sm flex-column">
@@ -85,16 +138,23 @@
             </ul>
         </div>
     </li>
-  
+
     <li class="nav-item">
-        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#students-navs" role="button" aria-expanded="false">
-            <i class="fe fe-book"></i>الطلاب 
+        <a
+            class="nav-link"
+            href="javascript:;"
+            data-toggle="collapse"
+            data-target="#students-navs"
+            role="button"
+            aria-expanded="false"
+        >
+            <i class="fe fe-book"></i>الطلاب
         </a>
         <div class="collapse" id="students-navs">
             <ul class="nav nav-sm flex-column">
                 <li class="nav-item">
                     <a href="{{ $r('students.add') }}" class="nav-link">
-                       طالب جديد
+                        طالب جديد
                     </a>
                 </li>
                 <li class="nav-item">
@@ -105,16 +165,23 @@
             </ul>
         </div>
     </li>
-  
+
     <li class="nav-item">
-        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#events-navs" role="button" aria-expanded="false">
-            <i class="fe fe-radio"></i>المناسبات 
+        <a
+            class="nav-link"
+            href="javascript:;"
+            data-toggle="collapse"
+            data-target="#events-navs"
+            role="button"
+            aria-expanded="false"
+        >
+            <i class="fe fe-radio"></i>المناسبات
         </a>
         <div class="collapse" id="events-navs">
             <ul class="nav nav-sm flex-column">
                 <li class="nav-item">
                     <a href="{{ $r('events.add') }}" class="nav-link">
-                       مناسبة جديدة
+                        مناسبة جديدة
                     </a>
                 </li>
                 <li class="nav-item">
@@ -125,16 +192,23 @@
             </ul>
         </div>
     </li>
-   
+
     <li class="nav-item">
-        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#fundraisers-navs" role="button" aria-expanded="false">
-            <i class="fe fe-shopping-bag"></i>حملات جمع التبرعات 
+        <a
+            class="nav-link"
+            href="javascript:;"
+            data-toggle="collapse"
+            data-target="#fundraisers-navs"
+            role="button"
+            aria-expanded="false"
+        >
+            <i class="fe fe-shopping-bag"></i>حملات جمع التبرعات
         </a>
         <div class="collapse" id="fundraisers-navs">
             <ul class="nav nav-sm flex-column">
                 <li class="nav-item">
                     <a href="{{ $r('fundraisers.add') }}" class="nav-link">
-                       حملة جديد
+                        حملة جديد
                     </a>
                 </li>
                 <li class="nav-item">
@@ -144,16 +218,24 @@
                 </li>
             </ul>
         </div>
-   
+    </li>
+
     <li class="nav-item">
-        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#places-navs" role="button" aria-expanded="false">
+        <a
+            class="nav-link"
+            href="javascript:;"
+            data-toggle="collapse"
+            data-target="#places-navs"
+            role="button"
+            aria-expanded="false"
+        >
             <i class="fe fe-map"></i> الأماكن
         </a>
         <div class="collapse" id="places-navs">
             <ul class="nav nav-sm flex-column">
                 <li class="nav-item">
                     <a href="{{ $r('places.add') }}" class="nav-link">
-                       مكان جديد
+                        مكان جديد
                     </a>
                 </li>
                 <li class="nav-item">
@@ -164,5 +246,4 @@
             </ul>
         </div>
     </li>
-    
 </ul>

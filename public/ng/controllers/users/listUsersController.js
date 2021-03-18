@@ -3,6 +3,6 @@ function listUsersControllerInit ($apiRequest) {
 }
 
 function listUsersController ($scope, $init) {
-    
+
     $scope.users = $init;
 }

@@ -13,6 +13,7 @@ use App\Http\Controllers\Target\{
     FundraiserController
 };
 
+use App\Http\Controllers\DonorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,4 +93,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/fundraisers', [FundraiserController::class, 'create']);
     Route::put('/fundraisers', [FundraiserController::class, 'update']);
     Route::get('/fundraisers/{id}', [FundraiserController::class, 'retrieve']);
+    Route::get('/donors', [DonorController::class, 'list']);
+    Route::post('/donors', [DonorController::class, 'create']);
+    Route::put('/donors', [DonorController::class, 'update']);
+    Route::get('/donors/{id}', [DonorController::class, 'retrieve']);
 });

@@ -475,6 +475,100 @@
             };
         });
         
+        app.directive('select2', function ($rootScope, $page, $timeout) {
+            
+            return {
+                restrict: 'E',
+                transclude: true,
+                scope : {
+                    model : '@',
+                    ajaxUrl : '@',
+                    placeholder: '@',
+                    multiple: '@',
+                    minLength: '@',
+                },
+                replace : true,
+                //template: '<div>@{{ url }}</div>',
+                template: '<select dir="rtl" class="form-control" ng-transclude></select>',
+                link : function (scope, element, attrs) {
+                    
+                    $timeout(function () {
+                        
+                        var select2Config = {
+                            multiple: (element[0].multiple) ? true : false,
+                            placeholder: (attrs.placeholder) ? attrs.placeholder : null,
+                            minimumInputLength: (attrs.minLength) ? attrs.minLength : ((attrs.ajaxUrl) ? 1 : 0),
+                        };
+                        
+                        if (attrs.ajaxUrl) {
+                            
+                            var path = attrs.ajaxUrl;
+                            var query = {};
+                            
+                            if (attrs.ajaxUrl.indexOf("?") != -1) {
+                                var queryStr = attrs.ajaxUrl.substr(attrs.ajaxUrl.indexOf("?") + 1);
+                                path = attrs.ajaxUrl.substr(0, attrs.ajaxUrl.indexOf("?"));
+                                query = JSON.parse('{"' + decodeURI(queryStr).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+                            }
+                            
+                            select2Config.ajax = {
+                                url: apiUrl + path,
+                                dataType: 'json',
+                                data: function (params) {
+                                    return Object.assign(query, {q: params.term});
+                                },
+                                processResults: function (data) {
+                                    // Transforms the top-level key of the response object from 'items' to 'results'
+                                    return {
+                                        results: data
+                                    };
+                                }
+                            };
+                            select2Config.delay = 250;
+                            select2Config.allowClear = false;
+                        }
+                        
+                        if (element[0].multiple) {
+                            element[0].setAttribute('multiple', 'multiple');
+                        }
+                        
+                        var elementScope = angular.element(element).scope();
+                        
+                        element.on("change", function () {
+                            eval('elementScope.' + attrs.model + ' = ' + JSON.stringify($(element).val()) + ';');
+                            elementScope.$apply();
+                        });
+                        
+                        var initOptions = element[0].getElementsByTagName('OPTION');
+                        var initModelValue = [];
+                        var initOptionsToRemove = [];
+                        
+                        for (i=0; i<initOptions.length; i++) {
+                            if (attrs.ajaxUrl && !initOptions[i].selected)
+                                initOptionsToRemove.push(initOptions[i]);                            
+                            
+                            if (element[0].multiple && initOptions[i].selected)
+                                initModelValue.push(initOptions[i].value);
+                            else if (initOptions[i].selected) {
+                                initModelValue = initOptions[i].value;
+                            }
+                            
+                        }
+                        
+                        for (i=0; i<initOptionsToRemove.length; i++) {
+                            initOptionsToRemove[i].remove();
+                        }
+                        
+                        eval('elementScope.' + attrs.model + ' = ' + JSON.stringify(initModelValue) + ';');
+                        elementScope.$apply();
+                        
+                        $(element).select2(select2Config);
+                    });
+                    
+                }
+            };
+        });
+        
         app.service('$page', function($location, $route) {
             
             var initProperties = {routeName : null, routeParams : {}, controllerName : null, templateDirectory: '', prevUrl : null, currentUrl : null, title : '', alignItemsCenter : false, sidenavHidden : false, sidenavLoaded : false, loading : false, headerTemplate : null, includedTemplate : null, templatesLoaded : false, sendingHttpRequest : false};
