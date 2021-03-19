@@ -143,7 +143,11 @@ class PlaceController extends BaseController
 
         $obj = new \stdClass();
         $obj->id = $place->id;
-        $obj->name = Helper::getFullNamePlace($place);
+        $name = Helper::getFullNamePlace($place);
+
+        // $obj->name = Helper::getFullNamePlace($place);
+        $obj->name = $name;
+        $obj->text = $name;
 
         // $parent = $place->parent;
 

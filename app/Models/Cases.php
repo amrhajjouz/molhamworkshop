@@ -25,20 +25,21 @@ class Cases extends BaseTargetModel
           $target = $this->parent->toArray();
           $section = $this->parent->section;
           $category = $this->parent->category;
-          $places = $this->places;
+          $place = $this->places()->first();
           $_places = [];
      
-          if($places){
-               foreach ($places as $item) {
+          if($place){
+
                     $_place = (object)[
-                         'id' => $item->id,
-                         'name' => $item->name,
-                         'type' => $item->type,
+                         'id' => $place->id,
+                         'name' => $place->name,
+                         'text' => $place->name,
+                         'type' => $place->type,
                     ];
 
                     $_places [] = $_place;
+                    $obj['place_id'] = $place->id;
                }
-          }
           $response =  (object)array_merge($obj, [
                'country' => [
                     'name' => $this->country->name
@@ -52,7 +53,8 @@ class Cases extends BaseTargetModel
                     'section_id' => $target['section_id'],
 
                ],
-               "places" => $_places
+               "places" => $_places ,
+
           ]);
           
           if($section){
@@ -66,6 +68,7 @@ class Cases extends BaseTargetModel
                     'name' =>$category->name,
                ];
           }
+         
           return $response;
      }
 

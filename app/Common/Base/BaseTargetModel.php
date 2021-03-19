@@ -106,14 +106,15 @@ class BaseTargetModel extends Model
             $target->save();
 
             
-            if ($this->has_places && isset($options['places'])) {
-                $this->places()->attach($options['places']);
+            if($this->has_places && isset($options['places_ids'])){
+
+                    $this->places()->attach($options['places_ids']);
+                
             }
+
             $this->target_id = $target->id;
-            
             return parent::save();
         } else {
-
             /////////////////////// update /////////////////////////
             $target = $this->parent;
 
@@ -131,7 +132,7 @@ class BaseTargetModel extends Model
             $target->save();
 
 
-            if ($this->has_places && isset($options['places'])) {
+            if ($this->has_places && isset($options['places_ids'])) {
 
                 // /////////////////////// delete /////////////////////////
                 // $places = $this->places;
@@ -140,9 +141,10 @@ class BaseTargetModel extends Model
                 //     $this->places()->detach([$item->id]);
                 // }
                 
-                foreach($options['places'] as $key => $val){
-                    if(!is_array($val)) continue;
-                    $attach = Place::find($val['id']);
+                foreach($options['places_ids'] as $key => $val){
+                    // dd($options  , $val);
+                    // if(!is_array($val)) continue;
+                    $attach = Place::find($val);
 
                     // $prev = $this->places()->attach($attach);
                     $prev = $this->places()->sync($attach);

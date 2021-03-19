@@ -32,7 +32,7 @@ class CaseController extends BaseController {
             $object->status = $data['status'];
             // $object->funded = 0;
             // $object->cancelled = 0;
-            $options = ['target' => $request->target , "places" => $request->places ];
+            $options = ['target' => $request->target , "places_ids" =>[ $request->place_id] ];
             $object->save($options);
 
             
@@ -54,9 +54,9 @@ class CaseController extends BaseController {
             $object->serial_number =Helper::getCaseSerialNumber();
             $object->country_id = $data['country_id'];
             $object->status = $data['status'];
-            
 
-            $options = ['target' => $request->target , "places" => $request->places ];
+
+            $options = ['target' => $request->target, "places_ids" => [$request->place_id]];
 
 
             $object->save($options);

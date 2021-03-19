@@ -37,7 +37,7 @@ function addCaseController($scope, $location, $apiRequest, $page, $init) {
             beneficiaries_count: 0,
             category_id: null,
         },
-        places:[],
+        place_id:null,
         status:'unfunded'
     };
 

@@ -32,7 +32,7 @@ class UpdateRequest extends BaseRequest
             'country_id' => ['required' ,'numeric'],
             'status' => ['required'],
             'target' => ['required'],
-            'places' => ['nullable', 'array'],
+            'place_id' => ['required', 'numeric'],
             // 'cancelled' => ['required'],
         ];
     }

@@ -125,7 +125,7 @@
     <script src="{{ asset('libs/list-js/dist/list.min.js') }}"></script>
     <script src="{{ asset('libs/quill/dist/quill.min.js') }}"></script>
     <script src="{{ asset('libs/dropzone/dist/min/dropzone.min.js') }}"></script>
-    <script src="{{ asset('libs/select2/dist/js/select2.min.js') }}"></script>
+    <script src="{{ asset('libs/select2/dist/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('libs/chart-js/Chart.extension.min.js') }}"></script>
     
     <script src="{{ asset('js/theme.min.js') }}"></script>

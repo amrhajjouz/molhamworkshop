@@ -23,7 +23,6 @@ function editCaseController($scope, $page, $apiRequest, $init) {
     $scope.object = $init.object;
     $scope.countries = $init.countries;
     $scope.places = $init.places;
-    
     if(!$scope.object.places) $scope.object.places = [];
     
     $scope.statuses = [
