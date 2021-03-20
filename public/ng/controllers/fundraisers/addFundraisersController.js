@@ -22,6 +22,7 @@ function addFundraisersController(
     $scope.object = {
         public_visibility: false,
         verified: false,
+        donor_id:null,
         target: {
             required: 0,
             visible: true,
@@ -30,6 +31,15 @@ function addFundraisersController(
             section_id: null,
         },
     };
+
+
+        $scope.$watchCollection(
+            "object.donor_id",
+            (oldData, newData) => {
+                $scope.createFundraiser.errors.donor_id = null;
+            },
+            true
+        );
 
     $scope.createFundraiser = $apiRequest.config(
         {

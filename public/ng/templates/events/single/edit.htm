@@ -169,14 +169,42 @@
   <div class="col-12 col-md-6">
           <div class="form-group">
               <label for="name">المكان</label>
-              <select class="form-control" ng-model="object.places[0].id"
-                  ng-class="(updateEvent.errors.places[0] != null) ? 'is-invalid' : ''" id="places[0]"
-                  ng-change="updateEvent.errors.places[0] = null"
-                  ng-options="place.id as place.name for place in places" placeholder="يرجى اختيار مكان.."
-                  required>
-              </select>
-              <div ng-show="updateEvent.errors.places[0] != null" class="invalid-feedback">
-                  {{ updateEvent.errors.places[0][0] }}</div>
+               <select2
+                model="object.places_ids"
+                ajax-url="places/search"
+                multiple
+            >
+                <option
+                    selected
+                    ng-repeat="p in object.places"
+                    value="{{p.id}}"
+                >
+                    {{p.text}}
+                </option>
+            </select2>
+            <div class="text-danger">
+                {{ updateEvent.errors.places_ids[0]}}
+            </div>
+          </div>
+      </div>
+
+  <div class="col-12 col-md-6">
+          <div class="form-group">
+              <label for="name">المتبرع</label>
+               <select2
+                model="object.donor_id"
+                ajax-url="donors/search"
+            >
+                <option
+                    selected
+                    value="{{object.donor.id}}"
+                >
+                    {{object.donor.text}}
+                </option>
+            </select2>
+            <div class="text-danger">
+                {{ updateEvent.errors.donor_id[0]}}
+            </div>
           </div>
       </div>
 

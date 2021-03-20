@@ -17,6 +17,16 @@ async function editSponsorShipsControllerInit($http, $page, $apiRequest) {
     return init;
 }
 
+    // to reinitialize place errors
+    $scope.$watchCollection(
+        "object.place_id",
+        (oldData, newData) => {
+            $scope.editSponsorShipsController.errors.place_id = null;
+        },
+        true
+    );
+
+
 function editSponsorShipsController($scope, $page, $apiRequest, $init) {
     $scope.object = $init.object;
     $scope.countries = $init.countries;

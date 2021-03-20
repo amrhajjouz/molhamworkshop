@@ -28,6 +28,7 @@ class UpdateRequest extends BaseRequest
             'public_visibility' => ['required' , 'boolean'],
             'verified' => ['required' , 'boolean'],
             'target' => ['required' , 'array'],
+            'donor_id' => ['required', 'numeric'],
         ];
     }
     

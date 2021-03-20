@@ -31,6 +31,7 @@ class UpdateRequest extends BaseRequest
             'country_id' => ['required' ,'numeric'],
             'sponsored' => ['required' ,'boolean'],
             'target' => ['required' ,'array'],
+            'place_id' => ['required', 'numeric'],
         ];
     }
 

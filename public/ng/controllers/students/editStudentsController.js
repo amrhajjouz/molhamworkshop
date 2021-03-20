@@ -14,12 +14,23 @@ async function editStudentsControllerInit($http, $page, $apiRequest) {
     return init;
 }
 
+
+
 function editStudentsController($scope, $page, $apiRequest, $init) {
     $scope.countries = $init.countries;
     $scope.places = $init.places;
     $scope.object = $init.object;
 
     if (!$scope.object.places) $scope.object.places = [];
+
+    // to reinitialize place errors
+    $scope.$watchCollection(
+        "object.place_id",
+        (oldData, newData) => {
+            $scope.updateStudent.errors.place_id = null;
+        },
+        true
+    );
 
     $scope.updateStudent = $apiRequest.config(
         {

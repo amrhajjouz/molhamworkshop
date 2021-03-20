@@ -19,18 +19,26 @@ async function editCaseControllerInit($http, $page, $apiRequest) {
 }
 
 function editCaseController($scope, $page, $apiRequest, $init) {
-
     $scope.object = $init.object;
     $scope.countries = $init.countries;
     $scope.places = $init.places;
-    if(!$scope.object.places) $scope.object.places = [];
-    
+    if (!$scope.object.places) $scope.object.places = [];
+
     $scope.statuses = [
         { id: "funded", name: "تم كفالتها" },
         { id: "unfunded", name: "غير مكفولة" },
         { id: "canceled", name: "ملغاة" },
         { id: "spent", name: "تم صرفها" },
     ];
+
+    // to reinitialize place errors
+    $scope.$watchCollection(
+        "object.place_id",
+        (oldData, newData) => {
+            $scope.updateCase.errors.place_id = null;
+        },
+        true
+    );
 
     $scope.updateCase = $apiRequest.config(
         {

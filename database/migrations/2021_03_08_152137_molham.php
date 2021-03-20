@@ -112,6 +112,7 @@ class Molham extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('target_id')->index()->nullable();
+            $table->bigInteger('donor_id')->index();
             $table->date('date')->index();
             $table->boolean('verified' )->index()->default(0);
             $table->boolean('public_visibility')->index()->default(0);
@@ -125,6 +126,7 @@ class Molham extends Migration
         Schema::create('fundraisers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('target_id')->index()->nullable();
+            $table->bigInteger('donor_id')->index();
             $table->boolean('verified' )->index()->default(0);
             $table->boolean('public_visibility')->index()->default(0);
 

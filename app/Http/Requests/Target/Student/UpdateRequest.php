@@ -35,7 +35,7 @@ class UpdateRequest extends BaseRequest
             // 'semesters_left' => ['required' ,'numeric'],
             'current_semester' => ['required', 'numeric'],
             'target' => ['nullable'],
-            'places' => ['nullable', 'array'],
+            'place_id' => ['required', 'numeric'],
         ];
     }
 }

@@ -18,11 +18,27 @@ class Fundraiser extends BaseTargetModel
           'public_visibility' => 'boolean',
       ];
 
+     public function donor()
+     {
+          return $this->hasOne('\App\Models\Donor', 'id', 'donor_id');
+     }
+
      public function transform()
      {
           $obj = $this->toArray();
           $parent = $this->parent->toArray();
           $section = $this->parent->section;
+          $donor = $this->donor;
+          $_donor = null;
+          if ($donor) {
+               $_donor = (object)[
+                    'id' => $donor->id,
+                    'name' => $donor->name,
+                    'text' => $donor->name,
+               ];
+          }
+
+
           if($section){
                unset($section->create_at);
                unset($section->update_at);
@@ -37,7 +53,9 @@ class Fundraiser extends BaseTargetModel
                     'visible' => $parent['visible'],
                     'section_id' => $parent['section_id'],
                ],
-               'section'=>$section
+               'section'=>$section ,
+               'donor' => $_donor
+
           ]);
      }
 

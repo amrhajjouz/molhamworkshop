@@ -78,6 +78,19 @@
                          <h4 ng-if="!object.target.visible">لا</h4>
                      </div>
                  </div>
+                 <hr>
+                  <div class="row align-items-center" ng-show="object.donor">
+                     <div class="col">
+                         <h4 class="mb-0 text-muted">المتبرع</h4>
+                     </div>
+                     <div class="col-auto">
+                         <h4>{{ object.donor.name }}</h4>
+                     </div>
+                 </div>
+
+                <div ng-show="object.donor">
+                    <hr />
+                </div>
             </div>
         </div>
     </div>

@@ -26,7 +26,7 @@ class FundraiserController extends BaseController {
 
             $object->verified = $data['verified'];
             $object->public_visibility = $data['public_visibility'];
-
+            $object->donor_id = $data['donor_id'];
             $options = ['target'=> $data['target']];
 
             $object->save($options);
@@ -48,7 +48,8 @@ class FundraiserController extends BaseController {
             $data = $request->validated();
             $object->verified = $data['verified'];
             $object->public_visibility = $data['public_visibility'];
-
+            $object->donor_id = $data['donor_id'];
+            
             $options = ['target' => $request->target];
 
             $object->save($options);

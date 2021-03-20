@@ -30,7 +30,7 @@ class SponsorShipController extends BaseController {
             $object->country_id = $data['country_id'];
             $object->sponsored = 0;
 
-            $options = ['target' => $request->target, "places" => $request->places];
+            $options = ['target' => $request->target , "places_ids" =>[ $request->place_id] ];
             $object->save($options);
 
             return $this->_response($object);
@@ -51,7 +51,7 @@ class SponsorShipController extends BaseController {
             $object->country_id = $data['country_id'];
             $object->sponsored = $data['sponsored'];
 
-            $options = ['target' => $request->target, "places" => $request->places];
+            $options = ['target' => $request->target , "places_ids" =>[ $request->place_id] ];
 
 
             $object->save($options);

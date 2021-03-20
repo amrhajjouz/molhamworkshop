@@ -18,18 +18,28 @@
                 </div>
 
                 <hr />
-               
-                <div class="row align-items-center" ng-if="object.youtube_video_url">
+
+                <div
+                    class="row align-items-center"
+                    ng-if="object.youtube_video_url"
+                >
                     <div class="col">
                         <h4 class="mb-0 text-muted">رابط الفيديو على يوتيوب</h4>
                     </div>
                     <div class="col-auto">
-                        <a href="{{ object.youtube_video_url }}" target="blank">{{ object.youtube_video_url }}</a>
+                        <a href="{{ object.youtube_video_url }}" target="blank"
+                            >{{ object.youtube_video_url }}</a
+                        >
                     </div>
                 </div>
-                <hr />
-               
-                <div class="row align-items-center" ng-if="object.implementation_date">
+                <div ng-if="object.youtube_video_url">
+                    <hr />
+                </div>
+
+                <div
+                    class="row align-items-center"
+                    ng-if="object.implementation_date"
+                >
                     <div class="col">
                         <h4 class="mb-0 text-muted">تاريخ التنفيذ</h4>
                     </div>
@@ -83,51 +93,63 @@
                         <h4 class="mb-0 text-muted">تم تنفيذه</h4>
                     </div>
                     <div class="col-auto">
-                          <h4 ng-if="object.implemented">نعم</h4>
-                          <h4 ng-if="!object.implemented">لا</h4>
+                        <h4 ng-if="object.implemented">نعم</h4>
+                        <h4 ng-if="!object.implemented">لا</h4>
                     </div>
                 </div>
-                 <hr />
-                 <div class="row align-items-center">
-                     <div class="col">
-                         <h4 class="mb-0 text-muted">مؤرشفة</h4>
-                     </div>
-                     <div class="col-auto">
-                         <h4 ng-if="object.target.archived">نعم</h4>
-                         <h4 ng-if="!object.target.archived">لا</h4>
-                     </div>
-                 </div>
-                 <hr />
-                 <div class="row align-items-center">
-                     <div class="col">
-                         <h4 class="mb-0 text-muted">ظاهرة</h4>
-                     </div>
-                     <div class="col-auto">
-                         <h4 ng-if="object.target.visible">نعم</h4>
-                         <h4 ng-if="!object.target.visible">لا</h4>
-                     </div>
-                 </div>
-                 <hr />
-                 <div class="row align-items-center">
-                     <div class="col">
-                         <h4 class="mb-0 text-muted">موثقة</h4>
-                     </div>
-                     <div class="col-auto">
-                         <h4 ng-if="object.target.documented">نعم</h4>
-                         <h4 ng-if="!object.target.documented">لا</h4>
-                     </div>
-                 </div>
-                 <hr />
-                  <div class="row align-items-center" ng-show="object.places[0]">
-                     <div class="col">
-                         <h4 class="mb-0 text-muted">الأماكن</h4>
-                     </div>
-                     <div class="col-auto" ng-repeat="place in object.places">
-                         <h4>{{ place.name }}</h4>
-                     </div>
-                 </div>
+                <hr />
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">مؤرشفة</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4 ng-if="object.target.archived">نعم</h4>
+                        <h4 ng-if="!object.target.archived">لا</h4>
+                    </div>
+                </div>
+                <hr />
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">ظاهرة</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4 ng-if="object.target.visible">نعم</h4>
+                        <h4 ng-if="!object.target.visible">لا</h4>
+                    </div>
+                </div>
+                <hr />
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">موثقة</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4 ng-if="object.target.documented">نعم</h4>
+                        <h4 ng-if="!object.target.documented">لا</h4>
+                    </div>
+                </div>
+                <hr />
+                <div class="row align-items-center" ng-show="object.places[0]">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">الأماكن</h4>
+                    </div>
+                    <div class="col-auto" ng-repeat="place in object.places">
+                        <h4>{{ place.name }}</h4>
+                    </div>
+                </div>
 
                 <div ng-show="object.places[0]">
+                    <hr />
+                </div>
+                <div class="row align-items-center" ng-show="object.donor">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">المتبرع</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ object.donor.name }}</h4>
+                    </div>
+                </div>
+
+                <div ng-show="object.donor">
                     <hr />
                 </div>
             </div>

@@ -34,7 +34,7 @@ class CreateRequest extends BaseRequest
             // 'semesters_left' => ['required' ,'numeric'],
             'current_semester' => ['required', 'numeric'],
             'target' => ['required', 'array'],
-            'places' => ['nullable', 'array'],
+            'place_id' => ['required', 'numeric'],
         ];
     }
 }

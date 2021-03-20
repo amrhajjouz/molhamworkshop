@@ -29,7 +29,6 @@ class Cases extends BaseTargetModel
           $_places = [];
      
           if($place){
-
                     $_place = (object)[
                          'id' => $place->id,
                          'name' => $place->name,

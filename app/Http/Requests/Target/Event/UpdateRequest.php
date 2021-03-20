@@ -17,7 +17,7 @@ class UpdateRequest extends BaseRequest
     {
         return true;
     }
-    
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -27,15 +27,15 @@ class UpdateRequest extends BaseRequest
     {
         return [
             'id' => ['required', 'exists:events'],
-              'date' => ['required'],
-             'public_visibility' => ['required' , 'boolean'],
-             'verified' => ['nullable'],
-             'implemented' => ['nullable' ,'boolean'],
-             'implementation_date' => [new RequiredIf($this->implemented ==true)],
-             'youtube_video_url' => ['nullable' ,'string'],
-             'target' => ['required' , 'array'],
-            'places' => ['nullable', 'array'],
+            'date' => ['required'],
+            'public_visibility' => ['required', 'boolean'],
+            'donor_id' => ['required', 'numeric'],
+            'verified' => ['nullable'],
+            'implemented' => ['nullable', 'boolean'],
+            'implementation_date' => [new RequiredIf($this->implemented == true)],
+            'youtube_video_url' => ['nullable', 'string'],
+            'target' => ['required', 'array'],
+            'places_ids' => ['required', 'array'],
         ];
     }
-    
 }

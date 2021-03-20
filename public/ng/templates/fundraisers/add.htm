@@ -66,6 +66,19 @@
         </div>
     </div>
 
+     <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">المتبرع</label>
+            <select2
+                model="object.donor_id"
+                ajax-url="donors/search"
+            ></select2>
+            <div class="text-danger">
+                {{ createFundraiser.errors.donor_id[0] }}
+            </div>
+        </div>
+    </div>
+
 
     <div class="col-12">
         <submit-button form="createFundraiserForm" icon="fe fe-plus">اضافة</submit-button>

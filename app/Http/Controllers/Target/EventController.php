@@ -24,17 +24,19 @@ class EventController extends BaseController
         try {
             $data = $request->validated();
             $object = new $this->model();
-
+            // dd($data);
             $object->date = date('Y/m/d', strtotime($data['date']));
             $object->verified = $data['verified'];
             $object->public_visibility = $data['public_visibility'];
             $object->implemented = $data['implemented'];
+            $object->donor_id = $data['donor_id'];
+
             if ($data['implementation_date']) {
                 $object->implementation_date = date('Y/m/d', strtotime($data['implementation_date']));
             }
             $object->youtube_video_url = $data['youtube_video_url'];
 
-            $options = ['target' => $request->target, "places" => $request->places];
+            $options = ['target' => $request->target, "places_ids" => $request->places_ids];
 
             $object->save($options);
 
@@ -57,13 +59,14 @@ class EventController extends BaseController
             $object->verified = $data['verified'];
             $object->public_visibility = $data['public_visibility'];
             $object->implemented = $data['implemented'];
+            $object->donor_id = $data['donor_id'];
+
             if ($data['implementation_date']) {
                 $object->implementation_date = date('Y/m/d', strtotime($data['implementation_date']));
             }
             $object->youtube_video_url = $data['youtube_video_url'];
 
-            $options = ['target' => $request->target, "places" => $request->places];
-
+            $options = ['target' => $request->target, "places_ids" => $request->places_ids];
 
             $object->save($options);
 

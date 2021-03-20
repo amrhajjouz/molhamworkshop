@@ -45,8 +45,6 @@
         </div>
     </div>
 
-
-
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="name">الدولة</label>
@@ -69,100 +67,157 @@
         </div>
     </div>
 
-
-     <div class="col-12 col-md-6">
-         <div class="form-group">
-             <label for="sponsored">تم كفالتها</label>
-             <select class="form-control" ng-model="object.sponsored"
-                 ng-class="(updateSponsorShips.errors.sponsored != null) ? 'is-invalid' : ''" id="sponsored"
-                 ng-change="updateSponsorShips.errors.target.sponsored = null" required>
-                 <option ng-value="true">نعم</option>
-                 <option ng-value="false">لا</option>
-             </select>
-             <div ng-show="updateSponsorShips.errors.sponsored != null" class="invalid-feedback">
-                 {{ updateSponsorShips.errors.sponsored[0] }}</div>
-         </div>
-     </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="sponsored">تم كفالتها</label>
+            <select
+                class="form-control"
+                ng-model="object.sponsored"
+                ng-class="(updateSponsorShips.errors.sponsored != null) ? 'is-invalid' : ''"
+                id="sponsored"
+                ng-change="updateSponsorShips.errors.target.sponsored = null"
+                required
+            >
+                <option ng-value="true">نعم</option>
+                <option ng-value="false">لا</option>
+            </select>
+            <div
+                ng-show="updateSponsorShips.errors.sponsored != null"
+                class="invalid-feedback"
+            >
+                {{ updateSponsorShips.errors.sponsored[0] }}
+            </div>
+        </div>
+    </div>
 
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="beneficiaries_count">عدد المستفيدين</label>
-            <input type="number" class="form-control"
-                ng-class="(updateSponsorShips.errors.beneficiaries_count != null) ? 'is-invalid' : ''" id="beneficiaries_count"
-                ng-model="object.target['beneficiaries_count']" ng-change="updateSponsorShips.errors.beneficiaries_count = null"
-                placeholder="عدد المستفيدين.." required>
-            <div ng-show="updateSponsorShips.errors.beneficiaries_count != null" class="invalid-feedback">
-                {{ updateSponsorShips.errors.beneficiaries_count[0] }}</div>
+            <input
+                type="number"
+                class="form-control"
+                ng-class="(updateSponsorShips.errors.beneficiaries_count != null) ? 'is-invalid' : ''"
+                id="beneficiaries_count"
+                ng-model="object.target['beneficiaries_count']"
+                ng-change="updateSponsorShips.errors.beneficiaries_count = null"
+                placeholder="عدد المستفيدين.."
+                required
+            />
+            <div
+                ng-show="updateSponsorShips.errors.beneficiaries_count != null"
+                class="invalid-feedback"
+            >
+                {{ updateSponsorShips.errors.beneficiaries_count[0] }}
+            </div>
         </div>
     </div>
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="required">المبلغ المطلوب شهريا</label>
-            <input type="number" class="form-control"
-                ng-class="(updateSponsorShips.errors.required != null) ? 'is-invalid' : ''" id="required"
-                ng-model="object.target['required']" ng-change="updateSponsorShips.errors.required = null"
-                placeholder="عدد المستفيدين.." required>
-            <div ng-show="updateSponsorShips.errors.required != null" class="invalid-feedback">
-                {{ updateSponsorShips.errors.required[0] }}</div>
+            <input
+                type="number"
+                class="form-control"
+                ng-class="(updateSponsorShips.errors.required != null) ? 'is-invalid' : ''"
+                id="required"
+                ng-model="object.target['required']"
+                ng-change="updateSponsorShips.errors.required = null"
+                placeholder="عدد المستفيدين.."
+                required
+            />
+            <div
+                ng-show="updateSponsorShips.errors.required != null"
+                class="invalid-feedback"
+            >
+                {{ updateSponsorShips.errors.required[0] }}
+            </div>
         </div>
     </div>
 
-
-      <div class="col-12 col-md-6">
-          <div class="form-group">
-              <label for="archived">مؤرشفة</label>
-              <select class="form-control" ng-model="object.target.archived"
-                  ng-class="(updateSponsorShips.errors.archived != null) ? 'is-invalid' : ''" id="archived"
-                  ng-change="updateSponsorShips.errors.target.archived = null" required>
-                  <option ng-value="true">نعم</option>
-                  <option ng-value="false">لا</option>
-              </select>
-              <div ng-show="updateSponsorShips.errors.archived != null" class="invalid-feedback">
-                  {{ updateSponsorShips.errors.archived[0] }}</div>
-          </div>
-      </div>
-      <div class="col-12 col-md-6">
-          <div class="form-group">
-              <label for="documented">موثقة</label>
-              <select class="form-control" ng-model="object.target.documented"
-                  ng-class="(updateSponsorShips.errors.documented != null) ? 'is-invalid' : ''" id="documented"
-                  ng-change="updateSponsorShips.errors.target.documented = null" required>
-                  <option ng-value="true">نعم</option>
-                  <option ng-value="false">لا</option>
-              </select>
-              <div ng-show="updateSponsorShips.errors.documented != null" class="invalid-feedback">
-                  {{ updateSponsorShips.errors.documented[0] }}</div>
-          </div>
-      </div>
-      <div class="col-12 col-md-6">
-          <div class="form-group">
-              <label for="visible">ظاهرة</label>
-              <select class="form-control" ng-model="object.target.visible"
-                  ng-class="(updateSponsorShips.errors.visible != null) ? 'is-invalid' : ''" id="visible"
-                  ng-change="updateSponsorShips.errors.target.visible = null" required>
-                  <option ng-value="true">نعم</option>
-                  <option ng-value="false">لا</option>
-              </select>
-              <div ng-show="updateSponsorShips.errors.visible != null" class="invalid-feedback">
-                  {{ updateSponsorShips.errors.visible[0] }}</div>
-          </div>
-      </div>
-<div class="col-12 col-md-6">
-          <div class="form-group">
-              <label for="place">المكان</label>
-              <select class="form-control" ng-model="object.places[0].id"
-                  ng-class="(updateSponsorShips.errors.places[0] != null) ? 'is-invalid' : ''" id="places[0]"
-                  ng-change="updateSponsorShips.errors.places[0] = null"
-                  ng-options="place.id as place.name for place in places" placeholder="يرجى اختيار مكان.."
-                  required>
-              </select>
-              <div ng-show="updateSponsorShips.errors.places[0] != null" class="invalid-feedback">
-                  {{ updateSponsorShips.errors.places[0][0] }}</div>
-          </div>
-      </div>
-
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="archived">مؤرشفة</label>
+            <select
+                class="form-control"
+                ng-model="object.target.archived"
+                ng-class="(updateSponsorShips.errors.archived != null) ? 'is-invalid' : ''"
+                id="archived"
+                ng-change="updateSponsorShips.errors.target.archived = null"
+                required
+            >
+                <option ng-value="true">نعم</option>
+                <option ng-value="false">لا</option>
+            </select>
+            <div
+                ng-show="updateSponsorShips.errors.archived != null"
+                class="invalid-feedback"
+            >
+                {{ updateSponsorShips.errors.archived[0] }}
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="documented">موثقة</label>
+            <select
+                class="form-control"
+                ng-model="object.target.documented"
+                ng-class="(updateSponsorShips.errors.documented != null) ? 'is-invalid' : ''"
+                id="documented"
+                ng-change="updateSponsorShips.errors.target.documented = null"
+                required
+            >
+                <option ng-value="true">نعم</option>
+                <option ng-value="false">لا</option>
+            </select>
+            <div
+                ng-show="updateSponsorShips.errors.documented != null"
+                class="invalid-feedback"
+            >
+                {{ updateSponsorShips.errors.documented[0] }}
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="visible">ظاهرة</label>
+            <select
+                class="form-control"
+                ng-model="object.target.visible"
+                ng-class="(updateSponsorShips.errors.visible != null) ? 'is-invalid' : ''"
+                id="visible"
+                ng-change="updateSponsorShips.errors.target.visible = null"
+                required
+            >
+                <option ng-value="true">نعم</option>
+                <option ng-value="false">لا</option>
+            </select>
+            <div
+                ng-show="updateSponsorShips.errors.visible != null"
+                class="invalid-feedback"
+            >
+                {{ updateSponsorShips.errors.visible[0] }}
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="place">المكان</label>
+            <select2 model="object.place_id" ajax-url="places/search">
+                <option
+                    selected
+                    ng-repeat="p in object.places"
+                    value="{{p.id}}"
+                >
+                    {{p.text}}
+                </option>
+            </select2>
+            <div class="text-danger">{{ updateSponsorShipsForm.errors.place_id[0] }}</div>
+        </div>
+    </div>
 
     <div class="col-12">
-        <submit-button form="updateSponsorShipsForm" icon="fe fe-edit">تعديل</submit-button>
+        <submit-button form="updateSponsorShipsForm" icon="fe fe-edit"
+            >تعديل</submit-button
+        >
     </div>
 </form>

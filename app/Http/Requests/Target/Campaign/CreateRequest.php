@@ -28,7 +28,7 @@ class CreateRequest extends BaseRequest
         return [
             'name' => ['required' ,'string', 'between:3,100'],
             'target' => ['required' ,'array'],
-            'places' => ['nullable', 'array'],
+            'places_ids' => ['required', 'array'],
         ];
     }
     

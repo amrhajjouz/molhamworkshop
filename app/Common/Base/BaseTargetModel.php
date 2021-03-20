@@ -107,7 +107,7 @@ class BaseTargetModel extends Model
 
             
             if($this->has_places && isset($options['places_ids'])){
-
+// dd($options['places_ids']);
                     $this->places()->attach($options['places_ids']);
                 
             }
@@ -142,21 +142,11 @@ class BaseTargetModel extends Model
                 // }
                 
                 foreach($options['places_ids'] as $key => $val){
-                    // dd($options  , $val);
-                    // if(!is_array($val)) continue;
-                    $attach = Place::find($val);
 
-                    // $prev = $this->places()->attach($attach);
-                    $prev = $this->places()->sync($attach);
-                    
+
+                    $prev = $this->places()->sync($options['places_ids']);
+
                 }
-                //to delete 
-                // dd($options['places']);
-                // $to_delete = $this->places()->whereNotIn('place_id' , $options['places'])->get();
-                // foreach($to_delete  as $item){
-                    
-                //     $this->places()->detach($item->id);
-                // }
             }
 
         }

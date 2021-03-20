@@ -93,8 +93,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/fundraisers', [FundraiserController::class, 'create']);
     Route::put('/fundraisers', [FundraiserController::class, 'update']);
     Route::get('/fundraisers/{id}', [FundraiserController::class, 'retrieve']);
+
+
+    /////////////////////// Donors /////////////////////////
+
     Route::get('/donors', [DonorController::class, 'list']);
     Route::post('/donors', [DonorController::class, 'create']);
     Route::put('/donors', [DonorController::class, 'update']);
+    Route::get('/donors/search', [DonorController::class, 'search']);
     Route::get('/donors/{id}', [DonorController::class, 'retrieve']);
 });

@@ -19,7 +19,6 @@ async function addCaseControllerInit($apiRequest) {
 }
 
 function addCaseController($scope, $location, $apiRequest, $page, $init) {
-    
     $scope.statuses = [
         { id: "funded", name: "تم كفالتها" },
         { id: "unfunded", name: "غير مكفولة" },
@@ -27,7 +26,6 @@ function addCaseController($scope, $location, $apiRequest, $page, $init) {
         { id: "spent", name: "تم صرفها" },
     ];
 
-   
     $scope.object = {
         target: {
             required: 0,
@@ -37,13 +35,23 @@ function addCaseController($scope, $location, $apiRequest, $page, $init) {
             beneficiaries_count: 0,
             category_id: null,
         },
-        place_id:null,
-        status:'unfunded'
+        place_id: null,
+        status: "unfunded",
     };
 
     $scope.countries = $init.countries;
     $scope.categories = $init.categories;
     $scope.places = $init.places;
+
+    // to reinitialize place errors
+    $scope.$watchCollection(
+        "object.place_id",
+        (oldData, newData) => {
+            $scope.createCase.errors.place_id = null;
+        },
+        true
+    );
+
 
     $scope.createCase = $apiRequest.config(
         {

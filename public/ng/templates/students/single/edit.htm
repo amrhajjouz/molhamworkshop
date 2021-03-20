@@ -121,22 +121,13 @@
       <div class="col-12 col-md-6">
           <div class="form-group">
               <label for="place">المكان</label>
-              <!-- <select class="form-control" ng-model="object.places[0].id"
-                  ng-class="(updateStudent.errors.places[0] != null) ? 'is-invalid' : ''" id="places[0]"
-                  ng-change="updateStudent.errors.places[0] = null"
-                  ng-options="place.id as place.name for place in places" placeholder="يرجى اختيار مكان.."
-                  required>
-              </select> -->
-                <select2  model="object.places[0]" ajax-url="places/search">
-                <option ng-repeat="o in object.places" value="{{o.id}}">{{o.text}}</option>
-                </select2>
-
-              <div ng-show="updateStudent.errors.places[0] != null" class="invalid-feedback">
-                  {{ updateStudent.errors.places[0][0] }}</div>
+           <select2 model="object.place_id" ajax-url="places/search">
+            <option selected ng-repeat="p in object.places" value="{{p.id}}">{{p.text}}</option>
+            </select2>
+          <div  class="text-danger">
+              {{ updateStudent.errors.place_id[0] }}</div>
           </div>
       </div>
-
-
     <div class="col-12">
         <submit-button form="updateStudentForm" icon="fe fe-edit">تعديل</submit-button>
     </div>

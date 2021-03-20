@@ -29,11 +29,20 @@ function addSponsorShipsController($scope, $location, $apiRequest, $page, $init)
             beneficiaries_count: 0,
             category_id: null,
         },
-        places:[]
+        places: [],
     };
     $scope.countries = $init.countries;
     $scope.categories = $init.categories;
     $scope.places = $init.places;
+
+    // to reinitialize place errors
+    $scope.$watchCollection(
+        "object.place_id",
+        (oldData, newData) => {
+            $scope.createSponsorShips.errors.place_id = null;
+        },
+        true
+    );
 
     $scope.createSponsorShips = $apiRequest.config(
         {

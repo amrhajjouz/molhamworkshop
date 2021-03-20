@@ -22,6 +22,11 @@ class Event extends BaseTargetModel
           'implemented' => 'boolean',
       ];
 
+     public function donor(){
+          return $this->hasOne('\App\Models\Donor' , 'id' , 'donor_id');
+     }
+     
+
      public function transform()
      {
 
@@ -29,13 +34,23 @@ class Event extends BaseTargetModel
 
           $target = $this->parent->toArray();
           $places = $this->places;
-          $_places = [];
+          $donor = $this->donor;
+          $_donor = null;
+          if($donor){
+               $_donor = (object)[
+                    'id' => $donor->id ,
+                    'name' => $donor->name ,
+                    'text' => $donor->name ,
+               ];
+          }
 
+          $_places = [];
           if ($places) {
                foreach ($places as $item) {
                     $_place = (object)[
                          'id' => $item->id,
                          'name' => $item->name,
+                         'text' => $item->name,
                          'type' => $item->type,
                     ];
 
@@ -52,7 +67,8 @@ class Event extends BaseTargetModel
                     'archived' => $target['archived'],
 
                ],
-               'places' => $_places
+               'places' => $_places ,
+               'donor' => $_donor
           ]);
      }
 

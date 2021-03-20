@@ -29,12 +29,13 @@ class CreateRequest extends BaseRequest
         return [
             'date' => ['required'],
             'public_visibility' => ['required' , 'boolean'],
+            'donor_id' => ['required' , 'numeric'],
             'verified' => ['nullable'],
             'implemented' => ['nullable' ,'boolean'],
             'implementation_date' => [new RequiredIf($this->implemented ==true)],
             'youtube_video_url' => ['nullable' ,'string'],
             'target' => ['required' , 'array'],
-            'places' => ['nullable', 'array'],
+            'places_ids' => ['required', 'array'],
         ];
     }
 

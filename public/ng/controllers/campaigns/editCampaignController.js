@@ -21,6 +21,11 @@ function editCampaignController($scope, $page, $apiRequest, $init) {
     $scope.places = $init.places;
     if (!$scope.object.places) $scope.object.places = [];
 
+    $scope.$watchCollection('object.places_ids', (oldData , newData) => {
+        $scope.updateCampaign.errors.places_ids = null;
+    } , true);
+
+
     $scope.updateCampaign = $apiRequest.config(
         {
             method: "PUT",

@@ -41,6 +41,7 @@ class Student extends BaseTargetModel
                     $_place = (object)[
                          'id' => $item->id,
                          'name' => $item->name,
+                         'text' => $item->name,
                          'type' => $item->type,
                     ];
 

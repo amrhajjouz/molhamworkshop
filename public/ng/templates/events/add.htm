@@ -1,139 +1,232 @@
 <page-header title="مناسبة جديدة" pretitle="المناسبات"></page-header>
 
-
-
 <form class="row" name="createEventForm" request="createEvent">
-
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="date">تاريخ المناسبة</label>
-            <input type="date" class="form-control" ng-class="(createEvent.errors.date != null) ? 'is-invalid' : ''"
-                id="date" ng-model="object.date" ng-change="createEvent.errors.date = null" placeholder="الاسم.."
+            <input
+                type="date"
+                class="form-control"
+                ng-class="(createEvent.errors.date != null) ? 'is-invalid' : ''"
+                id="date"
+                ng-model="object.date"
+                ng-change="createEvent.errors.date = null"
+                placeholder="الاسم.."
                 required
-                >
-            <div ng-show="createEvent.errors.date != null" class="invalid-feedback">
-                {{ createEvent.errors.date[0] }}</div>
+            />
+            <div
+                ng-show="createEvent.errors.date != null"
+                class="invalid-feedback"
+            >
+                {{ createEvent.errors.date[0] }}
+            </div>
         </div>
     </div>
-    
+
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="name">رابط الفيديو يوتيوب</label>
-            <input type="text" class="form-control"
-                ng-class="(createEvent.errors.youtube_video_url != null) ? 'is-invalid' : ''" id="youtube_video_url"
-                ng-model="object.youtube_video_url" ng-change="createEvent.errors.youtube_video_url = null"
-                placeholder="رابط الفيديو على يوتيوب.." >
-            <div ng-show="createEvent.errors.youtube_video_url != null" class="invalid-feedback">
-                {{ createEvent.errors.youtube_video_url[0] }}</div>
+            <input
+                type="text"
+                class="form-control"
+                ng-class="(createEvent.errors.youtube_video_url != null) ? 'is-invalid' : ''"
+                id="youtube_video_url"
+                ng-model="object.youtube_video_url"
+                ng-change="createEvent.errors.youtube_video_url = null"
+                placeholder="رابط الفيديو على يوتيوب.."
+            />
+            <div
+                ng-show="createEvent.errors.youtube_video_url != null"
+                class="invalid-feedback"
+            >
+                {{ createEvent.errors.youtube_video_url[0] }}
+            </div>
         </div>
     </div>
-<div class="col-12 col-md-6">
-    <div class="form-group">
-        <label for="implemented">تم تنفيذه</label>
-        <select class="form-control" ng-model="object.implemented"
-            ng-class="(createEvent.errors.implemented != null) ? 'is-invalid' : ''" id="implemented"
-            ng-change="createEvent.errors.implemented = null" required>
-            <option ng-value="true">نعم</option>
-            <option ng-value="false">لا</option>
-        </select>
-        <div ng-show="createEvent.errors.implemented != null" class="invalid-feedback">
-            {{ createEvent.errors.implemented[0] }}</div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="implemented">تم تنفيذه</label>
+            <select
+                class="form-control"
+                ng-model="object.implemented"
+                ng-class="(createEvent.errors.implemented != null) ? 'is-invalid' : ''"
+                id="implemented"
+                ng-change="createEvent.errors.implemented = null"
+                required
+            >
+                <option ng-value="true">نعم</option>
+                <option ng-value="false">لا</option>
+            </select>
+            <div
+                ng-show="createEvent.errors.implemented != null"
+                class="invalid-feedback"
+            >
+                {{ createEvent.errors.implemented[0] }}
+            </div>
+        </div>
     </div>
-</div>
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="name">تاريخ التنفيذ</label>
-            <input type="date" class="form-control"
-                ng-class="(createEvent.errors.implementation_date != null) ? 'is-invalid' : ''" id="implementation_date"
-                ng-model="object.implementation_date" ng-change="createEvent.errors.implementation_date = null"
-                ng-disabled="!object.implemented">
-            <div ng-show="createEvent.errors.implementation_date != null" class="invalid-feedback">
-                {{ createEvent.errors.implementation_date[0] }}</div>
+            <input
+                type="date"
+                class="form-control"
+                ng-class="(createEvent.errors.implementation_date != null) ? 'is-invalid' : ''"
+                id="implementation_date"
+                ng-model="object.implementation_date"
+                ng-change="createEvent.errors.implementation_date = null"
+                ng-disabled="!object.implemented"
+            />
+            <div
+                ng-show="createEvent.errors.implementation_date != null"
+                class="invalid-feedback"
+            >
+                {{ createEvent.errors.implementation_date[0] }}
+            </div>
         </div>
     </div>
-<div class="col-12 col-md-6">
-    <div class="form-group">
-        <label for="beneficiaries_count">عدد المستفيدين</label>
-        <input type="number" class="form-control"
-            ng-class="(createEvent.errors.beneficiaries_count != null) ? 'is-invalid' : ''" id="beneficiaries_count"
-            ng-model="object.target['beneficiaries_count']" ng-change="createEvent.errors.beneficiaries_count = null"
-            required min="0">
-        <div ng-show="createEvent.errors.beneficiaries_count != null" class="invalid-feedback">
-            {{ createEvent.errors.beneficiaries_count[0] }}</div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="beneficiaries_count">عدد المستفيدين</label>
+            <input
+                type="number"
+                class="form-control"
+                ng-class="(createEvent.errors.beneficiaries_count != null) ? 'is-invalid' : ''"
+                id="beneficiaries_count"
+                ng-model="object.target['beneficiaries_count']"
+                ng-change="createEvent.errors.beneficiaries_count = null"
+                required
+                min="0"
+            />
+            <div
+                ng-show="createEvent.errors.beneficiaries_count != null"
+                class="invalid-feedback"
+            >
+                {{ createEvent.errors.beneficiaries_count[0] }}
+            </div>
+        </div>
     </div>
-</div>
-     <div class="col-12 col-md-6">
-         <div class="form-group">
-             <label for="public_visibility">متاح للعامة</label>
-             <select class="form-control" ng-model="object.public_visibility"
-                 ng-class="(createEvent.errors.public_visibility != null) ? 'is-invalid' : ''" id="public_visibility"
-                 ng-change="createEvent.errors.public_visibility = null" required>
-                 <option ng-value="true">نعم</option>
-                 <option ng-value="false">لا</option>
-             </select>
-             <div ng-show="createEvent.errors.public_visibility != null" class="invalid-feedback">
-                 {{ createEvent.errors.public_visibility[0] }}</div>
-         </div>
-     </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="public_visibility">متاح للعامة</label>
+            <select
+                class="form-control"
+                ng-model="object.public_visibility"
+                ng-class="(createEvent.errors.public_visibility != null) ? 'is-invalid' : ''"
+                id="public_visibility"
+                ng-change="createEvent.errors.public_visibility = null"
+                required
+            >
+                <option ng-value="true">نعم</option>
+                <option ng-value="false">لا</option>
+            </select>
+            <div
+                ng-show="createEvent.errors.public_visibility != null"
+                class="invalid-feedback"
+            >
+                {{ createEvent.errors.public_visibility[0] }}
+            </div>
+        </div>
+    </div>
 
-    
-     <div class="col-12 col-md-6">
-         <div class="form-group">
-             <label for="verified">مؤكد</label>
-             <select class="form-control" ng-model="object.verified"
-                 ng-class="(createEvent.errors.verified != null) ? 'is-invalid' : ''" id="verified"
-                 ng-change="createEvent.errors.verified = null" required>
-                 <option ng-value="true">نعم</option>
-                 <option ng-value="false">لا</option>
-             </select>
-             <div ng-show="createEvent.errors.country_id != null" class="invalid-feedback">
-                 {{ createEvent.errors.country_id[0] }}</div>
-         </div>
-     </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="verified">مؤكد</label>
+            <select
+                class="form-control"
+                ng-model="object.verified"
+                ng-class="(createEvent.errors.verified != null) ? 'is-invalid' : ''"
+                id="verified"
+                ng-change="createEvent.errors.verified = null"
+                required
+            >
+                <option ng-value="true">نعم</option>
+                <option ng-value="false">لا</option>
+            </select>
+            <div
+                ng-show="createEvent.errors.country_id != null"
+                class="invalid-feedback"
+            >
+                {{ createEvent.errors.country_id[0] }}
+            </div>
+        </div>
+    </div>
 
- <div class="col-12 col-md-6">
-     <div class="form-group">
-         <label for="visible">ظاهر</label>
-         <select class="form-control" ng-model="object.target.visible"
-             ng-class="(createEvent.errors.visible != null) ? 'is-invalid' : ''" id="visible"
-             ng-change="createEvent.errors.target.visible = null" required>
-             <option ng-value="true">نعم</option>
-             <option ng-value="false">لا</option>
-         </select>
-         <div ng-show="createEvent.errors.visible != null" class="invalid-feedback">
-             {{ createEvent.errors.visible[0] }}</div>
-     </div>
- </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="visible">ظاهر</label>
+            <select
+                class="form-control"
+                ng-model="object.target.visible"
+                ng-class="(createEvent.errors.visible != null) ? 'is-invalid' : ''"
+                id="visible"
+                ng-change="createEvent.errors.target.visible = null"
+                required
+            >
+                <option ng-value="true">نعم</option>
+                <option ng-value="false">لا</option>
+            </select>
+            <div
+                ng-show="createEvent.errors.visible != null"
+                class="invalid-feedback"
+            >
+                {{ createEvent.errors.visible[0] }}
+            </div>
+        </div>
+    </div>
 
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="required">المبلغ المطلوب</label>
-            <input type="number" class="form-control"
-                ng-class="(createEvent.errors.required != null) ? 'is-invalid' : ''" id="required"
-                ng-model="object.target['required']" ng-change="createEvent.errors.required = null" required min="0">
-            <div ng-show="createEvent.errors.required != null" class="invalid-feedback" >
-                {{ createEvent.errors.required[0] }}</div>
+            <input
+                type="number"
+                class="form-control"
+                ng-class="(createEvent.errors.required != null) ? 'is-invalid' : ''"
+                id="required"
+                ng-model="object.target['required']"
+                ng-change="createEvent.errors.required = null"
+                required
+                min="0"
+            />
+            <div
+                ng-show="createEvent.errors.required != null"
+                class="invalid-feedback"
+            >
+                {{ createEvent.errors.required[0] }}
+            </div>
         </div>
     </div>
 
-  <div class="col-12 col-md-6">
-          <div class="form-group">
-              <label for="name">المكان</label>
-              <select class="form-control" ng-model="object.places[0]"
-                  ng-class="(createEvent.errors.places[0] != null) ? 'is-invalid' : ''" id="places[0]"
-                  ng-change="createEvent.errors.places[0] = null"
-                  ng-options="place.id as place.name for place in places" placeholder="يرجى اختيار مكان.."
-                  required>
-              </select>
-              <div ng-show="createEvent.errors.places[0] != null" class="invalid-feedback">
-                  {{ createEvent.errors.places[0][0] }}</div>
-          </div>
-      </div>
-
-
-
-    <div class="col-12">
-        <submit-button form="createEventForm" icon="fe fe-plus">اضافة</submit-button>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">المكان</label>
+            <select2
+                model="object.places_ids"
+                ajax-url="places/search"
+                multiple
+            ></select2>
+            <div class="text-danger">
+                {{ createEvent.errors.places_ids[0] }}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">المتبرع</label>
+            <select2
+                model="object.donor_id"
+                ajax-url="donors/search"
+            ></select2>
+            <div class="text-danger">
+                {{ createEvent.errors.donor_id[0] }}
+            </div>
+        </div>
     </div>
 
+    <div class="col-12">
+        <submit-button form="createEventForm" icon="fe fe-plus"
+            >اضافة</submit-button
+        >
+    </div>
 </form>

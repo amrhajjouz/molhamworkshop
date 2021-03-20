@@ -23,14 +23,12 @@ class CampaignController extends BaseController {
     
     public function create ( CreateRequest $request) {
         try {
-            
             $data = $request->validated();
-
             $object = new $this->model();
             $object->name = $data['name'];
             $object->funded = 0;
-            
-            $options = ['target' => $request->target, "places" => $request->places];
+
+            $options = ['target' => $request->target, "places_ids" => $request->places_ids];
 
             $object->save($options);
 
@@ -55,8 +53,7 @@ class CampaignController extends BaseController {
             $object->funded = $data['funded'];
 
 
-            $options = ['target' => $request->target , "places" => $request->places ];
-
+            $options = ['target' => $request->target, "places_ids" => $request->places_ids];
             $object->save($options);
 
             return $this->_response($object);

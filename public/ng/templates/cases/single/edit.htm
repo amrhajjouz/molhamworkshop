@@ -111,17 +111,11 @@
   <div class="col-12 col-md-6">
       <div class="form-group">
           <label for="place">المكان</label>
-          <!-- <select class="form-control" ng-model="object.places[0].id"
-              ng-class="(updateCase.errors.places[0] != null) ? 'is-invalid' : ''" id="places[0]"
-              ng-change="updateCase.errors.places[0] = null" ng-options="place.id as place.name for place in places"
-              placeholder="يرجى اختيار مكان.." required>
-          </select> -->
-          {{object.place_id}}
            <select2 model="object.place_id" ajax-url="places/search">
             <option selected ng-repeat="p in object.places" value="{{p.id}}">{{p.text}}</option>
             </select2>
-          <div ng-show="updateCase.errors.places[0] != null" class="invalid-feedback">
-              {{ updateCase.errors.places[0][0] }}</div>
+          <div  class="text-danger">
+              {{ updateCase.errors.place_id[0] }}</div>
       </div>
   </div>
 

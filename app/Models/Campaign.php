@@ -36,12 +36,14 @@ class Campaign extends BaseTargetModel
                     $_place = (object)[
                          'id' => $item->id,
                          'name' => $item->name,
+                         'text' => $item->name,
                          'type' => $item->type,
                     ];
 
                     $_places[] = $_place;
                }
           }
+          // dd($places);
 
           $response = (object)array_merge($obj, [
                'target' => [

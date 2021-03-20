@@ -14,7 +14,6 @@ async function addStudentsControllerInit($apiRequest) {
 
 
 function addStudentsController($scope, $location, $apiRequest, $page, $init) {
-
     $scope.object = {
         semesters_count: 1,
         current_semester: 1,
@@ -33,12 +32,12 @@ function addStudentsController($scope, $location, $apiRequest, $page, $init) {
 
     $scope.semesters = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     $scope.availableSemester = [1];
-    
+
     $scope.handleChangeSemesterCount = () => {
-        $scope.availableSemester =[]
+        $scope.availableSemester = [];
         $scope.createStudent.errors.country_id = null;
 
-        for (let index = 1; index <= $scope.object.semesters_count; index++){
+        for (let index = 1; index <= $scope.object.semesters_count; index++) {
             console.log(index);
             $scope.availableSemester.push(index);
         }
@@ -51,6 +50,16 @@ function addStudentsController($scope, $location, $apiRequest, $page, $init) {
         "currently_funded",
         "fully_funded",
     ];
+
+    // to reinitialize place errors
+    $scope.$watchCollection(
+        "object.place_id",
+        (oldData, newData) => {
+            $scope.createStudent.errors.place_id = null;
+        },
+        true
+    );
+    
     $scope.createStudent = $apiRequest.config(
         {
             method: "POST",

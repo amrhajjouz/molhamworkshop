@@ -17,6 +17,16 @@ function editFundraisersController($scope, $page, $apiRequest, $init) {
     $scope.object = $init.object;
     $scope.sections = $init.sections;
 
+
+
+    $scope.$watchCollection(
+        "object.donor_id",
+        (oldData, newData) => {
+            $scope.updateFundraiser.errors.donor_id = null;
+        },
+        true
+    );
+
     $scope.updateFundraiser = $apiRequest.config(
         {
             method: "PUT",

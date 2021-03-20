@@ -26,11 +26,20 @@ function addCampaignController($scope, $location, $apiRequest, $page, $init) {
             archived: false,
             section_id: null,
         },
-        places:[],
-        funded:false
-    };;
+        places: [],
+        funded: false,
+    };
     $scope.sections = $init.sections;
     $scope.places = $init.places;
+
+    // to reinitialize place errors
+    $scope.$watchCollection(
+        "object.places_ids",
+        (oldData, newData) => {
+            $scope.createCampaign.errors.places_ids = null;
+        },
+        true
+    );
 
     $scope.createCampaign = $apiRequest.config(
         {

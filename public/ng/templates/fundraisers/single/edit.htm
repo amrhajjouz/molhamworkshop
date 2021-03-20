@@ -94,6 +94,25 @@
          </div>
      </div>
 
+  <div class="col-12 col-md-6">
+          <div class="form-group">
+              <label for="name">المتبرع</label>
+               <select2
+                model="object.donor_id"
+                ajax-url="donors/search"
+            >
+                <option
+                    selected
+                    value="{{object.donor.id}}"
+                >
+                    {{object.donor.text}}
+                </option>
+            </select2>
+            <div class="text-danger">
+                {{ updateFundraiser.errors.donor_id[0]}}
+            </div>
+          </div>
+      </div>
     
     <div class="col-12">
         <submit-button form="updateFundraiserForm" icon="fe fe-edit">تعديل</submit-button>
