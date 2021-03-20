@@ -150,6 +150,16 @@ class Molham extends Migration
             $table->bigInteger('placeable_id')->index();
             $table->timestamps();
         });
+       
+        Schema::create('sponsors', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('donor_id')->index();
+            $table->string('purpose_type')->index();
+            $table->bigInteger('purpose_id')->index();
+            $table->integer('percentage')->index()->default(0);
+            $table->boolean('active')->index()->default(0);
+            $table->timestamps();
+        });
     }
 
     /**
@@ -172,5 +182,6 @@ class Molham extends Migration
         Schema::dropIfExists('fundraisers');
         Schema::dropIfExists('places');
         Schema::dropIfExists('placeables');
+        Schema::dropIfExists('sponsors');
     }
 }

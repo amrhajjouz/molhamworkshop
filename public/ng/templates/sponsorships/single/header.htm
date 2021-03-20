@@ -1,6 +1,7 @@
-<page-header title="كفالة: {{ object.beneficiary_name }}" pretitle="الكفالات"></page-header>
+<page-header title="كفالة: {{ object.id }}" pretitle="الكفالات"></page-header>
 
 <page-nav>
     <page-nav-item route="sponsorships.overview" params="{id: object.id}">نظرة عامة</page-nav-item>
     <page-nav-item route="sponsorships.edit" params="{id: object.id}">تعديل المعلومات</page-nav-item>
+    <page-nav-item route="sponsorships.sponsors" params="{id: object.id}">الكفلاء</page-nav-item>
 </page-nav>

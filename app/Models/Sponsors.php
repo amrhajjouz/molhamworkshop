@@ -4,32 +4,24 @@ namespace App\Models;
 
 use App\Models\{Country, Section , Category};
 
-use App\Common\Base\BaseTargetModel;
-use stdClass;
+use App\Common\Base\BaseModel;
 
-class Sponsorship extends BaseTargetModel
+class Sponsors extends BaseModel
 {
-     protected $table = 'sponsorships';
+     protected $table = 'sponsors';
      protected $guarded = [];
-     protected $has_places = true;
 
      protected $casts = [
-          'sponsored' => 'boolean',
+          'active' => 'boolean',
      ];
-     protected $model_path = '\App\Models\Sponsorship';
 
 
-     public function getBeneficiaryBirthdateAttribute($beneficiary_birthdate){
-          return date('Y/m/d' , strtotime($beneficiary_birthdate));
+     public function purpose(){
+          return $this->belongsTo($this->purpose_type , 'purpose_id' , 'id');
      }
      
-
-     public function country(){
-          return $this->belongsTo(Country::class , 'country_id' , 'id');
-     }
-
-     public function sponsors(){
-          return $this->hasMany('App\Models\Sponsors' , 'purpose_id' , 'id')->where('purpose_type' , '\App\Models\Sponsorship');
+     public function donor(){
+          return $this->belongsTo('App\Models\Donor' , 'donor_id' , 'id');
      }
      
      
@@ -38,22 +30,7 @@ class Sponsorship extends BaseTargetModel
           $target = $this->parent->toArray();
           $section = $this->parent->section;
           $category = $this->parent->category;
-          $sponsors = $this->sponsors;
-          $_sponsors=[];
           
-          foreach($sponsors as $item){
-               $donor = $item->donor;
-               unset($item->donor);
-               $_donor = new stdClass();
-               
-               $_donor->id = $donor->id;
-               $_donor->email = $donor->email;
-               $_donor->name = $donor->name;
-               $_donor->text = $donor->name;
-               $item->donor = $_donor;
-               $_sponsors []= $item; 
-          }
-
           if(!is_null($section)){
                unset($section->created_at);
                unset($section->updated_at);
@@ -100,7 +77,6 @@ class Sponsorship extends BaseTargetModel
                 "places" => $_places,
                'section' =>$section,
                'category' =>$category,
-               'spnonsors' => $_sponsors,
           ]);
      }
      

@@ -1,6 +1,6 @@
 // const { initial } = require("lodash");
 
-async function editSponsorShipsControllerInit($http, $page, $apiRequest) {
+async function SponsorShipsSponsorControllerInit($http, $page, $apiRequest) {
     const object = await $apiRequest
         .config("sponsorships/" + $page.routeParams.id)
         .getData();
@@ -19,7 +19,7 @@ async function editSponsorShipsControllerInit($http, $page, $apiRequest) {
 
 
 
-function editSponsorShipsController($scope, $page, $apiRequest, $init) {
+function SponsorShipsSponsorController($scope, $page, $apiRequest, $init) {
     $scope.object = $init.object;
     $scope.countries = $init.countries;
     $scope.places = $init.places;
@@ -32,7 +32,7 @@ function editSponsorShipsController($scope, $page, $apiRequest, $init) {
         },
         true
     );
-
+    
     $scope.updateSponsorShips = $apiRequest.config(
         {
             method: "PUT",

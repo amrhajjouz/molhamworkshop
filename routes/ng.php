@@ -40,6 +40,7 @@ return [
     'sponsorships.add' => ['sponsorships/add', 'sponsorships/addSponsorShipsController', 'sponsorships.add'],
     'sponsorships.overview' => ['sponsorships/:id', 'sponsorships/overviewSponsorShipsController', 'sponsorships.single.overview'],
     'sponsorships.edit' => ['sponsorships/:id/edit', 'sponsorships/editSponsorShipsController', 'sponsorships.single.edit'],
+    'sponsorships.sponsors' => ['sponsorships/:id/sponsors', 'sponsorships/SponsorShipsSponsorController', 'sponsorships.single.sponsors'],
     'sponsorships' => ['sponsorships', 'sponsorships/listsSponsorShipsController', 'sponsorships.list'],
 
     ////////////////////// Students Routes    ///////////////////
