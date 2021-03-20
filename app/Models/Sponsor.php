@@ -6,7 +6,7 @@ use App\Models\{Country, Section , Category};
 
 use App\Common\Base\BaseModel;
 
-class Sponsors extends BaseModel
+class Sponsor extends BaseModel
 {
      protected $table = 'sponsors';
      protected $guarded = [];

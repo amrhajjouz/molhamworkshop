@@ -2,7 +2,7 @@
 
 namespace App\Facades;
 
-use App\Models\{Cases, Place};
+use App\Models\{Cases, Donor, Place, Sponsorship, Student , Sponsor};
 
 class Helper
 {
@@ -27,7 +27,6 @@ class Helper
 
         return $token;
     }
-
     /*
     * Mohamd
     * Generate serial number for case model
@@ -90,5 +89,47 @@ class Helper
         }else{
             return $name;
         }
+    }
+
+    /*
+     * Mohamd
+    * Assign Sponsorship or Student to Sponsors
+    *  $object : object from student or sponsorship
+    *  Return false Or object from Sponsor
+    */
+    public static function AssignToSponsor($object , Donor $donor ,$percentage = 0 , $active = true , $request)
+    {
+
+        if(!$object->id) return false;
+        if(!$donor->id) return false;
+
+        $model_type = null;
+        
+        if($object instanceof Sponsorship){
+            $model_type = '\App\Models\Sponsorship';
+        }else if($object instanceof Student){
+            $model_type = '\App\Models\Student';
+        }else{
+            \Log::info('Helper AssignToSponsor assign wront object');
+            return false;
+        }
+        
+        $sponsor = Sponsor::where('purpose_type' , $model_type)
+                         ->where('purpose_id' , $model_id )
+                         ->where('donor_id' , $donor_id)
+                         ->first();
+
+        if(!is_null($sponsor)){
+            return $sponsor;
+        }
+
+        $sponsor = new Sponsor();
+        $sponsor->purpose_type = $model_type;
+        $sponsor->purpose_id = $object->id;
+        $sponsor->percentage = $percentage;
+        $sponsor->active = $active;
+        $sponsor->save();
+
+        return $sponsor;
     }
 }
