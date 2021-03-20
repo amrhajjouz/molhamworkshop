@@ -436,7 +436,7 @@
                     form : '=',
                 },
                 replace : true,
-                template : '<button class="btn btn-primary" ng-click="form.request.send();form.$submitted = true;" ng-disabled="form.$invalid || form.$pristine || form.request.sending || form.$submitted"><i ng-hide="form.request.sending || (!form.request.sending && form.$submitted && !form.request.error)" class="@{{ icon }}"></i><div ng-show="form.request.sending" class="spinner-border spinner-border-sm" role="status"></div><i ng-show="!form.request.sending && form.$submitted && !form.request.error" class="fa fa-check"></i>&nbsp; <span ng-transclude></span></button>',
+                template : '<button class="btn btn-primary" ng-click="form.request.send();form.$submitted = true;" ng-disabled="form.$invalid || !form.unregisteredRequiredModels.valid || form.$pristine || form.request.sending || form.$submitted"><i ng-hide="form.request.sending || (!form.request.sending && form.$submitted && !form.request.error)" class="@{{ icon }}"></i><div ng-show="form.request.sending" class="spinner-border spinner-border-sm" role="status"></div><i ng-show="!form.request.sending && form.$submitted && !form.request.error" class="fa fa-check"></i>&nbsp; <span ng-transclude></span></button>',
             };
         });
         
@@ -452,7 +452,21 @@
                 link : function (scope, element, attrs) {
                     
                     $timeout(function () {
+                        
+                        var elementScope = angular.element(element).scope();
+                        
                         scope.name.request = scope.request;
+                        scope.name.unregisteredRequiredModels.updateValidity = function () {
+                            scope.name.unregisteredRequiredModels.valid = true;
+                            for (i=0; i<this.models.length; i++) {
+                                if (eval('elementScope.' + this.models[i]) == false) {
+                                    scope.name.unregisteredRequiredModels.valid = false;
+                                    break ;
+                                }
+                            }
+                        }
+                        
+                        scope.name.unregisteredRequiredModels.updateValidity();
                         
                         element.on("change", function () {
                             resetFormSubmittedStateOnChange();
@@ -488,11 +502,10 @@
                     minLength: '@',
                 },
                 replace : true,
-                //template: '<div>@{{ url }}</div>',
-                template: '<select dir="rtl" class="form-control" ng-transclude></select>',
+                template: '<select class="form-control" ng-transclude></select>',
                 link : function (scope, element, attrs) {
                     
-                    $timeout(function () {
+                    $timeout(function () {                        
                         
                         var select2Config = {
                             multiple: (element[0].multiple) ? true : false,
@@ -536,6 +549,7 @@
                         
                         element.on("change", function () {
                             eval('elementScope.' + attrs.model + ' = ' + JSON.stringify($(element).val()) + ';');
+                            if (modelForm) elementScope[modelForm].unregisteredRequiredModels.updateValidity();
                             elementScope.$apply();
                         });
                         
@@ -552,7 +566,6 @@
                             else if (initOptions[i].selected) {
                                 initModelValue = initOptions[i].value;
                             }
-                            
                         }
                         
                         for (i=0; i<initOptionsToRemove.length; i++) {
@@ -563,9 +576,84 @@
                         elementScope.$apply();
                         
                         $(element).select2(select2Config);
+                        
+                        var modelForm;
+                        
+                        if ($(element).prop('required')) {
+
+                            var parentElement = element[0].parentElement;
+
+                            do {
+                                parentElement = parentElement.parentElement;
+                            } while (parentElement.nodeName != 'BODY' && parentElement.nodeName != 'FORM');
+
+                            if (parentElement.nodeName == 'FORM' && parentElement.getAttribute('name')) {
+                                var modelForm = parentElement.getAttribute('name');
+                                if (elementScope[modelForm]) {
+                                    elementScope[modelForm].unregisteredRequiredModels.models[elementScope[modelForm].unregisteredRequiredModels.models.length] = attrs.model;
+                                    elementScope.$apply();
+                                }
+                            }
+                        }
+                        
                     });
                     
                 }
+            };
+        });
+        
+        app.directive('modal', function ($rootScope, $page, $timeout) {
+            
+            return {
+                restrict: 'E',
+                transclude: true,
+                scope : {
+                    
+                },
+                replace : true,
+                template: '<div class="modal fade" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content" ng-transclude></div></div></div>',
+                link : function (scope, element, attrs) {
+                    
+                }
+            };
+        });
+        
+        app.directive('modalTitle', function () {
+            
+            return {
+                restrict: 'E',
+                transclude: true,
+                scope : {
+                    
+                },
+                replace : true,
+                template: '<div class="modal-header"><h4 class="modal-title" ng-transclude></h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>',
+            };
+        });
+        
+        app.directive('modalBody', function () {
+            
+            return {
+                restrict: 'E',
+                transclude: true,
+                scope : {
+                    
+                },
+                replace : true,
+                template: '<div class="modal-body" ng-transclude></div>',
+            };
+        });
+        
+        app.directive('modalFooter', function () {
+            
+            return {
+                restrict: 'E',
+                transclude: true,
+                scope : {
+                    
+                },
+                replace : true,
+                template: '<div class="modal-footer" ng-transclude></div>',
             };
         });
         
