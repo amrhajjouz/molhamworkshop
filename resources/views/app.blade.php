@@ -504,7 +504,6 @@
                 replace : true,
                 template: '<select class="form-control" ng-transclude></select>',
                 link : function (scope, element, attrs) {
-                    
                     $timeout(function () {                        
                         
                         var select2Config = {

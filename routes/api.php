@@ -10,7 +10,9 @@ use App\Http\Controllers\Target\{
     SponsorshipController,
     StudentController,
     EventController,
-    FundraiserController
+    FundraiserController ,
+    SponsorController
+
 };
 
 use App\Http\Controllers\DonorController;
@@ -100,6 +102,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/donors', [DonorController::class, 'list']);
     Route::post('/donors', [DonorController::class, 'create']);
     Route::put('/donors', [DonorController::class, 'update']);
-    Route::get('/donors/search', [DonorController::class, 'search']);
+    Route::get('/donors/search', [DonorController
+    ::class, 'search']);
     Route::get('/donors/{id}', [DonorController::class, 'retrieve']);
+
+
+    /////////////////////// Sponsors /////////////////////////
+    Route::post('/sponsors', [SponsorController::class, 'create']);
 });

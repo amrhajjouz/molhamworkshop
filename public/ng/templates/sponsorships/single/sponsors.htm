@@ -1,49 +1,97 @@
 <include-header />
+<button ng-click="add_sponsor()">إضافة كفيل</button>
+{{sponsor}}
+<form name="createSponsorShipsSponsorForm"  request="createSponsorShipsSponsor">
+<modal id="add-sponsors">
+  <modal-title> <i class="fe fe-plus-circle"></i>&nbsp; إضافة كفيل</modal-title
+  ><modal-body>
+      <div class="col-12 col-md-6">
+        <div class="form-group">
+          <label for="place">اسم الكفيل</label>
+          <select2 model="sponsor.donor_ids" ajax-url="donors/search"> </select2>
+        </div>
+      </div>
 
-<div class="row">
-    <div class="col-12 col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-header-title">معلومات الكفالة</h4>
-            </div>
-
-            <div class="card-body" ng-repeat="item in object.sponsors">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">الاسم</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4>{{ item.donor.name }}</h4>
-                    </div>
-                </div>
-                <hr>
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">الحالة</h4>
-                    </div>
-                    <div class="col-auto">
-                        <span ng-show="item.active">
-                            <i class="fa fa-check text-success"></i>
-                            مفعل
-                        </span>
-                        <span ng-show="!item.active">
-                            <i class="fa fa-times text-danger"></i>
-                            غير مفعل
-                        </span>
-                    </div>
-                </div>
-                <hr>
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">النسبة</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4> % {{ item.percentage }}</h4>
-                    </div>
-                </div>
-
-                <hr />
+       <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="percentage">نسبة المساهمة</label>
+            <input
+                type="number"
+                class="form-control"
+                ng-class="(createSponsorShipsSponsor.errors.percentage != null) ? 'is-invalid' : ''"
+                id="percentage"
+                ng-model="sponsor.percentage"
+                ng-change="createSponsorShipsSponsor.errors.percentage = null"
+                required
+                min="0"
+                max="{{object.percentage_to_complete}}"
+                
+            />
+            <div
+                ng-show="createSponsorShipsSponsor.errors.percentage != null"
+                class="invalid-feedback"
+            >
+                {{ createSponsorShipsSponsor.errors.percentage[0] }}
             </div>
         </div>
     </div>
+  </modal-body>
+  <modal-footer class="text-left">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+      <i class="fe fe-x"></i> اغلاق
+    </button>
+    <submit-button form="createSponsorShipsSponsorForm" icon="fe fe-plus">تعديل</submit-button>
+    <!-- <button type="button" class="btn btn-primary"> -->
+      <!-- <i class="fe fe-edit-2"></i> تعديل -->
+    <!-- </button> -->
+  </modal-footer>
+</modal>
+</form>
+
+<div class="row">
+  <div class="col-12 col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-header-title">معلومات الكفالة</h4>
+      </div>
+
+      <div class="card-body" ng-repeat="item in object.sponsors">
+        <div class="row align-items-center">
+          <div class="col">
+            <h4 class="mb-0 text-muted">الاسم</h4>
+          </div>
+          <div class="col-auto">
+            <h4>{{ item.donor.name }}</h4>
+          </div>
+        </div>
+        <hr />
+        <div class="row align-items-center">
+          <div class="col">
+            <h4 class="mb-0 text-muted">الحالة</h4>
+          </div>
+          <div class="col-auto">
+            <span ng-show="item.active">
+              <i class="fa fa-check text-success"></i>
+              مفعل
+            </span>
+            <span ng-show="!item.active">
+              <i class="fa fa-times text-danger"></i>
+              غير مفعل
+            </span>
+          </div>
+        </div>
+        <hr />
+        <div class="row align-items-center">
+          <div class="col">
+            <h4 class="mb-0 text-muted">النسبة</h4>
+          </div>
+          <div class="col-auto">
+            <h4>% {{ item.percentage }}</h4>
+          </div>
+        </div>
+
+        <hr />
+      </div>
+    </div>
+  </div>
 </div>

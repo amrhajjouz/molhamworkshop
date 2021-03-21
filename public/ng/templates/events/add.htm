@@ -1,3 +1,4 @@
+
 <page-header title="مناسبة جديدة" pretitle="المناسبات"></page-header>
 
 <form class="row" name="createEventForm" request="createEvent">
@@ -204,6 +205,7 @@
                 model="object.places_ids"
                 ajax-url="places/search"
                 multiple
+                required
             ></select2>
             <div class="text-danger">
                 {{ createEvent.errors.places_ids[0] }}
@@ -217,6 +219,7 @@
             <select2
                 model="object.donor_id"
                 ajax-url="donors/search"
+                required
             ></select2>
             <div class="text-danger">
                 {{ createEvent.errors.donor_id[0] }}

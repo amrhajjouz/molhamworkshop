@@ -117,35 +117,38 @@ class BaseTargetModel extends Model
         } else {
             /////////////////////// update /////////////////////////
             $target = $this->parent;
+            if(isset($options['target'])){
 
-            $target->fill($options['target']); //
-            switch (get_class($this)) {
+                $target->fill($options['target']); //
+                switch (get_class($this)) {
                 case "App\Models\Cases":
                     $target = $this->beforeSaveCase($target);
                     break;
-
-                default:
+                    
+                    default:
                     # code...
                     break;
+                }
+                
+                $target->save();
             }
 
-            $target->save();
+            if (isset($options['places_ids'])) {
+                if ($this->has_places && isset($options['places_ids'])) {
+
+                    // /////////////////////// delete /////////////////////////
+                    // $places = $this->places;
+                    // foreach($places as $item){
+                    //     // $this->places()->detach([$item->id]);
+                    //     $this->places()->detach([$item->id]);
+                    // }
+                    
+                    foreach($options['places_ids'] as $key => $val){
 
 
-            if ($this->has_places && isset($options['places_ids'])) {
+                        $prev = $this->places()->sync($options['places_ids']);
 
-                // /////////////////////// delete /////////////////////////
-                // $places = $this->places;
-                // foreach($places as $item){
-                //     // $this->places()->detach([$item->id]);
-                //     $this->places()->detach([$item->id]);
-                // }
-                
-                foreach($options['places_ids'] as $key => $val){
-
-
-                    $prev = $this->places()->sync($options['places_ids']);
-
+                    }
                 }
             }
 

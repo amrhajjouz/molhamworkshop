@@ -104,10 +104,9 @@ class Helper
         if(!$donor->id) return false;
 
         $model_type = null;
-        
-        if($object instanceof Sponsorship){
+        if($object instanceof \App\Models\Sponsorship){
             $model_type = '\App\Models\Sponsorship';
-        }else if($object instanceof Student){
+        }else if($object instanceof \App\Models\Student){
             $model_type = '\App\Models\Student';
         }else{
             \Log::info('Helper AssignToSponsor assign wront object');
@@ -115,8 +114,8 @@ class Helper
         }
         
         $sponsor = Sponsor::where('purpose_type' , $model_type)
-                         ->where('purpose_id' , $model_id )
-                         ->where('donor_id' , $donor_id)
+                         ->where('purpose_id' , $object->id )
+                         ->where('donor_id' , $donor->id)
                          ->first();
 
         if(!is_null($sponsor)){
@@ -128,8 +127,14 @@ class Helper
         $sponsor->purpose_id = $object->id;
         $sponsor->percentage = $percentage;
         $sponsor->active = $active;
+        $sponsor->donor_id = $donor->id;
         $sponsor->save();
 
+        if($object->sponsors->sum('percentage') >= 100){
+            $object->sponsored = true;
+            $object->save();
+
+        }
         return $sponsor;
     }
 }

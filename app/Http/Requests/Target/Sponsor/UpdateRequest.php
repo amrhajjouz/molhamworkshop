@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Http\Requests\Target\Sponsor;
+
+use App\Common\Base\BaseRequest;
+use Illuminate\Validation\Rule;
+
+class UpdateRequest extends BaseRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+    
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'id' => ['required', 'exists:sponsors'],
+            'beneficiary_name' => ['required' ,'string', 'between:3,100'],
+            'beneficiary_birthdate' => ['required' ,'string', 'between:3,100'],
+            'country_id' => ['required' ,'numeric'],
+            'sponsored' => ['required' ,'boolean'],
+            'target' => ['required' ,'array'],
+            'place_id' => ['required', 'numeric'],
+        ];
+    }
+
+
+    
+}

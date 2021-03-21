@@ -29,7 +29,7 @@ class Sponsorship extends BaseTargetModel
      }
 
      public function sponsors(){
-          return $this->hasMany('App\Models\Sponsors' , 'purpose_id' , 'id')->where('purpose_type' , '\App\Models\Sponsorship');
+          return $this->hasMany('App\Models\Sponsor' , 'purpose_id' , 'id')->where('purpose_type' , '\App\Models\Sponsorship');
      }
      
      
@@ -40,7 +40,7 @@ class Sponsorship extends BaseTargetModel
           $category = $this->parent->category;
           $sponsors = $this->sponsors;
           $_sponsors=[];
-          
+
           foreach($sponsors as $item){
                $donor = $item->donor;
                unset($item->donor);
@@ -101,6 +101,8 @@ class Sponsorship extends BaseTargetModel
                'section' =>$section,
                'category' =>$category,
                'spnonsors' => $_sponsors,
+               // percentage to complete
+               'percentage_to_complete' => 100 - $this->sponsors->sum('percentage')
           ]);
      }
      

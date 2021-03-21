@@ -23,22 +23,35 @@ function SponsorShipsSponsorController($scope, $page, $apiRequest, $init) {
     $scope.object = $init.object;
     $scope.countries = $init.countries;
     $scope.places = $init.places;
-
+    $scope.sponsor = {
+        donor_id:1
+    }
     // to reinitialize place errors
     $scope.$watchCollection(
-        "object.place_id",
+        "object.donor_id",
         (oldData, newData) => {
-            $scope.updateSponsorShips.errors.place_id = null;
+            $scope.createSponsorShipsSponsor.errors.place_id = null;
         },
         true
     );
     
-    $scope.updateSponsorShips = $apiRequest.config(
-        {
-            method: "PUT",
-            url: "sponsorships",
-            data: $scope.object,
-        },
-        function (response, data) {}
+    $scope.sponsor = {
+      donor_id: 1,
+      percentage: null,
+      purpose_type: "\\App\\Models\\Sponsorship",
+      purpose_id: $scope.object.id,
+    };
+    $scope.add_sponsor = ()=>{
+        
+        $('#add-sponsors').modal('show');
+    }
+
+    $scope.createSponsorShipsSponsor = $apiRequest.config(
+      {
+        method: "POST",
+        url: "sponsors",
+        data: $scope.sponsor,
+      },
+      function (response, data) {}
     );
 }
