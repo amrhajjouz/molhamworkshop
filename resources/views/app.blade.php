@@ -584,6 +584,13 @@
                         eval('elementScope.' + attrs.model + ' = ' + JSON.stringify(initModelValue) + ';');
                         elementScope.$apply();
                         
+                        // Check if element's parent is modal
+                        var parentElement = element[0].parentElement;
+                        do {
+                            parentElement = parentElement.parentElement;
+                        } while (parentElement.nodeName != 'BODY' && !parentElement.classList.contains("modal"));
+                        if (parentElement.classList.contains("modal")) select2Config.dropdownParent = $(parentElement);
+                        
                         $(element).select2(select2Config);
                         
                         var modelForm;
