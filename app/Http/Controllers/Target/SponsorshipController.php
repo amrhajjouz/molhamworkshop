@@ -75,5 +75,26 @@ class SponsorShipController extends BaseController {
             throw $this->_exception($e->getMessage());
         }
     }
+
+    public function get_sponsors(Request $request , $id){
+      
+        try {
+
+            $object = Sponsorship::findOrFail($id);
+
+            $sponsors= $object->sponsors;
+
+            $res = [];
+            foreach($sponsors  as $item){
+                $res [] = $item->transform();
+            }
+
+            return $this->_response($res);
+        } catch (\Exception $e) {
+            throw $this->_exception($e->getMessage());
+        }
+
+    }
+    
     
 }

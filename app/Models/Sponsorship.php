@@ -38,21 +38,21 @@ class Sponsorship extends BaseTargetModel
           $target = $this->parent->toArray();
           $section = $this->parent->section;
           $category = $this->parent->category;
-          $sponsors = $this->sponsors;
-          $_sponsors=[];
+          // $sponsors = $this->sponsors;
+          // $_sponsors=[];
 
-          foreach($sponsors as $item){
-               $donor = $item->donor;
-               unset($item->donor);
-               $_donor = new stdClass();
+          // foreach($sponsors as $item){
+          //      $donor = $item->donor;
+          //      unset($item->donor);
+          //      $_donor = new stdClass();
                
-               $_donor->id = $donor->id;
-               $_donor->email = $donor->email;
-               $_donor->name = $donor->name;
-               $_donor->text = $donor->name;
-               $item->donor = $_donor;
-               $_sponsors []= $item; 
-          }
+          //      $_donor->id = $donor->id;
+          //      $_donor->email = $donor->email;
+          //      $_donor->name = $donor->name;
+          //      $_donor->text = $donor->name;
+          //      $item->donor = $_donor;
+          //      $_sponsors []= $item; 
+          // }
 
           if(!is_null($section)){
                unset($section->created_at);
@@ -100,7 +100,7 @@ class Sponsorship extends BaseTargetModel
                 "places" => $_places,
                'section' =>$section,
                'category' =>$category,
-               'spnonsors' => $_sponsors,
+               // 'spnonsors' => $_sponsors,
                // percentage to complete
                'percentage_to_complete' => 100 - $this->sponsors->sum('percentage')
           ]);

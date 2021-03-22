@@ -27,56 +27,33 @@ class Sponsor extends BaseModel
      
      public function transform(){
           
-          $target = $this->parent->toArray();
-          $section = $this->parent->section;
-          $category = $this->parent->category;
-          
-          if(!is_null($section)){
-               unset($section->created_at);
-               unset($section->updated_at);
-          }
+          $donor = $this->donor;
 
-          if(!is_null($category)){
-               unset($category->created_for);
-               unset($category->created_at);
-               unset($category->updated_at);
-          }
 
-          unset($this->parent);
+          // $places = $this->places;
+          // $_places = [];
 
-          $places = $this->places;
-          $_places = [];
+          // if ($places) {
+          //      foreach ($places as $item) {
+          //           $_place = (object)[
+          //                'id' => $item->id,
+          //                'name' => $item->name,
+          //                'text' => $item->name,
+          //                'type' => $item->type,
+          //           ];
 
-          if ($places) {
-               foreach ($places as $item) {
-                    $_place = (object)[
-                         'id' => $item->id,
-                         'name' => $item->name,
-                         'text' => $item->name,
-                         'type' => $item->type,
-                    ];
-
-                    $_places[] = $_place;
-               }
-          }
+          //           $_places[] = $_place;
+          //      }
+          // }
 
           $obj = $this->toArray();
           
           return (object)array_merge($obj , [ 
-               'country'=>[ 
-                    'name'=> $this->country->name 
+               'donor'=>[ 
+                    'id'=> $donor->id, 
+                    'name'=> $donor->name, 
+                    'email'=> $donor->email, 
                ],  
-               'target' => [
-                    'required' => $target['required'],
-                    'visible' => $target['visible'],
-                    'beneficiaries_count' => $target['beneficiaries_count'],
-                    'documented' => $target['documented'],
-                    'archived' => $target['archived'],
-                    'section_id' => $target['section_id'],
-               ],
-                "places" => $_places,
-               'section' =>$section,
-               'category' =>$category,
           ]);
      }
      

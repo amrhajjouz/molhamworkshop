@@ -207,6 +207,7 @@ class BaseTargetModel extends Model
 
     private function beforeSaveStudent(Target $target)
     {
+        //TODO: add new catgory and assign student
         //التعليم
         $target->section_id = 5;
         $target->beneficiaries_count = 1;

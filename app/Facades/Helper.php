@@ -95,22 +95,32 @@ class Helper
      * Mohamd
     * Assign Sponsorship or Student to Sponsors
     *  $object : object from student or sponsorship
-    *  Return false Or object from Sponsor
+    *  Return arry has object or error
     */
     public static function AssignToSponsor($object , Donor $donor ,$percentage = 0 , $active = true , $request)
     {
+        $response = [
+            'error'=>false,
+            'sponsor'=>false,
+        ];
 
-        if(!$object->id) return false;
-        if(!$donor->id) return false;
+        $target = $object->parent;
+
+        if(!$object->id || !$donor->id || !$target ){
+            $response['error'] = 'missed data';
+            return $response;
+        }
 
         $model_type = null;
+
         if($object instanceof \App\Models\Sponsorship){
             $model_type = '\App\Models\Sponsorship';
         }else if($object instanceof \App\Models\Student){
             $model_type = '\App\Models\Student';
         }else{
             \Log::info('Helper AssignToSponsor assign wront object');
-            return false;
+            $response['error'] = 'invalid Model type';
+            return $response;
         }
         
         $sponsor = Sponsor::where('purpose_type' , $model_type)
@@ -119,7 +129,16 @@ class Helper
                          ->first();
 
         if(!is_null($sponsor)){
-            return $sponsor;
+            $response['error'] = 'already sponsored';
+            $response['object'] = $sponsor;
+            return $response;
+        }
+
+        // at least must pay 10$
+        $required = $target->required;
+        if(($required * $request->percentage) / 100 < config('general.least_sponsore_amount')){
+            $response['error'] = 'at least must pay 10 dolar';
+            return  $response;
         }
 
         $sponsor = new Sponsor();
@@ -133,8 +152,11 @@ class Helper
         if($object->sponsors->sum('percentage') >= 100){
             $object->sponsored = true;
             $object->save();
-
         }
-        return $sponsor;
+        
+        $response ['error'] = false;
+        $response ['sponsor'] = $sponsor;
+
+        return $response;
     }
 }

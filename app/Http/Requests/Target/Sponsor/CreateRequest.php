@@ -24,9 +24,12 @@ class CreateRequest extends BaseRequest
      */
     public function rules()
     {
-        
         return [
-            'donor_id' => ['required' ,'numeric'],
+            'donor_id' => [
+                Rule::unique('sponsors')->where('purpose_id', $this->purpose_id)->where('donor_id', $this->donor_id) ,
+                'required'
+            ],
+            // 'donor_id' => ['required' ,'numeric'],
             'percentage' => ['required' ,'numeric'],
             'purpose_id' => ['required', 'numeric'],
             'purpose_type' => ['required', 'string'],

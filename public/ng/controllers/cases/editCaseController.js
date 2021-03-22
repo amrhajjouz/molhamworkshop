@@ -1,4 +1,3 @@
-// const { initial } = require("lodash");
 
 async function editCaseControllerInit($http, $page, $apiRequest) {
     const object = await $apiRequest

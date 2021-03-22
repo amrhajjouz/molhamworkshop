@@ -25,16 +25,19 @@ class SponsorController extends BaseController {
             $purpose = $data['purpose_type']::find($data['purpose_id']);
             $donor = Donor::findOrfail($data['donor_id']);
             
-            $obj  = Helper::AssignToSponsor($purpose ,$donor  , $data['percentage'] , true , $request);
-            if(!$obj) throw $this->_exception('error in created data');
-            return $this->_response($obj);
+            $res  = Helper::AssignToSponsor($purpose ,$donor  , $data['percentage'] , true , $request);
+
+            if($res['error']) throw $this->_exception($res['error']);
+
+            return $this->_response($res['sponsor']);
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());;
         }
     }
     
-    public function update (UpdateRequest $request) {
-        
+    public function update (Request $request) {
+        // UpdateRequest
+        dd($request->all());
         try {
             
             $object = $this->model::findOrFail($request->id);
