@@ -440,7 +440,7 @@
                 link : function (scope, element, attrs) {
                     scope.updateFormModel = function () {
                         if (scope.form.model)
-                            form.request.config.data = scope.form.model;
+                            scope.form.request.config.data = scope.form.model;
                     }
                 }
             };
