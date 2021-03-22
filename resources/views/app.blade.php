@@ -436,7 +436,7 @@
                     form : '=',
                 },
                 replace : true,
-                template : '<button class="btn btn-primary" ng-click="form.request.send();form.$submitted = true;" ng-disabled="form.$invalid || !form.unregisteredRequiredModels.valid || form.$pristine || form.request.sending || form.$submitted"><i ng-hide="form.request.sending || (!form.request.sending && form.$submitted && !form.request.error)" class="@{{ icon }}"></i><div ng-show="form.request.sending" class="spinner-border spinner-border-sm" role="status"></div><i ng-show="!form.request.sending && form.$submitted && !form.request.error" class="fa fa-check"></i>&nbsp; <span ng-transclude></span></button>',
+                template : '<button class="btn btn-primary" ng-click="form.request.config.data=form.model;form.request.send();form.$submitted = true;" ng-disabled="form.$invalid || !form.unregisteredRequiredModels.valid || form.$pristine || form.request.sending || form.$submitted"><i ng-hide="form.request.sending || (!form.request.sending && form.$submitted && !form.request.error)" class="@{{ icon }}"></i><div ng-show="form.request.sending" class="spinner-border spinner-border-sm" role="status"></div><i ng-show="!form.request.sending && form.$submitted && !form.request.error" class="fa fa-check"></i>&nbsp; <span ng-transclude></span></button>',
             };
         });
         
@@ -447,6 +447,7 @@
                 scope : {
                     name : '=',
                     request : '=',
+                    model: '=',
                 },
                 
                 link : function (scope, element, attrs) {
@@ -467,12 +468,15 @@
                         }
                         
                         scope.name.unregisteredRequiredModels.updateValidity();
+                        scope.name.model = (scope.model) ? scope.model : null;
                         
                         element.on("change", function () {
+                            scope.name.model = (scope.model) ? scope.model : null;
                             resetFormSubmittedStateOnChange();
                         });
                         
                         element.on("input", function () {
+                            scope.name.model = (scope.model) ? scope.model : null;
                             resetFormSubmittedStateOnChange();
                         });
                     });
@@ -709,15 +713,15 @@
                     
                     return {
                         
-                        sending : false, sent : false, response : null, data : null, error : '', errors : {},
+                        config: config, sending : false, sent : false, response : null, data : null, error : '', errors : {},
                         
-                        send : function (returnData = false) {
+                        send : function (returnData = false) {                            
                             
                             var q = $q.defer(); this.sending = true; this.response = ''; this.data = null; this.error = ''; this.errors = {}; var _this = this;
                             
                             $page.sendingHttpRequest = true; 
                             
-                            $http(config).then(function (response) {
+                            $http(this.config).then(function (response) {
                                 _this.handleResponse(response);
                                 _this.abort(q);
                                 if (_this.error == '' && successCallback != null && typeof successCallback == 'function') successCallback(response, response.data);
