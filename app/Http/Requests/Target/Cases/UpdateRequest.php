@@ -33,7 +33,6 @@ class UpdateRequest extends BaseRequest
             'status' => ['required'],
             'target' => ['required'],
             'place_id' => ['required', 'numeric'],
-            // 'cancelled' => ['required'],
         ];
     }
     

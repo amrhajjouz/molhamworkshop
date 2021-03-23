@@ -7,14 +7,15 @@
 <modal id="add-sponsors">
   <modal-title> <i class="fe fe-plus-circle"></i>&nbsp; إضافة كفيل</modal-title
   ><modal-body>
-      <div class="col-12 col-md-6">
+      <div class="row">
+      <div class="col-md-6">
         <div class="form-group">
           <label for="place">اسم الكفيل</label>
           <select2 model="sponsor.donor_id" ajax-url="donors/search"> </select2>
         </div>
       </div>
 
-       <div class="col-12 col-md-6">
+       <div class="col-md-6">
         <div class="form-group">
             <label for="percentage">نسبة المساهمة</label>
             <input
@@ -37,6 +38,7 @@
             </div>
         </div>
     </div>
+    </div>
   </modal-body>
   <modal-footer class="text-left">
     <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -54,7 +56,8 @@
 <modal id="edit-sponsors">
   <modal-title> <i class="fe fe-plus-circle"></i>&nbsp; تعديل كفيل</modal-title
   ><modal-body>
-      <div class="col-12 col-md-6">
+      <div class="row">
+      <div class=" col-md-6">
         <div class="form-group">
           <label for="place">اسم الكفيل</label>
            <input
@@ -70,7 +73,7 @@
         </div>
       </div>
 
-       <div class="col-12 col-md-6">
+       <div class=" col-md-6">
         <div class="form-group">
             <label for="percentage_">نسبة المساهمة</label>
             <input
@@ -92,6 +95,7 @@
                 {{ updateSponsorShipsSponsor.errors.percentage[0] }}
             </div>
         </div>
+    </div>
     </div>
   </modal-body>
   <modal-footer class="text-left">

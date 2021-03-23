@@ -499,6 +499,53 @@
             };
         });
         
+        app.directive('ngError', function ($rootScope) {
+            
+            return {
+                restrict: 'A',
+                scope : {
+                    ngError : '=',
+                },
+                
+                link : function (scope, element, attrs) {
+                    
+                    if (attrs.ngError) {
+                        
+                        var errorElementClassName = attrs.ngError.toLowerCase().split('.').join('-');
+                        $('<div class="invalid-feedback display-none ' + errorElementClassName + '"></div>').insertAfter($(element));
+                        
+                        var elementScope = angular.element(element).scope();
+                        
+                        var clearError = function () {
+                            if (scope.ngError) {
+                                $(element).removeClass('is-invalid');
+                                $('.' + errorElementClassName).addClass('display-none');
+                                $('.' + errorElementClassName).html('');
+                                scope.ngError = null;
+                            }
+                        };
+
+                        $rootScope.$on('apiRequestError', function(event, options) {
+                            var errors = eval('elementScope.' + attrs.ngError);
+                            if (errors) {
+                                $(element).addClass('is-invalid');
+                                $('.' + errorElementClassName).removeClass('display-none');
+                                $('.' + errorElementClassName).html(errors[0]);
+                            } else {
+                                clearError();
+                            }
+                        });
+                        element.on("change", function () {
+                            clearError();
+                        });
+                        element.on("input", function () {
+                            clearError();
+                        }); 
+                    }
+                }
+            };
+        });
+        
         app.directive('select2', function ($rootScope, $page, $timeout) {
             
             return {
@@ -510,11 +557,13 @@
                     placeholder: '@',
                     multiple: '@',
                     minLength: '@',
+                    errorModel: '=',
                 },
                 replace : true,
                 template: '<select class="form-control" ng-transclude></select>',
                 link : function (scope, element, attrs) {
-                    $timeout(function () {                        
+                    
+                    $timeout(function () {
                         
                         var select2Config = {
                             multiple: (element[0].multiple) ? true : false,
@@ -611,8 +660,42 @@
                                 }
                             }
                         }
-                        
                     });
+                    
+                    if (attrs.errorModel) {
+                        
+                        var errorElementClassName = attrs.errorModel.toLowerCase().split('.').join('-');
+                        $('<div class="invalid-feedback display-none ' + errorElementClassName + '"></div>').insertAfter($(element));
+                        
+                        var elementScope = angular.element(element).scope();
+                        
+                        var clearError = function () {
+                            if (scope.errorModel) {
+                                $(element).removeClass('is-invalid');
+                                $('.' + errorElementClassName).addClass('display-none');
+                                $('.' + errorElementClassName).html('');
+                                scope.errorModel = null;
+                            }
+                        };
+                        
+                        $rootScope.$on('apiRequestError', function(event, options) {
+                            var errors = eval('elementScope.' + attrs.errorModel);
+                            if (errors) {
+                                $(element).addClass('is-invalid');
+                                $('.' + errorElementClassName).removeClass('display-none');
+                                $('.' + errorElementClassName).html(errors[0]);
+                            } else {
+                                clearError();
+                            }
+                        });
+                        
+                        element.on("change", function () {
+                            clearError();
+                        });
+                        element.on("input", function () {
+                            clearError();
+                        }); 
+                    }
                     
                 }
             };
@@ -713,7 +796,7 @@
             
         });
         
-        app.factory('$apiRequest', function($http, $q, $page) {
+        app.factory('$apiRequest', function($http, $q, $page, $rootScope) {
             
             return {
                 
@@ -762,7 +845,10 @@
                                 if (this.response.statusText != 'OK') {
                                     if (this.error == '' && 'message' in this.data) this.error = this.data.message; 
                                 }
-                                if (this.error != '' && $page.loading == false) alert(this.error);
+                                if (this.error != '' && $page.loading == false) {
+                                    $rootScope.$broadcast("apiRequestError", this.error);
+                                    alert(this.error);
+                                }
                             }
                         },
                         

@@ -1,125 +1,143 @@
 <include-header />
 
 <form class="row" name="myForm" request="updateCase">
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="name">اسم المستفيد</label>
-            <input
-                type="text"
-                class="form-control"
-                ng-class="(updateCase.errors.beneficiary_name != null) ? 'is-invalid' : ''"
-                id="beneficiary_name"
-                ng-model="object.beneficiary_name"
-                ng-change="updateCase.errors.beneficiary_name = null"
-                placeholder="الاسم.."
-                required
-            />
-            <div
-                ng-show="updateCase.errors.beneficiary_name != null"
-                class="invalid-feedback"
-            >
-                {{ updateCase.errors.beneficiary_name[0] }}
-            </div>
-        </div>
-    </div>
-
-     <div class="col-12 col-md-6">
-         <div class="form-group">
-             <label for="name">عدد المستفيدين</label>
-             <input type="number" class="form-control"
-                 ng-class="(updateCase.errors.beneficiaries_count != null) ? 'is-invalid' : ''" id="beneficiaries_count"
-                 ng-model="object.target['beneficiaries_count']"
-                 ng-change="updateCase.errors.beneficiaries_count = null" placeholder="عدد المستفيدين.." required>
-             <div ng-show="updateCase.errors.beneficiaries_count != null" class="invalid-feedback">
-                 {{ updateCase.errors.beneficiaries_count[0] }}</div>
-         </div>
-     </div>
-
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="name">الدولة</label>
-            <select
-                class="form-control"
-                ng-model="object.country_id"
-                ng-class="(updateCase.errors.country_id != null) ? 'is-invalid' : ''"
-                id="country_id"
-                ng-change="updateCase.errors.country_id = null"
-                ng-options="country.id as country.name for country in countries"
-                required
-            ></select>
-            <div
-                ng-show="updateCase.errors.country_id != null"
-                class="invalid-feedback"
-            >
-                {{ updateCase.errors.country_id[0] }}
-            </div>
-        </div>
-    </div>
-
-     <div class="col-12 col-md-6">
-         <div class="form-group">
-             <label for="archived">مؤرشفة</label>
-             <select class="form-control" ng-model="object.target.archived"
-                 ng-class="(updateCase.errors.archived != null) ? 'is-invalid' : ''" id="archived"
-                 ng-change="updateCase.errors.target.archived = null"  required>
-                 <option ng-value="true">نعم</option>
-                 <option ng-value="false">لا</option>
-             </select>
-             <div ng-show="updateCase.errors.archived != null" class="invalid-feedback">
-                 {{ updateCase.errors.archived[0] }}</div>
-         </div>
-     </div>
-     <div class="col-12 col-md-6">
-         <div class="form-group">
-             <label for="documented">موثقة</label>
-             <select class="form-control" ng-model="object.target.documented"
-                 ng-class="(updateCase.errors.documented != null) ? 'is-invalid' : ''" id="documented"
-                 ng-change="updateCase.errors.target.documented = null"  required>
-                 <option ng-value="true">نعم</option>
-                 <option ng-value="false">لا</option>
-             </select>
-             <div ng-show="updateCase.errors.documented != null" class="invalid-feedback">
-                 {{ updateCase.errors.documented[0] }}</div>
-         </div>
-     </div>
-     <div class="col-12 col-md-6">
-         <div class="form-group">
-             <label for="visible">ظاهرة</label>
-             <select class="form-control" ng-model="object.target.visible"
-                 ng-class="(updateCase.errors.visible != null) ? 'is-invalid' : ''" id="visible"
-                 ng-change="updateCase.errors.target.visible = null"  required>
-                 <option ng-value="true">نعم</option>
-                 <option ng-value="false">لا</option>
-             </select>
-             <div ng-show="updateCase.errors.visible != null" class="invalid-feedback">
-                 {{ updateCase.errors.visible[0] }}</div>
-         </div>
-     </div>
-
- <div class="col-12 col-md-6">
-     <div class="form-group">
-         <label for="status">الحالة</label>
-         <select class="form-control" ng-model="object.status"
-             ng-class="(updateCase.errors.status != null) ? 'is-invalid' : ''" id="status"
-             ng-change="updateCase.errors.status = null" ng-options="status.id as status.name for status in statuses"
-             required>
-         </select>
-         <div ng-show="updateCase.errors.status != null" class="invalid-feedback">
-             {{ updateCase.errors.status[0] }}</div>
-     </div>
- </div>
   <div class="col-12 col-md-6">
-      <div class="form-group">
-          <label for="place">المكان</label>
-           <select2 model="object.place_id" ajax-url="places/search">
-            <option selected ng-repeat="p in object.places" value="{{p.id}}">{{p.text}}</option>
-            </select2>
-          <div  class="text-danger">
-              {{ updateCase.errors.place_id[0] }}</div>
-      </div>
+    <div class="form-group">
+      <label for="beneficiary_name">اسم المستفيد</label>
+      <input
+        type="text"
+        class="form-control"
+        ng-class="(updateCase.errors.beneficiary_name != null) ? 'is-invalid' : ''"
+        id="beneficiary_name"
+        ng-model="object.beneficiary_name"
+        ng-change="updateCase.errors.beneficiary_name = null"
+        placeholder="الاسم.."
+        required
+        ng-error="updateCase.errors.beneficiary_name"
+      />
+    </div>
   </div>
 
-    <div class="col-12">
-        <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="beneficiaries_count">عدد المستفيدين</label>
+      <input
+        type="number"
+        class="form-control"
+        ng-class="(updateCase.errors.beneficiaries_count != null) ? 'is-invalid' : ''"
+        id="beneficiaries_count"
+        ng-model="object.target['beneficiaries_count']"
+        ng-change="updateCase.errors.beneficiaries_count = null"
+        placeholder="عدد المستفيدين.."
+        required
+        ng-error="updateCase.errors.beneficiaries_count"
+      />
     </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="country_id">الدولة</label>
+      <select
+        class="form-control"
+        ng-model="object.country_id"
+        ng-class="(updateCase.errors.country_id != null) ? 'is-invalid' : ''"
+        id="country_id"
+        ng-change="updateCase.errors.country_id = null"
+        ng-options="country.id as country.name for country in countries"
+        required
+        ng-error="updateCase.errors.country_id"
+      ></select>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="archived">مؤرشفة</label>
+      <select
+        class="form-control"
+        ng-model="object.target.archived"
+        ng-class="(updateCase.errors.archived != null) ? 'is-invalid' : ''"
+        id="archived"
+        ng-change="upsdateCase.errors.target.archived = null"
+        required
+        ng-error="updateCase.errors.archived"
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="documented">موثقة</label>
+      <select
+        class="form-control"
+        ng-model="object.target.documented"
+        ng-class="(updateCase.errors.documented != null) ? 'is-invalid' : ''"
+        id="documented"
+        ng-change="updateCase.errors.target.documented = null"
+        required
+        ng-error="updateCase.errors.documented"
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="visible">ظاهرة</label>
+      <select
+        class="form-control"
+        ng-model="object.target.visible"
+        ng-class="(updateCase.errors.visible != null) ? 'is-invalid' : ''"
+        id="visible"
+        ng-change="updateCase.errors.target.visible = null"
+        required
+        ng-error="updateCase.errors.visible"
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="status">الحالة</label>
+      <select
+        class="form-control"
+        ng-model="object.status"
+        ng-class="(updateCase.errors.status != null) ? 'is-invalid' : ''"
+        id="status"
+        ng-change="updateCase.errors.status = null"
+        ng-options="status.id as status.name for status in statuses"
+        required
+        ng-error="updateCase.errors.status"
+      ></select>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="place_id">المكان</label>
+      <select2
+        model="object.place_id"
+        ajax-url="places/search"
+        error-model="updateCase.errors.place_id"
+        required
+      >
+        <option selected ng-repeat="p in object.places" value="{{p.id}}">
+          {{p.text}}
+        </option>
+      </select2>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
+  </div>
 </form>

@@ -112,21 +112,8 @@ class PlaceController extends BaseController
             ->get();
 
 
-            // dd($places);
-            // if ($request->has('q')) {
-
-            //     $places = $this->model::where('name', 'like', "%" . $request->q . "%")->take(10)->get();
-            // } else {
-
-            //     $places = $this->model::take(10)->get();
-            // }
 
             foreach ($places as $place) {
-
-                $obj = new \stdClass();
-                $obj->id = $place->id;
-                $obj->name = $place->name;
-                
 
                 $result[] = $this->search_transform($place);
             }
@@ -147,7 +134,7 @@ class PlaceController extends BaseController
 
         // $obj->name = Helper::getFullNamePlace($place);
         $obj->name = $name;
-        $obj->text = $name;
+        $obj->text = Helper::getFullNamePlace($place);
 
         // $parent = $place->parent;
 
@@ -157,9 +144,4 @@ class PlaceController extends BaseController
 
         return $obj;
     }
-
-    // public function beforeListResponse($response)
-    // {
-    //     dd(2);
-    // }
 }

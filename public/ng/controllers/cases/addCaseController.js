@@ -4,10 +4,6 @@ async function addCaseControllerInit($apiRequest) {
     let categories = await $apiRequest.config("categories?created_for=Cases").getData();
     let places = await $apiRequest.config("places").getData();
 
-    categories.push({
-        id:null , name:"غير مصنفة"
-    })
-    countries.push({ id: null, name: "يرجى اختيار دولة.." });
 
     let init = {
         countries: countries,
@@ -43,14 +39,6 @@ function addCaseController($scope, $location, $apiRequest, $page, $init) {
     $scope.categories = $init.categories;
     $scope.places = $init.places;
 
-    // to reinitialize place errors
-    $scope.$watchCollection(
-        "object.place_id",
-        (oldData, newData) => {
-            $scope.createCase.errors.place_id = null;
-        },
-        true
-    );
 
 
     $scope.createCase = $apiRequest.config(
