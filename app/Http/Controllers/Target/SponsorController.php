@@ -35,23 +35,36 @@ class SponsorController extends BaseController {
         }
     }
     
-    public function update (Request $request) {
-        // UpdateRequest
-        dd($request->all());
+    public function update (UpdateRequest $request , $id) {
         try {
             
             $object = $this->model::findOrFail($request->id);
+
             $data = $request->validated();
 
-            $object->beneficiary_name = $data['beneficiary_name'];
-            $object->beneficiary_birthdate = $data['beneficiary_birthdate'];
-            $object->country_id = $data['country_id'];
-            $object->sponsored = $data['sponsored'];
+            $purpose = $object->purpose;
 
-            $options = ['target' => $request->target , "places_ids" =>[ $request->place_id] ];
+            $current_total_without_this_sponsor = $purpose->total_sponsores_percentage([$object->id]);
+            
+            if((100 - $current_total_without_this_sponsor) < $data['percentage'] ){
+                throw $this->_exception('big percentage');
+            }
 
+            $object->percentage = $data['percentage'];
+            
 
-            $object->save($options);
+            if (($current_total_without_this_sponsor + $data['percentage']) >= 100) {
+                $purpose->sponsored = true;
+                $object->active = true;
+            }else{
+                $purpose->sponsored = false;
+                $object->active = false;
+            }
+
+            $object->save();
+            $purpose->save();
+
+            
             
             return $this->_response($object);
         } catch (\Exception $e) {
@@ -59,18 +72,5 @@ class SponsorController extends BaseController {
         }
     }
     
-    public function list (Request $request) {
-        
-        try {
-            $result =[];
-            $data = $this->model::all();
-            foreach($data as $object){
-                $result[] = $object->transform();
-            }
-            return response()->json($result);
-        } catch (\Exception $e) {
-            throw $this->_exception($e->getMessage());
-        }
-    }
     
 }

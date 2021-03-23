@@ -105,5 +105,12 @@ class Sponsorship extends BaseTargetModel
                'percentage_to_complete' => 100 - $this->sponsors->sum('percentage')
           ]);
      }
+
+
+     public function total_sponsores_percentage($ignore = []){
+          
+          return $this->sponsors()->whereNotIn('id', $ignore)->sum('percentage');
+     }
+     
      
 }    

@@ -40,8 +40,6 @@ function SponsorShipsSponsorController($scope, $page, $apiRequest, $init) {
   };
 
   $scope.edit_sponsor = (object) => {
-    // $scope.selected_object = Object.assign({},object);
-    // $scope.selected_object = object;
     $scope.selected_object = angular.copy(object)
     $("#edit-sponsors").modal("show");
     console.log($scope.selected_object);
@@ -68,8 +66,8 @@ function SponsorShipsSponsorController($scope, $page, $apiRequest, $init) {
       data: $scope.sponsor,
     },
     function (response, data) {
-      console.log({ response });
-      console.log({ data });
+          $("#add-sponsors").modal("hide");
+
     }
   );
 
@@ -80,8 +78,9 @@ function SponsorShipsSponsorController($scope, $page, $apiRequest, $init) {
       data: $scope.selected_object,
     },
     function (response, data) {
-      console.log({ response });
-      console.log({ data });
+       $("#edit-sponsors").modal("hide");
+       //TODO : refresh datatable
+
     }
   );
 }
