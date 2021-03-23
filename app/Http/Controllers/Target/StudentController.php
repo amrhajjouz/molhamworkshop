@@ -89,4 +89,26 @@ class StudentController extends BaseController
             return ['error' => $e->getMessage()];
         }
     }
+
+
+    public function get_sponsors(Request $request, $id)
+    {
+
+        try {
+
+            $object = $this->model::findOrFail($id);
+
+            $sponsors = $object->sponsors;
+
+            $res = [];
+            foreach ($sponsors  as $item) {
+                $res[] = $item->transform();
+            }
+
+            return $this->_response($res);
+        } catch (\Exception $e) {
+            throw $this->_exception($e->getMessage());
+        }
+    }
+    
 }

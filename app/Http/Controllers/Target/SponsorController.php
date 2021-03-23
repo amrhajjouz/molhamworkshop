@@ -51,20 +51,22 @@ class SponsorController extends BaseController {
             }
 
             $object->percentage = $data['percentage'];
-            
+            $object->save();
 
-            if (($current_total_without_this_sponsor + $data['percentage']) >= 100) {
-                $purpose->sponsored = true;
-                $object->active = true;
+            $model_type = null;
+
+            if ($purpose instanceof \App\Models\Sponsorship) {
+                $model_type = '\App\Models\Sponsorship';
+            } else if ($purpose instanceof \App\Models\Student) {
+                $model_type = '\App\Models\Student';
             }else{
-                $purpose->sponsored = false;
-                $object->active = false;
+                throw $this->_exception('missing data');
             }
 
-            $object->save();
-            $purpose->save();
 
-            
+            if($model_type == "\App\Models\Sponsorship"){
+                $this->afterUpdateSponsership($purpose , $current_total_without_this_sponsor , $data);
+            }
             
             return $this->_response($object);
         } catch (\Exception $e) {
@@ -72,5 +74,17 @@ class SponsorController extends BaseController {
         }
     }
     
+
+    protected function afterUpdateSponsership($purpose , $current_total_without_this_sponsor , $data){
+       
+        if (($current_total_without_this_sponsor + $data['percentage']) >= 100) {
+            $purpose->sponsored = true;
+        } else {
+            $purpose->sponsored = false;
+        }
+
+        $purpose->save();
+
+    }
     
 }

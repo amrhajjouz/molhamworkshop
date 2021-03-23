@@ -134,9 +134,14 @@ class Helper
             return $response;
         }
 
+        $config_amount = config('general.least_sponsore_amount');
+
         // at least must pay 10$
         $required = $target->required;
-        if(($required * $request->percentage) / 100 < config('general.least_sponsore_amount')){
+        $real_amount = ($required * $request->percentage) / 100 ;
+        
+// dd($object->percentage_to_complete() != $percentage , $percentage , $object->percentage_to_complete());
+        if($real_amount < $config_amount  && $object->percentage_to_complete() != $percentage){
             $response['error'] = 'at least must pay 10 dolar';
             return  $response;
         }
@@ -149,9 +154,12 @@ class Helper
         $sponsor->donor_id = $donor->id;
         $sponsor->save();
 
-        if($object->sponsors->sum('percentage') >= 100){
-            $object->sponsored = true;
-            $object->save();
+        if($model_type == '\App\Models\Sponsorship'){
+
+            if($object->sponsors->sum('percentage') >= 100){
+                $object->sponsored = true;
+                $object->save();
+            }
         }
         
         $response ['error'] = false;

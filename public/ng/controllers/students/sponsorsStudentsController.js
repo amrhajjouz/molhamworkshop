@@ -1,10 +1,10 @@
-async function SponsorShipsSponsorControllerInit($http, $page, $apiRequest) {
+async function sponsorsStudentsControllerInit($http, $page, $apiRequest) {
   const sponsors = await $apiRequest
-    .config("sponsorships/" + $page.routeParams.id + "/sponsors")
+    .config("students/" + $page.routeParams.id + "/sponsors")
     .getData();
 
   const object = await $apiRequest
-    .config("sponsorships/" + $page.routeParams.id)
+    .config("students/" + $page.routeParams.id)
     .getData();
 
 
@@ -15,24 +15,16 @@ async function SponsorShipsSponsorControllerInit($http, $page, $apiRequest) {
   return init;
 }
 
-function SponsorShipsSponsorController($scope, $page, $apiRequest, $init) {
+function sponsorsStudentsController($scope, $page, $apiRequest, $init) {
   $scope.sponsors = $init.sponsors;
   $scope.object = $init.object;
   $scope.selected_object = {};
 
-  // to reinitialize place errors
-  $scope.$watchCollection(
-    "object.donor_id",
-    (newData, oldData) => {
-      $scope.createSponsorShipsSponsor.errors.place_id = null;
-    },
-    true
-  );
 
   $scope.sponsor = {
     donor_id: null,
     percentage: null,
-    purpose_type: "\\App\\Models\\Sponsorship",
+    purpose_type: "\\App\\Models\\Student",
     purpose_id: $page.routeParams.id,
   };
   $scope.add_sponsor = () => {
@@ -59,7 +51,7 @@ function SponsorShipsSponsorController($scope, $page, $apiRequest, $init) {
     return 100- total;
   };
 
-  $scope.createSponsorShipsSponsor = $apiRequest.config(
+  $scope.createStudentsSponsor = $apiRequest.config(
     {
       method: "POST",
       url: "sponsors",
@@ -71,7 +63,7 @@ function SponsorShipsSponsorController($scope, $page, $apiRequest, $init) {
     }
   );
 
-  $scope.updateSponsorShipsSponsor = $apiRequest.config(
+  $scope.updateStudentsSponsor = $apiRequest.config(
     {
       method: "PUT",
       url: "sponsors/" + $page.routeParams.id,

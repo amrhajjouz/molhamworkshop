@@ -84,6 +84,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/students', [StudentController::class, 'create']);
     Route::put('/students', [StudentController::class, 'update']);
     Route::get('/students/{id}', [StudentController::class, 'retrieve']);
+    Route::get('/students/{id}/sponsors', [StudentController::class, 'get_sponsors']);
 
     //////////////////  Events //////////////
     Route::get('/events', [EventController::class, 'list']);

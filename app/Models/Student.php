@@ -28,6 +28,12 @@ class Student extends BaseTargetModel
           return $this->belongsTo(Country::class, 'country_id', 'id');
      }
 
+     public function sponsors()
+     {
+          return $this->hasMany('App\Models\Sponsor', 'purpose_id', 'id')->where('purpose_type', '\App\Models\Student');
+     }
+     
+
      public function transform()
      {    
 
@@ -62,7 +68,9 @@ class Student extends BaseTargetModel
                     'archived' => $target['archived'],
 
                ],
-               "places" => $_places
+               "places" => $_places ,
+               'percentage_to_complete' => 100 - $this->sponsors->sum('percentage')
+
           ]);
      }
 
@@ -136,5 +144,20 @@ class Student extends BaseTargetModel
      {
           $this->status = self::FULLY_FUNDED;
           $this->save();
+     }
+
+
+     //return sum total sponsored percentage except any id in array
+     public function total_sponsores_percentage($ignore = [])
+     {
+
+          return $this->sponsors()->whereNotIn('id', $ignore)->sum('percentage');
+     }
+     
+     //return sum total sponsored percentage except any id in array
+     public function percentage_to_complete()
+     {
+
+          return 100 - $this->sponsors()->sum('percentage');
      }
 }

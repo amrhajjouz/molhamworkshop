@@ -47,6 +47,7 @@ return [
     'students.add' => ['students/add', 'students/addStudentsController', 'students.add'],
     'students.overview' => ['students/:id', 'students/overviewStudentsController', 'students.single.overview'],
     'students.edit' => ['students/:id/edit', 'students/editStudentsController', 'students.single.edit'],
+    'students.sponsors' => ['students/:id/sponsors', 'students/sponsorsStudentsController', 'students.single.sponsors'],
     'students' => ['students', 'students/listStudentsController', 'students.list'],
 
     /////////////////////////// Events Routes    ///////////////////
