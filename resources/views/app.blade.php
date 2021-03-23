@@ -607,7 +607,11 @@
                         
                         element.on("change", function () {
                             eval('elementScope.' + attrs.model + ' = ' + JSON.stringify($(element).val()) + ';');
-                            if (modelForm) elementScope[modelForm].unregisteredRequiredModels.updateValidity();
+                            if (modelForm) {
+                                elementScope[modelForm].$pristine = false;
+                                elementScope[modelForm].$dirty = true;
+                                elementScope[modelForm].unregisteredRequiredModels.updateValidity();
+                            }
                             elementScope.$apply();
                         });
                         
@@ -644,20 +648,17 @@
                         
                         var modelForm;
                         
-                        if ($(element).prop('required')) {
-
-                            var parentElement = element[0].parentElement;
-
-                            do {
-                                parentElement = parentElement.parentElement;
-                            } while (parentElement.nodeName != 'BODY' && parentElement.nodeName != 'FORM');
-
-                            if (parentElement.nodeName == 'FORM' && parentElement.getAttribute('name')) {
-                                var modelForm = parentElement.getAttribute('name');
-                                if (elementScope[modelForm]) {
-                                    elementScope[modelForm].unregisteredRequiredModels.models[elementScope[modelForm].unregisteredRequiredModels.models.length] = attrs.model;
-                                    elementScope.$apply();
-                                }
+                        var parentElement = element[0].parentElement;
+                        
+                        do {
+                            parentElement = parentElement.parentElement;
+                        } while (parentElement.nodeName != 'BODY' && parentElement.nodeName != 'FORM');
+                        
+                        if (parentElement.nodeName == 'FORM' && parentElement.getAttribute('name')) {
+                            var modelForm = parentElement.getAttribute('name');
+                            if (elementScope[modelForm] && $(element).prop('required')) {
+                                elementScope[modelForm].unregisteredRequiredModels.models[elementScope[modelForm].unregisteredRequiredModels.models.length] = attrs.model;
+                                elementScope.$apply();
                             }
                         }
                     });

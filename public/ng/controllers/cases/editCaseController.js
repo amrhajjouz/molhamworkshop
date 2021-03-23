@@ -30,14 +30,6 @@ function editCaseController($scope, $page, $apiRequest, $init) {
         { id: "spent", name: "تم صرفها" },
     ];
 
-    // to reinitialize place errors
-    $scope.$watchCollection(
-        "object.place_id",
-        (oldData, newData) => {
-            $scope.updateCase.errors.place_id = null;
-        },
-        true
-    );
 
     $scope.updateCase = $apiRequest.config(
         {
