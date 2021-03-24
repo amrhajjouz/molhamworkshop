@@ -23,15 +23,6 @@ function editStudentsController($scope, $page, $apiRequest, $init) {
 
     if (!$scope.object.places) $scope.object.places = [];
 
-    // to reinitialize place errors
-    $scope.$watchCollection(
-        "object.place_id",
-        (oldData, newData) => {
-            $scope.updateStudent.errors.place_id = null;
-        },
-        true
-    );
-
     $scope.updateStudent = $apiRequest.config(
         {
             method: "PUT",

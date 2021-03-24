@@ -1,87 +1,104 @@
-<page-header title="إضافة حملة جمع تبرعات جديدة" pretitle="حملات جمع التبرعات"></page-header>
+<page-header
+  title="إضافة حملة جمع تبرعات جديدة"
+  pretitle="حملات جمع التبرعات"
+></page-header>
 <form class="row" name="createFundraiserForm" request="createFundraiser">
-
-
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="public_visibility">متاح للعامة</label>
-            <select class="form-control" ng-model="object.public_visibility"
-                ng-class="(createFundraiser.errors.public_visibility != null) ? 'is-invalid' : ''"
-                id="public_visibility" ng-change="createFundraiser.errors.public_visibility = null" required>
-                <option ng-value="true">نعم</option>
-                <option ng-value="false">لا</option>
-            </select>
-            <div ng-show="createFundraiser.errors.public_visibility != null" class="invalid-feedback">
-                {{ createFundraiser.errors.public_visibility[0] }}</div>
-        </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="public_visibility">متاح للعامة</label>
+      <select
+        id="public_visibility"
+        class="form-control"
+        ng-model="object.public_visibility"
+        ng-class="(createFundraiser.errors.public_visibility != null) ? 'is-invalid' : ''"
+        ng-change="createFundraiser.errors.public_visibility = null"
+        ng-error="createFundraiser.errors.public_visibility"
+        required
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
     </div>
+  </div>
 
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="verified">مؤكد</label>
-            <select class="form-control" ng-model="object.verified"
-                ng-class="(createFundraiser.errors.verified != null) ? 'is-invalid' : ''" id="verified"
-                ng-change="createFundraiser.errors.verified = null" required>
-                <option ng-value="true">نعم</option>
-                <option ng-value="false">لا</option>
-            </select>
-            <div ng-show="createFundraiser.errors.verified != null" class="invalid-feedback">
-                {{ createFundraiser.errors.verified[0] }}</div>
-        </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="verified">مؤكد</label>
+      <select
+        id="verified"
+        class="form-control"
+        ng-model="object.verified"
+        ng-class="(createFundraiser.errors.verified != null) ? 'is-invalid' : ''"
+        ng-change="createFundraiser.errors.verified = null"
+        ng-error="createFundraiser.errors.verified"
+        required
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
     </div>
+  </div>
 
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="required">المبلغ المطلوب</label>
-            <input type="number" class="form-control"
-                ng-class="(createFundraiser.errors.required != null) ? 'is-invalid' : ''" id="required"
-                ng-model="object.target['required']" ng-change="createFundraiser.errors.required = null" required>
-            <div ng-show="createFundraiser.errors.required != null" class="invalid-feedback">
-                {{ createFundraiser.errors.required[0] }}</div>
-        </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="required">المبلغ المطلوب</label>
+      <input
+        id="required"
+        type="number"
+        class="form-control"
+        ng-class="(createFundraiser.errors['target.required'] != null) ? 'is-invalid' : ''"
+        ng-model="object.target['required']"
+        ng-change="createFundraiser.errors['target.required'] = null"
+        ng-error="createFundraiser.errors.target.required"
+        required
+      />
     </div>
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="section_id">القسم</label>
-            <select class="form-control" ng-model="object.target.section_id"
-                ng-class="(createFundraiser.errors.section_id != null) ? 'is-invalid' : ''" id="section_id"
-                ng-change="createFundraiser.errors.section_id = null"
-                ng-options="section.id as section.name for section in sections" placeholder="يرجى اختيار قسم..">
-            </select>
-            <div ng-show="createFundraiser.errors.section_id != null" class="invalid-feedback">
-                {{ createFundraiser.errors.section_id[0] }}</div>
-        </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="section_id">القسم</label>
+      <select
+        id="section_id"
+        class="form-control"
+        ng-model="object.target.section_id"
+        ng-class="(createFundraiser.errors['target.section_id'] != null) ? 'is-invalid' : ''"
+        ng-change="createFundraiser.errors['target.section_id'] = null"
+        ng-options="section.id as section.name for section in sections"
+        ng-error="createFundraiser.errors.target.section_id"
+        ng-init="object.target.section_id = sections[0].id"
+        required
+      ></select>
     </div>
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="visible">ظاهرة</label>
-            <select class="form-control" ng-model="object.target.visible"
-                ng-class="(createFundraiser.errors.visible != null) ? 'is-invalid' : ''" id="visible"
-                ng-change="createFundraiser.errors.target.visible = null" required>
-                <option ng-value="true">نعم</option>
-                <option ng-value="false">لا</option>
-            </select>
-            <div ng-show="createFundraiser.errors.country_id != null" class="invalid-feedback">
-                {{ createFundraiser.errors.country_id[0] }}</div>
-        </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="visible">ظاهرة</label>
+      <select
+        id="visible"
+        class="form-control"
+        ng-model="object.target.visible"
+        ng-class="(createFundraiser.errors['target.visible'] != null) ? 'is-invalid' : ''"
+        ng-change="createFundraiser.errors['target.visible'] = null"
+        ng-error="createFundraiser.errors.target.visible"
+        required
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
     </div>
+  </div>
 
-     <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="name">المتبرع</label>
-            <select2
-                model="object.donor_id"
-                ajax-url="donors/search"
-            ></select2>
-            <div class="text-danger">
-                {{ createFundraiser.errors.donor_id[0] }}
-            </div>
-        </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="name">المتبرع</label>
+      <select2 model="object.donor_id" ajax-url="donors/search"></select2>
+      <div class="text-danger">{{ createFundraiser.errors.donor_id[0] }}</div>
     </div>
+  </div>
 
-
-    <div class="col-12">
-        <submit-button form="createFundraiserForm" icon="fe fe-plus">اضافة</submit-button>
-    </div>
-
+  <div class="col-12">
+    <submit-button form="createFundraiserForm" icon="fe fe-plus"
+      >اضافة</submit-button
+    >
+  </div>
 </form>

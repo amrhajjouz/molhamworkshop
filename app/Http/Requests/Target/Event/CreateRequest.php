@@ -30,12 +30,17 @@ class CreateRequest extends BaseRequest
             'date' => ['required'],
             'public_visibility' => ['required' , 'boolean'],
             'donor_id' => ['required' , 'numeric'],
-            'verified' => ['nullable'],
-            'implemented' => ['nullable' ,'boolean'],
+            'verified' => ['required'],
+            'implemented' => ['required' ,'boolean'],
             'implementation_date' => [new RequiredIf($this->implemented ==true)],
             'youtube_video_url' => ['nullable' ,'string'],
-            'target' => ['required' , 'array'],
-            'places_ids' => ['required', 'array'],
+            'places_ids' => ['array', 'required'],
+            'target' => ['array' , 'required'],
+            'target.beneficiaries_count' => ['required', 'numeric', 'min:1'],
+            'target.required' => ['required', 'numeric', 'min:1'],
+            'target.visible' => ['required', 'boolean'],
+            'target.documented' => ['required', 'boolean'],
+            'target.archived' => ['required', 'boolean'],
         ];
     }
 

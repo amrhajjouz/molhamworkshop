@@ -27,22 +27,6 @@ function editEventsController($scope, $page, $apiRequest, $init) {
     if (!$scope.object.places) $scope.object.places = [];
 
 
-    // to reinitialize place errors
-    $scope.$watchCollection(
-        "object.places_ids",
-        (oldData, newData) => {
-            $scope.updateEvent.errors.places_ids = null;
-        },
-        true
-    );
-
-    $scope.$watchCollection(
-        "object.donor_id",
-        (oldData, newData) => {
-            $scope.updateEvent.errors.donor_id = null;
-        },
-        true
-    );
 
     $scope.updateEvent = $apiRequest.config(
         {

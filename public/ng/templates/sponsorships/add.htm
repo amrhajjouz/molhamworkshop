@@ -1,170 +1,139 @@
 <page-header title="كفالة جديدة" pretitle="الكفالات"></page-header>
 
 <form class="row" name="createSponsorShipsForm" request="createSponsorShips">
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="name">اسم المستفيد</label>
-            <input
-                type="text"
-                class="form-control"
-                ng-class="(createSponsorShips.errors.beneficiary_name != null) ? 'is-invalid' : ''"
-                id="beneficiary_name"
-                ng-model="object.beneficiary_name"
-                ng-change="createSponsorShips.errors.beneficiary_name = null"
-                placeholder="الاسم.."
-                required
-            />
-            <div
-                ng-show="createSponsorShips.errors.beneficiary_name != null"
-                class="invalid-feedback"
-            >
-                {{ createSponsorShips.errors.beneficiary_name[0] }}
-            </div>
-        </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="beneficiary_name">اسم المستفيد</label>
+      <input
+        type="text"
+        class="form-control"
+        ng-class="(createSponsorShips.errors.beneficiary_name != null) ? 'is-invalid' : ''"
+        id="beneficiary_name"
+        ng-model="object.beneficiary_name"
+        ng-change="createSponsorShips.errors.beneficiary_name = null"
+        placeholder="الاسم.."
+        required
+        ng-error="createSponsorShips.errors['beneficiary_name']"
+      />
     </div>
+  </div>
 
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="name">تاريخ ميلاد المستفيد</label>
-            <input
-                type="date"
-                class="form-control"
-                ng-class="(createSponsorShips.errors.beneficiary_birthdate != null) ? 'is-invalid' : ''"
-                id="beneficiary_birthdate"
-                ng-model="object.beneficiary_birthdate"
-                ng-change="createSponsorShips.errors.beneficiary_birthdate = null"
-                placeholder="الاسم.."
-                required
-            />
-            <div
-                ng-show="createSponsorShips.errors.beneficiary_birthdate != null"
-                class="invalid-feedback"
-            >
-                {{ createSponsorShips.errors.beneficiary_birthdate[0] }}
-            </div>
-        </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="beneficiary_birthdate">تاريخ ميلاد المستفيد</label>
+      <input
+        type="date"
+        class="form-control"
+        ng-class="(createSponsorShips.errors.beneficiary_birthdate != null) ? 'is-invalid' : ''"
+        id="beneficiary_birthdate"
+        ng-model="object.beneficiary_birthdate"
+        ng-change="createSponsorShips.errors.beneficiary_birthdate = null"
+        placeholder="تاريخ الميلاد.."
+        required
+        ng-error="createSponsorShips.errors.beneficiary_birthdate"
+      />
     </div>
+  </div>
 
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="name">الدولة</label>
-            <select
-                class="form-control"
-                ng-model="object.country_id"
-                ng-class="(createSponsorShips.errors.country_id != null) ? 'is-invalid' : ''"
-                id="country_id"
-                ng-change="createSponsorShips.errors.country_id = null"
-                ng-options="country.id as country.name for country in countries"
-                placeholder="يرجى اختيار دولة.."
-                required
-            ></select>
-            <div
-                ng-show="createSponsorShips.errors.country_id != null"
-                class="invalid-feedback"
-            >
-                {{ createSponsorShips.errors.country_id[0] }}
-            </div>
-        </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="country_id">الدولة</label>
+      <select
+        class="form-control"
+        ng-model="object.country_id"
+        ng-class="(createSponsorShips.errors.country_id != null) ? 'is-invalid' : ''"
+        id="country_id"
+        ng-change="createSponsorShips.errors.country_id = null"
+        ng-options="country.id as country.name for country in countries"
+        placeholder="يرجى اختيار دولة.."
+        required
+        ng-init="object.country_id = countries[0].id"
+        ng-error="createSponsorShips.errors['country_id']"
+      ></select>
     </div>
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="beneficiaries_count">عدد المستفيدين</label>
-            <input
-                type="number"
-                class="form-control"
-                ng-class="(createSponsorShips.errors.beneficiaries_count != null) ? 'is-invalid' : ''"
-                id="beneficiaries_count"
-                ng-model="object.target['beneficiaries_count']"
-                ng-change="createSponsorShips.errors.beneficiaries_count = null"
-                required
-                min="0"
-            />
-            <div
-                ng-show="createSponsorShips.errors.beneficiaries_count != null"
-                class="invalid-feedback"
-            >
-                {{ createSponsorShips.errors.beneficiaries_count[0] }}
-            </div>
-        </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="beneficiaries_count">عدد المستفيدين</label>
+      <input
+        type="number"
+        class="form-control"
+        ng-class="(createSponsorShips.errors['target.beneficiaries_count'] != null) ? 'is-invalid' : ''"
+        id="beneficiaries_count"
+        ng-model="object.target['beneficiaries_count']"
+        ng-change="createSponsorShips.errors.target.beneficiaries_count = null"
+        required
+        min="1"
+        ng-error="createSponsorShips.errors['target.beneficiaries_count']"
+      />
     </div>
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="required">المبلغ المطلوب شهريا</label>
-            <input
-                type="number"
-                class="form-control"
-                ng-class="(createSponsorShips.errors.required != null) ? 'is-invalid' : ''"
-                id="required"
-                ng-model="object.target['required']"
-                ng-change="createSponsorShips.errors.required = null"
-                placeholder="الاسم.."
-                required
-                min="0"
-            />
-            <div
-                ng-show="createSponsorShips.errors.required != null"
-                class="invalid-feedback"
-            >
-                {{ createSponsorShips.errors.required[0] }}
-            </div>
-        </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="required">المبلغ المطلوب شهريا</label>
+      <input
+        type="number"
+        class="form-control"
+        ng-class="(createSponsorShips.errors.target.required != null) ? 'is-invalid' : ''"
+        id="required"
+        ng-model="object.target['required']"
+        ng-change="createSponsorShips.errors.target.required = null"
+        placeholder="المبلغ المطلوب.."
+        required
+        min="1"
+        ng-error="createSponsorShips.errors.target"
+      />
     </div>
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="category_id">الصنف</label>
-            <select
-                class="form-control"
-                ng-model="object.target.category_id"
-                ng-class="(createSponsorShips.errors.category_id != null) ? 'is-invalid' : ''"
-                id="category_id"
-                ng-change="createSponsorShips.errors.category_id = null"
-                ng-options="category.id as category.name for category in categories"
-                placeholder="يرجى اختيار صنف.."
-            ></select>
-            <div
-                ng-show="createSponsorShips.errors.category_id != null"
-                class="invalid-feedback"
-            >
-                {{ createSponsorShips.errors.category_id[0] }}
-            </div>
-        </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="category_id">الصنف</label>
+      <select
+        class="form-control"
+        ng-model="object.target.category_id"
+        ng-class="(createSponsorShips.errors['target.category_id'] != null) ? 'is-invalid' : ''"
+        id="category_id"
+        ng-change="createSponsorShips.errors['target.category_id']= null"
+        ng-options="category.id as category.name for category in categories"
+        placeholder="يرجى اختيار صنف.."
+        ng-error="createSponsorShips.errors['target.category_id']"
+        ng-init="object.target.category_id = categories[0].id"
+      ></select>
     </div>
+  </div>
 
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="visible">ظاهرة</label>
-            <select
-                class="form-control"
-                ng-model="object.target.visible"
-                ng-class="(createSponsorShips.errors.visible != null) ? 'is-invalid' : ''"
-                id="visible"
-                ng-change="createSponsorShips.errors.target.visible = null"
-                required
-            >
-                <option ng-value="true">نعم</option>
-                <option ng-value="false">لا</option>
-            </select>
-            <div
-                ng-show="createSponsorShips.errors.country_id != null"
-                class="invalid-feedback"
-            >
-                {{ createSponsorShips.errors.country_id[0] }}
-            </div>
-        </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="visible">ظاهرة</label>
+      <select
+        class="form-control"
+        ng-model="object.target.visible"
+        ng-class="(createSponsorShips.errors['target.visible'] != null) ? 'is-invalid' : ''"
+        id="visible"
+        ng-change="createSponsorShips.errors['target.visible'] = null"
+        required
+        ng-error="createSponsorShips.errors['target.visible']"
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
     </div>
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="name">المكان</label>
-            <select2 model="object.place_id" ajax-url="places/search"></select2>
-            <div class="text-danger">
-                {{ createSponsorShips.errors.place_id[0] }}
-            </div>
-        </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="name">المكان</label>
+      <select2
+        model="object.place_id"
+        ajax-url="places/search"
+        error-model="createSponsorShips.errors.place_id"
+        required
+      ></select2>
     </div>
+  </div>
 
-    <div class="col-12">
-        <submit-button form="createSponsorShipsForm" icon="fe fe-plus"
-            >اضافة</submit-button
-        >
-    </div>
+  <div class="col-12">
+    <submit-button form="createSponsorShipsForm" icon="fe fe-plus"
+      >اضافة</submit-button
+    >
+  </div>
 </form>

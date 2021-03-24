@@ -20,31 +20,14 @@ function addEventsController($scope, $location, $apiRequest, $page, $init) {
         implementation_date: "",
         youtube_video_url: null,
         target: {
-            required: 0,
+            required: 1,
             visible: true,
             documented: false,
             archived: false,
-            beneficiaries_count: 0,
+            beneficiaries_count: 1,
         },
         places:[] , 
     };
-
-    // to reinitialize place errors
-     $scope.$watchCollection(
-         "object.places_ids",
-         (oldData, newData) => {
-             $scope.createEvent.errors.places_ids = null;
-         },
-         true
-     );
-     
-     $scope.$watchCollection(
-         "object.donor_id",
-         (oldData, newData) => {
-             $scope.createEvent.errors.donor_id = null;
-         },
-         true
-     );
 
     $scope.createEvent = $apiRequest.config(
         {

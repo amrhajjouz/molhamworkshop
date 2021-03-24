@@ -18,8 +18,8 @@ async function addCampaignControllerInit($apiRequest) {
 function addCampaignController($scope, $location, $apiRequest, $page, $init) {
     $scope.object = {
         target: {
-            beneficiaries_count: 0,
-            required: 0,
+            beneficiaries_count: 1,
+            required: 1,
             visible: true,
 
             documented: false,
@@ -32,14 +32,6 @@ function addCampaignController($scope, $location, $apiRequest, $page, $init) {
     $scope.sections = $init.sections;
     $scope.places = $init.places;
 
-    // to reinitialize place errors
-    $scope.$watchCollection(
-        "object.places_ids",
-        (oldData, newData) => {
-            $scope.createCampaign.errors.places_ids = null;
-        },
-        true
-    );
 
     $scope.createCampaign = $apiRequest.config(
         {

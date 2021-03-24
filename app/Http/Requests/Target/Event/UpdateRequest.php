@@ -32,10 +32,17 @@ class UpdateRequest extends BaseRequest
             'donor_id' => ['required', 'numeric'],
             'verified' => ['nullable'],
             'implemented' => ['nullable', 'boolean'],
-            'implementation_date' => [new RequiredIf($this->implemented == true)],
+            'implementation_date' => [ new RequiredIf($this->implemented == true)],
             'youtube_video_url' => ['nullable', 'string'],
-            'target' => ['required', 'array'],
-            'places_ids' => ['required', 'array'],
+            'target' => ['required', 'required'],
+            'places_ids' => ['required', 'required'],
+            'target' => ['array', 'required'],
+            'target.beneficiaries_count' => ['required', 'numeric', 'min:1'],
+            'target.required' => ['required', 'numeric', 'min:1'],
+            'target.visible' => ['required', 'boolean'],
+            'target.documented' => ['required', 'boolean'],
+            'target.required' => ['required', 'numeric'],
+            'target.archived' => ['required', 'boolean'],
         ];
     }
 }

@@ -1,216 +1,240 @@
 <include-header />
 <form class="row" name="updateEventForm" request="updateEvent">
-
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="date">تاريخ المناسبة</label>
-            <input type="date" class="form-control" ng-class="(updateEvent.errors.date != null) ? 'is-invalid' : ''"
-                id="date" ng-model="object.date" ng-change="updateEvent.errors.date = null"
-                required />
-
-            <div ng-show="updateEvent.errors.date != null" class="invalid-feedback">
-                {{ updateEvent.errors.date[0] }}
-            </div>
-        </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="date">تاريخ المناسبة</label>
+      <input
+        type="date"
+        class="form-control"
+        ng-class="(updateEvent.errors.date != null) ? 'is-invalid' : ''"
+        id="date"
+        ng-model="object.date"
+        ng-change="updateEvent.errors.date = null"
+        ng-error="updateEvent.errors.date"
+        required
+      />
     </div>
-    
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="object.target['required']">المبلغ المطلوب</label>
-            <input type="number" class="form-control"
-            ng-class="(updateEvent.errors.object.target['required'] != null) ? 'is-invalid' : ''" id="object.target['required']"
-            ng-model="object.target['required']" ng-change="updateEvent.errors.object.target['required'] = null"
-            required
-            />
-            
-            <div ng-show="updateEvent.errors.object.target['required'] != null" class="invalid-feedback">
-                {{ updateEvent.errors.object.target['required'][0] }}
-            </div>
-        </div>
+  </div>
+<!-- 
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="required">المبلغ المطلوب</label>
+      <input
+        type="number"
+        class="form-control"
+        ng-class="(updateEvent.errors['target.required'] != null) ? 'is-invalid' : ''"
+        id="required"
+        ng-model="object.target['required']"
+        ng-change="updateEvent.errors['target.required'] = null"
+        ng-error="updateEvent.errors.target.required"
+        required
+      />
     </div>
-    
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="youtube_video_url">رابط الفيديو يوتيوب</label>
-            <input type="text" class="form-control"
-                ng-class="(updateEvent.errors.object.youtube_video_url != null) ? 'is-invalid' : ''" id="object.youtube_video_url"
-                ng-model="object.youtube_video_url" ng-change="updateEvent.errors.object.youtube_video_url = null"
-                placeholder="رابط الفيديو على يوتيوب"
-            />
-            
-            <div ng-show="updateEvent.errors.object.youtube_video_url != null" class="invalid-feedback">
-                {{ updateEvent.errors.object.youtube_video_url[0] }}
-            </div>
-        </div>
-    </div>
-        <div class="col-12 col-md-6">
-            <div class="form-group">
-                <label for="implemented">تم تنفيذه</label>
-                <select class="form-control" ng-model="object.implemented"
-                    ng-class="(updateEvent.errors.implemented != null) ? 'is-invalid' : ''" id="implemented"
-                    ng-change="updateEvent.errors.implemented = null" required>
-                    <option ng-value="true">نعم</option>
-                    <option ng-value="false">لا</option>
-                </select>
-                <div ng-show="updateEvent.errors.implemented != null" class="invalid-feedback">
-                    {{ updateEvent.errors.implemented[0] }}</div>
-            </div>
-        </div>
-
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="implementation_date">تاريخ تنفيذ المناسبة</label>
-            <input type="date" class="form-control" ng-class="(updateEvent.errors.implementation_date != null) ? 'is-invalid' : ''"
-                id="implementation_date" ng-model="object.implementation_date"
-                ng-change="updateEvent.errors.implementation_date = null"
-                                ng-disabled="!object.implemented">
-
-
-            <div ng-show="updateEvent.errors.implementation_date != null" class="invalid-feedback">
-                {{ updateEvent.errors.implementation_date[0] }}
-            </div>
-        </div>
-    </div>
-
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="public_visibility">متاح للعامة</label>
-            <select class="form-control" ng-model="object.public_visibility"
-                ng-class="(updateEvent.errors.public_visibility != null) ? 'is-invalid' : ''" id="public_visibility"
-                ng-change="updateEvent.errors.public_visibility = null" required>
-                <option ng-value="true">نعم</option>
-                <option ng-value="false">لا</option>
-            </select>
-            <div ng-show="updateEvent.errors.public_visibility != null" class="invalid-feedback">
-                {{ updateEvent.errors.public_visibility[0] }}</div>
-        </div>
-    </div>
-
-
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="verified">مؤكد</label>
-            <select class="form-control" ng-model="object.verified"
-                ng-class="(updateEvent.errors.verified != null) ? 'is-invalid' : ''" id="verified"
-                ng-change="updateEvent.errors.verified = null" required>
-                <option ng-value="true">نعم</option>
-                <option ng-value="false">لا</option>
-            </select>
-            <div ng-show="updateEvent.errors.country_id != null" class="invalid-feedback">
-                {{ updateEvent.errors.country_id[0] }}</div>
-        </div>
-    </div>
-
-    
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="required">المبلغ المطلوب</label>
-            <input type="number" class="form-control"
-                ng-class="(updateEvent.errors.required != null) ? 'is-invalid' : ''" id="required"
-                ng-model="object.target['required']" ng-change="updateEvent.errors.required = null" required>
-                <div ng-show="updateEvent.errors.required != null" class="invalid-feedback">
-                    {{ updateEvent.errors.required[0] }}</div>
-                </div>
-            </div>
-            
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="visible">ظاهر</label>
-            <select class="form-control" ng-model="object.target.visible"
-                ng-class="(updateEvent.errors.visible != null) ? 'is-invalid' : ''" id="visible"
-                ng-change="updateEvent.errors.target.visible = null" required>
-                <option ng-value="true">نعم</option>
-                <option ng-value="false">لا</option>
-            </select>
-            <div ng-show="updateEvent.errors.visible != null" class="invalid-feedback">
-                {{ updateEvent.errors.visible[0] }}</div>
-        </div>
-    </div>
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="beneficiaries_count">عدد المستفيدين</label>
-            <input type="number" class="form-control"
-                ng-class="(updateEvent.errors.beneficiaries_count != null) ? 'is-invalid' : ''" id="beneficiaries_count"
-                ng-model="object.target['beneficiaries_count']"
-                ng-change="updateEvent.errors.beneficiaries_count = null" required min="0">
-            <div ng-show="updateEvent.errors.beneficiaries_count != null" class="invalid-feedback">
-                {{ updateEvent.errors.beneficiaries_count[0] }}</div>
-        </div>
-    </div>
-
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="archived">مؤرشفة</label>
-            <select class="form-control" ng-model="object.target.archived"
-                ng-class="(updateEvent.errors.archived != null) ? 'is-invalid' : ''" id="archived"
-                ng-change="updateEvent.errors.archived = null" required>
-                <option ng-value="true">نعم</option>
-                <option ng-value="false">لا</option>
-            </select>
-            <div ng-show="updateEvent.errors.archived != null" class="invalid-feedback">
-                {{ updateEvent.errors.archived[0] }}</div>
-        </div>
-    </div>
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="documented">موثقة</label>
-            <select class="form-control" ng-model="object.target.documented"
-                ng-class="(updateEvent.errors.documented != null) ? 'is-invalid' : ''" id="documented"
-                ng-change="updateEvent.errors.documented = null" required>
-                <option ng-value="true">نعم</option>
-                <option ng-value="false">لا</option>
-            </select>
-            <div ng-show="updateEvent.errors.documented != null" class="invalid-feedback">
-                {{ updateEvent.errors.documented[0] }}</div>
-        </div>
-    </div>
-
+  </div> -->
 
   <div class="col-12 col-md-6">
-          <div class="form-group">
-              <label for="name">المكان</label>
-               <select2
-                model="object.places_ids"
-                ajax-url="places/search"
-                multiple
-            >
-                <option
-                    selected
-                    ng-repeat="p in object.places"
-                    value="{{p.id}}"
-                >
-                    {{p.text}}
-                </option>
-            </select2>
-            <div class="text-danger">
-                {{ updateEvent.errors.places_ids[0]}}
-            </div>
-          </div>
-      </div>
+    <div class="form-group">
+      <label for="youtube_video_url">رابط الفيديو يوتيوب</label>
+      <input
+        type="text"
+        class="form-control"
+        ng-class="(updateEvent.errors.object.youtube_video_url != null) ? 'is-invalid' : ''"
+        id="object.youtube_video_url"
+        ng-model="object.youtube_video_url"
+        ng-change="updateEvent.errors.object.youtube_video_url = null"
+        placeholder="رابط الفيديو على يوتيوب"
+        ng-error="updateEvent.errors.youtube_video_url"
+      />
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="implemented">تم تنفيذه</label>
+      <select
+        class="form-control"
+        ng-model="object.implemented"
+        ng-class="(updateEvent.errors.implemented != null) ? 'is-invalid' : ''"
+        id="implemented"
+        ng-change="updateEvent.errors.implemented = null"
+        ng-error="updateEvent.errors.implemmented"
+        required
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
+    </div>
+  </div>
 
   <div class="col-12 col-md-6">
-          <div class="form-group">
-              <label for="name">المتبرع</label>
-               <select2
-                model="object.donor_id"
-                ajax-url="donors/search"
-            >
-                <option
-                    selected
-                    value="{{object.donor.id}}"
-                >
-                    {{object.donor.text}}
-                </option>
-            </select2>
-            <div class="text-danger">
-                {{ updateEvent.errors.donor_id[0]}}
-            </div>
-          </div>
-      </div>
+    <div class="form-group">
+      <label for="implementation_date">تاريخ تنفيذ المناسبة</label>
+      <input
+        type="date"
+        class="form-control"
+        ng-class="(updateEvent.errors.implementation_date != null) ? 'is-invalid' : ''"
+        id="implementation_date"
+        ng-model="object.implementation_date"
+        ng-change="updateEvent.errors.implementation_date = null"
+        ng-disabled="!object.implemented"
+        ng-error="updateEvent.errors.implementation_date"
+      />
+    </div>
+  </div>
 
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="public_visibility">متاح للعامة</label>
+      <select
+        class="form-control"
+        ng-model="object.public_visibility"
+        ng-class="(updateEvent.errors.public_visibility != null) ? 'is-invalid' : ''"
+        id="public_visibility"
+        ng-change="updateEvent.errors.public_visibility = null"
+        ng-error="updateEvent.errors.public_visibility"
+        required
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
     </div>
-    
-    <div class="col-12">
-        <submit-button form="updateEventForm" icon="fe fe-edit">تعديل</submit-button>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="verified">مؤكد</label>
+      <select
+        class="form-control"
+        ng-model="object.verified"
+        ng-class="(updateEvent.errors.verified != null) ? 'is-invalid' : ''"
+        id="verified"
+        ng-change="updateEvent.errors.verified = null"
+        ng-error="updateEvent.errors.verified"
+        required
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
     </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="required">المبلغ المطلوب</label>
+      <input
+        type="number"
+        class="form-control"
+        ng-class="(updateEvent.errors['target.required'] != null) ? 'is-invalid' : ''"
+        id="required"
+        ng-model="object.target['required']"
+        ng-change="updateEvent.errors['target.required'] = null"
+        ng-error="updateEvent.errors.target.required"
+        min="1"
+        required
+      />
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="visible">ظاهر</label>
+      <select
+        class="form-control"
+        ng-model="object.target.visible"
+        ng-class="(updateEvent.errors['target.visible'] != null) ? 'is-invalid' : ''"
+        id="visible"
+        ng-change="updateEvent.errors['target.visible'] = null"
+        ng-error="updateEvent.errors.target.visible"
+        required
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="beneficiaries_count">عدد المستفيدين</label>
+      <input
+        type="number"
+        class="form-control"
+        ng-class="(updateEvent.errors['target.beneficiaries_count'] != null) ? 'is-invalid' : ''"
+        id="beneficiaries_count"
+        ng-model="object.target['beneficiaries_count']"
+        ng-change="updateEvent.errors['target.beneficiaries_count'] = null"
+        ng-error="updateEvent.errors.target.beneficiaries_count"
+        required
+        min="1"
+      />
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="archived">مؤرشفة</label>
+      <select
+        class="form-control"
+        ng-model="object.target.archived"
+        ng-class="(updateEvent.errors['target.archived'] != null) ? 'is-invalid' : ''"
+        id="archived"
+        ng-change="updateEvent.errors['target.archived'] = null"
+        ng-error="updateEvent.errors.target.archived"
+        required
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="documented">موثقة</label>
+      <select
+        class="form-control"
+        ng-model="object.target.documented"
+        ng-class="(updateEvent.errors['target.documented'] != null) ? 'is-invalid' : ''"
+        id="documented"
+        ng-change="updateEvent.errors['target.documented'] = null"
+        ng-error="updateEvent.errors.target.documented"
+        required
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="places_ids">المكان</label>
+      <select2
+        model="object.places_ids"
+        ajax-url="places/search"
+        multiple
+        required
+        error-model="updateEvent.errors.places_ids"
+      >
+        <option selected ng-repeat="p in object.places" value="{{p.id}}">
+          {{p.text}}
+        </option>
+      </select2>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="donor_id">المتبرع</label>
+      <select2 model="object.donor_id" ajax-url="donors/search" required
+        error-model="updateEvent.errors.donor_id" >
+        <option selected value="{{object.donor.id}}">
+          {{object.donor.text}}
+        </option>
+      </select2>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <submit-button form="updateEventForm" icon="fe fe-edit"
+      >تعديل</submit-button
+    >
+  </div>
 </form>

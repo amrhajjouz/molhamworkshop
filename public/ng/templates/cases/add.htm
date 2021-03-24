@@ -13,7 +13,7 @@
         ng-change="createCase.errors.beneficiary_name = null"
         placeholder="الاسم.."
         required
-        ng-error="createCase.errors.name"
+        ng-error="createCase.errors.beneficiary_name"
       />
     </div>
   </div>
@@ -23,13 +23,13 @@
       <input
         type="number"
         class="form-control"
-        ng-class="(createCase.errors.beneficiaries_count != null) ? 'is-invalid' : ''"
+        ng-class="(createCase.errors.target.beneficiaries_count != null) ? 'is-invalid' : ''"
         id="beneficiaries_count"
         ng-model="object.target['beneficiaries_count']"
-        ng-change="createCase.errors.beneficiaries_count = null"
+        ng-change="createCase.errors.target.beneficiaries_count = null"
         required
-        min="0"
-        ng-error="createCase.errors.beneficiaries_count"
+        min="1"
+        ng-error="createCase.errors.target.beneficiaries_count"
       />
     </div>
   </div>
@@ -86,18 +86,19 @@
   </div>
   <div class="col-12 col-md-6">
     <div class="form-group">
+
       <label for="required">المبلغ المطلوب</label>
       <input
         type="number"
         class="form-control"
-        ng-class="(createCase.errors.required != null) ? 'is-invalid' : ''"
+        ng-class="(createCase.errors.target.required != null) ? 'is-invalid' : ''"
         id="required"
         ng-model="object.target['required']"
-        ng-change="createCase.errors.required = null"
+        ng-change="createCase.errors.target.required = null"
         placeholder="الاسم.."
         required
-        min="0"
-        ng-error="createCase.errors.required"
+        min="1"
+        ng-error="createCase.errors.target.required"
       />
     </div>
   </div>

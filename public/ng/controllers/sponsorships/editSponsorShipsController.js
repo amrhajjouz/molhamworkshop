@@ -24,15 +24,6 @@ function editSponsorShipsController($scope, $page, $apiRequest, $init) {
     $scope.countries = $init.countries;
     $scope.places = $init.places;
 
-    // to reinitialize place errors
-    $scope.$watchCollection(
-        "object.place_id",
-        (oldData, newData) => {
-            $scope.updateSponsorShips.errors.place_id = null;
-        },
-        true
-    );
-
     $scope.updateSponsorShips = $apiRequest.config(
         {
             method: "PUT",

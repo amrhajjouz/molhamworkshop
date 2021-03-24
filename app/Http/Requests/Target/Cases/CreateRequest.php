@@ -28,6 +28,8 @@ class CreateRequest extends BaseRequest
             'beneficiary_name' => ['required' ,'string', 'between:3,100'],
             'country_id' => ['required' ,'numeric'],
             'target' => ['required' ,'array'],
+            'target.beneficiaries_count' => ['required' ,'numeric', 'min:1'],
+            'target.required' => ['required' ,'numeric' , 'min:1'],
             'status' => ['required'],
             'place_id' => ['required' , 'numeric'],
 

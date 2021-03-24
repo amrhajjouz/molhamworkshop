@@ -24,11 +24,11 @@ function addCaseController($scope, $location, $apiRequest, $page, $init) {
 
     $scope.object = {
         target: {
-            required: 0,
+            required: 1,
             visible: true,
             documented: false,
             archived: false,
-            beneficiaries_count: 0,
+            beneficiaries_count: 1,
             category_id: null,
         },
         place_id: null,

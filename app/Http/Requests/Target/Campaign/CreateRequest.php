@@ -29,6 +29,9 @@ class CreateRequest extends BaseRequest
             'name' => ['required' ,'string', 'between:3,100'],
             'target' => ['required' ,'array'],
             'places_ids' => ['required', 'array'],
+            'target.beneficiaries_count' => ['required', 'numeric', 'min:1'],
+            'target.required' => ['required', 'numeric', 'min:1'],
+            'target.section_id' => ['required', 'numeric'],
         ];
     }
     

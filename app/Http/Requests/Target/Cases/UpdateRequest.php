@@ -31,7 +31,8 @@ class UpdateRequest extends BaseRequest
             'beneficiary_name' => ['required' ,'string', 'between:3,100'],
             'country_id' => ['required' ,'numeric'],
             'status' => ['required'],
-            'target' => ['required'],
+            'target' => ['required' , 'array'],
+            'target.beneficiaries_count' => ['required', 'numeric', 'min:1'],
             'place_id' => ['required', 'numeric'],
         ];
     }

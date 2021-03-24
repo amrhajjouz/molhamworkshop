@@ -1,134 +1,163 @@
 <include-header />
 
 <form class="row" name="updateStudentForm" request="updateStudent">
-
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="name">اسم الطالب</label>
-            <input type="text" class="form-control" ng-class="(updateStudent.errors.name != null) ? 'is-invalid' : ''"
-                id="name" ng-model="object.name" ng-change="updateStudent.errors.name = null" placeholder="الاسم.."
-                required />
-
-            <div ng-show="updateStudent.errors.name != null" class="invalid-feedback">
-                {{ updateStudent.errors.name[0] }}
-            </div>
-        </div>
-    </div>
-
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="name">الدولة</label>
-            <select class="form-control" ng-model="object.country_id"
-                ng-class="(updateStudent.errors.country_id != null) ? 'is-invalid' : ''" id="country_id"
-                ng-change="updateStudent.errors.country_id = null"
-                ng-options="country.id as country.name for country in countries" placeholder="يرجى اختيار دولة.."
-                required></select>
-            <div ng-show="updateStudent.errors.country_id != null" class="invalid-feedback">
-                {{ updateStudent.errors.country_id[0] }}
-            </div>
-        </div>
-    </div>
-
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="semesters_count">عدد الفصول</label>
-            <input type="number" class="form-control"
-                ng-class="(updateStudent.errors.semesters_count != null) ? 'is-invalid' : ''" id="semesters_count"
-                ng-model="object.semesters_count" ng-change="updateStudent.errors.semesters_count = null"
-                 required
-                 max="{{ object.semesters_count }}"
-                 min="1" ng-disabled="object.semesters_count == null"
-                />
-
-            <div ng-show="updateStudent.errors.semesters_count != null" class="invalid-feedback">
-                {{ updateStudent.errors.semesters_count[0] }}
-            </div>
-        </div>
-    </div>
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="current_semester">الفصل الحالي</label>
-            <input type="number" class="form-control"
-                ng-class="(updateStudent.errors.current_semester != null) ? 'is-invalid' : ''" id="current_semester"
-                ng-model="object.current_semester" ng-change="updateStudent.errors.current_semester = null"
-                required
-                 max="{{ object.semesters_count }}"
-                 min="1" ng-disabled="object.semesters_count == null"
-                />
-
-            <div ng-show="updateStudent.errors.current_semester != null" class="invalid-feedback">
-                {{ updateStudent.errors.current_semester[0] }}
-            </div>
-        </div>
-    </div>
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="object.target['required']">المبلغ المطلوب لكل فصل</label>
-            <input type="number" class="form-control"
-                ng-class="(updateStudent.errors.object.target['required'] != null) ? 'is-invalid' : ''" id="object.target['required']"
-                ng-model="object.target['required']" ng-change="updateStudent.errors.object.target['required'] = null"
-                 required
-                 min="0"
-                />
-
-            <div ng-show="updateStudent.errors.object.target['required'] != null" class="invalid-feedback">
-                {{ updateStudent.errors.object.target['required'][0] }}
-            </div>
-        </div>
-    </div>
-
-<div class="col-12 col-md-6">
+  <div class="col-12 col-md-6">
     <div class="form-group">
-        <label for="archived">مؤرشفة</label>
-        <select class="form-control" ng-model="object.target.archived"
-            ng-class="(updateStudent.errors.archived != null) ? 'is-invalid' : ''" id="archived"
-            ng-change="updateStudent.errors.target.archived = null" required>
-            <option ng-value="true">نعم</option>
-            <option ng-value="false">لا</option>
-        </select>
-        <div ng-show="updateStudent.errors.archived != null" class="invalid-feedback">
-            {{ updateStudent.errors.archived[0] }}</div>
+      <label for="name">اسم الطالب</label>
+      <input
+        type="text"
+        class="form-control"
+        ng-class="(updateStudent.errors.name != null) ? 'is-invalid' : ''"
+        id="name"
+        ng-model="object.name"
+        ng-change="updateStudent.errors.name = null"
+        placeholder="الاسم.."
+        ng-error="updateStudent.errors.name"
+        required
+      />
     </div>
-</div>
-<div class="col-12 col-md-6">
-    <div class="form-group">
-        <label for="documented">موثقة</label>
-        <select class="form-control" ng-model="object.target.documented"
-            ng-class="(updateStudent.errors.documented != null) ? 'is-invalid' : ''" id="documented"
-            ng-change="updateStudent.errors.target.documented = null" required>
-            <option ng-value="true">نعم</option>
-            <option ng-value="false">لا</option>
-        </select>
-        <div ng-show="updateStudent.errors.documented != null" class="invalid-feedback">
-            {{ updateStudent.errors.documented[0] }}</div>
-    </div>
-</div>
-<div class="col-12 col-md-6">
-    <div class="form-group">
-        <label for="visible">ظاهرة</label>
-        <select class="form-control" ng-model="object.target.visible"
-            ng-class="(updateStudent.errors.visible != null) ? 'is-invalid' : ''" id="visible"
-            ng-change="updateStudent.errors.target.visible = null" required>
-            <option ng-value="true">نعم</option>
-            <option ng-value="false">لا</option>
-        </select>
-        <div ng-show="updateStudent.errors.visible != null" class="invalid-feedback">
-            {{ updateStudent.errors.visible[0] }}</div>
-    </div>
-</div>
+  </div>
 
-
-      <div class="col-12 col-md-6">
-          <div class="form-group">
-              <label for="place">المكان</label>
-           <select2 model="object.place_id" ajax-url="places/search">
-            <option selected ng-repeat="p in object.places" value="{{p.id}}">{{p.text}}</option>
-            </select2>
-          <div  class="text-danger">
-              {{ updateStudent.errors.place_id[0] }}</div>
-          </div>
-      </div>
-    <div class="col-12">
-        <submit-button form="updateStudentForm" icon="fe fe-edit">تعديل</submit-button>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="country_id">الدولة</label>
+      <select
+        class="form-control"
+        ng-model="object.country_id"
+        ng-class="(updateStudent.errors.country_id != null) ? 'is-invalid' : ''"
+        id="country_id"
+        ng-change="updateStudent.errors.country_id = null"
+        ng-options="country.id as country.name for country in countries"
+        placeholder="يرجى اختيار دولة.."
+        ng-error="updateStudent.errors.country_id"
+        required
+      ></select>
     </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="semesters_count">عدد الفصول</label>
+      <input
+        type="number"
+        class="form-control"
+        ng-class="(updateStudent.errors.semesters_count != null) ? 'is-invalid' : ''"
+        id="semesters_count"
+        ng-model="object.semesters_count"
+        ng-change="updateStudent.errors.semesters_count = null"
+        required
+        max="{{ object.semesters_count }}"
+        min="1"
+        ng-disabled="object.semesters_count == null"
+        ng-error="updateStudent.errors.semesters_count"
+      />
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="current_semester">الفصل الحالي</label>
+      <input
+        type="number"
+        class="form-control"
+        ng-class="(updateStudent.errors.current_semester != null) ? 'is-invalid' : ''"
+        id="current_semester"
+        ng-model="object.current_semester"
+        ng-change="updateStudent.errors.current_semester = null"
+        required
+        max="{{ object.semesters_count }}"
+        min="1"
+        ng-disabled="object.semesters_count == null"
+        ng-error="updateStudent.errors.current_semester"
+      />
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="required">المبلغ المطلوب لكل فصل</label>
+      <input
+        type="number"
+        class="form-control"
+        ng-class="(updateStudent.errors['target.required'] != null) ? 'is-invalid' : ''"
+        id="required"
+        ng-model="object.target['required']"
+        ng-change="updateStudent.errors['target.required'] = null"
+        ng-error="updateStudent.errors.target.required"
+        required
+        min="1"
+      />
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="archived">مؤرشفة</label>
+      <select
+        class="form-control"
+        ng-model="object.target.archived"
+        ng-class="(updateStudent.errors['target.archived'] != null) ? 'is-invalid' : ''"
+        id="archived"
+        ng-change="updateStudent.errors['target.archived']= null"
+        ng-error="updateStudent.errors.target.archived"
+        required
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="documented">موثقة</label>
+      <select
+        class="form-control"
+        ng-model="object.target.documented"
+        ng-class="(updateStudent.errors['target.documented'] != null) ? 'is-invalid' : ''"
+        id="documented"
+        ng-change="updateStudent.errors['target.documented'] = null"
+        ng-error="updateStudent.errors.target.documented"
+        required
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="visible">ظاهرة</label>
+      <select
+        class="form-control"
+        ng-model="object.target.visible"
+        ng-class="(updateStudent.errors['target.visible'] != null) ? 'is-invalid' : ''"
+        id="visible"
+        ng-change="updateStudent.errors['target.visible']= null"
+        ng-error="updateStudent.errors.target.visible"
+        required
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="place">المكان</label>
+      <select2
+        model="object.place_id"
+        ajax-url="places/search"
+        error-model="updateStudent.errors.place_id"
+        required
+      >
+        <option selected ng-repeat="p in object.places" value="{{p.id}}">
+          {{p.text}}
+        </option>
+      </select2>
+    </div>
+  </div>
+  <div class="col-12">
+    <submit-button form="updateStudentForm" icon="fe fe-edit"
+      >تعديل</submit-button
+    >
+  </div>
 </form>

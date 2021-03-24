@@ -31,7 +31,13 @@ class UpdateRequest extends BaseRequest
             'name' => ['required' ,'string', 'between:3,100'],
             'funded' => ['required'],
             'target' => ['required' , 'array'],
-            'places_ids' => ['required', 'array'],
+            'places_ids' => ['array', 'array'],
+            'target.beneficiaries_count' => ['required', 'numeric', 'min:1'],
+            'target.section_id' => ['required', 'numeric'],
+            'target.required' => ['required', 'numeric'],
+            'target.documented' => ['required', 'boolean'],
+            'target.visible' => ['required', 'boolean'],
+            'target.archived' => ['required', 'boolean'],
         ];
     }
 

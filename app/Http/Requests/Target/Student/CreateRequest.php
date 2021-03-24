@@ -30,11 +30,13 @@ class CreateRequest extends BaseRequest
             'country_id' => ['required', 'numeric'],
             'status' => ['nullable', 'string'],
             'semesters_count' => ['required', 'numeric'],
-            // 'semesters_funded' => ['required' ,'numeric'],
-            // 'semesters_left' => ['required' ,'numeric'],
             'current_semester' => ['required', 'numeric'],
-            'target' => ['required', 'array'],
             'place_id' => ['required', 'numeric'],
+            'target' => ['array', 'required'],
+            'target.beneficiaries_count' => ['required', 'numeric', 'min:1'],
+            'target.required' => ['required', 'numeric', 'min:1'],
+            'target.visible' => ['required', 'boolean'],
+            'target.documented' => ['required', 'boolean'],
         ];
     }
 }
