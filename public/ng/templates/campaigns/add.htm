@@ -1,106 +1,104 @@
 <page-header title="حملة جديدة" pretitle="الحملات"></page-header>
 <form class="row" name="createCampaignForm" request="createCampaign">
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="name">اسم الحملة</label>
-            <input
-                type="text"
-                class="form-control"
-                ng-class="(createCampaign.errors.name != null) ? 'is-invalid' : ''"
-                id="name"
-                ng-model="object.name"
-                ng-change="createCampaign.errors.name = null"
-                placeholder="الاسم.."
-                required
-                ng-error="createCampaign.errors.name"
-            />
-        </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="name">اسم الحملة</label>
+      <input
+        id="name"
+        class="form-control"
+        type="text"
+        ng-model="object.name"
+        ng-class="(createCampaign.errors.name != null) ? 'is-invalid' : ''"
+        ng-change="createCampaign.errors.name = null"
+        placeholder="الاسم.."
+        ng-error="createCampaign.errors.name"
+        required
+      />
     </div>
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="beneficiaries_count">عدد المستفيدين</label>
-            <input
-                type="number"
-                class="form-control"
-                ng-class="(createCampaign.errors.target.beneficiaries_count != null) ? 'is-invalid' : ''"
-                id="beneficiaries_count"
-                ng-model="object.target['beneficiaries_count']"
-                ng-change="createCampaign.errors.target.beneficiaries_count = null"
-                required
-                min="1"
-                ng-error="createCampaign.errors.target.beneficiaries_count"
-            />
-        </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="beneficiaries_count">عدد المستفيدين</label>
+      <input
+        id="beneficiaries_count"
+        class="form-control"
+        type="number"
+        ng-model="object.target['beneficiaries_count']"
+        ng-class="(createCampaign.errors['target.beneficiaries_count'] != null) ? 'is-invalid' : ''"
+        ng-change="createCampaign.errors['target.beneficiaries_count'] = null"
+        required
+        min="1"
+        ng-error="createCampaign.errors.target.beneficiaries_count"
+      />
     </div>
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="visible">ظاهرة</label>
-            <select
-                class="form-control"
-                ng-model="object.target.visible"
-                ng-class="(createCampaign.errors.visible != null) ? 'is-invalid' : ''"
-                id="visible"
-                ng-change="createCampaign.errors.target.visible = null"
-                required
-                ng-error="createCampaign.errors.target.visible"
-            >
-                <option ng-value="true">نعم</option>
-                <option ng-value="false">لا</option>
-            </select>
-        </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="visible">ظاهرة</label>
+      <select
+        id="visible"
+        class="form-control"
+        ng-model="object.target.visible"
+        ng-class="(createCampaign.errors['target.visible'] != null) ? 'is-invalid' : ''"
+        ng-change="createCampaign.errors['target.visible'] = null"
+        required
+        ng-error="createCampaign.errors.target.visible"
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
     </div>
+  </div>
 
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="required">المبلغ المطلوب</label>
-            <input
-                type="number"
-                class="form-control"
-                ng-class="(createCampaign.errors.target.required != null) ? 'is-invalid' : ''"
-                id="required"
-                ng-model="object.target['required']"
-                ng-change="createCampaign.errors.required = null"
-                placeholder="الاسم.."
-                required
-                ng-error="createCampaign.errors.target.required"
-                min="1"
-            />
-        </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="required">المبلغ المطلوب</label>
+      <input
+        id="required"
+        class="form-control"
+        type="number"
+        ng-model="object.target['required']"
+        ng-change="createCampaign.errors['target.required'] = null"
+        ng-class="(createCampaign.errors['target.required'] != null) ? 'is-invalid' : ''"
+        placeholder="الاسم.."
+        ng-error="createCampaign.errors.target.required"
+        min="1"
+        required
+      />
     </div>
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="section_id">القسم</label>
-            <select
-                class="form-control"
-                ng-model="object.target.section_id"
-                ng-class="(createCampaign.errors.target.section_id != null) ? 'is-invalid' : ''"
-                id="section_id"
-                ng-change="createCampaign.errors.section_id = null"
-                ng-options="section.id as section.name for section in sections"
-                placeholder="يرجى اختيار قسم.."
-                required
-                ng-error="createCampaign.errors.target.section_id"
-                ng-init="object.target.section_id = sections[0].id"
-            ></select>
-        </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="section_id">القسم</label>
+      <select
+        id="section_id"
+        class="form-control"
+        ng-model="object.target.section_id"
+        ng-class="(createCampaign.errors['target.section_id'] != null) ? 'is-invalid' : ''"
+        ng-change="createCampaign.errors['target.section_id'] = null"
+        ng-options="section.id as section.name for section in sections"
+        ng-init="object.target.section_id = sections[0].id"
+        ng-error="createCampaign.errors.target.section_id"
+        required
+      ></select>
     </div>
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="place">المكان</label>
-            <select2
-                model="object.places_ids"
-                ajax-url="places/search"
-                error-model="createCampaign.errors.places_ids"
-                multiple
-                required
-            ></select2>
-           
-        </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="place">المكان</label>
+      <select2
+        model="object.places_ids"
+        ajax-url="places/search"
+        error-model="createCampaign.errors.places_ids"
+        multiple
+        required
+      ></select2>
     </div>
+  </div>
 
-    <div class="col-12">
-        <submit-button form="createCampaignForm" icon="fe fe-plus"
-            >اضافة</submit-button
-        >
-    </div>
+  <div class="col-12">
+    <submit-button form="createCampaignForm" icon="fe fe-plus"
+      >اضافة</submit-button
+    >
+  </div>
 </form>

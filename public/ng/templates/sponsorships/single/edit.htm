@@ -5,15 +5,15 @@
     <div class="form-group">
       <label for="beneficiary_name">اسم المستفيد</label>
       <input
-        type="text"
-        class="form-control"
-        ng-class="(updateSponsorShips.errors.beneficiary_name != null) ? 'is-invalid' : ''"
         id="beneficiary_name"
+        class="form-control"
+        type="text"
         ng-model="object.beneficiary_name"
+        ng-class="(updateSponsorShips.errors.beneficiary_name != null) ? 'is-invalid' : ''"
         ng-change="updateSponsorShips.errors.beneficiary_name = null"
         placeholder="الاسم.."
-        required
         ng-error="updateSponsorShips.errors.beneficiary_name"
+        required
       />
     </div>
   </div>
@@ -22,15 +22,14 @@
     <div class="form-group">
       <label for="beneficiary_birthdate">تاريخ ميلاد المستفيد</label>
       <input
-        type="date"
-        class="form-control"
-        ng-class="(updateSponsorShips.errors.beneficiary_birthdate != null) ? 'is-invalid' : ''"
         id="beneficiary_birthdate"
+        class="form-control"
+        type="date"
         ng-model="object.beneficiary_birthdate"
+        ng-class="(updateSponsorShips.errors.beneficiary_birthdate != null) ? 'is-invalid' : ''"
         ng-change="updateSponsorShips.errors.beneficiary_birthdate = null"
-        placeholder="تاريخ الميلاد.."
-        required
         ng-error="updateSponsorShips.errors.beneficiary_birthdate"
+        required
       />
     </div>
   </div>
@@ -39,15 +38,14 @@
     <div class="form-group">
       <label for="country_id">الدولة</label>
       <select
-        class="form-control"
-        ng-model="object.country_id"
-        ng-class="(updateSponsorShips.errors.country_id != null) ? 'is-invalid' : ''"
         id="country_id"
+        class="form-control"
+        ng-class="(updateSponsorShips.errors.country_id != null) ? 'is-invalid' : ''"
+        ng-model="object.country_id"
         ng-change="updateSponsorShips.errors.country_id = null"
         ng-options="country.id as country.name for country in countries"
-        placeholder="يرجى اختيار دولة.."
-        required
         ng-error="updateSponsorShips.errors.country_id"
+        required
       ></select>
     </div>
   </div>
@@ -56,10 +54,10 @@
     <div class="form-group">
       <label for="sponsored">تم كفالتها</label>
       <select
+        id="sponsored"
         class="form-control"
         ng-model="object.sponsored"
         ng-class="(updateSponsorShips.errors.sponsored != null) ? 'is-invalid' : ''"
-        id="sponsored"
         ng-change="updateSponsorShips.errors.sponsored = null"
         required
         ng-error="updateSponsorShips.errors.sponsored"
@@ -74,16 +72,15 @@
     <div class="form-group">
       <label for="beneficiaries_count">عدد المستفيدين</label>
       <input
-        type="number"
-        class="form-control"
-        ng-class="(updateSponsorShips.errors.beneficiaries_count != null) ? 'is-invalid' : ''"
         id="beneficiaries_count"
+        class="form-control"
+        type="number"
         ng-model="object.target['beneficiaries_count']"
-        ng-change="updateSponsorShips.errors.beneficiaries_count = null"
-        placeholder="عدد المستفيدين.."
-        ng-error="updateSponsorShips.errors.beneficiaries_count"
-        required
+        ng-class="(updateSponsorShips.errors['target.beneficiaries_count'] != null) ? 'is-invalid' : ''"
+        ng-change="updateSponsorShips.errors['target.beneficiaries_count'] = null"
+        ng-error="updateSponsorShips.errors.target.beneficiaries_count"
         min="1"
+        required
       />
     </div>
   </div>
@@ -91,16 +88,15 @@
     <div class="form-group">
       <label for="required">المبلغ المطلوب شهريا</label>
       <input
-        type="number"
-        class="form-control"
-        ng-class="(updateSponsorShips.errors['target.required'] != null) ? 'is-invalid' : ''"
         id="required"
+        class="form-control"
+        type="number"
         ng-model="object.target['required']"
-        ng-change="updateSponsorShips.errors.target.required = null"
-        placeholder="عدد المستفيدين.."
-        required
-        min="1"
+        ng-class="(updateSponsorShips.errors['target.required'] != null) ? 'is-invalid' : ''"
+        ng-change="updateSponsorShips.errors['target.required'] = null"
         ng-error="updateSponsorShips.errors.target.required"
+        min="1"
+        required
       />
     </div>
   </div>
@@ -109,11 +105,11 @@
     <div class="form-group">
       <label for="archived">مؤرشفة</label>
       <select
+        id="archived"
         class="form-control"
         ng-model="object.target.archived"
         ng-class="(updateSponsorShips.errors['target.archived'] != null) ? 'is-invalid' : ''"
-        id="archived"
-        ng-change="updateSponsorShips.errors.target.archived = null"
+        ng-change="updateSponsorShips.errors['target.archived'] = null"
         ng-error="updateSponsorShips.errors.target.archived"
         required
       >
@@ -127,11 +123,11 @@
     <div class="form-group">
       <label for="documented">موثقة</label>
       <select
+        id="documented"
         class="form-control"
         ng-model="object.target.documented"
         ng-class="(updateSponsorShips.errors['target.documented'] != null) ? 'is-invalid' : ''"
-        id="documented"
-        ng-change="updateSponsorShips.errors.target.documented = null"
+        ng-change="updateSponsorShips.errors['target.documented'] = null"
         ng-error="updateSponsorShips.errors.target.documented"
         required
       >
@@ -144,11 +140,11 @@
     <div class="form-group">
       <label for="visible">ظاهرة</label>
       <select
+      id="visible"
         class="form-control"
         ng-model="object.target.visible"
         ng-class="(updateSponsorShips.errors['target.visible'] != null) ? 'is-invalid' : ''"
-        id="visible"
-        ng-change="updateSponsorShips.errors.target.visible = null"
+        ng-change="updateSponsorShips.errors['target.visible'] = null"
         ng-error="updateSponsorShips.errors.target.visible"
         required
       >
@@ -160,8 +156,12 @@
   <div class="col-12 col-md-6">
     <div class="form-group">
       <label for="place">المكان</label>
-      <select2 model="object.place_id" ajax-url="places/search" error-model="updateSponsorShips.errors.place_id"
-        required>
+      <select2
+        model="object.place_id"
+        ajax-url="places/search"
+        error-model="updateSponsorShips.errors.place_id"
+        required
+      >
         <option selected ng-repeat="p in object.places" value="{{p.id}}">
           {{p.text}}
         </option>

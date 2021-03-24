@@ -91,8 +91,12 @@
   <div class="col-12 col-md-6">
     <div class="form-group">
       <label for="name">المتبرع</label>
-      <select2 model="object.donor_id" ajax-url="donors/search"></select2>
-      <div class="text-danger">{{ createFundraiser.errors.donor_id[0] }}</div>
+      <select2
+        model="object.donor_id"
+        ajax-url="donors/search"
+        required
+        error-model="createFundraiser.errors.donor_id"
+      ></select2>
     </div>
   </div>
 

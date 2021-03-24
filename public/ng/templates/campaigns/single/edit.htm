@@ -1,148 +1,143 @@
 <include-header />
 
 <form class="row" name="updateCampaignForm" request="updateCampaign">
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="name">اسم الحملة</label>
-            <input
-                type="text"
-                class="form-control"
-                ng-class="(updateCampaign.errors.name != null) ? 'is-invalid' : ''"
-                id="name"
-                ng-model="object.name"
-                ng-change="updateCampaign.errors.name = null"
-                placeholder="اسم الحملة.."
-                required
-                ng-error="updateCampaign.errors.name"
-            />
-        </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="name">اسم الحملة</label>
+      <input
+        id="name"
+        class="form-control"
+        type="text"
+        ng-class="(updateCampaign.errors.name != null) ? 'is-invalid' : ''"
+        ng-model="object.name"
+        ng-change="updateCampaign.errors.name = null"
+        placeholder="اسم الحملة.."
+        required
+        ng-error="updateCampaign.errors.name"
+      />
     </div>
+  </div>
 
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="beneficiaries_count">عدد المستفيدين</label>
-            <input
-                type="number"
-                class="form-control"
-                ng-class="(updateCampaign.errors['target.beneficiaries_count'] != null) ? 'is-invalid' : ''"
-                id="beneficiaries_count"
-                ng-model="object.target['beneficiaries_count']"
-                ng-change="updateCampaign.errors['target.beneficiaries_count'] = null"
-                placeholder="عدد المستفيدين.."
-                required
-                min="1"
-                ng-error="updateCampaign.errors['target.beneficiaries_count']"
-            />
-        </div>
-        <!-- <div class="text-danger">{{updateCampaign.errors['target.beneficiaries_count']}}</div> -->
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="beneficiaries_count">عدد المستفيدين</label>
+      <input
+        id="beneficiaries_count"
+        class="form-control"
+        type="number"
+        ng-model="object.target['beneficiaries_count']"
+        ng-class="(updateCampaign.errors['target.beneficiaries_count'] != null) ? 'is-invalid' : ''"
+        ng-change="updateCampaign.errors['target.beneficiaries_count'] = null"
+        ng-error="updateCampaign.errors.target.beneficiaries_count"
+        min="1"
+        required
+      />
     </div>
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="required">المبلغ المطلوب</label>
-            <input
-                type="number"
-                class="form-control"
-                ng-class="(updateCampaign.errors['target.required']!= null) ? 'is-invalid' : ''"
-                id="required"
-                ng-model="object.target['required']"
-                ng-change="updateCampaign.errors['target.required'] = null"
-                ng-error="updateCampaign.errors['target.required']"
-            />
-        </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="required">المبلغ المطلوب</label>
+      <input
+        id="required"
+        class="form-control"
+        type="number"
+        ng-model="object.target['required']"
+        ng-class="(updateCampaign.errors['target.required']!= null) ? 'is-invalid' : ''"
+        ng-change="updateCampaign.errors['target.required'] = null"
+        ng-error="updateCampaign.errors.target.required"
+        required
+      />
     </div>
+  </div>
 
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="archived">مؤرشفة</label>
-            <select
-                class="form-control"
-                ng-model="object.target.archived"
-                ng-class="(updateCampaign.errors['target.archived'] != null) ? 'is-invalid' : ''"
-                id="archived"
-                ng-change="updateCampaign.errors['target.archived']= null"
-                required
-                ng-error="updateCampaign.errors['target.archived']"
-            >
-                <option ng-value="true">نعم</option>
-                <option ng-value="false">لا</option>
-            </select>
-        </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="archived">مؤرشفة</label>
+      <select
+        id="archived"
+        class="form-control"
+        ng-model="object.target.archived"
+        ng-class="(updateCampaign.errors['target.archived'] != null) ? 'is-invalid' : ''"
+        ng-change="updateCampaign.errors['target.archived']= null"
+        ng-error="updateCampaign.errors.target.archived"
+        required
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
     </div>
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="documented">موثقة</label>
-            <select
-                class="form-control"
-                ng-model="object.target.documented"
-                ng-class="(updateCampaign.errors['target.documented'] != null) ? 'is-invalid' : ''"
-                id="documented"
-                ng-change="updateCampaign.errors['target.documented'] = null"
-                required
-                ng-error="updateCampaign.errors['target.documented']"
-            >
-                <option ng-value="true">نعم</option>
-                <option ng-value="false">لا</option>
-            </select>
-        </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="documented">موثقة</label>
+      <select
+        id="documented"
+        class="form-control"
+        ng-model="object.target.documented"
+        ng-class="(updateCampaign.errors['target.documented'] != null) ? 'is-invalid' : ''"
+        ng-change="updateCampaign.errors['target.documented'] = null"
+        ng-error="updateCampaign.errors.target.documented"
+        required
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
     </div>
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="visible">ظاهرة</label>
-            <select
-                class="form-control"
-                ng-model="object.target.visible"
-                ng-class="(updateCampaign.errors['target.visible'] != null) ? 'is-invalid' : ''"
-                id="visible"
-                ng-change="updateCampaign.errors['target.visible'] = null"
-                required
-                ng-error="updateCampaign.errors['target.visible']"
-            >
-                <option ng-value="true">نعم</option>
-                <option ng-value="false">لا</option>
-            </select>
-        </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="visible">ظاهرة</label>
+      <select
+        id="visible"
+        class="form-control"
+        ng-model="object.target.visible"
+        ng-class="(updateCampaign.errors['target.visible'] != null) ? 'is-invalid' : ''"
+        ng-change="updateCampaign.errors['target.visible'] = null"
+        ng-error="updateCampaign.errors.target.visible"
+        required
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
     </div>
+  </div>
 
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="funded">تم تأمينها</label>
-            <select
-                class="form-control"
-                ng-model="object.funded"
-                ng-class="(updateCampaign.errors.funded != null) ? 'is-invalid' : ''"
-                id="funded"
-                ng-change="updateCampaign.errors.funded = null"
-                required
-                ng-error="updateCampaign.errors.funded"
-            >
-                <option ng-value="true">نعم</option>
-                <option ng-value="false">لا</option>
-            </select>
-        </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="funded">تم تأمينها</label>
+      <select
+        id="funded"
+        class="form-control"
+        ng-model="object.funded"
+        ng-class="(updateCampaign.errors.funded != null) ? 'is-invalid' : ''"
+        ng-change="updateCampaign.errors.funded = null"
+        ng-error="updateCampaign.errors.funded"
+        required
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
     </div>
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="places_ids">المكان</label>
-            <select2
-                model="object.places_ids"
-                ajax-url="places/search"
-                multiple
-                error-model="updateCampaign.errors.places_ids"
-                required
-            >
-                <option
-                    selected
-                    ng-repeat="p in object.places"
-                    value="{{p.id}}"
-                >
-                    {{p.text}}
-                </option>
-            </select2>
-        </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="places_ids">المكان</label>
+      <select2
+        model="object.places_ids"
+        ajax-url="places/search"
+        multiple
+        error-model="updateCampaign.errors.places_ids"
+        required
+      >
+        <option selected ng-repeat="p in object.places" value="{{p.id}}">
+          {{p.text}}
+        </option>
+      </select2>
     </div>
-    <div class="col-12">
-        <submit-button form="updateCampaignForm" icon="fe fe-edit"
-            >تعديل</submit-button
-        >
-    </div>
+  </div>
+  <div class="col-12">
+    <submit-button form="updateCampaignForm" icon="fe fe-edit"
+      >تعديل</submit-button
+    >
+  </div>
 </form>

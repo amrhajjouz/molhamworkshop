@@ -28,8 +28,11 @@ class CreateRequest extends BaseRequest
         return [
             'public_visibility' => ['required' , 'boolean'],
             'verified' => ['required' , 'boolean'],
-            'target' => ['required' , 'array'],
             'donor_id' => ['required', 'numeric'],
+            'target' => ['array', 'array'],
+            'target.required' => ['required', 'numeric', 'min:1'],
+            'target.visible' => ['required', 'boolean'],
+            'target.section_id' => ['required', 'numeric'],
         ];
     }
 

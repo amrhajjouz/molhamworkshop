@@ -1,120 +1,143 @@
 <include-header />
 <form class="row" name="updateFundraiserForm" request="updateFundraiser">
-      <div class="col-12 col-md-6">
-          <div class="form-group">
-              <label for="public_visibility">متاح للعامة</label>
-              <select class="form-control" ng-model="object.public_visibility"
-                  ng-class="(updateFundraiser.errors.public_visibility != null) ? 'is-invalid' : ''"
-                  id="public_visibility" ng-change="updateFundraiser.errors.public_visibility = null" required>
-                  <option ng-value="true">نعم</option>
-                  <option ng-value="false">لا</option>
-              </select>
-              <div ng-show="updateFundraiser.errors.public_visibility != null" class="invalid-feedback">
-                  {{ updateFundraiser.errors.public_visibility[0] }}</div>
-          </div>
-      </div>
-
-      <div class="col-12 col-md-6">
-          <div class="form-group">
-              <label for="verified">مؤكد</label>
-              <select class="form-control" ng-model="object.verified"
-                  ng-class="(updateFundraiser.errors.verified != null) ? 'is-invalid' : ''" id="verified"
-                  ng-change="updateFundraiser.errors.verified = null" required>
-                  <option ng-value="true">نعم</option>
-                  <option ng-value="false">لا</option>
-              </select>
-              <div ng-show="updateFundraiser.errors.verified != null" class="invalid-feedback">
-                  {{ updateFundraiser.errors.verified[0] }}</div>
-          </div>
-      </div>
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="object.target['required']">المبلغ المطلوب</label>
-            <input type="number" class="form-control"
-            ng-class="(updateFundraiser.errors.object.target['required'] != null) ? 'is-invalid' : ''" id="object.target['required']"
-            ng-model="object.target['required']" ng-change="updateFundraiser.errors.object.target['required'] = null"
-            required
-            />
-            
-            <div ng-show="updateFundraiser.errors.object.target['required'] != null" class="invalid-feedback">
-                {{ updateFundraiser.errors.object.target['required'][0] }}
-            </div>
-        </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="public_visibility">متاح للعامة</label>
+      <select
+        id="public_visibility"
+        class="form-control"
+        ng-model="object.public_visibility"
+        ng-class="(updateFundraiser.errors.public_visibility != null) ? 'is-invalid' : ''"
+        ng-change="updateFundraiser.errors.public_visibility = null"
+        ng-error="updateFundraiser.errors.public_visibility"
+        required
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
     </div>
-    
-     <div class="col-12 col-md-6">
-         <div class="form-group">
-             <label for="section_id">القسم</label>
-             <select class="form-control" ng-model="object.target.section_id"
-                 ng-class="(updateFundraiser.errors.section_id != null) ? 'is-invalid' : ''" id="section_id"
-                 ng-change="updateFundraiser.errors.section_id = null"
-                 ng-options="section.id as section.name for section in sections" placeholder="يرجى اختيار قسم..">
-             </select>
-             <div ng-show="updateFundraiser.errors.section_id != null" class="invalid-feedback">
-                 {{ updateFundraiser.errors.section_id[0] }}</div>
-         </div>
-     </div>
-     <div class="col-12 col-md-6">
-         <div class="form-group">
-             <label for="visible">ظاهرة</label>
-             <select class="form-control" ng-model="object.target.visible"
-                 ng-class="(updateFundraiser.errors.visible != null) ? 'is-invalid' : ''" id="visible"
-                 ng-change="updateFundraiser.errors.target.visible = null" required>
-                 <option ng-value="true">نعم</option>
-                 <option ng-value="false">لا</option>
-             </select>
-             <div ng-show="updateFundraiser.errors.country_id != null" class="invalid-feedback">
-                 {{ updateFundraiser.errors.visible[0] }}</div>
-         </div>
-     </div>
-     <div class="col-12 col-md-6">
-         <div class="form-group">
-             <label for="archived">مؤرشفة</label>
-             <select class="form-control" ng-model="object.target.archived"
-                 ng-class="(updateFundraiser.errors.archived != null) ? 'is-invalid' : ''" id="archived"
-                 ng-change="updateFundraiser.errors.target.archived = null" required>
-                 <option ng-value="true">نعم</option>
-                 <option ng-value="false">لا</option>
-             </select>
-             <div ng-show="updateFundraiser.errors.archived != null" class="invalid-feedback">
-                 {{ updateFundraiser.errors.archived[0] }}</div>
-         </div>
-     </div>
-     <div class="col-12 col-md-6">
-         <div class="form-group">
-             <label for="documented">موثقة</label>
-             <select class="form-control" ng-model="object.target.documented"
-                 ng-class="(updateFundraiser.errors.documented != null) ? 'is-invalid' : ''" id="documented"
-                 ng-change="updateFundraiser.errors.target.documented = null" required>
-                 <option ng-value="true">نعم</option>
-                 <option ng-value="false">لا</option>
-             </select>
-             <div ng-show="updateFundraiser.errors.documented != null" class="invalid-feedback">
-                 {{ updateFundraiser.errors.documented[0] }}</div>
-         </div>
-     </div>
+  </div>
 
   <div class="col-12 col-md-6">
-          <div class="form-group">
-              <label for="name">المتبرع</label>
-               <select2
-                model="object.donor_id"
-                ajax-url="donors/search"
-            >
-                <option
-                    selected
-                    value="{{object.donor.id}}"
-                >
-                    {{object.donor.text}}
-                </option>
-            </select2>
-            <div class="text-danger">
-                {{ updateFundraiser.errors.donor_id[0]}}
-            </div>
-          </div>
-      </div>
-    
-    <div class="col-12">
-        <submit-button form="updateFundraiserForm" icon="fe fe-edit">تعديل</submit-button>
+    <div class="form-group">
+      <label for="verified">مؤكد</label>
+      <select
+        id="verified"
+        class="form-control"
+        ng-model="object.verified"
+        ng-class="(updateFundraiser.errors.verified != null) ? 'is-invalid' : ''"
+        ng-change="updateFundraiser.errors.verified = null"
+        ng-error="updateFundraiser.errors.verified"
+        required
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
     </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="object.target['required']">المبلغ المطلوب</label>
+      <input
+        id="required"
+        type="number"
+        class="form-control"
+        ng-class="(updateFundraiser.errors['target.required'] != null) ? 'is-invalid' : ''"
+        ng-model="object.target['required']"
+        ng-change="updateFundraiser.errors['target.required'] = null"
+        ng-error="updateFundraiser.errors.target.required"
+        min="1"
+        required
+      />
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="section_id">القسم</label>
+      <select
+        id="section_id"
+        class="form-control"
+        ng-model="object.target.section_id"
+        ng-class="(updateFundraiser.errors['target.section_id'] != null) ? 'is-invalid' : ''"
+        ng-change="updateFundraiser.errors['target.section_id'] = null"
+        ng-options="section.id as section.name for section in sections"
+        ng-error="updateFundraiser.errors.target.section_id"
+        required
+      ></select>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="visible">ظاهرة</label>
+      <select
+        id="visible"
+        class="form-control"
+        ng-model="object.target.visible"
+        ng-class="(updateFundraiser.errors['target.visible'] != null) ? 'is-invalid' : ''"
+        ng-change="updateFundraiser.errors.target['target.visible'] = null"
+        ng-error="updateFundraiser.errors.target.visible"
+        required
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="archived">مؤرشفة</label>
+      <select
+        id="archived"
+        class="form-control"
+        ng-model="object.target.archived"
+        ng-class="(updateFundraiser.errors['target.archived'] != null) ? 'is-invalid' : ''"
+        ng-change="updateFundraiser.errors['target.archived'] = null"
+        ng-error="updateFundraiser.errors.target.archived"
+        required
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="documented">موثقة</label>
+      <select
+        id="documented"
+        class="form-control"
+        ng-model="object.target.documented"
+        ng-class="(updateFundraiser.errors['target.documented'] != null) ? 'is-invalid' : ''"
+        ng-change="updateFundraiser.errors.target['target.documented'] = null"
+        ng-error="updateFundraiser.errors.target.documented"
+        required
+      >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="name">المتبرع</label>
+      <select2
+        model="object.donor_id"
+        ajax-url="donors/search"
+        error-model="updateFundraiser.errors.donor_id"
+        required
+      >
+        <option selected value="{{object.donor.id}}">
+          {{object.donor.text}}
+        </option>
+      </select2>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <submit-button form="updateFundraiserForm" icon="fe fe-edit"
+      >تعديل</submit-button
+    >
+  </div>
 </form>

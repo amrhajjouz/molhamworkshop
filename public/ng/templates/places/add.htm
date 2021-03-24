@@ -1,79 +1,94 @@
 <page-header title="مكان جديد" pretitle="الأماكن"></page-header>
 
 <form class="row" name="createSponsorShipsForm" request="createPlace">
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="name">اسم المكان</label>
-            <input type="text" class="form-control"
-                ng-class="(createPlace.errors.name != null) ? 'is-invalid' : ''"
-                id="name" ng-model="object.name"
-                ng-change="createPlace.errors.name = null" placeholder="الاسم.." required>
-            <div ng-show="createPlace.errors.name != null" class="invalid-feedback">
-                {{ createPlace.errors.name[0] }}</div>
-        </div>
-        </div>
-
-       
-
-         <div class="col-12 col-md-6">
-             <div class="form-group">
-                 <label for="type">النوع</label>
-                 <select class="form-control" ng-model="object.type"
-                     ng-class="(createPlace.errors.type != null) ? 'is-invalid' : ''" id="type"
-                     ng-change="handleChangeType()"
-                     ng-options="type.id as type.name for type in types"
-                     placeholder="يرجى اختيار نوع..">
-                 </select>
-                 <div ng-show="createPlace.errors.type != null" class="invalid-feedback">
-                     {{ createPlace.errors.type[0] }}</div>
-             </div>
-         </div>
-
-        <div class="col-12 col-md-6" ng-show="object.type == 'province'">
-            <div class="form-group">
-                <label for="name">الدولة</label>
-                <select class="form-control" ng-model="object.country_id"
-                    ng-class="(createPlace.errors.country_id != null) ? 'is-invalid' : ''" id="country_id"
-                    ng-change="createPlace.errors.country_id = null"
-                    ng-options="country.id as country.name for country in countries" placeholder="يرجى اختيار دولة..">
-                </select>
-                <div ng-show="createPlace.errors.country_id != null" class="invalid-feedback">
-                    {{ createPlace.errors.country_id[0] }}</div>
-            </div>
-        </div>
-      
-        <div class="col-12 col-md-6" ng-show="!['province' , 'city'].includes(object.type) && object.type != 'city'">
-            <div class="form-group">
-                <label for="parent_type">نوع المكان الذي تتبع له</label>
-                <select class="form-control" ng-model="object.parent_type"
-                    ng-class="(createPlace.errors.parent_type != null) ? 'is-invalid' : ''" id="parent_type"
-                    ng-change="handleChangeParentType()">
-                    <option  ng-value="'city'">مدينة</option>
-                    <option  ng-value="'province'">محافظة</option>
-                </select>
-            </div>
-        </div>
-
-
-        <div class="col-12 col-md-6" ng-show="object.type=='city' || object.type != 'province' && object.parent_type" >
-            <div class="form-group">
-                <label for="parent_id">المكان الذي تتبع له</label>
-                <select class="form-control" ng-model="object.parent_id"
-                    ng-class="(createPlace.errors.parent_id != null) ? 'is-invalid' : ''" id="parent_id"
-                    ng-change="createPlace.errors.parent_id = null"
-                    ng-options="item.id as item.name for item in parentPlaces" >
-                </select>
-                <div ng-show="createPlace.errors.parent_id != null" class="invalid-feedback">
-                    {{ createPlace.errors.parent_id[0] }}</div>
-            </div>
-        </div>
-
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="name">اسم المكان</label>
+      <input
+      id="name"
+      class="form-control"
+        type="text"
+        ng-model="object.name"
+        ng-class="(createPlace.errors.name != null) ? 'is-invalid' : ''"
+        ng-change="createPlace.errors.name = null"
+        placeholder="الاسم.."
+        ng-error="createPlace.errors.name"
+        required
+      />
     </div>
+  </div>
 
-
-
-    <div class="col-12">
-        <submit-button form="createSponsorShipsForm" icon="fe fe-plus">اضافة</submit-button>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="type">النوع</label>
+      <select
+      id="type"
+        class="form-control"
+        ng-model="object.type"
+        ng-class="(createPlace.errors.type != null) ? 'is-invalid' : ''"
+        ng-change="handleChangeType()"
+        ng-options="type.id as type.name for type in types"
+        placeholder="يرجى اختيار نوع.."
+        ng-error="createPlace.errors.type"
+      ></select>
     </div>
+  </div>
 
+  <div class="col-12 col-md-6" ng-show="object.type == 'province'">
+    <div class="form-group">
+      <label for="country_id">الدولة</label>
+      <select
+      id="country_id"
+      class="form-control"
+      ng-model="object.country_id"
+      ng-change="createPlace.errors.country_id = null"
+        ng-class="(createPlace.errors.country_id != null) ? 'is-invalid' : ''"
+        ng-options="country.id as country.name for country in countries"
+        ng-error="createPlace.errors.country_id"
+      ></select>
+    </div>
+  </div>
+
+  <div
+    class="col-12 col-md-6"
+    ng-show="!['province' , 'city'].includes(object.type) && object.type != 'city'"
+  >
+    <div class="form-group">
+      <label for="parent_type">نوع المكان الذي تتبع له</label>
+      <select
+      id="parent_type"
+      class="form-control"
+      ng-class="(createPlace.errors.parent_type != null) ? 'is-invalid' : ''"
+        ng-model="object.parent_type"
+        ng-change="handleChangeParentType()"
+        ng-error="createPlace.errors.parent_type "
+      >
+        <option ng-value="'city'">مدينة</option>
+        <option ng-value="'province'">محافظة</option>
+      </select>
+    </div>
+  </div>
+
+  <div
+    class="col-12 col-md-6"
+    ng-show="object.type=='city' || object.type != 'province' && object.parent_type"
+  >
+    <div class="form-group">
+      <label for="parent_id">المكان الذي تتبع له</label>
+      <select
+      id="parent_id"
+        class="form-control"
+        ng-model="object.parent_id"
+        ng-class="(createPlace.errors.parent_id != null) ? 'is-invalid' : ''"
+        ng-options="item.id as item.name for item in parentPlaces"
+        ng-change="createPlace.errors.parent_id = null"
+      ></select>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <submit-button form="createSponsorShipsForm" icon="fe fe-plus"
+      >اضافة</submit-button
+    >
+  </div>
 </form>

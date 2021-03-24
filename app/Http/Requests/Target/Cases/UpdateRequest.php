@@ -33,6 +33,7 @@ class UpdateRequest extends BaseRequest
             'status' => ['required'],
             'target' => ['required' , 'array'],
             'target.beneficiaries_count' => ['required', 'numeric', 'min:1'],
+            'target.required' => ['required', 'numeric', 'min:1'],
             'place_id' => ['required', 'numeric'],
         ];
     }

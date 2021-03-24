@@ -5,15 +5,15 @@
     <div class="form-group">
       <label for="beneficiary_name">اسم المستفيد</label>
       <input
-        type="text"
-        class="form-control"
-        ng-class="(createSponsorShips.errors.beneficiary_name != null) ? 'is-invalid' : ''"
         id="beneficiary_name"
+        class="form-control"
+        type="text"
         ng-model="object.beneficiary_name"
+        ng-class="(createSponsorShips.errors.beneficiary_name != null) ? 'is-invalid' : ''"
         ng-change="createSponsorShips.errors.beneficiary_name = null"
         placeholder="الاسم.."
+        ng-error="createSponsorShips.errors.beneficiary_name"
         required
-        ng-error="createSponsorShips.errors['beneficiary_name']"
       />
     </div>
   </div>
@@ -22,15 +22,14 @@
     <div class="form-group">
       <label for="beneficiary_birthdate">تاريخ ميلاد المستفيد</label>
       <input
-        type="date"
-        class="form-control"
-        ng-class="(createSponsorShips.errors.beneficiary_birthdate != null) ? 'is-invalid' : ''"
         id="beneficiary_birthdate"
+        class="form-control"
+        type="date"
         ng-model="object.beneficiary_birthdate"
+        ng-class="(createSponsorShips.errors.beneficiary_birthdate != null) ? 'is-invalid' : ''"
         ng-change="createSponsorShips.errors.beneficiary_birthdate = null"
-        placeholder="تاريخ الميلاد.."
-        required
         ng-error="createSponsorShips.errors.beneficiary_birthdate"
+        required
       />
     </div>
   </div>
@@ -39,16 +38,15 @@
     <div class="form-group">
       <label for="country_id">الدولة</label>
       <select
-        class="form-control"
-        ng-model="object.country_id"
-        ng-class="(createSponsorShips.errors.country_id != null) ? 'is-invalid' : ''"
         id="country_id"
+        ng-model="object.country_id"
+        class="form-control"
+        ng-class="(createSponsorShips.errors.country_id != null) ? 'is-invalid' : ''"
         ng-change="createSponsorShips.errors.country_id = null"
         ng-options="country.id as country.name for country in countries"
-        placeholder="يرجى اختيار دولة.."
-        required
         ng-init="object.country_id = countries[0].id"
-        ng-error="createSponsorShips.errors['country_id']"
+        ng-error="createSponsorShips.errors.country_id"
+        required
       ></select>
     </div>
   </div>
@@ -56,15 +54,15 @@
     <div class="form-group">
       <label for="beneficiaries_count">عدد المستفيدين</label>
       <input
-        type="number"
-        class="form-control"
-        ng-class="(createSponsorShips.errors['target.beneficiaries_count'] != null) ? 'is-invalid' : ''"
         id="beneficiaries_count"
+        class="form-control"
+        type="number"
         ng-model="object.target['beneficiaries_count']"
-        ng-change="createSponsorShips.errors.target.beneficiaries_count = null"
-        required
+        ng-class="(createSponsorShips.errors['target.beneficiaries_count'] != null) ? 'is-invalid' : ''"
+        ng-change="createSponsorShips.errors['target.beneficiaries_count'] = null"
+        ng-error="createSponsorShips.errors.target.beneficiaries_count"
         min="1"
-        ng-error="createSponsorShips.errors['target.beneficiaries_count']"
+        required
       />
     </div>
   </div>
@@ -72,16 +70,15 @@
     <div class="form-group">
       <label for="required">المبلغ المطلوب شهريا</label>
       <input
+        id="required"
         type="number"
         class="form-control"
-        ng-class="(createSponsorShips.errors.target.required != null) ? 'is-invalid' : ''"
-        id="required"
         ng-model="object.target['required']"
-        ng-change="createSponsorShips.errors.target.required = null"
-        placeholder="المبلغ المطلوب.."
-        required
+        ng-class="(createSponsorShips.errors['target.required'] != null) ? 'is-invalid' : ''"
+        ng-change="createSponsorShips.errors['target.required'] = null"
+        ng-error="createSponsorShips.errors.target.required"
         min="1"
-        ng-error="createSponsorShips.errors.target"
+        required
       />
     </div>
   </div>
@@ -89,15 +86,15 @@
     <div class="form-group">
       <label for="category_id">الصنف</label>
       <select
+        id="category_id"
         class="form-control"
         ng-model="object.target.category_id"
-        ng-class="(createSponsorShips.errors['target.category_id'] != null) ? 'is-invalid' : ''"
-        id="category_id"
-        ng-change="createSponsorShips.errors['target.category_id']= null"
         ng-options="category.id as category.name for category in categories"
-        placeholder="يرجى اختيار صنف.."
-        ng-error="createSponsorShips.errors['target.category_id']"
+        ng-class="(createSponsorShips.errors['target.category_id'] != null) ? 'is-invalid' : ''"
+        ng-change="createSponsorShips.errors['target.category_id']= null"
+        ng-error="createSponsorShips.errors.target.category_id"
         ng-init="object.target.category_id = categories[0].id"
+        required
       ></select>
     </div>
   </div>
@@ -106,13 +103,13 @@
     <div class="form-group">
       <label for="visible">ظاهرة</label>
       <select
+        id="visible"
         class="form-control"
         ng-model="object.target.visible"
         ng-class="(createSponsorShips.errors['target.visible'] != null) ? 'is-invalid' : ''"
-        id="visible"
         ng-change="createSponsorShips.errors['target.visible'] = null"
+        ng-error="createSponsorShips.errors.target.visible"
         required
-        ng-error="createSponsorShips.errors['target.visible']"
       >
         <option ng-value="true">نعم</option>
         <option ng-value="false">لا</option>

@@ -5,10 +5,10 @@
     <div class="form-group">
       <label for="beneficiary_name">اسم المستفيد</label>
       <input
+        id="beneficiary_name"
         type="text"
         class="form-control"
         ng-class="(createCase.errors.beneficiary_name != null) ? 'is-invalid' : ''"
-        id="beneficiary_name"
         ng-model="object.beneficiary_name"
         ng-change="createCase.errors.beneficiary_name = null"
         placeholder="الاسم.."
@@ -21,12 +21,12 @@
     <div class="form-group">
       <label for="beneficiaries_count">عدد المستفيدين</label>
       <input
+        id="beneficiaries_count"
         type="number"
         class="form-control"
-        ng-class="(createCase.errors.target.beneficiaries_count != null) ? 'is-invalid' : ''"
-        id="beneficiaries_count"
         ng-model="object.target['beneficiaries_count']"
-        ng-change="createCase.errors.target.beneficiaries_count = null"
+        ng-class="(createCase.errors['target.beneficiaries_count'] != null) ? 'is-invalid' : ''"
+        ng-change="createCase.errors['target.beneficiaries_count'] = null"
         required
         min="1"
         ng-error="createCase.errors.target.beneficiaries_count"
@@ -38,13 +38,12 @@
     <div class="form-group">
       <label for="country_id">الدولة</label>
       <select
+        id="country_id"
         class="form-control"
         ng-model="object.country_id"
         ng-class="(createCase.errors.country_id != null) ? 'is-invalid' : ''"
-        id="country_id"
         ng-change="createCase.errors.country_id = null"
         ng-options="country.id as country.name for country in countries"
-        placeholder="يرجى اختيار دولة.."
         required
         ng-error="createCase.errors.country_id"
         ng-init="object.country_id = countries[0].id;"
@@ -55,10 +54,10 @@
     <div class="form-group">
       <label for="status">الحالة</label>
       <select
+        id="status"
         class="form-control"
         ng-model="object.status"
         ng-class="(createCase.errors.status != null) ? 'is-invalid' : ''"
-        id="status"
         ng-change="createCase.errors.status = null"
         ng-options="status.id as status.name for status in statuses"
         required
@@ -71,13 +70,13 @@
     <div class="form-group">
       <label for="visible">ظاهرة</label>
       <select
+        id="visible"
         class="form-control"
         ng-model="object.target.visible"
-        ng-class="(createCase.errors.visible != null) ? 'is-invalid' : ''"
-        id="visible"
-        ng-change="createCase.errors.target.visible = null"
+        ng-class="(createCase.errors['target.visible'] != null) ? 'is-invalid' : ''"
+        ng-change="createCase.errors['target.visible'] = null"
+        ng-error="createCase.errors.target.visible"
         required
-        ng-error="createCase.errors.visible"
       >
         <option ng-value="true">نعم</option>
         <option ng-value="false">لا</option>
@@ -86,19 +85,17 @@
   </div>
   <div class="col-12 col-md-6">
     <div class="form-group">
-
       <label for="required">المبلغ المطلوب</label>
       <input
+        id="required"
         type="number"
         class="form-control"
-        ng-class="(createCase.errors.target.required != null) ? 'is-invalid' : ''"
-        id="required"
         ng-model="object.target['required']"
-        ng-change="createCase.errors.target.required = null"
-        placeholder="الاسم.."
-        required
-        min="1"
+        ng-class="(createCase.errors['target.required'] != null) ? 'is-invalid' : ''"
+        ng-change="createCase.errors['target.required'] = null"
         ng-error="createCase.errors.target.required"
+        min="1"
+        required
       />
     </div>
   </div>
@@ -106,14 +103,13 @@
     <div class="form-group">
       <label for="category_id">الصنف</label>
       <select
+        id="category_id"
         class="form-control"
         ng-model="object.target.category_id"
-        ng-class="(createCase.errors.category_id != null) ? 'is-invalid' : ''"
-        id="category_id"
-        ng-change="createCase.errors.category_id = null"
+        ng-class="(createCase.errors['target.category_id'] != null) ? 'is-invalid' : ''"
+        ng-change="createCase.errors['target.category_id'] = null"
         ng-options="category.id as category.name for category in categories"
-        placeholder="يرجى اختيار صنف.."
-        ng-error="createCase.errors.category_id"
+        ng-error="createCase.errors.target.category_id"
         ng-init="object.target.category_id = categories[0].id;"
         required
       ></select>

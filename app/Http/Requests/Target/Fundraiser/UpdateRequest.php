@@ -20,15 +20,21 @@ class UpdateRequest extends BaseRequest
      * Get the validation rules that apply to the request.
      *
      * @return array
-     */
+     */ 
+    // required
     public function rules()
     {
         return [
             'id' => ['required', 'exists:events'],
             'public_visibility' => ['required' , 'boolean'],
             'verified' => ['required' , 'boolean'],
-            'target' => ['required' , 'array'],
             'donor_id' => ['required', 'numeric'],
+            'target' => ['required', 'required'],
+            'target.required' => ['required', 'numeric', 'min:1'],
+            'target.visible' => ['required', 'boolean'],
+            'target.documented' => ['required', 'boolean'],
+            'target.archived' => ['required', 'boolean'],
+            'target.section_id' => ['required', 'numeric'],
         ];
     }
     

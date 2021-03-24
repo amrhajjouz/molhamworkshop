@@ -22,15 +22,14 @@
     <div class="form-group">
       <label for="beneficiaries_count">عدد المستفيدين</label>
       <input
-        type="number"
-        class="form-control"
-        ng-class="(updateCase.errors.beneficiaries_count != null) ? 'is-invalid' : ''"
         id="beneficiaries_count"
+        class="form-control"
+        type="number"
         ng-model="object.target['beneficiaries_count']"
-        ng-change="updateCase.errors.beneficiaries_count = null"
-        placeholder="عدد المستفيدين.."
+        ng-class="(updateCase.errors['target.beneficiaries_count'] != null) ? 'is-invalid' : ''"
+        ng-change="updateCase.errors['target.beneficiaries_count']= null"
+        ng-error="updateCase.errors.target.beneficiaries_count"
         required
-        ng-error="updateCase.errors.beneficiaries_count"
       />
     </div>
   </div>
@@ -39,10 +38,10 @@
     <div class="form-group">
       <label for="country_id">الدولة</label>
       <select
+        id="country_id"
         class="form-control"
         ng-model="object.country_id"
         ng-class="(updateCase.errors.country_id != null) ? 'is-invalid' : ''"
-        id="country_id"
         ng-change="updateCase.errors.country_id = null"
         ng-options="country.id as country.name for country in countries"
         required
@@ -50,18 +49,18 @@
       ></select>
     </div>
   </div>
- 
+
   <div class="col-12 col-md-6">
     <div class="form-group">
       <label for="archived">مؤرشفة</label>
       <select
+        id="archived"
         class="form-control"
         ng-model="object.target.archived"
-        ng-class="(updateCase.errors.archived != null) ? 'is-invalid' : ''"
-        id="archived"
-        ng-change="upsdateCase.errors.target.archived = null"
+        ng-class="(updateCase.errors['target.archived'] != null) ? 'is-invalid' : ''"
+        ng-change="upsdateCase.errors['target.archived'] = null"
         required
-        ng-error="updateCase.errors.archived"
+        ng-error="updateCase.errors.target.archived"
       >
         <option ng-value="true">نعم</option>
         <option ng-value="false">لا</option>
@@ -73,13 +72,13 @@
     <div class="form-group">
       <label for="documented">موثقة</label>
       <select
+      id="documented"
         class="form-control"
         ng-model="object.target.documented"
-        ng-class="(updateCase.errors.documented != null) ? 'is-invalid' : ''"
-        id="documented"
-        ng-change="updateCase.errors.target.documented = null"
+        ng-class="(updateCase.errors['target.documented'] != null) ? 'is-invalid' : ''"
+        ng-change="updateCase.errors['target.documented'] = null"
+        ng-error="updateCase.errors.target.documented"
         required
-        ng-error="updateCase.errors.documented"
       >
         <option ng-value="true">نعم</option>
         <option ng-value="false">لا</option>
@@ -91,13 +90,13 @@
     <div class="form-group">
       <label for="visible">ظاهرة</label>
       <select
+      id="visible"
         class="form-control"
         ng-model="object.target.visible"
-        ng-class="(updateCase.errors.visible != null) ? 'is-invalid' : ''"
-        id="visible"
-        ng-change="updateCase.errors.target.visible = null"
+        ng-class="(updateCase.errors['target.documented'] != null) ? 'is-invalid' : ''"
+        ng-change="updateCase.errors['target.documented'] = null"
+        ng-error="updateCase.errors.target.visible"
         required
-        ng-error="updateCase.errors.visible"
       >
         <option ng-value="true">نعم</option>
         <option ng-value="false">لا</option>
@@ -109,14 +108,14 @@
     <div class="form-group">
       <label for="status">الحالة</label>
       <select
+      id="status"
         class="form-control"
         ng-model="object.status"
         ng-class="(updateCase.errors.status != null) ? 'is-invalid' : ''"
-        id="status"
         ng-change="updateCase.errors.status = null"
         ng-options="status.id as status.name for status in statuses"
-        required
         ng-error="updateCase.errors.status"
+        required
       ></select>
     </div>
   </div>
