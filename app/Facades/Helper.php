@@ -3,6 +3,7 @@
 namespace App\Facades;
 
 use App\Models\{Cases, Donor, Place, Sponsorship, Student , Sponsor};
+use Illuminate\Support\Facades\Log;
 
 class Helper
 {
@@ -54,41 +55,52 @@ class Helper
         $name = null;
         $country_name = null;
 
-        $country = $place->country;
+        // $country = $place->country;
 
-        if ($country) $country_name = $country->name;
+        // if ($country) $country_name = $country->name;
 
-        $first_parent = $place->parent;
-        if ($first_parent) {
-            $arr[] =  $first_parent->name;
-            if ($first_parent->type == 'province' && $first_parent->country) $country_name = $first_parent->country->name;
-            $second_parent = $first_parent->parent;
-            if ($second_parent) {
-                $arr[] = $second_parent->name;
-                if ($second_parent->type == 'province' && $second_parent->country) $country_name = $second_parent->country->name;
+        // $first_parent = $place->parent;
+        // if ($first_parent) {
+        //     $arr[] =  $first_parent->name;
+        //     if ($first_parent->type == 'province' && $first_parent->country) $country_name = $first_parent->country->name;
+        //     $second_parent = $first_parent->parent;
+        //     if ($second_parent) {
+        //         $arr[] = $second_parent->name;
+        //         if ($second_parent->type == 'province' && $second_parent->country) $country_name = $second_parent->country->name;
 
-                $third_parent = $second_parent->parent;
-                if ($third_parent) {
-                    $arr[] = $third_parent->name;
-                    if ($third_parent->type == 'province' && $third_parent->country) $country_name = $third_parent->country->name;
-                }
-            }
-        }
+        //         $third_parent = $second_parent->parent;
+        //         if ($third_parent) {
+        //             $arr[] = $third_parent->name;
+        //             if ($third_parent->type == 'province' && $third_parent->country) $country_name = $third_parent->country->name;
+        //         }
+        //     }
+        // }
 
         
-        foreach(array_reverse($arr) as $val => $item){
-            if(is_null($name)){
-                $name = $item; 
-            }else{
-                $name .= ' - ' . $item;
+        // foreach(array_reverse($arr) as $val => $item){
+        //     if(is_null($name)){
+        //         $name = $item; 
+        //     }else{
+        //         $name .= ' - ' . $item;
+        //     }
+        // }
+
+        // if($country_name){
+        //     return $country_name . ' - ' . $name;
+        // }else{
+        //     return $name;
+        // }
+        $text = $place->name;
+        $object = $place;
+
+            while(isset($object->parent)){
+            $object = $object->parent;
+            $text .= '-' . $object->name; 
+            if(!is_null($object->country_id)){
+                $text .= '-' . $object->country->name;
             }
         }
-
-        if($country_name){
-            return $country_name . ' - ' . $name;
-        }else{
-            return $name;
-        }
+        return $text;
     }
 
     /*
@@ -118,7 +130,7 @@ class Helper
         }else if($object instanceof \App\Models\Student){
             $model_type = '\App\Models\Student';
         }else{
-            \Log::info('Helper AssignToSponsor assign wront object');
+            Log::info('Helper AssignToSponsor assign wront object');
             $response['error'] = 'invalid Model type';
             return $response;
         }

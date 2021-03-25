@@ -1,193 +1,231 @@
 <include-header />
-  <button href="#" ng-click="add_sponsor()" class="btn btn-primary" ng-disabled="object.percentage_to_complete  <= 0">
-        <i class="fe fe-plus"></i>&nbsp;إضافة كفيل
-    </button>
+<button
+  href="#"
+  ng-click="add_sponsor()"
+  class="btn btn-primary"
+  ng-disabled="object.percentage_to_complete  <= 0"
+>
+  <i class="fe fe-plus"></i>&nbsp;إضافة كفيل
+</button>
 <!-- create modal -->
-<form name="createSponsorStudentsForm"  request="createStudentsSponsor" model="sponsor">
-<modal id="add-sponsors">
-  <modal-title> <i class="fe fe-plus-circle"></i>&nbsp; إضافة كفيل</modal-title
-  ><modal-body>
-        <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="place">اسم الكفيل</label>
-          <select2 model="sponsor.donor_id" ajax-url="donors/search"> </select2>
+<form
+  name="createSponsorStudentsForm"
+  request="createStudentsSponsor"
+  model="sponsor"
+>
+  <modal id="add-sponsors">
+    <modal-title>
+      <i class="fe fe-plus-circle"></i>&nbsp; إضافة كفيل</modal-title
+    ><modal-body>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="donor_id">اسم الكفيل</label>
+            <select2
+              model="sponsor.donor_id"
+              ajax-url="donors/search"
+              error-model="createStudentsSponsor.errors.donor_id"
+              required
+            >
+            </select2>
+          </div>
         </div>
-      </div>
 
-       <div class="col-md-6">
-        <div class="form-group">
+        <div class="col-md-6">
+          <div class="form-group">
             <label for="percentage">نسبة المساهمة</label>
             <input
-                type="number"
-                class="form-control"
-                ng-class="(createStudentsSponsor.errors.percentage != null) ? 'is-invalid' : ''"
-                id="percentage"
-                ng-model="sponsor.percentage"
-                ng-change="createStudentsSponsor.errors.percentage = null"
-                required
-                min="0"
-                max="{{object.percentage_to_complete}}"
-                
+              id="percentage"
+              class="form-control"
+              type="number"
+              ng-model="sponsor.percentage"
+              ng-class="(createStudentsSponsor.errors.percentage != null) ? 'is-invalid' : ''"
+              ng-change="createStudentsSponsor.errors.percentage = null"
+              ng-error="createStudentsSponsor.errors.percentage"
+              required
+              min="0"
+              max="{{object.percentage_to_complete}}"
             />
-            <div
-                ng-show="createStudentsSponsor.errors.percentage != null"
-                class="invalid-feedback"
-            >
-                {{ createStudentsSponsor.errors.percentage[0] }}
-            </div>
+          </div>
         </div>
-    </div>
-    </div>
-  </modal-body>
-  <modal-footer class="text-left">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-      <i class="fe fe-x"></i> اغلاق
-    </button>
-    <submit-button form="createSponsorStudentsForm" icon="fe fe-plus">إضافة</submit-button>
-  </modal-footer>
-</modal>
+      </div>
+    </modal-body>
+    <modal-footer class="text-left">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">
+        <i class="fe fe-x"></i> اغلاق
+      </button>
+      <submit-button form="createSponsorStudentsForm" icon="fe fe-plus"
+        >إضافة</submit-button
+      >
+    </modal-footer>
+  </modal>
 </form>
 <!-- end create modal -->
 
-
 <!-- update modal -->
-<form name="updateSponsorShipsSponsorForm"  request="updateStudentsSponsor" model="selected_object">
-<modal id="edit-sponsors">
-  <modal-title> <i class="fe fe-plus-circle"></i>&nbsp; تعديل كفيل</modal-title
-  ><modal-body>
+<form
+  name="updateSponsorShipsSponsorForm"
+  request="updateStudentsSponsor"
+  model="selected_object"
+>
+  <modal id="edit-sponsors">
+    <modal-title>
+      <i class="fe fe-plus-circle"></i>&nbsp; تعديل كفيل</modal-title
+    ><modal-body>
       <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="place">اسم الكفيل</label>
-           <input
-                type="text"
-                class="form-control"
-                ng-class="(updateStudentsSponsor.errors.percentage != null) ? 'is-invalid' : ''"
-                ng-model="selected_object.donor.name"
-                ng-disabled="true"
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="donor_id">اسم الكفيل</label>
+            <input
+              type="text"
+              class="form-control"
+              ng-class="(updateStudentsSponsor.errors.percentage != null) ? 'is-invalid' : ''"
+              ng-model="selected_object.donor.name"
+              ng-disabled="true"
             />
+          </div>
         </div>
-      </div>
 
-       <div class="col-md-6">
-        <div class="form-group">
+        <div class="col-md-6">
+          <div class="form-group">
             <label for="percentage_">نسبة المساهمة</label>
             <input
-                type="number"
-                class="form-control"
-                ng-class="(updateStudentsSponsor.errors.percentage != null) ? 'is-invalid' : ''"
-                id="percentage_"
-                ng-model="selected_object.percentage"
-                ng-change="updateStudentsSponsor.errors.percentage = null"
-                required
-                min="0"
-                max="{{get_max_percentage_on_update()}}"
-                
+              id="percentage_"
+              class="form-control"
+              type="number"
+              ng-model="selected_object.percentage"
+              ng-class="(updateStudentsSponsor.errors.percentage != null) ? 'is-invalid' : ''"
+              ng-change="updateStudentsSponsor.errors.percentage = null"
+              ng-error="updateStudentsSponsor.errors.percentage"
+              min="0"
+              max="{{get_max_percentage_on_update()}}"
+              required
             />
-            <div
-                ng-show="updateStudentsSponsor.errors.percentage != null"
-                class="invalid-feedback"
-            >
-                {{ updateStudentsSponsor.errors.percentage[0] }}
-            </div>
+          </div>
         </div>
-    </div>
-    </div>
-  </modal-body>
-  <modal-footer class="text-left">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-      <i class="fe fe-x"></i> اغلاق
-    </button>
-    <submit-button form="updateSponsorShipsSponsorForm" icon="fe fe-plus">تعديل</submit-button>
-  </modal-footer>
-</modal>
+      </div>
+    </modal-body>
+    <modal-footer class="text-left">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">
+        <i class="fe fe-x"></i> اغلاق
+      </button>
+      <submit-button form="updateSponsorShipsSponsorForm" icon="fe fe-plus"
+        >تعديل</submit-button
+      >
+    </modal-footer>
+  </modal>
 </form>
 <!-- end update modal -->
 
 <div class="text-center h4 mt-4 mb-4">العدد الكلي : {{ sponsors.length }}</div>
-<div class="text-center h4 mt-4 mb-4">نسبة الإكتمال : {{ 100 - object.percentage_to_complete  }} % </div>
+<div class="text-center h4 mt-4 mb-4">
+  نسبة الإكتمال : {{ 100 - object.percentage_to_complete }} %
+</div>
 <div class="card">
-    <div class="card-header">
-        <div class="row align-items-center">
-            <div class="col">
-                <div class="input-group input-group-flush input-group-merge">
-                    <input type="search" ng-model="search" class="form-control form-control-prepended search"
-                        placeholder="اكتب كلمة للبحث ثم اضغط Enter  ..." />
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <span class="fe fe-search"></span>
-                        </div>
-                    </div>
-                </div>
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <div class="input-group input-group-flush input-group-merge">
+          <input
+            type="search"
+            ng-model="search"
+            class="form-control form-control-prepended search"
+            placeholder="اكتب كلمة للبحث ثم اضغط Enter  ..."
+          />
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <span class="fe fe-search"></span>
             </div>
-
-            <div class="col-auto">
-                <!-- Button -->
-                <button class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top"
-                    title="خيارات الفلترة والعرض">
-                    <i class="fe fe-sliders"></i>
-                </button>
-
-                <button class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top"
-                    title="تصدير القائمة الى ملف CSV">
-                    <i class="fe fe-download"></i>
-                </button>
-            </div>
+          </div>
         </div>
+      </div>
+
+      <div class="col-auto">
+        <!-- Button -->
+        <button
+          class="btn btn-sm btn-white"
+          type="button"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="خيارات الفلترة والعرض"
+        >
+          <i class="fe fe-sliders"></i>
+        </button>
+
+        <button
+          class="btn btn-sm btn-white"
+          type="button"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="تصدير القائمة الى ملف CSV"
+        >
+          <i class="fe fe-download"></i>
+        </button>
+      </div>
     </div>
+  </div>
 
-    <div class="table-responsive">
-        <table class="table table-sm card-table">
-            <thead>
-                <tr>
-                    <th class="text-center">#</th>
-                    <th class="text-center">اسم الكفيل</th>
-                    <th class="text-center">النسبة</th>
-                    <th class="text-center">الحالة</th>
-                    <th class="text-center">خيارات</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-show="sponsorships.length == 0">
-                    <td colspan="10" class="text-center">
-                        <div class="pt-3 pb-2 h4" ng-show="sponsors.length == 0">
-                            لا يوجد أية عناصر في هذه القائمة
-                        </div>
-                    </td>
-                </tr>
-                <tr ng-repeat="item in sponsors | filter : search">
-                    <td class="align-middle text-center">{{ item.id }}</td>
-                    <td class="align-middle text-center">{{ item.donor.name }}</td>
-                    <td class="align-middle text-center">{{ item.percentage }} %</td>
-                    <td class="align-middle text-center">
-                        <span class="badge badge-soft-success" ng-if="item.active">
-                            <i class="fe fe-check"></i>
-                        </span>
-                        <span class="badge badge-soft-danger" ng-if="!item.active"> <i class="fe fe-x"></i></span>
-                    </td>
-                    <td class="align-middle text-center h2">
-                        <div class="dropdown">
-                            <a href="javascript:;" class="color-black mr-2" role="button" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical"></i></a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item"
-                                    href="{{ $r('sponsorships.overview', {id: item.id}) }}"><i
-                                        class="fe fe-eye"></i> نظرة عامة</a>
+  <div class="table-responsive">
+    <table class="table table-sm card-table">
+      <thead>
+        <tr>
+          <th class="text-center">#</th>
+          <th class="text-center">اسم الكفيل</th>
+          <th class="text-center">النسبة</th>
+          <th class="text-center">الحالة</th>
+          <th class="text-center">خيارات</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-show="sponsorships.length == 0">
+          <td colspan="10" class="text-center">
+            <div class="pt-3 pb-2 h4" ng-show="sponsors.length == 0">
+              لا يوجد أية عناصر في هذه القائمة
+            </div>
+          </td>
+        </tr>
+        <tr ng-repeat="item in sponsors | filter : search">
+          <td class="align-middle text-center">{{ item.id }}</td>
+          <td class="align-middle text-center">{{ item.donor.name }}</td>
+          <td class="align-middle text-center">{{ item.percentage }} %</td>
+          <td class="align-middle text-center">
+            <span class="badge badge-soft-success" ng-if="item.active">
+              <i class="fe fe-check"></i>
+            </span>
+            <span class="badge badge-soft-danger" ng-if="!item.active">
+              <i class="fe fe-x"></i
+            ></span>
+          </td>
+          <td class="align-middle text-center h2">
+            <div class="dropdown">
+              <a
+                href="javascript:;"
+                class="color-black mr-2"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+                ><i class="fe fe-more-vertical"></i
+              ></a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a
+                  class="dropdown-item"
+                  href="{{ $r('sponsorships.overview', {id: item.id}) }}"
+                  ><i class="fe fe-eye"></i> نظرة عامة</a
+                >
 
-                                        <a href="#" ng-click="edit_sponsor(item)" class="dropdown-item">
-                                            <i class="fe fe-edit-2"></i>&nbsp;تعديل
-                                        </a>
+                <a href="#" ng-click="edit_sponsor(item)" class="dropdown-item">
+                  <i class="fe fe-edit-2"></i>&nbsp;تعديل
+                </a>
 
-
-                                <!-- <a class="dropdown-item"
+                <!-- <a class="dropdown-item"
                                     href="{{ $r('sponsorships.edit', {id: item.id}) }}"><i
                                         class="fe fe-edit-2"></i> تعديل</a> -->
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

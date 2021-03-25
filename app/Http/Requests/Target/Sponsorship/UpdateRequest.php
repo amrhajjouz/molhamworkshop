@@ -27,7 +27,7 @@ class UpdateRequest extends BaseRequest
         return [
             'id' => ['required', 'exists:sponsorships'],
             'beneficiary_name' => ['required' ,'string', 'between:3,100'],
-            'beneficiary_birthdate' => ['required' ,'string', 'between:3,100'],
+            'beneficiary_birthdate' => ['required' ,'string', 'between:3,100', "before:tomorrow"] ,
             'country_id' => ['required' ,'numeric'],
             'sponsored' => ['required' ,'boolean'],
             'target' => ['required' ,'array'],

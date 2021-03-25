@@ -5,10 +5,10 @@
     <div class="form-group">
       <label for="name">اسم الطالب</label>
       <input
+        id="name"
         type="text"
         class="form-control"
         ng-class="(updateStudent.errors.name != null) ? 'is-invalid' : ''"
-        id="name"
         ng-model="object.name"
         ng-change="updateStudent.errors.name = null"
         placeholder="الاسم.."
@@ -22,13 +22,12 @@
     <div class="form-group">
       <label for="country_id">الدولة</label>
       <select
+        id="country_id"
         class="form-control"
         ng-model="object.country_id"
         ng-class="(updateStudent.errors.country_id != null) ? 'is-invalid' : ''"
-        id="country_id"
         ng-change="updateStudent.errors.country_id = null"
         ng-options="country.id as country.name for country in countries"
-        placeholder="يرجى اختيار دولة.."
         ng-error="updateStudent.errors.country_id"
         required
       ></select>
@@ -39,17 +38,17 @@
     <div class="form-group">
       <label for="semesters_count">عدد الفصول</label>
       <input
-        type="number"
-        class="form-control"
-        ng-class="(updateStudent.errors.semesters_count != null) ? 'is-invalid' : ''"
         id="semesters_count"
+        class="form-control"
+        type="number"
         ng-model="object.semesters_count"
+        ng-class="(updateStudent.errors.semesters_count != null) ? 'is-invalid' : ''"
         ng-change="updateStudent.errors.semesters_count = null"
-        required
-        max="{{ object.semesters_count }}"
-        min="1"
-        ng-disabled="object.semesters_count == null"
         ng-error="updateStudent.errors.semesters_count"
+        ng-disabled="object.semesters_count == null"
+        max="10"
+        min="1"
+        required
       />
     </div>
   </div>
@@ -75,15 +74,15 @@
     <div class="form-group">
       <label for="required">المبلغ المطلوب لكل فصل</label>
       <input
-        type="number"
-        class="form-control"
-        ng-class="(updateStudent.errors['target.required'] != null) ? 'is-invalid' : ''"
         id="required"
+        class="form-control"
+        type="number"
+        ng-class="(updateStudent.errors['target.required'] != null) ? 'is-invalid' : ''"
         ng-model="object.target['required']"
         ng-change="updateStudent.errors['target.required'] = null"
         ng-error="updateStudent.errors.target.required"
-        required
         min="1"
+        required
       />
     </div>
   </div>
@@ -92,10 +91,10 @@
     <div class="form-group">
       <label for="archived">مؤرشفة</label>
       <select
+        id="archived"
         class="form-control"
         ng-model="object.target.archived"
         ng-class="(updateStudent.errors['target.archived'] != null) ? 'is-invalid' : ''"
-        id="archived"
         ng-change="updateStudent.errors['target.archived']= null"
         ng-error="updateStudent.errors.target.archived"
         required
@@ -109,10 +108,10 @@
     <div class="form-group">
       <label for="documented">موثقة</label>
       <select
+        id="documented"
         class="form-control"
         ng-model="object.target.documented"
         ng-class="(updateStudent.errors['target.documented'] != null) ? 'is-invalid' : ''"
-        id="documented"
         ng-change="updateStudent.errors['target.documented'] = null"
         ng-error="updateStudent.errors.target.documented"
         required
@@ -126,10 +125,10 @@
     <div class="form-group">
       <label for="visible">ظاهرة</label>
       <select
+        id="visible"
         class="form-control"
         ng-model="object.target.visible"
         ng-class="(updateStudent.errors['target.visible'] != null) ? 'is-invalid' : ''"
-        id="visible"
         ng-change="updateStudent.errors['target.visible']= null"
         ng-error="updateStudent.errors.target.visible"
         required

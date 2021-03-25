@@ -25,7 +25,7 @@ class UpdateRequest extends BaseRequest
     public function rules()
     {
         return [
-            'id' => ['required', 'exists:events'],
+            'id' => ['required', 'exists:fundraisers'],
             'public_visibility' => ['required' , 'boolean'],
             'verified' => ['required' , 'boolean'],
             'donor_id' => ['required', 'numeric'],

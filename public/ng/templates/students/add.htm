@@ -39,10 +39,10 @@
     <div class="form-group">
       <label for="semesters_count">عدد الفصول</label>
       <select
+        id="semesters_count"
         class="form-control"
         ng-model="object.semesters_count"
         ng-class="(createStudent.errors.semesters_count != null) ? 'is-invalid' : ''"
-        id="semesters_count"
         ng-change="handleChangeSemesterCount()"
         ng-error="createStudent.errors.semesters_count"
         min="1"
@@ -58,12 +58,12 @@
     <div class="form-group">
       <label for="current_semester">الفصل الحالي</label>
       <select
+        id="current_semester"
         class="form-control"
         ng-model="object.current_semester"
         ng-class="(createStudent.errors.current_semester != null) ? 'is-invalid' : ''"
-        id="current_semester"
         ng-change="createStudent.errors.current_semester = null"
-        ng-error="createStudent.errors.semesters_count"
+        ng-error="createStudent.errors.current_semester"
         required
       >
         <option ng-repeat="n in availableSemester track by $index" ng-value="n">
@@ -77,10 +77,10 @@
     <div class="form-group">
       <label for="required">المبلغ المطلوب لكل فصل</label>
       <input
-        type="number"
-        class="form-control"
-        ng-class="(createStudent.errors['target.required'] != null) ? 'is-invalid' : ''"
         id="required"
+        class="form-control"
+        type="number"
+        ng-class="(createStudent.errors['target.required'] != null) ? 'is-invalid' : ''"
         ng-model="object.target['required']"
         ng-change="createStudent.errors['target.required'] = null"
         ng-error="createStudent.errors.target.required"
@@ -94,10 +94,10 @@
     <div class="form-group">
       <label for="visible">ظاهرة</label>
       <select
+        id="visible"
         class="form-control"
         ng-model="object.target.visible"
         ng-class="(createStudent.errors['target.visible'] != null) ? 'is-invalid' : ''"
-        id="visible"
         ng-change="createStudent.errors['target.visible'] = null"
         ng-error="createStudent.errors.target.visible"
         required

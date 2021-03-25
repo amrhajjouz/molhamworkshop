@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use App\Models\{User , Country , Cases , Section , Category , Place};
+use App\Models\{User , Country , Cases , Section , Category , Place , Donor};
 
 class DatabaseSeeder extends Seeder
 {
@@ -59,7 +59,7 @@ class DatabaseSeeder extends Seeder
         ////////////////////CATEGORY ////////////////
         $categories = [
             'Sponsorships'=>[
-                ' كفالة يتيم' , 'طبية' , ' كفالة عائلة' , 'كفالة طالب'
+                ' كفالة يتيم' , 'طبية' , ' كفالة عائلة' 
             ],
             'Cases' =>[
                 'طبية' , 'انسانية'
@@ -89,6 +89,27 @@ class DatabaseSeeder extends Seeder
             'name' => 'بنش' , 
             'type' => 'city' , 
         ]);
+        Place::create([
+            'name' => 'sadfgh' , 
+            'type' => 'city' , 
+        ]);
+
+        /////////////////////// DONOR /////////////////////////
+
+        Donor::create([
+            'name' => 'donor1',
+            'email' => 'donor1@donor.com',
+            'password' => Hash::make(12345678),
+            'email' => 'donor1@donor.com',
+        ]);
+       
+        Donor::create([
+            'name' => 'donor2',
+            'email' => 'donor2@donor.com',
+            'password' => Hash::make(12345678),
+            'email' => 'donor1@donor.com',
+        ]);
+        
         
     }
 }

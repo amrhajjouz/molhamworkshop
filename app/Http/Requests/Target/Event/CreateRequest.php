@@ -27,7 +27,7 @@ class CreateRequest extends BaseRequest
     {
         
         return [
-            'date' => ['required'],
+            'date' => ['required' , 'after:today'],
             'public_visibility' => ['required' , 'boolean'],
             'donor_id' => ['required' , 'numeric'],
             'verified' => ['required'],
