@@ -220,7 +220,6 @@
                   href="{{ $r('sponsorships.overview', {id: item.id}) }}"
                   ><i class="fe fe-eye"></i> نظرة عامة</a
                 >
-
                 <a
                   href="#"
                   ng-click="showSponsorModal('edit', item)"
@@ -228,10 +227,6 @@
                 >
                   <i class="fe fe-edit-2"></i>&nbsp;تعديل
                 </a>
-
-                <!-- <a class="dropdown-item"
-                                    href="{{ $r('sponsorships.edit', {id: item.id}) }}"><i
-                                        class="fe fe-edit-2"></i> تعديل</a> -->
               </div>
             </div>
           </td>
@@ -260,10 +255,7 @@
       >
         <div class="row">
           <div class="col-12 col-md-6">
-            <div
-              class="form-group"
-              ng-if="currentSponsorModalAction == 'add'"
-            >
+            <div class="form-group" ng-if="currentSponsorModalAction == 'add'">
               <label for="donor_id">اسم الكفيل</label>
               <select2
                 model="sponsor.donor_id"
@@ -272,10 +264,7 @@
               >
               </select2>
             </div>
-            <div
-              class="form-group"
-              ng-if="currentSponsorModalAction == 'edit'"
-            >
+            <div class="form-group" ng-if="currentSponsorModalAction == 'edit'">
               <label for="donor_id">اسم الكفيل</label>
               <input
                 type="text"
@@ -296,7 +285,7 @@
                 ng-class="(createUpdateSponsorshipSponsor.errors.percentage != null) ? 'is-invalid' : ''"
                 ng-model="sponsor.percentage"
                 ng-change="createUpdateSponsorshipSponsor.errors.percentage = null"
-                max="{{object.percentage_to_complete}}"
+                max="{{getMaxRangeOnUpdate(sponsor)}}"
                 ng-error="createUpdateSponsorshipSponsor.errors.percentage"
                 min="0"
                 required

@@ -22,8 +22,9 @@ class SponsorController extends BaseController {
 
         try {
             $data = $request->validated();
-            // dd($data);
+
             $purpose = $data['purpose_type']::find($data['purpose_id']);
+            
             $donor = Donor::findOrfail($data['donor_id']);
             
             $res  = Helper::AssignToSponsor($purpose ,$donor  , $data['percentage'] , true , $request);
@@ -75,11 +76,9 @@ class SponsorController extends BaseController {
                 throw $this->_exception('missing data');
             }
 
-
             if($model_type == "\App\Models\Sponsorship"){
                 $this->afterUpdateSponsership($purpose , $current_total_without_this_sponsor , $data);
             }
-            
             return $this->_response($object->transform());
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());

@@ -30,16 +30,6 @@ function listSponsorshipSponsorsController($scope, $page, $apiRequest, $init) {
     purpose_id: $page.routeParams.id,
   };
 
-  // $scope.addSponsor = () => {
-  //   $("#add-sponsors").modal("show");
-  // };
-
-  // $scope.editSponsor = (object) => {
-  //   $scope.selected_object = angular.copy(object);
-  //   $("#edit-sponsors").modal("show");
-  //   console.log($scope.selected_object);
-  // };
-
   $scope.getMaxPercentageOnUpdate = () => {
     if (!$scope.selected_object) return 0;
     let sponsors = $scope.sponsors;
@@ -65,20 +55,6 @@ function listSponsorshipSponsorsController($scope, $page, $apiRequest, $init) {
       //TODO : refresh datatable
     }
   );
-
-  // $scope.updateSponsorShipsSponsor = $apiRequest.config(
-  //   {
-  //     method: "PUT",
-  //     url: "sponsors/" + $page.routeParams.id,
-  //     data: $scope.selected_object,
-  //   },
-  //   function (response, data) {
-  //      $("#edit-sponsors").modal("hide");
-  //      //TODO : refresh datatable
-
-  //   }
-
-  // );
 
   $scope.createUpdateSponsorshipSponsor = $apiRequest.config(
     {
@@ -118,7 +94,22 @@ function listSponsorshipSponsorsController($scope, $page, $apiRequest, $init) {
   $scope.calculatePercentageToComplete = ()=>{
     let percentageToComplete = 0;
     $scope.sponsors.forEach(i => percentageToComplete += i.percentage);
-    console.log({ percentageToComplete });
     $scope.object.percentage_to_complete = 100 - percentageToComplete;
+  }
+
+  //calculate acceptable max range for percentage on update
+  $scope.getMaxRangeOnUpdate=(item)=>{
+
+    if (($scope.currentSponsorModalAction == "add")){
+      return $scope.object.percentage_to_complete;
+    }
+       let sponsores = $scope.sponsors.filter((i) => i.id != item.id);
+
+       let max = 0;
+       sponsores.forEach(i=>{
+         max += i.percentage;
+       })
+      console.log({sponsores})
+       return 100 - max;
   }
 }

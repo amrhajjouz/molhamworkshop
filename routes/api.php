@@ -41,7 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/users', [UserController::class, 'create']);
     Route::put('/users', [UserController::class, 'update']);
     Route::get('/users/{id}', [UserController::class, 'retrieve']);
-
+    
     ////////////////// COUNTRY //////////////
     Route::get('/countries', [CountryController::class, 'list']);
 
@@ -104,12 +104,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/donors', [DonorController::class, 'list']);
     Route::post('/donors', [DonorController::class, 'create']);
     Route::put('/donors', [DonorController::class, 'update']);
-    Route::get('/donors/search', [DonorController
-    ::class, 'search']);
+    Route::get('/donors/search', [DonorController::class, 'search']);
     Route::get('/donors/{id}', [DonorController::class, 'retrieve']);
 
 
     /////////////////////// Sponsors /////////////////////////
+
     Route::post('/sponsors', [SponsorController::class, 'create']);
     Route::put('/sponsors', [SponsorController::class, 'update']);
 });
+
+
+
+
+// lists (s)
+// overview(single)
+// create (single)
+// edit ()
+// 
+// 
