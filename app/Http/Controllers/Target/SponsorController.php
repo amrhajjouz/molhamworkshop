@@ -51,6 +51,17 @@ class SponsorController extends BaseController {
                 throw $this->_exception('big percentage');
             }
 
+            $target = $purpose->parent;
+            $required = $target->required;
+            $real_amount = ($required * $request->percentage) / 100;
+            $config_amount = config('general.least_sponsore_amount');
+            $percentage = $request->percentage;
+
+            if ($real_amount < $config_amount  && $purpose->percentage_to_complete() != $percentage
+            ) {
+                throw $this->_exception('at least must pay 10 dolar');
+            }
+   
             $object->percentage = $data['percentage'];
             $object->save();
 
@@ -69,7 +80,7 @@ class SponsorController extends BaseController {
                 $this->afterUpdateSponsership($purpose , $current_total_without_this_sponsor , $data);
             }
             
-            return $this->_response($object);
+            return $this->_response($object->transform());
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
         }
