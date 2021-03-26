@@ -37,17 +37,17 @@ return [
     'campaigns' => ['campaigns', 'campaigns/listCampaignsController', 'campaigns.list'],
 
     ////////////////////// SponsorShip Routes    ///////////////////
-    'sponsorships.add' => ['sponsorships/add', 'sponsorships/addSponsorShipsController', 'sponsorships.add'],
-    'sponsorships.overview' => ['sponsorships/:id', 'sponsorships/overviewSponsorShipsController', 'sponsorships.single.overview'],
-    'sponsorships.edit' => ['sponsorships/:id/edit', 'sponsorships/editSponsorShipsController', 'sponsorships.single.edit'],
-    'sponsorships.sponsors' => ['sponsorships/:id/sponsors', 'sponsorships/SponsorShipsSponsorController', 'sponsorships.single.sponsors'],
-    'sponsorships' => ['sponsorships', 'sponsorships/listsSponsorShipsController', 'sponsorships.list'],
+    'sponsorships.add' => ['sponsorships/add', 'sponsorships/addSponsorshipsController', 'sponsorships.add'],
+    'sponsorships.overview' => ['sponsorships/:id', 'sponsorships/overviewSponsorshipsController', 'sponsorships.single.overview'],
+    'sponsorships.edit' => ['sponsorships/:id/edit', 'sponsorships/editSponsorshipsController', 'sponsorships.single.edit'],
+    'sponsorships.sponsors' => ['sponsorships/:id/sponsors', 'sponsorships/listSponsorshipSponsorsController', 'sponsorships.single.sponsors'],
+    'sponsorships' => ['sponsorships', 'sponsorships/listsSponsorshipsController', 'sponsorships.list'],
 
     ////////////////////// Students Routes    ///////////////////
     'students.add' => ['students/add', 'students/addStudentsController', 'students.add'],
     'students.overview' => ['students/:id', 'students/overviewStudentsController', 'students.single.overview'],
     'students.edit' => ['students/:id/edit', 'students/editStudentsController', 'students.single.edit'],
-    'students.sponsors' => ['students/:id/sponsors', 'students/sponsorsStudentsController', 'students.single.sponsors'],
+    'students.sponsors' => ['students/:id/sponsors', 'students/listStudentSponsorsController', 'students.single.sponsors'],
     'students' => ['students', 'students/listStudentsController', 'students.list'],
 
     /////////////////////////// Events Routes    ///////////////////

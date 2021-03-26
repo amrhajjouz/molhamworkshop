@@ -1,16 +1,16 @@
 <include-header />
 <button
   href="#"
-  ng-click="add_sponsor()"
+  ng-click="showSponsorModal('add')"
   class="btn btn-primary"
   ng-disabled="object.percentage_to_complete  <= 0"
 >
   <i class="fe fe-plus"></i>&nbsp;إضافة كفيل
 </button>
 <!-- create modal -->
-<form
+<!-- <form
   name="createSponsorShipsSponsorForm"
-  request="createSponsorShipsSponsor"
+  request="createSponsorshipsSponsor"
   model="sponsor"
 >
   <modal id="add-sponsors">
@@ -24,7 +24,7 @@
             <select2
               model="sponsor.donor_id"
               ajax-url="donors/search"
-              error-model="createSponsorShipsSponsor.errors.donor_id"
+              error-model="createSponsorshipsSponsor.errors.donor_id"
               required
             >
             </select2>
@@ -38,11 +38,11 @@
               id="percentage"
               class="form-control"
               type="number"
-              ng-class="(createSponsorShipsSponsor.errors.percentage != null) ? 'is-invalid' : ''"
+              ng-class="(createSponsorshipsSponsor.errors.percentage != null) ? 'is-invalid' : ''"
               ng-model="sponsor.percentage"
-              ng-change="createSponsorShipsSponsor.errors.percentage = null"
+              ng-change="createSponsorshipsSponsor.errors.percentage = null"
               max="{{object.percentage_to_complete}}"
-              ng-error="createSponsorShipsSponsor.errors.percentage"
+              ng-error="createSponsorshipsSponsor.errors.percentage"
               min="0"
               required
             />
@@ -59,11 +59,11 @@
       >
     </modal-footer>
   </modal>
-</form>
+</form> -->
 <!-- end create modal -->
 
 <!-- update modal -->
-<form
+<!-- <form
   name="updateSponsorShipsSponsorForm"
   request="updateSponsorShipsSponsor"
   model="selected_object"
@@ -97,7 +97,7 @@
               ng-class="(updateSponsorShipsSponsor.errors.percentage != null) ? 'is-invalid' : ''"
               ng-change="updateSponsorShipsSponsor.errors.percentage = null"
               required
-              max="{{get_max_percentage_on_update()}}"
+              max="{{getMaxPercentageOnUpdate()}}"
               ng-error="updateSponsorShipsSponsor.errors.percentage"
               min="0"
             />
@@ -120,7 +120,7 @@
       >
     </modal-footer>
   </modal>
-</form>
+</form> -->
 <!-- end update modal -->
 
 <div class="text-center h4 mt-4 mb-4">العدد الكلي : {{ sponsors.length }}</div>
@@ -221,7 +221,11 @@
                   ><i class="fe fe-eye"></i> نظرة عامة</a
                 >
 
-                <a href="#" ng-click="edit_sponsor(item)" class="dropdown-item">
+                <a
+                  href="#"
+                  ng-click="showSponsorModal('edit', item)"
+                  class="dropdown-item"
+                >
                   <i class="fe fe-edit-2"></i>&nbsp;تعديل
                 </a>
 
@@ -235,4 +239,85 @@
       </tbody>
     </table>
   </div>
+
+  <!-- Modal -->
+
+  <modal id="sponsor-modal">
+    <modal-title>
+      <span ng-show="currentSponsorModalAction == 'add'"
+        ><i class="fe fe-plus-circle"></i>&nbsp; اضافة كفيل جديد</span
+      >
+      <span ng-show="currentSponsorModalAction == 'edit'"
+        ><i class="fe fe-edit"></i>&nbsp; تعديل الكفيل {{ sponsor.id }}</span
+      >
+    </modal-title>
+
+    <modal-body>
+      <form
+        name="listSponsorshipSponsoresForm"
+        request="createUpdateSponsorshipSponsor"
+        model="sponsor"
+      >
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div
+              class="form-group"
+              ng-if="currentSponsorModalAction == 'add'"
+            >
+              <label for="donor_id">اسم الكفيل</label>
+              <select2
+                model="sponsor.donor_id"
+                ajax-url="donors/search"
+                error-model="createUpdateSponsorshipSponsor.errors.donor_id"
+              >
+              </select2>
+            </div>
+            <div
+              class="form-group"
+              ng-if="currentSponsorModalAction == 'edit'"
+            >
+              <label for="donor_id">اسم الكفيل</label>
+              <input
+                type="text"
+                class="form-control"
+                ng-class="(updateSponsorShipsSponsor.errors.percentage != null) ? 'is-invalid' : ''"
+                ng-model="sponsor.donor.name"
+                ng-disabled="true"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="percentage">نسبة المساهمة</label>
+              <input
+                id="percentage"
+                class="form-control"
+                type="number"
+                ng-class="(createUpdateSponsorshipSponsor.errors.percentage != null) ? 'is-invalid' : ''"
+                ng-model="sponsor.percentage"
+                ng-change="createUpdateSponsorshipSponsor.errors.percentage = null"
+                max="{{object.percentage_to_complete}}"
+                ng-error="createUpdateSponsorshipSponsor.errors.percentage"
+                min="0"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+        <submit-button
+          ng-show="currentSponsorModalAction == 'add'"
+          form="listSponsorshipSponsoresForm"
+          icon="fe fe-plus"
+          >اضافة</submit-button
+        >
+        <submit-button
+          ng-show="currentSponsorModalAction == 'edit'"
+          form="listSponsorshipSponsoresForm"
+          icon="fe fe-edit"
+          >تعديل</submit-button
+        >
+      </form>
+    </modal-body>
+  </modal>
 </div>

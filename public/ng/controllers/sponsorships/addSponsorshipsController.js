@@ -1,4 +1,4 @@
-async function addSponsorShipsControllerInit($apiRequest) {
+async function addSponsorshipsControllerInit($apiRequest) {
     
     let countries =await  $apiRequest.config("countries").getData();
     let categories =await  $apiRequest.config("categories?created_for=Sponsorships").getData();
@@ -15,7 +15,7 @@ async function addSponsorShipsControllerInit($apiRequest) {
 }
 
 
-function addSponsorShipsController($scope, $location, $apiRequest, $page, $init) {
+function addSponsorshipsController($scope, $location, $apiRequest, $page, $init) {
     $scope.object = {
         target: {
             required: 1,

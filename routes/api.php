@@ -111,5 +111,5 @@ Route::middleware('auth')->group(function () {
 
     /////////////////////// Sponsors /////////////////////////
     Route::post('/sponsors', [SponsorController::class, 'create']);
-    Route::put('/sponsors/{id}', [SponsorController::class, 'update']);
+    Route::put('/sponsors', [SponsorController::class, 'update']);
 });

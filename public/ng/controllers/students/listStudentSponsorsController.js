@@ -1,4 +1,4 @@
-async function sponsorsStudentsControllerInit($http, $page, $apiRequest) {
+async function listStudentSponsorsControllerInit($http, $page, $apiRequest) {
   const sponsors = await $apiRequest
     .config("students/" + $page.routeParams.id + "/sponsors")
     .getData();
@@ -15,7 +15,7 @@ async function sponsorsStudentsControllerInit($http, $page, $apiRequest) {
   return init;
 }
 
-function sponsorsStudentsController($scope, $page, $apiRequest, $init) {
+function listStudentSponsorsController($scope, $page, $apiRequest, $init) {
   $scope.sponsors = $init.sponsors;
   $scope.object = $init.object;
   $scope.selected_object = {};

@@ -90,14 +90,18 @@ class Helper
         // }else{
         //     return $name;
         // }
+       
         $text = $place->name;
         $object = $place;
 
+        if($object->type == 'province' && isset($object->country_id)){
+            return $object->country->name  . "-". $text;
+        }
             while(isset($object->parent)){
-            $object = $object->parent;
-            $text .= '-' . $object->name; 
+                $object = $object->parent;
+                $text =  $object->name . '-' . $text; 
             if(!is_null($object->country_id)){
-                $text .= '-' . $object->country->name;
+                $text = $object->country->name . "-" . $text;
             }
         }
         return $text;

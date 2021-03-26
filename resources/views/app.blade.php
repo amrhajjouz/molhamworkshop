@@ -185,6 +185,8 @@
             $rootScope.$page = $page;
             $rootScope.sidenavLoaded = false;
             $rootScope.currentTemplateDirectory = '';
+            $rootScope.$routeName = '';
+            $rootScope.$routeParams = '';
             $rootScope.$r = $r;            
             
             // refresh page if navagate to the current url
@@ -245,7 +247,8 @@
                 $('#page-content').hide();
                 
                 $rootScope.currentTemplateDirectory = angular.copy($rootScope.$page.templateDirectory);
-                
+                $rootScope.$routeName = angular.copy($rootScope.$page.routeName);
+                $rootScope.$routeParams = angular.copy($rootScope.$page.routeParams);
                 $timeout(function () {
                     if ($page.headerTemplate != null || $page.includedTemplate != null) {
                         $rootScope.$watch(function () {
@@ -702,18 +705,55 @@
             };
         });
         
-        app.directive('modal', function ($rootScope, $page, $timeout) {
+        app.directive('modal', function ($rootScope, $timeout) {
             
             return {
                 restrict: 'E',
                 transclude: true,
                 scope : {
-                    
+                    showCallback : '&',
+                    hideCallback : '&',
                 },
                 replace : true,
                 template: '<div class="modal fade" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content" ng-transclude></div></div></div>',
                 link : function (scope, element, attrs) {
-                    
+                    $timeout(function () {
+                        
+                        var modalFormsElements = element[0].getElementsByTagName('FORM');
+                        var modalForms = [];
+                        
+                        for (i=0; i<modalFormsElements.length; i++) {
+                            var formName = modalFormsElements[i].getAttribute('name');
+                            if (formName) {
+                                var currentChildTail = scope.$$childTail;
+                                while (currentChildTail != null && !(formName in currentChildTail)) {
+                                    currentChildTail = currentChildTail.$$childTail;
+                                }
+                                
+                                if (formName in currentChildTail) {
+                                    modalForms[modalForms.length] = currentChildTail[formName];
+                                }
+                            }
+                            
+                        }                        
+                        
+                        $(element).on('shown.bs.modal', function (e) {
+                            for (i=0; i<modalForms.length; i++) {
+                                modalForms[i].$setPristine();
+                            }
+                            if (attrs.showCallback) {
+                                scope.showCallback();
+                            }
+                            angular.element(element).scope().$apply();
+                        });
+                        
+                        if (attrs.hideCallback) {
+                            $(element).on('hidden.bs.modal', function (e) {
+                                scope.hideCallback();
+                                angular.element(element).scope().$apply();
+                            });
+                        }
+                    });
                 }
             };
         });
@@ -754,6 +794,125 @@
                 },
                 replace : true,
                 template: '<div class="modal-footer" ng-transclude></div>',
+            };
+        });
+        
+        app.directive('datatableItemActionsList', function ($rootScope, $page) {
+            
+            return {
+                restrict: 'E',
+                transclude: true,
+                scope : {},
+                replace : true,
+                template : '<div class="dropdown"><a href="javascript:;" class="color-black mr-2" role="button" data-toggle="dropdown"  data-boundary="window" aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical"></i></a><div class="dropdown-menu" aria-labelledby="navbarDropdown" ng-transclude></div></div>',
+            };
+        });
+        
+        app.directive('datatableItemAction', function ($rootScope, $page) {
+            
+            return {
+                restrict: 'E',
+                transclude: true,
+                scope : {},
+                replace : true,
+                template : '<a class="dropdown-item" ng-transclude></a>',
+            };
+        });
+        
+        app.directive('datatableHead', function ($rootScope, $page) {
+            
+            return {
+                restrict: 'E',
+                transclude: true,
+                scope : {},
+                replace : false,
+                template : '<thead><tr ng-transclude></tr></thead>',
+            };
+        });
+        
+        app.directive('datatableItemBody', function ($rootScope, $page) {
+            
+            return {
+                restrict: 'E',
+                transclude: true,
+                scope : {},
+                replace : false,
+                template : '<tbody><tr ng-repeat="u in users" ng-transclude></tr></tbody>',
+            };
+        });
+        
+        app.directive('datatable', function ($rootScope, $page) {
+            
+            return {
+                restrict: 'E',
+                transclude: true,
+                scope : {
+                    datalist: '=',
+                },
+                replace : true,
+                link : function (scope, element, attrs) {
+                    var tablesElements = element[0].getElementsByTagName('table');
+                    if (tablesElements.length > 0) {
+                        for (i=0; i<tablesElements.length; i++) {
+                            tablesElements[i].classList.add('table');
+                            tablesElements[i].classList.add('table-sm');
+                            tablesElements[i].classList.add('card-table');
+                        }
+                    }
+                    
+                    var pageSelect = element[0].getElementsByClassName('page-select')[0];                    
+                    
+                    $(pageSelect).change(function() {
+                        scope.datalist.page(pageSelect.value);
+                    });
+                    
+                },
+                template : '<div>' +
+                                '<div class="text-center h4 mt-4 mb-4">العدد الكلي : @{{ datalist.total }}</div>' +
+                                '<div class="card">' +
+                                    '<div class="card-header">' +
+                                        '<div class="row align-items-center">' +
+                                            '<div class="col">' +
+                                                '<div class="input-group input-group-flush input-group-merge">' +
+                                                    '<input type="search" ng-model="search" class="form-control form-control-prepended search" placeholder="اكتب كلمة للبحث ثم اضغط Enter  ...">'+
+                                                    '<div class="input-group-prepend">' +
+                                                        '<div class="input-group-text">' +
+                                                            '<span class="fe fe-search"></span>' +
+                                                        '</div>' +
+                                                    '</div>' +
+                                                '</div>'+
+                                            '</div>'+
+                                            '<div class="col-auto">' +
+                                                '<button class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top" title="خيارات الفلترة والعرض">' +
+                                                    '<i class="fe fe-sliders"></i>' +
+                                                '</button> ' +
+                                                '<button class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top" title="تصدير القائمة الى ملف CSV">' +
+                                                    '<i class="fe fe-download"></i>' +
+                                                '</button>' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="table-responsive">' +
+                                        '<ng-transclude></ng-transclude>' +
+                                        '<table>' +
+                                            '<tbody ng-show="datalist.length == 0">' +
+                                                '<tr>' +
+                                                    '<td class="text-center">' +
+                                                        '<div class="pt-3 pb-2 h4" ng-show="datalist.length == 0">لا يوجد أية عناصر في هذه القائمة</div>' +
+                                                    '</td>' +
+                                                '</tr>' +
+                                            '</tbody>' +
+                                        '</table>' +
+                                    '</div>' +
+                                    '<div class="card-footer d-flex justify-content-center">' +
+                                        '<div class="form-group my-0">' +
+                                            '<select class="form-control form-control-sm page-select">' +
+                                                '<option ng-repeat="p in datalist.pages" value="@{{ p }}" ng-selected="(p == datalist.currentPage)">الصفحة @{{ p }}</option>' +
+                                            '</select>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>'+
+                            '</div>'
             };
         });
         
@@ -864,6 +1023,96 @@
             };
         });
         
+        app.factory('$datalist', function($apiRequest, $q, $location) {
+            
+            return function (path, changeRouteOnLoad) {
+                
+                return {
+                    
+                    // Flags
+                    loading: false,
+                    searching: false,
+                    filtering: false,
+                    
+                    q: '', // Search Query
+                    filters: {}, // Filters
+                    params: {}, // Initial Query
+                    
+                    path: path, // should be api path 
+                    data: null,
+                    currentPage: 1,
+                    nextPageUrl: null, // should be api path 
+                    prevPageUrl: null, // should be api path 
+                    firstPageUrl: null, // should be api path 
+                    lastPage: null,
+                    lastPageUrl: null, // should be api path 
+                    perPage: null,
+                    from: null,
+                    to: null,
+                    total: null,
+                    
+                    pages: [],
+                    
+                    load : function (url = null) {
+                        // send request to path?params&filters&q
+                        var q = $q.defer();
+                        var _this = this;
+                        var requestUrl = (url) ? url : this.path;
+                        $apiRequest.config(requestUrl, function (response, data) {
+                            var dataKeys = Object.keys(data);
+                            for (i=0; i<dataKeys.length; i++) {
+                                var keySplitted = dataKeys[i].split('_');
+                                for (j=0; j<keySplitted.length; j++) {
+                                    if (j > 0) keySplitted[j] = keySplitted[j].charAt(0).toUpperCase() + keySplitted[j].slice(1);
+                                }
+                                if (typeof data[dataKeys[i]] == 'string') data[dataKeys[i]] = data[dataKeys[i]].replace(apiUrl, '');
+                                _this[keySplitted.join('')] = data[dataKeys[i]];
+                            }
+                            var keysWithUrl = ['nextPageUrl', 'prevPageUrl'];
+                            _this.pages = [];
+                            for (i=1; i<=_this.lastPage; i++) _this.pages[_this.pages.length] = i;
+                            q.resolve(_this);
+                        }).getData();
+                        
+                        return q.promise;
+                    },
+                    
+                    search : async function (q) {
+                        // set this.q = q
+                        // return this.load();
+                        return ;
+                    }, 
+                    
+                    filter : function (filters) {
+                        // set this.filters = filters
+                        // return this.load();
+                        return ;
+                    },
+                    
+                    nextPage : function () {
+                        // send request to nextPageUrl
+                        return ;
+                    },
+                    
+                    prevPage : function () {
+                        // send request to prevPageUrl and handle
+                        return ;
+                    },
+                    
+                    page : function (p) {
+                        // check page validity
+                        // send request to path?params&page=p and handle
+                        $location.search('page', p);
+                        return this.load(this.path + '?page=' + p);
+                    },
+                    
+                    sendAndHandle : async function (requestUrl) {
+                        
+                    }
+                }
+            };
+        });
+        
         app.factory('$promises', function($q) {
             return function (g) {
                 return $q.all(g).then(function(data) {
@@ -887,7 +1136,7 @@
                 controller: eval("{{ $r['controller_name'] }}"),
                 controllerAs: "{{ $r['controller_name'] }}",
                 reloadOnSearch : false,
-                reloadOnUrl : true,
+                reloadOnUrl : false,
                 resolve : {
                     $currentRoute : function ($page, $route) { $page.set({routeName : "{{ $r['name'] }}", routeParams : $route.current.params, controllerName : "{{ $r['controller_name'] }}", templateDirectory : "{{ $r['template_directory'] }}"}); },
                     $init : eval("{{ $r['controller_name'] . 'Init' }}"),
@@ -900,7 +1149,7 @@
                 templateUrl : "{{ asset('ng/templates/' . $r['template_path'] . '?t=' . time()) }}",
                 controller: eval("{{ $r['controller_name'] }}"),
                 reloadOnSearch : false,
-                reloadOnUrl : true,
+                reloadOnUrl : false,
                 resolve : {
                     $currentRoute : function ($page) { $page.set({routeName : "{{ $r['name'] }}", controllerName : "{{ $r['controller_name'] }}"}); },
                     $init : eval("{{ $r['controller_name'] . 'Init' }}"),

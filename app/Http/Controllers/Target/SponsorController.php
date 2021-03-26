@@ -19,9 +19,10 @@ class SponsorController extends BaseController {
     }
     
     public function create ( CreateRequest $request) {
+
         try {
             $data = $request->validated();
-            
+            // dd($data);
             $purpose = $data['purpose_type']::find($data['purpose_id']);
             $donor = Donor::findOrfail($data['donor_id']);
             
@@ -29,13 +30,13 @@ class SponsorController extends BaseController {
 
             if($res['error']) throw $this->_exception($res['error']);
 
-            return $this->_response($res['sponsor']);
+            return $this->_response($res['sponsor']->transform());
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());;
         }
     }
     
-    public function update (UpdateRequest $request , $id) {
+    public function update (UpdateRequest $request ) {
         try {
             
             $object = $this->model::findOrFail($request->id);

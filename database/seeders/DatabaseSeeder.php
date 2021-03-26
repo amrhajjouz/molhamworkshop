@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
 
         ////////////// COUNTRY ///////////////////////
         $countries = [
-            "syria" , "turkey" , "lebanon"  ,
+            "سوريا" , "تركيا" , "لبنان"  ,
         ];
 
         foreach($countries as $country){
@@ -80,13 +80,31 @@ class DatabaseSeeder extends Seeder
         }
 
         /////////////////////// Place /////////////////////////
-        Place::create([
+
+        $idlep = Place::create([
+            'name' => 'ادلب' , 
+            'type' => 'province' , 
+            'country_id' => Country::where('name' , 'سوريا')->first()->id , 
+        ]);
+        $saraqep = Place::create([
             'name' => 'سراقب' , 
             'type' => 'city' , 
+            'parent_id' => $idlep->id , 
+
+        ]);
+        $saraqep = Place::create([
+            'name' => 'افس' , 
+            'type' => 'village' , 
+            'parent_id' => $saraqep->id , 
+
         ]);
         
         Place::create([
             'name' => 'بنش' , 
+            'type' => 'city' , 
+        ]);
+        Place::create([
+            'name' => "جبلة" , 
             'type' => 'city' , 
         ]);
         Place::create([
