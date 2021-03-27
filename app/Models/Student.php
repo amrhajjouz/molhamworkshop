@@ -150,7 +150,6 @@ class Student extends BaseTargetModel
      //return sum total sponsored percentage except any id in array
      public function total_sponsores_percentage($ignore = [])
      {
-
           return $this->sponsors()->whereNotIn('id', $ignore)->sum('percentage');
      }
      

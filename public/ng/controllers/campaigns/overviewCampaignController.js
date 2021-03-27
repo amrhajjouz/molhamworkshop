@@ -1,8 +1,9 @@
-function overviewCampaignsControllerInit($apiRequest, $page) {
+function overviewCampaignControllerInit($apiRequest, $page) {
+    
     return $apiRequest.config("campaigns/" + $page.routeParams.id).getData();
 }
 
-function overviewCampaignsController($scope, $page, $apiRequest, $init) {
+function overviewCampaignController($scope, $page, $apiRequest, $init) {
     $scope.object = $init;
 
     $scope.updateCampaign = $apiRequest.config(

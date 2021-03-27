@@ -21,25 +21,23 @@ class CaseController extends BaseController {
     
     public function create ( CreateRequest $request) {
         try {
-            
 
             $data = $request->validated();
             
-            $object = new $this->model();
-            $object->beneficiary_name = $data['beneficiary_name'];
-            $object->serial_number =Helper::getCaseSerialNumber();
-            $object->country_id = $data['country_id'];
-            $object->status = $data['status'];
-            // $object->funded = 0;
-            // $object->cancelled = 0;
+            $case = new $this->model();
+
+            $case->beneficiary_name = $data['beneficiary_name'];
+            $case->serial_number =Helper::getCaseSerialNumber(); //generate number 
+            $case->country_id = $data['country_id'];
+            $case->status = $data['status'];
             $options = ['target' => $request->target , "places_ids" =>[ $request->place_id] ];
-            $object->save($options);
+            $case->save($options);
 
             
-            return $this->_response($object);
+            return $this->_response($case);
             
         } catch (\Exception $e) {
-            return ['error' => $e->getMessage()];
+            throw $this->_exception($e->getMessage());
         }
     }
     
@@ -49,23 +47,22 @@ class CaseController extends BaseController {
             
             $data = $request->validated();
 
-            $object = $this->model::findOrFail($request->id);
-            $object->beneficiary_name = $data['beneficiary_name'];
-            $object->serial_number =Helper::getCaseSerialNumber();
-            $object->country_id = $data['country_id'];
-            $object->status = $data['status'];
+            $case = $this->model::findOrFail($request->id);
 
+            $case->beneficiary_name = $data['beneficiary_name'];
+            $case->serial_number =Helper::getCaseSerialNumber();
+            $case->country_id = $data['country_id'];
+            $case->status = $data['status'];
 
             $options = ['target' => $request->target, "places_ids" => [$request->place_id]];
 
 
-            $object->save($options);
+            $case->save($options);
             
-            return $this->_response($object);
+            return $this->_response($case);
 
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
-            // return ['error' => $e->getMessage()];
         }
     }
     
@@ -82,8 +79,7 @@ class CaseController extends BaseController {
             return response()->json($result);
             
         } catch (\Exception $e) {
-            
-            return ['error' => $e->getMessage()];
+            throw $this->_exception($e->getMessage());
         }
     }
     

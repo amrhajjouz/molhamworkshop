@@ -44,17 +44,17 @@ function listSponsorshipSponsorsController($scope, $page, $apiRequest, $init) {
     return 100 - total;
   };
 
-  $scope.createSponsorshipsSponsor = $apiRequest.config(
-    {
-      method: "POST",
-      url: "sponsors",
-      data: $scope.sponsor,
-    },
-    function (response, data) {
-      $("#add-sponsors").modal("hide");
-      //TODO : refresh datatable
-    }
-  );
+  // $scope.createSponsorshipsSponsor = $apiRequest.config(
+  //   {
+  //     method: "POST",
+  //     url: "sponsors",
+  //     data: $scope.sponsor,
+  //   },
+  //   function (response, data) {
+  //     $("#add-sponsors").modal("hide");
+  //     //TODO : refresh datatable
+  //   }
+  // );
 
   $scope.createUpdateSponsorshipSponsor = $apiRequest.config(
     {
@@ -79,7 +79,6 @@ function listSponsorshipSponsorsController($scope, $page, $apiRequest, $init) {
   $scope.currentSponsorModalAction = "add";
 
   $scope.showSponsorModal = function (action, data = {}) {
-    console.log({data})
     $scope.currentSponsorModalAction = action;
     if (action == "add") {
       $scope.createUpdateSponsorshipSponsor.config.method  = "POST";
@@ -91,6 +90,7 @@ function listSponsorshipSponsorsController($scope, $page, $apiRequest, $init) {
     $("#sponsor-modal").modal("show");
   };
 
+//  refresh percentage to complete on edit or create
   $scope.calculatePercentageToComplete = ()=>{
     let percentageToComplete = 0;
     $scope.sponsors.forEach(i => percentageToComplete += i.percentage);
@@ -109,7 +109,6 @@ function listSponsorshipSponsorsController($scope, $page, $apiRequest, $init) {
        sponsores.forEach(i=>{
          max += i.percentage;
        })
-      console.log({sponsores})
        return 100 - max;
   }
 }

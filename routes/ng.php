@@ -26,13 +26,13 @@ return [
 
     //////////////////////// Cases Routes //////////////////////
     'cases.add' => ['cases/add', 'cases/addCaseController', 'cases.add'],
-    'cases.overview' => ['cases/:id', 'cases/overviewCasesController', 'cases.single.overview'],
+    'cases.overview' => ['cases/:id', 'cases/overviewCaseController', 'cases.single.overview'],
     'cases.edit' => ['cases/:id/edit', 'cases/editCaseController', 'cases.single.edit'],
     'cases' => ['cases', 'cases/listCasesController', 'cases.list'],
 
     ////////////////////// Campaign Routes    ///////////////////
     'campaigns.add' => ['campaigns/add', 'campaigns/addCampaignController', 'campaigns.add'],
-    'campaigns.overview' => ['campaigns/:id', 'campaigns/overviewCampaignsController', 'campaigns.single.overview'],
+    'campaigns.overview' => ['campaigns/:id', 'campaigns/overviewCampaignController', 'campaigns.single.overview'],
     'campaigns.edit' => ['campaigns/:id/edit', 'campaigns/editCampaignController', 'campaigns.single.edit'],
     'campaigns' => ['campaigns', 'campaigns/listCampaignsController', 'campaigns.list'],
 

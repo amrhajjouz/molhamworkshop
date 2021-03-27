@@ -5,15 +5,14 @@
     <div class="form-group">
       <label for="beneficiary_name">اسم المستفيد</label>
       <input
-        type="text"
-        class="form-control"
-        ng-class="(updateCase.errors.beneficiary_name != null) ? 'is-invalid' : ''"
         id="beneficiary_name"
+        class="form-control"
+        type="text"
         ng-model="object.beneficiary_name"
+        ng-class="(updateCase.errors.beneficiary_name != null) ? 'is-invalid' : ''"
         ng-change="updateCase.errors.beneficiary_name = null"
-        placeholder="الاسم.."
-        required
         ng-error="updateCase.errors.beneficiary_name"
+        required
       />
     </div>
   </div>
@@ -59,8 +58,8 @@
         ng-model="object.target.archived"
         ng-class="(updateCase.errors['target.archived'] != null) ? 'is-invalid' : ''"
         ng-change="upsdateCase.errors['target.archived'] = null"
-        required
         ng-error="updateCase.errors.target.archived"
+        required
       >
         <option ng-value="true">نعم</option>
         <option ng-value="false">لا</option>
@@ -72,7 +71,7 @@
     <div class="form-group">
       <label for="documented">موثقة</label>
       <select
-      id="documented"
+        id="documented"
         class="form-control"
         ng-model="object.target.documented"
         ng-class="(updateCase.errors['target.documented'] != null) ? 'is-invalid' : ''"
@@ -90,11 +89,11 @@
     <div class="form-group">
       <label for="visible">ظاهرة</label>
       <select
-      id="visible"
+        id="visible"
         class="form-control"
         ng-model="object.target.visible"
-        ng-class="(updateCase.errors['target.documented'] != null) ? 'is-invalid' : ''"
-        ng-change="updateCase.errors['target.documented'] = null"
+        ng-class="(updateCase.errors['target.visible'] != null) ? 'is-invalid' : ''"
+        ng-change="updateCase.errors['target.visible'] = null"
         ng-error="updateCase.errors.target.visible"
         required
       >
@@ -108,7 +107,7 @@
     <div class="form-group">
       <label for="status">الحالة</label>
       <select
-      id="status"
+        id="status"
         class="form-control"
         ng-model="object.status"
         ng-class="(updateCase.errors.status != null) ? 'is-invalid' : ''"

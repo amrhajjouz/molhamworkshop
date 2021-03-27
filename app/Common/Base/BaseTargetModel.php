@@ -6,53 +6,29 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use App\Models\{Place, Target};
 use App\Facades\Helper;
-use App\Common\Traits\HasPlace;
 
+/* 
+ * this Class is base class and any model extends this will records in targets table 
+*/
 class BaseTargetModel extends Model
 {
-    use HasPlace;
 
     protected $model_path;
-    //bool
     protected $has_places;
 
-    const targetAttributes = [
-        'required',
-        'received',
-        'left',
-        'left_to_complete',
-        'spent',
-        'beneficiaries_count',
-        'archived',
-        'documented',
-        'visible',
-        'posted',
-    ];
 
-    // abstract function target();
-
+    /* 
+     * return table name in database 
+    */
     public static function Table()
     {
         return with(new static)->getTable();
     }
 
-    // public function transform(){
-
-    //     if(isset($this->transformer)){
-    //         $class = $this->transformer;
-    //         return $class::transform($this);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function getModelTypeAttribute(){
-    //     $rec = \App\Models\ModelLevel::where('name',self::Table())
-    //             ->first();
-    //     return $rec;
-    // }
-
-
+    public function places()
+    {
+        return $this->morphToMany('App\Models\Place', 'placeable');
+    }
 
     public function save(array $options = [])
     {
@@ -73,17 +49,22 @@ class BaseTargetModel extends Model
             $target = new \App\Models\Target();
             $target->purpose_id = $this->id;
 
+            //model_path property comes from child
+
             if (isset($this->model_path)) {
                 $target->purpose_type = $this->model_path;
             } else {
                 $target->purpose_type = self::Table();
             }
+
             $target->reference = $reference;
 
 
 
 
-            $target->fill($options['target']); //
+            $target->fill($options['target']); 
+
+            //do anything on create new record
             switch (get_class($this)) {
                 case "App\Models\Cases":
                     $target = $this->beforeSaveCase($target);
@@ -105,18 +86,24 @@ class BaseTargetModel extends Model
 
             $target->save();
 
-            
+            /* 
+             * has_places comes from child class  
+             *  check if has places then assign any place_id comes in options
+            */
+
             if($this->has_places && isset($options['places_ids'])){
-// dd($options['places_ids']);
                     $this->places()->attach($options['places_ids']);
-                
             }
 
             $this->target_id = $target->id;
             return parent::save();
+
         } else {
+            
             /////////////////////// update /////////////////////////
+            
             $target = $this->parent;
+           
             if(isset($options['target'])){
 
                 $target->fill($options['target']); //
@@ -133,21 +120,11 @@ class BaseTargetModel extends Model
                 $target->save();
             }
 
+            //assign any place_id comes in options and remove old records
             if (isset($options['places_ids'])) {
                 if ($this->has_places && isset($options['places_ids'])) {
-
-                    // /////////////////////// delete /////////////////////////
-                    // $places = $this->places;
-                    // foreach($places as $item){
-                    //     // $this->places()->detach([$item->id]);
-                    //     $this->places()->detach([$item->id]);
-                    // }
-                    
                     foreach($options['places_ids'] as $key => $val){
-
-
-                        $prev = $this->places()->sync($options['places_ids']);
-
+                        $this->places()->sync($options['places_ids']);
                     }
                 }
             }

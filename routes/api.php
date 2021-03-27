@@ -77,14 +77,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/sponsorships', [SponsorshipController::class, 'create']);
     Route::put('/sponsorships', [SponsorshipController::class, 'update']);
     Route::get('/sponsorships/{id}', [SponsorshipController::class, 'retrieve']);
-    Route::get('/sponsorships/{id}/sponsors', [SponsorshipController::class, 'get_sponsors']);
+    Route::get('/sponsorships/{id}/sponsors', [SponsorshipController::class, 'list_sponsors']);
 
     //////////////////  Students //////////////
     Route::get('/students', [StudentController::class, 'list']);
     Route::post('/students', [StudentController::class, 'create']);
     Route::put('/students', [StudentController::class, 'update']);
     Route::get('/students/{id}', [StudentController::class, 'retrieve']);
-    Route::get('/students/{id}/sponsors', [StudentController::class, 'get_sponsors']);
+    Route::get('/students/{id}/sponsors', [StudentController::class, 'list_sponsors']);
 
     //////////////////  Events //////////////
     Route::get('/events', [EventController::class, 'list']);

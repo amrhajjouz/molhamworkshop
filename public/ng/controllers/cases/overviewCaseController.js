@@ -1,8 +1,8 @@
-function overviewCasesControllerInit ($apiRequest, $page) {
+function overviewCaseControllerInit ($apiRequest, $page) {
     return $apiRequest.config('cases/' + $page.routeParams.id).getData();
 }
 
-function overviewCasesController ($scope, $page, $apiRequest, $init) {
+function overviewCaseController ($scope, $page, $apiRequest, $init) {
     
     $scope.object = $init;
     

@@ -76,7 +76,7 @@ class SponsorShipController extends BaseController {
         }
     }
 
-    public function get_sponsors(Request $request , $id){
+    public function list_sponsors(Request $request , $id){
       
         try {
 

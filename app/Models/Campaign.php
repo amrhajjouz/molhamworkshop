@@ -9,8 +9,8 @@ class Campaign extends BaseTargetModel
 
      protected $table = 'campaigns';
      protected $guarded = [];
-     protected $model_path = '\App\Models\Campaign';
-     protected $has_places = true;
+     protected $model_path = '\App\Models\Campaign'; //used in parent model
+     protected $has_places = true; //used in parent model to check if this model has place
      protected $casts = [
           'funded' => 'boolean'
      ];
@@ -21,6 +21,11 @@ class Campaign extends BaseTargetModel
           return parent::save($options);
      }
 
+     /* 
+      * this function called to return this model with all relations
+      * Notice : this just for one object because it has big data 
+     */
+
      public function transform()
      {
           $obj = $this->toArray();
@@ -28,22 +33,20 @@ class Campaign extends BaseTargetModel
           $target = $this->parent->toArray();
           $section = $this->parent->section;
           $category = $this->parent->category;
-          $places = $this->places;
+          $places = $this->places; //this has Many places
           $_places = [];
 
-          if ($places) {
-               foreach ($places as $item) {
-                    $_place = (object)[
-                         'id' => $item->id,
-                         'name' => $item->name,
-                         'text' => $item->name,
-                         'type' => $item->type,
-                    ];
+          foreach ($places as $item) {
+               $long_name = $item->long_name(); // long_name() comes from Place Model retrive long name with parents names
+               $_place = (object)[
+                    'id' => $item->id,
+                    'name' => $long_name,
+                    'text' => $long_name,
+                    'type' => $item->type,
+               ];
 
-                    $_places[] = $_place;
-               }
+               $_places[] = $_place;
           }
-          // dd($places);
 
           $response = (object)array_merge($obj, [
                'target' => [
@@ -54,7 +57,7 @@ class Campaign extends BaseTargetModel
                     'archived' => $target['archived'],
                     'section_id' => $target['section_id'],
 
-               ] ,
+               ],
                "places" => $_places
           ]);
 

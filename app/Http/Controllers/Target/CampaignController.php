@@ -4,13 +4,9 @@ namespace App\Http\Controllers\Target;
 
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Target\Campaign\{CreateRequest , UpdateRequest};
-use App\Facades\Helper;
 
-use App\Models\{User , Campaign};
 
 class CampaignController extends BaseController {
     
@@ -25,6 +21,7 @@ class CampaignController extends BaseController {
         try {
             $data = $request->validated();
             $object = new $this->model();
+
             $object->name = $data['name'];
             $object->funded = 0;
 
@@ -51,7 +48,6 @@ class CampaignController extends BaseController {
 
             $object->name = $data['name'];
             $object->funded = $data['funded'];
-
 
             $options = ['target' => $request->target, "places_ids" => $request->places_ids];
             $object->save($options);

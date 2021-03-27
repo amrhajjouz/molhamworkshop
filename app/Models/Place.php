@@ -9,7 +9,7 @@ use App\Models\{Cases, Country};
 class Place extends BaseModel
 {
      protected $table = 'places';
-
+     
      const CITY = 'city';
 
      public function cases()
@@ -55,5 +55,12 @@ class Place extends BaseModel
      }
 
 
-    
+     /*
+     * optional transform this object and get long path of place with parents names 
+     */
+
+     public function long_name()
+     {
+          return \App\Facades\Helper::getFullNamePlace($this);
+     }
 }

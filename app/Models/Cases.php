@@ -10,13 +10,18 @@ class Cases extends BaseTargetModel
 {
      protected $table = 'cases';
      protected $guarded = [];
-     protected $model_path = '\App\Models\Cases';
-     protected $has_places = true;
+     protected $model_path = '\App\Models\Cases'; //used in parent model
+     protected $has_places = true; //used in parent model to check if this model has place
 
      public function country()
      {
           return $this->belongsTo(Country::class, 'country_id', 'id');
      }
+
+     /* 
+      * this function called to return this model with all relations
+      * Notice : this just for one object because it has big data 
+     */
 
      public function transform()
      {
@@ -25,14 +30,20 @@ class Cases extends BaseTargetModel
           $target = $this->parent->toArray();
           $section = $this->parent->section;
           $category = $this->parent->category;
-          $place = $this->places()->first();
+
+          
+          
+
+          $place = $this->places()->first(); //get First becaust this has one place
           $_places = [];
      
           if($place){
+               $long_name = $place->long_name(); // long_name() comes from Place Model retrive long name with parents names
+
                     $_place = (object)[
                          'id' => $place->id,
-                         'name' => $place->name,
-                         'text' => $place->name,
+                         'name' => $long_name,
+                         'text' => $long_name,
                          'type' => $place->type,
                     ];
 
@@ -75,17 +86,5 @@ class Cases extends BaseTargetModel
      {
           
           return parent::save($options);
-     }
-
-     public function getFundedAttribute($data)
-     {
-          if ($data) return true;
-          return false;
-     }
-
-     public function getCancelledAttribute($data)
-     {
-          if ($data) return true;
-          return false;
      }
 }

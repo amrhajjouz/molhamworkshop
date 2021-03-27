@@ -1,18 +1,13 @@
 async function listStudentSponsorsControllerInit($http, $page, $apiRequest) {
-  const sponsors = await $apiRequest
-    .config("students/" + $page.routeParams.id + "/sponsors")
-    .getData();
+  return {
+    sponsors: await $apiRequest
+      .config("students/" + $page.routeParams.id + "/sponsors")
+      .getData(),
 
-  const object = await $apiRequest
-    .config("students/" + $page.routeParams.id)
-    .getData();
-
-
-  const init = {
-    sponsors: sponsors,
-    object: object,
+    object: await $apiRequest
+      .config("students/" + $page.routeParams.id)
+      .getData(),
   };
-  return init;
 }
 
 function listStudentSponsorsController($scope, $page, $apiRequest, $init) {
@@ -20,35 +15,25 @@ function listStudentSponsorsController($scope, $page, $apiRequest, $init) {
   $scope.object = $init.object;
   $scope.selected_object = {};
 
-
   $scope.sponsor = {
     donor_id: null,
     percentage: null,
     purpose_type: "\\App\\Models\\Student",
     purpose_id: $page.routeParams.id,
   };
-  $scope.add_sponsor = () => {
-    $("#add-sponsors").modal("show");
-  };
-
-  $scope.edit_sponsor = (object) => {
-    $scope.selected_object = angular.copy(object)
-    $("#edit-sponsors").modal("show");
-    console.log($scope.selected_object);
-  };
 
   $scope.get_max_percentage_on_update = () => {
     if (!$scope.selected_object) return 0;
     let sponsors = $scope.sponsors;
-    sponsors = sponsors.filter(item => item.id != $scope.selected_object.id);
+    sponsors = sponsors.filter((item) => item.id != $scope.selected_object.id);
 
     let total = 0;
 
-    sponsors.forEach(element => {
-        total += element.percentage;
+    sponsors.forEach((element) => {
+      total += element.percentage;
     });
 
-    return 100- total;
+    return 100 - total;
   };
 
   $scope.createStudentsSponsor = $apiRequest.config(
@@ -62,17 +47,55 @@ function listStudentSponsorsController($scope, $page, $apiRequest, $init) {
       //TODO : refresh datatable
     }
   );
+  $scope.showSponsorModal = function (action, data = {}) {
+    $scope.currentSponsorModalAction = action;
+    if (action == "add") {
+      $scope.createUpdateStudentSponsor.config.method = "POST";
+    } else {
+      $scope.createUpdateStudentSponsor.config.method = action = "PUT";
+      $scope.sponsor = angular.copy(data);
+    }
+    $("#sponsor-modal").modal("show");
+  };
 
-  $scope.updateStudentsSponsor = $apiRequest.config(
+  $scope.createUpdateStudentSponsor = $apiRequest.config(
     {
-      method: "PUT",
-      url: "sponsors/" + $page.routeParams.id,
-      data: $scope.selected_object,
+      method: "POST",
+      url: `sponsors`,
+      data: $scope.sponsor,
     },
     function (response, data) {
-       $("#edit-sponsors").modal("hide");
-       //TODO : refresh datatable
+      if ($scope.currentSponsorModalAction == "edit") {
+        $scope.sponsors[
+          $scope.sponsors.findIndex((a) => a.id === data.id)
+        ] = data;
+      } else {
+        $scope.sponsors.push(data);
+      }
 
+      $scope.calculatePercentageToComplete();
+      $("#sponsor-modal").modal("hide");
     }
   );
+
+  //  refresh percentage to complete on edit or create
+  $scope.calculatePercentageToComplete = () => {
+    let percentageToComplete = 0;
+    $scope.sponsors.forEach((i) => (percentageToComplete += i.percentage));
+    $scope.object.percentage_to_complete = 100 - percentageToComplete;
+  };
+
+  //calculate acceptable max range for percentage on update
+  $scope.getMaxRangeOnUpdate = (item) => {
+    if ($scope.currentSponsorModalAction == "add") {
+      return $scope.object.percentage_to_complete;
+    }
+    let sponsores = $scope.sponsors.filter((i) => i.id != item.id);
+
+    let max = 0;
+    sponsores.forEach((i) => {
+      max += i.percentage;
+    });
+    return 100 - max;
+  };
 }

@@ -6,14 +6,14 @@
       <label for="beneficiary_name">اسم المستفيد</label>
       <input
         id="beneficiary_name"
-        type="text"
         class="form-control"
+        type="text"
         ng-class="(createCase.errors.beneficiary_name != null) ? 'is-invalid' : ''"
         ng-model="object.beneficiary_name"
         ng-change="createCase.errors.beneficiary_name = null"
         placeholder="الاسم.."
-        required
         ng-error="createCase.errors.beneficiary_name"
+        required
       />
     </div>
   </div>
@@ -22,8 +22,8 @@
       <label for="beneficiaries_count">عدد المستفيدين</label>
       <input
         id="beneficiaries_count"
-        type="number"
         class="form-control"
+        type="number"
         ng-model="object.target['beneficiaries_count']"
         ng-class="(createCase.errors['target.beneficiaries_count'] != null) ? 'is-invalid' : ''"
         ng-change="createCase.errors['target.beneficiaries_count'] = null"
@@ -44,9 +44,9 @@
         ng-class="(createCase.errors.country_id != null) ? 'is-invalid' : ''"
         ng-change="createCase.errors.country_id = null"
         ng-options="country.id as country.name for country in countries"
-        required
         ng-error="createCase.errors.country_id"
         ng-init="object.country_id = countries[0].id;"
+        required
       ></select>
     </div>
   </div>
@@ -60,8 +60,8 @@
         ng-class="(createCase.errors.status != null) ? 'is-invalid' : ''"
         ng-change="createCase.errors.status = null"
         ng-options="status.id as status.name for status in statuses"
+        ng-errorbeneficiary_name="createCase.errors.status"
         required
-        ng-error="createCase.errors.status"
       ></select>
     </div>
   </div>
@@ -88,14 +88,14 @@
       <label for="required">المبلغ المطلوب</label>
       <input
         id="required"
-        type="number"
         class="form-control"
+        type="number"
         ng-model="object.target['required']"
         ng-class="(createCase.errors['target.required'] != null) ? 'is-invalid' : ''"
         ng-change="createCase.errors['target.required'] = null"
         ng-error="createCase.errors.target.required"
-        min="1"
         required
+        min="1"
       />
     </div>
   </div>

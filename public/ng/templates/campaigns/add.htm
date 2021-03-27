@@ -26,9 +26,9 @@
         ng-model="object.target['beneficiaries_count']"
         ng-class="(createCampaign.errors['target.beneficiaries_count'] != null) ? 'is-invalid' : ''"
         ng-change="createCampaign.errors['target.beneficiaries_count'] = null"
-        required
-        min="1"
         ng-error="createCampaign.errors.target.beneficiaries_count"
+        min="1"
+        required
       />
     </div>
   </div>
@@ -41,8 +41,8 @@
         ng-model="object.target.visible"
         ng-class="(createCampaign.errors['target.visible'] != null) ? 'is-invalid' : ''"
         ng-change="createCampaign.errors['target.visible'] = null"
-        required
         ng-error="createCampaign.errors.target.visible"
+        required
       >
         <option ng-value="true">نعم</option>
         <option ng-value="false">لا</option>

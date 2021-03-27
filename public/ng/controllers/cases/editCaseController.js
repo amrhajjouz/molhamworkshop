@@ -8,13 +8,12 @@ async function editCaseControllerInit($http, $page, $apiRequest) {
     
     const places = await $apiRequest.config("places").getData();
 
-    let init = {
-        countries: countries,
-        object: object,
-        places: places,
-    };
+   return {
+     countries: countries,
+     object: object,
+     places: places,
+   };
 
-    return init;
 }
 
 function editCaseController($scope, $page, $apiRequest, $init) {
