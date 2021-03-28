@@ -1,16 +1,13 @@
-async function addPlacesControllerInit($apiRequest) {
-    let countries = await $apiRequest.config("countries").getData();
-    let places = await $apiRequest.config("places").getData();
+async function addPlaceControllerInit($apiRequest) {
 
-    let init = {
-        countries: countries,
-        places: places,
+    return {
+      countries: await $apiRequest.config("countries").getData(),
+      places: await $apiRequest.config("places").getData(),
     };
 
-    return init;
 }
 
-function addPlacesController($scope, $location, $apiRequest, $page, $init) {
+function addPlaceController($scope, $location, $apiRequest, $page, $init) {
     $scope.types = [
         { id: "province", name: "محافظة" },
         { id: "city", name: "مدينة" },

@@ -4,10 +4,10 @@
     <div class="form-group">
       <label for="date">تاريخ المناسبة</label>
       <input
-        type="date"
-        class="form-control"
-        ng-class="(updateEvent.errors.date != null) ? 'is-invalid' : ''"
         id="date"
+        class="form-control"
+        type="date"
+        ng-class="(updateEvent.errors.date != null) ? 'is-invalid' : ''"
         ng-model="object.date"
         ng-change="updateEvent.errors.date = null"
         ng-error="updateEvent.errors.date"
@@ -15,31 +15,15 @@
       />
     </div>
   </div>
-<!-- 
-  <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="required">المبلغ المطلوب</label>
-      <input
-        type="number"
-        class="form-control"
-        ng-class="(updateEvent.errors['target.required'] != null) ? 'is-invalid' : ''"
-        id="required"
-        ng-model="object.target['required']"
-        ng-change="updateEvent.errors['target.required'] = null"
-        ng-error="updateEvent.errors.target.required"
-        required
-      />
-    </div>
-  </div> -->
 
   <div class="col-12 col-md-6">
     <div class="form-group">
       <label for="youtube_video_url">رابط الفيديو يوتيوب</label>
       <input
-        type="text"
-        class="form-control"
-        ng-class="(updateEvent.errors.object.youtube_video_url != null) ? 'is-invalid' : ''"
         id="object.youtube_video_url"
+        class="form-control"
+        type="text"
+        ng-class="(updateEvent.errors.object.youtube_video_url != null) ? 'is-invalid' : ''"
         ng-model="object.youtube_video_url"
         ng-change="updateEvent.errors.object.youtube_video_url = null"
         placeholder="رابط الفيديو على يوتيوب"
@@ -51,12 +35,12 @@
     <div class="form-group">
       <label for="implemented">تم تنفيذه</label>
       <select
-        class="form-control"
-        ng-model="object.implemented"
-        ng-class="(updateEvent.errors.implemented != null) ? 'is-invalid' : ''"
         id="implemented"
+        class="form-control"
+        ng-class="(updateEvent.errors.implemented != null) ? 'is-invalid' : ''"
+        ng-model="object.implemented"
         ng-change="updateEvent.errors.implemented = null"
-        ng-error="updateEvent.errors.implemmented"
+        ng-error="updateEvent.errors.implemented"
         required
       >
         <option ng-value="true">نعم</option>
@@ -69,11 +53,11 @@
     <div class="form-group">
       <label for="implementation_date">تاريخ تنفيذ المناسبة</label>
       <input
-        type="date"
-        class="form-control"
-        ng-class="(updateEvent.errors.implementation_date != null) ? 'is-invalid' : ''"
         id="implementation_date"
+        class="form-control"
+        type="date"
         ng-model="object.implementation_date"
+        ng-class="(updateEvent.errors.implementation_date != null) ? 'is-invalid' : ''"
         ng-change="updateEvent.errors.implementation_date = null"
         ng-disabled="!object.implemented"
         ng-error="updateEvent.errors.implementation_date"
@@ -85,10 +69,10 @@
     <div class="form-group">
       <label for="public_visibility">متاح للعامة</label>
       <select
-        class="form-control"
-        ng-model="object.public_visibility"
-        ng-class="(updateEvent.errors.public_visibility != null) ? 'is-invalid' : ''"
         id="public_visibility"
+        class="form-control"
+        ng-class="(updateEvent.errors.public_visibility != null) ? 'is-invalid' : ''"
+        ng-model="object.public_visibility"
         ng-change="updateEvent.errors.public_visibility = null"
         ng-error="updateEvent.errors.public_visibility"
         required
@@ -223,8 +207,12 @@
   <div class="col-12 col-md-6">
     <div class="form-group">
       <label for="donor_id">المتبرع</label>
-      <select2 model="object.donor_id" ajax-url="donors/search" required
-        error-model="updateEvent.errors.donor_id" >
+      <select2
+        model="object.donor_id"
+        ajax-url="donors/search"
+        required
+        error-model="updateEvent.errors.donor_id"
+      >
         <option selected value="{{object.donor.id}}">
           {{object.donor.text}}
         </option>

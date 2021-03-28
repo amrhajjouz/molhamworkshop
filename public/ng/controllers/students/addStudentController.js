@@ -1,16 +1,11 @@
-async function addStudentsControllerInit($apiRequest) {
-  let countries = await $apiRequest.config("countries").getData();
-  let places = await $apiRequest.config("places").getData();
-
-  let init = {
-    countries: countries,
-    places: places,
+async function addStudentControllerInit($apiRequest) {
+  return {
+    countries: await $apiRequest.config("countries").getData(),
+    places: await $apiRequest.config("places").getData(),
   };
-
-  return init;
 }
 
-function addStudentsController($scope, $location, $apiRequest, $page, $init) {
+function addStudentController($scope, $location, $apiRequest, $page, $init) {
   $scope.object = {
     semesters_count: 1,
     current_semester: 1,
@@ -38,7 +33,6 @@ function addStudentsController($scope, $location, $apiRequest, $page, $init) {
     }
     $scope.$evalAsync();
   };
-
 
   $scope.createStudent = $apiRequest.config(
     {

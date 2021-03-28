@@ -1,21 +1,16 @@
-async function addSponsorshipsControllerInit($apiRequest) {
+async function addSponsorshipControllerInit($apiRequest) {
     
-    let countries =await  $apiRequest.config("countries").getData();
-    let categories =await  $apiRequest.config("categories?created_for=Sponsorships").getData();
-    let places = await $apiRequest.config("places").getData();
 
-
-    let init = {
-        countries: countries,
-        categories: categories,
-        places: places,
+    return {
+        countries: await  $apiRequest.config("countries").getData(),
+        categories: await  $apiRequest.config("categories?created_for=Sponsorships").getData(),
+        places: await $apiRequest.config("places").getData(),
     };
 
-    return init;
 }
 
 
-function addSponsorshipsController($scope, $location, $apiRequest, $page, $init) {
+function addSponsorshipController($scope, $location, $apiRequest, $page, $init) {
     $scope.object = {
         target: {
             required: 1,

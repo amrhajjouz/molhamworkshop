@@ -1,8 +1,8 @@
-function overviewEventsControllerInit ($apiRequest, $page) {
+function overviewEventControllerInit ($apiRequest, $page) {
     return $apiRequest.config('events/' + $page.routeParams.id).getData();
 }
 
-function overviewEventsController ($scope, $page, $apiRequest, $init) {
+function overviewEventController ($scope, $page, $apiRequest, $init) {
     
     $scope.object = $init;
     

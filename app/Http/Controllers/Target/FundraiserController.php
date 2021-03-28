@@ -22,16 +22,16 @@ class FundraiserController extends BaseController {
         try {
             $data = $request->validated();
 
-            $object = new $this->model();
+            $fundraiser = new $this->model();
 
-            $object->verified = $data['verified'];
-            $object->public_visibility = $data['public_visibility'];
-            $object->donor_id = $data['donor_id'];
+            $fundraiser->verified = $data['verified'];
+            $fundraiser->public_visibility = $data['public_visibility'];
+            $fundraiser->donor_id = $data['donor_id'];
             $options = ['target'=> $data['target']];
 
-            $object->save($options);
+            $fundraiser->save($options);
             
-            return $this->_response($object->transform());
+            return $this->_response($fundraiser->transform());
             
         } catch (\Exception $e) {
 
@@ -43,18 +43,18 @@ class FundraiserController extends BaseController {
         
         try {
             
-            $object = $this->model::findOrFail($request->id);
+            $fundraiser = $this->model::findOrFail($request->id);
             
             $data = $request->validated();
-            $object->verified = $data['verified'];
-            $object->public_visibility = $data['public_visibility'];
-            $object->donor_id = $data['donor_id'];
+            $fundraiser->verified = $data['verified'];
+            $fundraiser->public_visibility = $data['public_visibility'];
+            $fundraiser->donor_id = $data['donor_id'];
             
             $options = ['target' => $request->target];
 
-            $object->save($options);
+            $fundraiser->save($options);
             
-            return $this->_response($object->transform());
+            return $this->_response($fundraiser->transform());
 
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());

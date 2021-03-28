@@ -16,7 +16,7 @@ class CreateRequest extends BaseRequest
     {
         return true;
     }
-    
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,18 +25,17 @@ class CreateRequest extends BaseRequest
     public function rules()
     {
         return [
-            'beneficiary_name' => ['required' ,'string', 'between:3,100'],
-            'beneficiary_birthdate' => ['required' ,'date' ,"before:tomorrow"],
-            'country_id' => ['required' ,'numeric'],
-            'sponsored' => ['nullable' ,'boolean'],
-            'target' => ['array' ,'required'],
+            'beneficiary_name' => ['required', 'string', 'between:3,100'],
+            'beneficiary_birthdate' => ['required', 'date', "before:today"],
+            'country_id' => ['required', 'numeric'],
+            'sponsored' => ['nullable', 'boolean'],
+            'target' => ['array', 'required'],
             'place_id' => ['required', 'numeric'],
             'target.beneficiaries_count' => ['required', 'numeric', 'min:1'],
             'target.required' => ['required', 'numeric', 'min:1'],
             'target.category_id' => ['required'],
             'target.visible' => ['required', 'boolean'],
-            
+
         ];
     }
-    
 }

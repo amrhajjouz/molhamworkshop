@@ -13,7 +13,6 @@ async function listStudentSponsorsControllerInit($http, $page, $apiRequest) {
 function listStudentSponsorsController($scope, $page, $apiRequest, $init) {
   $scope.sponsors = $init.sponsors;
   $scope.object = $init.object;
-  $scope.selected_object = {};
 
   $scope.sponsor = {
     donor_id: null,
@@ -75,6 +74,13 @@ function listStudentSponsorsController($scope, $page, $apiRequest, $init) {
 
       $scope.calculatePercentageToComplete();
       $("#sponsor-modal").modal("hide");
+
+      $scope.sponsor = {
+        donor_id: null,
+        percentage: null,
+        purpose_type: "\\App\\Models\\Student",
+        purpose_id: $page.routeParams.id,
+      };
     }
   );
 

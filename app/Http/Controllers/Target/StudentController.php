@@ -25,20 +25,17 @@ class StudentController extends BaseController
     {
         try {
             $data = $request->validated();
-            $object = new $this->model();
-            $object->name = $data['name'];
-            $object->country_id = $data['country_id'];
-            $object->semesters_count = $data['semesters_count'];
-            $object->current_semester = $data['current_semester'];
-            // $object->semesters_funded = $data['semesters_funded'];
-            // $object->semesters_left = $data['semesters_left'];
-            // $object->status = $data['status'];
+            $student = new $this->model();
+            $student->name = $data['name'];
+            $student->country_id = $data['country_id'];
+            $student->semesters_count = $data['semesters_count'];
+            $student->current_semester = $data['current_semester'];
             $options = ['target' => $request->target, "places_ids" => [$request->place_id]];
 
-            $object->save($options);
+            $student->save($options);
 
 
-            return $this->_response($object);
+            return $this->_response($student);
         } catch (\Exception $e) {
 
             throw $this->_exception($e->getMessage());
@@ -50,25 +47,21 @@ class StudentController extends BaseController
 
         try {
 
-            $object = $this->model::findOrFail($request->id);
+            $student = $this->model::findOrFail($request->id);
 
             $data = $request->validated();
-            // dd($data);
-            $object->name = $data['name'];
-            //  $object->target = $data['target'];
-            $object->country_id = $data['country_id'];
-            $object->semesters_count = $data['semesters_count'];
-            $object->current_semester = $data['current_semester'];
+            $student->name = $data['name'];
+            $student->country_id = $data['country_id'];
+            $student->semesters_count = $data['semesters_count'];
+            $student->current_semester = $data['current_semester'];
 
             $options = ['target' => $request->target, "places_ids" => [$request->place_id]];
 
+            $student->save($options);
 
-            $object->save($options);
-
-            return $this->_response($object->transform());
+            return $this->_response($student->transform());
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
-            // return ['error' => $e->getMessage()];
         }
     }
 
@@ -79,8 +72,8 @@ class StudentController extends BaseController
             $result = [];
             $data = $this->model::all();
 
-            foreach ($data as $object) {
-                $result[] = $object->transform();
+            foreach ($data as $student) {
+                $result[] = $student->transform();
             }
 
             return $this->_response($result);

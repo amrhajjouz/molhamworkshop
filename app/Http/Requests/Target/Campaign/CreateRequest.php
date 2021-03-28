@@ -24,14 +24,16 @@ class CreateRequest extends BaseRequest
      */
     public function rules()
     {
-        
+        // dd($this->all());
         return [
             'name' => ['required' ,'string', 'between:3,100'],
-            'target' => ['required' ,'array'],
             'places_ids' => ['required', 'array'],
+            'target' => ['required' ,'array'],
             'target.beneficiaries_count' => ['required', 'numeric', 'min:1'],
             'target.required' => ['required', 'numeric', 'min:1'],
             'target.section_id' => ['required', 'numeric'],
+            'target.required' => ['required' ,'numeric'],
+            'target.visible' => ['required' ,'boolean'],
         ];
     }
     

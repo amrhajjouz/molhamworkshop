@@ -13,8 +13,8 @@ class Event extends BaseTargetModel
 
      protected $table = 'events';
      protected $guarded = [];
-     protected $model_path = '\App\Models\Event';
-     protected $has_places = true;
+     protected $model_path = '\App\Models\Event';//used in parent model
+     protected $has_places = true;//used in parent model to check if this model has place
 
      protected $casts = [
           'verified' => 'boolean',
@@ -45,18 +45,17 @@ class Event extends BaseTargetModel
           }
 
           $_places = [];
-          if ($places) {
                foreach ($places as $item) {
+                    $long_name = $item->long_name();// long_name() comes from Place Model retrive long name with parents names
                     $_place = (object)[
                          'id' => $item->id,
-                         'name' => $item->name,
-                         'text' => $item->name,
+                         'name' => $long_name,
+                         'text' => $long_name,
                          'type' => $item->type,
                     ];
 
                     $_places[] = $_place;
                }
-          }
           unset( $obj['parent']);
           return (object)array_merge($obj, [
                'target' => [

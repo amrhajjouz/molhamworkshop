@@ -23,26 +23,23 @@ class EventController extends BaseController
     {
         try {
             $data = $request->validated();
-            $object = new $this->model();
-            // dd($data);
-            $object->date = date('Y/m/d', strtotime($data['date']));
-            $object->verified = $data['verified'];
-            $object->public_visibility = $data['public_visibility'];
-            $object->implemented = $data['implemented'];
-            $object->donor_id = $data['donor_id'];
+            $event = new $this->model();
+            $event->date = date('Y/m/d', strtotime($data['date']));
+            $event->verified = $data['verified'];
+            $event->public_visibility = $data['public_visibility'];
+            $event->implemented = $data['implemented'];
+            $event->donor_id = $data['donor_id'];
 
             if ($data['implementation_date']) {
-                $object->implementation_date = date('Y/m/d', strtotime($data['implementation_date']));
+                $event->implementation_date = date('Y/m/d', strtotime($data['implementation_date']));
             }
-            $object->youtube_video_url = $data['youtube_video_url'];
-
+            $event->youtube_video_url = $data['youtube_video_url'];
             $options = ['target' => $request->target, "places_ids" => $request->places_ids];
 
-            $object->save($options);
+            $event->save($options);
 
-            return $this->_response($object->transform());
+            return $this->_response($event->transform());
         } catch (\Exception $e) {
-
             throw $this->_exception($e->getMessage());
         }
     }
@@ -52,25 +49,25 @@ class EventController extends BaseController
 
         try {
 
-            $object = $this->model::findOrFail($request->id);
+            $event = $this->model::findOrFail($request->id);
 
             $data = $request->validated();
-            $object->date = date('Y/m/d', strtotime($data['date']));
-            $object->verified = $data['verified'];
-            $object->public_visibility = $data['public_visibility'];
-            $object->implemented = $data['implemented'];
-            $object->donor_id = $data['donor_id'];
+            $event->date = date('Y/m/d', strtotime($data['date']));
+            $event->verified = $data['verified'];
+            $event->public_visibility = $data['public_visibility'];
+            $event->implemented = $data['implemented'];
+            $event->donor_id = $data['donor_id'];
 
             if ($data['implementation_date']) {
-                $object->implementation_date = date('Y/m/d', strtotime($data['implementation_date']));
+                $event->implementation_date = date('Y/m/d', strtotime($data['implementation_date']));
             }
-            $object->youtube_video_url = $data['youtube_video_url'];
+            $event->youtube_video_url = $data['youtube_video_url'];
 
             $options = ['target' => $request->target, "places_ids" => $request->places_ids];
 
-            $object->save($options);
+            $event->save($options);
 
-            return $this->_response($object->transform());
+            return $this->_response($event->transform());
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
         }
@@ -83,14 +80,10 @@ class EventController extends BaseController
             $result = [];
             $data = $this->model::all();
 
-            // foreach($data as $object){
-            //     $result[] = $object->transform();
-            // }
 
             return response()->json($data);
         } catch (\Exception $e) {
-
-            return ['error' => $e->getMessage()];
-        }
+            throw $this->_exception($e->getMessage());
+        }   
     }
 }

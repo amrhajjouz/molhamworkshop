@@ -1,86 +1,114 @@
 <page-header title="قائمة الطلاب" pretitle="الطلاب">
-    <a href="{{ $r('students.add') }}" class="btn btn-primary">
-        <i class="fe fe-plus"></i>&nbsp;  طالب جديد
-    </a>
+  <a href="{{ $r('students.add') }}" class="btn btn-primary">
+    <i class="fe fe-plus"></i>&nbsp; طالب جديد
+  </a>
+  
 </page-header>
 <div class="text-center h4 mt-4 mb-4">العدد الكلي : {{ students.length }}</div>
 <div class="card">
-    <div class="card-header">
-        <div class="row align-items-center">
-            <div class="col">
-                <div class="input-group input-group-flush input-group-merge">
-                    <input type="search" ng-model="search" class="form-control form-control-prepended search"
-                        placeholder="اكتب كلمة للبحث ثم اضغط Enter  ..." />
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <span class="fe fe-search"></span>
-                        </div>
-                    </div>
-                </div>
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <div class="input-group input-group-flush input-group-merge">
+          <input
+            type="search"
+            ng-model="search"
+            class="form-control form-control-prepended search"
+            placeholder="اكتب كلمة للبحث ثم اضغط Enter  ..."
+          />
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <span class="fe fe-search"></span>
             </div>
-
-            <div class="col-auto">
-                <!-- Button -->
-                <button class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top"
-                    title="خيارات الفلترة والعرض">
-                    <i class="fe fe-sliders"></i>
-                </button>
-
-                <button class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top"
-                    title="تصدير القائمة الى ملف CSV">
-                    <i class="fe fe-download"></i>
-                </button>
-            </div>
+          </div>
         </div>
+      </div>
+
+      <div class="col-auto">
+        <!-- Button -->
+        <button
+          class="btn btn-sm btn-white"
+          type="button"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="خيارات الفلترة والعرض"
+        >
+          <i class="fe fe-sliders"></i>
+        </button>
+
+        <button
+          class="btn btn-sm btn-white"
+          type="button"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="تصدير القائمة الى ملف CSV"
+        >
+          <i class="fe fe-download"></i>
+        </button>
+      </div>
     </div>
+  </div>
 
-    <div class="table-responsive">
-        <table class="table table-sm card-table">
-            <thead>
-                <tr>
-                    <th class="text-center">#</th>
-                    <th class="text-center">الاسم</th>
-                    <th class="text-center">الدولة</th>
-                    <th class="text-center">الفصل الحالي</th>
-                    <th class="text-center">عدد الفصول</th>
-                    <th class="text-center">خيارات</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-show="students.length == 0">
-                    <td colspan="10" class="text-center">
-                        <div class="pt-3 pb-2 h4" ng-show="students.length == 0">
-                            لا يوجد أية عناصر في هذه القائمة
-                        </div>
-                    </td>
-                </tr>
+  <div class="table-responsive">
+    <table class="table table-sm card-table">
+      <thead>
+        <tr>
+          <th class="text-center">#</th>
+          <th class="text-center">الاسم</th>
+          <th class="text-center">الدولة</th>
+          <th class="text-center">الفصل الحالي</th>
+          <th class="text-center">عدد الفصول</th>
+          <th class="text-center">خيارات</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-show="students.length == 0">
+          <td colspan="10" class="text-center">
+            <div class="pt-3 pb-2 h4" ng-show="students.length == 0">
+              لا يوجد أية عناصر في هذه القائمة
+            </div>
+          </td>
+        </tr>
 
-                <tr ng-repeat="item in students | filter : search">
-                    <td class="align-middle text-center">{{ item.id }}</td>
-                    <td class="align-middle text-center">{{ item.name }}</td>
-                    <td class="align-middle text-center">{{ item.country.name }}</td>
-                    <td class="align-middle text-center">{{ item.current_semester }}</td>
-                    <td class="align-middle text-center">{{ item.semesters_count }}</td>
+        <tr ng-repeat="item in students | filter : search">
+          <td class="align-middle text-center">{{ item.id }}</td>
+          <td class="align-middle text-center">{{ item.name }}</td>
+          <td class="align-middle text-center">{{ item.country.name }}</td>
+          <td class="align-middle text-center">{{ item.current_semester }}</td>
+          <td class="align-middle text-center">{{ item.semesters_count }}</td>
 
-                    <td class="align-middle text-center h2">
-                        <div class="dropdown">
-                            <a href="javascript:;" class="color-black mr-2" role="button" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical"></i></a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item"
-                                    href="{{ $r('students.overview', {id: item.id}) }}"><i
-                                        class="fe fe-eye"></i> نظرة عامة</a>
-                                <a class="dropdown-item"
-                                    href="{{ $r('students.edit', {id: item.id}) }}"><i
-                                        class="fe fe-edit-2"></i> تعديل</a>
-                                        <a class="dropdown-item"
-                                    href="{{ $r('students.sponsors', {id: item.id}) }}"><i
-                                        class="fe fe-align-center"></i> الكفلاء</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+          <td class="align-middle text-center h2">
+            <div class="dropdown">
+              <a
+                href="javascript:;"
+                class="color-black mr-2"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+                ><i class="fe fe-more-vertical"></i
+              ></a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a
+                  class="dropdown-item"
+                  href="{{ $r('students.overview', {id: item.id}) }}"
+                  ><i class="fe fe-eye"></i> نظرة عامة</a
+                >
+                <a
+                  class="dropdown-item"
+                  href="{{ $r('students.edit', {id: item.id}) }}"
+                  ><i class="fe fe-edit-2"></i> تعديل</a
+                >
+                <a
+                  class="dropdown-item"
+                  href="{{ $r('students.sponsors', {id: item.id}) }}"
+                  ><i class="fe fe-align-center"></i> الكفلاء</a
+                >
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

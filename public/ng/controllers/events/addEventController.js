@@ -1,15 +1,12 @@
-async function addEventsControllerInit($apiRequest) {
+async function addEventControllerInit($apiRequest) {
 
-    const places = await $apiRequest.config("places").getData();
-
-    let init = {
-        places: places,
+    return {
+      places: await $apiRequest.config("places").getData(),
     };
 
-    return init;
 }
 
-function addEventsController($scope, $location, $apiRequest, $page, $init) {
+function addEventController($scope, $location, $apiRequest, $page, $init) {
 
     $scope.places = $init.places;
 

@@ -1,6 +1,5 @@
-// const { initial } = require("lodash");
 
-async function editPlacesControllerInit($http, $page, $apiRequest) {
+async function editPlaceControllerInit($http, $page, $apiRequest) {
     const object = await $apiRequest
         .config("places/" + $page.routeParams.id)
         .getData();
@@ -14,15 +13,14 @@ async function editPlacesControllerInit($http, $page, $apiRequest) {
     }
     const parentPlaces = await $apiRequest.config(url).getData();
 
-    const init = {
-        object: object,
-        countries: countries,
-        parentPlaces: parentPlaces,
+    return {
+      object: object,
+      countries: countries,
+      parentPlaces: parentPlaces,
     };
-    return init;
 }
 
-function editPlacesController($scope, $page, $apiRequest, $init) {
+function editPlaceController($scope, $page, $apiRequest, $init) {
     $scope.types = [
         { id: "province", name: "محافظة" },
         { id: "city", name: "مدينة" },
@@ -35,16 +33,6 @@ function editPlacesController($scope, $page, $apiRequest, $init) {
     $scope.countries = $init.countries;
     $scope.parentPlaces = $init.parentPlaces;
 
-    //set parent type to object to check on input
-    // if (object.parent) {
-    //     switch (object.parent) {
-    //         case value:
-    //             break;
-
-    //         default:
-    //             break;
-    //     }
-    // }
 
     $scope.handleChangeParentType = async (type) => {
         $scope.parentPlaces = [];

@@ -23,17 +23,16 @@ class SponsorShipController extends BaseController {
         try {
             $data = $request->validated();
 
-            $object = new $this->model();
-            $object->beneficiary_name = $data['beneficiary_name'];
-            // $object->beneficiary_birthdate = date('Y/m/d' , strtotime($data['beneficiary_birthdate']));
-            $object->beneficiary_birthdate =  $data['beneficiary_birthdate'];
-            $object->country_id = $data['country_id'];
-            $object->sponsored = 0;
+            $sponsorship = new $this->model();
+            $sponsorship->beneficiary_name = $data['beneficiary_name'];
+            $sponsorship->beneficiary_birthdate =  $data['beneficiary_birthdate'];
+            $sponsorship->country_id = $data['country_id'];
+            $sponsorship->sponsored = 0;
 
             $options = ['target' => $request->target , "places_ids" =>[ $request->place_id] ];
-            $object->save($options);
+            $sponsorship->save($options);
 
-            return $this->_response($object);
+            return $this->_response($sponsorship);
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());;
         }
@@ -43,20 +42,20 @@ class SponsorShipController extends BaseController {
         
         try {
             
-            $object = $this->model::findOrFail($request->id);
+            $sponsorship = $this->model::findOrFail($request->id);
             $data = $request->validated();
 
-            $object->beneficiary_name = $data['beneficiary_name'];
-            $object->beneficiary_birthdate = $data['beneficiary_birthdate'];
-            $object->country_id = $data['country_id'];
-            $object->sponsored = $data['sponsored'];
+            $sponsorship->beneficiary_name = $data['beneficiary_name'];
+            $sponsorship->beneficiary_birthdate = $data['beneficiary_birthdate'];
+            $sponsorship->country_id = $data['country_id'];
+            $sponsorship->sponsored = $data['sponsored'];
 
             $options = ['target' => $request->target , "places_ids" =>[ $request->place_id] ];
 
 
-            $object->save($options);
+            $sponsorship->save($options);
             
-            return $this->_response($object);
+            return $this->_response($sponsorship);
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
         }
@@ -79,10 +78,9 @@ class SponsorShipController extends BaseController {
     public function list_sponsors(Request $request , $id){
       
         try {
+            $sponsorship = Sponsorship::findOrFail($id);
 
-            $object = Sponsorship::findOrFail($id);
-
-            $sponsors= $object->sponsors;
+            $sponsors= $sponsorship->sponsors;
 
             $res = [];
             foreach($sponsors  as $item){

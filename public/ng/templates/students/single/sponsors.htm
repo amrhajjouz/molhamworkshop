@@ -8,7 +8,6 @@
   <i class="fe fe-plus"></i>&nbsp;إضافة كفيل
 </button>
 
-
 <div class="text-center h4 mt-4 mb-4">العدد الكلي : {{ sponsors.length }}</div>
 <div class="text-center h4 mt-4 mb-4">
   نسبة الإكتمال : {{ 100 - object.percentage_to_complete }} %
@@ -106,14 +105,13 @@
                   ><i class="fe fe-eye"></i> نظرة عامة</a
                 >
 
-                                <a
+                <a
                   href="#"
                   ng-click="showSponsorModal('edit', item)"
                   class="dropdown-item"
                 >
                   <i class="fe fe-edit-2"></i>&nbsp;تعديل
                 </a>
-
               </div>
             </div>
           </td>
@@ -122,9 +120,7 @@
     </table>
   </div>
 
-
-
-    <!-- Create Update Modal -->
+  <!-- Create Update Modal -->
   <modal id="sponsor-modal">
     <modal-title>
       <span ng-show="currentSponsorModalAction == 'add'"
@@ -197,7 +193,4 @@
       </form>
     </modal-body>
   </modal>
-
-
-
 </div>

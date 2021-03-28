@@ -1,4 +1,4 @@
-async function addFundraisersControllerInit($apiRequest) {
+async function addFundraiserControllerInit($apiRequest) {
     
     
     return{
@@ -7,7 +7,7 @@ async function addFundraisersControllerInit($apiRequest) {
 
 }
 
-function addFundraisersController(
+function addFundraiserController(
     $scope,
     $location,
     $apiRequest,

@@ -27,7 +27,6 @@
         id="country_id"
         ng-change="createStudent.errors.country_id = null"
         ng-options="country.id as country.name for country in countries"
-        placeholder="يرجى اختيار دولة.."
         ng-init="object.country_id = countries[0].id"
         ng-error="createStudent.errors.country_id"
         required

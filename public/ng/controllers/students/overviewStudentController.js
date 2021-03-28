@@ -1,11 +1,9 @@
-function overviewStudentsControllerInit ($apiRequest, $page) {
+function overviewStudentControllerInit ($apiRequest, $page) {
     return $apiRequest.config('students/' + $page.routeParams.id).getData();
 }
 
-function overviewStudentsController ($scope, $page, $apiRequest, $init) {
-    
+function overviewStudentController ($scope, $page, $apiRequest, $init) {
     $scope.object = $init;
-    
     $scope.updateUser = $apiRequest.config({
         method : 'POST',
         url : 'students',

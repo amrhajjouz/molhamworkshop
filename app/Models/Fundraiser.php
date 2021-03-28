@@ -11,8 +11,9 @@ class Fundraiser extends BaseTargetModel
 
      protected $table = 'fundraisers';
      protected $guarded = [];
-     protected $model_path = '\App\Models\Fundraiser';
-     protected $has_places = false;
+     protected $model_path = '\App\Models\Fundraiser'; //used in parent model
+     protected $has_places = false;//used in parent model to check if this model has place
+
      protected $casts = [
           'verified' => 'boolean',
           'public_visibility' => 'boolean',
@@ -22,6 +23,12 @@ class Fundraiser extends BaseTargetModel
      {
           return $this->hasOne('\App\Models\Donor', 'id', 'donor_id');
      }
+
+
+     /* 
+      * this function called to return this model with all relations
+      * Notice : this just for one object because it has big data 
+     */
 
      public function transform()
      {

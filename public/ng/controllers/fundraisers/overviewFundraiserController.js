@@ -1,8 +1,8 @@
-function overviewFundraisersControllerInit ($apiRequest, $page) {
+function overviewFundraiserControllerInit ($apiRequest, $page) {
     return $apiRequest.config('fundraisers/' + $page.routeParams.id).getData();
 }
 
-function overviewFundraisersController ($scope, $page, $apiRequest, $init) {
+function overviewFundraiserController ($scope, $page, $apiRequest, $init) {
     
     $scope.object = $init;
     

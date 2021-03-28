@@ -20,16 +20,16 @@ class CampaignController extends BaseController {
     public function create ( CreateRequest $request) {
         try {
             $data = $request->validated();
-            $object = new $this->model();
+            $campaign = new $this->model();
 
-            $object->name = $data['name'];
-            $object->funded = 0;
+            $campaign->name = $data['name'];
+            $campaign->funded = 0;
 
             $options = ['target' => $request->target, "places_ids" => $request->places_ids];
 
-            $object->save($options);
+            $campaign->save($options);
 
-            return $this->_response($object);
+            return $this->_response($campaign);
             
         } catch (\Exception $e) {
             
@@ -42,17 +42,17 @@ class CampaignController extends BaseController {
         
         try {
             
-            $object = $this->model::findOrFail($request->id);
+            $campaign = $this->model::findOrFail($request->id);
             
             $data = $request->validated();
 
-            $object->name = $data['name'];
-            $object->funded = $data['funded'];
+            $campaign->name = $data['name'];
+            $campaign->funded = $data['funded'];
 
             $options = ['target' => $request->target, "places_ids" => $request->places_ids];
-            $object->save($options);
+            $campaign->save($options);
 
-            return $this->_response($object);
+            return $this->_response($campaign);
 
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());

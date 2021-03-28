@@ -2,23 +2,23 @@
 
 namespace App\Models;
 
-use App\Models\{Country, Section , Category};
+use App\Models\{Country};
 
 use App\Common\Base\BaseTargetModel;
-use stdClass;
 
 class Sponsorship extends BaseTargetModel
 {
      protected $table = 'sponsorships';
      protected $guarded = [];
-     protected $has_places = true;
-
+     protected $has_places = true; //used in parent model to check if this model has places
+     protected $model_path = '\App\Models\Sponsorship'; //used in parent model
      protected $casts = [
           'sponsored' => 'boolean',
      ];
-     protected $model_path = '\App\Models\Sponsorship';
 
-
+     /* 
+      * return beneficiary_birthdate in custom format Y/m/d 
+     */
      public function getBeneficiaryBirthdateAttribute($beneficiary_birthdate){
           return date('Y/m/d' , strtotime($beneficiary_birthdate));
      }
@@ -38,21 +38,6 @@ class Sponsorship extends BaseTargetModel
           $target = $this->parent->toArray();
           $section = $this->parent->section;
           $category = $this->parent->category;
-          // $sponsors = $this->sponsors;
-          // $_sponsors=[];
-
-          // foreach($sponsors as $item){
-          //      $donor = $item->donor;
-          //      unset($item->donor);
-          //      $_donor = new stdClass();
-               
-          //      $_donor->id = $donor->id;
-          //      $_donor->email = $donor->email;
-          //      $_donor->name = $donor->name;
-          //      $_donor->text = $donor->name;
-          //      $item->donor = $_donor;
-          //      $_sponsors []= $item; 
-          // }
 
           if(!is_null($section)){
                unset($section->created_at);
@@ -70,18 +55,17 @@ class Sponsorship extends BaseTargetModel
           $places = $this->places;
           $_places = [];
 
-          if ($places) {
                foreach ($places as $item) {
+                    $long_name = $item->long_name(); // retrive long name of place with parents names
                     $_place = (object)[
                          'id' => $item->id,
-                         'name' => $item->name,
-                         'text' => $item->name,
+                         'name' => $long_name,
+                         'text' => $long_name,
                          'type' => $item->type,
                     ];
 
                     $_places[] = $_place;
                }
-          }
 
           $obj = $this->toArray();
           
@@ -100,19 +84,25 @@ class Sponsorship extends BaseTargetModel
                 "places" => $_places,
                'section' =>$section,
                'category' =>$category,
-               // 'spnonsors' => $_sponsors,
-               // percentage to complete
                'percentage_to_complete' => 100 - $this->sponsors->sum('percentage')
           ]);
      }
 
 
-     //return sum total sponsored percentage except any id in array
+     /* 
+      * return sum total sponsored percentage except any id in array 
+      *  
+     */
+
      public function total_sponsores_percentage($ignore = []){
           
           return $this->sponsors()->whereNotIn('id', $ignore)->sum('percentage');
      }
 
+     /* 
+      * return what value required to complete percentage to 100%
+     */
+    
      public function percentage_to_complete()
      {
           return 100 - $this->sponsors()->sum('percentage');

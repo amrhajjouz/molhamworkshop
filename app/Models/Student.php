@@ -10,8 +10,8 @@ class Student extends BaseTargetModel
 {
      protected $table = 'students';
      protected $guarded = ["semesters_funded", "semesters_left"];
-     protected $model_path = '\App\Models\Student';
-     protected $has_places = true;
+     protected $model_path = '\App\Models\Student'; //used in parent model
+     protected $has_places = true; //used in parent model to check if this model has places
 
      const PAUSED = 'paused';
      const NOT_FOUNDED = 'not_funded';
@@ -32,31 +32,29 @@ class Student extends BaseTargetModel
      {
           return $this->hasMany('App\Models\Sponsor', 'purpose_id', 'id')->where('purpose_type', '\App\Models\Student');
      }
-     
+
 
      public function transform()
-     {    
-
+     {
           $obj = $this->toArray();
           $target = $this->parent->toArray();
           $places = $this->places;
           $_places = [];
 
-          if ($places) {
-               foreach ($places as $item) {
-                    $_place = (object)[
-                         'id' => $item->id,
-                         'name' => $item->name,
-                         'text' => $item->name,
-                         'type' => $item->type,
-                    ];
+          foreach ($places as $item) {
+               $long_name =  $item->long_name();
+               $_place = (object)[
+                    'id' => $item->id,
+                    'name' =>  $long_name,
+                    'text' =>  $long_name,
+                    'type' => $item->type,
+               ];
 
-                    $_places[] = $_place;
-               }
+               $_places[] = $_place;
           }
 
           unset($obj['parent']);
-          
+
           return (object)array_merge($obj, [
                'country' => [
                     'name' => $this->country->name
@@ -68,7 +66,7 @@ class Student extends BaseTargetModel
                     'archived' => $target['archived'],
 
                ],
-               "places" => $_places ,
+               "places" => $_places,
                'percentage_to_complete' => 100 - $this->sponsors->sum('percentage')
 
           ]);
@@ -152,7 +150,7 @@ class Student extends BaseTargetModel
      {
           return $this->sponsors()->whereNotIn('id', $ignore)->sum('percentage');
      }
-     
+
      public function percentage_to_complete()
      {
           return 100 - $this->sponsors()->sum('percentage');
