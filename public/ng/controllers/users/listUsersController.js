@@ -1,8 +1,9 @@
-function listUsersControllerInit ($apiRequest) {
-    return $apiRequest.config('users').getData();
+function listUsersControllerInit ($datalist, $location) {
+    return $datalist('users', true).load();
 }
 
-function listUsersController ($scope, $init) {
+function listUsersController ($scope, $init, $datalist) {
 
     $scope.users = $init;
+    
 }

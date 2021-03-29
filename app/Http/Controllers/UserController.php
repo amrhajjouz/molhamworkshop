@@ -63,7 +63,11 @@ class UserController extends Controller {
         
         try {
             
-            return response()->json(User::all());            
+            $search_query = ($request->has('q') ? [['name', 'like', '%' . $request->q . '%']] : null);
+            
+            $users = User::orderBy('id', 'desc')->where($search_query)->paginate(5)->withQueryString();
+            
+            return response()->json($users);  
             
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
