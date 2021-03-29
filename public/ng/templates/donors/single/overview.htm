@@ -1,67 +1,61 @@
 <include-header/>
-<div class="row">
-    <div class="col-12 col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-header-title">
-                    معلومات المتبرع
-                </h4>
-            </div>
-
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">الاسم</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4>{{ donor.name }}</h4>
-                    </div>
-                </div>
-
-                <hr>
-
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">البريد الالكتروني</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4>{{ donor.email }}</h4>
-                    </div>
-                </div>
-
-                <hr>
-
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">رقم الهاتف</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4>{{ donor.phone }}</h4>
-                    </div>
-                </div>
-
-                <hr>
-
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">Whatsapp numberرقم الواتس اب
-                    <div class="col-auto">
-                        <h4>{{ donor.whatsapp_number }}</h4>
-                    </div>
-                </div>
-
-                <hr>
-
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">رقم السويش</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4>{{ donor.swish_number }}</h4>
-                    </div>
-                </div>
-
-            </div>
-        </div>
+  
+<div class="header">
+    <div class="header-body">
+        <h1 class="header-title h3 font-weight-bold">
+            معلومات المتبرع
+        </h1>
     </div>
 </div>
+
+<div class="row">
+
+    <div class="col-12 col-lg-6">
+
+        <table>
+            <tr>
+                <td class="text-muted py-3">الاسم</td>
+                <td class="py-3 pr-3">{{ donor.name }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">البريد الالكتروني</td>
+                <td class="py-3 pr-3" dir="ltr">{{ donor.email }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">رقم الهاتف</td>
+                <td class="py-3 pr-3" dir="ltr">{{ donor.phone }}</td>
+            </tr>
+            
+            <tr>
+                <td class="text-muted py-3">رقم السويش</td>
+                <td class="py-3 pr-3" dir="ltr">{{ donor.swish_number }}</td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div class="col-12 col-lg-6">
+
+        <table>
+            
+            <tr>
+                <td class="text-muted py-3">رقم الواتس اب</td>
+                <td class="py-3 pr-3" dir="ltr">{{ donor.whatsapp_number }}</td>
+            </tr>
+            
+            <tr>
+                <td class="text-muted py-3">تاريخ الاضافة</td>
+                <td class="py-3 pr-3"><span ng-bind="donor.created_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ اخر تعديل</td>
+                <td class="py-3 pr-3"><span ng-bind="donor.updated_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td>
+            </tr>
+        </table>
+
+    </div>
+
+</div>
+
+<hr>
+
