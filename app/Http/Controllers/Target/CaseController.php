@@ -27,10 +27,12 @@ class CaseController extends BaseController {
             $case = new $this->model();
 
             $case->beneficiary_name = $data['beneficiary_name'];
-            $case->serial_number =Helper::getCaseSerialNumber(); //generate number 
+            $case->serial_number =Helper::getCaseSerialNumber(); //generate unique number 
             $case->country_id = $data['country_id'];
             $case->status = $data['status'];
-            $options = ['target' => $request->target , "places_ids" =>[ $request->place_id] ];
+
+
+            $options = ['target' => $request->target , "places_ids" =>[ $request->place_id] ]; // will saved in parent target
             $case->save($options);
 
             
@@ -50,11 +52,11 @@ class CaseController extends BaseController {
             $case = $this->model::findOrFail($request->id);
 
             $case->beneficiary_name = $data['beneficiary_name'];
-            $case->serial_number =Helper::getCaseSerialNumber();
+            // $case->serial_number =Helper::getCaseSerialNumber();
             $case->country_id = $data['country_id'];
             $case->status = $data['status'];
 
-            $options = ['target' => $request->target, "places_ids" => [$request->place_id]];
+            $options = ['target' => $request->target, "places_ids" => [$request->place_id]]; //options for parent target
 
 
             $case->save($options);

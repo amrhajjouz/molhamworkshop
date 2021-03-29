@@ -16,6 +16,7 @@ async function editEventControllerInit($http, $page, $apiRequest) {
 }
 
 function editEventController($scope, $page, $apiRequest, $init) {
+  
   $scope.object = $init.object;
   $scope.places = $init.places;
 

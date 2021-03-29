@@ -26,30 +26,27 @@ class Cases extends BaseTargetModel
      public function transform()
      {
           $obj = $this->toArray();
-          
+
           $target = $this->parent->toArray();
           $section = $this->parent->section;
           $category = $this->parent->category;
 
-          
-          
-
           $place = $this->places()->first(); //get First becaust this has one place
           $_places = [];
-     
-          if($place){
+
+          if ($place) {
                $long_name = $place->long_name(); // long_name() comes from Place Model retrive long name with parents names
 
-                    $_place = (object)[
-                         'id' => $place->id,
-                         'name' => $long_name,
-                         'text' => $long_name,
-                         'type' => $place->type,
-                    ];
+               $_place = (object)[
+                    'id' => $place->id,
+                    'name' => $long_name,
+                    'text' => $long_name,
+                    'type' => $place->type,
+               ];
 
-                    $_places [] = $_place;
-                    $obj['place_id'] = $place->id;
-               }
+               $_places[] = $_place;
+               $obj['place_id'] = $place->id;
+          }
           $response =  (object)array_merge($obj, [
                'country' => [
                     'name' => $this->country->name
@@ -63,28 +60,28 @@ class Cases extends BaseTargetModel
                     'section_id' => $target['section_id'],
 
                ],
-               "places" => $_places ,
+               "places" => $_places,
 
           ]);
-          
-          if($section){
+
+          if ($section) {
                $response->section = [
-                    'name' =>$section->name,
+                    'name' => $section->name,
                ];
           }
-       
-          if($category){
+
+          if ($category) {
                $response->category = [
-                    'name' =>$category->name,
+                    'name' => $category->name,
                ];
           }
-         
+
           return $response;
      }
 
      public function save($options = [])
      {
-          
+
           return parent::save($options);
      }
 }

@@ -9,6 +9,4 @@ class Section extends BaseModel
 {
      protected $table = 'sections';
 
-
-
 }

@@ -8,7 +8,7 @@ use App\Models\{Cases , Place};
 class MohamdController extends Controller
 {
     //
-
+    //this controller just for test any code
 
     public function test(Request $request){
 

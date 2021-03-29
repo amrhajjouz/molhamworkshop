@@ -1,31 +1,27 @@
-
 async function editSponsorshipControllerInit($http, $page, $apiRequest) {
-    const object = await $apiRequest
-        .config("sponsorships/" + $page.routeParams.id)
-        .getData();
-    object.beneficiary_birthdate = new Date(object.beneficiary_birthdate);
+  const object = await $apiRequest
+    .config("sponsorships/" + $page.routeParams.id)
+    .getData();
+  object.beneficiary_birthdate = new Date(object.beneficiary_birthdate);
 
-
-    return {
-        object: object,
-        countries:  await $apiRequest.config("countries").getData(),
-        places:  await $apiRequest.config("places").getData(),
-    };
+  return {
+    object: object,
+    countries: await $apiRequest.config("countries").getData(),
+    places: await $apiRequest.config("places").getData(),
+  };
 }
 
-
-
 function editSponsorshipController($scope, $page, $apiRequest, $init) {
-    $scope.object = $init.object;
-    $scope.countries = $init.countries;
-    $scope.places = $init.places;
+  $scope.object = $init.object;
+  $scope.countries = $init.countries;
+  $scope.places = $init.places;
 
-    $scope.updateSponsorShips = $apiRequest.config(
-        {
-            method: "PUT",
-            url: "sponsorships",
-            data: $scope.object,
-        },
-        function (response, data) {}
-    );
+  $scope.updateSponsorShips = $apiRequest.config(
+    {
+      method: "PUT",
+      url: "sponsorships",
+      data: $scope.object,
+    },
+    function (response, data) {}
+  );
 }

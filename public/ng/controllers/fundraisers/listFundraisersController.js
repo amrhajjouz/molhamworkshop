@@ -1,8 +1,7 @@
 function listFundraisersControllerInit($apiRequest) {
-    return $apiRequest.config("fundraisers").getData();
+  return $apiRequest.config("fundraisers").getData();
 }
 
 function listFundraisersController($scope, $init) {
-    
-    $scope.fundraisers = $init;
+  $scope.fundraisers = $init;
 }

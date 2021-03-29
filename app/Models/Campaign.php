@@ -11,8 +11,9 @@ class Campaign extends BaseTargetModel
      protected $guarded = [];
      protected $model_path = '\App\Models\Campaign'; //used in parent model
      protected $has_places = true; //used in parent model to check if this model has place
+     
      protected $casts = [
-          'funded' => 'boolean'
+          'funded' => 'boolean' //transform funded field as bool value 
      ];
 
 
@@ -32,7 +33,7 @@ class Campaign extends BaseTargetModel
 
           $target = $this->parent->toArray();
           $section = $this->parent->section;
-          $category = $this->parent->category;
+          // $category = $this->parent->category;
           $places = $this->places; //this has Many places
           $_places = [];
 

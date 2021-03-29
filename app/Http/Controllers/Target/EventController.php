@@ -23,6 +23,7 @@ class EventController extends BaseController
     {
         try {
             $data = $request->validated();
+
             $event = new $this->model();
             $event->date = date('Y/m/d', strtotime($data['date']));
             $event->verified = $data['verified'];
@@ -34,7 +35,7 @@ class EventController extends BaseController
                 $event->implementation_date = date('Y/m/d', strtotime($data['implementation_date']));
             }
             $event->youtube_video_url = $data['youtube_video_url'];
-            $options = ['target' => $request->target, "places_ids" => $request->places_ids];
+            $options = ['target' => $request->target, "places_ids" => $request->places_ids]; // will saved in parent target
 
             $event->save($options);
 
@@ -63,7 +64,7 @@ class EventController extends BaseController
             }
             $event->youtube_video_url = $data['youtube_video_url'];
 
-            $options = ['target' => $request->target, "places_ids" => $request->places_ids];
+            $options = ['target' => $request->target, "places_ids" => $request->places_ids]; // will saved in parent target
 
             $event->save($options);
 
@@ -73,6 +74,8 @@ class EventController extends BaseController
         }
     }
 
+
+    // TODO : make traits for List Function
     public function list(Request $request)
     {
 

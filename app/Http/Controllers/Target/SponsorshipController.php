@@ -6,9 +6,8 @@ use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
 use App\Http\Requests\Target\Sponsorship\{CreateRequest , UpdateRequest};
-use App\Facades\Helper;
 
-use App\Models\{User , Sponsorship};
+use App\Models\{Sponsorship};
 
 class SponsorShipController extends BaseController {
     
@@ -29,7 +28,7 @@ class SponsorShipController extends BaseController {
             $sponsorship->country_id = $data['country_id'];
             $sponsorship->sponsored = 0;
 
-            $options = ['target' => $request->target , "places_ids" =>[ $request->place_id] ];
+            $options = ['target' => $request->target , "places_ids" =>[ $request->place_id] ]; // used in parent target
             $sponsorship->save($options);
 
             return $this->_response($sponsorship);

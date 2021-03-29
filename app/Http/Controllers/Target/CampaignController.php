@@ -20,12 +20,13 @@ class CampaignController extends BaseController {
     public function create ( CreateRequest $request) {
         try {
             $data = $request->validated();
+
             $campaign = new $this->model();
 
             $campaign->name = $data['name'];
             $campaign->funded = 0;
 
-            $options = ['target' => $request->target, "places_ids" => $request->places_ids];
+            $options = ['target' => $request->target, "places_ids" => $request->places_ids];//used in parent target
 
             $campaign->save($options);
 
@@ -49,7 +50,8 @@ class CampaignController extends BaseController {
             $campaign->name = $data['name'];
             $campaign->funded = $data['funded'];
 
-            $options = ['target' => $request->target, "places_ids" => $request->places_ids];
+            $options = ['target' => $request->target, "places_ids" => $request->places_ids]; //used in parent target
+
             $campaign->save($options);
 
             return $this->_response($campaign);

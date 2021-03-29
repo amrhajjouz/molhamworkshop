@@ -4,7 +4,6 @@ namespace App\Models;
 
 
 use App\Common\Base\BaseTargetModel;
-use PDO;
 
 class Fundraiser extends BaseTargetModel
 {

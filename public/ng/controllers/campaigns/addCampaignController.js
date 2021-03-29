@@ -1,21 +1,17 @@
 async function addCampaignControllerInit($apiRequest) {
     
-    const sections = await $apiRequest.config("sections").getData();
-    sections.push({id:null , name:"اختر قسم"})
 
-    const places = await $apiRequest.config("places").getData();
-
-    const init = {
-        sections: sections,
-        places: places,
+    return {
+      sections: await $apiRequest.config("sections").getData(),
+      places: await $apiRequest.config("places").getData(),
     };
 
 
-    return init;
 }
 
 
 function addCampaignController($scope, $location, $apiRequest, $page, $init) {
+    
     $scope.object = {
         target: {
             beneficiaries_count: 1,

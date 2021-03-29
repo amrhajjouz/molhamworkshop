@@ -48,10 +48,15 @@ class DonorController extends Controller
         }
     }
 
-    public function list()
-    {
+
+    public function list (Request $request) {
+        
         try {
-            return response()->json(Donor::all());
+            $search_query = ($request->has('q') ? [['name', 'like', '%' . $request->q . '%']] : null);
+            
+            $donors = Donor::orderBy('id', 'desc')->where($search_query)->paginate(5)->withQueryString();
+            
+            return response()->json($donors);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }

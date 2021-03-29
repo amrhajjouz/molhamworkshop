@@ -2,15 +2,11 @@
 
 namespace App\Models;
 
-// use App\Common\Traits\HasTarget;
-
 use App\Common\Base\BaseTargetModel;
 
 class Event extends BaseTargetModel
 {
      
-     // use HasTarget;
-
      protected $table = 'events';
      protected $guarded = [];
      protected $model_path = '\App\Models\Event';//used in parent model
@@ -26,7 +22,6 @@ class Event extends BaseTargetModel
           return $this->hasOne('\App\Models\Donor' , 'id' , 'donor_id');
      }
      
-
      public function transform()
      {
 
