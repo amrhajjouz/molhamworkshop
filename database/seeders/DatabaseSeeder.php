@@ -31,6 +31,15 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('123123'),
         ]);
 
+        for ($i=0; $i < 100; $i++) {
+
+            $mohamd = User::create([
+                'name' => 'Mohamd Ghanoum'.$i,
+                'email' => 'mohamd' . $i.'@admin.com',
+                'password' => Hash::make('123123'),
+            ]);
+        }
+
         ////////////// COUNTRY ///////////////////////
         $countries = [
             "سوريا" , "تركيا" , "لبنان"  ,
