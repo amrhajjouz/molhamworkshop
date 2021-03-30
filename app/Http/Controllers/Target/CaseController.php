@@ -23,7 +23,6 @@ class CaseController extends BaseController {
         try {
 
             $data = $request->validated();
-            
             $case = new $this->model();
 
             $case->beneficiary_name = $data['beneficiary_name'];
@@ -71,14 +70,16 @@ class CaseController extends BaseController {
     public function list (Request $request) {
         
         try {
-            $result =[];
-            $data = $this->model::all();
+            // $search_query = ($request->has('q') ? [['beneficiary_name', 'like', '%' . $request->q . '%']] : null);
 
-            foreach($data as $object){
-                $result[] = $object->transform();
-            }
-            
-            return response()->json($result);
+            $cases = $this->model::orderBy('id', 'desc')->where(function($q)use($request){
+                if($request->has('q')){
+                    $q->where('beneficiary_name', 'like', '%' . $request->q . '%');
+                    $q->orWhere('serial_number', 'like', '%' . $request->q . '%');
+                }
+            })->paginate(10)->withQueryString();
+
+            return $this->_response($cases);
             
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());

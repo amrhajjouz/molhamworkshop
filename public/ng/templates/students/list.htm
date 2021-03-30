@@ -4,7 +4,55 @@
   </a>
   
 </page-header>
-<div class="text-center h4 mt-4 mb-4">العدد الكلي : {{ students.length }}</div>
+
+
+
+<datatable datalist="students">
+  <table>
+    <thead>
+      <tr>
+        <th class="text-center">#</th>
+        <th class="text-center">الاسم</th>
+        <th class="text-center">عدد الفصول</th>
+        <th class="text-center">الفصل الحالي</th>
+        <th class="text-center">الحالة</th>
+        <th class="text-center">خيارات</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="student in students.data">
+        <td class="align-middle text-center">{{ student.id }}</td>
+        <td class="align-middle text-center">
+          {{ student.name }}
+        </td>
+        <td class="align-middle text-center">{{ student.semesters_count }}</td>
+        <td class="align-middle text-center">{{ student.current_semester }}</td>
+        <td class="align-middle text-center">{{ student.status }}</td>
+        <td class="align-middle text-center h2">
+          <dropdown>
+            <dropdown-item
+              href="{{ $r('students.overview', {id: student.id}) }}"
+              ><i class="fe fe-eye"></i> نظرة عامة</dropdown-item
+            >
+            <dropdown-item
+              href="{{ $r('students.edit', {id: student.id}) }}"
+              ><i class="fe fe-edit-2"></i> تعديل</dropdown-item
+            >
+            <dropdown-item
+              href="{{ $r('students.sponsors', {id: student.id}) }}"
+              ><i class="fe fe-align-center"></i> الكفلاء</dropdown-item
+            >
+          </dropdown>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</datatable>
+
+
+
+<!-- <div class="text-center h4 mt-4 mb-4">العدد الكلي : {{ students.length }}</div>
 <div class="card">
   <div class="card-header">
     <div class="row align-items-center">
@@ -25,7 +73,6 @@
       </div>
 
       <div class="col-auto">
-        <!-- Button -->
         <button
           class="btn btn-sm btn-white"
           type="button"
@@ -111,4 +158,4 @@
       </tbody>
     </table>
   </div>
-</div>
+</div> -->

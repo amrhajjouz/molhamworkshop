@@ -60,12 +60,17 @@ class CampaignController extends BaseController {
             throw $this->_exception($e->getMessage());
         }
     }
-    
-    
-    public function list (Request $request) {
-        
+
+
+    public function list(Request $request)
+    {
+
         try {
-            return response()->json($this->model::all());            
+            $search_query = ($request->has('q') ? [['name', 'like', '%' . $request->q . '%']] : null);
+
+            $campaign = $this->model::orderBy('id', 'desc')->where($search_query)->paginate(10)->withQueryString();
+
+            return $this->_response($campaign);
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
         }

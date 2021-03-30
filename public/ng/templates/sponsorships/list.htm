@@ -1,89 +1,52 @@
 <page-header title="قائمة الكفالات" pretitle="الكفالات">
-    <a href="{{ $r('sponsorships.add') }}" class="btn btn-primary">
-        <i class="fe fe-plus"></i>&nbsp; كفالة جديدة
-    </a>
+  <a href="{{ $r('sponsorships.add') }}" class="btn btn-primary">
+    <i class="fe fe-plus"></i>&nbsp; كفالة جديدة
+  </a>
 </page-header>
 
-<div class="text-center h4 mt-4 mb-4">العدد الكلي : {{ sponsorships.length }}</div>
+<datatable datalist="sponsorships">
+  <table>
+    <thead>
+      <tr>
+        <th class="text-center">#</th>
+        <th class="text-center">اسم المستفيد</th>
+        <th class="text-center">تم كفالتها</th>
+        <th class="text-center">خيارات</th>
+      </tr>
+    </thead>
 
-<div class="card">
-    <div class="card-header">
-        <div class="row align-items-center">
-            <div class="col">
-                <div class="input-group input-group-flush input-group-merge">
-                    <input type="search" ng-model="search" class="form-control form-control-prepended search"
-                        placeholder="اكتب كلمة للبحث ثم اضغط Enter  ..." />
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <span class="fe fe-search"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-auto">
-                <!-- Button -->
-                <button class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top"
-                    title="خيارات الفلترة والعرض">
-                    <i class="fe fe-sliders"></i>
-                </button>
-
-                <button class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top"
-                    title="تصدير القائمة الى ملف CSV">
-                    <i class="fe fe-download"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="table-responsive">
-        <table class="table table-sm card-table">
-            <thead>
-                <tr>
-                    <th class="text-center">#</th>
-                    <th class="text-center">الاسم</th>
-                    <th class="text-center">الدولة</th>
-                    <th class="text-center">تم كفالتها</th>
-                    <th class="text-center">خيارات</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-show="sponsorships.length == 0">
-                    <td colspan="10" class="text-center">
-                        <div class="pt-3 pb-2 h4" ng-show="volunteers.length == 0">
-                            لا يوجد أية عناصر في هذه القائمة
-                        </div>
-                    </td>
-                </tr>
-                <tr ng-repeat="item in sponsorships | filter : search">
-                    <td class="align-middle text-center">{{ item.id }}</td>
-                    <td class="align-middle text-center">{{ item.beneficiary_name }}</td>
-                    <td class="align-middle text-center">{{ item.country.name }}</td>
-                    <td class="align-middle text-center">
-                        <span class="badge badge-soft-success" ng-if="item.sponsored">
-                            <i class="fe fe-check"></i>
-                        </span>
-                        <span class="badge badge-soft-danger" ng-if="!item.sponsored"> <i class="fe fe-x"></i></span>
-                    </td>
-                    <td class="align-middle text-center h2">
-                        <div class="dropdown">
-                            <a href="javascript:;" class="color-black mr-2" role="button" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical"></i></a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item"
-                                    href="{{ $r('sponsorships.overview', {id: item.id}) }}"><i
-                                        class="fe fe-eye"></i> نظرة عامة</a>
-                                <a class="dropdown-item"
-                                    href="{{ $r('sponsorships.edit', {id: item.id}) }}"><i
-                                        class="fe fe-edit-2"></i> تعديل</a>
-                                <a class="dropdown-item"
-                                    href="{{ $r('sponsorships.sponsors', {id: item.id}) }}"><i
-                                        class="fe fe-align-center"></i> الكفلاء</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+    <tbody>
+      <tr ng-repeat="sponsorship in sponsorships.data">
+        <td class="align-middle text-center">{{ sponsorship.id }}</td>
+        <td class="align-middle text-center">
+          {{ sponsorship.beneficiary_name }}
+        </td>
+        <td class="align-middle text-center">{{ sponsorship.sponsored }}</td>
+        <td class="align-middle text-center">
+          <span class="badge badge-soft-danger" ng-if="!sponsorship.sponsored"
+            ><i class="fe fe-x"></i>غير مكفولة</span
+          >
+          <span class="badge badge-soft-success" ng-if="sponsorship.sponsored"
+            ><i class="fe fe-check"></i>تم كفالتها</span
+          >
+        </td>
+        <td class="align-middle text-center h2">
+          <dropdown>
+            <dropdown-item
+              href="{{ $r('sponsorships.overview', {id: sponsorship.id}) }}"
+              ><i class="fe fe-eye"></i> نظرة عامة</dropdown-item
+            >
+            <dropdown-item
+              href="{{ $r('sponsorships.edit', {id: sponsorship.id}) }}"
+              ><i class="fe fe-edit-2"></i> تعديل</dropdown-item
+            >
+            <dropdown-item
+              href="{{ $r('sponsorships.sponsors', {id: sponsorship.id}) }}"
+              ><i class="fe fe-align-center"></i> الكفلاء</dropdown-item
+            >
+          </dropdown>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</datatable>

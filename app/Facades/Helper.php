@@ -74,73 +74,73 @@ class Helper
     *  $object : object from student or sponsorship
     *  Return arry has object or error
     */
-    public static function AssignToSponsor($object, Donor $donor, $percentage = 0, $active = true, $request)
-    {
-        $response = [
-            'error' => false,
-            'sponsor' => false,
-        ];
+    // public static function AssignToSponsor($object, Donor $donor, $percentage = 0, $active = true, $request)
+    // {
+    //     $response = [
+    //         'error' => false,
+    //         'sponsor' => false,
+    //     ];
 
-        $target = $object->parent;
+    //     $target = $object->parent;
 
-        if (!$object->id || !$donor->id || !$target) {
-            $response['error'] = 'missed data';
-            return $response;
-        }
+    //     if (!$object->id || !$donor->id || !$target) {
+    //         $response['error'] = 'missed data';
+    //         return $response;
+    //     }
 
-        $model_type = null;
+    //     $model_type = null;
 
-        if ($object instanceof \App\Models\Sponsorship) {
-            $model_type = '\App\Models\Sponsorship';
-        } else if ($object instanceof \App\Models\Student) {
-            $model_type = '\App\Models\Student';
-        } else {
-            Log::info('Helper AssignToSponsor assign wront object');
-            $response['error'] = 'invalid Model type';
-            return $response;
-        }
+    //     if ($object instanceof \App\Models\Sponsorship) {
+    //         $model_type = '\App\Models\Sponsorship';
+    //     } else if ($object instanceof \App\Models\Student) {
+    //         $model_type = '\App\Models\Student';
+    //     } else {
+    //         Log::info('Helper AssignToSponsor assign wront object');
+    //         $response['error'] = 'invalid Model type';
+    //         return $response;
+    //     }
 
-        $sponsor = Sponsor::where('purpose_type', $model_type)
-            ->where('purpose_id', $object->id)
-            ->where('donor_id', $donor->id)
-            ->first();
+    //     $sponsor = Sponsor::where('purpose_type', $model_type)
+    //         ->where('purpose_id', $object->id)
+    //         ->where('donor_id', $donor->id)
+    //         ->first();
 
-        if (!is_null($sponsor)) {
-            $response['error'] = 'already sponsored';
-            $response['object'] = $sponsor;
-            return $response;
-        }
+    //     if (!is_null($sponsor)) {
+    //         $response['error'] = 'already sponsored';
+    //         $response['object'] = $sponsor;
+    //         return $response;
+    //     }
 
-        $config_amount = config('general.least_sponsore_amount');
+    //     $config_amount = config('general.least_sponsore_amount');
 
-        // at least must pay 10$
-        $required = $target->required;
-        $real_amount = ($required * $request->percentage) / 100;
+    //     // at least must pay 10$
+    //     $required = $target->required;
+    //     $real_amount = ($required * $request->percentage) / 100;
 
-        if ($real_amount < $config_amount  && $object->percentage_to_complete() != $percentage) {
-            $response['error'] = 'at least must pay 10 dolar';
-            return  $response;
-        }
+    //     if ($real_amount < $config_amount  && $object->percentage_to_complete() != $percentage) {
+    //         $response['error'] = 'at least must pay 10 dolar';
+    //         return  $response;
+    //     }
 
-        $sponsor = new Sponsor();
-        $sponsor->purpose_type = $model_type;
-        $sponsor->purpose_id = $object->id;
-        $sponsor->percentage = $percentage;
-        $sponsor->active = $active;
-        $sponsor->donor_id = $donor->id;
-        $sponsor->save();
+    //     $sponsor = new Sponsor();
+    //     $sponsor->purpose_type = $model_type;
+    //     $sponsor->purpose_id = $object->id;
+    //     $sponsor->percentage = $percentage;
+    //     $sponsor->active = $active;
+    //     $sponsor->donor_id = $donor->id;
+    //     $sponsor->save();
 
-        if ($model_type == '\App\Models\Sponsorship') {
+    //     if ($model_type == '\App\Models\Sponsorship') {
 
-            if ($object->sponsors->sum('percentage') >= 100) {
-                $object->sponsored = true;
-                $object->save();
-            }
-        }
+    //         if ($object->sponsors->sum('percentage') >= 100) {
+    //             $object->sponsored = true;
+    //             $object->save();
+    //         }
+    //     }
 
-        $response['error'] = false;
-        $response['sponsor'] = $sponsor;
+    //     $response['error'] = false;
+    //     $response['sponsor'] = $sponsor;
 
-        return $response;
-    }
+    //     return $response;
+    // }
 }

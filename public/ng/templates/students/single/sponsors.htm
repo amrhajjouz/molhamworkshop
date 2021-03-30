@@ -1,5 +1,5 @@
 <include-header />
-<button
+<!-- <button
   href="#"
   ng-click="showSponsorModal('add')"
   class="btn btn-primary"
@@ -11,114 +11,68 @@
 <div class="text-center h4 mt-4 mb-4">العدد الكلي : {{ sponsors.length }}</div>
 <div class="text-center h4 mt-4 mb-4">
   نسبة الإكتمال : {{ 100 - object.percentage_to_complete }} %
+</div> -->
+
+
+<div class="row m-2">
+  <div class="col-6">
+    نسبة الإكتمال : {{ 100 - object.percentage_to_complete }} %
+  </div>
+  <div class="col-6 text-left">
+    <button
+      href="#"
+      ng-click="showSponsorModal('add')"
+      class="btn btn-primary"
+      ng-disabled="object.percentage_to_complete  <= 0"
+    >
+      <i class="fe fe-plus"></i>&nbsp;إضافة كفيل
+    </button>
+  </div>
 </div>
-<div class="card">
-  <div class="card-header">
-    <div class="row align-items-center">
-      <div class="col">
-        <div class="input-group input-group-flush input-group-merge">
-          <input
-            type="search"
-            ng-model="search"
-            class="form-control form-control-prepended search"
-            placeholder="اكتب كلمة للبحث ثم اضغط Enter  ..."
-          />
-          <div class="input-group-prepend">
-            <div class="input-group-text">
-              <span class="fe fe-search"></span>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="col-auto">
-        <!-- Button -->
-        <button
-          class="btn btn-sm btn-white"
-          type="button"
-          data-toggle="tooltip"
-          data-placement="top"
-          title="خيارات الفلترة والعرض"
-        >
-          <i class="fe fe-sliders"></i>
-        </button>
 
-        <button
-          class="btn btn-sm btn-white"
-          type="button"
-          data-toggle="tooltip"
-          data-placement="top"
-          title="تصدير القائمة الى ملف CSV"
-        >
-          <i class="fe fe-download"></i>
-        </button>
-      </div>
-    </div>
-  </div>
 
-  <div class="table-responsive">
-    <table class="table table-sm card-table">
-      <thead>
-        <tr>
-          <th class="text-center">#</th>
-          <th class="text-center">اسم الكفيل</th>
-          <th class="text-center">النسبة</th>
-          <th class="text-center">الحالة</th>
-          <th class="text-center">خيارات</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-show="sponsorships.length == 0">
-          <td colspan="10" class="text-center">
-            <div class="pt-3 pb-2 h4" ng-show="sponsors.length == 0">
-              لا يوجد أية عناصر في هذه القائمة
-            </div>
-          </td>
-        </tr>
-        <tr ng-repeat="item in sponsors | filter : search">
-          <td class="align-middle text-center">{{ item.id }}</td>
-          <td class="align-middle text-center">{{ item.donor.name }}</td>
-          <td class="align-middle text-center">{{ item.percentage }} %</td>
-          <td class="align-middle text-center">
-            <span class="badge badge-soft-success" ng-if="item.active">
-              <i class="fe fe-check"></i>
-            </span>
-            <span class="badge badge-soft-danger" ng-if="!item.active">
-              <i class="fe fe-x"></i
-            ></span>
-          </td>
-          <td class="align-middle text-center h2">
-            <div class="dropdown">
-              <a
-                href="javascript:;"
-                class="color-black mr-2"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                ><i class="fe fe-more-vertical"></i
-              ></a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a
-                  class="dropdown-item"
-                  href="{{ $r('sponsorships.overview', {id: item.id}) }}"
-                  ><i class="fe fe-eye"></i> نظرة عامة</a
-                >
+<datatable datalist="sponsors">
+  <table>
+    <thead>
+      <tr>
+        <th class="text-center">#</th>
+        <th class="text-center">اسم الكفيل</th>
+        <th class="text-center">النسبة</th>
+        <th class="text-center">الحالة</th>
+        <th class="text-center">خيارات</th>
+      </tr>
+    </thead>
 
-                <a
-                  href="#"
-                  ng-click="showSponsorModal('edit', item)"
-                  class="dropdown-item"
-                >
-                  <i class="fe fe-edit-2"></i>&nbsp;تعديل
-                </a>
-              </div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <tbody>
+      <tr ng-repeat="sponsor in sponsors.data">
+        <td class="align-middle text-center">{{ sponsor.id }}</td>
+        <td class="align-middle text-center">{{ sponsor.donor.name }}</td>
+        <td class="align-middle text-center">{{ sponsor.percentage }} %</td>
+        <td class="align-middle text-center">
+          <span class="badge badge-soft-success" ng-if="sponsor.active">
+            <i class="fe fe-check"></i>
+          </span>
+          <span class="badge badge-soft-danger" ng-if="!sponsor.active">
+            <i class="fe fe-x"></i
+          ></span>
+        </td>
+        <td class="align-middle text-center h2">
+          <dropdown>
+            <a
+              href="#"
+              ng-click="showSponsorModal('edit', sponsor)"
+              class="dropdown-item"
+            >
+              <i class="fe fe-edit-2"></i>&nbsp;تعديل
+            </a>
+          </dropdown>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</datatable>
+
 
   <!-- Create Update Modal -->
   <modal id="sponsor-modal">
@@ -193,4 +147,3 @@
       </form>
     </modal-body>
   </modal>
-</div>

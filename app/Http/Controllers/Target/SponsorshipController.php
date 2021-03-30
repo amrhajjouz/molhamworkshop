@@ -5,20 +5,23 @@ namespace App\Http\Controllers\Target;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Target\Sponsorship\{CreateRequest , UpdateRequest};
+use App\Http\Requests\Target\Sponsorship\{CreateRequest, UpdateRequest};
 
 use App\Models\{Sponsorship};
 
-class SponsorShipController extends BaseController {
-    
+class SponsorShipController extends BaseController
+{
+
     use HasRetrieve;
 
-    public function __construct () {
+    public function __construct()
+    {
         $this->middleware('auth');
         $this->model = \App\Models\Sponsorship::class;
     }
-    
-    public function create ( CreateRequest $request) {
+
+    public function create(CreateRequest $request)
+    {
         try {
             $data = $request->validated();
 
@@ -28,7 +31,7 @@ class SponsorShipController extends BaseController {
             $sponsorship->country_id = $data['country_id'];
             $sponsorship->sponsored = 0;
 
-            $options = ['target' => $request->target , "places_ids" =>[ $request->place_id] ]; // used in parent target
+            $options = ['target' => $request->target, "places_ids" => [$request->place_id]]; // used in parent target
             $sponsorship->save($options);
 
             return $this->_response($sponsorship);
@@ -36,11 +39,12 @@ class SponsorShipController extends BaseController {
             throw $this->_exception($e->getMessage());;
         }
     }
-    
-    public function update (UpdateRequest $request) {
-        
+
+    public function update(UpdateRequest $request)
+    {
+
         try {
-            
+
             $sponsorship = $this->model::findOrFail($request->id);
             $data = $request->validated();
 
@@ -49,49 +53,44 @@ class SponsorShipController extends BaseController {
             $sponsorship->country_id = $data['country_id'];
             $sponsorship->sponsored = $data['sponsored'];
 
-            $options = ['target' => $request->target , "places_ids" =>[ $request->place_id] ];
+            $options = ['target' => $request->target, "places_ids" => [$request->place_id]];
 
 
             $sponsorship->save($options);
-            
+
             return $this->_response($sponsorship);
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
         }
     }
-    
-    public function list (Request $request) {
-        
+
+    public function list(Request $request)
+    {
+
         try {
-            $result =[];
-            $data = $this->model::all();
-            foreach($data as $object){
-                $result[] = $object->transform();
-            }
-            return response()->json($result);
+            $search_query = ($request->has('q') ? [['beneficiary_name', 'like', '%' . $request->q . '%']] : null);
+
+            $sponsorships = $this->model::orderBy('id', 'desc')->where($search_query)->paginate(10)->withQueryString();
+
+            return $this->_response($sponsorships);
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
         }
     }
 
-    public function list_sponsors(Request $request , $id){
-      
+    public function list_sponsors(Request $request, $id)
+    {
+
         try {
             $sponsorship = Sponsorship::findOrFail($id);
 
-            $sponsors= $sponsorship->sponsors;
+            $sponsors = $sponsorship->sponsors()->paginate()->through(function ($sponsor, $key) {
+                return $sponsor->transform();
+            });
 
-            $res = [];
-            foreach($sponsors  as $item){
-                $res [] = $item->transform();
-            }
-
-            return $this->_response($res);
+            return $this->_response($sponsors);
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
         }
-
     }
-    
-    
 }

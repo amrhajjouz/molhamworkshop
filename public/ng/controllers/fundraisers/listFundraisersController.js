@@ -1,5 +1,5 @@
-function listFundraisersControllerInit($apiRequest) {
-  return $apiRequest.config("fundraisers").getData();
+function listFundraisersControllerInit($datalist) {
+  return $datalist("fundraisers", true).load();
 }
 
 function listFundraisersController($scope, $init) {

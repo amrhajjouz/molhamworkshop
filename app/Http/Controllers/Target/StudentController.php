@@ -68,37 +68,30 @@ class StudentController extends BaseController
     {
 
         try {
-            $result = [];
-            $data = $this->model::all();
+            $search_query = ($request->has('q') ? [['name', 'like', '%' . $request->q . '%']] : null);
 
-            foreach ($data as $student) {
-                $result[] = $student->transform();
-            }
+            $students = $this->model::orderBy('id', 'desc')->where($search_query)->paginate(10)->withQueryString();
 
-            return $this->_response($result);
+            return $this->_response($students);
         } catch (\Exception $e) {
-
-            return ['error' => $e->getMessage()];
+            throw $this->_exception($e->getMessage());
         }
     }
 
 
-    // TODO: replace it in trait
+
+
     public function list_sponsors(Request $request, $id)
     {
 
         try {
+            $student = Student::findOrFail($id);
 
-            $object = $this->model::findOrFail($id);
+            $sponsors = $student->sponsors()->paginate()->through(function ($sponsor, $key) {
+                return $sponsor->transform();
+            });
 
-            $sponsors = $object->sponsors;
-
-            $res = [];
-            foreach ($sponsors  as $item) {
-                $res[] = $item->transform();
-            }
-
-            return $this->_response($res);
+            return $this->_response($sponsors);
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
         }

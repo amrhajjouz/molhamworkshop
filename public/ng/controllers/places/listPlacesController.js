@@ -1,5 +1,5 @@
-function listPlacesControllerInit($apiRequest) {
-    return $apiRequest.config("places").getData();
+function listPlacesControllerInit($datalist) {
+  return $datalist("places", true).load();
 }
 
 function listPlacesController($scope, $init) {

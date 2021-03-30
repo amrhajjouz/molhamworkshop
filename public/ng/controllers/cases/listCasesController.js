@@ -1,5 +1,5 @@
-function listCasesControllerInit($apiRequest) {
-  return $apiRequest.config("cases").getData();
+async function listCasesControllerInit($datalist) {
+  return await $datalist("cases", true).load();
 }
 
 function listCasesController($scope, $init) {

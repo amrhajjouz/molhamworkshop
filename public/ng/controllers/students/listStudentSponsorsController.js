@@ -1,9 +1,13 @@
-async function listStudentSponsorsControllerInit($http, $page, $apiRequest) {
+async function listStudentSponsorsControllerInit(
+  $http,
+  $page,
+  $apiRequest,
+  $datalist
+) {
   return {
-    sponsors: await $apiRequest
-      .config("students/" + $page.routeParams.id + "/sponsors")
-      .getData(),
-
+    sponsors: await $datalist(
+      "students/" + $page.routeParams.id + "/sponsors"
+    ).load(),
     object: await $apiRequest
       .config("students/" + $page.routeParams.id)
       .getData(),
@@ -23,7 +27,7 @@ function listStudentSponsorsController($scope, $page, $apiRequest, $init) {
 
   $scope.get_max_percentage_on_update = () => {
     if (!$scope.selected_object) return 0;
-    let sponsors = $scope.sponsors;
+    let sponsors = $scope.sponsors.data;
     sponsors = sponsors.filter((item) => item.id != $scope.selected_object.id);
 
     let total = 0;
@@ -65,11 +69,12 @@ function listStudentSponsorsController($scope, $page, $apiRequest, $init) {
     },
     function (response, data) {
       if ($scope.currentSponsorModalAction == "edit") {
-        $scope.sponsors[
-          $scope.sponsors.findIndex((a) => a.id === data.id)
+        $scope.sponsors.data[
+          $scope.sponsors.data.findIndex((a) => a.id === data.id)
         ] = data;
       } else {
-        $scope.sponsors.push(data);
+        $scope.sponsors.data.push(data);
+        $scope.sponsors.total ++;
       }
 
       $scope.calculatePercentageToComplete();
@@ -87,7 +92,7 @@ function listStudentSponsorsController($scope, $page, $apiRequest, $init) {
   //  refresh percentage to complete on edit or create
   $scope.calculatePercentageToComplete = () => {
     let percentageToComplete = 0;
-    $scope.sponsors.forEach((i) => (percentageToComplete += i.percentage));
+    $scope.sponsors.data.forEach((i) => (percentageToComplete += i.percentage));
     $scope.object.percentage_to_complete = 100 - percentageToComplete;
   };
 
@@ -96,7 +101,7 @@ function listStudentSponsorsController($scope, $page, $apiRequest, $init) {
     if ($scope.currentSponsorModalAction == "add") {
       return $scope.object.percentage_to_complete;
     }
-    let sponsores = $scope.sponsors.filter((i) => i.id != item.id);
+    let sponsores = $scope.sponsors.data.filter((i) => i.id != item.id);
 
     let max = 0;
     sponsores.forEach((i) => {

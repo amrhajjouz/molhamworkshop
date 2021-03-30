@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
         /////////////////// USER ////////////////////////
       
         DB::table('users')->insert([
@@ -30,15 +29,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'mohamd@admin.com',
             'password' => Hash::make('123123'),
         ]);
-
-        for ($i=0; $i < 100; $i++) {
-
-            $mohamd = User::create([
-                'name' => 'Mohamd Ghanoum'.$i,
-                'email' => 'mohamd' . $i.'@admin.com',
-                'password' => Hash::make('123123'),
-            ]);
-        }
 
         ////////////// COUNTRY ///////////////////////
         $countries = [
@@ -134,9 +124,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'donor2',
             'email' => 'donor2@donor.com',
             'password' => Hash::make(12345678),
-            'email' => 'donor1@donor.com',
         ]);
-        
-        
+
+        $this->call(FakerSeed::class);
     }
 }

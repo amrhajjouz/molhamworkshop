@@ -1,5 +1,5 @@
-function listsSponsorshipsControllerInit($apiRequest) {
-  return $apiRequest.config("sponsorships").getData();
+async function listsSponsorshipsControllerInit($datalist) {
+  return await $datalist("sponsorships", true).load();
 }
 
 function listsSponsorshipsController($scope, $init) {

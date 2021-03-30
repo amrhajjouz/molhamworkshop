@@ -1,81 +1,38 @@
 <page-header title="قائمة الأماكن" pretitle="الأماكن">
-    <a href="{{ $r('places.add') }}" class="btn btn-primary">
-        <i class="fe fe-plus"></i>&nbsp; مكان جديد
-    </a>
+  <a href="{{ $r('places.add') }}" class="btn btn-primary">
+    <i class="fe fe-plus"></i>&nbsp; مكان جديد
+  </a>
 </page-header>
 
-<div class="text-center h4 mt-4 mb-4">العدد الكلي : {{ places.length }}</div>
+<datatable datalist="places">
+  <table>
+    <thead>
+      <tr>
+        <th class="text-center">#</th>
+        <th class="text-center">الاسم</th>
+        <th class="text-center">الاسم الكامل</th>
+        <th class="text-center">النوع</th>
+        <th class="text-center">خيارات</th>
+      </tr>
+    </thead>
 
-<div class="card">
-    <div class="card-header">
-        <div class="row align-items-center">
-            <div class="col">
-                <div class="input-group input-group-flush input-group-merge">
-                    <input type="search" ng-model="search" class="form-control form-control-prepended search"
-                        placeholder="اكتب كلمة للبحث ثم اضغط Enter  ..." />
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <span class="fe fe-search"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-auto">
-                <!-- Button -->
-                <button class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top"
-                    title="خيارات الفلترة والعرض">
-                    <i class="fe fe-sliders"></i>
-                </button>
-
-                <button class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top"
-                    title="تصدير القائمة الى ملف CSV">
-                    <i class="fe fe-download"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="table-responsive">
-        <table class="table table-sm card-table">
-            <thead>
-                <tr>
-                    <th class="text-center">#</th>
-                    <th class="text-center">الاسم</th>
-                    <th class="text-center">الاسم الكامل</th>
-                    <th class="text-center">النوع</th>
-                    <th class="text-center">خيارات</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-show="places.length == 0">
-                    <td colspan="10" class="text-center">
-                        <div class="pt-3 pb-2 h4" ng-show="volunteers.length == 0">
-                            لا يوجد أية عناصر في هذه القائمة
-                        </div>
-                    </td>
-                </tr>
-                <tr ng-repeat="item in places | filter : search">
-                    <td class="align-middle text-center">{{ item.id }}</td>
-                    <td class="align-middle text-center">{{ item.name }}</td>
-                    <td class="align-middle text-center">{{ item.long_name }}</td>
-                    <td class="align-middle text-center">{{ item.type }}</td>
-                     <td class="align-middle text-center h2">
-                         <div class="dropdown">
-                             <a href="javascript:;" class="color-black mr-2" role="button" data-toggle="dropdown"
-                                 aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical"></i></a>
-                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                 <a class="dropdown-item"
-                                     href="{{ $r('places.overview', {id: item.id}) }}"><i
-                                         class="fe fe-eye"></i> نظرة عامة</a>
-                                 <a class="dropdown-item"
-                                     href="{{ $r('places.edit', {id: item.id}) }}"><i
-                                         class="fe fe-edit-2"></i> تعديل</a>
-                             </div>
-                         </div>
-                     </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+    <tbody>
+      <tr ng-repeat="place in places.data">
+        <td class="align-middle text-center">{{ place.id }}</td>
+        <td class="align-middle text-center">{{ place.name }}</td>
+        <td class="align-middle text-center">{{ place.long_name }}</td>
+        <td class="align-middle text-center">{{ place.type }}</td>
+        <td class="align-middle text-center h2">
+          <dropdown>
+            <dropdown-item href="{{ $r('places.overview', {id: place.id}) }}"
+              ><i class="fe fe-eye"></i> نظرة عامة</dropdown-item
+            >
+            <dropdown-item href="{{ $r('places.edit', {id: place.id}) }}"
+              ><i class="fe fe-edit-2"></i> تعديل</dropdown-item
+            >
+          </dropdown>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</datatable>

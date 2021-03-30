@@ -66,17 +66,14 @@ class PlaceController extends BaseController
     {
 
         try {
-            $result = [];
-            $data = $this->model::all();
+            $search_query = ($request->has('q') ? [['name', 'like', '%' . $request->q . '%']] : null);
 
-            foreach ($data as $object) {
-                $obj = (object) $object->toArray();
-                $obj->long_name = Helper::getFullNamePlace($object);
-                $result[] = $obj;
+            $places = $this->model::orderBy('id', 'desc')->where($search_query)->paginate(10)->withQueryString();
+            foreach($places  as $place){
+                $place->long_name = Helper::getFullNamePlace($place);
             }
-            return response()->json($result);
+            return $this->_response($places);
         } catch (\Exception $e) {
-
             throw $this->_exception($e->getMessage());
         }
     }

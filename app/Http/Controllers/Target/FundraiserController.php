@@ -64,13 +64,16 @@ class FundraiserController extends BaseController
         }
     }
 
+
     public function list(Request $request)
     {
 
         try {
-            $data = $this->model::all();
+            $search_query = ($request->has('q') ? [['donor_id', 'like', '%' . $request->q . '%']] : null);
 
-            return $this->_response($data);
+            $fundraisers = $this->model::orderBy('id', 'desc')->where($search_query)->paginate(10)->withQueryString();
+
+            return $this->_response($fundraisers);
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
         }

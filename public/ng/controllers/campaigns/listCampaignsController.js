@@ -1,8 +1,7 @@
-function listCampaignsControllerInit($apiRequest) {
-    return $apiRequest.config("campaigns").getData();
+async function listCampaignsControllerInit($datalist) {
+  return await $datalist("campaigns", true).load();
 }
 
 function listCampaignsController($scope, $init) {
-    
-    $scope.campaigns = $init;
+  $scope.campaigns = $init;
 }

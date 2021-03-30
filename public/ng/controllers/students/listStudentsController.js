@@ -1,5 +1,5 @@
-function listStudentsControllerInit($apiRequest) {
-    return $apiRequest.config("students").getData();
+function listStudentsControllerInit($datalist) {
+  return $datalist("students", true).load();
 }
 
 function listStudentsController($scope, $init) {

@@ -75,18 +75,18 @@ class EventController extends BaseController
     }
 
 
-    // TODO : make traits for List Function
     public function list(Request $request)
     {
 
         try {
-            $result = [];
-            $data = $this->model::all();
+            $search_query = ($request->has('q') ? [['donor_id', 'like', '%' . $request->q . '%']] : null);
 
+            $events = $this->model::orderBy('id', 'desc')->where($search_query)->paginate(10)->withQueryString();
 
-            return response()->json($data);
+            return $this->_response($events);
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
-        }   
+        }
     }
+
 }
