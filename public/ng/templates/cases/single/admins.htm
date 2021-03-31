@@ -1,0 +1,163 @@
+<include-header />
+
+<div class="row m-2">
+  <div class="col-6"></div>
+  <div class="col-6 text-left">
+    <button
+      href="#"
+      ng-click="showModal('add')"
+      class="btn btn-primary"
+      ng-disabled="object.percentage_to_complete  <= 0"
+    >
+      <i class="fe fe-plus"></i>&nbsp;إضافة مشرف
+    </button>
+  </div>
+</div>
+
+<datatable datalist="data">
+  <table>
+    <thead>
+      <tr>
+        <th class="text-center">#</th>
+        <th class="text-center">اسم المشرف</th>
+        <th class="text-center">الدور</th>
+        <th class="text-center">خيارات</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="admin in admins">
+        <td class="align-middle text-center">{{ admin.id }}</td>
+        <td class="align-middle text-center">{{ admin.user.name }}</td>
+        <td class="align-middle text-center">
+          <p ng-repeat="r in admin.role">{{r }}</p>
+        </td>
+        <td class="align-middle text-center h2">
+          <dropdown>
+            <a
+              href="#"
+              ng-click="showModal('edit', admin)"
+              class="dropdown-item"
+            >
+              <i class="fe fe-edit-2"></i>&nbsp;تعديل
+            </a>
+            <a
+              href="#"
+              ng-click="showModal('delete', admin)"
+              class="dropdown-item"
+            >
+              <i class="fe fe-trash"></i>&nbsp;حذف
+            </a>
+          </dropdown>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</datatable>
+{{roles}}
+<div class="card">
+  <!-- Create Update Modal -->
+  <modal id="admin-modal">
+    <modal-title>
+      <span>
+        <div ng-show="currentModalAction == 'add'">
+          <i class="fe fe-plus-circle"></i>&nbsp; اضافة مشرف جديد
+        </div>
+        <div ng-show="currentModalAction == 'edit'">
+          <i class="fe fe-edit"></i>&nbsp; تعديل المشرف {{ admin.id }}
+        </div>
+        <div ng-show="currentModalAction == 'delete'">
+          <i class="fe fe-trash"></i>&nbsp; حذف المشرف {{ admin.id }}
+        </div>
+      </span>
+      <span> </span>
+    </modal-title>
+
+    <modal-body>
+      <form
+        name="listCaseAdminsForm"
+        request="createUpdateCaseAdmins"
+        model="admin"
+        id="myForm"
+      >
+        <div class="row" ng-if="currentModalAction != 'delete'">
+          <div class="col-12 col-md-6">
+            <div class="form-group" ng-if="currentModalAction == 'add'">
+              <label for="user_id">اسم المشرف</label>
+              <select2
+                model="admin.user_id"
+                ajax-url="users/search"
+                error-model="createUpdateCaseAdmins.errors.user_id"
+              >
+              </select2>
+            </div>
+            <div class="form-group" ng-if="currentModalAction == 'edit'">
+              <label for="user_id">اسم المشرف</label>
+              <input
+                type="text"
+                class="form-control"
+                ng-class="(updateSponsorShipsSponsor.errors.percentage != null) ? 'is-invalid' : ''"
+                ng-model="admin.user.name"
+                ng-disabled="true"
+              />
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="percentage">الدور</label>
+              <select2
+                model="admin.role"
+                error-model="createUpdateCaseAdmins.errors.user_id"
+                multiple
+              >
+                <option
+                  ng-repeat="r in roles"
+                  value="{{r.id}}"
+                  selected
+                  ng-if="admin.role.includes(r.id)"
+                >
+                  {{r.name}}
+                </option>
+                <option
+                  ng-repeat="r in roles"
+                  value="{{r.id}}"
+                  ng-if="!admin.role.includes(r.id)"
+                >
+                  {{r.name}}
+                </option>
+              </select2>
+            </div>
+          </div>
+        </div>
+
+        <submit-button
+          ng-show="currentModalAction == 'add'"
+          form="listCaseAdminsForm"
+          icon="fe fe-plus"
+          >اضافة</submit-button
+        >
+        <submit-button
+          ng-show="currentModalAction == 'edit'"
+          form="listCaseAdminsForm"
+          icon="fe fe-edit"
+          >تعديل</submit-button
+        >
+
+        <!-- Delete Section in modal -->
+
+        <div class="row" ng-if="currentModalAction == 'delete'">
+          <div class="col-12 col-md-12 mt-2 mb-4">
+            هل تريد تأكيد حذف هذا المشرف وأدواره {{admin.user.name}} ؟
+          </div>
+        </div>
+        <submit-button
+          ng-show="currentModalAction == 'delete'"
+          form="listCaseAdminsFormm"
+          icon="fe fe-delete"
+        >
+          حذف
+        </submit-button>
+      </form>
+    </modal-body>
+  </modal>
+</div>

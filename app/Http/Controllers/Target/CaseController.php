@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Target\Cases\{CreateRequest , UpdateRequest};
 use App\Facades\Helper;
 
-use App\Models\{User , Cases};
+use App\Models\{User , Cases , Admin};
 
 class CaseController extends BaseController {
      
@@ -85,5 +85,41 @@ class CaseController extends BaseController {
             throw $this->_exception($e->getMessage());
         }
     }
+    
+    public function list_admins (Request $request , $id) {
+        
+        try {
+
+            $case = $this->model::findOrFail($id);
+
+            // $admins = $case->admins()->with('user')->paginate(10);
+            $admins = $case->admins()->with('user')->get();
+// return $this->_response($admins);
+            $admins = collect($admins)->groupBy('user_id');
+
+            $admins = $this->transform_list_admins($admins);
+
+            return $this->_response($admins);
+            
+        } catch (\Exception $e) {
+            throw $this->_exception($e->getMessage());
+        }
+    }
+
+    private function transform_list_admins($admins){
+        $return = [];
+        
+        foreach ($admins as $items) {
+            $roles = [];
+            foreach($items  as $item){
+                array_push($roles , $item->role);
+               
+            }
+            $item->role = $roles;
+            $return [] = $item;
+        }
+        return $return;
+    }
+    
     
 }

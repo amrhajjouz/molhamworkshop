@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Http\Requests\Admin;
+
+use App\Common\Base\BaseRequest;
+use Illuminate\Validation\Rule;
+
+class UpdateRequest extends BaseRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+    
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'user_id' => [
+                'required'
+            ],
+            'role' => ['required', 'array'],
+            'adminable_id' => ['required', 'numeric'],
+            'adminable_type' => ['required', 'string'],
+        ];
+    }
+
+
+    
+}

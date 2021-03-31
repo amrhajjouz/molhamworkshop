@@ -18,6 +18,14 @@ class Cases extends BaseTargetModel
           return $this->belongsTo(Country::class, 'country_id', 'id');
      }
 
+
+
+     public function admins()
+     {
+          return $this->hasMany('App\Models\Admin', 'adminable_id', 'id')->where('adminable_type', '\App\Models\Cases');
+     }
+
+
      /* 
       * this function called to return this model with all relations
       * Notice : this just for one object because it has big data 

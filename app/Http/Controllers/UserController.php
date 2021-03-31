@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Common\Base\BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\User\CreateUserRequest;
@@ -10,7 +10,7 @@ use App\Http\Requests\User\UpdateUserRequest;
 
 use App\Models\User;
 
-class UserController extends Controller {
+class UserController extends BaseController {
     
     public function __construct () {
         $this->middleware('auth');
@@ -72,6 +72,42 @@ class UserController extends Controller {
             
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
+        }
+    }
+
+
+
+    public function search(Request $request)
+    {
+
+        try {
+
+            $result = [];
+            $data = null;
+
+            $data = User::where(function ($q) use ($request) {
+                if ($request->has('q')) {
+                    $q->where('name', 'like', "%" . $request->q . "%")
+                        ->orWhere('email', 'like', "%" . $request->q . "%");
+                }
+            })
+                ->take(10)
+                ->get();
+
+            foreach ($data as $item) {
+
+                $obj = new \stdClass();
+                $obj->id = $item->id;
+                $obj->name = $item->name;
+                $obj->text = $item->name;
+
+                $result[] = $obj;
+            }
+
+            return response()->json($result);
+        } catch (\Exception $e) {
+
+            throw $this->_exception($e->getMessage());
         }
     }
     

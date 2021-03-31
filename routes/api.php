@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\ProfileController;
-use App\Http\Controllers\{UserController, CountryController, CategoryController, SectionController, PlaceController};
+use App\Http\Controllers\{UserController, CountryController, CategoryController, SectionController, PlaceController , AdminController};
 use App\Http\Controllers\Target\{
     CaseController,
     CampaignController,
@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/password', [ProfileController::class, 'change_password']);
 
     Route::get('/users', [UserController::class, 'list']);
+    Route::get('/users/search', [UserController::class, 'search']);
     Route::post('/users', [UserController::class, 'create']);
     Route::put('/users', [UserController::class, 'update']);
     Route::get('/users/{id}', [UserController::class, 'retrieve']);
@@ -64,6 +65,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/cases', [CaseController::class, 'create']);
     Route::put('/cases', [CaseController::class, 'update']);
     Route::get('/cases/{id}', [CaseController::class, 'retrieve']);
+    Route::get('/cases/{id}/admins', [CaseController::class, 'list_admins']);
 
 
     //////////////////  CAMPAIGNS //////////////
@@ -112,6 +114,12 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/sponsors', [SponsorController::class, 'create']);
     Route::put('/sponsors', [SponsorController::class, 'update']);
+
+    /////////////////////// AdminController /////////////////////////
+
+    Route::post('/admins', [AdminController::class, 'create']);
+    Route::put('/admins', [AdminController::class, 'update']);
+    // Route::delete('/admins/{id}', [AdminController::class, 'delete']);
 });
 
 

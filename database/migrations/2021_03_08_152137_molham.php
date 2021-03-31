@@ -160,6 +160,17 @@ class Molham extends Migration
             $table->boolean('active')->index()->default(0);
             $table->timestamps();
         });
+
+        Schema::create('admins', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('adminable_type')->index();
+            $table->bigInteger('adminable_id')->index();
+            $table->bigInteger('user_id')->index();
+            $table->enum('role', ['supervisor', 'field_officer', 'media_officer', 'data_entry'])->index();
+            $table->softDeletes();
+
+            $table->timestamps();
+        });
     }
 
     /**
@@ -183,5 +194,6 @@ class Molham extends Migration
         Schema::dropIfExists('places');
         Schema::dropIfExists('placeables');
         Schema::dropIfExists('sponsors');
+        Schema::dropIfExists('admins');
     }
 }
