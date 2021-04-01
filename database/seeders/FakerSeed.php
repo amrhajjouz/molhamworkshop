@@ -19,7 +19,7 @@ class FakerSeed extends Seeder
     {
         //
 
-        if(0) return;
+        // if(0) return;
         $count = 50;
 
         
