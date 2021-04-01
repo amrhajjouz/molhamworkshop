@@ -119,7 +119,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/admins', [AdminController::class, 'create']);
     Route::put('/admins', [AdminController::class, 'update']);
-    // Route::delete('/admins/{id}', [AdminController::class, 'delete']);
+    Route::post('/admins/delete', [AdminController::class, 'delete']);
 });
 
 

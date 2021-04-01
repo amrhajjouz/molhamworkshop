@@ -27,6 +27,7 @@ async function listCaseAdminsControllerInit(
     q: "",
     search: function (q) {},
   };
+
   fakerPaginator.data = admins;
   fakerPaginator.total = admins.length;
   
@@ -46,7 +47,6 @@ function listCaseAdminsController($scope, $page, $apiRequest, $init) {
   ];
 
   //initial value for admin recors
-
   $scope.defaultAdminModel = {
     user_id: null,
     role: [],
@@ -56,6 +56,25 @@ function listCaseAdminsController($scope, $page, $apiRequest, $init) {
 
   $scope.admin = angular.copy($scope.defaultAdminModel);
 
+
+
+/////////////////////// DELETE FUNCTION /////////////////////////
+$scope.deleteAdmin = (admin) => {
+  if (confirm("هل أنت متأكد من حذف هذا العنصر؟")) {
+      $apiRequest.config(
+        {
+          method: "POST",
+          url: `admins/delete`,
+          data: admin,
+        },
+        function (response, data) {
+            $page.reload();
+        }
+      ).send();
+  }//end if confirm
+};
+
+
   $scope.createUpdateCaseAdmins = $apiRequest.config(
     {
       method: "POST",
@@ -63,13 +82,10 @@ function listCaseAdminsController($scope, $page, $apiRequest, $init) {
       data: $scope.admin,
     },
     function (response, data) {
-      // if ($scope.currentModalAction == "edit") {
-        // $scope.admins[$scope.admins.findIndex((a) => a.id === data.id)] = data;
-      // } else {
-      // }
-      // $page.reload();
-
-      // $("#admin-modal").modal("hide");
+      $("#admin-modal").on("hidden.bs.modal", function (e) {
+        $page.reload() 
+      });
+      $("#admin-modal").modal("hide");
 
       // reinitialize admin to default value after create or update
       $scope.admin = angular.copy($scope.defaultAdminModel);
@@ -88,13 +104,6 @@ function listCaseAdminsController($scope, $page, $apiRequest, $init) {
       case "edit":
          $scope.createUpdateCaseAdmins.config.method = action = "PUT";
          $scope.admin = angular.copy(data);
-        break;
-      case "delete":
-        console.log({data})
-        $scope.createUpdateCaseAdmins.config.method = action = "POST";
-        $scope.createUpdateCaseAdmins.config.url = action =
-        "admins/" + $page.routeParams.id;
-        $scope.admin = angular.copy(data);
         break;
     
       default:

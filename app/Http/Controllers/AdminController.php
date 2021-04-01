@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Common\Base\{BaseController};
-use App\Http\Requests\Admin\{CreateRequest, UpdateRequest};
+use App\Http\Requests\Admin\{CreateRequest, UpdateRequest , DeleteRequest};
 use App\Models\{User, Sponsor, Donor, Admin};
+use Illuminate\Http\Request;
 
 class AdminController extends BaseController
 {
@@ -103,9 +104,24 @@ class AdminController extends BaseController
     /* 
      * Soft delete 
     */  
-    public function delete(Request $request){
-        
+    public function delete(DeleteRequest $request){
+        try {
+            $data = $request->validated();
 
+            $model = $data['adminable_type']::find($data['adminable_id']);
+
+            if(!$model) throw $this->_exception('record not found');
+
+            $admins = $model->admins()->where('user_id' , $data['user_id'])->get();
+            
+            foreach($admins  as $admin){
+                $admin->delete();
+            }
+
+            return $this->_response($model);
+        } catch (\Exception $e) {
+            throw $this->_exception($e->getMessage());
+        }
         
     }
     

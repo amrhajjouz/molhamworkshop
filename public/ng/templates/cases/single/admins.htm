@@ -7,7 +7,6 @@
       href="#"
       ng-click="showModal('add')"
       class="btn btn-primary"
-      ng-disabled="object.percentage_to_complete  <= 0"
     >
       <i class="fe fe-plus"></i>&nbsp;إضافة مشرف
     </button>
@@ -34,27 +33,14 @@
         </td>
         <td class="align-middle text-center h2">
           <dropdown>
-            <a
-              href="#"
-              ng-click="showModal('edit', admin)"
-              class="dropdown-item"
-            >
-              <i class="fe fe-edit-2"></i>&nbsp;تعديل
-            </a>
-            <a
-              href="#"
-              ng-click="showModal('delete', admin)"
-              class="dropdown-item"
-            >
-              <i class="fe fe-trash"></i>&nbsp;حذف
-            </a>
+             <dropdown-item href="javascript:;" ng-click="showModal('edit', admin)"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
+             <dropdown-item href="javascript:;" ng-click="deleteAdmin(admin)"><i class="fe fe-trash"></i> حذف</dropdown-item>
           </dropdown>
         </td>
       </tr>
     </tbody>
   </table>
 </datatable>
-{{roles}}
 <div class="card">
   <!-- Create Update Modal -->
   <modal id="admin-modal">
@@ -66,11 +52,7 @@
         <div ng-show="currentModalAction == 'edit'">
           <i class="fe fe-edit"></i>&nbsp; تعديل المشرف {{ admin.id }}
         </div>
-        <div ng-show="currentModalAction == 'delete'">
-          <i class="fe fe-trash"></i>&nbsp; حذف المشرف {{ admin.id }}
-        </div>
       </span>
-      <span> </span>
     </modal-title>
 
     <modal-body>
@@ -80,7 +62,7 @@
         model="admin"
         id="myForm"
       >
-        <div class="row" ng-if="currentModalAction != 'delete'">
+        <div class="row">
           <div class="col-12 col-md-6">
             <div class="form-group" ng-if="currentModalAction == 'add'">
               <label for="user_id">اسم المشرف</label>
@@ -96,7 +78,7 @@
               <input
                 type="text"
                 class="form-control"
-                ng-class="(updateSponsorShipsSponsor.errors.percentage != null) ? 'is-invalid' : ''"
+                ng-class="(createUpdateCaseAdmins.errors.name != null) ? 'is-invalid' : ''"
                 ng-model="admin.user.name"
                 ng-disabled="true"
               />
@@ -143,20 +125,6 @@
           >تعديل</submit-button
         >
 
-        <!-- Delete Section in modal -->
-
-        <div class="row" ng-if="currentModalAction == 'delete'">
-          <div class="col-12 col-md-12 mt-2 mb-4">
-            هل تريد تأكيد حذف هذا المشرف وأدواره {{admin.user.name}} ؟
-          </div>
-        </div>
-        <submit-button
-          ng-show="currentModalAction == 'delete'"
-          form="listCaseAdminsFormm"
-          icon="fe fe-delete"
-        >
-          حذف
-        </submit-button>
       </form>
     </modal-body>
   </modal>
