@@ -48,8 +48,8 @@ class FakerSeed extends Seeder
 
             /////////////////////// Donor /////////////////////////
             Donor::create([
-                'name' => 'donor'.$i+4,
-                'email' => 'donor'.$i + 4 .'@donor.com',
+                'name' => 'donor'.$i,
+                'email' => 'donor'.$i.'@donor.com',
                 'password' => Hash::make(12345678),
             ]);
 
