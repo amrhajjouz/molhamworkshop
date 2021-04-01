@@ -1,13 +1,13 @@
-<page-header title="الحالة  {{ object.id }}" pretitle="الحالات"></page-header>
+<page-header title="الحالة  {{ $routeParams.id }}" pretitle="الحالات"></page-header>
 
 <page-nav>
-  <page-nav-item route="cases.overview" params="{id: object.id}"
+  <page-nav-item route="cases.overview" params="{id: $routeParams.id}"
     >نظرة عامة</page-nav-item
   >
-  <page-nav-item route="cases.edit" params="{id: object.id}"
+  <page-nav-item route="cases.edit" params="{id: $routeParams.id}"
     >تعديل المعلومات</page-nav-item
   >
-  <page-nav-item route="cases.admins" params="{id: object.id}"
+  <page-nav-item route="cases.admins" params="{id: $routeParams.id}"
     >المشرفون</page-nav-item
   >
 </page-nav>
