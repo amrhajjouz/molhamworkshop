@@ -29,6 +29,11 @@ class BaseTargetModel extends Model
     {
         return $this->morphToMany('App\Models\Place', 'placeable');
     }
+   
+    public function admins()
+    {
+        return $this->morphToMany('App\Models\User', 'adminable' , 'adminables', null , 'admin_id');
+    }
 
     public function save(array $options = [])
     {
@@ -95,6 +100,16 @@ class BaseTargetModel extends Model
                     $this->places()->attach($options['places_ids']);
             }
 
+
+           /* 
+            * save admins_ids array if current model has admins as supervisors 
+            *  
+           */
+
+            if($this->has_admins && isset($options['admins_ids'])){
+                    $this->admins()->attach($options['admins_ids']);
+            }
+
             $this->target_id = $target->id;
             return parent::save();
 
@@ -123,9 +138,22 @@ class BaseTargetModel extends Model
             //assign any place_id comes in options and remove old records
             if (isset($options['places_ids'])) {
                 if ($this->has_places && isset($options['places_ids'])) {
-                    foreach($options['places_ids'] as $key => $val){
+                    // foreach($options['places_ids'] as $key => $val){
                         $this->places()->sync($options['places_ids']);
-                    }
+                    // }
+                }
+            }
+          
+          /* 
+           * check if there is modifications on admins for this model
+           *  
+           *  
+          */
+            if (isset($options['admins_ids'])) {
+                if ($this->has_places && isset($options['admins_ids'])) {
+                    // foreach($options['admins_ids'] as $key => $val){
+                        $this->admins()->sync($options['admins_ids']);
+                    // }
                 }
             }
 

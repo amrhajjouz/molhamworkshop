@@ -126,7 +126,18 @@
       ></select2>
     </div>
   </div>
-
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="admins_ids">المشرفون</label>
+      <select2
+        model="object.admins_ids"
+        ajax-url="users/search"
+        error-model="createCase.errors.place_id"
+        multiple
+      ></select2>
+    </div>
+  </div>
+{{object}}
   <div class="col-12">
     <submit-button form="createCaseForm" icon="fe fe-plus">اضافة</submit-button>
   </div>

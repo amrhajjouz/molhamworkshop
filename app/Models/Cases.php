@@ -12,6 +12,7 @@ class Cases extends BaseTargetModel
      protected $guarded = [];
      protected $model_path = '\App\Models\Cases'; //used in parent model
      protected $has_places = true; //used in parent model to check if this model has place
+     protected $has_admins = true; //used in parent model to check if this model has admins
 
      public function country()
      {
@@ -20,10 +21,10 @@ class Cases extends BaseTargetModel
 
 
 
-     public function admins()
-     {
-          return $this->hasMany('App\Models\Admin', 'adminable_id', 'id')->where('adminable_type', '\App\Models\Cases');
-     }
+     // public function admins()
+     // {
+     //      return $this->hasMany('App\Models\Admin', 'adminable_id', 'id')->where('adminable_type', '\App\Models\Cases');
+     // }
 
 
      /* 
@@ -40,6 +41,7 @@ class Cases extends BaseTargetModel
           $category = $this->parent->category;
 
           $place = $this->places()->first(); //get First becaust this has one place
+          $admins = $this->admins;
           $_places = [];
 
           if ($place) {
@@ -69,6 +71,7 @@ class Cases extends BaseTargetModel
 
                ],
                "places" => $_places,
+               "admins" => $admins,
 
           ]);
 

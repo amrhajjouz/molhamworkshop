@@ -32,6 +32,7 @@ class CreateRequest extends BaseRequest
             'target.required' => ['required' ,'numeric' , 'min:1'],
             'status' => ['required'],
             'place_id' => ['required' , 'numeric'],
+            'admins_ids' => ['nullable' , 'array'],
 
         ];
     }

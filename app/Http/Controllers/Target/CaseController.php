@@ -30,8 +30,7 @@ class CaseController extends BaseController {
             $case->country_id = $data['country_id'];
             $case->status = $data['status'];
 
-
-            $options = ['target' => $request->target , "places_ids" =>[ $request->place_id] ]; // will saved in parent target
+            $options = ['target' => $request->target , "places_ids" =>[ $request->place_id] , 'admins_ids'=>$request->admins_ids ]; // will saved in parent target or as a relation for this model
             $case->save($options);
 
             
@@ -55,7 +54,7 @@ class CaseController extends BaseController {
             $case->country_id = $data['country_id'];
             $case->status = $data['status'];
 
-            $options = ['target' => $request->target, "places_ids" => [$request->place_id]]; //options for parent target
+            $options = ['target' => $request->target, "places_ids" => [$request->place_id] , 'admins_ids' => $request->admins_ids]; //options for parent target
 
 
             $case->save($options);

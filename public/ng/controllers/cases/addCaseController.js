@@ -29,6 +29,7 @@ function addCaseController($scope, $location, $apiRequest, $page, $init) {
     },
     place_id: null,
     status: "unfunded",
+    admins_ids: [],
   };
 
   $scope.countries = $init.countries;

@@ -117,9 +117,9 @@ Route::middleware('auth')->group(function () {
 
     /////////////////////// AdminController /////////////////////////
 
-    Route::post('/admins', [AdminController::class, 'create']);
-    Route::put('/admins', [AdminController::class, 'update']);
-    Route::post('/admins/delete', [AdminController::class, 'delete']);
+    // Route::post('/admins', [AdminController::class, 'create']);
+    // Route::put('/admins', [AdminController::class, 'update']);
+    // Route::post('/admins/delete', [AdminController::class, 'delete']);
 });
 
 
