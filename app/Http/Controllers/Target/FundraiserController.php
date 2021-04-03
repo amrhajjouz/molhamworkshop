@@ -31,7 +31,18 @@ class FundraiserController extends BaseController
             $fundraiser->public_visibility = $data['public_visibility'];
             $fundraiser->donor_id = $data['donor_id'];
 
-            $options = ['target' => $data['target']]; // options will saved in parent target
+            /* 
+             *  will saved in parent target or as a relation for this model 
+             * array admins_ids => admins table
+             * array target => some data for target table (parent)
+            */
+
+            $options = [
+                'target' => $data['target'],
+                'admins_ids' => $request->admins_ids
+
+            ];
+
 
             $fundraiser->save($options);
 
@@ -54,7 +65,18 @@ class FundraiserController extends BaseController
             $fundraiser->public_visibility = $data['public_visibility'];
             $fundraiser->donor_id = $data['donor_id'];
 
-            $options = ['target' => $request->target];
+
+
+            /* 
+             *  will update data in parent target or as a relation for this model 
+             * array admins_ids => admins table
+             * array target => some data for target table (parent)
+            */
+
+            $options = [
+                'target' => $request->target,
+                'admins_ids' => $request->admins_ids,
+            ];
 
             $fundraiser->save($options);
 

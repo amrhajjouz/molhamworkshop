@@ -11,7 +11,8 @@ class Fundraiser extends BaseTargetModel
      protected $table = 'fundraisers';
      protected $guarded = [];
      protected $model_path = '\App\Models\Fundraiser'; //used in parent model
-     protected $has_places = false;//used in parent model to check if this model has place
+     protected $has_places = false; //used in parent model to check if this model has place
+     protected $has_admins = true; //used in parent model to check if this model has admins
 
      protected $casts = [
           'verified' => 'boolean',
@@ -35,6 +36,8 @@ class Fundraiser extends BaseTargetModel
           $parent = $this->parent->toArray();
           $section = $this->parent->section;
           $donor = $this->donor;
+          $admins = $this->admins;
+
           $_donor = null;
           if ($donor) {
                $_donor = (object)[
@@ -60,7 +63,8 @@ class Fundraiser extends BaseTargetModel
                     'section_id' => $parent['section_id'],
                ],
                'section'=>$section ,
-               'donor' => $_donor
+               'donor' => $_donor ,
+               'admins'=>$admins,
 
           ]);
      }

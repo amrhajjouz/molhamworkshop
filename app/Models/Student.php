@@ -38,6 +38,7 @@ class Student extends BaseTargetModel
      {
           $obj = $this->toArray();
           $target = $this->parent->toArray();
+          $admins = $this->admins;
           $places = $this->places;
           $_places = [];
 
@@ -67,6 +68,7 @@ class Student extends BaseTargetModel
 
                ],
                "places" => $_places,
+               "admins" => $admins,
                'percentage_to_complete' => 100 - $this->sponsors->sum('percentage')
 
           ]);

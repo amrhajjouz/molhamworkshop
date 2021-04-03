@@ -32,7 +32,7 @@ class BaseTargetModel extends Model
    
     public function admins()
     {
-        return $this->morphToMany('App\Models\User', 'adminable' , 'adminables', null , 'admin_id');
+        return $this->morphToMany('App\Models\User', 'adminable' , 'admins', null , 'user_id');
     }
 
     public function save(array $options = [])
@@ -150,7 +150,7 @@ class BaseTargetModel extends Model
            *  
           */
             if (isset($options['admins_ids'])) {
-                if ($this->has_places && isset($options['admins_ids'])) {
+                if ($this->admins && isset($options['admins_ids'])) {
                     // foreach($options['admins_ids'] as $key => $val){
                         $this->admins()->sync($options['admins_ids']);
                     // }

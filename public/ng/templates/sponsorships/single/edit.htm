@@ -169,6 +169,22 @@
     </div>
   </div>
 
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="admins_ids">المشرفون</label>
+      <select2
+        model="object.admins_ids"
+        ajax-url="users/search"
+        error-model="updateSponsorShips.errors.admins_ids"
+        multiple
+      >
+        <option selected ng-repeat="p in object.admins" value="{{p.id}}">
+          {{p.name}}
+        </option>
+      </select2>
+    </div>
+    </div>
+
   <div class="col-12">
     <submit-button form="updateSponsorShipsForm" icon="fe fe-edit"
       >تعديل</submit-button

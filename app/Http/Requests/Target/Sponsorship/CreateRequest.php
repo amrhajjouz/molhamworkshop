@@ -35,6 +35,7 @@ class CreateRequest extends BaseRequest
             'target.required' => ['required', 'numeric', 'min:1'],
             'target.category_id' => ['required'],
             'target.visible' => ['required', 'boolean'],
+            'admins_ids' => ['nullable', 'array'], // for adminable model
 
         ];
     }

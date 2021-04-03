@@ -25,10 +25,12 @@ function addSponsorshipController(
       category_id: null,
     },
     place_id: null,
+    admins_ids: [],
   };
   $scope.countries = $init.countries;
   $scope.categories = $init.categories;
   $scope.places = $init.places;
+
 
   $scope.createSponsorShips = $apiRequest.config(
     {

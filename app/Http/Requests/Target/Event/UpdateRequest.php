@@ -43,6 +43,7 @@ class UpdateRequest extends BaseRequest
             'target.documented' => ['required', 'boolean'],
             'target.required' => ['required', 'numeric'],
             'target.archived' => ['required', 'boolean'],
+            'admins_ids' => ['nullable', 'array'], // for adminable model
         ];
     }
 }

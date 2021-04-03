@@ -26,7 +26,7 @@ class CampaignController extends BaseController {
             $campaign->name = $data['name'];
             $campaign->funded = 0;
 
-            $options = ['target' => $request->target, "places_ids" => $request->places_ids];//used in parent target
+            $options = ['target' => $request->target, "places_ids" => $request->places_ids , 'admins_ids'=>$request->admins_ids ]; // will saved in parent target or as a relation for this model
 
             $campaign->save($options);
 
@@ -50,7 +50,7 @@ class CampaignController extends BaseController {
             $campaign->name = $data['name'];
             $campaign->funded = $data['funded'];
 
-            $options = ['target' => $request->target, "places_ids" => $request->places_ids]; //used in parent target
+            $options = ['target' => $request->target, "places_ids" => $request->places_ids ,'admins_ids' => $request->admins_ids]; //used in parent target or another relations
 
             $campaign->save($options);
 

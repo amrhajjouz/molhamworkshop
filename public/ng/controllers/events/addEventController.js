@@ -21,6 +21,7 @@ function addEventController($scope, $location, $apiRequest, $page, $init) {
       beneficiaries_count: 1,
     },
     places: [],
+    admins_ids: [],
   };
 
   $scope.createEvent = $apiRequest.config(

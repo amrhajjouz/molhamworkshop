@@ -16,6 +16,7 @@ function addFundraiserController($scope, $location, $apiRequest, $page, $init) {
       archived: false,
       section_id: null,
     },
+    admins_ids: [],
   };
 
   $scope.createFundraiser = $apiRequest.config(

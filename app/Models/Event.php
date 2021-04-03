@@ -10,7 +10,9 @@ class Event extends BaseTargetModel
      protected $table = 'events';
      protected $guarded = [];
      protected $model_path = '\App\Models\Event';//used in parent model
-     protected $has_places = true;//used in parent model to check if this model has place
+     protected $has_places = true; //used in parent model to check if this model has place
+     protected $has_admins = true; //used in parent model to check if this model has admins
+
 
      protected $casts = [
           'verified' => 'boolean',
@@ -28,6 +30,7 @@ class Event extends BaseTargetModel
           $obj = $this->toArray();
 
           $target = $this->parent->toArray();
+          $admins = $this->admins;
           $places = $this->places;
           $donor = $this->donor;
           $_donor = null;
@@ -62,6 +65,7 @@ class Event extends BaseTargetModel
 
                ],
                'places' => $_places ,
+               'admins' => $admins ,
                'donor' => $_donor
           ]);
      }

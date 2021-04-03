@@ -31,7 +31,20 @@ class SponsorShipController extends BaseController
             $sponsorship->country_id = $data['country_id'];
             $sponsorship->sponsored = 0;
 
-            $options = ['target' => $request->target, "places_ids" => [$request->place_id]]; // used in parent target
+            
+             /* 
+             *  will saved in parent target or as a relation for this model 
+             * places_ids => placeable table
+             * array admins_ids => admins table
+             * array target => some data for target table (parent)
+            */
+
+            $options = [
+                'target' => $request->target, 
+                "places_ids" => [$request->place_id],
+                'admins_ids' => $request->admins_ids,
+            ];
+
             $sponsorship->save($options);
 
             return $this->_response($sponsorship);
@@ -43,6 +56,8 @@ class SponsorShipController extends BaseController
     public function update(UpdateRequest $request)
     {
 
+        
+
         try {
 
             $sponsorship = $this->model::findOrFail($request->id);
@@ -53,7 +68,17 @@ class SponsorShipController extends BaseController
             $sponsorship->country_id = $data['country_id'];
             $sponsorship->sponsored = $data['sponsored'];
 
-            $options = ['target' => $request->target, "places_ids" => [$request->place_id]];
+             /* 
+             *  will update data in parent target or as a relation for this model 
+             * array admins_ids => admins table
+             * array target => some data for target table (parent)
+            */
+            
+            $options = [
+                'target' => $request->target,
+                 "places_ids" => [$request->place_id],
+                'admins_ids' => $request->admins_ids,
+                ];
 
 
             $sponsorship->save($options);

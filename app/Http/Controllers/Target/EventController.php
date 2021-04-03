@@ -35,7 +35,20 @@ class EventController extends BaseController
                 $event->implementation_date = date('Y/m/d', strtotime($data['implementation_date']));
             }
             $event->youtube_video_url = $data['youtube_video_url'];
-            $options = ['target' => $request->target, "places_ids" => $request->places_ids]; // will saved in parent target
+
+
+            /* 
+             *  will saved in parent target or as a relation for this model 
+             * places_ids => placeable table
+             * array admins_ids => admins table
+             * array target => some data for target table (parent)
+            */
+
+            $options = [
+                'target' => $request->target, 
+                "places_ids" => $request->places_ids, 
+                'admins_ids' => $request->admins_ids
+            ];
 
             $event->save($options);
 
@@ -63,8 +76,20 @@ class EventController extends BaseController
                 $event->implementation_date = date('Y/m/d', strtotime($data['implementation_date']));
             }
             $event->youtube_video_url = $data['youtube_video_url'];
+            
 
-            $options = ['target' => $request->target, "places_ids" => $request->places_ids]; // will saved in parent target
+
+           /* 
+             *  will update data in parent target or as a relation for this model 
+             * array places_ids => placeable table
+             * array admins_ids => admins table
+             * array target => some data for target table (parent)
+            */
+            $options = [
+                'target' => $request->target,
+                 "places_ids" => $request->places_ids ,
+                'admins_ids' => $request->admins_ids,
+            ];
 
             $event->save($options);
 
@@ -88,5 +113,4 @@ class EventController extends BaseController
             throw $this->_exception($e->getMessage());
         }
     }
-
 }

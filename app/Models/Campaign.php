@@ -11,7 +11,8 @@ class Campaign extends BaseTargetModel
      protected $guarded = [];
      protected $model_path = '\App\Models\Campaign'; //used in parent model
      protected $has_places = true; //used in parent model to check if this model has place
-     
+     protected $has_admins = true; //used in parent model to check if this model has admins
+
      protected $casts = [
           'funded' => 'boolean' //transform funded field as bool value 
      ];
@@ -35,6 +36,7 @@ class Campaign extends BaseTargetModel
           $section = $this->parent->section;
           // $category = $this->parent->category;
           $places = $this->places; //this has Many places
+          $admins = $this->admins;
           $_places = [];
 
           foreach ($places as $item) {
@@ -59,7 +61,8 @@ class Campaign extends BaseTargetModel
                     'section_id' => $target['section_id'],
 
                ],
-               "places" => $_places
+               "places" => $_places ,
+               "admins" => $admins,
           ]);
 
           if ($section) {

@@ -29,7 +29,7 @@ class StudentController extends BaseController
             $student->country_id = $data['country_id'];
             $student->semesters_count = $data['semesters_count'];
             $student->current_semester = $data['current_semester'];
-            $options = ['target' => $request->target, "places_ids" => [$request->place_id]]; //used in parent target
+            $options = ['target' => $request->target, "places_ids" => [$request->place_id], 'admins_ids' => $request->admins_ids]; // will saved in parent target or as a relation for this model
 
             $student->save($options);
 
@@ -54,7 +54,7 @@ class StudentController extends BaseController
             $student->semesters_count = $data['semesters_count'];
             $student->current_semester = $data['current_semester'];
 
-            $options = ['target' => $request->target, "places_ids" => [$request->place_id]];
+            $options = ['target' => $request->target, "places_ids" => [$request->place_id], 'admins_ids' => $request->admins_ids]; //used in parent target or another relations
 
             $student->save($options);
 

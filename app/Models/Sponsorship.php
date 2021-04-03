@@ -12,6 +12,8 @@ class Sponsorship extends BaseTargetModel
      protected $guarded = [];
      protected $has_places = true; //used in parent model to check if this model has places
      protected $model_path = '\App\Models\Sponsorship'; //used in parent model
+     protected $has_admins = true; //used in parent model to check if this model has admins
+
      protected $casts = [
           'sponsored' => 'boolean',
      ];
@@ -42,6 +44,8 @@ class Sponsorship extends BaseTargetModel
           $target = $this->parent->toArray();
           $section = $this->parent->section;
           $category = $this->parent->category;
+          $admins = $this->admins;
+
 
           if (!is_null($section)) {
                unset($section->created_at);
@@ -88,6 +92,7 @@ class Sponsorship extends BaseTargetModel
                "places" => $_places,
                'section' => $section,
                'category' => $category,
+               'admins' => $admins,
                'percentage_to_complete' => 100 - $this->sponsors->sum('percentage')
           ]);
      }
