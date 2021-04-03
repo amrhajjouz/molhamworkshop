@@ -2,7 +2,8 @@
 
 namespace App\Common\Base;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Common\Base\BaseModel as Model;
+// use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use App\Models\{Place, Target};
 use App\Facades\Helper;
@@ -20,10 +21,10 @@ class BaseTargetModel extends Model
     /* 
      * return table name in database 
     */
-    public static function Table()
-    {
-        return with(new static)->getTable();
-    }
+    // public static function Table()
+    // {
+    //     return with(new static)->getTable();
+    // }
 
     public function places()
     {

@@ -34,6 +34,7 @@ class Cases extends BaseTargetModel
 
      public function transform()
      {
+          
           $obj = $this->toArray();
 
           $target = $this->parent->toArray();
@@ -84,6 +85,14 @@ class Cases extends BaseTargetModel
           if ($category) {
                $response->category = [
                     'name' => $category->name,
+               ];
+          }
+
+          $creator = $this->creator ;
+          if($creator){
+               $response->creator =[
+                    'name' => $creator->name ,
+                    'email' => $creator->email ,
                ];
           }
 

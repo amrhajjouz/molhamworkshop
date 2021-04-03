@@ -112,6 +112,19 @@
         <div ng-show="object.places[0]">
           <hr />
         </div>
+       
+        <div class="row align-items-center" ng-show="object.creator.name">
+          <div class="col">
+            <h4 class="mb-0 text-muted">من قام بإضافة الحالة</h4>
+          </div>
+          <div class="col-auto">
+            <h4>{{ object.creator.name }}</h4>
+          </div>
+        </div>
+
+        <div ng-show="object.creator.name">
+          <hr />
+        </div>
       </div>
     </div>
   </div>

@@ -81,7 +81,7 @@ class Molham extends Migration
             // $table->boolean('funded')->index()->default(0);
             // $table->boolean('cancelled')->index()->default(0);
             $table->enum('status' , ['funded' , 'unfunded' , 'canceled','spent'])->index()->default('unfunded');
-
+            $table->bigInteger('created_by')->nullable()->index();
             $table->timestamps();
         });
        
