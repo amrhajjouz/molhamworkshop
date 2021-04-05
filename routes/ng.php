@@ -30,6 +30,7 @@ return [
     'cases.edit' => ['cases/:id/edit', 'cases/editCaseController', 'cases.single.edit'],
     'cases' => ['cases', 'cases/listCasesController', 'cases.list'],
     // 'cases.admins' => ['cases/:id/admins', 'cases/listCaseAdminsController', 'cases.single.admins'],
+    'cases.contents' => ['cases/:id/contents', 'cases/caseContentsController', 'cases.single.contents'],
 
     ////////////////////// Campaign Routes    ///////////////////
     'campaigns.add' => ['campaigns/add', 'campaigns/addCampaignController', 'campaigns.add'],

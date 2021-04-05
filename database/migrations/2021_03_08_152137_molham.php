@@ -172,6 +172,18 @@ class Molham extends Migration
 
             $table->timestamps();
         });
+
+
+        Schema::create('contents', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('contentable_type')->index();
+            $table->bigInteger('contentable_id')->index();
+            $table->string('locale')->index()->default('ar');
+            $table->string('name')->index();
+            $table->text('value');
+            $table->softDeletes();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -196,5 +208,6 @@ class Molham extends Migration
         Schema::dropIfExists('placeables');
         Schema::dropIfExists('sponsors');
         Schema::dropIfExists('admins');
+        Schema::dropIfExists('contents');
     }
 }

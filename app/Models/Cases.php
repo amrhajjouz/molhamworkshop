@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Country;
+use App\Models\{Country , Content};
 
 use App\Common\Base\BaseTargetModel;
 
@@ -20,6 +20,12 @@ class Cases extends BaseTargetModel
      }
 
 
+     public function contents()
+     {
+          return $this->morphMany(Content::class, 'contentable');
+     }
+
+
 
      // public function admins()
      // {
@@ -34,6 +40,8 @@ class Cases extends BaseTargetModel
 
      public function transform()
      {
+
+          // dd($this->contents);
           
           $obj = $this->toArray();
 
