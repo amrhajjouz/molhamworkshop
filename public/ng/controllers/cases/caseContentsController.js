@@ -25,11 +25,11 @@ function caseContentsController($scope, $page, $apiRequest, $init) {
     },
   ];
 
-  $scope.updateCase = $apiRequest.config(
+  $scope.createUpdateCaseContents = $apiRequest.config(
     {
       method: "PUT",
-      url: "cases",
-      data: $scope.object,
+      url: "cases/" + $page.routeParams.id +'/contents',
+      data: $scope.contents,
     },
     function (response, data) {}
   );

@@ -91,9 +91,7 @@ class CaseController extends BaseController {
 
             $case = $this->model::findOrFail($id);
 
-            // $admins = $case->admins()->with('user')->paginate(10);
             $admins = $case->admins()->with('user')->get();
-// return $this->_response($admins);
             $admins = collect($admins)->groupBy('user_id');
 
             $admins = $this->transform_list_admins($admins);
@@ -119,6 +117,54 @@ class CaseController extends BaseController {
         }
         return $return;
     }
+
+    public function get_contents(Request $request , $id){
+        
+        try {
+            $locales = ['ar' , 'en'];
+            $content_fields = ['title' , "details"];
+
+            $model = $this->model::find($id);
+
+            $contents = $model->contents;
+
+            $content = [];
+            foreach ($content_fields as $field) {
+                foreach ($locales as $l) {
+                    $default [$l]= null;
+                    $content[$field] = $default;
+                    
+                }
+            }
+
+            foreach ($contents as $c){
+                $content[$c->name][$c->locale] = $c->value;
+            } 
+            
+            return $content;
+
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+    
+    public function put_contents(Request $request , $id){
+
+        $model = $this->model::find($id);
+
+        foreach($request->all() as $title => $values){
+            foreach($values  as $locale => $val){
+
+                \App\Models\Content::updateOrCreate(
+                     ['contentable_type' => 'App\Models\Cases', 'contentable_id' => $id, 'locale' => $locale, 'name' => $title],
+                     ['value' => $val]
+                );
+            }
+        }
+
+        return $this->_response($model->contents);
+    }
+    
     
     
 }

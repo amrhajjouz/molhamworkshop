@@ -1,157 +1,69 @@
 <include-header />
 
-<form class="row" name="myForm" request="createUpdateCaseContents">
+<form class="row" name="caseContentsForm" request="createUpdateCaseContents">
   <div class="col-12 col-md-6">
     <div class="form-group">
-      <label for="beneficiary_name">اسم المستفيد</label>
+      <label for="title-ar">العنوان باللغة العربية</label>
       <input
-        id="beneficiary_name"
+        id="title-ar"
         class="form-control"
         type="text"
-        ng-model="object.beneficiary_name"
-        ng-class="(createUpdateCaseContents.errors.beneficiary_name != null) ? 'is-invalid' : ''"
-        ng-change="createUpdateCaseContents.errors.beneficiary_name = null"
-        ng-error="createUpdateCaseContents.errors.beneficiary_name"
+        ng-model="contents.title.ar"
+        ng-class="(createUpdateCaseContents.errors['title.ar'] != null) ? 'is-invalid' : ''"
+        ng-change="createUpdateCaseContents.errors['title.ar'] = null"
+        ng-error="createUpdateCaseContents.errors.title.ar"
         required
       />
     </div>
   </div>
-
   <div class="col-12 col-md-6">
     <div class="form-group">
-      <label for="beneficiaries_count">عدد المستفيدين</label>
+      <label for="title-en">العنوان باللغة الإنكليزية</label>
       <input
-        id="beneficiaries_count"
+        id="title-en"
         class="form-control"
-        type="number"
-        ng-model="object.target['beneficiaries_count']"
-        ng-class="(createUpdateCaseContents.errors['target.beneficiaries_count'] != null) ? 'is-invalid' : ''"
-        ng-change="createUpdateCaseContents.errors['target.beneficiaries_count']= null"
-        ng-error="createUpdateCaseContents.errors.target.beneficiaries_count"
+        type="text"
+        ng-model="contents.title.en"
+        ng-class="(createUpdateCaseContents.errors['title.en'] != null) ? 'is-invalid' : ''"
+        ng-change="createUpdateCaseContents.errors['title.en'] = null"
+        ng-error="createUpdateCaseContents.errors.title.en"
+        required
+      />
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="details-ar">التفاصيل باللغة العربية</label>
+      <input
+        id="details-ar"
+        class="form-control"
+        type="text"
+        ng-model="contents.details.ar"
+        ng-class="(createUpdateCaseContents.errors['details.ar'] != null) ? 'is-invalid' : ''"
+        ng-change="createUpdateCaseContents.errors['details.ar'] = null"
+        ng-error="createUpdateCaseContents.errors.details.ar"
+        required
+      />
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="details-en">التفاصيل باللغة الإنكليزية</label>
+      <input
+        id="details-en"
+        class="form-control"
+        type="text"
+        ng-model="contents.details.en"
+        ng-class="(createUpdateCaseContents.errors['details.en'] != null) ? 'is-invalid' : ''"
+        ng-change="createUpdateCaseContents.errors['details.en'] = null"
+        ng-error="createUpdateCaseContents.errors.details.en"
         required
       />
     </div>
   </div>
 
-  <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="country_id">الدولة</label>
-      <select
-        id="country_id"
-        class="form-control"
-        ng-model="object.country_id"
-        ng-class="(createUpdateCaseContents.errors.country_id != null) ? 'is-invalid' : ''"
-        ng-change="createUpdateCaseContents.errors.country_id = null"
-        ng-options="country.id as country.name for country in countries"
-        required
-        ng-error="createUpdateCaseContents.errors.country_id"
-      ></select>
-    </div>
-  </div>
-
-  <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="archived">مؤرشفة</label>
-      <select
-        id="archived"
-        class="form-control"
-        ng-model="object.target.archived"
-        ng-class="(createUpdateCaseContents.errors['target.archived'] != null) ? 'is-invalid' : ''"
-        ng-change="upsdateCase.errors['target.archived'] = null"
-        ng-error="createUpdateCaseContents.errors.target.archived"
-        required
-      >
-        <option ng-value="true">نعم</option>
-        <option ng-value="false">لا</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="documented">موثقة</label>
-      <select
-        id="documented"
-        class="form-control"
-        ng-model="object.target.documented"
-        ng-class="(createUpdateCaseContents.errors['target.documented'] != null) ? 'is-invalid' : ''"
-        ng-change="createUpdateCaseContents.errors['target.documented'] = null"
-        ng-error="createUpdateCaseContents.errors.target.documented"
-        required
-      >
-        <option ng-value="true">نعم</option>
-        <option ng-value="false">لا</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="visible">ظاهرة</label>
-      <select
-        id="visible"
-        class="form-control"
-        ng-model="object.target.visible"
-        ng-class="(createUpdateCaseContents.errors['target.visible'] != null) ? 'is-invalid' : ''"
-        ng-change="createUpdateCaseContents.errors['target.visible'] = null"
-        ng-error="createUpdateCaseContents.errors.target.visible"
-        required
-      >
-        <option ng-value="true">نعم</option>
-        <option ng-value="false">لا</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="status">الحالة</label>
-      <select
-        id="status"
-        class="form-control"
-        ng-model="object.status"
-        ng-class="(createUpdateCaseContents.errors.status != null) ? 'is-invalid' : ''"
-        ng-change="createUpdateCaseContents.errors.status = null"
-        ng-options="status.id as status.name for status in statuses"
-        ng-error="createUpdateCaseContents.errors.status"
-        required
-      ></select>
-    </div>
-  </div>
-
-  <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="place_id">المكان</label>
-      <select2
-        model="object.place_id"
-        ajax-url="places/search"
-        error-model="createUpdateCaseContents.errors.place_id"
-        required
-      >
-        <option selected ng-repeat="p in object.places" value="{{p.id}}">
-          {{p.text}}
-        </option>
-      </select2>
-    </div>
-  </div>
-  <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="admins_ids">المشرفون</label>
-      <select2
-        model="object.admins_ids"
-        ajax-url="users/search"
-        error-model="createUpdateCaseContents.errors.admins_ids"
-        required
-        multiple
-      >
-        <option selected ng-repeat="p in object.admins" value="{{p.id}}">
-          {{p.name}}
-        </option>
-      </select2>
-    </div>
-  </div>
 
   <div class="col-12">
-    <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
+    <submit-button form="caseContentsForm" icon="fe fe-edit">تعديل</submit-button>
   </div>
 </form>
