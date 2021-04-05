@@ -2,17 +2,25 @@
 
 namespace App\Models;
 
-use App\Models\{Country , Content};
-
+use App\Models\{Country, Content};
+use App\Common\Traits\HasContent;
 use App\Common\Base\BaseTargetModel;
 
 class Cases extends BaseTargetModel
 {
+     use HasContent;
+
      protected $table = 'cases';
      protected $guarded = [];
      protected $model_path = '\App\Models\Cases'; //used in parent model
      protected $has_places = true; //used in parent model to check if this model has place
      protected $has_admins = true; //used in parent model to check if this model has admins
+
+     /* 
+      * append this attribute from content relations 
+      * transform this attribute by getTitleAttribute() , getDetailsAttribute()
+     */
+     protected $appends = ['title' , 'details'];
 
      public function country()
      {
@@ -20,12 +28,7 @@ class Cases extends BaseTargetModel
      }
 
 
-     public function contents()
-     {
-          return $this->morphMany(Content::class, 'contentable');
-     }
-
-
+     
 
      // public function admins()
      // {
@@ -42,7 +45,7 @@ class Cases extends BaseTargetModel
      {
 
           // dd($this->contents);
-          
+
           $obj = $this->toArray();
 
           $target = $this->parent->toArray();
@@ -96,11 +99,11 @@ class Cases extends BaseTargetModel
                ];
           }
 
-          $creator = $this->creator ;
-          if($creator){
-               $response->creator =[
-                    'name' => $creator->name ,
-                    'email' => $creator->email ,
+          $creator = $this->creator;
+          if ($creator) {
+               $response->creator = [
+                    'name' => $creator->name,
+                    'email' => $creator->email,
                ];
           }
 
@@ -112,4 +115,20 @@ class Cases extends BaseTargetModel
 
           return parent::save($options);
      }
+
+     
+
+
+     public function getTitleAttribute($title)
+     {
+          return $this->get_content('title');
+     }
+
+
+     public function getDetailsAttribute($title)
+     {
+          return $this->get_content('details');
+     }
+
+  
 }

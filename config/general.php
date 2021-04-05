@@ -4,6 +4,15 @@ return [
 
     // amount of least acceptable sponsor used in Helper Facades AssignToSponsor function
 
-    'least_sponsore_amount' => 10 , 
+    'least_sponsore_amount' => 10 ,
+
+
+
+    /* 
+     * this array retrive what exists locales in site 
+    */
+    'available_locales'=>[
+        'ar' , 'en'
+    ]
 ];
 

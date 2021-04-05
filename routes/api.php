@@ -66,8 +66,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/cases', [CaseController::class, 'update']);
     Route::get('/cases/{id}', [CaseController::class, 'retrieve']);
     Route::get('/cases/{id}/admins', [CaseController::class, 'list_admins']);
-    Route::get('/cases/{id}/contents', [CaseController::class, 'get_contents']);
-    Route::put('/cases/{id}/contents', [CaseController::class, 'put_contents']);
+    Route::get('/cases/{id}/contents', [CaseController::class, 'list_contents']);
+    Route::put('/cases/{id}/contents', [CaseController::class, 'create_update_contents']);
 
 
     //////////////////  CAMPAIGNS //////////////

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Target;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Target\Cases\{CreateRequest , UpdateRequest};
+use App\Http\Requests\Target\Cases\{CreateRequest , UpdateRequest , CreateUpdateContent};
 use App\Facades\Helper;
 
 use App\Models\{User , Cases , Admin};
@@ -17,6 +17,7 @@ class CaseController extends BaseController {
     public function __construct () {
         $this->middleware('auth');
         $this->model = \App\Models\Cases::class;
+        $this->required_contents_fields = ['title', "details"];
     }
     
     public function create ( CreateRequest $request) {
@@ -118,28 +119,32 @@ class CaseController extends BaseController {
         return $return;
     }
 
-    public function get_contents(Request $request , $id){
+    public function list_contents(Request $request , $id){
         
         try {
             $locales = ['ar' , 'en'];
-            $content_fields = ['title' , "details"];
 
             $model = $this->model::find($id);
-
             $contents = $model->contents;
 
             $content = [];
-            foreach ($content_fields as $field) {
+            foreach ($this->required_contents_fields as $field) {
                 foreach ($locales as $l) {
-                    $default [$l]= null;
-                    $content[$field] = $default;
-                    
+                    $content[$field][$l] = null;
                 }
             }
-
+            
             foreach ($contents as $c){
+                
+                /* 
+                 * if there any value not required dont display it 
+                */
+
+                if(!in_array($c->name , $this->required_contents_fields)) continue;
+
                 $content[$c->name][$c->locale] = $c->value;
             } 
+
             
             return $content;
 
@@ -148,15 +153,28 @@ class CaseController extends BaseController {
         }
     }
     
-    public function put_contents(Request $request , $id){
+    public function create_update_contents(CreateUpdateContent $request , $id){
 
         $model = $this->model::find($id);
-
+        
+        
         foreach($request->all() as $title => $values){
+
+            /* 
+             * if there is any value not registerd in constructor dont save it
+            */
+            if(!in_array($title , $this->required_contents_fields) ) continue;
+
+
             foreach($values  as $locale => $val){
 
+                /* 
+                 * if value equal null dont create new record  
+                */
+                if(is_null($val)) continue;
+
                 \App\Models\Content::updateOrCreate(
-                     ['contentable_type' => 'App\Models\Cases', 'contentable_id' => $id, 'locale' => $locale, 'name' => $title],
+                     ['contentable_type' => get_class($model), 'contentable_id' => $id, 'locale' => $locale, 'name' => $title],
                      ['value' => $val]
                 );
             }
