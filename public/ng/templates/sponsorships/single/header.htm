@@ -1,7 +1,8 @@
 <page-header title="الكفالة {{ object.id }}" pretitle="الكفالات"></page-header>
 
 <page-nav>
-    <page-nav-item route="sponsorships.overview" params="{id: object.id}">نظرة عامة</page-nav-item>
-    <page-nav-item route="sponsorships.edit" params="{id: object.id}">تعديل المعلومات</page-nav-item>
-    <page-nav-item route="sponsorships.sponsors" params="{id: object.id}">الكفلاء</page-nav-item>
+    <page-nav-item route="sponsorships.overview" params="{id:  $routeParams.id}">نظرة عامة</page-nav-item>
+    <page-nav-item route="sponsorships.edit" params="{id:  $routeParams.id}">تعديل المعلومات</page-nav-item>
+    <page-nav-item route="sponsorships.sponsors" params="{id:  $routeParams.id}">الكفلاء</page-nav-item>
+    <page-nav-item route="sponsorships.contents" params="{id:  $routeParams.id}">المحتوى</page-nav-item>
 </page-nav>

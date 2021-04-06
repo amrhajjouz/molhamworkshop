@@ -1,0 +1,36 @@
+<include-header />
+
+<form class="row" name="studentshipContentsForm" request="createUpdateStudentContents">
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="title-ar">العنوان باللغة العربية</label>
+      <input
+        id="title-ar"
+        class="form-control"
+        type="text"
+        ng-model="contents.title.ar"
+        ng-class="(createUpdateStudentContents.errors['title.ar'] != null) ? 'is-invalid' : ''"
+        ng-change="createUpdateStudentContents.errors['title.ar'] = null"
+        ng-error="createUpdateStudentContents.errors.title.ar"
+      />
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="details-ar">التفاصيل باللغة العربية</label>
+      <textarea
+        id="details-ar"
+        class="form-control"
+        type="text"
+        ng-model="contents.details.ar"
+        ng-class="(createUpdateStudentContents.errors['details.ar'] != null) ? 'is-invalid' : ''"
+        ng-change="createUpdateStudentContents.errors['details.ar'] = null"
+        ng-error="createUpdateStudentContents.errors.details.ar"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <submit-button form="studentshipContentsForm" icon="fe fe-edit">تعديل</submit-button>
+  </div>
+</form>

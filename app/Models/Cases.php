@@ -130,5 +130,16 @@ class Cases extends BaseTargetModel
           return $this->get_content('details');
      }
 
+
+     /* 
+      * Abstracted from HasContent Trait 
+     */
+     public static function get_content_fields(){
+          return [
+               'title' , 'details'
+          ];
+     }
+     
+
   
 }

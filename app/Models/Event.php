@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use App\Common\Base\BaseTargetModel;
+use App\Common\Traits\HasContent;
 
 class Event extends BaseTargetModel
 {
+     use HasContent;
      
      protected $table = 'events';
      protected $guarded = [];
@@ -77,5 +79,14 @@ class Event extends BaseTargetModel
      }
 
 
+     /* 
+      * Abstracted from HasContent Trait ti determin what fields are required fot this model
+     */
+     public static function get_content_fields()
+     {
+          return [
+               'title', 'details'
+          ];
+     }
 
 }

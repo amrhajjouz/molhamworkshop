@@ -5,6 +5,13 @@ namespace App\Common\Traits;
 trait HasContent
 {
 
+    /* 
+     * Abstract Function
+     * @return array of fields contents names for this model 
+    */
+
+    abstract public static function get_content_fields();
+
 
     /* 
      * retrive any field value from content table 
@@ -39,5 +46,7 @@ trait HasContent
         return $this->morphMany(\App\Models\Content::class, 'contentable');
     }
 
+
+    
 
 }

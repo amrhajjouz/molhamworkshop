@@ -5,47 +5,50 @@ namespace App\Http\Controllers\Target;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Target\Cases\{CreateRequest , UpdateRequest , CreateUpdateContent};
+use App\Http\Requests\Target\Cases\{CreateRequest, UpdateRequest, CreateUpdateContent};
 use App\Facades\Helper;
 
-use App\Models\{User , Cases , Admin};
+use App\Models\{User, Cases, Admin};
 
-class CaseController extends BaseController {
-     
+class CaseController extends BaseController
+{
+
     use HasRetrieve;
 
-    public function __construct () {
+    public function __construct()
+    {
         $this->middleware('auth');
         $this->model = \App\Models\Cases::class;
         $this->required_contents_fields = ['title', "details"];
     }
-    
-    public function create ( CreateRequest $request) {
+
+    public function create(CreateRequest $request)
+    {
         try {
 
             $data = $request->validated();
             $case = new $this->model();
 
             $case->beneficiary_name = $data['beneficiary_name'];
-            $case->serial_number =Helper::getCaseSerialNumber(); //generate unique number 
+            $case->serial_number = Helper::getCaseSerialNumber(); //generate unique number 
             $case->country_id = $data['country_id'];
             $case->status = $data['status'];
 
-            $options = ['target' => $request->target , "places_ids" =>[ $request->place_id] , 'admins_ids'=>$request->admins_ids ]; // will saved in parent target or as a relation for this model
+            $options = ['target' => $request->target, "places_ids" => [$request->place_id], 'admins_ids' => $request->admins_ids]; // will saved in parent target or as a relation for this model
             $case->save($options);
 
-            
+
             return $this->_response($case);
-            
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
         }
     }
-    
-    public function update (UpdateRequest $request) {
-        
+
+    public function update(UpdateRequest $request)
+    {
+
         try {
-            
+
             $data = $request->validated();
 
             $case = $this->model::findOrFail($request->id);
@@ -55,39 +58,39 @@ class CaseController extends BaseController {
             $case->country_id = $data['country_id'];
             $case->status = $data['status'];
 
-            $options = ['target' => $request->target, "places_ids" => [$request->place_id] , 'admins_ids' => $request->admins_ids]; //options for parent target
+            $options = ['target' => $request->target, "places_ids" => [$request->place_id], 'admins_ids' => $request->admins_ids]; //options for parent target
 
 
             $case->save($options);
-            
-            return $this->_response($case);
 
+            return $this->_response($case);
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
         }
     }
-    
-    public function list (Request $request) {
-        
+
+    public function list(Request $request)
+    {
+
         try {
             // $search_query = ($request->has('q') ? [['beneficiary_name', 'like', '%' . $request->q . '%']] : null);
 
-            $cases = $this->model::orderBy('id', 'desc')->where(function($q)use($request){
-                if($request->has('q')){
+            $cases = $this->model::orderBy('id', 'desc')->where(function ($q) use ($request) {
+                if ($request->has('q')) {
                     $q->where('beneficiary_name', 'like', '%' . $request->q . '%');
                     $q->orWhere('serial_number', 'like', '%' . $request->q . '%');
                 }
             })->paginate(10)->withQueryString();
 
             return $this->_response($cases);
-            
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
         }
     }
-    
-    public function list_admins (Request $request , $id) {
-        
+
+    public function list_admins(Request $request, $id)
+    {
+
         try {
 
             $case = $this->model::findOrFail($id);
@@ -98,91 +101,50 @@ class CaseController extends BaseController {
             $admins = $this->transform_list_admins($admins);
 
             return $this->_response($admins);
-            
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
         }
     }
 
-    private function transform_list_admins($admins){
+    private function transform_list_admins($admins)
+    {
         $return = [];
-        
+
         foreach ($admins as $items) {
             $roles = [];
-            foreach($items  as $item){
-                array_push($roles , $item->role);
-               
+            foreach ($items  as $item) {
+                array_push($roles, $item->role);
             }
             $item->role = $roles;
-            $return [] = $item;
+            $return[] = $item;
         }
         return $return;
     }
 
-    public function list_contents(Request $request , $id){
-        
+    public function list_contents(Request $request, $id)
+    {
+
         try {
-            $locales = ['ar' , 'en'];
 
-            $model = $this->model::find($id);
-            $contents = $model->contents;
+            $model = $this->model::findOrFail($id);
 
-            $content = [];
-            foreach ($this->required_contents_fields as $field) {
-                foreach ($locales as $l) {
-                    $content[$field][$l] = null;
-                }
-            }
-            
-            foreach ($contents as $c){
-                
-                /* 
-                 * if there any value not required dont display it 
-                */
-
-                if(!in_array($c->name , $this->required_contents_fields)) continue;
-
-                $content[$c->name][$c->locale] = $c->value;
-            } 
-
-            
-            return $content;
-
+            return $this->_response(getContent($model));
         } catch (\Exception $th) {
             throw $this->_exception($th->getMessage());
         }
     }
-    
-    public function create_update_contents(CreateUpdateContent $request , $id){
 
-        $model = $this->model::find($id);
-        
-        
-        foreach($request->all() as $title => $values){
+    public function create_update_contents(CreateUpdateContent $request, $id)
+    {
+        try {
 
-            /* 
-             * if there is any value not registerd in constructor dont save it
-            */
-            if(!in_array($title , $this->required_contents_fields) ) continue;
+            $model = $this->model::find($id);
 
+            setContent($request, $model);
 
-            foreach($values  as $locale => $val){
-
-                /* 
-                 * if value equal null dont create new record  
-                */
-                if(is_null($val)) continue;
-
-                \App\Models\Content::updateOrCreate(
-                     ['contentable_type' => get_class($model), 'contentable_id' => $id, 'locale' => $locale, 'name' => $title],
-                     ['value' => $val]
-                );
-            }
+            return $this->_response($model->contents);
+        } catch (\Exception $ex) {
+            throw $this->_exception($ex->getMessage());
         }
-
-        return $this->_response($model->contents);
     }
-    
-    
-    
 }

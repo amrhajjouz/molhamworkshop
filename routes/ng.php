@@ -37,6 +37,7 @@ return [
     'campaigns.overview' => ['campaigns/:id', 'campaigns/overviewCampaignController', 'campaigns.single.overview'],
     'campaigns.edit' => ['campaigns/:id/edit', 'campaigns/editCampaignController', 'campaigns.single.edit'],
     'campaigns' => ['campaigns', 'campaigns/listCampaignsController', 'campaigns.list'],
+    'campaigns.contents' => ['campaigns/:id/contents', 'campaigns/campaignContentsController', 'campaigns.single.contents'],
 
     ////////////////////// SponsorShip Routes    ///////////////////
     'sponsorships.add' => ['sponsorships/add', 'sponsorships/addSponsorshipController', 'sponsorships.add'],
@@ -44,25 +45,30 @@ return [
     'sponsorships.edit' => ['sponsorships/:id/edit', 'sponsorships/editSponsorshipController', 'sponsorships.single.edit'],
     'sponsorships.sponsors' => ['sponsorships/:id/sponsors', 'sponsorships/listSponsorshipSponsorsController', 'sponsorships.single.sponsors'],
     'sponsorships' => ['sponsorships', 'sponsorships/listsSponsorshipsController', 'sponsorships.list'],
-
+    'sponsorships.contents' => ['sponsorships/:id/contents', 'sponsorships/sponsorshipContentsController', 'sponsorships.single.contents'],
+    
     ////////////////////// Students Routes    ///////////////////
     'students.add' => ['students/add', 'students/addStudentController', 'students.add'],
     'students.overview' => ['students/:id', 'students/overviewStudentController', 'students.single.overview'],
     'students.edit' => ['students/:id/edit', 'students/editStudentController', 'students.single.edit'],
     'students.sponsors' => ['students/:id/sponsors', 'students/listStudentSponsorsController', 'students.single.sponsors'],
     'students' => ['students', 'students/listStudentsController', 'students.list'],
-
+    'students.contents' => ['students/:id/contents', 'students/studentContentsController', 'students.single.contents'],
+    
     /////////////////////////// Events Routes    ///////////////////
     'events.add' => ['events/add', 'events/addEventController', 'events.add'],
     'events.overview' => ['events/:id', 'events/overviewEventController', 'events.single.overview'],
     'events.edit' => ['events/:id/edit', 'events/editEventController', 'events.single.edit'],
     'events' => ['events', 'events/listEventsController', 'events.list'],
+    'events.contents' => ['events/:id/contents', 'events/eventContentsController', 'events.single.contents'],
 
     /////////////////////////// Fundraisers Routes    ///////////////////
     'fundraisers.add' => ['fundraisers/add', 'fundraisers/addFundraiserController', 'fundraisers.add'],
     'fundraisers.overview' => ['fundraisers/:id', 'fundraisers/overviewFundraiserController', 'fundraisers.single.overview'],
     'fundraisers.edit' => ['fundraisers/:id/edit', 'fundraisers/editFundraiserController', 'fundraisers.single.edit'],
     'fundraisers' => ['fundraisers', 'fundraisers/listFundraisersController', 'fundraisers.list'],
+    'fundraisers.contents' => ['fundraisers/:id/contents', 'fundraisers/fundraiserContentsController', 'fundraisers.single.contents'],
+
 
     /////////////////////// Places /////////////////////////
 

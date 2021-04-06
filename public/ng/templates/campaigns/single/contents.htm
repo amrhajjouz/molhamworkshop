@@ -1,6 +1,6 @@
 <include-header />
 
-<form class="row" name="caseContentsForm" request="createUpdateCaseContents">
+<form class="row" name="campaignContentsForm" request="createUpdateCampaignContents">
   <div class="col-12 col-md-6">
     <div class="form-group">
       <label for="title-ar">العنوان باللغة العربية</label>
@@ -9,14 +9,13 @@
         class="form-control"
         type="text"
         ng-model="contents.title.ar"
-        ng-class="(createUpdateCaseContents.errors['title.ar'] != null) ? 'is-invalid' : ''"
-        ng-change="createUpdateCaseContents.errors['title.ar'] = null"
-        ng-error="createUpdateCaseContents.errors.title.ar"
-        required
+        ng-class="(createUpdateCampaignContents.errors['title.ar'] != null) ? 'is-invalid' : ''"
+        ng-change="createUpdateCampaignContents.errors['title.ar'] = null"
+        ng-error="createUpdateCampaignContents.errors.title.ar"
       />
     </div>
   </div>
-  <div class="col-12 col-md-6">
+  <!-- <div class="col-12 col-md-6">
     <div class="form-group">
       <label for="title-en">العنوان باللغة الإنكليزية</label>
       <input
@@ -24,13 +23,12 @@
         class="form-control"
         type="text"
         ng-model="contents.title.en"
-        ng-class="(createUpdateCaseContents.errors['title.en'] != null) ? 'is-invalid' : ''"
-        ng-change="createUpdateCaseContents.errors['title.en'] = null"
-        ng-error="createUpdateCaseContents.errors.title.en"
-        required
+        ng-class="(createUpdateCampaignContents.errors['title.en'] != null) ? 'is-invalid' : ''"
+        ng-change="createUpdateCampaignContents.errors['title.en'] = null"
+        ng-error="createUpdateCampaignContents.errors.title.en"
       />
     </div>
-  </div>
+  </div> -->
   <div class="col-12 col-md-6">
     <div class="form-group">
       <label for="details-ar">التفاصيل باللغة العربية</label>
@@ -39,13 +37,13 @@
         class="form-control"
         type="text"
         ng-model="contents.details.ar"
-        ng-class="(createUpdateCaseContents.errors['details.ar'] != null) ? 'is-invalid' : ''"
-        ng-change="createUpdateCaseContents.errors['details.ar'] = null"
-        ng-error="createUpdateCaseContents.errors.details.ar"
-        required
+        ng-class="(createUpdateCampaignContents.errors['details.ar'] != null) ? 'is-invalid' : ''"
+        ng-change="createUpdateCampaignContents.errors['details.ar'] = null"
+        ng-error="createUpdateCampaignContents.errors.details.ar"
       ></textarea>
     </div>
   </div>
+   <!--
   <div class="col-12 col-md-6">
     <div class="form-group">
       <label for="details-en">التفاصيل باللغة الإنكليزية</label>
@@ -54,16 +52,15 @@
         class="form-control"
         type="text"
         ng-model="contents.details.en"
-        ng-class="(createUpdateCaseContents.errors['details.en'] != null) ? 'is-invalid' : ''"
-        ng-change="createUpdateCaseContents.errors['details.en'] = null"
-        ng-error="createUpdateCaseContents.errors.details.en"
-        required
+        ng-class="(createUpdateCampaignContents.errors['details.en'] != null) ? 'is-invalid' : ''"
+        ng-change="createUpdateCampaignContents.errors['details.en'] = null"
+        ng-error="createUpdateCampaignContents.errors.details.en"
       ></textarea>
     </div>
   </div>
-
+ -->
 
   <div class="col-12">
-    <submit-button form="caseContentsForm" icon="fe fe-edit">تعديل</submit-button>
+    <submit-button form="campaignContentsForm" icon="fe fe-edit">تعديل</submit-button>
   </div>
 </form>

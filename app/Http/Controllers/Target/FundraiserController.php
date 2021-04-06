@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Target;
 use Illuminate\Http\Request;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
-use App\Http\Requests\Target\Fundraiser\{CreateRequest, UpdateRequest};
+use App\Http\Requests\Target\Fundraiser\{CreateRequest, UpdateRequest , CreateUpdateContent};
 use App\Models\{Fundraiser};
 
 class FundraiserController extends BaseController
@@ -98,6 +98,34 @@ class FundraiserController extends BaseController
             return $this->_response($fundraisers);
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
+        }
+    }
+
+
+    public function list_contents(Request $request, $id)
+    {
+
+        try {
+
+            $model = $this->model::findOrFail($id);
+
+            return $this->_response(getContent($model));
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function create_update_contents(CreateUpdateContent $request, $id)
+    {
+        try {
+
+            $model = $this->model::find($id);
+
+            setContent($request, $model);
+
+            return $this->_response($model->contents);
+        } catch (\Exception $ex) {
+            throw $this->_exception($ex->getMessage());
         }
     }
 }

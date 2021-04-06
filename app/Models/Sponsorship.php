@@ -5,9 +5,13 @@ namespace App\Models;
 use App\Models\{Country};
 
 use App\Common\Base\BaseTargetModel;
+use App\Common\Traits\HasContent;
+
 
 class Sponsorship extends BaseTargetModel
 {
+     use HasContent;
+
      protected $table = 'sponsorships';
      protected $guarded = [];
      protected $has_places = true; //used in parent model to check if this model has places
@@ -116,5 +120,18 @@ class Sponsorship extends BaseTargetModel
      public function percentage_to_complete()
      {
           return 100 - $this->sponsors()->sum('percentage');
+     }
+
+
+
+
+     /* 
+      * Abstracted from HasContent Trait ti determin what fields are required fot this model
+     */
+     public static function get_content_fields()
+     {
+          return [
+               'title', 'details'
+          ];
      }
 }

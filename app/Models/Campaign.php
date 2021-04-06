@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use App\Common\Base\BaseTargetModel;
+use App\Common\Traits\HasContent;
+
 
 class Campaign extends BaseTargetModel
 {
+     use HasContent;
 
      protected $table = 'campaigns';
      protected $guarded = [];
@@ -72,5 +75,16 @@ class Campaign extends BaseTargetModel
           }
 
           return $response;
+     }
+
+
+     /* 
+      * Abstracted from HasContent Trait ti determin what fields are required fot this model
+     */
+     public static function get_content_fields()
+     {
+          return [
+               'title', 'details'
+          ];
      }
 }

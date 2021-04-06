@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Target;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Target\Student\{CreateRequest, UpdateRequest};
+use App\Http\Requests\Target\Student\{CreateRequest, UpdateRequest , CreateUpdateContent};
 
 use App\Models\{User, Student};
 
@@ -78,9 +78,6 @@ class StudentController extends BaseController
         }
     }
 
-
-
-
     public function list_sponsors(Request $request, $id)
     {
 
@@ -94,6 +91,33 @@ class StudentController extends BaseController
             return $this->_response($sponsors);
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
+        }
+    }
+
+    public function list_contents(Request $request, $id)
+    {
+
+        try {
+
+            $model = $this->model::findOrFail($id);
+
+            return $this->_response(getContent($model));
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function create_update_contents(CreateUpdateContent $request, $id)
+    {
+        try {
+
+            $model = $this->model::find($id);
+
+            setContent($request, $model);
+
+            return $this->_response($model->contents);
+        } catch (\Exception $ex) {
+            throw $this->_exception($ex->getMessage());
         }
     }
 }

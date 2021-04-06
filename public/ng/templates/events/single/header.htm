@@ -1,6 +1,16 @@
-<page-header title="المناسبة {{ object.id }}" pretitle="المناسبات"></page-header>
+<page-header
+  title="المناسبة {{  $routeParams.id }}"
+  pretitle="المناسبات"
+></page-header>
 
 <page-nav>
-    <page-nav-item route="events.overview" params="{id: object.id}">نظرة عامة</page-nav-item>
-    <page-nav-item route="events.edit" params="{id: object.id}">تعديل المعلومات</page-nav-item>
+  <page-nav-item route="events.overview" params="{id:  $routeParams.id}"
+    >نظرة عامة</page-nav-item
+  >
+  <page-nav-item route="events.edit" params="{id:  $routeParams.id}"
+    >تعديل المعلومات</page-nav-item
+  >
+  <page-nav-item route="events.contents" params="{id:  $routeParams.id}"
+    >المحتوى</page-nav-item
+  >
 </page-nav>

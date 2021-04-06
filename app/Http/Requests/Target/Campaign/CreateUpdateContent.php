@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Target\Cases;
+namespace App\Http\Requests\Target\Campaign;
 
 
 use App\Common\Base\BaseRequest;
@@ -35,7 +35,7 @@ class CreateUpdateContent extends BaseRequest
     {
 
         $locales = config('general.available_locales');
-        $fields = \App\Models\Cases::get_content_fields();
+        $fields = \App\Models\Campaign::get_content_fields();
         
         
         foreach($fields  as $key => $field){
