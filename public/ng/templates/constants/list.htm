@@ -1,0 +1,38 @@
+<page-header title="قائمة الثوابت" pretitle="الثوابت">
+  <a href="{{ $r('constants.add') }}" class="btn btn-primary">
+    <i class="fe fe-plus"></i>&nbsp; ثابت جديد
+  </a>
+</page-header>
+
+<datatable datalist="constants">
+  <table>
+    <thead>
+      <tr>
+        <th class="text-center">#</th>
+        <th class="text-center">الاسم</th>
+        <th class="text-center">اللغة</th>
+        <th class="text-center">القيمة</th>
+        <th class="text-center">خيارات</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="constant in constants.data">
+        <td class="align-middle text-center">{{ constant.id }}</td>
+        <td class="align-middle text-center">{{ constant.name }}</td>
+        <td class="align-middle text-center">{{ constant.locale }}</td>
+        <td class="align-middle text-center">{{ constant.value}}</td>
+        <td class="align-middle text-center h2">
+          <dropdown>
+            <dropdown-item href="{{ $r('constants.overview', {id: constant.id}) }}"
+              ><i class="fe fe-eye"></i> نظرة عامة</dropdown-item
+            >
+            <dropdown-item href="{{ $r('constants.edit', {id: constant.id}) }}"
+              ><i class="fe fe-edit-2"></i> تعديل</dropdown-item
+            >
+          </dropdown>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</datatable>

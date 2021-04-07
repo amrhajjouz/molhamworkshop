@@ -4,6 +4,60 @@
             <i class="fe fe-home"></i> البداية
         </a>
     </li>
+     <li class="nav-item">
+        <a
+            class="nav-link"
+            href="javascript:;"
+            data-toggle="collapse"
+            data-target="#users-navs"
+            role="button"
+            aria-expanded="false"
+        >
+            <i class="fe fe-users"></i> المستخدمين
+        </a>
+        <div class="collapse" id="users-navs">
+            <ul class="nav nav-sm flex-column">
+                 <li class="nav-item">
+                    <a href="{{ $r('users') }}" class="nav-link">
+                        قائمة المستخدمين
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('users.add') }}" class="nav-link">
+                        مستخدم جديد
+                    </a>
+                </li>
+               
+            </ul>
+        </div>
+    </li>
+     <li class="nav-item">
+        <a
+            class="nav-link"
+            href="javascript:;"
+            data-toggle="collapse"
+            data-target="#donors-navs"
+            role="button"
+            aria-expanded="false"
+        >
+            <i class="fe fe-book"></i> المتبرعين
+        </a>
+        <div class="collapse" id="donors-navs">
+            <ul class="nav nav-sm flex-column">
+                 <li class="nav-item">
+                    <a href="{{ $r('donors') }}" class="nav-link">
+                        قائمة المتبرعين
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('donors.add') }}" class="nav-link">
+                        متبرع جديد
+                    </a>
+                </li>
+               
+            </ul>
+        </div>
+    </li>
 
     <!-- SECTIONS -->
     <li class="nav-item">
@@ -19,24 +73,24 @@
         </a>
         <div class="collapse" id="sections-nav">
             <ul class="nav nav-sm flex-column">
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="{{ $r('users') }}" class="nav-link">
                         <i class="fe fe-users"></i>
                      المستخدمين
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a href="{{ $r('cases') }}" class="nav-link">
                         <i class="fe fe-command"></i>
                      الحالات
                     </a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="{{ $r('donors') }}" class="nav-link">
                         <i class="fe fe-book"></i>
                      المتبرعون
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a href="{{ $r('campaigns') }}" class="nav-link">
                         <i class="fe fe-volume-1"></i>
@@ -303,6 +357,32 @@
                 <li class="nav-item">
                     <a href="{{ $r('places') }}" class="nav-link">
                         قائمة الأماكن
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a
+            class="nav-link"
+            href="javascript:;"
+            data-toggle="collapse"
+            data-target="#constants-navs"
+            role="button"
+            aria-expanded="false"
+        >
+            <i class="fe fe-layout"></i> الثوابت
+        </a>
+        <div class="collapse" id="constants-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('constants.add') }}" class="nav-link">
+                        ثابت جديد
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('constants') }}" class="nav-link">
+                        قائمة الثوابت
                     </a>
                 </li>
             </ul>

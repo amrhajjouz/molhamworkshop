@@ -3,7 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\ProfileController;
-use App\Http\Controllers\{UserController, CountryController, CategoryController, SectionController, PlaceController , AdminController};
+use App\Http\Controllers\{UserController, CountryController, CategoryController, SectionController, PlaceController , AdminController , ConstantController};
+
 use App\Http\Controllers\Target\{
     CaseController,
     CampaignController,
@@ -132,6 +133,16 @@ Route::middleware('auth')->group(function () {
     // Route::post('/admins', [AdminController::class, 'create']);
     // Route::put('/admins', [AdminController::class, 'update']);
     // Route::post('/admins/delete', [AdminController::class, 'delete']);
+
+
+
+
+    ////////////////// Fundraiser // //////////////
+    Route::get('/constants', [ConstantController::class, 'list']);
+    Route::post('/constants', [ConstantController::class, 'create']);
+    Route::put('/constants', [ConstantController::class, 'update']);
+    Route::get('/constants/{id}', [ConstantController::class, 'retrieve']);
+
 });
 
 

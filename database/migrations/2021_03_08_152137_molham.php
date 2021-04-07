@@ -184,6 +184,12 @@ class Molham extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+       
+        Schema::create('constants', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->boolean('plaintext')->index()->default(0);
+            $table->timestamps();
+        });
     }
 
     /**
@@ -209,5 +215,6 @@ class Molham extends Migration
         Schema::dropIfExists('sponsors');
         Schema::dropIfExists('admins');
         Schema::dropIfExists('contents');
+        Schema::dropIfExists('constants');
     }
 }

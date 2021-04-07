@@ -76,6 +76,13 @@ return [
     'places.overview' => ['places/:id', 'places/overviewPlaceController', 'places.single.overview'],
     'places.edit' => ['places/:id/edit', 'places/editPlaceController', 'places.single.edit'],
     'places' => ['places', 'places/listPlacesController', 'places.list'],
+    
+    
+    /////////////////////// Constants /////////////////////////
+    'constants.add' => ['constants/add', 'constants/addConstantController', 'constants.add'],
+    'constants.overview' => ['constants/:id', 'constants/overviewConstantController', 'constants.single.overview'],
+    'constants.edit' => ['constants/:id/edit', 'constants/editConstantController', 'constants.single.edit'],
+    'constants' => ['constants', 'constants/listConstantsController', 'constants.list'],
 
 
 

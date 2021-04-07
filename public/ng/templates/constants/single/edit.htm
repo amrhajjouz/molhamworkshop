@@ -1,0 +1,42 @@
+<include-header />
+
+<form class="row" name="updateConstantForm" request="updateConstant">
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="name">اسم الثابت</label>
+      <input
+        id="name"
+        class="form-control"
+        type="text"
+        ng-model="constant.content.name"
+        ng-class="(updateConstant.errors['content.name'] != null) ? 'is-invalid' : ''"
+        ng-change="updateConstant.errors['content.name'] = null"
+        placeholder="اسم الثابت.."
+        ng-error="updateConstant.errors.content.name"
+        required
+      />
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="value">قيمة الثابت</label>
+      <input
+        id="value"
+        class="form-control"
+        type="text"
+        ng-model="constant.content.value"
+        ng-class="(updateConstant.errors['content.value'] != null) ? 'is-invalid' : ''"
+        ng-change="updateConstant.errors['content.value'] = null"
+        placeholder="اسم الثابت.."
+        ng-error="updateConstant.errors.content.value"
+        required
+      />
+    </div>
+  </div>
+
+  <div class="col-12">
+    <submit-button form="updateConstantForm" icon="fe fe-plus"
+      >اضافة</submit-button
+    >
+  </div>
+</form>
