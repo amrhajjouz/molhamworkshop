@@ -190,6 +190,12 @@ class Molham extends Migration
             $table->boolean('plaintext')->index()->default(0);
             $table->timestamps();
         });
+       
+        Schema::create('faqs', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('category_id');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -216,5 +222,6 @@ class Molham extends Migration
         Schema::dropIfExists('admins');
         Schema::dropIfExists('contents');
         Schema::dropIfExists('constants');
+        Schema::dropIfExists('faqs');
     }
 }

@@ -4,22 +4,19 @@ namespace App\Models;
 
 use App\Common\Base\BaseModel;
 
-class Constant extends BaseModel
+class Faq extends BaseModel
 {
 
-    protected $table = 'constants';
+    protected $table = 'faqs';
     protected $guarded = [];
-    protected $casts = [
-        'plaintext' => 'boolean' 
-    ];
 
 
     /* 
      * Relation for this model with Content Model 
     */
-    public function content()
+    public function contents()
     {
-        return $this->morphOne(\App\Models\Content::class, 'contentable');
+        return $this->morphMany(\App\Models\Content::class, 'contentable');
     }
 
 
@@ -29,7 +26,7 @@ class Constant extends BaseModel
         $constant = $this->toArray();
 
         return(object)array_merge($constant , [
-            'content'=>$this->content
+            'contents'=>$this->contents
         ]);
     }
     

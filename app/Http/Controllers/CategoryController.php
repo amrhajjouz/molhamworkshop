@@ -34,7 +34,6 @@ class CategoryController extends BaseController
             return $this->_response($data);
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
-            // return ['error' => $e->getMessage()];
         }
     }
 }

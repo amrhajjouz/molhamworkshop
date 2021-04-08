@@ -3,7 +3,19 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\ProfileController;
-use App\Http\Controllers\{UserController, CountryController, CategoryController, SectionController, PlaceController , AdminController , ConstantController};
+use App\Http\Controllers\{
+    UserController,
+    CountryController,
+    CategoryController,
+    SectionController,
+    PlaceController,
+    AdminController,
+    ConstantController,
+    FaqController
+};
+
+
+/////////////////////// Target Controller /////////////////////////
 
 use App\Http\Controllers\Target\{
     CaseController,
@@ -11,9 +23,8 @@ use App\Http\Controllers\Target\{
     SponsorshipController,
     StudentController,
     EventController,
-    FundraiserController ,
+    FundraiserController,
     SponsorController
-
 };
 
 use App\Http\Controllers\DonorController;
@@ -43,7 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/users', [UserController::class, 'create']);
     Route::put('/users', [UserController::class, 'update']);
     Route::get('/users/{id}', [UserController::class, 'retrieve']);
-    
+
     ////////////////// COUNTRY //////////////
     Route::get('/countries', [CountryController::class, 'list']);
 
@@ -137,12 +148,19 @@ Route::middleware('auth')->group(function () {
 
 
 
-    ////////////////// Fundraiser // //////////////
+    ////////////////// Constants // //////////////
     Route::get('/constants', [ConstantController::class, 'list']);
     Route::post('/constants', [ConstantController::class, 'create']);
     Route::put('/constants', [ConstantController::class, 'update']);
     Route::get('/constants/{id}', [ConstantController::class, 'retrieve']);
 
+
+    ////////////////// Constants /////////////////
+
+    Route::get('/faqs', [FaqController::class, 'list']);
+    Route::post('/faqs', [FaqController::class, 'create']);
+    Route::put('/faqs', [FaqController::class, 'update']);
+    Route::get('/faqs/{id}', [FaqController::class, 'retrieve']);
 });
 
 
