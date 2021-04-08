@@ -29,14 +29,14 @@ class UpdateRequest extends BaseRequest
 
         $locales = config('general.available_locales');
         $fields = \App\Models\Faq::get_content_fields();
-
-
+        
         foreach ($fields  as $key => $field) {
             foreach ($locales  as $locale) {
-                $rules[$field]  = ['array'];
-                $rules[$field . '.' . $locale]  = ['nullable'];
+                $rules['contents.'.  $field]  = ['array'];
+                $rules['contents.'.  $field . '.' . $locale]  = ['nullable'];
             }
         }
+        $rules['category_id'] = ['required'];
 
         return $rules;
     }

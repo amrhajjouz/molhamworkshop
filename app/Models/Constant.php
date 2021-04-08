@@ -21,14 +21,13 @@ class Faq extends BaseModel
 
 
 
-    public function transform(){
-        
+    public function transform()
+    {
+
         $constant = $this->toArray();
 
-        return(object)array_merge($constant , [
-            'contents'=>$this->contents
+        return (object)array_merge($constant, [
+            'contents' => $this->contents
         ]);
     }
-    
-
 }

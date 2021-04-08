@@ -45,7 +45,7 @@ function getContent($contentable)
 /*
  * Set Contents records for any data model has relation pivot with Content model 
 */
-function setContent($request, $contentable)
+function setContent($request, $contentable )
 {
 
     $locales = config('general.available_locales');
@@ -57,14 +57,21 @@ function setContent($request, $contentable)
 
     $required_contents_fields = $contentable::get_content_fields();
 
+    $data = $request->validated();
 
-    foreach ($request->validated() as $title => $values) {
+
+    // if we have contents as array inside object in request 
+    if(isset($request->validated()['contents'])){
+        $data = $request->validated()['contents']; 
+    }
+
+
+    foreach ($data as $title => $values) {
 
         /* 
              * if there is any value not registerd in constructor dont save it
             */
         if (!in_array($title, $required_contents_fields)) continue;
-
 
 
         foreach ($values  as $locale => $val) {

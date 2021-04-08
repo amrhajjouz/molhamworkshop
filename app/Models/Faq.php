@@ -5,34 +5,40 @@ namespace App\Models;
 use App\Common\Base\BaseModel;
 use App\Common\Traits\HasContent;
 
-class Constant extends BaseModel
+class Faq extends BaseModel
 {
     use HasContent;
 
 
-    protected $table = 'constants';
+    protected $table = 'faqs';
     protected $guarded = [];
-    protected $casts = [
-        'plaintext' => 'boolean' 
-    ];
 
 
     /* 
      * Relation for this model with Content Model 
     */
-    public function content()
+    public function contents()
     {
-        return $this->morphOne(\App\Models\Content::class, 'contentable');
+        return $this->morphMany(\App\Models\Content::class, 'contentable');
     }
 
+    public function category(){
+        return $this->hasOne('App\Models\Category' , 'id' , 'category_id');
+    }
+    
 
+    public function transform()
+    {
 
-    public function transform(){
-        
         $constant = $this->toArray();
 
-        return(object)array_merge($constant , [
-            'content'=>$this->content
+        $category = $this->category->name??null;
+
+        return (object)array_merge($constant, [
+            'contents' => getContent($this) ,
+            'category' => [
+                'name' => $category
+            ],
         ]);
     }
 
@@ -47,4 +53,5 @@ class Constant extends BaseModel
         ];
     }
 
+    
 }

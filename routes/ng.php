@@ -84,6 +84,11 @@ return [
     'constants.edit' => ['constants/:id/edit', 'constants/editConstantController', 'constants.single.edit'],
     'constants' => ['constants', 'constants/listConstantsController', 'constants.list'],
 
+    /////////////////////// FAQS /////////////////////////
+    'faqs.add' => ['faqs/add', 'faqs/addFaqController', 'faqs.add'],
+    'faqs.overview' => ['faqs/:id', 'faqs/overviewFaqController', 'faqs.single.overview'],
+    'faqs.edit' => ['faqs/:id/edit', 'faqs/editFaqController', 'faqs.single.edit'],
+    'faqs' => ['faqs', 'faqs/listFaqsController', 'faqs.list'],
 
 
     //Donors Routes

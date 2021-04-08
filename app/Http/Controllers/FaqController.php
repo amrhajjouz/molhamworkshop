@@ -23,49 +23,47 @@ class FaqController extends BaseController
         try {
 
             $data = $request->validated();
-            $constant = new $this->model();
-            $constant->plaintext = $data['plaintext'];
+            $faq = new $this->model();
+            $faq->category_id  = $data['category_id'];
+            // dd($request->validated());
+            $faq->save();
+            setContent($request, $faq);
+            // unset($data['category_id']);
 
-            $constant->save();
+            // foreach($data  as $locales){
+            //     foreach($locales  as $_content){
+            //         $content = new Content();
+            //         $content->name = $_content['name'];
+            //         $content->value = $_content['value'];
+            //         $content->locale = $_content['locale'];
+            //         $content->contentable_type = 'App\Models\Faq';
+            //         $content->contentable_id= $faq->id;
+                    
+            //         $content->save();
+                    
+            //     }
+            // }
 
-            $content = Content::create([
-                'name' => $data['content']['name'],
-                'value' => $data['content']['value'],
-                'contentable_type' => "App\Models\Faq",
-                'contentable_id' => $constant->id,
-
-            ]);
-
-            return $this->_response($constant);
+            return $this->_response($faq);
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
         }
     }
 
+
     public function update(UpdateRequest $request)
     {
-
         try {
 
-            $data = $request->validated();
+            $model = $this->model::findOrFail($request->id);
+            $data = $request->all();
+            $model->category_id = $data['category_id'];
+            $model->save();
+            setContent($request, $model);
 
-            $constant = $this->model::findOrFail($request->id);
-            $constant->plaintext = $data['plaintext'];
-
-            $constant->save();
-
-            $content = $constant->content;
-
-            $content->name = $data['content']['name'];
-            $content->value = $data['content']['value'];
-            $content->locale = $data['content']['locale'];
-
-            $content->save();
-
-
-            return $this->_response($constant);
-        } catch (\Exception $e) {
-            throw $this->_exception($e->getMessage());
+            return $this->_response($model->contents);
+        } catch (\Exception $ex) {
+            throw $this->_exception($ex->getMessage());
         }
     }
 
@@ -73,24 +71,29 @@ class FaqController extends BaseController
     {
 
         try {
-            // $search_query = ($request->has('q') ? [['name', 'like', '%' . $request->q . '%']] : null);
 
-            $constants = $this->model::orderBy('id', 'desc')
-                ->join('contents', 'constants.id', 'contents.contentable_id')
+            $faqs = $this->model::orderBy('id', 'desc')
+                ->join('contents', 'faqs.id', 'contents.contentable_id')
+                ->join('categories', 'faqs.category_id', 'categories.id')
                 ->where('contents.contentable_type', 'App\Models\Faq')
-                ->select('contents.value', 'contents.name', 'contents.locale', 'constants.*')
+                ->select('contents.value', 'contents.name', 'contents.locale', 'faqs.*' , 'categories.name as category')
                 ->where(function ($q) use ($request) {
                     if ($request->has("q")) {
                         $q->where('contents.name', 'like', '%' .$request-> q . '%');
                         $q->orWhere('contents.value', 'like', '%' .  $request->q . '%');
+                        $q->orWhere('categories.name', 'like', '%' .  $request->q . '%');
                     }
                 })
                 ->paginate(10)
                 ->withQueryString();
 
-            return $this->_response($constants);
+            return $this->_response($faqs);
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
         }
     }
+
+
+
+
 }
