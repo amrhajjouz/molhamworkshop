@@ -11,7 +11,8 @@ use App\Http\Controllers\{
     PlaceController,
     AdminController,
     ConstantController,
-    FaqController
+    FaqController ,
+    ShortcutController
 };
 
 
@@ -155,12 +156,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/constants/{id}', [ConstantController::class, 'retrieve']);
 
 
-    ////////////////// Constants /////////////////
+    ////////////////// Faq /////////////////
 
     Route::get('/faqs', [FaqController::class, 'list']);
     Route::post('/faqs', [FaqController::class, 'create']);
     Route::put('/faqs', [FaqController::class, 'update']);
     Route::get('/faqs/{id}', [FaqController::class, 'retrieve']);
+  
+  
+    ////////////////// Shortcut /////////////////
+    Route::get('/shortcuts', [ShortcutController::class, 'list']);
+    Route::post('/shortcuts', [ShortcutController::class, 'create']);
+    Route::put('/shortcuts', [ShortcutController::class, 'update']);
+    Route::get('/shortcuts/{id}', [ShortcutController::class, 'retrieve']);
+    Route::get('/shortcuts/{id}/keywords', [ShortcutController::class, 'list_keywords']);
 });
 
 

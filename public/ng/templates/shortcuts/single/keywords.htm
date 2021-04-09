@@ -1,0 +1,91 @@
+<include-header />
+
+<div class="row m-2">
+  <div class="col-6"></div>
+  <div class="col-6 text-left">
+    <button
+      href="#"
+      ng-click="showModal('add')"
+      class="btn btn-primary"
+    >
+      <i class="fe fe-plus"></i>&nbsp;إضافة كلمة مفتاحية
+    </button>
+  </div>
+</div>
+
+<datatable datalist="keywords">
+  <table>
+    <thead>
+      <tr>
+        <th class="text-center">#</th>
+        <th class="text-center">الكلمة المفتاحية</th>
+        <th class="text-center">خيارات</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="keyword in keywords.data">
+        <td class="align-middle text-center">{{ keyword.id }}</td>
+        <td class="align-middle text-center">{{ keyword.value }}</td>
+        <td class="align-middle text-center h2">
+          <dropdown>
+             <dropdown-item href="javascript:;" ng-click="showModal('edit', keyword)"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
+          </dropdown>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</datatable>
+<div class="card">
+  <!-- Create Update Modal -->
+  <modal id="keyword-modal">
+    <modal-title>
+      <span>
+        <div ng-show="currentModalAction == 'add'">
+          <i class="fe fe-plus-circle"></i>&nbsp; اضافة كلمة مفتاحية جديدة
+        </div>
+        <div ng-show="currentModalAction == 'edit'">
+          <i class="fe fe-edit"></i>&nbsp; تعديل الكلمة المفتاحية {{ keyword.id }}
+        </div>
+      </span>
+    </modal-title>
+
+    <modal-body>
+      <form
+        name="listShortcutKeywordsForm"
+        request="createUpdateCaseAdmins"
+        model="keyword"
+        id="myForm"
+      >
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="form-group" ng-if="currentModalAction == 'edit'">
+              <label for="user_id">الكلمة المفتاحية</label>
+              <input
+                type="text"
+                class="form-control"
+                ng-class="(createUpdateCaseAdmins.errors.name != null) ? 'is-invalid' : ''"
+                ng-model="keyword.user.name"
+                ng-disabled="true"
+              />
+            </div>
+          </div>
+        </div>
+
+        <submit-button
+          ng-show="currentModalAction == 'add'"
+          form="listShortcutKeywordsForm"
+          icon="fe fe-plus"
+          >اضافة</submit-button
+        >
+        <submit-button
+          ng-show="currentModalAction == 'edit'"
+          form="listShortcutKeywordsForm"
+          icon="fe fe-edit"
+          >تعديل</submit-button
+        >
+
+      </form>
+    </modal-body>
+  </modal>
+</div>

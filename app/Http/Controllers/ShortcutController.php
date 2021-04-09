@@ -5,17 +5,17 @@ namespace App\Http\Controllers;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasList, HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Faq\{CreateRequest, UpdateRequest};
-use App\Models\{User, Faq, Content};
+use App\Http\Requests\Shortcut\{CreateRequest, UpdateRequest , CreateUpdateKeywordsContent};
+use App\Models\{User, Shortcut, Content};
 use App\Facades\Helper;
 
-class FaqController extends BaseController
+class ShortcutController extends BaseController
 {
     use HasList, HasRetrieve;
 
     public function __construct()
     {
-        $this->model = \App\Models\Faq::class;
+        $this->model = \App\Models\Shortcut::class;
     }
 
     public function create(CreateRequest $request)
@@ -23,12 +23,13 @@ class FaqController extends BaseController
         try {
 
             $data = $request->validated();
-            $faq = new $this->model();
-            $faq->category_id  = $data['category_id'];
-            $faq->save();
-            setContent($request, $faq);
 
-            return $this->_response($faq);
+            $shortcut = new $this->model();
+            $shortcut->path  = $data['path'];
+            $shortcut->save();
+            setContent($request, $shortcut);
+
+            return $this->_response($shortcut);
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
         }
@@ -38,14 +39,14 @@ class FaqController extends BaseController
     public function update(UpdateRequest $request)
     {
         try {
-
-            $model = $this->model::findOrFail($request->id);
+            
+            $shortcut = $this->model::findOrFail($request->id);
             $data = $request->all();
-            $model->category_id = $data['category_id'];
-            $model->save();
-            setContent($request, $model);
+            $shortcut->path  = $data['path'];
+            $shortcut->save();
+            setContent($request, $shortcut);
 
-            return $this->_response($model->contents);
+            return $this->_response($shortcut->contents);
         } catch (\Exception $ex) {
             throw $this->_exception($ex->getMessage());
         }
@@ -59,7 +60,7 @@ class FaqController extends BaseController
             $faqs = $this->model::orderBy('id', 'desc')
                 ->join('contents', 'faqs.id', 'contents.contentable_id')
                 ->join('categories', 'faqs.category_id', 'categories.id')
-                ->where('contents.contentable_type', 'App\Models\Faq')
+                ->where('contents.contentable_type', 'App\Models\Shortcut')
                 ->select('contents.value', 'contents.name', 'contents.locale', 'faqs.*' , 'categories.name as category')
                 ->where(function ($q) use ($request) {
                     if ($request->has("q")) {
@@ -74,6 +75,36 @@ class FaqController extends BaseController
             return $this->_response($faqs);
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
+        }
+    }
+
+
+
+
+    public function list_keywords(Request $request, $id)
+    {
+
+        try {
+
+            $model = $this->model::findOrFail($id);
+            return $this->_response($model->list_keywords());
+            return $this->_response(getContent($model));
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function create_update_keywords_contents(CreateUpdateKeywordsContent $request, $id)
+    {
+        try {
+
+            $model = $this->model::find($id);
+
+            setContent($request, $model);
+
+            return $this->_response($model->contents);
+        } catch (\Exception $ex) {
+            throw $this->_exception($ex->getMessage());
         }
     }
 

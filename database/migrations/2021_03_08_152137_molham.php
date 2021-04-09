@@ -196,6 +196,12 @@ class Molham extends Migration
             $table->bigInteger('category_id');
             $table->timestamps();
         });
+       
+        Schema::create('shortcuts', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('path')->index();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -223,5 +229,6 @@ class Molham extends Migration
         Schema::dropIfExists('contents');
         Schema::dropIfExists('constants');
         Schema::dropIfExists('faqs');
+        Schema::dropIfExists('shortcuts');
     }
 }

@@ -24,6 +24,14 @@ return [
     'users.edit' => ['users/:id/edit', 'users/editUserController', 'users.single.edit'],
     'users' => ['users', 'users/listUsersController', 'users.list'],
 
+
+    //Donors Routes
+    'donors' => ['donors', 'donors/listDonorsController', 'donors.list'],
+    'donors.add' => ['donors/add', 'donors/addDonorController', 'donors.add'],
+    'donors.overview' => ['donors/:id', 'donors/overviewDonorController', 'donors.single.overview'],
+    'donors.edit' => ['donors/:id/edit', 'donors/editDonorController', 'donors.single.edit'],
+
+
     //////////////////////// Cases Routes //////////////////////
     'cases.add' => ['cases/add', 'cases/addCaseController', 'cases.add'],
     'cases.overview' => ['cases/:id', 'cases/overviewCaseController', 'cases.single.overview'],
@@ -90,12 +98,14 @@ return [
     'faqs.edit' => ['faqs/:id/edit', 'faqs/editFaqController', 'faqs.single.edit'],
     'faqs' => ['faqs', 'faqs/listFaqsController', 'faqs.list'],
 
+    /////////////////////// Shortcuts /////////////////////////
+    'shortcuts.add' => ['shortcuts/add', 'shortcuts/addShortcutController', 'shortcuts.add'],
+    'shortcuts.overview' => ['shortcuts/:id', 'shortcuts/overviewShortcutController', 'shortcuts.single.overview'],
+    'shortcuts.edit' => ['shortcuts/:id/edit', 'shortcuts/editShortcutController', 'shortcuts.single.edit'],
+    'shortcuts.keywords' => ['shortcuts/:id/keywords', 'shortcuts/listShortcutKeywordsController', 'shortcuts.single.keywords'],
+    'shortcuts' => ['shortcuts', 'shortcuts/listShortcutsController', 'shortcuts.list'],
 
-    //Donors Routes
-    'donors' => ['donors', 'donors/listDonorsController', 'donors.list'],
-    'donors.add' => ['donors/add', 'donors/addDonorController', 'donors.add'],
-    'donors.overview' => ['donors/:id', 'donors/overviewDonorController', 'donors.single.overview'],
-    'donors.edit' => ['donors/:id/edit', 'donors/editDonorController', 'donors.single.edit'],
+
 
 
 ];

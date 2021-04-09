@@ -1,0 +1,56 @@
+<include-header />
+
+<form class="row" name="updateShortcutForm" request="updateShortcut">
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="path">المسار</label>
+      <input
+        id="path"
+        class="form-control"
+        ng-model="shortcut.path"
+        ng-class="(updateShortcut.errors['path'] != null) ? 'is-invalid' : ''"
+        ng-change="updateShortcut.errors['path'] = null"
+        ng-error="updateShortcut.errors.path"
+        required
+      />
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="ar-title"> العنوان باللغة العربية</label>
+      <input
+        id="ar-title"
+        class="form-control"
+        type="text"
+        ng-model="shortcut.contents.title.ar"
+        ng-class="(updateShortcut.errors['contents.title.ar'] != null) ? 'is-invalid' : ''"
+        ng-change="updateShortcut.errors['contents.title.ar'] = null"
+        placeholder="العنوان.."
+        ng-error="updateShortcut.errors.title.ar"
+        required
+      />
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="ar-description">الوصف باللغة العربية</label>
+      <textarea
+        id="ar-description"
+        class="form-control"
+        type="text"
+        ng-model="shortcut.contents.description.ar"
+        ng-class="(updateShortcut.errors['contents.description.ar'] != null) ? 'is-invalid' : ''"
+        ng-change="updateShortcut.errors['contents.description.ar'] = null"
+        placeholder="الجواب.."
+        ng-error="updateShortcut.errors.contents.description.ar"
+        required
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <submit-button form="updateShortcutForm" icon="fe fe-plus"
+      >اضافة</submit-button
+    >
+  </div>
+</form>

@@ -393,6 +393,32 @@
             class="nav-link"
             href="javascript:;"
             data-toggle="collapse"
+            data-target="#shortcuts-navs"
+            role="button"
+            aria-expanded="false"
+        >
+            <i class="fe fe-corner-right-up"></i> الاختصارات
+        </a>
+        <div class="collapse" id="shortcuts-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('shortcuts.add') }}" class="nav-link">
+                        اختصار جديد
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('shortcuts') }}" class="nav-link">
+                        قائمة الإختصارات
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a
+            class="nav-link"
+            href="javascript:;"
+            data-toggle="collapse"
             data-target="#faqs-navs"
             role="button"
             aria-expanded="false"
