@@ -170,6 +170,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/shortcuts', [ShortcutController::class, 'update']);
     Route::get('/shortcuts/{id}', [ShortcutController::class, 'retrieve']);
     Route::get('/shortcuts/{id}/keywords', [ShortcutController::class, 'list_keywords']);
+    Route::post('/shortcuts/{id}/keyword', [ShortcutController::class, 'create_keyword']);
+    Route::put('/shortcuts/{id}/keyword', [ShortcutController::class, 'update_keyword']);
 });
 
 

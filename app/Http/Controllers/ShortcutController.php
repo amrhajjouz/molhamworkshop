@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasList, HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Shortcut\{CreateRequest, UpdateRequest , CreateUpdateKeywordsContent};
+use App\Http\Requests\Shortcut\{CreateRequest, UpdateRequest , CreateKeyword , UpdateKeyword};
 use App\Models\{User, Shortcut, Content};
 use App\Facades\Helper;
 
@@ -35,7 +35,6 @@ class ShortcutController extends BaseController
         }
     }
 
-
     public function update(UpdateRequest $request)
     {
         try {
@@ -44,7 +43,8 @@ class ShortcutController extends BaseController
             $data = $request->all();
             $shortcut->path  = $data['path'];
             $shortcut->save();
-            setContent($request, $shortcut);
+
+            setContent($request->validated(), $shortcut);
 
             return $this->_response($shortcut->contents);
         } catch (\Exception $ex) {
@@ -58,15 +58,16 @@ class ShortcutController extends BaseController
         try {
 
             $faqs = $this->model::orderBy('id', 'desc')
-                ->join('contents', 'faqs.id', 'contents.contentable_id')
-                ->join('categories', 'faqs.category_id', 'categories.id')
+                ->join('contents', 'shortcuts.id', 'contents.contentable_id')
                 ->where('contents.contentable_type', 'App\Models\Shortcut')
-                ->select('contents.value', 'contents.name', 'contents.locale', 'faqs.*' , 'categories.name as category')
+                ->where('contents.name', 'title')
+                ->where('contents.locale', 'ar')
+                ->select('contents.value', 'contents.name as content_name', 'contents.locale', 'shortcuts.*' )
                 ->where(function ($q) use ($request) {
                     if ($request->has("q")) {
                         $q->where('contents.name', 'like', '%' .$request-> q . '%');
                         $q->orWhere('contents.value', 'like', '%' .  $request->q . '%');
-                        $q->orWhere('categories.name', 'like', '%' .  $request->q . '%');
+                        $q->orWhere('shortcuts.path', 'like', '%' .  $request->q . '%');
                     }
                 })
                 ->paginate(10)
@@ -77,8 +78,6 @@ class ShortcutController extends BaseController
             throw $this->_exception($e->getMessage());
         }
     }
-
-
 
 
     public function list_keywords(Request $request, $id)
@@ -94,15 +93,48 @@ class ShortcutController extends BaseController
         }
     }
 
-    public function create_update_keywords_contents(CreateUpdateKeywordsContent $request, $id)
+    public function create_keyword(CreateKeyword $request , $id)
     {
         try {
 
             $model = $this->model::find($id);
 
-            setContent($request, $model);
+            $data = $request->validated();
 
-            return $this->_response($model->contents);
+            $keywords = Content::create([
+                'contentable_type' => get_class($model) ,
+                'contentable_id' => $model->id ,
+                'name' => 'keyword' ,
+                'value' => $data['value'] ,
+                'locale' => $data['locale'] ,
+            ]);
+
+            return $this->_response($keywords);
+        } catch (\Exception $ex) {
+            throw $this->_exception($ex->getMessage());
+        }
+    }
+
+
+    public function update_keyword(UpdateKeyword $request, $id)
+    {
+        try {
+
+            $model = $this->model::findOrFail($id);
+
+            $data = $request->validated();
+            Content::findOrFail($data['id'])->delete();
+            $keywords = Content::create([
+                    'contentable_type' => get_class($model),
+                    'contentable_id' => $model->id,
+                    'name' => 'keyword',
+                    'value' => $data['value'],
+                    'locale' => $data['locale'],
+                ]);
+
+
+
+            return $this->_response($keywords);
         } catch (\Exception $ex) {
             throw $this->_exception($ex->getMessage());
         }

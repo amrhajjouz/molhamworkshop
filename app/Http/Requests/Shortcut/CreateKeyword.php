@@ -6,7 +6,7 @@ namespace App\Http\Requests\Shortcut;
 use App\Common\Base\BaseRequest;
 use Illuminate\Validation\Rule;
 
-class CreateUpdateContent extends BaseRequest
+class CreateKeyword extends BaseRequest
 {
 
 
@@ -26,18 +26,12 @@ class CreateUpdateContent extends BaseRequest
      * @return array
      */
     public function rules()
-    {
+    {   
+        $rules=[
 
-        $locales = config('general.available_locales');
-        $fields = \App\Models\Shortcut::get_content_fields();
-
-
-        foreach ($fields  as $key => $field) {
-            $rules[$field]  = ['array'];
-            foreach ($locales  as $locale) {
-                $rules[$field . '.' . $locale]  = ['nullable'];
-            }
-        }
+            'locale'=>['required'],
+            'value'=>['required'],
+        ];
 
         return $rules;
     }

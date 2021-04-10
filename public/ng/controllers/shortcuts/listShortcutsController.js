@@ -1,7 +1,7 @@
 function listShortcutsControllerInit($datalist) {
-  return $datalist("faqs", true).load();
+  return $datalist("shortcuts", true).load();
 }
 
 function listShortcutsController($scope, $init) {
-  $scope.faqs = $init;
+  $scope.shortcuts = $init;
 }

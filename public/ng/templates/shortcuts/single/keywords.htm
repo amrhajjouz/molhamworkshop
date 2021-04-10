@@ -1,13 +1,8 @@
 <include-header />
-
 <div class="row m-2">
   <div class="col-6"></div>
   <div class="col-6 text-left">
-    <button
-      href="#"
-      ng-click="showModal('add')"
-      class="btn btn-primary"
-    >
+    <button href="#" ng-click="showModal('add')" class="btn btn-primary">
       <i class="fe fe-plus"></i>&nbsp;إضافة كلمة مفتاحية
     </button>
   </div>
@@ -29,7 +24,11 @@
         <td class="align-middle text-center">{{ keyword.value }}</td>
         <td class="align-middle text-center h2">
           <dropdown>
-             <dropdown-item href="javascript:;" ng-click="showModal('edit', keyword)"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
+            <dropdown-item
+              href="javascript:;"
+              ng-click="showModal('edit', keyword)"
+              ><i class="fe fe-edit-2"></i> تعديل</dropdown-item
+            >
           </dropdown>
         </td>
       </tr>
@@ -45,7 +44,8 @@
           <i class="fe fe-plus-circle"></i>&nbsp; اضافة كلمة مفتاحية جديدة
         </div>
         <div ng-show="currentModalAction == 'edit'">
-          <i class="fe fe-edit"></i>&nbsp; تعديل الكلمة المفتاحية {{ keyword.id }}
+          <i class="fe fe-edit"></i>&nbsp; تعديل الكلمة المفتاحية {{ keyword.id
+          }}
         </div>
       </span>
     </modal-title>
@@ -53,20 +53,21 @@
     <modal-body>
       <form
         name="listShortcutKeywordsForm"
-        request="createUpdateCaseAdmins"
+        request="createUpdateShortcutKeywords"
         model="keyword"
         id="myForm"
       >
         <div class="row">
           <div class="col-12 col-md-6">
-            <div class="form-group" ng-if="currentModalAction == 'edit'">
-              <label for="user_id">الكلمة المفتاحية</label>
+            <div class="form-group">
+              <label for="value">الكلمة المفتاحية</label>
               <input
+                id="value"
                 type="text"
                 class="form-control"
-                ng-class="(createUpdateCaseAdmins.errors.name != null) ? 'is-invalid' : ''"
-                ng-model="keyword.user.name"
-                ng-disabled="true"
+                ng-class="(createUpdateShortcutKeywords.errors.value != null) ? 'is-invalid' : ''"
+                ng-model="keyword.value"
+                ng-error="createUpdateShortcutKeywords.errors.value"
               />
             </div>
           </div>
@@ -84,7 +85,6 @@
           icon="fe fe-edit"
           >تعديل</submit-button
         >
-
       </form>
     </modal-body>
   </modal>

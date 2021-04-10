@@ -20,7 +20,7 @@ class Shortcut extends BaseModel
 
 
         return (object)array_merge($shortcut, [
-            'contents' => getContent($this) ,
+            'contents' => getContent($this),
         ]);
     }
 
@@ -31,15 +31,13 @@ class Shortcut extends BaseModel
     public static function get_content_fields()
     {
         return [
-            'title', 'description' , 'keyword'
+            'title', 'description', 'keyword'
         ];
     }
 
 
-    public function list_keywords(){
-       return  $keywords = $this->contents->where('name' , 'keyword');
+    public function list_keywords()
+    {
+        return  $keywords = $this->contents->where('name', 'keyword');
     }
-    
-
-    
 }

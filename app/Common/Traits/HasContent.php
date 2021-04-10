@@ -43,7 +43,7 @@ trait HasContent
     */
     public function contents()
     {
-        return $this->morphMany(\App\Models\Content::class, 'contentable');
+        return $this->morphMany(\App\Models\Content::class, 'contentable')->orderBy('id', 'desc');
     }
 
 

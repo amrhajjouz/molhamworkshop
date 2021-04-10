@@ -26,18 +26,29 @@ class UpdateRequest extends BaseRequest
      */
     public function rules()
     {
-
         $locales = config('general.available_locales');
         $fields = \App\Models\Shortcut::get_content_fields();
-        
+
+        /* 
+         * delete key word from rules because it has many records  
+        */
+        $fields = array_filter($fields, function ($e) {
+            return ($e !== 'keyword');
+        });
+
+
         foreach ($fields  as $key => $field) {
             foreach ($locales  as $locale) {
-                $rules['contents.'.  $field]  = ['array'];
-                $rules['contents.'.  $field . '.' . $locale]  = ['nullable'];
+                if (is_array($field)) {
+                    $rules['contents.' .  $key]  = ['array'];
+                    $rules['contents.' .  $key . '.' . $locale]  = ['nullable'];
+                } else {
+                    $rules['contents.' .  $field]  = ['array'];
+                    $rules['contents.' .  $field . '.' . $locale]  = ['nullable'];
+                }
             }
         }
         $rules['path'] = ['required'];
-
         return $rules;
     }
 }
