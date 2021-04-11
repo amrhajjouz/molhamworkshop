@@ -591,7 +591,7 @@
                                 dataType: 'json',
                                 data: function (params) {
                                     if (attrs.ajaxData)
-                                        Object.assign(query, scope.ajaxData);
+                                        query = Object.assign(query, scope.ajaxData);
                                     return Object.assign(query, {q: params.term});
                                 },
                                 processResults: function (data) {
