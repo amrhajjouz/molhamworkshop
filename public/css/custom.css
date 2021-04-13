@@ -68,3 +68,7 @@ body {
     right: 30px;
     top: 20px;
 }
+
+.flex-none {
+    flex: none;
+}
