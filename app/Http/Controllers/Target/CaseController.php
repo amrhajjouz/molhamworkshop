@@ -140,7 +140,7 @@ class CaseController extends BaseController
 
             $model = $this->model::find($id);
 
-            setContent($request, $model);
+            setContent($request->validated(), $model);
 
             return $this->_response($model->contents);
         } catch (\Exception $ex) {

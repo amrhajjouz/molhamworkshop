@@ -68,6 +68,22 @@ class Helper
         return $text;
     }
 
+
+    /* 
+     * used to format any url and replace space with / 
+     * for EX : PageController 
+    */
+
+    public static function formatUrl($url, $symbol = ' ')
+    {
+        $res = strtolower($url);
+        $res = str_replace(" ",
+            "/",
+            $res
+        );
+        return trim($res, $symbol);
+    }
+
     /*
      * Mohamd
     * Assign Sponsorship or Student to Sponsors

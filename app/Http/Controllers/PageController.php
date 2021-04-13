@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Target;
+namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
-use Illuminate\Http\Request;
-use App\Http\Requests\Target\Campaign\{CreateRequest, UpdateRequest , CreateUpdateContent};
+use App\Facades\Helper;
+use App\Http\Requests\Page\{CreateRequest, UpdateRequest, CreateUpdateContent};
+use App\Models\{Page};
 
-
-class CampaignController extends BaseController
+class PageController extends BaseController
 {
 
     use HasRetrieve;
@@ -16,7 +17,7 @@ class CampaignController extends BaseController
     public function __construct()
     {
         $this->middleware('auth');
-        $this->model = \App\Models\Campaign::class;
+        $this->model = \App\Models\Page::class;
     }
 
     public function create(CreateRequest $request)
@@ -24,40 +25,31 @@ class CampaignController extends BaseController
         try {
             $data = $request->validated();
 
-            $campaign = new $this->model();
+            $page = new $this->model();
+            $page->url = Helper::formatUrl($data['url'] , ' ');
 
-            $campaign->name = $data['name'];
-            $campaign->funded = 0;
+            $page->save();
 
-            $options = ['target' => $request->target, "places_ids" => $request->places_ids, 'admins_ids' => $request->admins_ids]; // will saved in parent target or as a relation for this model
-
-            $campaign->save($options);
-
-            return $this->_response($campaign);
+            return $this->_response($page->transform());
         } catch (\Exception $e) {
-
             throw $this->_exception($e->getMessage());
         }
     }
-
 
     public function update(UpdateRequest $request)
     {
 
         try {
 
-            $campaign = $this->model::findOrFail($request->id);
+            $page = $this->model::findOrFail($request->id);
 
             $data = $request->validated();
+            $page->url = Helper::formatUrl($data['url'] , ' ');
 
-            $campaign->name = $data['name'];
-            $campaign->funded = $data['funded'];
+            $page->save();
 
-            $options = ['target' => $request->target, "places_ids" => $request->places_ids, 'admins_ids' => $request->admins_ids]; //used in parent target or another relations
 
-            $campaign->save($options);
-
-            return $this->_response($campaign);
+            return $this->_response($page->transform());
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
         }
@@ -68,16 +60,15 @@ class CampaignController extends BaseController
     {
 
         try {
-            $search_query = ($request->has('q') ? [['name', 'like', '%' . $request->q . '%']] : null);
+            $search_query = ($request->has('q') ? [['url', 'like', '%' . $request->q . '%']] : null);
 
-            $campaign = $this->model::orderBy('id', 'desc')->where($search_query)->paginate(10)->withQueryString();
+            $events = $this->model::orderBy('id', 'desc')->where($search_query)->paginate(10)->withQueryString();
 
-            return $this->_response($campaign);
+            return $this->_response($events);
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
         }
     }
-
 
     public function list_contents(Request $request, $id)
     {
@@ -105,4 +96,7 @@ class CampaignController extends BaseController
             throw $this->_exception($ex->getMessage());
         }
     }
+
+
+  
 }

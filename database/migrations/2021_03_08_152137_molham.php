@@ -202,6 +202,12 @@ class Molham extends Migration
             $table->string('path')->index();
             $table->timestamps();
         });
+        
+        Schema::create('pages', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('url')->unique();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -230,5 +236,6 @@ class Molham extends Migration
         Schema::dropIfExists('constants');
         Schema::dropIfExists('faqs');
         Schema::dropIfExists('shortcuts');
+        Schema::dropIfExists('pages');
     }
 }

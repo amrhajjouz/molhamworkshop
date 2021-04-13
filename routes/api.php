@@ -12,7 +12,8 @@ use App\Http\Controllers\{
     AdminController,
     ConstantController,
     FaqController ,
-    ShortcutController
+    ShortcutController,
+    PageController,
 };
 
 
@@ -172,6 +173,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/shortcuts/{id}/keywords', [ShortcutController::class, 'list_keywords']);
     Route::post('/shortcuts/{id}/keyword', [ShortcutController::class, 'create_keyword']);
     Route::put('/shortcuts/{id}/keyword', [ShortcutController::class, 'update_keyword']);
+
+
+
+    /////////////////////// Pages /////////////////////////
+    Route::get('/pages', [PageController::class, 'list']);
+    Route::post('/pages', [PageController::class, 'create']);
+    Route::put('/pages', [PageController::class, 'update']);
+    Route::get('/pages/{id}', [PageController::class, 'retrieve']);
+    Route::get('/pages/{id}/contents', [PageController::class, 'list_contents']);
+    Route::put('/pages/{id}/contents', [PageController::class, 'create_update_contents']);
+
+
+
 });
 
 

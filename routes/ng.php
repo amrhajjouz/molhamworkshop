@@ -105,6 +105,12 @@ return [
     'shortcuts.keywords' => ['shortcuts/:id/keywords', 'shortcuts/listShortcutKeywordsController', 'shortcuts.single.keywords'],
     'shortcuts' => ['shortcuts', 'shortcuts/listShortcutsController', 'shortcuts.list'],
 
+    /////////////////////////// Pages Routes    ///////////////////
+    'pages.add' => ['pages/add', 'pages/addPageController', 'pages.add'],
+    'pages.overview' => ['pages/:id', 'pages/overviewPageController', 'pages.single.overview'],
+    'pages.edit' => ['pages/:id/edit', 'pages/editPageController', 'pages.single.edit'],
+    'pages' => ['pages', 'pages/listPagesController', 'pages.list'],
+    'pages.contents' => ['pages/:id/contents', 'pages/pageContentsController', 'pages.single.contents'],
 
 
 

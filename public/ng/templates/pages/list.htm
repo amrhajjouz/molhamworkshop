@@ -1,0 +1,43 @@
+<page-header title="قائمة الصفحات" pretitle="الصفحات">
+  <a href="{{ $r('pages.add') }}" class="btn btn-primary">
+    <i class="fe fe-plus"></i>&nbsp; صفحة جديد
+  </a>
+</page-header>
+
+
+
+<datatable datalist="pages">
+  <table>
+    <thead>
+      <tr>
+        <th class="text-center">#</th>
+          <th class="text-center">الرابط</th>
+          <th class="text-center">خيارات</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="page in pages.data">
+       <td class="align-middle text-center">{{ page.id }}</td>
+          <td class="align-middle text-center">{{ page.url }}</td>
+        <td class="align-middle text-center h2">
+          <dropdown>
+            <dropdown-item
+              href="{{ $r('pages.overview', {id: page.id}) }}"
+              ><i class="fe fe-eye"></i> نظرة عامة</dropdown-item
+            >
+            <dropdown-item
+              href="{{ $r('pages.edit', {id: page.id}) }}"
+              ><i class="fe fe-edit-2"></i> تعديل</dropdown-item
+            >
+            <dropdown-item
+              href="{{ $r('pages.contents', {id: page.id}) }}"
+              ><i class="fe fe-book-open"></i> المحتوى</dropdown-item
+            >
+          </dropdown>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</datatable>
+

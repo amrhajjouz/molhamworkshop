@@ -56,8 +56,6 @@ class SponsorShipController extends BaseController
     public function update(UpdateRequest $request)
     {
 
-        
-
         try {
 
             $sponsorship = $this->model::findOrFail($request->id);
@@ -139,7 +137,7 @@ class SponsorShipController extends BaseController
 
             $model = $this->model::find($id);
 
-            setContent($request, $model);
+            setContent($request->validated(), $model);
 
             return $this->_response($model->contents);
         } catch (\Exception $ex) {

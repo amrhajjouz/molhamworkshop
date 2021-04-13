@@ -1,0 +1,50 @@
+<include-header />
+
+<form class="row" name="pageContentsForm" request="createUpdatePageContents">
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="title-ar">العنوان باللغة العربية</label>
+      <input
+        id="title-ar"
+        class="form-control"
+        type="text"
+        ng-model="contents.title.ar"
+        ng-class="(createUpdatePageContents.errors['title.ar'] != null) ? 'is-invalid' : ''"
+        ng-change="createUpdatePageContents.errors['title.ar'] = null"
+        ng-error="createUpdatePageContents.errors.title.ar"
+      />
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="description-ar">التفاصيل باللغة العربية</label>
+      <textarea
+        id="description-ar"
+        class="form-control"
+        type="text"
+        ng-model="contents.description.ar"
+        ng-class="(createUpdatePageContents.errors['description.ar'] != null) ? 'is-invalid' : ''"
+        ng-change="createUpdatePageContents.errors['description.ar'] = null"
+        ng-error="createUpdatePageContents.errors.description.ar"
+      ></textarea>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="body-ar">المحتوى باللغة العربية</label>
+      <textarea
+        id="body-ar"
+        class="form-control"
+        type="text"
+        ng-model="contents.body.ar"
+        ng-class="(createUpdatePageContents.errors['body.ar'] != null) ? 'is-invalid' : ''"
+        ng-change="createUpdatePageContents.errors['body.ar'] = null"
+        ng-error="createUpdatePageContents.errors.body.ar"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <submit-button form="pageContentsForm" icon="fe fe-edit">تعديل</submit-button>
+  </div>
+</form>
