@@ -1,0 +1,50 @@
+<include-header />
+
+<form class="row" name="blogContentsForm" request="createUpdateBlogContents">
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="title-ar">العنوان باللغة العربية</label>
+      <input
+        id="title-ar"
+        class="form-control"
+        type="text"
+        ng-model="contents.title.ar"
+        ng-class="(createUpdateBlogContents.errors['title.ar'] != null) ? 'is-invalid' : ''"
+        ng-change="createUpdateBlogContents.errors['title.ar'] = null"
+        ng-error="createUpdateBlogContents.errors.title.ar"
+      />
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="description-ar">التفاصيل باللغة العربية</label>
+      <textarea
+        id="description-ar"
+        class="form-control"
+        type="text"
+        ng-model="contents.description.ar"
+        ng-class="(createUpdateBlogContents.errors['description.ar'] != null) ? 'is-invalid' : ''"
+        ng-change="createUpdateBlogContents.errors['description.ar'] = null"
+        ng-error="createUpdateBlogContents.errors.description.ar"
+      ></textarea>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="body-ar">المحتوى باللغة العربية</label>
+      <textarea
+        id="body-ar"
+        class="form-control"
+        type="text"
+        ng-model="contents.body.ar"
+        ng-class="(createUpdateBlogContents.errors['body.ar'] != null) ? 'is-invalid' : ''"
+        ng-change="createUpdateBlogContents.errors['body.ar'] = null"
+        ng-error="createUpdateBlogContents.errors.body.ar"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <submit-button form="blogContentsForm" icon="fe fe-edit">تعديل</submit-button>
+  </div>
+</form>

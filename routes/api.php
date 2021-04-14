@@ -14,6 +14,7 @@ use App\Http\Controllers\{
     FaqController ,
     ShortcutController,
     PageController,
+    BlogController,
 };
 
 
@@ -183,6 +184,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/pages/{id}', [PageController::class, 'retrieve']);
     Route::get('/pages/{id}/contents', [PageController::class, 'list_contents']);
     Route::put('/pages/{id}/contents', [PageController::class, 'create_update_contents']);
+
+    /////////////////////// Blogs /////////////////////////
+    Route::get('/blogs', [BlogController::class, 'list']);
+    Route::post('/blogs', [BlogController::class, 'create']);
+    Route::put('/blogs', [BlogController::class, 'update']);
+    Route::get('/blogs/{id}', [BlogController::class, 'retrieve']);
+    Route::get('/blogs/{id}/contents', [BlogController::class, 'list_contents']);
+    Route::put('/blogs/{id}/contents', [BlogController::class, 'create_update_contents']);
 
 
 

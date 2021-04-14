@@ -5,21 +5,21 @@ namespace App\Models;
 use App\Common\Base\BaseModel;
 use App\Common\Traits\HasContent;
 
-class Page extends BaseModel
+class Blog extends BaseModel
 {
-    use HasContent; 
+    use HasContent;
+  
 
-
-    protected $table = 'pages';
+    protected $table = 'blogs';
     protected $guarded = [];
 
     public function transform()
     {
 
-        $page = $this->toArray();
+        $blog = $this->toArray();
 
 
-        return (object)array_merge($page, [
+        return (object)array_merge($blog, [
             'contents' => getContent($this),
         ]);
     }

@@ -1,0 +1,24 @@
+<include-header />
+<form class="row" name="updateBlogForm" request="updateBlog">
+
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="url">رابط التدوينة</label>
+      <input
+        id="url"
+        class="form-control"
+        type="text"
+        ng-class="(updateBlog.errors.blog.url != null) ? 'is-invalid' : ''"
+        ng-model="blog.url"
+        ng-change="updateBlog.errors.blog.url = null"
+        placeholder="ادخل رابط التدوينة "
+        ng-error="updateBlog.errors.url"
+      />
+    </div>
+  </div>
+  <div class="col-12">
+    <submit-button form="updateBlogForm" icon="fe fe-edit"
+      >تعديل</submit-button
+    >
+  </div>
+</form>

@@ -445,6 +445,32 @@
             class="nav-link"
             href="javascript:;"
             data-toggle="collapse"
+            data-target="#blogs-navs"
+            role="button"
+            aria-expanded="false"
+        >
+            <i class="fe fe-feather"></i> التدوينات
+        </a>
+        <div class="collapse" id="blogs-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('blogs.add') }}" class="nav-link">
+                        تدوينة جديدة
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('blogs') }}" class="nav-link">
+                        قائمة التدوينات
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a
+            class="nav-link"
+            href="javascript:;"
+            data-toggle="collapse"
             data-target="#faqs-navs"
             role="button"
             aria-expanded="false"

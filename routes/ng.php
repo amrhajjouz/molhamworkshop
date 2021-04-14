@@ -111,7 +111,33 @@ return [
     'pages.edit' => ['pages/:id/edit', 'pages/editPageController', 'pages.single.edit'],
     'pages' => ['pages', 'pages/listPagesController', 'pages.list'],
     'pages.contents' => ['pages/:id/contents', 'pages/pageContentsController', 'pages.single.contents'],
+   
+   
+    /////////////////////////// Blogs Routes    ///////////////////
+    'blogs.add' => ['blogs/add', 'blogs/addBlogController', 'blogs.add'],
+    'blogs.overview' => ['blogs/:id', 'blogs/overviewBlogController', 'blogs.single.overview'],
+    'blogs.edit' => ['blogs/:id/edit', 'blogs/editBlogController', 'blogs.single.edit'],
+    'blogs' => ['blogs', 'blogs/listBlogsController', 'blogs.list'],
+    'blogs.contents' => ['blogs/:id/contents', 'blogs/blogContentsController', 'blogs.single.contents'],
 
 
 
 ];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
