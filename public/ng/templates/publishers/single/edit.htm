@@ -1,0 +1,42 @@
+<include-header />
+
+<form class="row" name="updatePublisherForm" request="updatePublisher">
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="ar-name"> الاسم باللغة العربية</label>
+      <input
+        id="ar-name"
+        class="form-control"
+        type="text"
+        ng-model="publisher.contents.name.ar"
+        ng-class="(updatePublisher.errors['contents.name.ar'] != null) ? 'is-invalid' : ''"
+        ng-change="updatePublisher.errors['contents.name.ar'] = null"
+        placeholder="العنوان.."
+        ng-error="updatePublisher.errors.name.ar"
+        required
+      />
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="ar-description">الوصف باللغة العربية</label>
+      <textarea
+        id="ar-description"
+        class="form-control"
+        type="text"
+        ng-model="publisher.contents.description.ar"
+        ng-class="(updatePublisher.errors['contents.description.ar'] != null) ? 'is-invalid' : ''"
+        ng-change="updatePublisher.errors['contents.description.ar'] = null"
+        placeholder="الجواب.."
+        ng-error="updatePublisher.errors.contents.description.ar"
+        required
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <submit-button form="updatePublisherForm" icon="fe fe-plus"
+      >تعديل</submit-button
+    >
+  </div>
+</form>

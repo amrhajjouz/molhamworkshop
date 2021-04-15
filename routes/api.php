@@ -15,6 +15,7 @@ use App\Http\Controllers\{
     ShortcutController,
     PageController,
     BlogController,
+    PublisherController,
 };
 
 
@@ -192,6 +193,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/blogs/{id}', [BlogController::class, 'retrieve']);
     Route::get('/blogs/{id}/contents', [BlogController::class, 'list_contents']);
     Route::put('/blogs/{id}/contents', [BlogController::class, 'create_update_contents']);
+
+    /////////////////////// Publisher /////////////////////////
+    Route::get('/publishers', [PublisherController::class, 'list']);
+    Route::post('/publishers', [PublisherController::class, 'create']);
+    Route::put('/publishers', [PublisherController::class, 'update']);
+    Route::get('/publishers/{id}', [PublisherController::class, 'retrieve']);
+    Route::get('/publishers/{id}/contents', [PublisherController::class, 'list_contents']);
+    Route::put('/publishers/{id}/contents', [PublisherController::class, 'create_update_contents']);
 
 
 

@@ -26,7 +26,7 @@ class FaqController extends BaseController
             $faq = new $this->model();
             $faq->category_id  = $data['category_id'];
             $faq->save();
-            setContent($request, $faq);
+            setContent($request->all(), $faq);
 
             return $this->_response($faq);
         } catch (\Exception $e) {
@@ -43,7 +43,7 @@ class FaqController extends BaseController
             $data = $request->all();
             $model->category_id = $data['category_id'];
             $model->save();
-            setContent($request, $model);
+            setContent($request->all(), $model);
 
             return $this->_response($model->contents);
         } catch (\Exception $ex) {

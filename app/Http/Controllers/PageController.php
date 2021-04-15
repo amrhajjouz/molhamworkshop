@@ -26,7 +26,7 @@ class PageController extends BaseController
             $data = $request->validated();
 
             $page = new $this->model();
-            $page->url = Helper::formatUrl($data['url'] , ' ');
+            $page->url = Helper::formatUrl($data['url'], ' ');
 
             $page->save();
 
@@ -44,7 +44,7 @@ class PageController extends BaseController
             $page = $this->model::findOrFail($request->id);
 
             $data = $request->validated();
-            $page->url = Helper::formatUrl($data['url'] , ' ');
+            $page->url = Helper::formatUrl($data['url'], ' ');
 
             $page->save();
 
@@ -62,9 +62,33 @@ class PageController extends BaseController
         try {
             $search_query = ($request->has('q') ? [['url', 'like', '%' . $request->q . '%']] : null);
 
-            $events = $this->model::orderBy('id', 'desc')->where($search_query)->paginate(10)->withQueryString();
+            // $pages = $this->model::orderBy('id', 'desc')->where($search_query)->paginate(10)->withQueryString();
+            $pages = $this->model::orderBy('id', 'desc')
+                ->leftJoin('contents AS CAR', function($join){
+                    $join->on('pages.id','=' ,'CAR.contentable_id')
+                        ->where('CAR.contentable_type', 'App\Models\Page')
+                        ->where('CAR.name', 'title')
+                        ->where('CAR.locale', 'ar');
+                })
+                ->leftJoin('contents AS CEN', function($join){
+                    $join->on('pages.id','=' ,'CEN.contentable_id')
+                        ->where('CEN.contentable_type', 'App\Models\Page')
+                        ->where('CEN.name', 'title')
+                        ->where('CEN.locale', 'en');
+                })
+                ->select('CAR.value AS ar_title', 'CEN.value AS en_title', 'pages.*')
+                ->where(function ($q) use ($request) {
+                    if ($request->has("q")) {
+                        // $q->orWhere('CAR.ar_title', 'like', '%' .  $request->q . '%');
+                        $q->orWhere('CEN.value', 'like', '%' .  $request->q . '%');
+                        $q->orWhere('CAR.value', 'like', '%' .  $request->q . '%');
+                    }
+                })
+                ->paginate(10)
+            ->withQueryString();;
 
-            return $this->_response($events);
+
+            return $this->_response($pages);
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
         }
@@ -96,7 +120,4 @@ class PageController extends BaseController
             throw $this->_exception($ex->getMessage());
         }
     }
-
-
-  
 }

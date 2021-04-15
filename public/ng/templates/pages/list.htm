@@ -12,6 +12,8 @@
       <tr>
         <th class="text-center">#</th>
           <th class="text-center">الرابط</th>
+          <th class="text-center">الاسم العربي</th>
+          <th class="text-center">الاسم الأجنبي</th>
           <th class="text-center">خيارات</th>
       </tr>
     </thead>
@@ -20,6 +22,8 @@
       <tr ng-repeat="page in pages.data">
        <td class="align-middle text-center">{{ page.id }}</td>
           <td class="align-middle text-center">{{ page.url }}</td>
+          <td class="align-middle text-center">{{ page.ar_title }}</td>
+          <td class="align-middle text-center">{{ page.en_title }}</td>
         <td class="align-middle text-center h2">
           <dropdown>
             <dropdown-item

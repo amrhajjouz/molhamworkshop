@@ -214,6 +214,11 @@ class Molham extends Migration
             $table->string('url')->unique();
             $table->timestamps();
         });
+        
+        Schema::create('publishers', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -244,5 +249,6 @@ class Molham extends Migration
         Schema::dropIfExists('shortcuts');
         Schema::dropIfExists('pages');
         Schema::dropIfExists('blogs');
+        Schema::dropIfExists('publishers');
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Target;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Target\Cases\{CreateRequest, UpdateRequest, CreateUpdateContent};
+use App\Http\Requests\Target\Cases\{CreateRequest, UpdateRequest, CreateUpdateContent , CreateUpdateSingleContent};
 use App\Facades\Helper;
 
 use App\Models\{User, Cases, Admin};
@@ -135,6 +135,25 @@ class CaseController extends BaseController
     }
 
     public function create_update_contents(CreateUpdateContent $request, $id)
+    {
+        try {
+
+            $model = $this->model::find($id);
+
+            setContent($request->validated(), $model);
+
+            return $this->_response($model->contents);
+        } catch (\Exception $ex) {
+            throw $this->_exception($ex->getMessage());
+        }
+    }
+
+
+
+    /* 
+     * For Test 
+    */
+    public function create_update_single_contents(CreateUpdateSingleContent $request, $id)
     {
         try {
 

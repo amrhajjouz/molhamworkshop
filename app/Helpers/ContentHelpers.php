@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Content;
+
 
 
 /* 
@@ -103,4 +105,38 @@ function setContent($data, $contentable)
         }
     }
     return true;
+}
+
+
+
+
+
+
+
+// TEST Function 
+
+
+function setSingleContent($contentable , Content $content){
+    
+    if(!$content->id) return false;
+    if(!$contentable->id) return false;
+
+    /* 
+     * check if exists and delete
+    */
+
+    Content::where('id' , $content->id)->delete();
+    
+    $new_content = new Content;
+
+    $new_content -> name = $content->name;
+    $new_content -> value = $content->value;
+    $new_content -> contentable_id = $contentable->id;
+    $new_content -> contentable_type = get_class($contentable);
+    
+    $new_content->save();
+
+    return $new_content;
+
+
 }

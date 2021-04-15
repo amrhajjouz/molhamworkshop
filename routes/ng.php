@@ -120,6 +120,12 @@ return [
     'blogs' => ['blogs', 'blogs/listBlogsController', 'blogs.list'],
     'blogs.contents' => ['blogs/:id/contents', 'blogs/blogContentsController', 'blogs.single.contents'],
 
+    /////////////////////////// Publisher Routes    ///////////////////
+    'publishers.add' => ['publishers/add', 'publishers/addPublisherController', 'publishers.add'],
+    'publishers.overview' => ['publishers/:id', 'publishers/overviewPublisherController', 'publishers.single.overview'],
+    'publishers.edit' => ['publishers/:id/edit', 'publishers/editPublisherController', 'publishers.single.edit'],
+    'publishers' => ['publishers', 'publishers/listPublishersController', 'publishers.list'],
+
 
 
 ];
