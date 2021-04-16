@@ -14,3 +14,17 @@
         </div> 
     </form>
 </content-card>
+
+<content-card content-model="contents.details" content-title="العنوان" content-name="details">
+    <form class="row" name="caseDetailsContentForm" request="createUpdateDetailsContent" model="detailsContent">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="details-content" class="locale-label">عربي</label>
+                <input id="details-content" class="form-control" type="text" ng-model="detailsContent.value" ng-error="createUpdateDetailsContent.errors.value" required />
+            </div>
+        </div>
+        <div class="col-12">        
+            <submit-button form="caseDetailsContentForm" icon="fe fe-edit">تعديل</submit-button>
+        </div> 
+    </form>
+</content-card>
