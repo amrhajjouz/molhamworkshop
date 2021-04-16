@@ -1,69 +1,16 @@
 <include-header />
 
-<form class="row" name="caseContentsForm" request="createUpdateCaseContents">
-  <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="title-ar">العنوان باللغة العربية</label>
-      <input
-        id="title-ar"
-        class="form-control"
-        type="text"
-        ng-model="content.value"
-        ng-class="(createUpdateCaseContents.errors['title.ar'] != null) ? 'is-invalid' : ''"
-        ng-change="createUpdateCaseContents.errors['title.ar'] = null"
-        ng-error="createUpdateCaseContents.errors.title.ar"
-        required
-      />
-    </div>
-  </div>
-  <!-- <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="title-en">العنوان باللغة الإنكليزية</label>
-      <input
-        id="title-en"
-        class="form-control"
-        type="text"
-        ng-model="contents.title.en"
-        ng-class="(createUpdateCaseContents.errors['title.en'] != null) ? 'is-invalid' : ''"
-        ng-change="createUpdateCaseContents.errors['title.en'] = null"
-        ng-error="createUpdateCaseContents.errors.title.en"
-        required
-      />
-    </div>
-  </div>
-  <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="details-ar">التفاصيل باللغة العربية</label>
-      <textarea
-        id="details-ar"
-        class="form-control"
-        type="text"
-        ng-model="contents.details.ar"
-        ng-class="(createUpdateCaseContents.errors['details.ar'] != null) ? 'is-invalid' : ''"
-        ng-change="createUpdateCaseContents.errors['details.ar'] = null"
-        ng-error="createUpdateCaseContents.errors.details.ar"
-        required
-      ></textarea>
-    </div>
-  </div>
-  <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="details-en">التفاصيل باللغة الإنكليزية</label>
-      <textarea
-        id="details-en"
-        class="form-control"
-        type="text"
-        ng-model="contents.details.en"
-        ng-class="(createUpdateCaseContents.errors['details.en'] != null) ? 'is-invalid' : ''"
-        ng-change="createUpdateCaseContents.errors['details.en'] = null"
-        ng-error="createUpdateCaseContents.errors.details.en"
-        required
-      ></textarea>
-    </div>
-  </div> -->
 
-
-  <div class="col-12">
-    <submit-button form="caseContentsForm" icon="fe fe-edit">تعديل</submit-button>
-  </div>
-</form>
+<content-card content-model="contents.title" content-title="العنوان" content-name="title">
+    <form class="row" name="caseTitleContentForm" request="createUpdateTitleContent" model="titleContent">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="title-content" class="locale-label">عربي</label>
+                <input id="title-content" class="form-control" type="text" ng-model="titleContent.value" ng-error="createUpdateTitleContent.errors.value" required />
+            </div>
+        </div>
+        <div class="col-12">        
+            <submit-button form="caseTitleContentForm" icon="fe fe-edit">تعديل</submit-button>
+        </div> 
+    </form>
+</content-card>

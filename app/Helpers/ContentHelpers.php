@@ -86,6 +86,7 @@ function setContent($contentable, $name, $value, $locale = 'ar')
         'value' => $value,
         'contentable_id' => $contentable_id,
         'contentable_type' => $contentable_type,
+        'locale' => $locale,
     ]);
 }
 
