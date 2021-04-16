@@ -36,15 +36,22 @@ class CreateUpdateContent extends BaseRequest
 
         $locales = config('general.available_locales');
         $fields = \App\Models\Campaign::get_content_fields();
-        
-        
-        foreach($fields  as $key => $field){
-                foreach($locales  as $locale){
-                        $rules[$field]  = ['array' ];
-                        $rules[$field.'.'.$locale]  = ['nullable' ];
-                    }
-                }
-                
+
+
+        $rules = [
+            'name' => ['required', 'string', Rule::in($fields)],
+            'locale' => ['required', Rule::in($locales)],
+            'value' => ['required']
+        ];
+
+        if ($this->name == 'details') {
+            $rules['value'] = ['required', 'string', 'max:1000'];
+        }
+
+        if ($this->name == 'title') {
+            $rules['value'] = ['required', 'string', 'between:3,100'];
+        }
+
         return $rules;
     }
     

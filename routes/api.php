@@ -82,8 +82,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/cases', [CaseController::class, 'update']);
     Route::get('/cases/{id}', [CaseController::class, 'retrieve']);
     Route::get('/cases/{id}/admins', [CaseController::class, 'list_admins']);
-    Route::get('/cases/{id}/contents', [CaseController::class, 'list_contents']);
-    Route::put('/cases/{id}/contents', [CaseController::class, 'create_update_contents']);
+    Route::get('/cases/{case}/contents', [CaseController::class, 'list_contents']);
+    Route::put('/cases/{case}/contents', [CaseController::class, 'create_update_contents']);
 
 
     //////////////////  CAMPAIGNS //////////////
@@ -91,8 +91,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/campaigns', [CampaignController::class, 'create']);
     Route::put('/campaigns', [CampaignController::class, 'update']);
     Route::get('/campaigns/{id}', [CampaignController::class, 'retrieve']);
-    Route::get('/campaigns/{id}/contents', [CampaignController::class, 'list_contents']);
-    Route::put('/campaigns/{id}/contents', [CampaignController::class, 'create_update_contents']);
+    Route::get('/campaigns/{campaign}/contents', [CampaignController::class, 'list_contents']);
+    Route::put('/campaigns/{campaign}/contents', [CampaignController::class, 'create_update_contents']);
 
     //////////////////  SponsorShips //////////////
     Route::get('/sponsorships', [SponsorshipController::class, 'list']);

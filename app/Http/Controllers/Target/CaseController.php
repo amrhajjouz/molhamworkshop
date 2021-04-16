@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Target;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Target\Cases\{CreateRequest, UpdateRequest, CreateUpdateContent , CreateUpdateSingleContent};
+use App\Http\Requests\Target\Cases\{CreateRequest, UpdateRequest, CreateUpdateContent , CreateUpdateSingleContent , ListContentRequest};
 use App\Facades\Helper;
 
 use App\Models\{User, Cases, Admin};
@@ -121,28 +121,22 @@ class CaseController extends BaseController
         return $return;
     }
 
-    public function list_contents(Request $request, $id)
+    public function list_contents(ListContentRequest $request, Cases $case)
     {
 
         try {
-
-            $model = $this->model::findOrFail($id);
-
-            return $this->_response(getContent($model));
+            return $this->_response(getContent($case , $request));
         } catch (\Exception $th) {
             throw $this->_exception($th->getMessage());
         }
     }
 
-    public function create_update_contents(CreateUpdateContent $request, $id)
+    public function create_update_contents(CreateUpdateContent $request, Cases $case)
     {
         try {
-
-            $model = $this->model::find($id);
-
-            setContent($request->validated(), $model);
-
-            return $this->_response($model->contents);
+            $data = $request->validated();
+            setContent($case, $data['name'] , $data['value'] , $data['locale']);
+            return $this->_response($case->contents);
         } catch (\Exception $ex) {
             throw $this->_exception($ex->getMessage());
         }
@@ -153,17 +147,17 @@ class CaseController extends BaseController
     /* 
      * For Test 
     */
-    public function create_update_single_contents(CreateUpdateSingleContent $request, $id)
-    {
-        try {
+    // public function create_update_single_contents(CreateUpdateSingleContent $request, $id)
+    // {
+    //     try {
 
-            $model = $this->model::find($id);
+    //         $model = $this->model::find($id);
 
-            setContent($request->validated(), $model);
+    //         setContent($request->validated(), $model);
 
-            return $this->_response($model->contents);
-        } catch (\Exception $ex) {
-            throw $this->_exception($ex->getMessage());
-        }
-    }
+    //         return $this->_response($model->contents);
+    //     } catch (\Exception $ex) {
+    //         throw $this->_exception($ex->getMessage());
+    //     }
+    // }
 }

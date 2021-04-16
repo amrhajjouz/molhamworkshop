@@ -6,7 +6,7 @@ namespace App\Http\Requests\Target\Cases;
 use App\Common\Base\BaseRequest;
 use Illuminate\Validation\Rule;
 
-class CreateUpdateContent extends BaseRequest
+class _CreateUpdateContent extends BaseRequest
 {
 
 
@@ -25,7 +25,7 @@ class CreateUpdateContent extends BaseRequest
     {
         return true;
     }
-
+    
     /**
      * Get the validation rules that apply to the request.
      *
@@ -36,22 +36,23 @@ class CreateUpdateContent extends BaseRequest
 
         $locales = config('general.available_locales');
         $fields = \App\Models\Cases::get_content_fields();
-
-        $rules =[
-            'name' => ['required' , 'string' , Rule::in($fields)] ,
-            'locale' => ['required' , Rule::in($locales)] ,
-            'value'=>['required']
-        ];
-
-        if($this->name == 'details'){
-            $rules['value'] = ['required' , 'string' , 'max:1000'];
-        }
-
-        if($this->name == 'title'){
-            $rules['value'] = ['required' , 'string' , 'between:3,100'];
-        }
+        
 
 
+       
+        foreach($fields  as $key => $field){
+
+
+
+
+
+                foreach($locales  as $locale){
+                        $rules[$field]  = ['array' ];
+                        $rules[$field.'.'.$locale]  = ['nullable' ];
+                    }
+                }
+                
         return $rules;
     }
+    
 }

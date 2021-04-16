@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Target;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Target\Campaign\{CreateRequest, UpdateRequest , CreateUpdateContent};
-
+use App\Http\Requests\Target\Campaign\{CreateRequest, UpdateRequest , CreateUpdateContent , ListContentRequest};
+use App\Models\Campaign;
 
 class CampaignController extends BaseController
 {
@@ -79,28 +79,22 @@ class CampaignController extends BaseController
     }
 
 
-    public function list_contents(Request $request, $id)
+    public function list_contents(ListContentRequest $request, Campaign $campaign)
     {
 
         try {
-
-            $model = $this->model::findOrFail($id);
-
-            return $this->_response(getContent($model));
+            return $this->_response(getContent($campaign , $request));
         } catch (\Exception $th) {
             throw $this->_exception($th->getMessage());
         }
     }
 
-    public function create_update_contents(CreateUpdateContent $request, $id)
+    public function create_update_contents(CreateUpdateContent $request, $campaign)
     {
         try {
-
-            $model = $this->model::find($id);
-
-            setContent($request->validated(), $model);
-
-            return $this->_response($model->contents);
+            $data = $request->validated();
+            setContent($campaign, $data['name'], $data['value'], $data['locale']);
+            return $this->_response($campaign->contents);
         } catch (\Exception $ex) {
             throw $this->_exception($ex->getMessage());
         }

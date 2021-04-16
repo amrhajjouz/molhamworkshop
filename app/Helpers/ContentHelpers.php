@@ -7,10 +7,9 @@ use App\Models\Content;
 /* 
  * Get Contents records for any data model has relation pivot with Content model 
 */
-function getContent($contentable)
+function getContent($contentable , $request)
 {
     $locales = config('general.available_locales');
-
 
     /* 
      * this static function comes from contaentable model  
@@ -18,8 +17,28 @@ function getContent($contentable)
 
     $required_contents_fields = $contentable::get_content_fields();
 
-    $contents = $contentable->contents;
+    /* 
+     * if isset only one field in routes like ?field=foo 
+    */
+    if(isset($request->field)){
+        $required_contents_fields = [$request->field];
+    }
 
+
+    $contents = $contentable->contents()->where(function($q)use($request){
+
+        if(isset($request->field)){
+            $q->where('name' , $request->field);
+        }
+       
+    });
+
+    if (isset($request->trashed) && $request->trashed == "true") {
+        return $contents = $contents->withTrashed()->get();
+    }else{
+        $contents = $contents->get();
+    }
+    
     $content = [];
     foreach ($required_contents_fields as $name => $field) {
         foreach ($locales as $l) {
@@ -44,68 +63,96 @@ function getContent($contentable)
 
 
 
-/*
- * Set Contents records for any data model has relation pivot with Content model 
-*/
-function setContent($data, $contentable)
-{
 
-    $locales = config('general.available_locales');
+function setContent($contentable, $name, $value, $locale = 'ar')
+{
+    $contentable_id = $contentable->id;
+    $contentable_type = get_class($contentable);
+
 
 
     /* 
-     * this static function comes from contaentable model  
+     * For delete Before create  
     */
-
-    $required_contents_fields = $contentable::get_content_fields();
-
-    // $data = $request->validated();
-
-
-    // if we have contents as array inside object in request 
-    if (isset($data['contents'])) {
-        $data = $data['contents'];
-    }
+    Content::where('name', $name)
+        ->where('contentable_id', $contentable_id)
+        ->where('contentable_type', $contentable_type)
+        ->where('locale', $locale)
+        ->delete();
 
 
-    foreach ($data as $name => $values) {
-
-        /* 
-        * if there is any value not registerd in constructor dont save it
-        */
-        if (!in_array($name, $required_contents_fields)) continue;
-
-
-        // TODO:CHECK IF IS ARRAY AND IF MULTIPLE 
-        // TODO:IF SINGLE DELETE ALL AND CREATE
-
-
-        foreach ($values  as $locale => $value) {
-            /* 
-                 * if value equal null dont create new record  
-                */
-            if (is_null($value)) continue;
-
-
-            \App\Models\Content::where('contentable_type' ,get_class($contentable))
-                               ->where('contentable_id' , $contentable->id)
-                               ->where('name' , $name)
-                               ->where('locale' , $locale)
-                               ->delete();
-
-
-            \App\Models\Content::Create(
-                [
-                    'contentable_type' => get_class($contentable),
-                    'contentable_id' => $contentable->id,
-                    'locale' => $locale, 'name' => $name,
-                    'value' => $value,
-                ]
-            );
-        }
-    }
-    return true;
+    return Content::create([
+        'name' => $name,
+        'value' => $value,
+        'contentable_id' => $contentable_id,
+        'contentable_type' => $contentable_type,
+    ]);
 }
+
+
+
+/*
+ * Set Contents records for any data model has relation pivot with Content model 
+*/
+// function setContent($data, $contentable)
+// {
+
+//     $locales = config('general.available_locales');
+
+
+//     /* 
+//      * this static function comes from contaentable model  
+//     */
+
+//     $required_contents_fields = $contentable::get_content_fields();
+
+//     // $data = $request->validated();
+
+
+//     // if we have contents as array inside object in request 
+//     if (isset($data['contents'])) {
+//         $data = $data['contents'];
+//     }
+
+
+//     foreach ($data as $name => $values) {
+
+//         /* 
+//         * if there is any value not registerd in constructor dont save it
+//         */
+//         if (!in_array($name, $required_contents_fields)) continue;
+
+
+//         // TODO:CHECK IF IS ARRAY AND IF MULTIPLE 
+//         // TODO:IF SINGLE DELETE ALL AND CREATE
+
+
+//         foreach ($values  as $locale => $value) {
+//             /* 
+//                  * if value equal null dont create new record  
+//                 */
+//             if (is_null($value)) continue;
+
+
+//             \App\Models\Content::where('contentable_type' ,get_class($contentable))
+//                                ->where('contentable_id' , $contentable->id)
+//                                ->where('name' , $name)
+//                                ->where('locale' , $locale)
+//                                ->delete();
+
+
+//             \App\Models\Content::Create(
+//                 [
+//                     'contentable_type' => get_class($contentable),
+//                     'contentable_id' => $contentable->id,
+//                     'locale' => $locale, 'name' => $name,
+//                     'value' => $value,
+//                 ]
+//             );
+//         }
+//     }
+//     return true;
+// }
 
 
 
@@ -118,7 +165,7 @@ function setContent($data, $contentable)
 
 function setSingleContent($contentable , Content $content){
     
-    if(!$content->id) return false;
+    // if(!$content->id) return false;
     if(!$contentable->id) return false;
 
     /* 
@@ -140,3 +187,12 @@ function setSingleContent($contentable , Content $content){
 
 
 }
+
+
+
+
+
+
+
+
+

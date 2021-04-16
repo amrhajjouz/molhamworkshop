@@ -8,28 +8,35 @@ function caseContentsController($scope, $page, $apiRequest, $init) {
     
   $scope.contents = $init.contents;
 
-  $scope.newContents = [
-    { 
-      contentable_id:$page.routeParams.id,
-      contentable_type:"\\App\\Models\Cases",
-      locale:"ar",
-      name:"العنوان",
-      value:null,
-    },
-    { 
-      contentable_id:$page.routeParams.id,
-      contentable_type:"\\App\\Models\Cases",
-      locale:"ar",
-      name:"التفاصيل",
-      value:null,
-    },
-  ];
+  // $scope.newContents = [
+  //   { 
+  //     contentable_id:$page.routeParams.id,
+  //     contentable_type:"\\App\\Models\Cases",
+  //     locale:"ar",
+  //     name:"العنوان",
+  //     value:null,
+  //   },
+  //   { 
+  //     contentable_id:$page.routeParams.id,
+  //     contentable_type:"\\App\\Models\Cases",
+  //     locale:"ar",
+  //     name:"التفاصيل",
+  //     value:null,
+  //   },
+  // ];
+
+  $scope.content = {
+    name: "title",
+    locale: "ar",
+    value: null,
+  };
 
   $scope.createUpdateCaseContents = $apiRequest.config(
     {
       method: "PUT",
       url: "cases/" + $page.routeParams.id +'/contents',
-      data: $scope.contents,
+      // data: $scope.contents,
+      data: $scope.content,
     },
     function (response, data) {}
   );
