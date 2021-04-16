@@ -144,8 +144,8 @@
         var appDebug = {{ env('APP_DEBUG') }};
         var appTitle = $('title').text();
         var routes = JSON.parse(("{{ $routes->toJson() }}").replace(/&quot;/g,'"'));
+        var locales = JSON.parse(("{{ $locales->toJson() }}").replace(/&quot;/g,'"'));
         var app = angular.module("app", ["ngRoute"]);
-        
         function $r (name, params = null, withBaseAppUrl = true) {
             
             var routeUrlPrefix = (withBaseAppUrl) ? appUrl : '';
@@ -445,6 +445,78 @@
                         if (scope.form.model)
                             scope.form.request.config.data = scope.form.model;
                     }
+                }
+            };
+        });
+        
+        app.directive('contentCard', function ($timeout, $rootScope) {
+            
+            return {
+                restrict: 'E',
+                transclude: true,
+                scope : {
+                    contentModel : '=',
+                    contentTitle : '@',
+                    contentName : '@',
+                },
+                replace : true,
+                template: 
+                '<div class="card mt-4">' +
+                    '<div class="card-header">' +
+                        '<div class="row align-items-center">' +
+                            '<div class="col">' +
+                                '<h4 class="card-header-title">@{{ contentTitle }}</h4>' +
+                            '</div>' +
+                            '<div class="col-auto">' +
+                                '<button ng-click="editContent();" class="btn btn-sm btn-white">تعديل</button>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="card-header row d-flex">' +
+                        '<div class="col">' +
+                            '<ul class="nav nav-tabs card-header-tabs nav-overflow">' +
+                                '<li class="nav-item" ng-repeat="l in locales">' +
+                                    '<a href="javascript:;" id="@{{ l.code }}-link" ng-click="changeCardLocale(l);" class="nav-link locale-link" ng-class="{active: (cardCurrentLocale.code == l.code)}">@{{ l.name }}</a>' +
+                                '</li>' +
+                            '</ul>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="card-body py-4">' +
+                        '<p ng-repeat="l in locales" ng-show="(cardCurrentLocale.code == l.code)" dir="@{{ l.dir }}" class="text-@{{ l.align }}">@{{ contentModel[l.code] }}</p>' +
+                    '</div>' +
+                
+                    '<div class="card-body border-top" ng-show="cardModificationState" ng-transclude>' +
+                
+                    '</div>' +
+                    
+                '</div>',
+                
+                link : function (scope, element, attrs) {
+                    
+                    $timeout(function () {
+                        scope.locales = locales;
+                        scope.cardCurrentLocale = {code: locales[0].code, name: locales[0].name, dir: locales[0].dir};
+                        scope.changeCardLocale = function (locale) {
+                            scope.cardCurrentLocale = locale;
+                        }
+                        
+                        scope.cardModificationState = false;
+                        
+                        var formElement = element[0].getElementsByTagName('FORM')[0];
+                        
+                        var formModelName = formElement.getAttribute('model');
+                        var localeLable = formElement.getElementsByClassName('locale-label')[0];
+                        var elementScope = angular.element(element).scope();
+                        
+                        scope.editContent = function () {
+                            scope.cardModificationState = !scope.cardModificationState;
+                            eval('elementScope.' + formModelName + '.locale = ' + '"' + scope.cardCurrentLocale.code + '"');
+                            eval('elementScope.' + formModelName + '.name = ' + '"' + scope.contentName + '"');
+                            if (scope.contentModel[scope.cardCurrentLocale.code])
+                                eval('elementScope.' + formModelName + '.value = ' + '"' + scope.contentModel[scope.cardCurrentLocale.code] + '"');
+                            localeLable.innerHTML = scope.cardCurrentLocale.name;
+                        }
+                    });
                 }
             };
         });
