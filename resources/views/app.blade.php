@@ -629,6 +629,7 @@
                 scope : {
                     model : '@',
                     ajaxUrl : '@',
+                    ajaxData : '=',
                     placeholder: '@',
                     multiple: '@',
                     minLength: '@',
@@ -661,6 +662,8 @@
                                 url: apiUrl + path,
                                 dataType: 'json',
                                 data: function (params) {
+                                    if (attrs.ajaxData)
+                                        query = Object.assign(query, scope.ajaxData);
                                     return Object.assign(query, {q: params.term});
                                 },
                                 processResults: function (data) {
