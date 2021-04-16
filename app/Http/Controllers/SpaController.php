@@ -21,10 +21,10 @@ class SpaController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index (Request $request, $url = null)
+    public function index (Request $request , $url = null)
     {
         try {
-            $a = 'test';
+            
             if ($request->is('api/*')) return response()->json(['error' => 'API Route not found'], 500);
             
             $app_url =  url('');
@@ -51,7 +51,12 @@ class SpaController extends Controller
                 if (!file_exists(public_path() . '/ng/templates/' . $r['template_path']))
                     return response()->json(['error' => 'AngularJS Configuration Error: template file ' . $r['template_path'] . ' is not found !'], 500);
             }
-            return view('app', ['routes' => collect($routes), 'app_url' => $app_url, 'api_url' => $app_url . '/api/']);
+            
+            $locales = collect([]);
+            
+            foreach (config('general.available_locales') as $l) $locales[] = ['code' => $l, 'name' => getLocaleName($l), 'dir' => ($l == 'ar') ? 'rtl' : 'ltr', 'align' => ($l == 'ar') ? 'right' : 'left'];
+            
+            return view('app', ['routes' => collect($routes), 'app_url' => $app_url, 'api_url' => $app_url . '/api/', 'locales' => $locales]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
