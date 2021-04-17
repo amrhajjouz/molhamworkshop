@@ -142,22 +142,4 @@ class CaseController extends BaseController
         }
     }
 
-
-
-    /* 
-     * For Test 
-    */
-    // public function create_update_single_contents(CreateUpdateSingleContent $request, $id)
-    // {
-    //     try {
-
-    //         $model = $this->model::find($id);
-
-    //         setContent($request->validated(), $model);
-
-    //         return $this->_response($model->contents);
-    //     } catch (\Exception $ex) {
-    //         throw $this->_exception($ex->getMessage());
-    //     }
-    // }
 }

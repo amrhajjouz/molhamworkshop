@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Target;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Target\Student\{CreateRequest, UpdateRequest , CreateUpdateContent};
+use App\Http\Requests\Target\Student\{CreateRequest, UpdateRequest , CreateUpdateContent , ListContentRequest};
 
-use App\Models\{User, Student};
+use App\Models\{Student};
 
 class StudentController extends BaseController
 {
@@ -93,29 +93,22 @@ class StudentController extends BaseController
             throw $this->_exception($e->getMessage());
         }
     }
-
-    public function list_contents(Request $request, $id)
+    public function list_contents(ListContentRequest $request, Student $student)
     {
 
         try {
-
-            $model = $this->model::findOrFail($id);
-
-            return $this->_response(getContent($model));
-        } catch (\Exception $th) {
-            throw $this->_exception($th->getMessage());
+            return $this->_response(getContent($student, $request));
+        } catch (\Exception $e) {
+            throw $this->_exception($e->getMessage());
         }
     }
 
-    public function create_update_contents(CreateUpdateContent $request, $id)
+    public function create_update_contents(CreateUpdateContent $request, Student $student)
     {
         try {
-
-            $model = $this->model::find($id);
-
-            setContent($request->validated(), $model);
-
-            return $this->_response($model->contents);
+            $data = $request->validated();
+            setContent($student, $data['name'], $data['value'], $data['locale']);
+            return $this->_response($student->contents);
         } catch (\Exception $ex) {
             throw $this->_exception($ex->getMessage());
         }

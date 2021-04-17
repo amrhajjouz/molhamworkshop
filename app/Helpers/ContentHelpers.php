@@ -2,13 +2,19 @@
 
 use App\Models\Content;
 
-
-
 /* 
  * Get Contents records for any data model has relation pivot with Content model 
 */
-function getContent($contentable , $request)
+function getContent($contentable , $request = null)
 {
+
+    /* 
+     * if request null get request from helper function 
+    */
+    if(is_null($request)) $request = request();
+
+
+
     $locales = config('general.available_locales');
 
     /* 
@@ -61,15 +67,10 @@ function getContent($contentable , $request)
     return $content;
 }
 
-
-
-
 function setContent($contentable, $name, $value, $locale = 'ar')
 {
     $contentable_id = $contentable->id;
     $contentable_type = get_class($contentable);
-
-
 
     /* 
      * For delete Before create  

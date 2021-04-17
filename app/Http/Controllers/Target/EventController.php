@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Target;
 use Illuminate\Http\Request;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
-use App\Http\Requests\Target\Event\{CreateRequest, UpdateRequest , CreateUpdateContent};
+use App\Http\Requests\Target\Event\{CreateRequest, UpdateRequest , CreateUpdateContent , ListContentRequest};
 use App\Models\{Event};
 
 class EventController extends BaseController
@@ -113,29 +113,22 @@ class EventController extends BaseController
             throw $this->_exception($e->getMessage());
         }
     }
-
-    public function list_contents(Request $request, $id)
+    public function list_contents(ListContentRequest $request, Event $event)
     {
 
         try {
-
-            $model = $this->model::findOrFail($id);
-
-            return $this->_response(getContent($model));
-        } catch (\Exception $th) {
-            throw $this->_exception($th->getMessage());
+            return $this->_response(getContent($event, $request));
+        } catch (\Exception $ex) {
+            throw $this->_exception($ex->getMessage());
         }
     }
 
-    public function create_update_contents(CreateUpdateContent $request, $id)
+    public function create_update_contents(CreateUpdateContent $request, Event $event)
     {
         try {
-
-            $model = $this->model::find($id);
-
-            setContent($request->validated(), $model);
-
-            return $this->_response($model->contents);
+            $data = $request->validated();
+            setContent($event, $data['name'], $data['value'], $data['locale']);
+            return $this->_response($event->contents);
         } catch (\Exception $ex) {
             throw $this->_exception($ex->getMessage());
         }

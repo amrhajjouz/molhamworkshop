@@ -89,7 +89,7 @@ class CampaignController extends BaseController
         }
     }
 
-    public function create_update_contents(CreateUpdateContent $request, $campaign)
+    public function create_update_contents(CreateUpdateContent $request, Campaign $campaign)
     {
         try {
             $data = $request->validated();

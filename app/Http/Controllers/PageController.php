@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use App\Facades\Helper;
-use App\Http\Requests\Page\{CreateRequest, UpdateRequest, CreateUpdateContent};
+use App\Http\Requests\Page\{CreateRequest, UpdateRequest, CreateUpdateContent , ListContentRequest};
 use App\Models\{Page};
 
 class PageController extends BaseController
@@ -94,28 +94,22 @@ class PageController extends BaseController
         }
     }
 
-    public function list_contents(Request $request, $id)
+    public function list_contents(ListContentRequest $request, Page $page)
     {
 
         try {
-
-            $model = $this->model::findOrFail($id);
-
-            return $this->_response(getContent($model));
-        } catch (\Exception $th) {
-            throw $this->_exception($th->getMessage());
+            return $this->_response(getContent($page, $request));
+        } catch (\Exception $ex) {
+            throw $this->_exception($ex->getMessage());
         }
     }
 
-    public function create_update_contents(CreateUpdateContent $request, $id)
+    public function create_update_contents(CreateUpdateContent $request, Page $page)
     {
         try {
-
-            $model = $this->model::find($id);
-
-            setContent($request->validated(), $model);
-
-            return $this->_response($model->contents);
+            $data = $request->validated();
+            setContent($page, $data['name'], $data['value'], $data['locale']);
+            return $this->_response($page->contents);
         } catch (\Exception $ex) {
             throw $this->_exception($ex->getMessage());
         }

@@ -1,4 +1,4 @@
-<page-header title="قائمة حملات حمع التبرعات" pretitle="حملات جمع التبرعات">
+<page-header title="قائمة حملات جمع التبرعات" pretitle="حملات جمع التبرعات">
   <a href="{{ $r('fundraisers.add') }}" class="btn btn-primary">
     <i class="fe fe-plus"></i>&nbsp; حملة جمع تبرعات جديدة
   </a>
@@ -52,6 +52,10 @@
             <dropdown-item
               href="{{ $r('fundraisers.edit', {id: fundraiser.id}) }}"
               ><i class="fe fe-edit-2"></i> تعديل</dropdown-item
+            >
+                <dropdown-item
+              href="{{ $r('fundraisers.contents', {id: fundraiser.id}) }}"
+              ><i class="fe fe-book-open"></i> المحتوى</dropdown-item
             >
           </dropdown>
         </td>

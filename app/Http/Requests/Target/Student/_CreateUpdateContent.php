@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Target\Cases;
+namespace App\Http\Requests\Target\Student;
 
 
 use App\Common\Base\BaseRequest;
 use Illuminate\Validation\Rule;
 
-class ListContentRequest extends BaseRequest
+class CreateUpdateContent extends BaseRequest
 {
-
 
 
     /**
@@ -29,16 +28,16 @@ class ListContentRequest extends BaseRequest
     public function rules()
     {
 
-
         $locales = config('general.available_locales');
-        $fields = \App\Models\Cases::get_content_fields();
+        $fields = \App\Models\Student::get_content_fields();
 
-        $rules =[
-            'field' => ['sometimes'  , Rule::in($fields)] ,
-            'locale' => ['sometimes' , Rule::in($locales)] ,
-            'trashed'=>['sometimes' ]
-        ];
 
+        foreach ($fields  as $key => $field) {
+            $rules[$field]  = ['array'];
+            foreach ($locales  as $locale) {
+                $rules[$field . '.' . $locale]  = ['nullable'];
+            }
+        }
 
         return $rules;
     }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Target;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Target\Sponsorship\{CreateRequest, UpdateRequest , CreateUpdateContent};
+use App\Http\Requests\Target\Sponsorship\{CreateRequest, UpdateRequest , CreateUpdateContent , ListContentRequest};
 
 use App\Models\{Sponsorship};
 
@@ -117,29 +117,22 @@ class SponsorShipController extends BaseController
         }
     }
 
-
-    public function list_contents(Request $request, $id)
+    public function list_contents(ListContentRequest $request, Sponsorship $sponsorship)
     {
 
         try {
-
-            $model = $this->model::findOrFail($id);
-
-            return $this->_response(getContent($model));
-        } catch (\Exception $th) {
-            throw $this->_exception($th->getMessage());
+            return $this->_response(getContent($sponsorship, $request));
+        } catch (\Exception $e) {
+            throw $this->_exception($e->getMessage());
         }
     }
 
-    public function create_update_contents(CreateUpdateContent $request, $id)
+    public function create_update_contents(CreateUpdateContent $request, Sponsorship $sponsorship)
     {
         try {
-
-            $model = $this->model::find($id);
-
-            setContent($request->validated(), $model);
-
-            return $this->_response($model->contents);
+            $data = $request->validated();
+            setContent($sponsorship, $data['name'], $data['value'], $data['locale']);
+            return $this->_response($sponsorship->contents);
         } catch (\Exception $ex) {
             throw $this->_exception($ex->getMessage());
         }

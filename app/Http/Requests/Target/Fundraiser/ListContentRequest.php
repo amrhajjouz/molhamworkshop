@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Target\Cases;
+namespace App\Http\Requests\Target\Fundraiser;
 
 
 use App\Common\Base\BaseRequest;
@@ -8,8 +8,6 @@ use Illuminate\Validation\Rule;
 
 class ListContentRequest extends BaseRequest
 {
-
-
 
     /**
      * Determine if the user is authorized to make this request.
@@ -28,10 +26,8 @@ class ListContentRequest extends BaseRequest
      */
     public function rules()
     {
-
-
         $locales = config('general.available_locales');
-        $fields = \App\Models\Cases::get_content_fields();
+        $fields = \App\Models\Fundraiser::get_content_fields();
 
         $rules =[
             'field' => ['sometimes'  , Rule::in($fields)] ,

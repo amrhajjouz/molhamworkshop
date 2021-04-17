@@ -10,11 +10,6 @@ class CreateUpdateContent extends BaseRequest
 {
 
 
-    // protected function prepareForValidation()
-    // {
-    //     // $this->merge(['id' => [$this->id]]);
-
-    // }
 
     /**
      * Determine if the user is authorized to make this request.

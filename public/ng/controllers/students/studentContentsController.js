@@ -8,12 +8,18 @@ function studentContentsController($scope, $page, $apiRequest, $init) {
     
   $scope.contents = $init.contents;
 
-  $scope.createUpdateStudentContents = $apiRequest.config(
-    {
-      method: "PUT",
-      url: "students/" + $page.routeParams.id + "/contents",
-      data: $scope.contents,
-    },
-    function (response, data) {}
-  );
+  $scope.titleContent = {};
+  $scope.detailsContent = {};
+
+  $scope.createUpdateTitleContent = $apiRequest.config({
+    method: "PUT",
+    url: "students/" + $page.routeParams.id + "/contents",
+    data: $scope.titleContent,
+  });
+
+  $scope.createUpdateDetailsContent = $apiRequest.config({
+    method: "PUT",
+    url: "students/" + $page.routeParams.id + "/contents",
+    data: $scope.detailsContent,
+  });
 }

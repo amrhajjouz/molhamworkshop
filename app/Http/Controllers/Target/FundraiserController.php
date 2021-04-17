@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Target;
 use Illuminate\Http\Request;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
-use App\Http\Requests\Target\Fundraiser\{CreateRequest, UpdateRequest , CreateUpdateContent};
+use App\Http\Requests\Target\Fundraiser\{CreateRequest, UpdateRequest , CreateUpdateContent , ListContentRequest};
 use App\Models\{Fundraiser};
 
 class FundraiserController extends BaseController
@@ -100,30 +100,22 @@ class FundraiserController extends BaseController
             throw $this->_exception($e->getMessage());
         }
     }
-
-
-    public function list_contents(Request $request, $id)
+    public function list_contents(ListContentRequest $request, Fundraiser $fundraiser)
     {
 
         try {
-
-            $model = $this->model::findOrFail($id);
-
-            return $this->_response(getContent($model));
-        } catch (\Exception $th) {
-            throw $this->_exception($th->getMessage());
+            return $this->_response(getContent($fundraiser, $request));
+        } catch (\Exception $ex) {
+            throw $this->_exception($ex->getMessage());
         }
     }
 
-    public function create_update_contents(CreateUpdateContent $request, $id)
+    public function create_update_contents(CreateUpdateContent $request, Fundraiser $fundraiser)
     {
         try {
-
-            $model = $this->model::find($id);
-
-            setContent($request->validated(), $model);
-
-            return $this->_response($model->contents);
+            $data = $request->validated();
+            setContent($fundraiser, $data['name'], $data['value'], $data['locale']);
+            return $this->_response($fundraiser->contents);
         } catch (\Exception $ex) {
             throw $this->_exception($ex->getMessage());
         }

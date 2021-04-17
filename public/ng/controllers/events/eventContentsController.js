@@ -6,14 +6,21 @@ async function eventContentsControllerInit($http, $page, $apiRequest) {
 
 function eventContentsController($scope, $page, $apiRequest, $init) {
     
+    
   $scope.contents = $init.contents;
 
-  $scope.createUpdateEventContents = $apiRequest.config(
-    {
-      method: "PUT",
-      url: "events/" + $page.routeParams.id + "/contents",
-      data: $scope.contents,
-    },
-    function (response, data) {}
-  );
+  $scope.titleContent = {};
+  $scope.detailsContent = {};
+
+  $scope.createUpdateTitleContent = $apiRequest.config({
+    method: "PUT",
+    url: "events/" + $page.routeParams.id + "/contents",
+    data: $scope.titleContent,
+  });
+
+  $scope.createUpdateDetailsContent = $apiRequest.config({
+    method: "PUT",
+    url: "events/" + $page.routeParams.id + "/contents",
+    data: $scope.detailsContent,
+  });
 }

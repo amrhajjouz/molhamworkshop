@@ -19,7 +19,7 @@ class CreateUpdateContent extends BaseRequest
     {
         return true;
     }
-
+    
     /**
      * Get the validation rules that apply to the request.
      *
@@ -28,17 +28,29 @@ class CreateUpdateContent extends BaseRequest
     public function rules()
     {
 
-            $locales = config('general.available_locales');
-            $fields = \App\Models\Page::get_content_fields();
+        $locales = config('general.available_locales');
+        $fields = \App\Models\Page::get_content_fields();
 
 
-            foreach ($fields  as $key => $field) {
-                $rules[$field]  = ['array'];
-                foreach ($locales  as $locale) {
-                    $rules[$field . '.' . $locale]  = ['nullable'];
-                }
-            }
+        $rules = [
+            'name' => ['required', 'string', Rule::in($fields)],
+            'locale' => ['required', Rule::in($locales)],
+            'value' => ['required']
+        ];
+
+        if ($this->name == 'description') {
+            $rules['value'] = ['required', 'string', 'max:1000'];
+        }
+       
+        if ($this->name == 'body') {
+            $rules['value'] = ['required', 'string', 'max:1000'];
+        }
+
+        if ($this->name == 'title') {
+            $rules['value'] = ['required', 'string', 'between:3,100'];
+        }
 
         return $rules;
     }
+    
 }
