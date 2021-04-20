@@ -1,0 +1,28 @@
+<include-header />
+<content-card content-model="contents.name" content-title="الاسم" content-name="name">
+    <form class="row" name="publisherNameContentForm" request="createUpdateNameContent" model="nameContent">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="name-content" class="locale-label">عربي</label>
+                <input id="name-content" class="form-control" type="text" ng-model="titleContent.value" ng-error="createUpdateNameContent.errors.value" required />
+            </div>
+        </div>
+        <div class="col-12">        
+            <submit-button form="publisherNameContentForm" icon="fe fe-edit">تعديل</submit-button>
+        </div> 
+    </form>
+</content-card>
+<content-card content-model="contents.description" content-title="الوصف" content-name="description">
+    <form class="row" name="publisherDescriptionContentForm" request="createUpdateDescriptionContent" model="descriptionContent">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="description-content" class="locale-label">عربي</label>
+                <textarea id="description-content" class="form-control" type="text" ng-model="descriptionContent.value" ng-error="createUpdateDescriptionContent.errors.value" required ></textarea>
+            </div>
+        </div>
+        <div class="col-12">        
+            <submit-button form="publisherDescriptionContentForm" icon="fe fe-edit">تعديل</submit-button>
+        </div> 
+    </form>
+</content-card>
+

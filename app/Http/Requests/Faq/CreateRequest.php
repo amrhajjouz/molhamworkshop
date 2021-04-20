@@ -29,25 +29,16 @@ class CreateRequest extends BaseRequest
 
         $locales = config('general.available_locales');
         $fields = \App\Models\Faq::get_content_fields();
-        // dd($this->all());
-
-        // foreach ($fields  as $key => $field) {
-        //     foreach ($locales  as $locale) {
-        //         $rules[$locale]  = ['array'];
-        //         $rules[ $locale . '.' . $field . '.value']  = ['nullable'];
-        //         $rules[ $locale . '.' . $field . '.name']  = ['nullable'];
-        //         $rules[ $locale . '.' . $field . '.locale']  = ['nullable'];
-        //     }
-        // }
-        // dd($this->all() , $locales , $fields , $rules);
-
-        foreach ($fields  as $key => $field) {
-            foreach ($locales  as $locale) {
-                $rules['contents.' .  $field]  = ['array'];
-                $rules['contents.' .  $field . '.' . $locale]  = ['nullable'];
-            }
-        }
-        $rules['category_id'] =['required'];
+        
+        $rules = [
+           'category_id' => ['required'],
+            'contents' => ['required', 'array'],
+            'contents.question.value' => ['required', 'string'],
+            'contents.question.name' => ['required', 'string'],
+            'contents.answer.value' => ['required', 'string'],
+            'contents.answer.name' => ['required', 'string'],
+            
+        ];
         // dd($rules , $this->all());
         return $rules;
     }

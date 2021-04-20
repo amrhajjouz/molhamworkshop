@@ -1,50 +1,42 @@
 <include-header />
+<content-card content-model="contents.title" content-title="العنوان" content-name="title">
+    <form class="row" name="pageTitleContentForm" request="createUpdateTitleContent" model="titleContent">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="title-content" class="locale-label">عربي</label>
+                <input id="title-content" class="form-control" type="text" ng-model="titleContent.value" ng-error="createUpdateTitleContent.errors.value" required />
+            </div>
+        </div>
+        <div class="col-12">        
+            <submit-button form="pageTitleContentForm" icon="fe fe-edit">تعديل</submit-button>
+        </div> 
+    </form>
+</content-card>
+<content-card content-model="contents.description" content-title="الوصف" content-name="description">
+    <form class="row" name="pageDescriptionContentForm" request="createUpdateDescriptionContent" model="descriptionContent">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="description-content" class="locale-label">عربي</label>
+                <textarea id="description-content" class="form-control" type="text" ng-model="descriptionContent.value" ng-error="createUpdateDescriptionContent.errors.value" required ></textarea>
+            </div>
+        </div>
+        <div class="col-12">        
+            <submit-button form="pageDescriptionContentForm" icon="fe fe-edit">تعديل</submit-button>
+        </div> 
+    </form>
+</content-card>
 
-<form class="row" name="blogContentsForm" request="createUpdateBlogContents">
-  <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="title-ar">العنوان باللغة العربية</label>
-      <input
-        id="title-ar"
-        class="form-control"
-        type="text"
-        ng-model="contents.title.ar"
-        ng-class="(createUpdateBlogContents.errors['title.ar'] != null) ? 'is-invalid' : ''"
-        ng-change="createUpdateBlogContents.errors['title.ar'] = null"
-        ng-error="createUpdateBlogContents.errors.title.ar"
-      />
-    </div>
-  </div>
-  <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="description-ar">التفاصيل باللغة العربية</label>
-      <textarea
-        id="description-ar"
-        class="form-control"
-        type="text"
-        ng-model="contents.description.ar"
-        ng-class="(createUpdateBlogContents.errors['description.ar'] != null) ? 'is-invalid' : ''"
-        ng-change="createUpdateBlogContents.errors['description.ar'] = null"
-        ng-error="createUpdateBlogContents.errors.description.ar"
-      ></textarea>
-    </div>
-  </div>
-  <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="body-ar">المحتوى باللغة العربية</label>
-      <textarea
-        id="body-ar"
-        class="form-control"
-        type="text"
-        ng-model="contents.body.ar"
-        ng-class="(createUpdateBlogContents.errors['body.ar'] != null) ? 'is-invalid' : ''"
-        ng-change="createUpdateBlogContents.errors['body.ar'] = null"
-        ng-error="createUpdateBlogContents.errors.body.ar"
-      ></textarea>
-    </div>
-  </div>
 
-  <div class="col-12">
-    <submit-button form="blogContentsForm" icon="fe fe-edit">تعديل</submit-button>
-  </div>
-</form>
+<content-card content-model="contents.body" content-title="المحتوى" content-name="body">
+    <form class="row" name="pageBodyContentForm" request="createUpdateBodyContent" model="bodyContent">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="body-content" class="locale-label">عربي</label>
+                <textarea id="body-content" class="form-control" type="text" ng-model="bodyContent.value" ng-error="createUpdateBodyContent.errors.value" required ></textarea>
+            </div>
+        </div>
+        <div class="col-12">        
+            <submit-button form="pageBodyContentForm" icon="fe fe-edit">تعديل</submit-button>
+        </div> 
+    </form>
+</content-card>

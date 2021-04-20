@@ -27,8 +27,10 @@ class CreateRequest extends BaseRequest
         
         return [
             'contents' => ['required', 'array'],
-            'contents.name.ar' => ['required', 'string'],
-            'contents.description.ar' => ['required', 'string'],
+            'contents.name.value' => ['required', 'string'],
+            'contents.name.name' => ['required', 'string'],
+            'contents.description.value' => ['required', 'string'],
+            'contents.description.name' => ['required', 'string'],
         ];
     }
 

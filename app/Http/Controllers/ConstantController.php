@@ -28,13 +28,7 @@ class ConstantController extends BaseController
 
             $constant->save();
 
-            $content = Content::create([
-                'name' => $data['content']['name'],
-                'value' => $data['content']['value'],
-                'contentable_type' => "App\Models\Constant",
-                'contentable_id' => $constant->id,
-
-            ]);
+            setContent($constant , $data['content']['name'] , $data['content']['value'] ,'ar' );
 
             return $this->_response($constant);
         } catch (\Exception $e) {

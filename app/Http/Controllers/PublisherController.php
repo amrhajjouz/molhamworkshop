@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasList, HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Publisher\{CreateRequest, UpdateRequest};
+use App\Http\Requests\Publisher\{CreateRequest,
+    ListContentRequest ,
+    CreateUpdateContent
+    // UpdateRequest
+};
 use App\Models\{User, Publisher, Content};
 use App\Facades\Helper;
 
@@ -25,7 +29,11 @@ class PublisherController extends BaseController
             $data = $request->validated();
             $publisher = new $this->model();
             $publisher->save();
-            setContent($request, $publisher);
+
+            foreach($data['contents']  as $content){
+                setContent($publisher , $content['name'] , $content['value'] , 'ar');
+             
+            }
 
             return $this->_response($publisher);
         } catch (\Exception $e) {
@@ -34,19 +42,19 @@ class PublisherController extends BaseController
     }
 
 
-    public function update(UpdateRequest $request)
-    {
-        try {
+    // public function update(UpdateRequest $request)
+    // {
+    //     try {
 
-            $model = $this->model::findOrFail($request->id);
-            $model->save();
-            setContent($request->all(), $model);
+    //         $model = $this->model::findOrFail($request->id);
+    //         $model->save();
+    //         setContent($request->all(), $model);
 
-            return $this->_response($model->contents);
-        } catch (\Exception $ex) {
-            throw $this->_exception($ex->getMessage());
-        }
-    }
+    //         return $this->_response($model->contents);
+    //     } catch (\Exception $ex) {
+    //         throw $this->_exception($ex->getMessage());
+    //     }
+    // }
 
     public function list(Request $request)
     {
@@ -81,6 +89,26 @@ class PublisherController extends BaseController
         }
     }
 
+    public function list_contents(ListContentRequest $request, Publisher $publisher)
+    {
+
+        try {
+            return $this->_response(getContent($publisher, $request));
+        } catch (\Exception $ex) {
+            throw $this->_exception($ex->getMessage());
+        }
+    }
+
+    public function create_update_contents(CreateUpdateContent $request, Publisher $publisher)
+    {
+        try {
+            $data = $request->validated();
+            setContent($publisher, $data['name'], $data['value'], $data['locale']);
+            return $this->_response($publisher->contents);
+        } catch (\Exception $ex) {
+            throw $this->_exception($ex->getMessage());
+        }
+    }
 
 
 

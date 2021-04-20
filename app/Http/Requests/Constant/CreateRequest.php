@@ -26,11 +26,18 @@ class CreateRequest extends BaseRequest
      */
     public function rules()
     {
-        
+
+        $request = $this;
+        // dd($request->all());
         return [
             'plaintext' => ['required' ,'boolean'],
             'content' => ['array' ,'required'],
-            'content.name' => ['string' ,'required'],
+            'content.name' => ['string' ,'required' , 'unique:contents,name',
+            Rule::unique('contents' , 'name')->where(function ($query) use($request){
+                $query->where('contentable_type' , 'App\Models\Constant');
+                return $query->where('name',  $request->all()['content']['name']);
+            })
+        ],
             'content.value' => ['string' ,'required'],
             
             

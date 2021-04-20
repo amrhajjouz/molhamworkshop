@@ -1,7 +1,26 @@
 <page-header title="ثابت جديد" pretitle="الثوابت"></page-header>
-
 <form class="row" name="createConstantForm" request="createConstant">
   <div class="col-12 col-md-6">
+    
+    <div class="form-group">
+      <label for="plaintext">نص عادي </label>
+      <select
+        id="plaintext"
+        class="form-control"
+        type="text"
+        ng-model="constant.plaintext"
+        ng-class="(createConstant.errors['plaintext'] != null) ? 'is-invalid' : ''"
+        ng-change="createConstant.errors['plaintext'] = null"
+        placeholder="اسم الثابت.."
+        ng-error="createConstant.errors.plaintext"
+        required
+      >
+      <option ng-value="true" >نعم</option>
+      <option ng-value="false" >لا</option>
+    </select>
+    </div>
+  </div>
+    <div class="col-12 col-md-6">
     <div class="form-group">
       <label for="name">اسم الثابت</label>
       <input

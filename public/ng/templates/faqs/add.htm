@@ -18,16 +18,16 @@
   </div>
   <div class="col-12 col-md-6">
     <div class="form-group">
-      <label for="ar-question">السؤال باللغة العربية</label>
+      <label for="value-question">السؤال باللغة العربية</label>
       <input
-        id="ar-question"
+        id="value-question"
         class="form-control"
         type="text"
-        ng-model="faq.contents.question.ar"
-        ng-class="(createFaq.errors['contents.question.ar'] != null) ? 'is-invalid' : ''"
-        ng-change="createFaq.errors['contents.question.ar'] = null"
+        ng-model="faq.contents.question.value"
+        ng-class="(createFaq.errors['contents.question.value'] != null) ? 'is-invalid' : ''"
+        ng-change="createFaq.errors['contents.question.value'] = null"
         placeholder="السؤال.."
-        ng-error="createFaq.errors.question.ar"
+        ng-error="createFaq.errors.question.value"
         required
       />
     </div>
@@ -36,14 +36,14 @@
     <div class="form-group">
       <label for="value">الجواب باللغة العربية</label>
       <textarea
-        id="ar-answer"
+        id="value-answer"
         class="form-control"
         type="text"
-        ng-model="faq.contents.answer.ar"
-        ng-class="(createFaq.errors['contents.answer.ar'] != null) ? 'is-invalid' : ''"
-        ng-change="createFaq.errors['contents.answer.ar'] = null"
+        ng-model="faq.contents.answer.value"
+        ng-class="(createFaq.errors['contents.answer.value'] != null) ? 'is-invalid' : ''"
+        ng-change="createFaq.errors['contents.answer.value'] = null"
         placeholder="الجواب.."
-        ng-error="createFaq.errors.contents.answer.ar"
+        ng-error="createFaq.errors.contents.answer.value"
         required
       ></textarea>
     </div>

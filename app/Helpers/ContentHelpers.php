@@ -23,6 +23,14 @@ function getContent($contentable , $request = null)
 
     $required_contents_fields = $contentable::get_content_fields();
 
+    if(in_array('*' , $required_contents_fields)){
+         $required_contents_fields = [];
+        $fields = $contentable->contents()->get('name')->toArray();
+        foreach($fields  as $field){
+            $required_contents_fields [] = $field['name'];
+        }
+    }
+
     /* 
      * if isset only one field in routes like ?field=foo 
     */

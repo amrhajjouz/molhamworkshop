@@ -7,26 +7,26 @@
       <input
         id="name"
         class="form-control"
-        ng-model="publisher.contents.name.ar"
-        ng-class="(createPublisher.errors['contents.ar.name'] != null) ? 'is-invalid' : ''"
-        ng-change="createPublisher.errors['contents.ar.name'] = null"
-        ng-error="createPublisher.errors.contents.ar.name"
+        ng-model="publisher.contents.name.value"
+        ng-class="(createPublisher.errors['contents.value.name'] != null) ? 'is-invalid' : ''"
+        ng-change="createPublisher.errors['contents.value.name'] = null"
+        ng-error="createPublisher.errors.contents.value.name"
         required
       />
     </div>
   </div>
   <div class="col-12 col-md-6">
     <div class="form-group">
-      <label for="ar-description">الوصف باللغة العربية</label>
+      <label for="value-description">الوصف باللغة العربية</label>
       <textarea
-        id="ar-description"
+        id="value-description"
         class="form-control"
         type="text"
-        ng-model="publisher.contents.description.ar"
-        ng-class="(createPublisher.errors['contents.description.ar'] != null) ? 'is-invalid' : ''"
-        ng-change="createPublisher.errors['contents.description.ar'] = null"
+        ng-model="publisher.contents.description.value"
+        ng-class="(createPublisher.errors['contents.description.value'] != null) ? 'is-invalid' : ''"
+        ng-change="createPublisher.errors['contents.description.value'] = null"
         placeholder="الجواب.."
-        ng-error="createPublisher.errors.contents.description.ar"
+        ng-error="createPublisher.errors.contents.description.value"
         required
       ></textarea>
     </div>

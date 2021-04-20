@@ -202,6 +202,12 @@ class Molham extends Migration
             $table->string('path')->index();
             $table->timestamps();
         });
+       
+        Schema::create('shortcut_keys', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('shortcut_id');
+            $table->timestamps();
+        });
         
         Schema::create('pages', function (Blueprint $table) {
             $table->bigIncrements('id');
@@ -247,6 +253,7 @@ class Molham extends Migration
         Schema::dropIfExists('constants');
         Schema::dropIfExists('faqs');
         Schema::dropIfExists('shortcuts');
+        Schema::dropIfExists('shortcut_keys');
         Schema::dropIfExists('pages');
         Schema::dropIfExists('blogs');
         Schema::dropIfExists('publishers');

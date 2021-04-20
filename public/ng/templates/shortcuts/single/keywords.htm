@@ -13,20 +13,20 @@
     <thead>
       <tr>
         <th class="text-center">#</th>
-        <th class="text-center">الكلمة المفتاحية</th>
+        <th class="text-center">الجملة  المفتاحية بالعربي</th>
+        <th class="text-center">الجملة  المفتاحية بالأجتبي</th>
         <th class="text-center">خيارات</th>
       </tr>
     </thead>
 
     <tbody>
-      <tr ng-repeat="keyword in keywords.data">
-        <td class="align-middle text-center">{{ keyword.id }}</td>
-        <td class="align-middle text-center">{{ keyword.value }}</td>
+      <tr ng-repeat="key in keywords.data">
+        <td class="align-middle text-center">{{ key.id }}</td>
+        <td class="align-middle text-center">{{ key.contents.keyword.ar }}</td>
+        <td class="align-middle text-center">{{ key.contents.keyword.en }}</td>
         <td class="align-middle text-center h2">
           <dropdown>
-            <dropdown-item
-              href="javascript:;"
-              ng-click="showModal('edit', keyword)"
+            <dropdown-item href="javascript:;" ng-click="showModal( 'edit' , key)"
               ><i class="fe fe-edit-2"></i> تعديل</dropdown-item
             >
           </dropdown>
@@ -36,41 +36,84 @@
   </table>
 </datatable>
 <div class="card">
-  <!-- Create Update Modal -->
-  <modal id="keyword-modal">
+  <!-- Create Modal -->
+  <modal id="key-modal">
     <modal-title>
       <span>
         <div ng-show="currentModalAction == 'add'">
           <i class="fe fe-plus-circle"></i>&nbsp; اضافة كلمة مفتاحية جديدة
         </div>
-        <div ng-show="currentModalAction == 'edit'">
-          <i class="fe fe-edit"></i>&nbsp; تعديل الكلمة المفتاحية {{ keyword.id
-          }}
-        </div>
+        <!-- <div ng-show="currentModalAction == 'edit'">
+          <i class="fe fe-edit"></i>&nbsp; تعديل الجملة المفتاحية {{ key.id }}
+        </div> -->
       </span>
     </modal-title>
 
     <modal-body>
       <form
         name="listShortcutKeywordsForm"
-        request="createUpdateShortcutKeywords"
-        model="keyword"
+        request="createUpdateShortcutContent"
+        model="key"
         id="myForm"
       >
         <div class="row">
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-md-6" ng-show="currentModalAction == 'add'">
             <div class="form-group">
-              <label for="value">الكلمة المفتاحية</label>
+              <label for="value">الجملة المفتاحية</label>
               <input
                 id="value"
                 type="text"
                 class="form-control"
-                ng-class="(createUpdateShortcutKeywords.errors.value != null) ? 'is-invalid' : ''"
-                ng-model="keyword.value"
-                ng-error="createUpdateShortcutKeywords.errors.value"
+                ng-class="(createUpdateShortcutContent.errors.value != null) ? 'is-invalid' : ''"
+                ng-model="key.value"
+                ng-error="createUpdateShortcutContent.errors.value"
               />
             </div>
           </div>
+
+          <!-- Edit -->
+          <!-- <div class="col-12 col-md-6" ng-if="currentModalAction == 'edit'">
+            <content-card
+              content-model="contents.keyword"
+              content-title="الوصف"
+              content-name="keyword"
+            >
+              <form
+                name="createUpdatekeywordContentForm"
+                request="createUpdatekeywordContent"
+                model="keywordContent"
+              >
+                <div class="col-12">
+                  <div class="form-group">
+                    <label for="keyword-content" class="locale-label"
+                      >عربي</label
+                    >
+                    <textarea
+                      id="keyword-content"
+                      class="form-control"
+                      type="text"
+                      ng-model="keywordContent.value"
+                      ng-error="createUpdatekeywordContent.errors.value"
+                      required
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <submit-button
+                    form="createUpdatekeywordContentForm"
+                    icon="fe fe-edit"
+                    >تعديل</submit-button
+                  >
+                </div>
+              </form>
+            </content-card>
+            <submit-button
+              ng-show="currentModalAction == 'edit'"
+              form="listShortcutKeywordsForm"
+              icon="fe fe-edit"
+              >تعديل</submit-button
+            >
+          </div> -->
         </div>
 
         <submit-button
@@ -79,13 +122,64 @@
           icon="fe fe-plus"
           >اضافة</submit-button
         >
-        <submit-button
-          ng-show="currentModalAction == 'edit'"
-          form="listShortcutKeywordsForm"
-          icon="fe fe-edit"
-          >تعديل</submit-button
-        >
       </form>
+    </modal-body>
+  </modal>
+
+
+
+
+
+  <!-- Update -->
+  <modal id="update-modal">
+    <modal-title>
+      <span>
+        <div>
+          <i class="fe fe-edit"></i>&nbsp; تعديل الجملة المفتاحية {{ key.id }}
+        </div>
+      </span>
+    </modal-title>
+
+    <modal-body>
+      <div class="row">
+        <!-- Edit -->
+        <div class="col-12 col-md-12" ng-if="currentModalAction == 'edit'">
+          <content-card
+            content-model="contents.keyword"
+            content-title="الوصف"
+            content-name="keyword"
+          >
+            <form
+              name="createUpdatekeywordContentForm"
+              request="createUpdateShortcutContent"
+              model="keywordContent"
+              id="updateForm"
+            >
+              <div ">
+                <div class="form-group">
+                  <label for="keyword-content" class="locale-label">عربي</label>
+                  <textarea
+                    id="keyword-content"
+                    class="form-control"
+                    type="text"
+                    ng-model="keywordContent.value"
+                    ng-error="createUpdateShortcutContent.errors.value"
+                    required
+                  ></textarea>
+                </div>
+              </div>
+              <div class="col-12">
+                <submit-button
+                  form="createUpdatekeywordContentForm"
+                  icon="fe fe-edit"
+                  >تعديل</submit-button
+                >
+              </div>
+            </form>
+          </content-card>
+        </div>
+      </div>
+
     </modal-body>
   </modal>
 </div>

@@ -4,11 +4,14 @@ namespace App\Models;
 
 use App\Common\Base\BaseModel;
 
-class Faq extends BaseModel
+class Constant extends BaseModel
 {
 
-    protected $table = 'faqs';
+    protected $table = 'constants';
     protected $guarded = [];
+    protected $casts= [
+        'plaintext' => 'boolean'
+    ];
 
 
     /* 
@@ -19,15 +22,32 @@ class Faq extends BaseModel
         return $this->morphMany(\App\Models\Content::class, 'contentable');
     }
 
-
-
+    
     public function transform()
     {
+        // dd(array_key_first(getContent($this)));
+        // dd(["name" =>getContent($this)]);
 
         $constant = $this->toArray();
 
         return (object)array_merge($constant, [
-            'contents' => $this->contents
+            // 'contents' =>[
+            //     "name" => array_key_first(getContent($this)) ,  
+            //     'content_value' => getContent($this)
+
+            // ]
+
+            'contents' => getContent($this) , 
+            'content_name' => array_key_first(getContent($this)) 
         ]);
     }
+
+
+    public static function get_content_fields(){
+        return [
+            '*'
+        ];
+    }
+    
+    // name , 
 }

@@ -22,11 +22,11 @@
         id="ar-title"
         class="form-control"
         type="text"
-        ng-model="shortcut.contents.title.ar"
-        ng-class="(createShortcut.errors['contents.title.ar'] != null) ? 'is-invalid' : ''"
-        ng-change="createShortcut.errors['contents.title.ar'] = null"
+        ng-model="shortcut.contents.title.value"
+        ng-class="(createShortcut.errors['contents.title.value'] != null) ? 'is-invalid' : ''"
+        ng-change="createShortcut.errors['contents.title.value'] = null"
         placeholder="العنوان.."
-        ng-error="createShortcut.errors.title.ar"
+        ng-error="createShortcut.errors.title.value"
         required
       />
     </div>
@@ -38,11 +38,11 @@
         id="ar-description"
         class="form-control"
         type="text"
-        ng-model="shortcut.contents.description.ar"
-        ng-class="(createShortcut.errors['contents.description.ar'] != null) ? 'is-invalid' : ''"
-        ng-change="createShortcut.errors['contents.description.ar'] = null"
+        ng-model="shortcut.contents.description.value"
+        ng-class="(createShortcut.errors['contents.description.value'] != null) ? 'is-invalid' : ''"
+        ng-change="createShortcut.errors['contents.description.value'] = null"
         placeholder="الجواب.."
-        ng-error="createShortcut.errors.contents.description.ar"
+        ng-error="createShortcut.errors.contents.description.value"
         required
       ></textarea>
     </div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Blog;
+namespace App\Http\Requests\Shortcut;
 
 
 use App\Common\Base\BaseRequest;
@@ -19,7 +19,7 @@ class CreateUpdateContent extends BaseRequest
     {
         return true;
     }
-
+    
     /**
      * Get the validation rules that apply to the request.
      *
@@ -28,8 +28,8 @@ class CreateUpdateContent extends BaseRequest
     public function rules()
     {
 
-            $locales = config('general.available_locales');
-            $fields = \App\Models\Blog::get_content_fields();
+        $locales = config('general.available_locales');
+        $fields = \App\Models\Shortcut::get_content_fields();
 
 
         $rules = [
@@ -41,7 +41,7 @@ class CreateUpdateContent extends BaseRequest
         if ($this->name == 'description') {
             $rules['value'] = ['required', 'string', 'max:1000'];
         }
-
+       
         if ($this->name == 'body') {
             $rules['value'] = ['required', 'string', 'max:1000'];
         }
@@ -52,4 +52,5 @@ class CreateUpdateContent extends BaseRequest
 
         return $rules;
     }
+    
 }

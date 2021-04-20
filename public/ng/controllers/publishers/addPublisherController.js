@@ -8,10 +8,12 @@ function addPublisherController($scope, $location, $apiRequest, $page, $init) {
   $scope.publisher = {
     contents: {
       name: {
-        ar: null,
+        value: null,
+        name: "name",
       },
       description: {
-        ar: null,
+        value: null,
+        name: "description",
       },
     },
   };

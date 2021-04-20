@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasList, HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Shortcut\{CreateRequest, UpdateRequest , CreateKeyword , UpdateKeyword};
+use App\Http\Requests\Shortcut\{CreateRequest, UpdateRequest , CreateKeyword , UpdateKeyword , ListContentRequest , CreateUpdateContent};
 use App\Models\{User, Shortcut, Content};
 use App\Facades\Helper;
 
@@ -23,11 +23,13 @@ class ShortcutController extends BaseController
         try {
 
             $data = $request->validated();
-
             $shortcut = new $this->model();
             $shortcut->path  = $data['path'];
             $shortcut->save();
-            setContent($request, $shortcut);
+
+            foreach($data['contents']  as $content){
+                setContent($shortcut, $content['name'] , $content['value'] , 'ar' );
+            }
 
             return $this->_response($shortcut);
         } catch (\Exception $e) {
@@ -44,7 +46,6 @@ class ShortcutController extends BaseController
             $shortcut->path  = $data['path'];
             $shortcut->save();
 
-            setContent($request->validated(), $shortcut);
 
             return $this->_response($shortcut->contents);
         } catch (\Exception $ex) {
@@ -80,67 +81,40 @@ class ShortcutController extends BaseController
     }
 
 
-    public function list_keywords(Request $request, $id)
+
+
+    public function list_contents(ListContentRequest $request, Shortcut $shortcut)
     {
-
         try {
+            return $this->_response(getContent($shortcut, $request));
+        } catch (\Exception $ex) {
+            throw $this->_exception($ex->getMessage());
+        }
+    }
 
+    public function create_update_contents(CreateUpdateContent $request, Shortcut $shortcut)
+    {
+        try {
+            $data = $request->validated();
+            setContent($shortcut, $data['name'], $data['value'], $data['locale']);
+            return $this->_response($shortcut->contents);
+        } catch (\Exception $ex) {
+            throw $this->_exception($ex->getMessage());
+        }
+    }
+
+
+    public function list_keys(Request $request, $id)
+    {
+        try {
+            
             $model = $this->model::findOrFail($id);
+
             return $this->_response($model->list_keywords());
-            return $this->_response(getContent($model));
         } catch (\Exception $th) {
             throw $this->_exception($th->getMessage());
         }
     }
-
-    public function create_keyword(CreateKeyword $request , $id)
-    {
-        try {
-
-            $model = $this->model::find($id);
-
-            $data = $request->validated();
-
-            $keywords = Content::create([
-                'contentable_type' => get_class($model) ,
-                'contentable_id' => $model->id ,
-                'name' => 'keyword' ,
-                'value' => $data['value'] ,
-                'locale' => $data['locale'] ,
-            ]);
-
-            return $this->_response($keywords);
-        } catch (\Exception $ex) {
-            throw $this->_exception($ex->getMessage());
-        }
-    }
-
-
-    public function update_keyword(UpdateKeyword $request, $id)
-    {
-        try {
-
-            $model = $this->model::findOrFail($id);
-
-            $data = $request->validated();
-            Content::findOrFail($data['id'])->delete();
-            $keywords = Content::create([
-                    'contentable_type' => get_class($model),
-                    'contentable_id' => $model->id,
-                    'name' => 'keyword',
-                    'value' => $data['value'],
-                    'locale' => $data['locale'],
-                ]);
-
-
-
-            return $this->_response($keywords);
-        } catch (\Exception $ex) {
-            throw $this->_exception($ex->getMessage());
-        }
-    }
-
-
 
 
 }

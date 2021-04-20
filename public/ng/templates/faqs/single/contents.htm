@@ -1,0 +1,29 @@
+<include-header />
+<content-card content-model="contents.question" content-title="السؤال" content-name="question">
+    <form class="row" name="faqQuestionContentForm" request="createUpdateQuestionContent" model="questionContent">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="question-content" class="locale-label">عربي</label>
+                <textarea id="question-content" class="form-control" type="text" ng-model="questionContent.value" ng-error="createUpdateQuestionContent.errors.value" required ></textarea>
+            </div>
+        </div>
+        <div class="col-12">        
+            <submit-button form="faqQuestionContentForm" icon="fe fe-edit">تعديل</submit-button>
+        </div> 
+    </form>
+</content-card>
+
+
+<content-card content-model="contents.answer" content-title="الجواب" content-name="answer">
+    <form class="row" name="faqAnswerContentForm" request="createUpdateAnswerContent" model="answerContent">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="answer-content" class="locale-label">عربي</label>
+                <textarea id="answer-content" class="form-control" type="text" ng-model="answerContent.value" ng-error="createUpdateAnswerContent.errors.value" required ></textarea>
+            </div>
+        </div>
+        <div class="col-12">        
+            <submit-button form="faqAnswerContentForm" icon="fe fe-edit">تعديل</submit-button>
+        </div> 
+    </form>
+</content-card>

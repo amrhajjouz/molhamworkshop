@@ -95,8 +95,9 @@ return [
     /////////////////////// FAQS /////////////////////////
     'faqs.add' => ['faqs/add', 'faqs/addFaqController', 'faqs.add'],
     'faqs.overview' => ['faqs/:id', 'faqs/overviewFaqController', 'faqs.single.overview'],
-    'faqs.edit' => ['faqs/:id/edit', 'faqs/editFaqController', 'faqs.single.edit'],
+    // 'faqs.edit' => ['faqs/:id/edit', 'faqs/editFaqController', 'faqs.single.edit'],
     'faqs' => ['faqs', 'faqs/listFaqsController', 'faqs.list'],
+    'faqs.contents' => ['faqs/:id/contents', 'faqs/faqContentsController', 'faqs.single.contents'],
 
     /////////////////////// Shortcuts /////////////////////////
     'shortcuts.add' => ['shortcuts/add', 'shortcuts/addShortcutController', 'shortcuts.add'],
@@ -104,6 +105,8 @@ return [
     'shortcuts.edit' => ['shortcuts/:id/edit', 'shortcuts/editShortcutController', 'shortcuts.single.edit'],
     'shortcuts.keywords' => ['shortcuts/:id/keywords', 'shortcuts/listShortcutKeywordsController', 'shortcuts.single.keywords'],
     'shortcuts' => ['shortcuts', 'shortcuts/listShortcutsController', 'shortcuts.list'],
+
+    'shortcuts.contents' => ['shortcuts/:id/contents', 'shortcuts/shortcutContentsController', 'shortcuts.single.contents'],
 
     /////////////////////////// Pages Routes    ///////////////////
     'pages.add' => ['pages/add', 'pages/addPageController', 'pages.add'],
@@ -119,12 +122,13 @@ return [
     'blogs.edit' => ['blogs/:id/edit', 'blogs/editBlogController', 'blogs.single.edit'],
     'blogs' => ['blogs', 'blogs/listBlogsController', 'blogs.list'],
     'blogs.contents' => ['blogs/:id/contents', 'blogs/blogContentsController', 'blogs.single.contents'],
-
+    
     /////////////////////////// Publisher Routes    ///////////////////
     'publishers.add' => ['publishers/add', 'publishers/addPublisherController', 'publishers.add'],
     'publishers.overview' => ['publishers/:id', 'publishers/overviewPublisherController', 'publishers.single.overview'],
-    'publishers.edit' => ['publishers/:id/edit', 'publishers/editPublisherController', 'publishers.single.edit'],
+    // 'publishers.edit' => ['publishers/:id/edit', 'publishers/editPublisherController', 'publishers.single.edit'],
     'publishers' => ['publishers', 'publishers/listPublishersController', 'publishers.list'],
+    'publishers.contents' => ['publishers/:id/contents', 'publishers/publisherContentsController', 'publishers.single.contents'],
 
 
 

@@ -13,10 +13,14 @@ function addFaqController($scope, $location, $apiRequest, $page, $init) {
     category_id: null,
     contents: {
       question: {
-        ar: null,
+        value: null,
+        locale: "ar",
+        name: "question",
       },
       answer: {
-        ar: null,
+        value: null,
+        locale: "ar",
+        name: "answer",
       },
     },
   };

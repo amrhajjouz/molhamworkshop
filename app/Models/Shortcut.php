@@ -13,6 +13,12 @@ class Shortcut extends BaseModel
     protected $table = 'shortcuts';
     protected $guarded = [];
 
+    public function keys(){
+        return $this->hasMany('App\Models\ShortcutKey' , 'shortcut_id' , 'id' );
+    }
+
+    
+    
     public function transform()
     {
 
@@ -31,13 +37,23 @@ class Shortcut extends BaseModel
     public static function get_content_fields()
     {
         return [
-            'title', 'description', 'keyword'
+            'title', 'description', 
         ];
     }
 
 
     public function list_keywords()
     {
-        return  $keywords = $this->contents->where('name', 'keyword');
+        $res = [];
+        foreach ($this->keys as $key) {
+
+            $key->contents = getContent($key);
+            $res[] = $key;
+            // foreach($key->contents  as $item){
+            // }
+            
+        }
+        // $keywords = $this->contents->where('name', 'keyword');
+        return $res;  
     }
 }

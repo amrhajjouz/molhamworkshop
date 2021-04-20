@@ -9,10 +9,16 @@ function addShortcutController($scope, $location, $apiRequest, $page, $init) {
     path: null,
     contents: {
       title: {
-        ar: null,
+        locale:'ar',
+        name:'title',
+        value:null,
+
       },
       description: {
-        ar: null,
+        locale:'ar',
+        name:'description',
+        value:null,
+
       },
     },
   };

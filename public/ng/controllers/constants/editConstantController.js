@@ -12,6 +12,7 @@ async function editConstantControllerInit($http, $page, $apiRequest) {
 function editConstantController($scope, $page, $apiRequest, $init) {
 
   $scope.constant = $init.constant;
+  $scope.contents = $init.constant.contents;
 
   $scope.updateConstant = $apiRequest.config(
     {

@@ -16,6 +16,7 @@ use App\Http\Controllers\{
     PageController,
     BlogController,
     PublisherController,
+    ShortcutKeyController,
 };
 
 
@@ -163,8 +164,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/faqs', [FaqController::class, 'list']);
     Route::post('/faqs', [FaqController::class, 'create']);
-    Route::put('/faqs', [FaqController::class, 'update']);
+    // Route::put('/faqs', [FaqController::class, 'update']);
     Route::get('/faqs/{id}', [FaqController::class, 'retrieve']);
+    Route::get('/faqs/{faq}/contents', [FaqController::class, 'list_contents']);
+    Route::put('/faqs/{faq}/contents', [FaqController::class, 'create_update_contents']);
   
   
     ////////////////// Shortcut /////////////////
@@ -172,10 +175,19 @@ Route::middleware('auth')->group(function () {
     Route::post('/shortcuts', [ShortcutController::class, 'create']);
     Route::put('/shortcuts', [ShortcutController::class, 'update']);
     Route::get('/shortcuts/{id}', [ShortcutController::class, 'retrieve']);
-    Route::get('/shortcuts/{id}/keywords', [ShortcutController::class, 'list_keywords']);
-    Route::post('/shortcuts/{id}/keyword', [ShortcutController::class, 'create_keyword']);
-    Route::put('/shortcuts/{id}/keyword', [ShortcutController::class, 'update_keyword']);
+    // Route::post('/shortcuts/{id}/keyword', [ShortcutController::class, 'create_keyword']);
+    // Route::put('/shortcuts/{id}/keyword', [ShortcutController::class, 'update_keyword']);
+    
+    Route::get('/shortcuts/{id}/keys', [ShortcutController::class, 'list_keys']);
+    Route::get('/shortcuts/{shortcut}/contents', [ShortcutController::class, 'list_contents']);
+    Route::put('/shortcuts/{shortcut}/contents', [ShortcutController::class, 'create_update_contents']);
 
+
+    ////////////////// Shortcut Keys /////////////////
+    Route::post('/shortcuts_keys/{shortcut_id}', [ShortcutKeyController::class, 'create']);
+    Route::get('/shortcut_keys/{shortcut_key}', [ShortcutKeyController::class, 'retrive']);
+    Route::get('/shortcut_keys/{shortcut}/contents', [ShortcutKeyController::class, 'list_contents']);
+    Route::put('/shortcuts_keys/{shortcut_key}/contents', [ShortcutKeyController::class, 'create_update_contents']);
 
 
     /////////////////////// Pages /////////////////////////
@@ -191,16 +203,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/blogs', [BlogController::class, 'create']);
     Route::put('/blogs', [BlogController::class, 'update']);
     Route::get('/blogs/{id}', [BlogController::class, 'retrieve']);
-    Route::get('/blogs/{id}/contents', [BlogController::class, 'list_contents']);
-    Route::put('/blogs/{id}/contents', [BlogController::class, 'create_update_contents']);
+    Route::get('/blogs/{blog}/contents', [BlogController::class, 'list_contents']);
+    Route::put('/blogs/{blog}/contents', [BlogController::class, 'create_update_contents']);
 
     /////////////////////// Publisher /////////////////////////
     Route::get('/publishers', [PublisherController::class, 'list']);
     Route::post('/publishers', [PublisherController::class, 'create']);
-    Route::put('/publishers', [PublisherController::class, 'update']);
+    // Route::put('/publishers', [PublisherController::class, 'update']);
     Route::get('/publishers/{id}', [PublisherController::class, 'retrieve']);
-    Route::get('/publishers/{id}/contents', [PublisherController::class, 'list_contents']);
-    Route::put('/publishers/{id}/contents', [PublisherController::class, 'create_update_contents']);
+    Route::get('/publishers/{publisher}/contents', [PublisherController::class, 'list_contents']);
+    Route::put('/publishers/{publisher}/contents', [PublisherController::class, 'create_update_contents']);
 
 
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Blog;
+namespace App\Http\Requests\Publisher;
 
 
 use App\Common\Base\BaseRequest;
@@ -31,13 +31,20 @@ class CreateUpdateContent extends BaseRequest
             $locales = config('general.available_locales');
             $fields = \App\Models\Publisher::get_content_fields();
 
+        $rules = [
+            'name' => ['required', 'string', Rule::in($fields)],
+            'locale' => ['required', Rule::in($locales)],
+            'value' => ['required']
+        ];
 
-            foreach ($fields  as $key => $field) {
-                $rules[$field]  = ['array'];
-                foreach ($locales  as $locale) {
-                    $rules[$field . '.' . $locale]  = ['nullable'];
-                }
-            }
+        if ($this->name == 'description') {
+            $rules['value'] = ['required', 'string', 'max:1000'];
+        }
+
+
+        if ($this->name == 'name') {
+            $rules['value'] = ['required', 'string', 'between:3,100'];
+        }
 
 
         return $rules;

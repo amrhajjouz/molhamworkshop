@@ -1,6 +1,27 @@
 <include-header />
 
 <form class="row" name="updateConstantForm" request="updateConstant">
+
+    <div class="col-12 col-md-6">
+    
+    <div class="form-group">
+      <label for="plaintext">نص عادي </label>
+      <select
+        id="plaintext"
+        class="form-control"
+        type="text"
+        ng-model="constant.plaintext"
+        ng-class="(updateConstant.errors['plaintext'] != null) ? 'is-invalid' : ''"
+        ng-change="updateConstant.errors['plaintext'] = null"
+        ng-error="updateConstant.errors.plaintext"
+        required
+      >
+      <option ng-value="true" >نعم</option>
+      <option ng-value="false" >لا</option>
+    </select>
+    </div>
+  </div>
+
   <div class="col-12 col-md-6">
     <div class="form-group">
       <label for="name">اسم الثابت</label>
@@ -39,4 +60,65 @@
       >اضافة</submit-button
     >
   </div>
+
+
+
+
+
+
+
+
 </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+
+<content-card content-model="contents[constant.content_name]" content-title="المحتوى" content-name="constant.content_name">
+    <form class="row" name="constantNameContentForm" request="createUpdateNameContent" model="detailsContent">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="details-content" class="locale-label">عربي</label>
+                <input id="details-content" class="form-control" type="text" ng-model="detailsContent.value" ng-error="createUpdateDetailsContent.errors.value" required />
+            </div>
+        </div>
+        <div class="col-12">        
+            <submit-button form="constantNameContentForm" icon="fe fe-edit">تعديل</submit-button>
+        </div> 
+    </form>
+</content-card> -->

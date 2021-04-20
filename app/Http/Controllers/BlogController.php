@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use App\Facades\Helper;
-use App\Http\Requests\Blog\{CreateRequest, UpdateRequest, CreateUpdateContent};
-
+use App\Http\Requests\Blog\{CreateRequest, UpdateRequest, CreateUpdateContent , ListContentRequest};
+use App\Models\Blog;
 class BlogController extends BaseController
 {
 
@@ -69,33 +69,26 @@ class BlogController extends BaseController
         }
     }
 
-    public function list_contents(Request $request, $id)
+    public function list_contents(ListContentRequest $request, Blog $blog)
     {
 
         try {
-
-            $model = $this->model::findOrFail($id);
-
-            return $this->_response(getContent($model));
-        } catch (\Exception $th) {
-            throw $this->_exception($th->getMessage());
-        }
-    }
-
-    public function create_update_contents(CreateUpdateContent $request, $id)
-    {
-        try {
-
-            $model = $this->model::find($id);
-
-            setContent($request->validated(), $model);
-
-            return $this->_response($model->contents);
+            return $this->_response(getContent($blog, $request));
         } catch (\Exception $ex) {
             throw $this->_exception($ex->getMessage());
         }
     }
 
+    public function create_update_contents(CreateUpdateContent $request, Blog $blog)
+    {
+        try {
+            $data = $request->validated();
+            setContent($blog, $data['name'], $data['value'], $data['locale']);
+            return $this->_response($blog->contents);
+        } catch (\Exception $ex) {
+            throw $this->_exception($ex->getMessage());
+        }
+    }
 
   
 }

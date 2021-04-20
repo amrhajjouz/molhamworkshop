@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Blog;
+namespace App\Http\Requests\Faq;
 
 
 use App\Common\Base\BaseRequest;
@@ -29,7 +29,7 @@ class CreateUpdateContent extends BaseRequest
     {
 
             $locales = config('general.available_locales');
-            $fields = \App\Models\Blog::get_content_fields();
+            $fields = \App\Models\Faq::get_content_fields();
 
 
         $rules = [
@@ -38,16 +38,13 @@ class CreateUpdateContent extends BaseRequest
             'value' => ['required']
         ];
 
-        if ($this->name == 'description') {
+        if ($this->name == 'answer') {
             $rules['value'] = ['required', 'string', 'max:1000'];
         }
 
-        if ($this->name == 'body') {
-            $rules['value'] = ['required', 'string', 'max:1000'];
-        }
 
-        if ($this->name == 'title') {
-            $rules['value'] = ['required', 'string', 'between:3,100'];
+        if ($this->name == 'question') {
+            $rules['value'] = ['required', 'string', 'between:3,255'];
         }
 
         return $rules;

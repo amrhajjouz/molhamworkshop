@@ -1,7 +1,6 @@
 async function listShortcutKeywordsControllerInit($http, $page, $apiRequest) {
-
   const keywords = await $apiRequest
-    .config("shortcuts/" + $page.routeParams.id + "/keywords")
+    .config("shortcuts/" + $page.routeParams.id + "/keys")
     .getData();
 
   let fakerPaginator = {
@@ -34,48 +33,79 @@ async function listShortcutKeywordsControllerInit($http, $page, $apiRequest) {
 function listShortcutKeywordsController($scope, $page, $apiRequest, $init) {
   $scope.keywords = $init.keywords;
   $scope.defaultKeywordModel = {
-        id:null,
-        name:"keyword",
-        value:null,
-        locale:'ar', //ToDo: make dropdown select locale
+    shortcut_id: $page.routeParams.id,
+    id: null,
+    name: "key",
+    value: null,
+    locale: "ar", //ToDo: make dropdown select locale
   };
 
-  $scope.keyword = angular.copy($scope.defaultKeywordModel);
+  $scope.key = angular.copy($scope.defaultKeywordModel);
 
-  $scope.createUpdateShortcutKeywords = $apiRequest.config(
+  $scope.contents = {};
+  $scope.selectedKey = {};
+  $scope.keywordContent = {};
+
+  $scope.createUpdateShortcutContent = $apiRequest.config(
     {
       method: "POST",
-      url: `shortcuts/${$page.routeParams.id}/keyword`,
-      data: $scope.keyword,
+      url: `shortcuts_keys/${$page.routeParams.id}`,
+      data: $scope.key,
     },
     function (response, data) {
-      $("#keyword-modal").on("hidden.bs.modal", function (e) {
+      $("#key-modal").on("hidden.bs.modal", function (e) {
         $page.reload();
       });
-      $("#keyword-modal").modal("hide");
+      $("#update-modal").on("hidden.bs.modal", function (e) {
+        $page.reload();
+      });
+      $("#key-modal").modal("hide");
+      $("#update-modal").modal("hide");
 
-      // reinitialize keyword to default value after create or update
-      $scope.keyword = angular.copy($scope.defaultKeywordModel);
+      // reinitialize key to default value after create or update
+      $scope.key = angular.copy($scope.defaultKeywordModel);
     }
   );
 
-  $scope.currentModalAction = "add";
+  // $scope.showContent = async (id) => {
+  //   $apiRequest.config(
+  //     {
+  //       method: "get",
+  //       url: `shortcut_keys/${id}`,
+  //       data: $scope.key,
+  //     },
+  //     function (response, data) {
+  //       $scope.contents = data;
+  //         $scope.createUpdateShortcutContent.config.method = action = "PUT";
+  //         $scope.createUpdateShortcutContent.config.url = `api/shortcuts_keys/${id}/contents`;
+  //         $("#update-modal").modal("show");
+  //       console.log({data})
+  //       console.log({response})
+
+  //     }
+  //   ).getData();
+  //   $scope.currentModalAction = "edit";
+  // };
 
   $scope.showModal = function (action, data = {}) {
     $scope.currentModalAction = action;
     switch (action) {
       case "add":
-        $scope.keyword = angular.copy($scope.defaultKeywordModel); //reinitial object , maybu user click on edit then create ,,, to reset Keyword object
-        $scope.createUpdateShortcutKeywords.config.method = "POST";
+        $scope.key = angular.copy($scope.defaultKeywordModel); //reinitial object , maybu user click on edit then create ,,, to reset Keyword object
+        $scope.createUpdateShortcutContent.config.method = "POST";
+        $("#key-modal").modal("show");
         break;
       case "edit":
-        $scope.createUpdateShortcutKeywords.config.method = action = "PUT";
-        $scope.keyword = angular.copy(data);
+        $scope.selectedKey = data;
+        $scope.createUpdateShortcutContent.config.method = action = "PUT";
+        $scope.createUpdateShortcutContent.config.url = `api/shortcuts_keys/${$scope.selectedKey.id}/contents`;
+        $scope.contents = {};
+        $scope.contents = data.contents;
+        $("#update-modal").modal("show");
         break;
 
       default:
         break;
     }
-    $("#keyword-modal").modal("show");
   };
 }
