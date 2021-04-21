@@ -18,9 +18,6 @@ function campaignContentsController($scope, $page, $apiRequest, $init) {
     data: $scope.titleContent,
     
   },
-  // function(response, data) {
-  //     $page.reload();
-  //   },
     );
 
   $scope.createUpdateDetailsContent = $apiRequest.config(
@@ -29,9 +26,6 @@ function campaignContentsController($scope, $page, $apiRequest, $init) {
       url: "campaigns/" + $page.routeParams.id + "/contents",
       data: $scope.detailsContent,
     },
-    // function (response, data) {
-    //   $page.reload();
-    // }
   );
 
 

@@ -1,7 +1,16 @@
-<page-header title="الحملة {{  $routeParams.id }}" pretitle="حملات جمع التبرعات"></page-header>
+<page-header
+  title="الحملة {{  $routeParams.id }}"
+  pretitle="حملات جمع التبرعات"
+></page-header>
 
 <page-nav>
-    <page-nav-item route="fundraisers.overview" params="{id:  $routeParams.id}">نظرة عامة</page-nav-item>
-    <page-nav-item route="fundraisers.edit" params="{id:  $routeParams.id}">تعديل المعلومات</page-nav-item>
-      <page-nav-item route="fundraisers.contents" params="{id:  $routeParams.id}">المحتوى</page-nav-item>
+  <page-nav-item route="fundraisers.overview" params="{id:  $routeParams.id}"
+    >نظرة عامة</page-nav-item
+  >
+  <page-nav-item route="fundraisers.edit" params="{id:  $routeParams.id}"
+    >تعديل المعلومات</page-nav-item
+  >
+  <page-nav-item route="fundraisers.contents" params="{id:  $routeParams.id}"
+    >المحتوى</page-nav-item
+  >
 </page-nav>

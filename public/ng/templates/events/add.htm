@@ -139,9 +139,9 @@
     <div class="form-group">
       <label for="required">المبلغ المطلوب</label>
       <input
-      id="required"
-      class="form-control"
-      type="number"
+        id="required"
+        class="form-control"
+        type="number"
         ng-class="(createEvent.errors['target.required'] != null) ? 'is-invalid' : ''"
         ng-model="object.target['required']"
         ng-change="createEvent.errors['target.required'] = null"
@@ -177,7 +177,7 @@
     </div>
   </div>
 
-   <div class="col-12 col-md-6">
+  <div class="col-12 col-md-6">
     <div class="form-group">
       <label for="admins_ids">المشرفون</label>
       <select2

@@ -5,12 +5,4 @@ function overviewEventControllerInit($apiRequest, $page) {
 function overviewEventController($scope, $page, $apiRequest, $init) {
   $scope.object = $init;
 
-  $scope.updateEvent = $apiRequest.config(
-    {
-      method: "POST",
-      url: "events",
-      data: $scope.object,
-    },
-    function (response, data) {}
-  );
 }

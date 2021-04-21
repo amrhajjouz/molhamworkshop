@@ -38,14 +38,13 @@ class Constant extends BaseModel
             // ]
 
             'contents' => getContent($this) , 
-            'content_name' => array_key_first(getContent($this)) 
         ]);
     }
 
 
     public static function get_content_fields(){
         return [
-            '*'
+            'body'
         ];
     }
     

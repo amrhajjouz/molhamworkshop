@@ -158,13 +158,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/constants', [ConstantController::class, 'create']);
     Route::put('/constants', [ConstantController::class, 'update']);
     Route::get('/constants/{id}', [ConstantController::class, 'retrieve']);
-
+    Route::put('/constants/{constant}/contents', [ConstantController::class, 'create_update_contents']);
 
     ////////////////// Faq /////////////////
 
     Route::get('/faqs', [FaqController::class, 'list']);
     Route::post('/faqs', [FaqController::class, 'create']);
-    // Route::put('/faqs', [FaqController::class, 'update']);
+    Route::put('/faqs', [FaqController::class, 'update']);
     Route::get('/faqs/{id}', [FaqController::class, 'retrieve']);
     Route::get('/faqs/{faq}/contents', [FaqController::class, 'list_contents']);
     Route::put('/faqs/{faq}/contents', [FaqController::class, 'create_update_contents']);

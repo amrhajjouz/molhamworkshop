@@ -39,21 +39,22 @@ class FaqController extends BaseController
     }
 
 
-    // public function update(UpdateRequest $request)
-    // {
-    //     try {
+    public function update(UpdateRequest $request)
+    {
+        try {
 
-    //         $model = $this->model::findOrFail($request->id);
-    //         $data = $request->all();
-    //         $model->category_id = $data['category_id'];
-    //         $model->save();
-    //         setContent($request->all(), $model);
+            $model = $this->model::findOrFail($request->id);
+            $data = $request->all();
+            $model->category_id = $data['category_id'];
+            $model->save();
+            // dd($request->all());
+            // setContent($request->all(), $model);
 
-    //         return $this->_response($model->contents);
-    //     } catch (\Exception $ex) {
-    //         throw $this->_exception($ex->getMessage());
-    //     }
-    // }
+            return $this->_response($model->contents);
+        } catch (\Exception $ex) {
+            throw $this->_exception($ex->getMessage());
+        }
+    }
 
     public function list(Request $request)
     {
@@ -64,6 +65,7 @@ class FaqController extends BaseController
                 ->join('contents', 'faqs.id', 'contents.contentable_id')
                 ->join('categories', 'faqs.category_id', 'categories.id')
                 ->where('contents.contentable_type', 'App\Models\Faq')
+                ->where('contents.name', 'question')
                 ->where('contents.deleted_at', null)
                 ->select('contents.value', 'contents.name', 'contents.locale', 'faqs.*' , 'categories.name as category')
                 ->where(function ($q) use ($request) {

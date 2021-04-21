@@ -29,9 +29,7 @@ class UpdateRequest extends BaseRequest
         return [
             'id' => ['required', 'exists:constants'],
             'plaintext' => ['required', 'boolean'],
-            'content' => ['array', 'required'],
-            'content.name' => ['string', 'required'],
-            'content.value' => ['string', 'required'],
+            'name' => ['required', 'unique:constants,name,'.$this->id],
         ];
     }
 }

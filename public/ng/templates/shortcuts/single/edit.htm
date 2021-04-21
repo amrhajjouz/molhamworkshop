@@ -22,3 +22,33 @@
     >
   </div>
 </form>
+
+
+
+<content-card content-model="contents.title" content-title="العنوان" content-name="title">
+    <form class="row" name="shortcutTitleContentForm" request="createUpdateTitleContent" model="titleContent">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="title-content" class="locale-label">عربي</label>
+                <input id="title-content" class="form-control" type="text" ng-model="titleContent.value" ng-error="createUpdateTitleContent.errors.value" required />
+            </div>
+        </div>
+        <div class="col-12">        
+            <submit-button form="shortcutTitleContentForm" icon="fe fe-edit">تعديل</submit-button>
+        </div> 
+    </form>
+</content-card>
+<content-card content-model="contents.description" content-title="الوصف" content-name="description">
+    <form class="row" name="shortcutDescriptionContentForm" request="createUpdateDescriptionContent" model="descriptionContent">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="description-content" class="locale-label">عربي</label>
+                <textarea id="description-content" class="form-control" type="text" ng-model="descriptionContent.value" ng-error="createUpdateDescriptionContent.errors.value" required ></textarea>
+            </div>
+        </div>
+        <div class="col-12">        
+            <submit-button form="shortcutDescriptionContentForm" icon="fe fe-edit">تعديل</submit-button>
+        </div> 
+    </form>
+</content-card>
+

@@ -24,7 +24,6 @@ class CreateRequest extends BaseRequest
      */
     public function rules()
     {
-        // dd($this->all());
         return [
             'name' => ['required' ,'string', 'between:3,100'],
             'places_ids' => ['required', 'array'],

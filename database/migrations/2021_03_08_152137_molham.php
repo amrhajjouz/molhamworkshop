@@ -188,6 +188,7 @@ class Molham extends Migration
         Schema::create('constants', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->boolean('plaintext')->index()->default(0);
+            $table->string('name')->unique();
             $table->timestamps();
         });
        

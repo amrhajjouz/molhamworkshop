@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasList, HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Constant\{CreateRequest, UpdateRequest};
+use App\Http\Requests\Constant\{CreateRequest, UpdateRequest , CreateUpdateContent};
 use App\Models\{User, Constant, Content};
 use App\Facades\Helper;
 
@@ -25,6 +25,7 @@ class ConstantController extends BaseController
             $data = $request->validated();
             $constant = new $this->model();
             $constant->plaintext = $data['plaintext'];
+            $constant->name = $data['name'];
 
             $constant->save();
 
@@ -45,16 +46,9 @@ class ConstantController extends BaseController
 
             $constant = $this->model::findOrFail($request->id);
             $constant->plaintext = $data['plaintext'];
+            $constant->name = $data['name'];
 
             $constant->save();
-
-            $content = $constant->content;
-
-            $content->name = $data['content']['name'];
-            $content->value = $data['content']['value'];
-            $content->locale = $data['content']['locale'];
-
-            $content->save();
 
 
             return $this->_response($constant);
@@ -73,6 +67,7 @@ class ConstantController extends BaseController
                 ->join('contents', 'constants.id', 'contents.contentable_id')
                 ->where('contents.contentable_type', 'App\Models\Constant')
                 ->select('contents.value', 'contents.name', 'contents.locale', 'constants.*')
+                ->where('contents.deleted_at', null)
                 ->where(function ($q) use ($request) {
                     if ($request->has("q")) {
                         $q->where('contents.name', 'like', '%' .$request-> q . '%');
@@ -85,6 +80,20 @@ class ConstantController extends BaseController
             return $this->_response($constants);
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());
+        }
+    }
+
+
+
+
+    public function create_update_contents(CreateUpdateContent $request, Constant $constant)
+    {
+        try {
+            $data = $request->validated();
+            setContent($constant, $data['name'], $data['value'], $data['locale']);
+            return $this->_response($constant->contents);
+        } catch (\Exception $ex) {
+            throw $this->_exception($ex->getMessage());
         }
     }
 }

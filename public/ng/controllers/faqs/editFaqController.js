@@ -9,6 +9,8 @@ async function editFaqControllerInit($http, $page, $apiRequest) {
 
 function editFaqController($scope, $page, $apiRequest, $init) {
   $scope.faq = $init.faq;
+  $scope.contents = $init.faq.contents;
+
   $scope.categories = $init.categories;
 
   $scope.updateFaq = $apiRequest.config(
@@ -19,4 +21,25 @@ function editFaqController($scope, $page, $apiRequest, $init) {
     },
     function (response, data) {}
   );
+
+
+
+
+  // Contents
+
+   $scope.questionContent = {};
+   $scope.answerContent = {};
+   $scope.bodyContent = {};
+
+   $scope.createUpdateQuestionContent = $apiRequest.config({
+     method: "PUT",
+     url: "faqs/" + $page.routeParams.id + "/contents",
+     data: $scope.questionContent,
+   });
+
+   $scope.createUpdateAnswerContent = $apiRequest.config({
+     method: "PUT",
+     url: "faqs/" + $page.routeParams.id + "/contents",
+     data: $scope.answerContent,
+   });
 }

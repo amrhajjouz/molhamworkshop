@@ -15,4 +15,37 @@ function editShortcutController($scope, $page, $apiRequest, $init) {
     },
     function (response, data) {}
   );
+
+
+
+  // /////////////////////// contents /////////////////////////
+
+        $scope.contents = $init.shortcut.contents;
+        $scope.defaultKey = {
+          shortcut_id: $page.routeParams.id,
+          content: {
+            contentable_type: "\\AppModels\\ShortcutKey",
+            contentable_id: null,
+            locale: "ar",
+            value: null,
+          },
+        };
+
+        $scope.key = angular.copy($scope.defaultKey);
+
+        $scope.titleContent = {};
+        $scope.descriptionContent = {};
+
+        $scope.createUpdateTitleContent = $apiRequest.config({
+          method: "PUT",
+          url: "shortcuts/" + $page.routeParams.id + "/contents",
+          data: $scope.titleContent,
+        });
+
+        $scope.createUpdateDescriptionContent = $apiRequest.config({
+          method: "PUT",
+          url: "shortcuts/" + $page.routeParams.id + "/contents",
+          data: $scope.descriptionContent,
+        });
+  
 }

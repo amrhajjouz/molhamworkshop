@@ -4,5 +4,4 @@ async function listCasesControllerInit($datalist) {
 
 function listCasesController($scope, $init) {
   $scope.cases = $init;
-  // console.log({$init})
 }

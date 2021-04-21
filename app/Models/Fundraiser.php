@@ -74,16 +74,6 @@ class Fundraiser extends BaseTargetModel
 
      public function save($options = [])
      {    
-          // $newRecord = !($this->exists);
-
-
-          // parent::save($options);
-
-          // if ($newRecord) {
-
-          // } else {
-
-          // }
 
           return parent::save($options);
      }

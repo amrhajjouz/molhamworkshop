@@ -10,7 +10,6 @@ use App\Models\{Event};
 
 class EventController extends BaseController
 {
-
     use HasRetrieve;
 
     public function __construct()
@@ -98,7 +97,6 @@ class EventController extends BaseController
             throw $this->_exception($e->getMessage());
         }
     }
-
 
     public function list(Request $request)
     {

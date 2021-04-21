@@ -23,20 +23,18 @@ class CreateRequest extends BaseRequest
      * Get the validation rules that apply to the request.
      *
      * @return array
-     */
+     */ 
     public function rules()
     {
 
         $request = $this;
         // dd($request->all());
         return [
+            'name' => ['required' ,'unique:constants,name'],
             'plaintext' => ['required' ,'boolean'],
             'content' => ['array' ,'required'],
-            'content.name' => ['string' ,'required' , 'unique:contents,name',
-            Rule::unique('contents' , 'name')->where(function ($query) use($request){
-                $query->where('contentable_type' , 'App\Models\Constant');
-                return $query->where('name',  $request->all()['content']['name']);
-            })
+            'content.name' => ['string' ,'required',
+            Rule::in(['body'])
         ],
             'content.value' => ['string' ,'required'],
             

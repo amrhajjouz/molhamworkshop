@@ -20,7 +20,7 @@
     <tbody>
       <tr ng-repeat="faq in faqs.data">
         <td class="align-middle text-center">{{ faq.id }}</td>
-        <td class="align-middle text-center">{{ faq.name }}</td>
+        <td class="align-middle text-center">{{ faq.value }}</td>
         <!-- <td class="align-middle text-center">{{ faq.value}}</td> -->
         <td class="align-middle text-center">{{ faq.category }}</td>
         <td class="align-middle text-center">{{ faq.locale }}</td>
@@ -29,9 +29,12 @@
             <dropdown-item href="{{ $r('faqs.overview', {id: faq.id}) }}"
               ><i class="fe fe-eye"></i> نظرة عامة</dropdown-item
             >
-            <dropdown-item href="{{ $r('faqs.contents', {id: faq.id}) }}"
-              ><i class="fe fe-edit-2"></i> المحتوى</dropdown-item
+            <dropdown-item href="{{ $r('faqs.edit', {id: faq.id}) }}"
+              ><i class="fe fe-edit-2"></i> تعديل </dropdown-item
             >
+            <!-- <dropdown-item href="{{ $r('faqs.contents', {id: faq.id}) }}"
+              ><i class="fe fe-edit-2"></i> المحتوى</dropdown-item
+            > -->
           </dropdown>
         </td>
       </tr>

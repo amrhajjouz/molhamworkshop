@@ -68,15 +68,18 @@ class PageController extends BaseController
                     $join->on('pages.id','=' ,'CAR.contentable_id')
                         ->where('CAR.contentable_type', 'App\Models\Page')
                         ->where('CAR.name', 'title')
-                        ->where('CAR.locale', 'ar');
+                        ->where('CAR.locale', 'ar')
+                        ->where('CAR.deleted_at', null);
                 })
                 ->leftJoin('contents AS CEN', function($join){
                     $join->on('pages.id','=' ,'CEN.contentable_id')
                         ->where('CEN.contentable_type', 'App\Models\Page')
                         ->where('CEN.name', 'title')
-                        ->where('CEN.locale', 'en');
+                        ->where('CEN.locale', 'en')
+                    ->where('CEN.deleted_at', null);
                 })
                 ->select('CAR.value AS ar_title', 'CEN.value AS en_title', 'pages.*')
+                // ->groupBy('pages.id')
                 ->where(function ($q) use ($request) {
                     if ($request->has("q")) {
                         // $q->orWhere('CAR.ar_title', 'like', '%' .  $request->q . '%');

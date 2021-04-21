@@ -6,10 +6,11 @@ async function addConstantControllerInit($apiRequest) {
 function addConstantController($scope, $location, $apiRequest, $page, $init) {
 
   $scope.constant = {
+    name:null,
     plaintext: false,
     content:{
       locale:"ar",
-      name:null,
+      name:"body",
       value:null,
     }
   };

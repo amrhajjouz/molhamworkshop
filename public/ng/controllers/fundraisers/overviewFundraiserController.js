@@ -5,12 +5,4 @@ function overviewFundraiserControllerInit($apiRequest, $page) {
 function overviewFundraiserController($scope, $page, $apiRequest, $init) {
   $scope.object = $init;
 
-  $scope.updateEvent = $apiRequest.config(
-    {
-      method: "POST",
-      url: "fundraisers",
-      data: $scope.object,
-    },
-    function (response, data) {}
-  );
 }

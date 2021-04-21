@@ -5,10 +5,9 @@ namespace App\Http\Controllers\Target;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Target\Cases\{CreateRequest, UpdateRequest, CreateUpdateContent , CreateUpdateSingleContent , ListContentRequest};
+use App\Http\Requests\Target\Cases\{CreateRequest, UpdateRequest, CreateUpdateContent , ListContentRequest};
 use App\Facades\Helper;
-
-use App\Models\{User, Cases, Admin};
+use App\Models\{Cases};
 
 class CaseController extends BaseController
 {
@@ -19,7 +18,6 @@ class CaseController extends BaseController
     {
         $this->middleware('auth');
         $this->model = \App\Models\Cases::class;
-        $this->required_contents_fields = ['title', "details"];
     }
 
     public function create(CreateRequest $request)
@@ -54,7 +52,6 @@ class CaseController extends BaseController
             $case = $this->model::findOrFail($request->id);
 
             $case->beneficiary_name = $data['beneficiary_name'];
-            // $case->serial_number =Helper::getCaseSerialNumber();
             $case->country_id = $data['country_id'];
             $case->status = $data['status'];
 
@@ -73,15 +70,12 @@ class CaseController extends BaseController
     {
 
         try {
-            // $search_query = ($request->has('q') ? [['beneficiary_name', 'like', '%' . $request->q . '%']] : null);
-
             $cases = $this->model::orderBy('id', 'desc')->where(function ($q) use ($request) {
                 if ($request->has('q')) {
                     $q->where('beneficiary_name', 'like', '%' . $request->q . '%');
                     $q->orWhere('serial_number', 'like', '%' . $request->q . '%');
                 }
             })->paginate(10)->withQueryString();
-
             return $this->_response($cases);
         } catch (\Exception $e) {
             throw $this->_exception($e->getMessage());

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Target\Student;
+namespace App\Http\Requests\Constant;
 
 
 use App\Common\Base\BaseRequest;
@@ -28,16 +28,21 @@ class CreateUpdateContent extends BaseRequest
     public function rules()
     {
 
-        $locales = config('general.available_locales');
-        $fields = \App\Models\Student::get_content_fields();
+            $locales = config('general.available_locales');
+            $fields = \App\Models\Constant::get_content_fields();
 
+        $rules = [
+            'name' => ['required', 'string', Rule::in($fields)],
+            'locale' => ['required', Rule::in($locales)],
+            'value' => ['required']
+        ];
 
-        foreach ($fields  as $key => $field) {
-            $rules[$field]  = ['array'];
-            foreach ($locales  as $locale) {
-                $rules[$field . '.' . $locale]  = ['nullable'];
-            }
+        if ($this->name == 'body') {
+            $rules['value'] = ['required', 'string', 'max:1000'];
         }
+
+
+
 
         return $rules;
     }

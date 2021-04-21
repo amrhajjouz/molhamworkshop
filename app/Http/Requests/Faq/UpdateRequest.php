@@ -27,15 +27,15 @@ class UpdateRequest extends BaseRequest
     public function rules()
     {
 
-        $locales = config('general.available_locales');
-        $fields = \App\Models\Faq::get_content_fields();
+        // $locales = config('general.available_locales');
+        // $fields = \App\Models\Faq::get_content_fields();
         
-        foreach ($fields  as $key => $field) {
-            foreach ($locales  as $locale) {
-                $rules['contents.'.  $field]  = ['array'];
-                $rules['contents.'.  $field . '.' . $locale]  = ['nullable'];
-            }
-        }
+        // foreach ($fields  as $key => $field) {
+        //     foreach ($locales  as $locale) {
+        //         $rules['contents.'.  $field]  = ['array'];
+        //         $rules['contents.'.  $field . '.' . $locale]  = ['nullable'];
+        //     }
+        // }
         $rules['category_id'] = ['required'];
 
         return $rules;

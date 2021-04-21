@@ -10,6 +10,7 @@ async function editBlogControllerInit($http, $page, $apiRequest) {
 
 function editBlogController($scope, $page, $apiRequest, $init) {
   $scope.blog = $init.blog;
+  $scope.contents = $init.blog.contents;
 
   $scope.updateBlog = $apiRequest.config(
     {
@@ -19,4 +20,30 @@ function editBlogController($scope, $page, $apiRequest, $init) {
     },
     function (response, data) {}
   );
+
+
+
+  /////////////////////// Content /////////////////////////
+    $scope.titleContent = {};
+    $scope.descriptionContent = {};
+    $scope.bodyContent = {};
+
+    $scope.createUpdateTitleContent = $apiRequest.config({
+      method: "PUT",
+      url: "blogs/" + $page.routeParams.id + "/contents",
+      data: $scope.titleContent,
+    });
+
+    $scope.createUpdateDescriptionContent = $apiRequest.config({
+      method: "PUT",
+      url: "blogs/" + $page.routeParams.id + "/contents",
+      data: $scope.descriptionContent,
+    });
+
+    $scope.createUpdateBodyContent = $apiRequest.config({
+      method: "PUT",
+      url: "blogs/" + $page.routeParams.id + "/contents",
+      data: $scope.bodyContent,
+    });
+  
 }

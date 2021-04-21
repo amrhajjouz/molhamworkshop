@@ -34,7 +34,6 @@ class UpdateRequest extends BaseRequest
             'current_semester' => ['required', 'numeric'],
             'place_id' => ['required', 'numeric'],
             'target' => ['required', 'array'],
-            // 'target.beneficiaries_count' => ['required', 'numeric', 'min:1'],
             'target.required' => ['required', 'numeric', 'min:1'],
             'target.visible' => ['required', 'boolean'],
             'target.documented' => ['required', 'boolean'],

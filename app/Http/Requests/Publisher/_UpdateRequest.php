@@ -21,7 +21,6 @@ class UpdateRequest extends BaseRequest
      *
      * @return array
      */ 
-    // required
     public function rules()
     {
         return [

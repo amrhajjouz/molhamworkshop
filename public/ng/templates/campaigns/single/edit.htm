@@ -45,6 +45,7 @@
         ng-class="(updateCampaign.errors['target.required']!= null) ? 'is-invalid' : ''"
         ng-change="updateCampaign.errors['target.required'] = null"
         ng-error="updateCampaign.errors.target.required"
+        min="1"
         required
       />
     </div>

@@ -26,6 +26,7 @@ function addStudentController($scope, $location, $apiRequest, $page, $init) {
   $scope.semesters = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   $scope.availableSemester = [1];
 
+  
   $scope.handleChangeSemesterCount = () => {
     $scope.availableSemester = [];
     $scope.createStudent.errors.country_id = null;

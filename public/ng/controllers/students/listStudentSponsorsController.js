@@ -47,7 +47,6 @@ function listStudentSponsorsController($scope, $page, $apiRequest, $init) {
     },
     function (response, data) {
       $("#add-sponsors").modal("hide");
-      //TODO : refresh datatable
     }
   );
   $scope.showSponsorModal = function (action, data = {}) {

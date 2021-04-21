@@ -43,6 +43,7 @@ class ShortcutKeyController extends BaseController
                 ->where('contents.contentable_type', 'App\Models\Shortcut')
                 ->where('contents.name', 'title')
                 ->where('contents.locale', 'ar')
+                ->where('contents.deleted_at', null)
                 ->select('contents.value', 'contents.name as content_name', 'contents.locale', 'shortcuts.*' )
                 ->where(function ($q) use ($request) {
                     if ($request->has("q")) {
@@ -68,22 +69,6 @@ class ShortcutKeyController extends BaseController
             throw $this->_exception($ex->getMessage());
         }
     }
-    
-
-    // public function list_contents(ListContentRequest $request, Shortcut $shortcut)
-    // {
-    //     $res = [];
-
-    //     foreach ($shortcut->keys as $key) {
-    //         dd($key->contents);
-
-    //     }
-    //     try {
-    //         return $this->_response(getContent($shortcut, $request));
-    //     } catch (\Exception $ex) {
-    //         throw $this->_exception($ex->getMessage());
-    //     }
-    // }
 
     public function create_update_contents(CreateUpdateContent $request, ShortcutKey $shortcut_key)
     {

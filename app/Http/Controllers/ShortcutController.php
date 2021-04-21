@@ -63,6 +63,7 @@ class ShortcutController extends BaseController
                 ->where('contents.contentable_type', 'App\Models\Shortcut')
                 ->where('contents.name', 'title')
                 ->where('contents.locale', 'ar')
+              ->where('contents.deleted_at', null)
                 ->select('contents.value', 'contents.name as content_name', 'contents.locale', 'shortcuts.*' )
                 ->where(function ($q) use ($request) {
                     if ($request->has("q")) {
