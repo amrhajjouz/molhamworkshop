@@ -166,7 +166,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/faqs', [FaqController::class, 'create']);
     Route::put('/faqs', [FaqController::class, 'update']);
     Route::get('/faqs/{id}', [FaqController::class, 'retrieve']);
-    Route::get('/faqs/{faq}/contents', [FaqController::class, 'list_contents']);
+    // Route::get('/faqs/{faq}/contents', [FaqController::class, 'list_contents']);
     Route::put('/faqs/{faq}/contents', [FaqController::class, 'create_update_contents']);
   
   
@@ -175,18 +175,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/shortcuts', [ShortcutController::class, 'create']);
     Route::put('/shortcuts', [ShortcutController::class, 'update']);
     Route::get('/shortcuts/{id}', [ShortcutController::class, 'retrieve']);
-    // Route::post('/shortcuts/{id}/keyword', [ShortcutController::class, 'create_keyword']);
-    // Route::put('/shortcuts/{id}/keyword', [ShortcutController::class, 'update_keyword']);
-    
     Route::get('/shortcuts/{id}/keys', [ShortcutController::class, 'list_keys']);
-    Route::get('/shortcuts/{shortcut}/contents', [ShortcutController::class, 'list_contents']);
     Route::put('/shortcuts/{shortcut}/contents', [ShortcutController::class, 'create_update_contents']);
 
 
     ////////////////// Shortcut Keys /////////////////
     Route::post('/shortcuts_keys/{shortcut_id}', [ShortcutKeyController::class, 'create']);
-    Route::get('/shortcut_keys/{shortcut_key}', [ShortcutKeyController::class, 'retrive']);
-    Route::get('/shortcut_keys/{shortcut}/contents', [ShortcutKeyController::class, 'list_contents']);
     Route::put('/shortcuts_keys/{shortcut_key}/contents', [ShortcutKeyController::class, 'create_update_contents']);
 
 
@@ -195,7 +189,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/pages', [PageController::class, 'create']);
     Route::put('/pages', [PageController::class, 'update']);
     Route::get('/pages/{id}', [PageController::class, 'retrieve']);
-    Route::get('/pages/{page}/contents', [PageController::class, 'list_contents']);
     Route::put('/pages/{page}/contents', [PageController::class, 'create_update_contents']);
 
     /////////////////////// Blogs /////////////////////////
@@ -203,15 +196,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/blogs', [BlogController::class, 'create']);
     Route::put('/blogs', [BlogController::class, 'update']);
     Route::get('/blogs/{id}', [BlogController::class, 'retrieve']);
-    Route::get('/blogs/{blog}/contents', [BlogController::class, 'list_contents']);
     Route::put('/blogs/{blog}/contents', [BlogController::class, 'create_update_contents']);
 
     /////////////////////// Publisher /////////////////////////
     Route::get('/publishers', [PublisherController::class, 'list']);
     Route::post('/publishers', [PublisherController::class, 'create']);
-    // Route::put('/publishers', [PublisherController::class, 'update']);
     Route::get('/publishers/{id}', [PublisherController::class, 'retrieve']);
-    Route::get('/publishers/{publisher}/contents', [PublisherController::class, 'list_contents']);
     Route::put('/publishers/{publisher}/contents', [PublisherController::class, 'create_update_contents']);
 
 

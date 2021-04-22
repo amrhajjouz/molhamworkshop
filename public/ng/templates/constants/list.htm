@@ -10,8 +10,8 @@
       <tr>
         <th class="text-center">#</th>
         <th class="text-center">الاسم</th>
-        <th class="text-center">اللغة</th>
-        <th class="text-center">القيمة</th>
+        <th class="text-center">المحتوى بالعربي</th>
+        <th class="text-center">المحتوى بالإنكليزي</th>
         <th class="text-center">خيارات</th>
       </tr>
     </thead>
@@ -20,8 +20,8 @@
       <tr ng-repeat="constant in constants.data">
         <td class="align-middle text-center">{{ constant.id }}</td>
         <td class="align-middle text-center">{{ constant.name }}</td>
-        <td class="align-middle text-center">{{ constant.locale }}</td>
-        <td class="align-middle text-center">{{ constant.value}}</td>
+        <td class="align-middle text-center">{{ constant.ar_body }}</td>
+        <td class="align-middle text-center">{{ constant.en_body }}</td>
         <td class="align-middle text-center h2">
           <dropdown>
             <dropdown-item href="{{ $r('constants.overview', {id: constant.id}) }}"

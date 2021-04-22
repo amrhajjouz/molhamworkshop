@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Common\Base\{BaseController};
-use App\Common\Traits\{HasList, HasRetrieve};
+use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Faq\{CreateRequest, UpdateRequest  , ListContentRequest , CreateUpdateContent};
-use App\Models\{User, Faq, Content};
-use App\Facades\Helper;
+use App\Http\Requests\Faq\{CreateRequest, UpdateRequest , CreateUpdateContent};
+use App\Models\{Faq};
 
 class FaqController extends BaseController
 {
-    use HasList, HasRetrieve;
+    use HasRetrieve;
 
     public function __construct()
     {
@@ -47,9 +46,6 @@ class FaqController extends BaseController
             $data = $request->all();
             $model->category_id = $data['category_id'];
             $model->save();
-            // dd($request->all());
-            // setContent($request->all(), $model);
-
             return $this->_response($model->contents);
         } catch (\Exception $ex) {
             throw $this->_exception($ex->getMessage());
@@ -62,12 +58,22 @@ class FaqController extends BaseController
         try {
 
             $faqs = $this->model::orderBy('id', 'desc')
-                ->join('contents', 'faqs.id', 'contents.contentable_id')
                 ->join('categories', 'faqs.category_id', 'categories.id')
-                ->where('contents.contentable_type', 'App\Models\Faq')
-                ->where('contents.name', 'question')
-                ->where('contents.deleted_at', null)
-                ->select('contents.value', 'contents.name', 'contents.locale', 'faqs.*' , 'categories.name as category')
+                ->leftJoin('contents AS CAR', function ($join) {
+                    $join->on('faqs.id', '=', 'CAR.contentable_id')
+                        ->where('CAR.contentable_type', 'faq')
+                        ->where('CAR.name', 'question')
+                        ->where('CAR.locale', 'ar')
+                        ->where('CAR.deleted_at', null);
+                })
+                ->leftJoin('contents AS CEN', function ($join) {
+                    $join->on('faqs.id', '=', 'CEN.contentable_id')
+                        ->where('CEN.contentable_type', 'faq')
+                        ->where('CEN.name', 'question')
+                        ->where('CEN.locale', 'en')
+                        ->where('CEN.deleted_at', null);
+                })
+                ->select('CAR.value AS ar_question', 'CEN.value AS en_question', 'faqs.*' , 'categories.name as category')
                 ->where(function ($q) use ($request) {
                     if ($request->has("q")) {
                         $q->where('contents.name', 'like', '%' .$request-> q . '%');
@@ -84,16 +90,6 @@ class FaqController extends BaseController
         }
     }
 
-
-    public function list_contents(ListContentRequest $request, Faq $faq)
-    {
-
-        try {
-            return $this->_response(getContent($faq, $request));
-        } catch (\Exception $ex) {
-            throw $this->_exception($ex->getMessage());
-        }
-    }
 
     public function create_update_contents(CreateUpdateContent $request, Faq $faq)
     {

@@ -9,7 +9,7 @@
     <thead>
       <tr>
         <th class="text-center">#</th>
-        <th class="text-center">الاسم</th>
+        <th class="text-center">العنوان</th>
         <th class="text-center">المسار</th>
         <th class="text-center">خيارات</th>
       </tr>
@@ -18,7 +18,7 @@
     <tbody>
       <tr ng-repeat="shortcut in shortcuts.data">
         <td class="align-middle text-center">{{ shortcut.id }}</td>
-        <td class="align-middle text-center">{{ shortcut.content_name }}</td>
+        <td class="align-middle text-center">{{ shortcut.value }}</td>
         <td class="align-middle text-center">{{ shortcut.path }}</td>
         <td class="align-middle text-center h2">
           <dropdown>

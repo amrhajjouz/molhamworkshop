@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasList, HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Shortcut\{CreateRequest, UpdateRequest , CreateKeyword , UpdateKeyword , ListContentRequest , CreateUpdateContent};
-use App\Models\{User, Shortcut, Content};
-use App\Facades\Helper;
+use App\Http\Requests\Shortcut\{CreateRequest, UpdateRequest, CreateUpdateContent};
+use App\Models\{Shortcut};
 
 class ShortcutController extends BaseController
 {
@@ -27,8 +26,8 @@ class ShortcutController extends BaseController
             $shortcut->path  = $data['path'];
             $shortcut->save();
 
-            foreach($data['contents']  as $content){
-                setContent($shortcut, $content['name'] , $content['value'] , 'ar' );
+            foreach ($data['contents']  as $content) {
+                setContent($shortcut, $content['name'], $content['value'], 'ar');
             }
 
             return $this->_response($shortcut);
@@ -40,7 +39,7 @@ class ShortcutController extends BaseController
     public function update(UpdateRequest $request)
     {
         try {
-            
+
             $shortcut = $this->model::findOrFail($request->id);
             $data = $request->all();
             $shortcut->path  = $data['path'];
@@ -60,14 +59,14 @@ class ShortcutController extends BaseController
 
             $faqs = $this->model::orderBy('id', 'desc')
                 ->join('contents', 'shortcuts.id', 'contents.contentable_id')
-                ->where('contents.contentable_type', 'App\Models\Shortcut')
+                ->where('contents.contentable_type', 'shortcut')
                 ->where('contents.name', 'title')
                 ->where('contents.locale', 'ar')
-              ->where('contents.deleted_at', null)
-                ->select('contents.value', 'contents.name as content_name', 'contents.locale', 'shortcuts.*' )
+                ->where('contents.deleted_at', null)
+                ->select('contents.value', 'contents.name as content_name', 'contents.locale', 'shortcuts.*')
                 ->where(function ($q) use ($request) {
                     if ($request->has("q")) {
-                        $q->where('contents.name', 'like', '%' .$request-> q . '%');
+                        $q->where('contents.name', 'like', '%' . $request->q . '%');
                         $q->orWhere('contents.value', 'like', '%' .  $request->q . '%');
                         $q->orWhere('shortcuts.path', 'like', '%' .  $request->q . '%');
                     }
@@ -84,15 +83,6 @@ class ShortcutController extends BaseController
 
 
 
-    public function list_contents(ListContentRequest $request, Shortcut $shortcut)
-    {
-        try {
-            return $this->_response(getContent($shortcut, $request));
-        } catch (\Exception $ex) {
-            throw $this->_exception($ex->getMessage());
-        }
-    }
-
     public function create_update_contents(CreateUpdateContent $request, Shortcut $shortcut)
     {
         try {
@@ -108,7 +98,7 @@ class ShortcutController extends BaseController
     public function list_keys(Request $request, $id)
     {
         try {
-            
+
             $model = $this->model::findOrFail($id);
 
             return $this->_response($model->list_keywords());
@@ -116,6 +106,4 @@ class ShortcutController extends BaseController
             throw $this->_exception($th->getMessage());
         }
     }
-
-
 }

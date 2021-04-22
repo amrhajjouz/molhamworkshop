@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use App\Facades\Helper;
-use App\Http\Requests\Blog\{CreateRequest, UpdateRequest, CreateUpdateContent , ListContentRequest};
+use App\Http\Requests\Blog\{CreateRequest, UpdateRequest, CreateUpdateContent};
 use App\Models\Blog;
 class BlogController extends BaseController
 {
@@ -69,15 +69,6 @@ class BlogController extends BaseController
         }
     }
 
-    public function list_contents(ListContentRequest $request, Blog $blog)
-    {
-
-        try {
-            return $this->_response(getContent($blog, $request));
-        } catch (\Exception $ex) {
-            throw $this->_exception($ex->getMessage());
-        }
-    }
 
     public function create_update_contents(CreateUpdateContent $request, Blog $blog)
     {

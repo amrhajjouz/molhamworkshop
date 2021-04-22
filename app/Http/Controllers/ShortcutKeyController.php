@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Common\Base\{BaseController};
-use Illuminate\Http\Request;
-use App\Http\Requests\ShortcutKey\{CreateRequest, UpdateRequest , CreateKeyword , UpdateKeyword , ListContentRequest , CreateUpdateContent};
-use App\Models\{User, Shortcut, Content , ShortcutKey};
+use App\Http\Requests\ShortcutKey\{CreateRequest, CreateUpdateContent};
+use App\Models\{ ShortcutKey};
 
 class ShortcutKeyController extends BaseController
 {
@@ -32,43 +31,6 @@ class ShortcutKeyController extends BaseController
         }
     }
 
-
-    public function list(Request $request)
-    {
-
-        try {
-
-            $faqs = $this->model::orderBy('id', 'desc')
-                ->join('contents', 'shortcuts.id', 'contents.contentable_id')
-                ->where('contents.contentable_type', 'App\Models\Shortcut')
-                ->where('contents.name', 'title')
-                ->where('contents.locale', 'ar')
-                ->where('contents.deleted_at', null)
-                ->select('contents.value', 'contents.name as content_name', 'contents.locale', 'shortcuts.*' )
-                ->where(function ($q) use ($request) {
-                    if ($request->has("q")) {
-                        $q->where('contents.name', 'like', '%' .$request-> q . '%');
-                        $q->orWhere('contents.value', 'like', '%' .  $request->q . '%');
-                        $q->orWhere('shortcuts.path', 'like', '%' .  $request->q . '%');
-                    }
-                })
-                ->paginate(10)
-                ->withQueryString();
-
-            return $this->_response($faqs);
-        } catch (\Exception $e) {
-            throw $this->_exception($e->getMessage());
-        }
-    }
-
-
-    public function retrive(Request $request , ShortcutKey $shortcut_key){
-        try {
-            return $this->_response(getContent($shortcut_key));
-        } catch (\Exception $ex) {
-            throw $this->_exception($ex->getMessage());
-        }
-    }
 
     public function create_update_contents(CreateUpdateContent $request, ShortcutKey $shortcut_key)
     {

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use App\Facades\Helper;
-use App\Http\Requests\Page\{CreateRequest, UpdateRequest, CreateUpdateContent , ListContentRequest};
+use App\Http\Requests\Page\{CreateRequest, UpdateRequest, CreateUpdateContent};
 use App\Models\{Page};
 
 class PageController extends BaseController
@@ -60,29 +60,25 @@ class PageController extends BaseController
     {
 
         try {
-            $search_query = ($request->has('q') ? [['url', 'like', '%' . $request->q . '%']] : null);
 
-            // $pages = $this->model::orderBy('id', 'desc')->where($search_query)->paginate(10)->withQueryString();
             $pages = $this->model::orderBy('id', 'desc')
                 ->leftJoin('contents AS CAR', function($join){
                     $join->on('pages.id','=' ,'CAR.contentable_id')
-                        ->where('CAR.contentable_type', 'App\Models\Page')
+                        ->where('CAR.contentable_type', 'page')
                         ->where('CAR.name', 'title')
                         ->where('CAR.locale', 'ar')
                         ->where('CAR.deleted_at', null);
                 })
                 ->leftJoin('contents AS CEN', function($join){
                     $join->on('pages.id','=' ,'CEN.contentable_id')
-                        ->where('CEN.contentable_type', 'App\Models\Page')
+                        ->where('CEN.contentable_type', 'page')
                         ->where('CEN.name', 'title')
                         ->where('CEN.locale', 'en')
                     ->where('CEN.deleted_at', null);
                 })
                 ->select('CAR.value AS ar_title', 'CEN.value AS en_title', 'pages.*')
-                // ->groupBy('pages.id')
                 ->where(function ($q) use ($request) {
                     if ($request->has("q")) {
-                        // $q->orWhere('CAR.ar_title', 'like', '%' .  $request->q . '%');
                         $q->orWhere('CEN.value', 'like', '%' .  $request->q . '%');
                         $q->orWhere('CAR.value', 'like', '%' .  $request->q . '%');
                     }
@@ -97,15 +93,6 @@ class PageController extends BaseController
         }
     }
 
-    public function list_contents(ListContentRequest $request, Page $page)
-    {
-
-        try {
-            return $this->_response(getContent($page, $request));
-        } catch (\Exception $ex) {
-            throw $this->_exception($ex->getMessage());
-        }
-    }
 
     public function create_update_contents(CreateUpdateContent $request, Page $page)
     {

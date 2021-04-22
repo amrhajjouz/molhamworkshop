@@ -1,4 +1,4 @@
-async function listShortcutKeywordsControllerInit($http, $page, $apiRequest) {
+async function listShortcutKeysControllerInit($http, $page, $apiRequest) {
   const keywords = await $apiRequest
     .config("shortcuts/" + $page.routeParams.id + "/keys")
     .getData();
@@ -30,7 +30,7 @@ async function listShortcutKeywordsControllerInit($http, $page, $apiRequest) {
   };
 }
 
-function listShortcutKeywordsController($scope, $page, $apiRequest, $init) {
+function listShortcutKeysController($scope, $page, $apiRequest, $init) {
   $scope.keywords = $init.keywords;
   $scope.defaultKeywordModel = {
     shortcut_id: $page.routeParams.id,

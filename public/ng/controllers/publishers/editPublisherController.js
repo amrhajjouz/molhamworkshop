@@ -1,11 +1,16 @@
-async function publisherContentsControllerInit($http, $page, $apiRequest) {
+async function editPublisherControllerInit($http, $page, $apiRequest) {
   return {
-    contents: await $apiRequest.config("publishers/" + $page.routeParams.id + '/contents').getData(),
+    publisher: await $apiRequest
+      .config("publishers/" + $page.routeParams.id)
+      .getData(),
   };
 }
 
-function publisherContentsController($scope, $page, $apiRequest, $init) {
-      $scope.contents = $init.contents;
+function editPublisherController($scope, $page, $apiRequest, $init) {
+  $scope.publisher = $init.publisher;
+
+
+      $scope.contents = $init.publisher.contents;
 
       $scope.descriptionContent = {};
       $scope.nameContent = {};

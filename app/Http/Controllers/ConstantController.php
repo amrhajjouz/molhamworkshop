@@ -6,8 +6,7 @@ use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasList, HasRetrieve};
 use Illuminate\Http\Request;
 use App\Http\Requests\Constant\{CreateRequest, UpdateRequest , CreateUpdateContent};
-use App\Models\{User, Constant, Content};
-use App\Facades\Helper;
+use App\Models\{Constant};
 
 class ConstantController extends BaseController
 {
@@ -60,22 +59,33 @@ class ConstantController extends BaseController
     public function list(Request $request)
     {
 
-        try {
-            // $search_query = ($request->has('q') ? [['name', 'like', '%' . $request->q . '%']] : null);
+        try { 
 
             $constants = $this->model::orderBy('id', 'desc')
-                ->join('contents', 'constants.id', 'contents.contentable_id')
-                ->where('contents.contentable_type', 'App\Models\Constant')
-                ->select('contents.value', 'contents.name', 'contents.locale', 'constants.*')
-                ->where('contents.deleted_at', null)
+
+                ->leftJoin('contents AS CAR', function ($join) {
+                    $join->on('constants.id', '=', 'CAR.contentable_id')
+                    ->where('CAR.contentable_type', 'constant')
+                    ->where('CAR.name', 'body')
+                    ->where('CAR.locale', 'ar')
+                    ->where('CAR.deleted_at', null);
+                })
+                ->leftJoin('contents AS CEN', function ($join) {
+                    $join->on('constants.id', '=', 'CEN.contentable_id')
+                    ->where('CEN.contentable_type', 'constant')
+                    ->where('CEN.name', 'body')
+                    ->where('CEN.locale', 'en')
+                    ->where('CEN.deleted_at', null);
+                })
+                ->select('CAR.value AS ar_body', 'CEN.value AS en_body', 'constants.*')
                 ->where(function ($q) use ($request) {
                     if ($request->has("q")) {
-                        $q->where('contents.name', 'like', '%' .$request-> q . '%');
-                        $q->orWhere('contents.value', 'like', '%' .  $request->q . '%');
+                        $q->orWhere('CEN.value', 'like', '%' .  $request->q . '%');
+                        $q->orWhere('CAR.value', 'like', '%' .  $request->q . '%');
                     }
                 })
                 ->paginate(10)
-                ->withQueryString();
+                ->withQueryString();;
 
             return $this->_response($constants);
         } catch (\Exception $e) {

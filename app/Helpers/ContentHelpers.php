@@ -78,7 +78,11 @@ function getContent($contentable , $request = null)
 function setContent($contentable, $name, $value, $locale = 'ar')
 {
     $contentable_id = $contentable->id;
-    $contentable_type = get_class($contentable);
+
+    $arr = explode("\\", get_class($contentable));
+
+    // $contentable_type = get_class($contentable);
+    $contentable_type = strtolower(array_pop($arr));
 
     /* 
      * For delete Before create  

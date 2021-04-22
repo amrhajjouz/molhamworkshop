@@ -29,6 +29,10 @@ class Faq extends BaseModel
 
     public function transform()
     {
+        // $arr = explode("\\" , get_class($this));
+        // // array_pop($arr);
+        // dd(strtolower(array_pop($arr)));
+        // dd(get_class($this) , $arr , array_pop($arr) , strtolower(array_pop($arr)));
 
         $constant = $this->toArray();
 

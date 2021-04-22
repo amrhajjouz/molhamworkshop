@@ -97,15 +97,13 @@ return [
     'faqs.overview' => ['faqs/:id', 'faqs/overviewFaqController', 'faqs.single.overview'],
     'faqs.edit' => ['faqs/:id/edit', 'faqs/editFaqController', 'faqs.single.edit'],
     'faqs' => ['faqs', 'faqs/listFaqsController', 'faqs.list'],
-    // 'faqs.contents' => ['faqs/:id/contents', 'faqs/faqContentsController', 'faqs.single.contents'],
 
     /////////////////////// Shortcuts /////////////////////////
     'shortcuts.add' => ['shortcuts/add', 'shortcuts/addShortcutController', 'shortcuts.add'],
     'shortcuts.overview' => ['shortcuts/:id', 'shortcuts/overviewShortcutController', 'shortcuts.single.overview'],
     'shortcuts.edit' => ['shortcuts/:id/edit', 'shortcuts/editShortcutController', 'shortcuts.single.edit'],
-    'shortcuts.keys' => ['shortcuts/:id/keywords', 'shortcuts/listShortcutKeywordsController', 'shortcuts.single.keywords'],
+    'shortcuts.keys' => ['shortcuts/:id/keys', 'shortcuts/listShortcutKeysController', 'shortcuts.single.keys'],
     'shortcuts' => ['shortcuts', 'shortcuts/listShortcutsController', 'shortcuts.list'],
-    // 'shortcuts.contents' => ['shortcuts/:id/contents', 'shortcuts/shortcutContentsController', 'shortcuts.single.contents'],
 
 
     /////////////////////////// Pages Routes    ///////////////////
@@ -113,7 +111,6 @@ return [
     'pages.overview' => ['pages/:id', 'pages/overviewPageController', 'pages.single.overview'],
     'pages.edit' => ['pages/:id/edit', 'pages/editPageController', 'pages.single.edit'],
     'pages' => ['pages', 'pages/listPagesController', 'pages.list'],
-    // 'pages.contents' => ['pages/:id/contents', 'pages/pageContentsController', 'pages.single.contents'],
    
    
     /////////////////////////// Blogs Routes    ///////////////////
@@ -121,14 +118,12 @@ return [
     'blogs.overview' => ['blogs/:id', 'blogs/overviewBlogController', 'blogs.single.overview'],
     'blogs.edit' => ['blogs/:id/edit', 'blogs/editBlogController', 'blogs.single.edit'],
     'blogs' => ['blogs', 'blogs/listBlogsController', 'blogs.list'],
-    // 'blogs.contents' => ['blogs/:id/contents', 'blogs/blogContentsController', 'blogs.single.contents'],
     
     /////////////////////////// Publisher Routes    ///////////////////
     'publishers.add' => ['publishers/add', 'publishers/addPublisherController', 'publishers.add'],
     'publishers.overview' => ['publishers/:id', 'publishers/overviewPublisherController', 'publishers.single.overview'],
-    // 'publishers.edit' => ['publishers/:id/edit', 'publishers/editPublisherController', 'publishers.single.edit'],
+    'publishers.edit' => ['publishers/:id/edit', 'publishers/editPublisherController', 'publishers.single.edit'],
     'publishers' => ['publishers', 'publishers/listPublishersController', 'publishers.list'],
-    'publishers.contents' => ['publishers/:id/contents', 'publishers/publisherContentsController', 'publishers.single.contents'],
 
 
 
