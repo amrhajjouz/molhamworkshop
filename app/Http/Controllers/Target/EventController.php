@@ -17,7 +17,7 @@ class EventController extends BaseController
         $this->middleware('auth');
         $this->model = \App\Models\Event::class;
     }
-
+ 
     public function create(CreateRequest $request)
     {
         try {

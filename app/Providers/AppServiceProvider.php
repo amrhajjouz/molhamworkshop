@@ -37,6 +37,12 @@ class AppServiceProvider extends ServiceProvider
             'shortcut' => 'App\Models\Shortcut',
             'shortcutkey' => 'App\Models\ShortcutKey',
             'constant' => 'App\Models\Constant',
+            'cases' => 'App\Models\Cases',
+            'campaign' => 'App\Models\Campaign',
+            'sponsorship' => 'App\Models\Sponsorship',
+            'student' => 'App\Models\Student',
+            'event' => 'App\Models\Event',
+            'fundraiser' => 'App\Models\Fundraiser',
         ]);
     }
 }

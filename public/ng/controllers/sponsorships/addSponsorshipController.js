@@ -31,7 +31,6 @@ function addSponsorshipController(
   $scope.categories = $init.categories;
   $scope.places = $init.places;
 
-
   $scope.createSponsorShips = $apiRequest.config(
     {
       method: "POST",

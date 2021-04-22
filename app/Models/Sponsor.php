@@ -18,7 +18,9 @@ class Sponsor extends BaseModel
 
      public function purpose()
      {
-          return $this->belongsTo($this->purpose_type, 'purpose_id', 'id');
+          return $this->morphTo();
+
+          // return $this->belongsTo($this->purpose_type, 'purpose_id', 'id');
      }
 
      public function donor()

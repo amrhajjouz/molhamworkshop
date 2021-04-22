@@ -1,30 +1,64 @@
 <include-header />
 
-
-<content-card content-model="contents.title" content-title="العنوان" content-name="title">
-    <form class="row" name="eventTitleContentForm" request="createUpdateTitleContent" model="titleContent">
-        <div class="col-12">
-            <div class="form-group">
-                <label for="title-content" class="locale-label">عربي</label>
-                <input id="title-content" class="form-control" type="text" ng-model="titleContent.value" ng-error="createUpdateTitleContent.errors.value" required />
-            </div>
-        </div>
-        <div class="col-12">        
-            <submit-button form="eventTitleContentForm" icon="fe fe-edit">تعديل</submit-button>
-        </div> 
-    </form>
+<content-card
+  content-model="contents.title"
+  content-title="العنوان"
+  content-name="title"
+>
+  <form
+    class="row"
+    name="eventTitleContentForm"
+    request="createUpdateTitleContent"
+    model="titleContent"
+  >
+    <div class="col-12">
+      <div class="form-group">
+        <label for="title-content" class="locale-label">عربي</label>
+        <input
+          id="title-content"
+          class="form-control"
+          type="text"
+          ng-model="titleContent.value"
+          ng-error="createUpdateTitleContent.errors.value"
+          required
+        />
+      </div>
+    </div>
+    <div class="col-12">
+      <submit-button form="eventTitleContentForm" icon="fe fe-edit"
+        >تعديل</submit-button
+      >
+    </div>
+  </form>
 </content-card>
-<content-card content-model="contents.details" content-title="الوصف" content-name="details">
-    <form class="row" name="eventDetailsContentForm" request="createUpdateDetailsContent" model="detailsContent">
-        <div class="col-12">
-            <div class="form-group">
-                <label for="details-content" class="locale-label">عربي</label>
-                <textarea id="details-content" class="form-control" type="text" ng-model="detailsContent.value" ng-error="createUpdateDetailsContent.errors.value" required ></textarea>
-            </div>
-        </div>
-        <div class="col-12">        
-            <submit-button form="eventDetailsContentForm" icon="fe fe-edit">تعديل</submit-button>
-        </div> 
-    </form>
+<content-card
+  content-model="contents.details"
+  content-title="الوصف"
+  content-name="details"
+>
+  <form
+    class="row"
+    name="eventDetailsContentForm"
+    request="createUpdateDetailsContent"
+    model="detailsContent"
+  >
+    <div class="col-12">
+      <div class="form-group">
+        <label for="details-content" class="locale-label">عربي</label>
+        <textarea
+          id="details-content"
+          class="form-control"
+          type="text"
+          ng-model="detailsContent.value"
+          ng-error="createUpdateDetailsContent.errors.value"
+          required
+        ></textarea>
+      </div>
+    </div>
+    <div class="col-12">
+      <submit-button form="eventDetailsContentForm" icon="fe fe-edit"
+        >تعديل</submit-button
+      >
+    </div>
+  </form>
 </content-card>
-

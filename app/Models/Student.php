@@ -34,7 +34,8 @@ class Student extends BaseTargetModel
 
      public function sponsors()
      {
-          return $this->hasMany('App\Models\Sponsor', 'purpose_id', 'id')->where('purpose_type', '\App\Models\Student');
+          return $this->morphMany('App\Models\Sponsor', 'purpose', 'purpose_type' , null , 'id' );
+          // return $this->hasMany('App\Models\Sponsor', 'purpose_id', 'id')->where('purpose_type', '\App\Models\Student');
      }
 
 
@@ -45,7 +46,6 @@ class Student extends BaseTargetModel
           $admins = $this->admins;
           $places = $this->places;
           $_places = [];
-
           foreach ($places as $item) {
                $long_name =  $item->long_name();
                $_place = (object)[

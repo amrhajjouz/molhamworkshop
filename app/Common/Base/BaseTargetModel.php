@@ -139,9 +139,7 @@ class BaseTargetModel extends Model
             //assign any place_id comes in options and remove old records
             if (isset($options['places_ids'])) {
                 if ($this->has_places && isset($options['places_ids'])) {
-                    // foreach($options['places_ids'] as $key => $val){
                         $this->places()->sync($options['places_ids']);
-                    // }
                 }
             }
           

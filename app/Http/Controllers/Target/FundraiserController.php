@@ -90,10 +90,15 @@ class FundraiserController extends BaseController
     public function list(Request $request)
     {
 
-        try {
-            $search_query = ($request->has('q') ? [['donor_id', 'like', '%' . $request->q . '%']] : null);
 
-            $fundraisers = $this->model::orderBy('id', 'desc')->where($search_query)->paginate(10)->withQueryString();
+        try {
+
+            $fundraisers = $this->model::orderBy('id', 'desc')
+                                     ->leftJoin('donors AS D' ,  'fundraisers.donor_id' , 'D.id')
+                                     ->select( 'fundraisers.*' , 'D.name AS donor_name')
+            ->where(function($q)use($request){
+                $q->where('D.name' , 'like' , '%' . $request->q  . '%');
+            })->paginate(10)->withQueryString();
 
             return $this->_response($fundraisers);
         } catch (\Exception $e) {

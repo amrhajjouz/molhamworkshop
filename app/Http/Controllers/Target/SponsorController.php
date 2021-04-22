@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Target;
 
 use App\Common\Base\{BaseController};
 use App\Http\Requests\Target\Sponsor\{CreateRequest, UpdateRequest};
-use App\Models\{User, Sponsor, Donor};
+use App\Models\{Sponsor, Donor};
+use Illuminate\Support\Facades\Log;
+
 
 class SponsorController extends BaseController
 {
@@ -35,11 +37,11 @@ class SponsorController extends BaseController
 
             // determin purpose instance of which model
             if ($purpose instanceof \App\Models\Sponsorship) {
-                $model_type = '\App\Models\Sponsorship';
+                $model_type = 'sponsorship';
             } else if ($purpose instanceof \App\Models\Student) {
-                $model_type = '\App\Models\Student';
+                $model_type = 'student';
             } else {
-                \Log::info('Helper AssignToSponsor assign wront object');
+                Log::info('Helper AssignToSponsor assign wront object');
                 throw $this->_exception('invalid Model type');
             }
 
@@ -75,7 +77,7 @@ class SponsorController extends BaseController
             $sponsor->donor_id = $donor->id;
             $sponsor->save();
 
-            if ($model_type == '\App\Models\Sponsorship') {
+            if ($model_type == 'sponsorship') {
                 if ($purpose->sponsors->sum('percentage') >= 100) {
                     $purpose->sponsored = true;
                     $purpose->save();
@@ -97,7 +99,6 @@ class SponsorController extends BaseController
             $data = $request->validated();
 
             $purpose = $object->purpose;
-
 
             //id in array mean calculate sum percentage for this purpose without sponsor has this id 
             $current_total_without_this_sponsor = $purpose->total_sponsores_percentage([$object->id]);

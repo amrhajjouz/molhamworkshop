@@ -38,7 +38,8 @@ class Sponsorship extends BaseTargetModel
 
      public function sponsors()
      {
-          return $this->hasMany('App\Models\Sponsor', 'purpose_id', 'id')->where('purpose_type', '\App\Models\Sponsorship');
+          return $this->morphMany('App\Models\Sponsor', 'purpose', 'purpose_type', null, 'id');
+          // return $this->hasMany('App\Models\Sponsor', 'purpose_id', 'id')->where('purpose_type', '\App\Models\Sponsorship');
      }
 
 

@@ -82,39 +82,6 @@ class CaseController extends BaseController
         }
     }
 
-    public function list_admins(Request $request, $id)
-    {
-
-        try {
-
-            $case = $this->model::findOrFail($id);
-
-            $admins = $case->admins()->with('user')->get();
-            $admins = collect($admins)->groupBy('user_id');
-
-            $admins = $this->transform_list_admins($admins);
-
-            return $this->_response($admins);
-        } catch (\Exception $e) {
-            throw $this->_exception($e->getMessage());
-        }
-    }
-
-    private function transform_list_admins($admins)
-    {
-        $return = [];
-
-        foreach ($admins as $items) {
-            $roles = [];
-            foreach ($items  as $item) {
-                array_push($roles, $item->role);
-            }
-            $item->role = $roles;
-            $return[] = $item;
-        }
-        return $return;
-    }
-
     public function list_contents(ListContentRequest $request, Cases $case)
     {
 

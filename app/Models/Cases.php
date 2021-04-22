@@ -44,7 +44,6 @@ class Cases extends BaseTargetModel
      public function transform()
      {
 
-          // dd($this->contents);
 
           $obj = $this->toArray();
 
