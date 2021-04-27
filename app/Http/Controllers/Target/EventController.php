@@ -30,7 +30,7 @@ class EventController extends BaseController
             $event->implemented = $data['implemented'];
             $event->donor_id = $data['donor_id'];
 
-            if ($data['implementation_date']) {
+            if ( $data['implemented'] && $data['implementation_date']) {
                 $event->implementation_date = date('Y/m/d', strtotime($data['implementation_date']));
             }
             $event->youtube_video_url = $data['youtube_video_url'];
