@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Target;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Target\Campaign\{CreateRequest, UpdateRequest , CreateUpdateContent , ListContentRequest};
-use App\Models\Campaign;
+use App\Http\Requests\Target\Campaign\{CreateRequest, UpdateRequest , CreateUpdateContent , ListContentRequest , CreateStatusRequest , UpdateStatusRequest};
+use App\Models\{Campaign , Status};
 
 class CampaignController extends BaseController
 {
@@ -97,6 +97,44 @@ class CampaignController extends BaseController
             return $this->_response($campaign->contents);
         } catch (\Exception $ex) {
             throw $this->_exception($ex->getMessage());
+        }
+    }
+
+
+
+
+
+
+    public function list_statuses(Request $request, Campaign $campaign)
+    {
+        try {
+            return $this->_response($campaign->list_statuses()); // this function exists in baseTargetModel
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function create_statuses(CreateStatusRequest $request, Campaign $campaign)
+    {
+
+        try {
+            $data = $request->validated();
+            return $this->_response(createStatus($campaign, $data));
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function update_statuses(UpdateStatusRequest $request, Campaign $campaign, Status $status)
+    {
+
+        try {
+
+            $data = $request->validated();
+            setContent($status, $data['name'], $data['value'], $data['locale']);
+            return $this->_response($status);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
         }
     }
 }

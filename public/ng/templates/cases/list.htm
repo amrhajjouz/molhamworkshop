@@ -47,9 +47,9 @@
               href="{{ $r('cases.contents', {id: case.id}) }}"
               ><i class="fe fe-book-open"></i> المحتوى</dropdown-item
             >
-            <!-- <dropdown-item href="{{ $r('cases.admins', {id: case.id}) }}"
-              ><i class="fe fe-user"></i> المشرفون</dropdown-item
-            > -->
+            <dropdown-item href="{{ $r('cases.statuses', {id: case.id}) }}"
+              ><i class="fe fe-activity"></i> نحديث الحالة</dropdown-item
+            >
           </dropdown>
         </td>
       </tr>

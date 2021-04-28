@@ -226,6 +226,12 @@ class Molham extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
         });
+        Schema::create('statuses', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('targetable_id');
+            $table->string('targetable_type')->index();
+            $table->timestamps();
+        });
     }
 
     /**

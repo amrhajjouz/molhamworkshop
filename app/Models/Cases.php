@@ -44,6 +44,7 @@ class Cases extends BaseTargetModel
      public function transform()
      {
 
+          // dd($this->statuses);
 
           $obj = $this->toArray();
 
@@ -138,7 +139,20 @@ class Cases extends BaseTargetModel
                'title' , 'details'
           ];
      }
-     
+
+
+
+     public function list_statuses()
+     {
+          $res = [];
+          foreach ($this->statuses as $status) {
+
+               $status->contents = getContent($status);
+               $res[] = $status;
+
+          }
+          return $res;
+     }
 
   
 }

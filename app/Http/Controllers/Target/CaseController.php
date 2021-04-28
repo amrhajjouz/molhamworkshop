@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Target;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Target\Cases\{CreateRequest, UpdateRequest, CreateUpdateContent , ListContentRequest};
+use App\Http\Requests\Target\Cases\{CreateRequest, UpdateRequest, CreateUpdateContent, ListContentRequest , CreateStatusRequest , UpdateStatusRequest};
 use App\Facades\Helper;
-use App\Models\{Cases};
+use App\Models\{Cases , Status};
 
 class CaseController extends BaseController
 {
@@ -86,7 +86,7 @@ class CaseController extends BaseController
     {
 
         try {
-            return $this->_response(getContent($case , $request));
+            return $this->_response(getContent($case, $request));
         } catch (\Exception $th) {
             throw $this->_exception($th->getMessage());
         }
@@ -96,11 +96,43 @@ class CaseController extends BaseController
     {
         try {
             $data = $request->validated();
-            setContent($case, $data['name'] , $data['value'] , $data['locale']);
+            setContent($case, $data['name'], $data['value'], $data['locale']);
             return $this->_response($case->contents);
         } catch (\Exception $ex) {
             throw $this->_exception($ex->getMessage());
         }
     }
 
+    public function list_statuses(Request $request, Cases $case)
+    {
+        try {
+            return $this->_response($case->list_statuses()); // this function exists in baseTargetModel
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+   
+    public function create_statuses(CreateStatusRequest $request, Cases $case)
+    {
+
+        try {
+            $data = $request->validated();
+            return $this->_response(createStatus($case , $data));
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+   
+    public function update_statuses(UpdateStatusRequest $request, Cases $case , Status $status )
+    {
+
+        try {
+
+            $data = $request->validated();
+            setContent($status, $data['name'], $data['value'], $data['locale']);
+            return $this->_response($status);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
 }

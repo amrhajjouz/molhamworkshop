@@ -38,6 +38,7 @@ return [
     'cases.edit' => ['cases/:id/edit', 'cases/editCaseController', 'cases.single.edit'],
     'cases' => ['cases', 'cases/listCasesController', 'cases.list'],
     'cases.contents' => ['cases/:id/contents', 'cases/caseContentsController', 'cases.single.contents'],
+    'cases.statuses' => ['cases/:id/statuses', 'cases/listCaseStatusesController', 'cases.single.statuses'],
 
     ////////////////////// Campaign Routes    ///////////////////
     'campaigns.add' => ['campaigns/add', 'campaigns/addCampaignController', 'campaigns.add'],
@@ -45,6 +46,7 @@ return [
     'campaigns.edit' => ['campaigns/:id/edit', 'campaigns/editCampaignController', 'campaigns.single.edit'],
     'campaigns' => ['campaigns', 'campaigns/listCampaignsController', 'campaigns.list'],
     'campaigns.contents' => ['campaigns/:id/contents', 'campaigns/campaignContentsController', 'campaigns.single.contents'],
+    'campaigns.statuses' => ['campaigns/:id/statuses', 'campaigns/listCampaignStatusesController', 'campaigns.single.statuses'],
 
     ////////////////////// SponsorShip Routes    ///////////////////
     'sponsorships.add' => ['sponsorships/add', 'sponsorships/addSponsorshipController', 'sponsorships.add'],

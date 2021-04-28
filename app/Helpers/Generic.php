@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Status;
+
 function getLocaleName ($locale) {
     switch ($locale) {
         case 'ar' : return 'عربي'; break;
@@ -10,4 +12,13 @@ function getLocaleName ($locale) {
         case 'es' : return 'اسباني'; break;
         default: return ; break;
     }
+}
+
+
+function createStatus($statusable , $content){
+
+        $status = $statusable->statuses()->save(new Status);
+        $content = setContent($status, $content['name'], $content['value'], $content['locale']);
+
+        return $status ;
 }

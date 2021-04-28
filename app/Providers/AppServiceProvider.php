@@ -43,6 +43,7 @@ class AppServiceProvider extends ServiceProvider
             'student' => 'App\Models\Student',
             'event' => 'App\Models\Event',
             'fundraiser' => 'App\Models\Fundraiser',
+            'status' => 'App\Models\Status',
         ]);
     }
 }
