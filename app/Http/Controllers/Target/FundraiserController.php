@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Target;
 use Illuminate\Http\Request;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
-use App\Http\Requests\Target\Fundraiser\{CreateRequest, UpdateRequest , CreateUpdateContent , ListContentRequest};
-use App\Models\{Fundraiser};
+use App\Http\Requests\Target\Fundraiser\{CreateRequest, UpdateRequest , CreateUpdateContent , ListContentRequest , CreateStatusRequest , UpdateStatusRequest};
+use App\Models\{Fundraiser , Status};
 
 class FundraiserController extends BaseController
 {
@@ -123,6 +123,39 @@ class FundraiserController extends BaseController
             return $this->_response($fundraiser->contents);
         } catch (\Exception $ex) {
             throw $this->_exception($ex->getMessage());
+        }
+    }
+
+    public function list_statuses(Request $request, Fundraiser $fundraiser)
+    {
+        try {
+            return $this->_response($fundraiser->list_statuses()); // this function exists in baseTargetModel
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function create_statuses(CreateStatusRequest $request, Fundraiser $fundraiser)
+    {
+
+        try {
+            $data = $request->validated();
+            return $this->_response(createStatus($fundraiser, $data));
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function update_statuses(UpdateStatusRequest $request, Fundraiser $fundraiser, Status $status)
+    {
+
+        try {
+
+            $data = $request->validated();
+            setContent($status, $data['name'], $data['value'], $data['locale']);
+            return $this->_response($status);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
         }
     }
 }

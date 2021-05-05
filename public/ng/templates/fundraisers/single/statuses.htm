@@ -44,7 +44,7 @@
           <i class="fe fe-plus-circle"></i>&nbsp; اضافة حالة جديدة
         </div>
         <div ng-show="currentModalAction == 'edit'">
-          <i class="fe fe-edit"></i>&nbsp; تعديل تحديث الحالة {{ status.id }}
+           <i class="fe fe-edit"></i>&nbsp; تعديل تحديث الحالة {{ status.id }}
         </div>
       </span>
     </modal-title>
@@ -52,7 +52,7 @@
     <div ng-if="currentModalAction == 'add'">
       <modal-body>
         <form
-          name="createCaseStatusesForm"
+          name="createFundraiserStatusesForm"
           request="createUpdateStatusContent"
           model="status"
           id="myForm"
@@ -75,7 +75,7 @@
 
           <submit-button
             ng-show="currentModalAction == 'add'"
-            form="createCaseStatusesForm"
+            form="createFundraiserStatusesForm"
             icon="fe fe-plus"
             >اضافة</submit-button
           >

@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Target;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Target\Sponsorship\{CreateRequest, UpdateRequest , CreateUpdateContent , ListContentRequest};
+use App\Http\Requests\Target\Sponsorship\{CreateRequest, UpdateRequest , CreateUpdateContent , ListContentRequest , CreateStatusRequest , UpdateStatusRequest};
 
-use App\Models\{Sponsorship};
+use App\Models\{Sponsorship , Status};
 
 class SponsorShipController extends BaseController
 {
@@ -135,6 +135,40 @@ class SponsorShipController extends BaseController
             return $this->_response($sponsorship->contents);
         } catch (\Exception $ex) {
             throw $this->_exception($ex->getMessage());
+        }
+    }
+
+
+    public function list_statuses(Request $request, Sponsorship $sponsorship)
+    {
+        try {
+            return $this->_response($sponsorship->list_statuses()); // this function exists in baseTargetModel
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function create_statuses(CreateStatusRequest $request, Sponsorship $sponsorship)
+    {
+
+        try {
+            $data = $request->validated();
+            return $this->_response(createStatus($sponsorship, $data));
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function update_statuses(UpdateStatusRequest $request, Sponsorship $sponsorship, Status $status)
+    {
+
+        try {
+
+            $data = $request->validated();
+            setContent($status, $data['name'], $data['value'], $data['locale']);
+            return $this->_response($status);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
         }
     }
 }

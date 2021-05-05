@@ -16,7 +16,6 @@ function getLocaleName ($locale) {
 
 
 function createStatus($statusable , $content){
-
         $status = $statusable->statuses()->save(new Status);
         $content = setContent($status, $content['name'], $content['value'], $content['locale']);
 

@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Target;
 use Illuminate\Http\Request;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
-use App\Http\Requests\Target\Event\{CreateRequest, UpdateRequest , CreateUpdateContent , ListContentRequest};
-use App\Models\{Event};
+use App\Http\Requests\Target\Event\{CreateRequest, UpdateRequest , CreateUpdateContent , ListContentRequest , CreateStatusRequest , UpdateStatusRequest };
+use App\Models\{Event , Status};
 
 class EventController extends BaseController
 {
@@ -129,6 +129,40 @@ class EventController extends BaseController
             return $this->_response($event->contents);
         } catch (\Exception $ex) {
             throw $this->_exception($ex->getMessage());
+        }
+    }
+
+
+    public function list_statuses(Request $request, Event $event)
+    {
+        try {
+            return $this->_response($event->list_statuses()); // this function exists in baseTargetModel
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function create_statuses(CreateStatusRequest $request, Event $event)
+    {
+
+        try {
+            $data = $request->validated();
+            return $this->_response(createStatus($event, $data));
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function update_statuses(UpdateStatusRequest $request, Event $event, Status $status)
+    {
+
+        try {
+
+            $data = $request->validated();
+            setContent($status, $data['name'], $data['value'], $data['locale']);
+            return $this->_response($status);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
         }
     }
     

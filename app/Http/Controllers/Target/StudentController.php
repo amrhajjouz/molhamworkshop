@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Target;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Target\Student\{CreateRequest, UpdateRequest , CreateUpdateContent , ListContentRequest};
+use App\Http\Requests\Target\Student\{CreateRequest, UpdateRequest , CreateUpdateContent , ListContentRequest , CreateStatusRequest , UpdateStatusRequest};
 
-use App\Models\{Student};
+use App\Models\{Student , Status};
 
 class StudentController extends BaseController
 {
@@ -111,6 +111,39 @@ class StudentController extends BaseController
             return $this->_response($student->contents);
         } catch (\Exception $ex) {
             throw $this->_exception($ex->getMessage());
+        }
+    }
+
+    public function list_statuses(Request $request, Student $student)
+    {
+        try {
+            return $this->_response($student->list_statuses()); // this function exists in baseTargetModel
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function create_statuses(CreateStatusRequest $request, Student $student)
+    {
+
+        try {
+            $data = $request->validated();
+            return $this->_response(createStatus($student, $data));
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function update_statuses(UpdateStatusRequest $request, Student $student, Status $status)
+    {
+
+        try {
+
+            $data = $request->validated();
+            setContent($status, $data['name'], $data['value'], $data['locale']);
+            return $this->_response($status);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
         }
     }
 }

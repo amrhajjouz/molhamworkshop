@@ -110,9 +110,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/sponsorships', [SponsorshipController::class, 'create']);
     Route::put('/sponsorships', [SponsorshipController::class, 'update']);
     Route::get('/sponsorships/{id}', [SponsorshipController::class, 'retrieve']);
-    Route::get('/sponsorships/{id}/sponsors', [SponsorshipController::class, 'list_sponsors']);
+    Route::get('/sponsorships/{id}/spon\sors', [SponsorshipController::class, 'list_sponsors']);
     Route::get('/sponsorships/{sponsorship}/contents', [SponsorshipController::class, 'list_contents']);
     Route::put('/sponsorships/{sponsorship}/contents', [SponsorshipController::class, 'create_update_contents']);
+    Route::get('/sponsorships/{sponsorship}/statuses', [SponsorshipController::class, 'list_statuses']);
+    Route::post('/sponsorships/{sponsorship}/statuses', [SponsorshipController::class, 'create_statuses']);
+    Route::put('/sponsorships/{sponsorship}/statuses/{status}/contents', [SponsorshipController::class, 'update_statuses']);
 
     //////////////////  Students //////////////
     Route::get('/students', [StudentController::class, 'list']);
@@ -122,6 +125,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/students/{id}/sponsors', [StudentController::class, 'list_sponsors']);
     Route::get('/students/{student}/contents', [StudentController::class, 'list_contents']);
     Route::put('/students/{student}/contents', [StudentController::class, 'create_update_contents']);
+    Route::get('/students/{student}/statuses', [StudentController::class, 'list_statuses']);
+    Route::post('/students/{student}/statuses', [StudentController::class, 'create_statuses']);
+    Route::put('/students/{student}/statuses/{status}/contents', [StudentController::class, 'update_statuses']);
 
     //////////////////  Events //////////////
     Route::get('/events', [EventController::class, 'list']);
@@ -130,6 +136,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/events/{id}', [EventController::class, 'retrieve']);
     Route::get('/events/{event}/contents', [EventController::class, 'list_contents']);
     Route::put('/events/{event}/contents', [EventController::class, 'create_update_contents']);
+    Route::get('/events/{event}/statuses', [EventController::class, 'list_statuses']);
+    Route::post('/events/{event}/statuses', [EventController::class, 'create_statuses']);
+    Route::put('/events/{event}/statuses/{status}/contents', [EventController::class, 'update_statuses']);
+
+    Route::get('/sponsorships/{sponsorship}/statuses', [SponsorshipController::class, 'list_statuses']);
+    Route::post('/sponsorships/{sponsorship}/statuses', [SponsorshipController::class, 'create_statuses']);
+    Route::put('/sponsorships/{sponsorship}/statuses/{status}/contents', [SponsorshipController::class, 'update_statuses']);
 
     ////////////////// Fundraiser // //////////////
     Route::get('/fundraisers', [FundraiserController::class, 'list']);
@@ -138,7 +151,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/fundraisers/{id}', [FundraiserController::class, 'retrieve']);
     Route::get('/fundraisers/{fundraiser}/contents', [FundraiserController::class, 'list_contents']);
     Route::put('/fundraisers/{fundraiser}/contents', [FundraiserController::class, 'create_update_contents']);
-
+    Route::get('/fundraisers/{fundraiser}/statuses', [FundraiserController::class, 'list_statuses']);
+    Route::post('/fundraisers/{fundraiser}/statuses', [FundraiserController::class, 'create_statuses']);
+    Route::put('/fundraisers/{fundraiser}/statuses/{status}/contents', [FundraiserController::class, 'update_statuses']);
 
     /////////////////////// Donors /////////////////////////
 
