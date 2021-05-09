@@ -110,7 +110,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/sponsorships', [SponsorshipController::class, 'create']);
     Route::put('/sponsorships', [SponsorshipController::class, 'update']);
     Route::get('/sponsorships/{id}', [SponsorshipController::class, 'retrieve']);
-    Route::get('/sponsorships/{id}/spon\sors', [SponsorshipController::class, 'list_sponsors']);
+    Route::get('/sponsorships/{id}/sponsors', [SponsorshipController::class, 'list_sponsors']);
     Route::get('/sponsorships/{sponsorship}/contents', [SponsorshipController::class, 'list_contents']);
     Route::put('/sponsorships/{sponsorship}/contents', [SponsorshipController::class, 'create_update_contents']);
     Route::get('/sponsorships/{sponsorship}/statuses', [SponsorshipController::class, 'list_statuses']);
