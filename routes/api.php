@@ -103,7 +103,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/campaigns/{campaign}/contents', [CampaignController::class, 'create_update_contents']);
     Route::get('/campaigns/{campaign}/statuses', [CampaignController::class, 'list_statuses']);
     Route::post('/campaigns/{campaign}/statuses', [CampaignController::class, 'create_statuses']);
-    Route::put('/campaigns/{campaign}/statuses/{status}/contents', [CampaignController::class, 'update_statuses']);
+    Route::put('/campaigns/{campaign_id}/statuses/{status}/contents', [CampaignController::class, 'update_statuses']);
 
     //////////////////  SponsorShips //////////////
     Route::get('/sponsorships', [SponsorshipController::class, 'list']);

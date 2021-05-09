@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Target;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Target\Cases\{CreateRequest, UpdateRequest, CreateUpdateContent, ListContentRequest , CreateStatusRequest , UpdateStatusRequest};
+
+use App\Http\Requests\Target\Cases\{CreateRequest, UpdateRequest, CreateUpdateContent, ListContentRequest, CreateStatusRequest, UpdateStatusRequest};
 use App\Facades\Helper;
-use App\Models\{Cases , Status};
+use App\Models\{Cases, Status};
 
 class CaseController extends BaseController
 {
@@ -32,7 +33,13 @@ class CaseController extends BaseController
             $case->country_id = $data['country_id'];
             $case->status = $data['status'];
 
-            $options = ['target' => $request->target, "places_ids" => [$request->place_id], 'admins_ids' => $request->admins_ids]; // will saved in parent target or as a relation for this model
+            // will saved in parent target or as a relation for this model
+            $options = [
+                'target' => $request->target,
+                "places_ids" => [$request->place_id],
+                'admins_ids' => $request->admins_ids
+            ];
+
             $case->save($options);
 
 
@@ -55,8 +62,12 @@ class CaseController extends BaseController
             $case->country_id = $data['country_id'];
             $case->status = $data['status'];
 
-            $options = ['target' => $request->target, "places_ids" => [$request->place_id], 'admins_ids' => $request->admins_ids]; //options for parent target
-
+            //options for parent target
+            $options = [
+                'target' => $request->target,
+                "places_ids" => [$request->place_id],
+                'admins_ids' => $request->admins_ids
+            ];
 
             $case->save($options);
 
@@ -111,19 +122,19 @@ class CaseController extends BaseController
             throw $this->_exception($th->getMessage());
         }
     }
-   
+
     public function create_statuses(CreateStatusRequest $request, Cases $case)
     {
 
         try {
             $data = $request->validated();
-            return $this->_response(createStatus($case , $data));
+            return $this->_response(createStatus($case, $data));
         } catch (\Exception $th) {
             throw $this->_exception($th->getMessage());
         }
     }
-   
-    public function update_statuses(UpdateStatusRequest $request, Cases $case , Status $status )
+
+    public function update_statuses(UpdateStatusRequest $request, Cases $case, Status $status)
     {
 
         try {

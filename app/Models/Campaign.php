@@ -21,10 +21,10 @@ class Campaign extends BaseTargetModel
      ];
 
 
-     public function save($options = [])
-     {
-          return parent::save($options);
-     }
+     // public function save($options = [])
+     // {
+     //      return parent::save($options);
+     // }
 
      /* 
       * this function called to return this model with all relations

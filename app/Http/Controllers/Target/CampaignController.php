@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Target;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Target\Campaign\{CreateRequest, UpdateRequest , CreateUpdateContent , ListContentRequest , CreateStatusRequest , UpdateStatusRequest};
-use App\Models\{Campaign , Status};
+use App\Http\Requests\Target\Campaign\{CreateRequest, UpdateRequest, CreateUpdateContent, ListContentRequest, CreateStatusRequest, UpdateStatusRequest};
+use App\Models\{Campaign, Status};
 
 class CampaignController extends BaseController
 {
@@ -29,7 +29,12 @@ class CampaignController extends BaseController
             $campaign->name = $data['name'];
             $campaign->funded = 0;
 
-            $options = ['target' => $request->target, "places_ids" => $request->places_ids, 'admins_ids' => $request->admins_ids]; // will saved in parent target or as a relation for this model
+            // will saved in parent target or as a relation for this model
+            $options = [
+                'target' => $request->target,
+                "places_ids" => $request->places_ids,
+                'admins_ids' => $request->admins_ids
+            ];
 
             $campaign->save($options);
 
@@ -53,7 +58,12 @@ class CampaignController extends BaseController
             $campaign->name = $data['name'];
             $campaign->funded = $data['funded'];
 
-            $options = ['target' => $request->target, "places_ids" => $request->places_ids, 'admins_ids' => $request->admins_ids]; //used in parent target or another relations
+            //used in parent target or another relations
+            $options = [
+                'target' => $request->target,
+                "places_ids" => $request->places_ids,
+                'admins_ids' => $request->admins_ids
+            ];
 
             $campaign->save($options);
 
@@ -78,12 +88,11 @@ class CampaignController extends BaseController
         }
     }
 
-
     public function list_contents(ListContentRequest $request, Campaign $campaign)
     {
 
         try {
-            return $this->_response(getContent($campaign , $request));
+            return $this->_response(getContent($campaign, $request));
         } catch (\Exception $th) {
             throw $this->_exception($th->getMessage());
         }
@@ -99,10 +108,6 @@ class CampaignController extends BaseController
             throw $this->_exception($ex->getMessage());
         }
     }
-
-
-
-
 
 
     public function list_statuses(Request $request, Campaign $campaign)
@@ -125,7 +130,7 @@ class CampaignController extends BaseController
         }
     }
 
-    public function update_statuses(UpdateStatusRequest $request, Campaign $campaign, Status $status)
+    public function update_statuses(UpdateStatusRequest $request, $campaign_id, Status $status)
     {
 
         try {

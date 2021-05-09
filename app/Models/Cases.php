@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\{Country, Content};
+use App\Models\{Country};
 use App\Common\Traits\HasContent;
 use App\Common\Base\BaseTargetModel;
 
@@ -28,12 +28,6 @@ class Cases extends BaseTargetModel
      }
 
 
-     
-
-     // public function admins()
-     // {
-     //      return $this->hasMany('App\Models\Admin', 'adminable_id', 'id')->where('adminable_type', '\App\Models\Cases');
-     // }
 
 
      /* 
@@ -43,8 +37,6 @@ class Cases extends BaseTargetModel
 
      public function transform()
      {
-
-          // dd($this->statuses);
 
           $obj = $this->toArray();
 
@@ -110,13 +102,6 @@ class Cases extends BaseTargetModel
           return $response;
      }
 
-     public function save($options = [])
-     {
-
-          return parent::save($options);
-     }
-
-     
 
 
      public function getTitleAttribute($title)
@@ -142,17 +127,6 @@ class Cases extends BaseTargetModel
 
 
 
-     public function list_statuses()
-     {
-          $res = [];
-          foreach ($this->statuses as $status) {
-
-               $status->contents = getContent($status);
-               $res[] = $status;
-
-          }
-          return $res;
-     }
 
   
 }
