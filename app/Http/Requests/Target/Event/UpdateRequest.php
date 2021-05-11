@@ -27,7 +27,7 @@ class UpdateRequest extends BaseRequest
     {
         return [
             'id' => ['required', 'exists:events'],
-            'date' => ['required','after:today'],
+            'date' => ['required'],
             'public_visibility' => ['required', 'boolean'],
             'donor_id' => ['required', 'numeric'],
             'verified' => ['nullable'],
