@@ -6,9 +6,19 @@ use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
 
-use App\Http\Requests\Target\Cases\{CreateRequest, UpdateRequest, CreateUpdateContent, ListContentRequest, CreateStatusRequest, UpdateStatusRequest};
 use App\Facades\Helper;
-use App\Models\{Cases, Status};
+use App\Models\{Cases, Status, Note, NoteReview};
+
+use App\Http\Requests\Target\Cases\{
+    CreateRequest,
+    UpdateRequest,
+    CreateUpdateContent,
+    ListContentRequest,
+    CreateStatusRequest,
+    UpdateStatusRequest ,
+    CreateNoteRequest ,
+    UpdateNoteRequest , 
+};
 
 class CaseController extends BaseController
 {
@@ -142,6 +152,74 @@ class CaseController extends BaseController
             $data = $request->validated();
             setContent($status, $data['name'], $data['value'], $data['locale']);
             return $this->_response($status);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function listing_notes(Request $request, Cases $case)
+    {
+        try {
+            return $this->_response($case->listing_notes());
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function create_note(CreateNoteRequest $request, Cases $case)
+    {
+        try {
+            $data = $request->validated();
+
+            $note = new Note;
+            $note->content = $data['content'];
+
+            $case->notes()->save($note);
+            return $this->_response($case->listing_notes());
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+    public function update_note(UpdateNoteRequest $request, $case_id , Note $note)
+    {
+        try {
+            $data = $request->validated();
+
+            $note->content = $data['content'];
+            $note->save();
+
+            return $this->_response($note);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function review_note(UpdateNoteRequest $request, $case_id , Note $note)
+    {
+        try {
+            $user  = auth()->user();
+            $exists = $note->reviews()->where('reviewed_by', $user->id)->first();
+
+            if($exists){
+                return $this->_response($exists);
+            }
+
+            $review = new NoteReview();
+            $review->reviewed_by = $user->id;
+            $review->note_id = $note->id;
+            $review->save();
+            return $this->_response($review);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function unreview_note(UpdateNoteRequest $request, $case_id , Note $note)
+    {
+        try {
+            $user  = auth()->user();
+            $exists = $note->reviews()->where('reviewed_by', $user->id)->delete();
+            return $this->_response($note);
         } catch (\Exception $th) {
             throw $this->_exception($th->getMessage());
         }

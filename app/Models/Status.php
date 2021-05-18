@@ -24,10 +24,8 @@ class Status extends BaseModel
 
      public function transform()
      {
-
           $shortcut = $this->toArray();
-
-
+          
           return (object)array_merge($shortcut, [
                'contents' => getContent($this),
           ]);

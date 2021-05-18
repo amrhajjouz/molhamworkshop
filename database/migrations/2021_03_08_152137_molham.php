@@ -232,6 +232,22 @@ class Molham extends Migration
             $table->string('targetable_type')->index();
             $table->timestamps();
         });
+       
+        Schema::create('notes', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('noteable_id');
+            $table->string('noteable_type')->index();
+            $table->text('content');
+            $table->bigInteger('created_by')->nullable();
+            $table->timestamps();
+        });
+     
+        Schema::create('notes_reviews', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('note_id')->index();
+            $table->bigInteger('reviewed_by')->index();
+            $table->timestamps();
+        });
     }
 
     /**

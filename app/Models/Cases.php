@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use App\Models\{Country};
-use App\Common\Traits\HasContent;
+use App\Common\Traits\{HasContent , HasNote};
 use App\Common\Base\BaseTargetModel;
 
 class Cases extends BaseTargetModel
 {
-     use HasContent;
+     use HasContent , HasNote;
 
      protected $table = 'cases';
      protected $guarded = [];
@@ -27,7 +27,10 @@ class Cases extends BaseTargetModel
           return $this->belongsTo(Country::class, 'country_id', 'id');
      }
 
-
+     // public function notes()
+     // {
+     //      return $this->morphMany('App\Models\Note','noteable');
+     // }
 
 
      /* 
@@ -125,6 +128,18 @@ class Cases extends BaseTargetModel
           ];
      }
 
+
+     // public function listing_notes(){
+     //      $response = [];
+     //      foreach($this->notes  as $note){
+     //           $note->creator;
+     //           $note->reviews= $note->transform_reviews();
+     //           $response[] = $note;
+     //      }
+
+     //      return $response;
+     // }
+     
 
 
 

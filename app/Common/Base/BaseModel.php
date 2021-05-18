@@ -44,7 +44,6 @@ use Illuminate\Database\Eloquent\Model;
 
         if(!$this->exists && $this->hasColumn('created_by')){
             $this->created_by = auth()->id();
-            // dd(1);
         }
 
         return parent::save($options);

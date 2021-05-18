@@ -1,0 +1,102 @@
+<include-header />
+<div class="row m-2">
+  <div class="col-6"></div>
+  <div class="col-6 text-left">
+    <button href="#" ng-click="showModal('add')" class="btn btn-primary">
+      <i class="fe fe-plus"></i>&nbsp;إضافة ملاحظة
+    </button>
+  </div>
+</div>
+
+<datatable datalist="notes">
+  <table>
+    <thead>
+      <tr>
+        <th class="text-center">#</th>
+        <th class="text-center">الملاحظة</th>
+        <th class="text-center">بواسطة</th>
+        <th class="text-center">المراجعة من قبل</th>
+        <th class="text-center">خيارات</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="note in notes.data">
+        <td class="align-middle text-center">{{ note.id }}</td>
+        <td class="align-middle text-center">{{ note.content }}</td>
+        <td class="align-middle text-center">{{ note.creator.name }}</td>
+        <td class="align-middle text-center">
+          <div ng-repeat="_rev in note.reviews">
+            <span>{{_rev.reviewer.name}}</span>
+          </div>
+        </td>
+        <td class="align-middle text-center h2">
+          <dropdown>
+            <dropdown-item
+              href="javascript:;"
+              ng-click="showModal( 'edit' , note)"
+              ><i class="fe fe-edit-2"></i> تعديل</dropdown-item
+            >
+            <form
+              name="createReviewForm"
+              request="createReviewRequest"
+              id="reviewForm"
+            >
+              <dropdown-item
+              href="javascript:;"
+              ng-click="addDeleteReview(note)"
+              ><i class="fe fe-edit-2"></i> تعديل</dropdown-item
+            >
+            </form>
+          </dropdown>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</datatable>
+<div class="card">
+  <!-- Create Modal -->
+  <modal id="note-modal">
+    <modal-title>
+      <span>
+        <div ng-show="currentModalAction == 'add'">
+          <i class="fe fe-plus-circle"></i>&nbsp; اضافة ملاحظة جديدة
+        </div>
+        <div ng-show="currentModalAction == 'edit'">
+          <i class="fe fe-edit"></i>&nbsp; تعديل الملاحظة {{ note.id }}
+        </div>
+      </span>
+    </modal-title>
+    <!-- create -->
+    <div>
+      <modal-body>
+        <form
+          name="createUpdateCaseNoteForm"
+          request="createUpdateNote"
+          id="myForm"
+        >
+          <!-- model="status" -->
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="form-group">
+                <label for="content">الملاحظة </label>
+                <input
+                  id="content"
+                  type="text"
+                  class="form-control"
+                  ng-class="(createUpdateNote.errors.content != null) ? 'is-invalid' : ''"
+                  ng-model="selectedNote.content"
+                  ng-error="createUpdateNote.errors.content"
+                />
+              </div>
+            </div>
+          </div>
+
+          <submit-button form="createUpdateCaseNoteForm" icon="fe fe-plus"
+            >اضافة</submit-button
+          >
+        </form>
+      </modal-body>
+    </div>
+  </modal>
+</div>

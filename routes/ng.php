@@ -39,6 +39,7 @@ return [
     'cases' => ['cases', 'cases/listCasesController', 'cases.list'],
     'cases.contents' => ['cases/:id/contents', 'cases/caseContentsController', 'cases.single.contents'],
     'cases.statuses' => ['cases/:id/statuses', 'cases/listCaseStatusesController', 'cases.single.statuses'],
+    'cases.notes' => ['cases/:id/notes', 'cases/listCaseNotesController', 'cases.single.notes'],
 
     ////////////////////// Campaign Routes    ///////////////////
     'campaigns.add' => ['campaigns/add', 'campaigns/addCampaignController', 'campaigns.add'],

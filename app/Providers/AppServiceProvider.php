@@ -26,9 +26,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //
 
-
-
-
         Relation::morphMap([
             'faq' => 'App\Models\Faq',
             'publisher' => 'App\Models\Publisher',

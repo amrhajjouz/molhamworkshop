@@ -92,6 +92,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/cases/{case}/statuses', [CaseController::class, 'list_statuses']);
     Route::post('/cases/{case}/statuses', [CaseController::class, 'create_statuses']);
     Route::put('/cases/{case}/statuses/{status}/contents', [CaseController::class, 'update_statuses']);
+    Route::get('/cases/{case}/notes', [CaseController::class, 'listing_notes']);
+    Route::post('/cases/{case}/notes', [CaseController::class, 'create_note']);
+    Route::put('/cases/{case_id}/notes/{note}', [CaseController::class, 'update_note']);
+    Route::post('/cases/{case_id}/notes/{note}/review', [CaseController::class, 'review_note']);
+    Route::post('/cases/{case_id}/notes/{note}/unreview', [CaseController::class, 'unreview_note']);
 
 
     //////////////////  CAMPAIGNS //////////////
