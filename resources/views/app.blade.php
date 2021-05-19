@@ -190,9 +190,7 @@
             $rootScope.$routeName = '';
             $rootScope.$routeParams = '';
             $rootScope.$r = $r;
-            $rootScope.$auth = auth;
-            
-            console.log($rootScope.$auth);
+            $rootScope.$auth = auth;            
             
             // refresh page if navagate to the current url
             /*document.addEventListener('click', function (e) {
