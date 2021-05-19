@@ -143,6 +143,8 @@
         var apiUrl = "{{ $api_url }}";
         var appDebug = {{ env('APP_DEBUG') }};
         var appTitle = $('title').text();
+        var auth = {id: "{{ auth()->user()->id }}", name: "{{ auth()->user()->name }}", email: "{{ auth()->user()->email }}"};
+        
         var routes = JSON.parse(("{{ $routes->toJson() }}").replace(/&quot;/g,'"'));
         var locales = JSON.parse(("{{ $locales->toJson() }}").replace(/&quot;/g,'"'));
         var app = angular.module("app", ["ngRoute"]);
@@ -187,7 +189,10 @@
             $rootScope.currentTemplateDirectory = '';
             $rootScope.$routeName = '';
             $rootScope.$routeParams = '';
-            $rootScope.$r = $r;            
+            $rootScope.$r = $r;
+            $rootScope.$auth = auth;
+            
+            console.log($rootScope.$auth);
             
             // refresh page if navagate to the current url
             /*document.addEventListener('click', function (e) {
