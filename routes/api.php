@@ -109,6 +109,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/campaigns/{campaign}/statuses', [CampaignController::class, 'list_statuses']);
     Route::post('/campaigns/{campaign}/statuses', [CampaignController::class, 'create_statuses']);
     Route::put('/campaigns/{campaign_id}/statuses/{status}/contents', [CampaignController::class, 'update_statuses']);
+    Route::get('/campaigns/{campaign}/notes', [CampaignController::class, 'listing_notes']);
+    Route::post('/campaigns/{campaign}/notes', [CampaignController::class, 'create_note']);
+    Route::put('/campaigns/{campaign_id}/notes/{note}', [CampaignController::class, 'update_note']);
+    Route::post('/campaigns/{campaign_id}/notes/{note}/review', [CampaignController::class, 'review_note']);
+    Route::post('/campaigns/{campaign_id}/notes/{note}/unreview', [CampaignController::class, 'unreview_note']);
 
     //////////////////  SponsorShips //////////////
     Route::get('/sponsorships', [SponsorshipController::class, 'list']);
@@ -121,6 +126,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/sponsorships/{sponsorship}/statuses', [SponsorshipController::class, 'list_statuses']);
     Route::post('/sponsorships/{sponsorship}/statuses', [SponsorshipController::class, 'create_statuses']);
     Route::put('/sponsorships/{sponsorship}/statuses/{status}/contents', [SponsorshipController::class, 'update_statuses']);
+    Route::get('/sponsorships/{sponsorship}/notes', [SponsorshipController::class, 'listing_notes']);
+    Route::post('/sponsorships/{sponsorship}/notes', [SponsorshipController::class, 'create_note']);
+    Route::put('/sponsorships/{sponsorship_id}/notes/{note}', [SponsorshipController::class, 'update_note']);
+    Route::post('/sponsorships/{sponsorship_id}/notes/{note}/review', [SponsorshipController::class, 'review_note']);
+    Route::post('/sponsorships/{sponsorship_id}/notes/{note}/unreview', [SponsorshipController::class, 'unreview_note']);
 
     //////////////////  Students //////////////
     Route::get('/students', [StudentController::class, 'list']);
@@ -133,6 +143,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/students/{student}/statuses', [StudentController::class, 'list_statuses']);
     Route::post('/students/{student}/statuses', [StudentController::class, 'create_statuses']);
     Route::put('/students/{student}/statuses/{status}/contents', [StudentController::class, 'update_statuses']);
+    Route::get('/students/{student}/notes', [StudentController::class, 'listing_notes']);
+    Route::post('/students/{student}/notes', [StudentController::class, 'create_note']);
+    Route::put('/students/{student_id}/notes/{note}', [StudentController::class, 'update_note']);
+    Route::post('/students/{student_id}/notes/{note}/review', [StudentController::class, 'review_note']);
+    Route::post('/students/{student_id}/notes/{note}/unreview', [StudentController::class, 'unreview_note']);
 
     //////////////////  Events //////////////
     Route::get('/events', [EventController::class, 'list']);
@@ -144,10 +159,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/events/{event}/statuses', [EventController::class, 'list_statuses']);
     Route::post('/events/{event}/statuses', [EventController::class, 'create_statuses']);
     Route::put('/events/{event}/statuses/{status}/contents', [EventController::class, 'update_statuses']);
+    Route::get('/events/{event}/notes', [EventController::class, 'listing_notes']);
+    Route::post('/events/{event}/notes', [EventController::class, 'create_note']);
+    Route::put('/events/{event_id}/notes/{note}', [EventController::class, 'update_note']);
+    Route::post('/events/{event_id}/notes/{note}/review', [EventController::class, 'review_note']);
+    Route::post('/events/{event_id}/notes/{note}/unreview', [EventController::class, 'unreview_note']);
 
-    Route::get('/sponsorships/{sponsorship}/statuses', [SponsorshipController::class, 'list_statuses']);
-    Route::post('/sponsorships/{sponsorship}/statuses', [SponsorshipController::class, 'create_statuses']);
-    Route::put('/sponsorships/{sponsorship}/statuses/{status}/contents', [SponsorshipController::class, 'update_statuses']);
+    // Route::get('/sponsorships/{sponsorship}/statuses', [SponsorshipController::class, 'list_statuses']);
+    // Route::post('/sponsorships/{sponsorship}/statuses', [SponsorshipController::class, 'create_statuses']);
+    // Route::put('/sponsorships/{sponsorship}/statuses/{status}/contents', [SponsorshipController::class, 'update_statuses']);
 
     ////////////////// Fundraiser // //////////////
     Route::get('/fundraisers', [FundraiserController::class, 'list']);
@@ -159,6 +179,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/fundraisers/{fundraiser}/statuses', [FundraiserController::class, 'list_statuses']);
     Route::post('/fundraisers/{fundraiser}/statuses', [FundraiserController::class, 'create_statuses']);
     Route::put('/fundraisers/{fundraiser}/statuses/{status}/contents', [FundraiserController::class, 'update_statuses']);
+    Route::get('/fundraisers/{fundraiser}/notes', [FundraiserController::class, 'listing_notes']);
+    Route::post('/fundraisers/{fundraiser}/notes', [FundraiserController::class, 'create_note']);
+    Route::put('/fundraisers/{fundraiser_id}/notes/{note}', [FundraiserController::class, 'update_note']);
+    Route::post('/fundraisers/{fundraiser_id}/notes/{note}/review', [FundraiserController::class, 'review_note']);
+    Route::post('/fundraisers/{fundraiser_id}/notes/{note}/unreview', [FundraiserController::class, 'unreview_note']);
+
 
     /////////////////////// Donors /////////////////////////
 
@@ -219,6 +245,11 @@ Route::middleware('auth')->group(function () {
     Route::put('/blogs', [BlogController::class, 'update']);
     Route::get('/blogs/{id}', [BlogController::class, 'retrieve']);
     Route::put('/blogs/{blog}/contents', [BlogController::class, 'create_update_contents']);
+    Route::get('/blogs/{blog}/notes', [BlogController::class, 'listing_notes']);
+    Route::post('/blogs/{blog}/notes', [BlogController::class, 'create_note']);
+    Route::put('/blogs/{blog_id}/notes/{note}', [BlogController::class, 'update_note']);
+    Route::post('/blogs/{blog_id}/notes/{note}/review', [BlogController::class, 'review_note']);
+    Route::post('/blogs/{blog_id}/notes/{note}/unreview', [BlogController::class, 'unreview_note']);
 
     /////////////////////// Publisher /////////////////////////
     Route::get('/publishers', [PublisherController::class, 'list']);

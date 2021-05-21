@@ -5,12 +5,12 @@ namespace App\Models;
 use App\Models\{Country};
 
 use App\Common\Base\BaseTargetModel;
-use App\Common\Traits\HasContent;
+use App\Common\Traits\{HasContent , HasNote};
 
 
 class Sponsorship extends BaseTargetModel
 {
-     use HasContent;
+     use HasContent , HasNote;
 
      protected $table = 'sponsorships';
      protected $guarded = [];
@@ -39,7 +39,6 @@ class Sponsorship extends BaseTargetModel
      public function sponsors()
      {
           return $this->morphMany('App\Models\Sponsor', 'purpose', 'purpose_type', null, 'id');
-          // return $this->hasMany('App\Models\Sponsor', 'purpose_id', 'id')->where('purpose_type', '\App\Models\Sponsorship');
      }
 
 

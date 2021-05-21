@@ -1,11 +1,11 @@
-async function listCaseNotesControllerInit(
+async function listCampaignNotesControllerInit(
   $http,
   $page,
   $apiRequest,
   $datalist
 ) {
   const notes = await $apiRequest
-    .config("cases/" + $page.routeParams.id + "/notes")
+    .config("campaigns/" + $page.routeParams.id + "/notes")
     .getData();
 
   let fakerPaginator = {
@@ -35,13 +35,13 @@ async function listCaseNotesControllerInit(
   };
 }
 
-function listCaseNotesController($scope, $page, $apiRequest, $init) {
+function listCampaignNotesController($scope, $page, $apiRequest, $init) {
   $scope.notes = $init.notes;
 
   $scope.createUpdateNote = $apiRequest.config(
     {
       method: "POST",
-      url: `cases/${$page.routeParams.id}/notes`,
+      url: `campaigns/${$page.routeParams.id}/notes`,
       data: $scope.selectedNote,
     },
     function (response, data) {
@@ -60,7 +60,7 @@ function listCaseNotesController($scope, $page, $apiRequest, $init) {
 
   $scope.defaultNoteModel = {
     noteable_id: $page.routeParams.id,
-    noteable_type: "cases",
+    noteable_type: "campaigns",
     content: null,
     id: null,
   };
@@ -73,12 +73,12 @@ function listCaseNotesController($scope, $page, $apiRequest, $init) {
       case "add":
         $scope.selectedNote = angular.copy($scope.defaultNoteModel); //reinitial object , maybu user click on edit then create ,,, to reset Keyword object
         $scope.createUpdateNote.config.method = "POST";
-        $scope.createUpdateNote.config.url = `api/cases/${$page.routeParams.id}/notes`;
+        $scope.createUpdateNote.config.url = `api/campaigns/${$page.routeParams.id}/notes`;
         break;
       case "edit":
         $scope.selectedNote = angular.copy(data);
         $scope.createUpdateNote.config.method = action = "PUT";
-        $scope.createUpdateNote.config.url = `api/cases/${$page.routeParams.id}/notes/${$scope.selectedNote.id}`;
+        $scope.createUpdateNote.config.url = `api/campaigns/${$page.routeParams.id}/notes/${$scope.selectedNote.id}`;
         break;
       default:
         break;
@@ -100,9 +100,9 @@ function listCaseNotesController($scope, $page, $apiRequest, $init) {
 
 
       if(userExists){
-        reviewUrl = `cases/${$page.routeParams.id}/notes/${note.id}/unreview`;
+        reviewUrl = `campaigns/${$page.routeParams.id}/notes/${note.id}/unreview`;
       }else{
-        reviewUrl = `cases/${$page.routeParams.id}/notes/${note.id}/review`;
+        reviewUrl = `campaigns/${$page.routeParams.id}/notes/${note.id}/review`;
       }
 
     $scope.reviewNoteRequest = await $apiRequest

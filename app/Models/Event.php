@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use App\Common\Base\BaseTargetModel;
-use App\Common\Traits\HasContent;
+use App\Common\Traits\{HasContent , HasNote};
 
 class Event extends BaseTargetModel
 {
-     use HasContent;
+     use HasContent , HasNote;
      
      protected $table = 'events';
      protected $guarded = [];

@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use App\Common\Base\BaseTargetModel;
-use App\Common\Traits\HasContent;
+use App\Common\Traits\{HasContent , HasNote};
 
 
 class Campaign extends BaseTargetModel
 {
-     use HasContent;
+     use HasContent , HasNote;
 
      protected $table = 'campaigns';
      protected $guarded = [];

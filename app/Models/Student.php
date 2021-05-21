@@ -5,12 +5,12 @@ namespace App\Models;
 use App\Models\Country;
 
 use App\Common\Base\BaseTargetModel;
-use App\Common\Traits\HasContent;
+use App\Common\Traits\{HasContent , HasNote};
 
 
 class Student extends BaseTargetModel
 {
-     use HasContent;
+     use HasContent , HasNote;
 
      protected $table = 'students';
      protected $guarded = ["semesters_funded", "semesters_left"];

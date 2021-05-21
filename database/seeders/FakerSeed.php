@@ -20,7 +20,7 @@ class FakerSeed extends Seeder
         //
 
         // if(0) return;
-        $count = 50;
+        $count = 10;
 
         
         for ($i = 0; $i < $count; $i++) {

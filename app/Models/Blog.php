@@ -3,18 +3,18 @@
 namespace App\Models;
 
 use App\Common\Base\BaseModel;
-use App\Common\Traits\HasContent;
+use App\Common\Traits\{HasContent , HasNote};
 
 class Blog extends BaseModel
 {
-    use HasContent;
+    use HasContent , HasNote;
   
 
     protected $table = 'blogs';
     protected $guarded = [];
 
     public function transform()
-    {
+    { 
 
         $blog = $this->toArray();
 

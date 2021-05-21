@@ -5,8 +5,21 @@ namespace App\Http\Controllers\Target;
 use Illuminate\Http\Request;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
-use App\Http\Requests\Target\Event\{CreateRequest, UpdateRequest , CreateUpdateContent , ListContentRequest , CreateStatusRequest , UpdateStatusRequest };
-use App\Models\{Event , Status};
+use App\Models\{Event, Status ,  Note , NoteReview};
+
+use App\Http\Requests\Target\Event\{
+    CreateRequest,
+    UpdateRequest,
+    CreateUpdateContent,
+    ListContentRequest,
+    CreateStatusRequest,
+    UpdateStatusRequest, 
+    
+    /////////////// Note 
+    CreateNoteRequest,
+    UpdateNoteRequest,
+    ReviewUnReviewRequest,
+};
 
 class EventController extends BaseController
 {
@@ -17,7 +30,7 @@ class EventController extends BaseController
         $this->middleware('auth');
         $this->model = \App\Models\Event::class;
     }
- 
+
     public function create(CreateRequest $request)
     {
         try {
@@ -30,7 +43,7 @@ class EventController extends BaseController
             $event->implemented = $data['implemented'];
             $event->donor_id = $data['donor_id'];
 
-            if ( $data['implemented'] && $data['implementation_date']) {
+            if ($data['implemented'] && $data['implementation_date']) {
                 $event->implementation_date = date('Y/m/d', strtotime($data['implementation_date']));
             }
             $event->youtube_video_url = $data['youtube_video_url'];
@@ -44,8 +57,8 @@ class EventController extends BaseController
             */
 
             $options = [
-                'target' => $request->target, 
-                "places_ids" => $request->places_ids, 
+                'target' => $request->target,
+                "places_ids" => $request->places_ids,
                 'admins_ids' => $request->admins_ids
             ];
 
@@ -75,10 +88,10 @@ class EventController extends BaseController
                 $event->implementation_date = date('Y/m/d', strtotime($data['implementation_date']));
             }
             $event->youtube_video_url = $data['youtube_video_url'];
-            
 
 
-           /* 
+
+            /* 
              *  will update data in parent target or as a relation for this model 
              * array places_ids => placeable table
              * array admins_ids => admins table
@@ -86,7 +99,7 @@ class EventController extends BaseController
             */
             $options = [
                 'target' => $request->target,
-                 "places_ids" => $request->places_ids ,
+                "places_ids" => $request->places_ids,
                 'admins_ids' => $request->admins_ids,
             ];
 
@@ -165,5 +178,77 @@ class EventController extends BaseController
             throw $this->_exception($th->getMessage());
         }
     }
-    
+
+
+
+    /////////////////////// Notes /////////////////////////
+
+    public function listing_notes(Request $request, Event $event)
+    {
+        try {
+            return $this->_response($event->listing_notes());
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function create_note(CreateNoteRequest $request, Event $event)
+    {
+        try {
+            $data = $request->validated();
+
+            $note = new Note;
+            $note->content = $data['content'];
+
+            $event->notes()->save($note);
+            return $this->_response($event->listing_notes());
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function update_note(UpdateNoteRequest $request, $case_id, Note $note)
+    {
+        try {
+            $data = $request->validated();
+
+            $note->content = $data['content'];
+            $note->save();
+
+            return $this->_response($note);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function review_note(ReviewUnReviewRequest $request, $case_id, Note $note)
+    {
+        try {
+            $user  = auth()->user();
+            $exists = $note->reviews()->where('reviewed_by', $user->id)->first();
+
+            if ($exists) {
+                return $this->_response($exists);
+            }
+
+            $review = new NoteReview();
+            $review->reviewed_by = $user->id;
+            $review->note_id = $note->id;
+            $review->save();
+            return $this->_response($review);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function unreview_note(ReviewUnReviewRequest $request, $case_id, Note $note)
+    {
+        try {
+            $user  = auth()->user();
+            $note->reviews()->where('reviewed_by', $user->id)->delete();
+            return $this->_response($note);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
 }

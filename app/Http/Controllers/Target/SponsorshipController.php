@@ -5,9 +5,21 @@ namespace App\Http\Controllers\Target;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Http\Requests\Target\Sponsorship\{CreateRequest, UpdateRequest , CreateUpdateContent , ListContentRequest , CreateStatusRequest , UpdateStatusRequest};
+use App\Models\{Sponsorship, Status, Note, NoteReview};
+use App\Http\Requests\Target\Sponsorship\{
+    CreateRequest,
+    UpdateRequest,
+    CreateUpdateContent,
+    ListContentRequest,
+    CreateStatusRequest,
+    UpdateStatusRequest, 
+    
+    /////////////// Note 
+    CreateNoteRequest,
+    UpdateNoteRequest,
+    ReviewUnReviewRequest,
+};
 
-use App\Models\{Sponsorship , Status};
 
 class SponsorShipController extends BaseController
 {
@@ -31,8 +43,8 @@ class SponsorShipController extends BaseController
             $sponsorship->country_id = $data['country_id'];
             $sponsorship->sponsored = 0;
 
-            
-             /* 
+
+            /* 
              *  will saved in parent target or as a relation for this model 
              * places_ids => placeable table
              * array admins_ids => admins table
@@ -40,7 +52,7 @@ class SponsorShipController extends BaseController
             */
 
             $options = [
-                'target' => $request->target, 
+                'target' => $request->target,
                 "places_ids" => [$request->place_id],
                 'admins_ids' => $request->admins_ids,
             ];
@@ -66,17 +78,17 @@ class SponsorShipController extends BaseController
             $sponsorship->country_id = $data['country_id'];
             $sponsorship->sponsored = $data['sponsored'];
 
-             /* 
+            /* 
              *  will update data in parent target or as a relation for this model 
              * array admins_ids => admins table
              * array target => some data for target table (parent)
             */
-            
+
             $options = [
                 'target' => $request->target,
-                 "places_ids" => [$request->place_id],
+                "places_ids" => [$request->place_id],
                 'admins_ids' => $request->admins_ids,
-                ];
+            ];
 
 
             $sponsorship->save($options);
@@ -167,6 +179,78 @@ class SponsorShipController extends BaseController
             $data = $request->validated();
             setContent($status, $data['name'], $data['value'], $data['locale']);
             return $this->_response($status);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+
+    /////////////////////// Notes /////////////////////////
+
+    public function listing_notes(Request $request, Sponsorship $sponsorship)
+    {
+        try {
+            return $this->_response($sponsorship->listing_notes());
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function create_note(CreateNoteRequest $request, Sponsorship $sponsorship)
+    {
+        try {
+            $data = $request->validated();
+
+            $note = new Note;
+            $note->content = $data['content'];
+
+            $sponsorship->notes()->save($note);
+            return $this->_response($sponsorship->listing_notes());
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function update_note(UpdateNoteRequest $request, $case_id, Note $note)
+    {
+        try {
+            $data = $request->validated();
+
+            $note->content = $data['content'];
+            $note->save();
+
+            return $this->_response($note);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function review_note(ReviewUnReviewRequest $request, $case_id, Note $note)
+    {
+        try {
+            $user  = auth()->user();
+            $exists = $note->reviews()->where('reviewed_by', $user->id)->first();
+
+            if ($exists) {
+                return $this->_response($exists);
+            }
+
+            $review = new NoteReview();
+            $review->reviewed_by = $user->id;
+            $review->note_id = $note->id;
+            $review->save();
+            return $this->_response($review);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function unreview_note(ReviewUnReviewRequest $request, $case_id, Note $note)
+    {
+        try {
+            $user  = auth()->user();
+            $note->reviews()->where('reviewed_by', $user->id)->delete();
+            return $this->_response($note);
         } catch (\Exception $th) {
             throw $this->_exception($th->getMessage());
         }
