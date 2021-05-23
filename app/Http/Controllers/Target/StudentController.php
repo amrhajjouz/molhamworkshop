@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Target;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Models\{Student, Status, Note, NoteReview};
+use App\Models\{Student, Status, Note,NoteReview, Card};
 
 use App\Http\Requests\Target\Student\{
     CreateRequest,
@@ -19,6 +19,9 @@ use App\Http\Requests\Target\Student\{
     CreateNoteRequest,
     UpdateNoteRequest,
     ReviewUnReviewRequest,
+    /////////////////////// Cards
+    CreateCardRequest,
+    UpdateCardRequest,
 };
 
 
@@ -187,7 +190,7 @@ class StudentController extends BaseController
         }
     }
 
-    public function update_note(UpdateNoteRequest $request, $case_id, Note $note)
+    public function update_note(UpdateNoteRequest $request, $student_id, Note $note)
     {
         try {
             $data = $request->validated();
@@ -201,7 +204,7 @@ class StudentController extends BaseController
         }
     }
 
-    public function review_note(ReviewUnReviewRequest $request, $case_id, Note $note)
+    public function review_note(ReviewUnReviewRequest $request, $student_id, Note $note)
     {
         try {
             $user  = auth()->user();
@@ -221,12 +224,57 @@ class StudentController extends BaseController
         }
     }
 
-    public function unreview_note(ReviewUnReviewRequest $request, $case_id, Note $note)
+    public function unreview_note(ReviewUnReviewRequest $request, $student_id, Note $note)
     {
         try {
             $user  = auth()->user();
             $note->reviews()->where('reviewed_by', $user->id)->delete();
             return $this->_response($note);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    
+    /////////////////////// Card /////////////////////////
+
+    public function listing_cards(Request $request, Student $student)
+    {
+        try {
+            return $this->_response($student->listing_cards());
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function create_card(CreateCardRequest $request, Student $student)
+    {
+        try {
+            $data = $request->validated();
+
+            $card = new card;
+            $card->name = $data['name'];
+            $card->description = $data['description'];
+
+            $student->cards()->save($card);
+
+            return $this->_response($student->listing_cards());
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+    public function update_card(UpdateCardRequest $request, $student_id, Card $card)
+    {
+        try {
+
+            $card = Card::findOrFail($request->id);
+            $data = $request->validated();
+
+            $card->name = $data['name'];
+            $card->description = $data['description'];
+            $card->save();
+
+            return $this->_response($card);
         } catch (\Exception $th) {
             throw $this->_exception($th->getMessage());
         }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Target;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Models\{Sponsorship, Status, Note, NoteReview};
+use App\Models\{Sponsorship, Status, Note,NoteReview, Card};
 use App\Http\Requests\Target\Sponsorship\{
     CreateRequest,
     UpdateRequest,
@@ -18,6 +18,10 @@ use App\Http\Requests\Target\Sponsorship\{
     CreateNoteRequest,
     UpdateNoteRequest,
     ReviewUnReviewRequest,
+    /////////////////////// Cards
+    CreateCardRequest,
+    UpdateCardRequest,
+    
 };
 
 
@@ -211,7 +215,7 @@ class SponsorShipController extends BaseController
         }
     }
 
-    public function update_note(UpdateNoteRequest $request, $case_id, Note $note)
+    public function update_note(UpdateNoteRequest $request, $sponsorship_id, Note $note)
     {
         try {
             $data = $request->validated();
@@ -225,7 +229,7 @@ class SponsorShipController extends BaseController
         }
     }
 
-    public function review_note(ReviewUnReviewRequest $request, $case_id, Note $note)
+    public function review_note(ReviewUnReviewRequest $request, $sponsorship_id, Note $note)
     {
         try {
             $user  = auth()->user();
@@ -245,12 +249,57 @@ class SponsorShipController extends BaseController
         }
     }
 
-    public function unreview_note(ReviewUnReviewRequest $request, $case_id, Note $note)
+    public function unreview_note(ReviewUnReviewRequest $request, $sponsorship_id, Note $note)
     {
         try {
             $user  = auth()->user();
             $note->reviews()->where('reviewed_by', $user->id)->delete();
             return $this->_response($note);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+
+    /////////////////////// Card /////////////////////////
+
+    public function listing_cards(Request $request, Sponsorship $sponsorship)
+    {
+        try {
+            return $this->_response($sponsorship->listing_cards());
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function create_card(CreateCardRequest $request, Sponsorship $sponsorship)
+    {
+        try {
+            $data = $request->validated();
+
+            $card = new card;
+            $card->name = $data['name'];
+            $card->description = $data['description'];
+
+            $sponsorship->cards()->save($card);
+
+            return $this->_response($sponsorship->listing_cards());
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+    public function update_card(UpdateCardRequest $request, $sponsorship_id, Card $card)
+    {
+        try {
+
+            $card = Card::findOrFail($request->id);
+            $data = $request->validated();
+
+            $card->name = $data['name'];
+            $card->description = $data['description'];
+            $card->save();
+
+            return $this->_response($card);
         } catch (\Exception $th) {
             throw $this->_exception($th->getMessage());
         }

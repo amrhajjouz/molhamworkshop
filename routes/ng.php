@@ -40,6 +40,9 @@ return [
     'cases.contents' => ['cases/:id/contents', 'cases/caseContentsController', 'cases.single.contents'],
     'cases.statuses' => ['cases/:id/statuses', 'cases/listCaseStatusesController', 'cases.single.statuses'],
     'cases.notes' => ['cases/:id/notes', 'cases/listCaseNotesController', 'cases.single.notes'],
+    'cases.cards' => ['cases/:id/cards', 'cases/listCaseCardsController', 'cases.single.cards'],
+
+
 
     ////////////////////// Campaign Routes    ///////////////////
     'campaigns.add' => ['campaigns/add', 'campaigns/addCampaignController', 'campaigns.add'],
@@ -49,6 +52,9 @@ return [
     'campaigns.contents' => ['campaigns/:id/contents', 'campaigns/campaignContentsController', 'campaigns.single.contents'],
     'campaigns.statuses' => ['campaigns/:id/statuses', 'campaigns/listCampaignStatusesController', 'campaigns.single.statuses'],
     'campaigns.notes' => ['campaigns/:id/notes', 'campaigns/listCampaignNotesController', 'campaigns.single.notes'],
+    'campaigns.cards' => ['campaigns/:id/cards', 'campaigns/listCampaignCardsController', 'campaigns.single.cards'],
+
+
 
     ////////////////////// SponsorShip Routes    ///////////////////
     'sponsorships.add' => ['sponsorships/add', 'sponsorships/addSponsorshipController', 'sponsorships.add'],
@@ -59,6 +65,9 @@ return [
     'sponsorships.contents' => ['sponsorships/:id/contents', 'sponsorships/sponsorshipContentsController', 'sponsorships.single.contents'],
     'sponsorships.statuses' => ['sponsorships/:id/statuses', 'sponsorships/listSponsorshipStatusesController', 'sponsorships.single.statuses'],
     'sponsorships.notes' => ['sponsorships/:id/notes', 'sponsorships/listSponsorshipNotesController', 'sponsorships.single.notes'],
+    'sponsorships.cards' => ['sponsorships/:id/cards', 'sponsorships/listSponsorshipCardsController', 'sponsorships.single.cards'],
+
+
 
     ////////////////////// Students Routes    ///////////////////
     'students.add' => ['students/add', 'students/addStudentController', 'students.add'],
@@ -69,6 +78,9 @@ return [
     'students.contents' => ['students/:id/contents', 'students/studentContentsController', 'students.single.contents'],
     'students.statuses' => ['students/:id/statuses', 'students/listStudentStatusesController', 'students.single.statuses'],
     'students.notes' => ['students/:id/notes', 'students/listStudentNotesController', 'students.single.notes'],
+    'students.cards' => ['students/:id/cards', 'students/listStudentCardsController', 'students.single.cards'],
+
+
 
     /////////////////////////// Events Routes    ///////////////////
     'events.add' => ['events/add', 'events/addEventController', 'events.add'],
@@ -78,6 +90,9 @@ return [
     'events.contents' => ['events/:id/contents', 'events/eventContentsController', 'events.single.contents'],
     'events.statuses' => ['events/:id/statuses', 'events/listEventStatusesController', 'events.single.statuses'],
     'events.notes' => ['events/:id/notes', 'events/listEventNotesController', 'events.single.notes'],
+    'events.cards' => ['events/:id/cards', 'events/listEventCardsController', 'events.single.cards'],
+
+
 
     /////////////////////////// Fundraisers Routes    ///////////////////
     'fundraisers.add' => ['fundraisers/add', 'fundraisers/addFundraiserController', 'fundraisers.add'],
@@ -87,6 +102,8 @@ return [
     'fundraisers.contents' => ['fundraisers/:id/contents', 'fundraisers/fundraiserContentsController', 'fundraisers.single.contents'],
     'fundraisers.statuses' => ['fundraisers/:id/statuses', 'fundraisers/listFundraiserStatusesController', 'fundraisers.single.statuses'],
     'fundraisers.notes' => ['fundraisers/:id/notes', 'fundraisers/listFundraiserNotesController', 'fundraisers.single.notes'],
+    'fundraisers.cards' => ['fundraisers/:id/cards', 'fundraisers/listFundraiserCardsController', 'fundraisers.single.cards'],
+    
 
     /////////////////////// Places /////////////////////////
 

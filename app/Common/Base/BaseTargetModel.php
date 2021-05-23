@@ -7,6 +7,7 @@ use App\Common\Base\BaseModel as Model;
 use Illuminate\Support\Facades\Auth;
 use App\Models\{Place, Target};
 use App\Facades\Helper;
+use App\Common\Traits\HasCard;
 
 /* 
  * this Class is base class and any model extends this will records in targets table 
@@ -14,6 +15,7 @@ use App\Facades\Helper;
 
 class BaseTargetModel extends Model
 {
+    use HasCard;
 
     protected $model_path;
     protected $has_places;

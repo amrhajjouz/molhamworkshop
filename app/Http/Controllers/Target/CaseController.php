@@ -7,7 +7,7 @@ use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
 
 use App\Facades\Helper;
-use App\Models\{Cases, Status, Note, NoteReview};
+use App\Models\{Cases, Status, Note, NoteReview , Card};
 
 use App\Http\Requests\Target\Cases\{
     CreateRequest,
@@ -17,7 +17,10 @@ use App\Http\Requests\Target\Cases\{
     CreateStatusRequest,
     UpdateStatusRequest ,
     CreateNoteRequest ,
-    UpdateNoteRequest , 
+    UpdateNoteRequest ,
+    /////////////////////// Cards
+    CreateCardRequest,
+    UpdateCardRequest,
 };
 
 class CaseController extends BaseController
@@ -157,6 +160,8 @@ class CaseController extends BaseController
         }
     }
 
+    /////////////////////// notes  /////////////////////////
+
     public function listing_notes(Request $request, Cases $case)
     {
         try {
@@ -224,4 +229,50 @@ class CaseController extends BaseController
             throw $this->_exception($th->getMessage());
         }
     }
+
+
+    /////////////////////// Card /////////////////////////
+
+    public function listing_cards(Request $request, Cases $case)
+    {
+        try {
+            return $this->_response($case->listing_cards());
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function create_card(CreateCardRequest $request, Cases $case)
+    {
+        try {
+            $data = $request->validated();
+
+            $card = new card;
+            $card->name = $data['name'];
+            $card->description = $data['description'];
+
+            $case->cards()->save($card);
+
+            return $this->_response($case->listing_cards());
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+    public function update_card(UpdateCardRequest $request, $case_id, Card $card)
+    {
+        try {
+
+            $card = Card::findOrFail($request->id);
+            $data = $request->validated();
+
+            $card->name = $data['name'];
+            $card->description = $data['description'];
+            $card->save();
+
+            return $this->_response($card);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+    
 }

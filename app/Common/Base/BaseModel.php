@@ -37,6 +37,10 @@ use Illuminate\Database\Eloquent\Model;
         return $this->hasOne('App\Models\User' , 'id' , 'created_by');
     }
     
+    public function updator(){
+        return $this->hasOne('App\Models\User' , 'id' , 'updated_by');
+    }
+    
 
     public function save(array $options = []){
         

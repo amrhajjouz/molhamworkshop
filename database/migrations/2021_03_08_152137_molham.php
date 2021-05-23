@@ -248,6 +248,18 @@ class Molham extends Migration
             $table->bigInteger('reviewed_by')->index();
             $table->timestamps();
         });
+
+
+        Schema::create('cards', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('cardable_id');
+            $table->string('cardable_type')->index();
+            $table->string('name' , 100);
+            $table->text('description' , 100);
+            $table->bigInteger('created_by')->nullable();
+            $table->bigInteger('updated_by')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -280,5 +292,6 @@ class Molham extends Migration
         Schema::dropIfExists('pages');
         Schema::dropIfExists('blogs');
         Schema::dropIfExists('publishers');
+        Schema::dropIfExists('cards');
     }
 }
