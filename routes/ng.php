@@ -41,6 +41,7 @@ return [
     'cases.statuses' => ['cases/:id/statuses', 'cases/listCaseStatusesController', 'cases.single.statuses'],
     'cases.notes' => ['cases/:id/notes', 'cases/listCaseNotesController', 'cases.single.notes'],
     'cases.cards' => ['cases/:id/cards', 'cases/listCaseCardsController', 'cases.single.cards'],
+    'cases.attachments' => ['cases/:id/attachments', 'cases/listCaseAttachmentsController', 'cases.single.attachments'],
 
 
 
@@ -91,7 +92,6 @@ return [
     'events.statuses' => ['events/:id/statuses', 'events/listEventStatusesController', 'events.single.statuses'],
     'events.notes' => ['events/:id/notes', 'events/listEventNotesController', 'events.single.notes'],
     'events.cards' => ['events/:id/cards', 'events/listEventCardsController', 'events.single.cards'],
-
 
 
     /////////////////////////// Fundraisers Routes    ///////////////////

@@ -134,6 +134,32 @@
     <script src="{{ asset('js/angular.min.js') }}"></script>
     <script src="{{ asset('js/angular-route.js') }}"></script>
     
+    {{-- trello  --}}
+    
+    {{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone.min.js"></script> --}}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
+    <script src="https://trello.com/1/client.js?key=478a021e0eee1bc54f97f29c1e6149f6"></script>
+    <script src="https://p.trellocdn.com/embed.min.js"></script>
+    
+
+   {{-- <script>
+      const scriptSrc = window.customElements
+        ? "/card.min.js"
+        : "/card-polyfilled.min.js";
+      window.cardComponentLoaded = new Promise(function (resolve) {
+        const cardJs = document.createElement("script");
+        cardJs.crossOrigin = "anonymous";
+        cardJs.src = "https://p.trellocdn.com" + scriptSrc;
+        cardJs.onload = resolve;
+        document.head.appendChild(cardJs);
+      });
+    </script>
+ --}}
+
+
+
+
+
     @foreach ($routes as $r)
     <script src="{{ asset('ng/controllers/' . $r['controller_path'] . '?t=' . time()) }}"></script>
     @endforeach
