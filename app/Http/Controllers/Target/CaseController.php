@@ -22,7 +22,8 @@ use App\Http\Requests\Target\Cases\{
     /////////////////////// Cards
     CreateCardRequest,
     UpdateCardRequest,
-    CreateCommentRequest
+    CreateCommentRequest,
+    UpdateCommentRequest,
 };
 use App\Jobs\ImportDriveFile;
 
@@ -298,6 +299,33 @@ class CaseController extends BaseController
             $comment->body = $data['body'];
 
             $card->comments()->save($comment);
+            return $this->_response($comment);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+    
+    public function update_comment(UpdateCommentRequest $request,  $case_id , Card $card)
+    {
+        try {
+            $data = $request->validated();
+            $comment = Comment::findOrFail($data['id']);
+            $comment->body =  $data['body'];
+            $comment->save();
+
+            return $this->_response($comment);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+    
+    public function delete_comment(Request $request,  $case_id , $card_id , Comment $comment)
+    {
+        try {
+
+             
+            $comment->delete();
+
             return $this->_response($comment);
         } catch (\Exception $th) {
             throw $this->_exception($th->getMessage());

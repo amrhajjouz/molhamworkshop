@@ -33,6 +33,11 @@ function listCaseCardsController($scope, $page, $apiRequest, $init) {
 
   $scope.comments = [];
   $scope.newComment = {};
+  $scope.selectedComment = {};
+  $scope.currentCommentAction = 'add';
+  $scope.loadingComments = false;
+
+  $scope.selectedCard = {};
 
   $scope.createUpdateCard = $apiRequest.config(
     {
@@ -51,9 +56,6 @@ function listCaseCardsController($scope, $page, $apiRequest, $init) {
       $scope.selectedCard = angular.copy($scope.defaultCardModel);
     }
   );
-
-  $scope.selectedCard = {};
-  $scope.loadingComments = false;
 
   $scope.defaultCardModel = {
     cardable_id: $page.routeParams.id,
@@ -74,7 +76,6 @@ function listCaseCardsController($scope, $page, $apiRequest, $init) {
       case 'edit':
         $scope.createUpdateCard.config.method = action = 'PUT';
         $scope.selectedCard = angular.copy(data);
-        $scope.createCommentRequest.config.url = `api/cases/${$page.routeParams.id}/cards/${$scope.selectedCard.id}`;
         $scope.getComments();
         break;
       default:
@@ -88,7 +89,7 @@ function listCaseCardsController($scope, $page, $apiRequest, $init) {
     $('#card-modal').modal('show');
   };
 
-  /////////////////////// Get Case Comments /////////////////////////
+  ///////////////////////  Comments /////////////////////////
   $scope.getComments = async () => {
     if ($scope.comments.length) return;
     $scope.loadingComments = true;
@@ -101,27 +102,67 @@ function listCaseCardsController($scope, $page, $apiRequest, $init) {
     $scope.$evalAsync();
   };
 
+  $scope.createUpdateComment = $apiRequest.config(
+    {
+      method: 'POST',
+      url: `cases/${$page.routeParams.id}/cards/${$scope.selectedCard.id}/comments`,
+      data: $scope.newComment,
+    },
+    function (response, data) {
+      $scope.selectedComment = {};
 
-    $scope.createCommentRequest = $apiRequest.config(
-      {
-        method: 'POST',
-        url: `cases/${$page.routeParams.id}/cards/${$scope.selectedCard.id}`,
-        data: $scope.newComment,
-      },
-      function (response, data) {
+      $scope.newComment = {};
 
-        $scope.comments.push(data)
-        $scope.newComment = null;
-        // $('#card-modal').on('hidden.bs.modal', function (e) {
-        //   $page.reload();
-        // });
+      if ($scope.currentCommentAction == 'add') $scope.comments.push(data);
+    }
+  );
 
-        // $('#card-modal').modal('hide');
+  $scope.switchCommentMode = function (action = 'add', data = {}) {
+    $scope.currentCommentAction = action;
+    switch (action) {
+      case 'add':
+        $scope.createUpdateComment.config.method = 'POST';
+        $scope.createUpdateComment.config.url = `api/cases/${$page.routeParams.id}/cards/${$scope.selectedCard.id}/comments`;
+        break;
+      case 'edit':
+        $scope.selectedComment = data;
+        $scope.createUpdateComment.config.method = action = 'PUT';
+        $scope.createUpdateComment.config.url = `api/cases/${$page.routeParams.id}/cards/${$scope.selectedCard.id}/comments`;
+        break;
 
-        // reinitialize card to default value after create or update
-        // $scope.selectedCard = angular.copy($scope.defaultCardModel);
-      }
-    );
+      case 'delete':
+        $scope.selectedComment = data;
+        if (confirm('هل تريد التأكيد على حذف هذا التعليق ؟ ')) {
+          $apiRequest
+            .config(
+              {
+                method: 'DELETE',
+                url: `cases/${$page.routeParams.id}/cards/${$scope.selectedCard.id}/comments/${$scope.selectedComment.id}`,
+                data: $scope.selectedComment,
+              },
+              function (response, data) {
+                $scope.comments = $scope.comments.filter((e) => e.id != data.id);
+                $scope.selectedComment = null;
+              }
+            )
+            .getData();
+        }
+        break;
 
+      default:
+        break;
+    }
+    $scope.$evalAsync();
+  };
 
+  $scope.$watch('selectedComment.body', function (body) {
+    $scope.createUpdateComment.config.data = $scope.selectedComment;
+    $scope.createUpdateComment.config.method = action = 'PUT';
+    $scope.createUpdateComment.config.url = `api/cases/${$page.routeParams.id}/cards/${$scope.selectedCard.id}/comments`;
+  });
+
+  $scope.$watch('newComment.body', function (body) {
+    $scope.createUpdateComment.config.data = $scope.newComment;
+    $scope.createUpdateComment.config.method = 'POST';
+  });
 }

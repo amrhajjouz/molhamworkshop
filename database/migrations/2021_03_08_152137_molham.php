@@ -278,6 +278,8 @@ class Molham extends Migration
             $table->bigInteger('commentable_id');
             $table->text('body');
             $table->bigInteger('created_by');
+            $table->softDeletes();
+
             $table->timestamps();
         });
     }

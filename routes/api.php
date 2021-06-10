@@ -100,7 +100,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/cases/{case_id}/notes/{note}/unreview', [CaseController::class, 'unreview_note']);
     Route::get('/cases/{case}/cards', [CaseController::class, 'listing_cards']);
     Route::get('/cases/{case}/cards/{card}', [CaseController::class, 'retrieve_card']);
-    Route::post('/cases/{case_id}/cards/{card}', [CaseController::class, 'create_comment']);
+    Route::post('/cases/{case_id}/cards/{card}/comments', [CaseController::class, 'create_comment']);
+    Route::put('/cases/{case_id}/cards/{card}/comments', [CaseController::class, 'update_comment']);
+    Route::delete('/cases/{case_id}/cards/{card_id}/comments/{comment}', [CaseController::class, 'delete_comment']);
     Route::post('/cases/{case}/cards', [CaseController::class, 'create_card']);
     Route::put('/cases/{case_id}/cards', [CaseController::class, 'update_card']);
     Route::get('/cases/{case}/attachments', [CaseController::class, 'listing_attachments']);
@@ -122,6 +124,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/campaigns/{campaign_id}/notes/{note}/review', [CampaignController::class, 'review_note']);
     Route::post('/campaigns/{campaign_id}/notes/{note}/unreview', [CampaignController::class, 'unreview_note']);
     Route::get('/campaigns/{campaign}/cards', [CampaignController::class, 'listing_cards']);
+    Route::get('/campaigns/{campaign}/cards/{card}', [CampaignController::class, 'retrieve_card']);
+    Route::post('/campaigns/{campaign_id}/cards/{card}/comments', [CampaignController::class, 'create_comment']);
+    Route::put('/campaigns/{campaign_id}/cards/{card}/comments', [CampaignController::class, 'update_comment']);
+    Route::delete('/campaigns/{campaign_id}/cards/{card_id}/comments/{comment}', [CampaignController::class, 'delete_comment']);
     Route::post('/campaigns/{campaign}/cards', [CampaignController::class, 'create_card']);
     Route::put('/campaigns/{campaign_id}/cards', [CampaignController::class, 'update_card']);
 

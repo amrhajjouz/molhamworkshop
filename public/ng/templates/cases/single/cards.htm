@@ -75,10 +75,9 @@
       </form>
 
       <!-- comments -->
-
       <div class="card p-5 mt-3" ng-show="currentModalAction=='edit'">
         <div ng-show="loadingComments">جاري التحميل ..</div>
-        <div class="comment mb-3" ng-repeat="comment in comments" ng-show="!loadingComments">
+        <div class="comment mb-3" ng-repeat="cmt in comments" ng-show="!loadingComments">
           <div class="row">
             <div class="col-auto">
               <!-- Avatar -->
@@ -92,17 +91,35 @@
                 <div class="row">
                   <div class="col">
                     <!-- Title -->
-                    <h5 class="comment-title">{{comment.user.name}}</h5>
+                    <h5 class="comment-title">{{cmt.user.name}}</h5>
                   </div>
                   <div class="col-auto">
                     <!-- Time -->
-                    <time class="comment-time"> {{comment.created_at}}</time>
+                    <time class="comment-time"> {{cmt.created_at}}</time>
+                  </div>
+                  <div class="col-auto">
+                    <dropdown>
+                      <dropdown-item href="#" ng-click="switchCommentMode( 'edit' ,cmt)"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
+                      <dropdown-item href="#" ng-click="switchCommentMode( 'delete' ,cmt)"><i class="fe fe-trash"></i>حذف</dropdown-item>
+                    </dropdown>
                   </div>
                 </div>
                 <!-- / .row -->
 
                 <!-- Text -->
-                <p class="comment-text">{{comment.body}}</p>
+                  <p ng-if="selectedComment.id!=cmt.id">{{cmt.body}}</p>
+                <form name="updateCommentForm" request="createUpdateComment" class="mt-1" ng-if="selectedComment.id==cmt.id">
+                  <textarea
+                    class="form-control form-control-flush"
+                    data-autosize=""
+                    rows="1"
+                    style="overflow: hidden; overflow-wrap: break-word; height: 41px"
+                    ng-model="selectedComment.body"
+                    required
+                  ></textarea>
+                  <submit-button ng-show="selectedComment.id == cmt.id" form="updateCommentForm" icon="fe fe-edit">تعديل</submit-button>
+                </form>
+                <!-- <p class="comment-text">{{comment.body}}</p> -->
               </div>
             </div>
           </div>
@@ -122,7 +139,7 @@
           </div>
           <div class="col ms-n2">
             <!-- Input -->
-            <form name="createCommentForm" request="createCommentRequest" id="commentForm" class="mt-1">
+            <form name="createCommentForm" request="createUpdateComment" id="commentForm" class="mt-1">
               <label class="visually-hidden">اترك تعليقا ..</label>
               <textarea
                 class="form-control form-control-flush"

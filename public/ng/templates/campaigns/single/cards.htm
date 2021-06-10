@@ -37,6 +37,9 @@
     </tbody>
   </table>
 </datatable>
+
+
+
 <div class="card">
   <!-- Create Modal -->
   <modal id="card-modal">
@@ -90,5 +93,110 @@
           >
         </form>
       </modal-body>
+
+
+
+            <!-- comments -->
+
+      <div class="card p-5 mt-3" ng-show="currentModalAction=='edit'">
+        <div ng-show="loadingComments">جاري التحميل ..</div>
+        <div class="comment mb-3" ng-repeat="cmt in comments" ng-show="!loadingComments">
+          <div class="row">
+            <div class="col-auto">
+              <!-- Avatar -->
+              <a class="avatar" href="profile-posts.html">
+                <img src="https://dashkit.goodthemes.co/assets/img/avatars/profiles/avatar-3.jpg" alt="..." class="avatar-img rounded-circle" />
+              </a>
+            </div>
+            <div class="col ms-n2">
+              <!-- Body -->
+              <div class="comment-body">
+                <div class="row">
+                  <div class="col">
+                    <!-- Title -->
+                    <h5 class="comment-title">{{cmt.user.name}}</h5>
+                  </div>
+                  <div class="col-auto">
+                    <!-- Time -->
+                    <time class="comment-time"> {{cmt.created_at}}</time>
+                  </div>
+                  <div class="col-auto">
+                    <dropdown>
+                      <dropdown-item href="#" ng-click="switchCommentMode( 'edit' ,cmt)"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
+                      <dropdown-item href="#" ng-click="switchCommentMode( 'delete' ,cmt)"><i class="fe fe-trash"></i>حذف</dropdown-item>
+                    </dropdown>
+                  </div>
+                </div>
+                <!-- / .row -->
+
+                <!-- Text -->
+                  <p ng-if="selectedComment.id!=cmt.id">{{cmt.body}}</p>
+                <form name="updateCommentForm" request="createUpdateComment" class="mt-1" ng-if="selectedComment.id==cmt.id">
+                  <textarea
+                    class="form-control form-control-flush"
+                    data-autosize=""
+                    rows="1"
+                    style="overflow: hidden; overflow-wrap: break-word; height: 41px"
+                    ng-model="selectedComment.body"
+                    required
+                  ></textarea>
+                  <submit-button ng-if="selectedComment.id == cmt.id" form="updateCommentForm" icon="fe fe-edit">تعديل</submit-button>
+                </form>
+                <!-- <p class="comment-text">{{comment.body}}</p> -->
+              </div>
+            </div>
+          </div>
+          <!-- / .row -->
+        </div>
+
+        <!-- Divider -->
+        <hr />
+
+        <!-- Form -->
+        <div class="row">
+          <div class="col-auto">
+            <!-- Avatar -->
+            <div class="avatar avatar-sm">
+              <img src="https://dashkit.goodthemes.co/assets/img/avatars/profiles/avatar-1.jpg" alt="..." class="avatar-img rounded-circle" />
+            </div>
+          </div>
+          <div class="col ms-n2">
+            <!-- Input -->
+            <form name="createCommentForm" request="createUpdateComment" id="commentForm" class="mt-1">
+              <label class="visually-hidden">اترك تعليقا ..</label>
+              <textarea
+                class="form-control form-control-flush"
+                data-autosize=""
+                rows="1"
+                placeholder="إنقر لإضافة تعليق"
+                style="overflow: hidden; overflow-wrap: break-word; height: 41px"
+                ng-model="newComment.body"
+                required
+              ></textarea>
+
+              <submit-button form="createCommentForm" icon="fe fe-plus">إضافة تعليق</submit-button>
+            </form>
+          </div>
+          <div class="col-auto align-self-end">
+            <!-- Icons -->
+            <div class="text-muted mb-2">
+              <a class="text-reset me-3" href="#" data-bs-toggle="tooltip" title="" data-bs-original-title="Add photo">
+                <i class="fe fe-camera"></i>
+              </a>
+              <a class="text-reset me-3" href="#" data-bs-toggle="tooltip" title="" data-bs-original-title="Attach file">
+                <i class="fe fe-paperclip"></i>
+              </a>
+              <a class="text-reset" href="#" data-bs-toggle="tooltip" title="" data-bs-original-title="Record audio">
+                <i class="fe fe-mic"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- / .row -->
+      </div>
+
+
+
+
   </modal>
 </div>

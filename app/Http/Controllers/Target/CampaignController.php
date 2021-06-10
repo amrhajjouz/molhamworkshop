@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Target;
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
 use Illuminate\Http\Request;
-use App\Models\{Campaign, Status , Note , NoteReview , Card};
+use App\Models\{Campaign, Status , Note , NoteReview , Card, Comment};
 use App\Http\Requests\Target\Campaign\{
     CreateRequest,
     UpdateRequest,
@@ -21,6 +21,8 @@ use App\Http\Requests\Target\Campaign\{
     /////////////////////// Cards
     CreateCardRequest,
     UpdateCardRequest,
+    CreateCommentRequest,
+    UpdateCommentRequest,
 };
 
 class CampaignController extends BaseController
@@ -274,4 +276,63 @@ class CampaignController extends BaseController
             throw $this->_exception($th->getMessage());
         }
     }
+
+
+    public function retrieve_card(Request $request, $campaign_id, Card $card)
+    {
+        try {
+            $card->comments;
+
+            return $this->_response($card);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function create_comment(CreateCommentRequest $request,  $campaign_id, Card $card)
+    {
+        try {
+            $data = $request->validated();
+
+            $comment = new Comment();
+            $comment->body = $data['body'];
+
+            $card->comments()->save($comment);
+            return $this->_response($comment);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function update_comment(UpdateCommentRequest $request,  $campaign_id, Card $card)
+    {
+        try {
+            $data = $request->validated();
+            $comment = Comment::findOrFail($data['id']);
+            $comment->body =  $data['body'];
+            $comment->save();
+
+            return $this->_response($comment);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function delete_comment(Request $request,  $campaign_id, $card_id, Comment $comment)
+    {
+        try {
+
+
+            $comment->delete();
+
+            return $this->_response($comment);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+
+
+
+
 }

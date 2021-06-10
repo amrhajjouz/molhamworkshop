@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-
 use App\Common\Base\BaseModel;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends BaseModel
 {
+     use SoftDeletes;
 
      protected $table = 'comments';
      protected $guarded = [];
