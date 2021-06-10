@@ -18,5 +18,18 @@ return [
         "de", //Germany , 
         "tr", //Turkey
         "es" //Spain
-    ]
+    ],
+
+
+
+
+    // Google Drive
+    'google_drive_api_key' => env("GOOGLE_DRIVE_API_KEY", '')
+
+
 ];
+
+
+
+
+

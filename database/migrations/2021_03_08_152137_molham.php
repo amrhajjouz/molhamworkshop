@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Validation\Rules\Unique;
 
 class Molham extends Migration
 {
@@ -260,6 +261,25 @@ class Molham extends Migration
             $table->bigInteger('updated_by')->nullable();
             $table->timestamps();
         });
+    
+        Schema::create('files', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('fileable_id');
+            $table->string('fileable_type')->index();
+            $table->string('reference' , 100)->unique();
+            $table->text('name');
+            $table->text('extension');
+            $table->timestamps();
+        });
+      
+        Schema::create('comments', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('commentable_type')->index();
+            $table->bigInteger('commentable_id');
+            $table->text('body');
+            $table->bigInteger('created_by');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -293,5 +313,7 @@ class Molham extends Migration
         Schema::dropIfExists('blogs');
         Schema::dropIfExists('publishers');
         Schema::dropIfExists('cards');
+        Schema::dropIfExists('files');
+        Schema::dropIfExists('comments');
     }
 }

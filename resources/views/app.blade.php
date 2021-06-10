@@ -136,25 +136,101 @@
     
     {{-- trello  --}}
     
-    {{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone.min.js"></script> --}}
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
+    {{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script> --}}
     <script src="https://trello.com/1/client.js?key=478a021e0eee1bc54f97f29c1e6149f6"></script>
     <script src="https://p.trellocdn.com/embed.min.js"></script>
-    
 
-   {{-- <script>
-      const scriptSrc = window.customElements
-        ? "/card.min.js"
-        : "/card-polyfilled.min.js";
-      window.cardComponentLoaded = new Promise(function (resolve) {
-        const cardJs = document.createElement("script");
-        cardJs.crossOrigin = "anonymous";
-        cardJs.src = "https://p.trellocdn.com" + scriptSrc;
-        cardJs.onload = resolve;
-        document.head.appendChild(cardJs);
-      });
+    {{-- Google Drive --}}
+       {{-- <script src="https://apis.google.com/js/client.js"></script> --}}
+
+  <script async defer src="https://apis.google.com/js/api.js"> onreadystatechange="if (this.readyState === 'complete') this.onload()"</script>
+
+{{-- 
+
+    <script type="text/javascript">
+
+    // The Browser API key obtained from the Google API Console.
+    // Replace with your own Browser API key, or your own key.
+    var developerKey = "AIzaSyBqzy_qnXlJbHr6pExKeow1NYJX4d2oTXY";
+
+    // The Client ID obtained from the Google API Console. Replace with your own Client ID.
+    var clientId = "120230772858-lg8cb520vnjn9gfcle83l90v4kqo3d5g.apps.googleusercontent.com";
+
+    // Replace with your own project number from console.developers.google.com.
+    // See "Project number" under "IAM & Admin" > "Settings"
+    var appId = "test-api-project-314916";
+
+    // Scope to use to access user's Drive items.
+    var scope = ['https://www.googleapis.com/auth/drive.file'];
+
+    var pickerApiLoaded = false;
+    var oauthToken;
+
+    // Use the Google API Loader script to load the google.picker script.
+    function loadPicker() {
+      gapi.load('auth', {'callback': onAuthApiLoad});
+      gapi.load('picker', {'callback': onPickerApiLoad});
+    }
+
+    function onAuthApiLoad() {
+      window.gapi.auth.authorize(
+          {
+            'client_id': clientId,
+            'scope': scope,
+            'immediate': false
+          },
+          handleAuthResult);
+    }
+
+    function onPickerApiLoad() {
+      pickerApiLoaded = true;
+      createPicker();
+    }
+
+    function handleAuthResult(authResult) {
+      if (authResult && !authResult.error) {
+        oauthToken = authResult.access_token;
+        createPicker();
+      }
+    }
+
+    // Create and render a Picker object for searching images.
+    function createPicker() {
+      if (pickerApiLoaded && oauthToken) {
+        var view = new google.picker.View(google.picker.ViewId.DOCS);
+        view.setMimeTypes("image/png,image/jpeg,image/jpg,*");
+        var picker = new google.picker.PickerBuilder()
+            .enableFeature(google.picker.Feature.NAV_HIDDEN)
+            .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
+            .setAppId(appId)
+            .setOAuthToken(oauthToken)
+            .addView(view)
+            .addView(new google.picker.DocsUploadView())
+            // .setDeveloperKey(developerKey)
+            .setCallback(pickerCallback)
+            .build();
+         picker.setVisible(true);
+      }
+    }
+
+    // A simple callback implementation.
+    function pickerCallback(data) {
+      if (data.action == google.picker.Action.PICKED) {
+        var fileId = data.docs[0].id;
+        console.log( data.docs)
+        alert('The user selected: ' + fileId);
+      }
+    }
     </script>
- --}}
+
+     <script type="text/javascript" src="https://apis.google.com/js/api.js?onload=loadPicker"></script>
+ 
+
+
+
+
+
+     --}}
 
 
 
@@ -472,6 +548,7 @@
                 replace : true,
                 template : '<button class="btn btn-primary" ng-click="updateFormModel();form.request.send();form.$submitted = true;" ng-disabled="form.$invalid || !form.unregisteredRequiredModels.valid || form.$pristine || form.request.sending || form.$submitted"><i ng-hide="form.request.sending || (!form.request.sending && form.$submitted && !form.request.error)" class="@{{ icon }}"></i><div ng-show="form.request.sending" class="spinner-border spinner-border-sm" role="status"></div><i ng-show="!form.request.sending && form.$submitted && !form.request.error" class="fa fa-check"></i>&nbsp; <span ng-transclude></span></button>',
                 link : function (scope, element, attrs) {
+                    console.log(scope.form)
                     scope.updateFormModel = function () {
                         if (scope.form.model)
                             scope.form.request.config.data = scope.form.model;

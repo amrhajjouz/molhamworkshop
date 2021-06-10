@@ -34,6 +34,7 @@ use App\Http\Controllers\{
     BlogController,
     PublisherController,
     ShortcutKeyController,
+    FileController,
 };
 
 
@@ -98,8 +99,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/cases/{case_id}/notes/{note}/review', [CaseController::class, 'review_note']);
     Route::post('/cases/{case_id}/notes/{note}/unreview', [CaseController::class, 'unreview_note']);
     Route::get('/cases/{case}/cards', [CaseController::class, 'listing_cards']);
+    Route::get('/cases/{case}/cards/{card}', [CaseController::class, 'retrieve_card']);
+    Route::post('/cases/{case_id}/cards/{card}', [CaseController::class, 'create_comment']);
     Route::post('/cases/{case}/cards', [CaseController::class, 'create_card']);
     Route::put('/cases/{case_id}/cards', [CaseController::class, 'update_card']);
+    Route::get('/cases/{case}/attachments', [CaseController::class, 'listing_attachments']);
 
 
     //////////////////  CAMPAIGNS //////////////
@@ -181,10 +185,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/events/{event}/cards', [EventController::class, 'listing_cards']);
     Route::post('/events/{event}/cards', [EventController::class, 'create_card']);
     Route::put('/events/{event_id}/cards', [EventController::class, 'update_card']);
-
-    // Route::get('/sponsorships/{sponsorship}/statuses', [SponsorshipController::class, 'list_statuses']);
-    // Route::post('/sponsorships/{sponsorship}/statuses', [SponsorshipController::class, 'create_statuses']);
-    // Route::put('/sponsorships/{sponsorship}/statuses/{status}/contents', [SponsorshipController::class, 'update_statuses']);
 
     ////////////////// Fundraiser // //////////////
     Route::get('/fundraisers', [FundraiserController::class, 'list']);
@@ -277,16 +277,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/publishers/{id}', [PublisherController::class, 'retrieve']);
     Route::put('/publishers/{publisher}/contents', [PublisherController::class, 'create_update_contents']);
 
+    //files
+    Route::post('/files',  [FileController::class, 'create']);
 
 
 });
 
-
-
-
-// lists (s)
-// overview(single)
-// create (single)
-// edit ()
-// 
-// 

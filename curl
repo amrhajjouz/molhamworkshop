@@ -1,0 +1,12 @@
+curl \
+  'https://www.googleapis.com/drive/v3/files/1t6RbNlJxfFWwcuZJ6CqYw2GyumbnNpLQ/export?mimeType=text/csv&key=AIzaSyBqzy_qnXlJbHr6pExKeow1NYJX4d2oTXY' \
+  --header 'Authorization: Bearer ya29.a0AfH6SMCpYK2qhyiHFSZTAV0hZ1rJlCA_K-Xc2coNnzBWt1Y0ywFZunEU5JYAWRp7A9vwusxYf19DeQH0qKd1nYYIa7pORzhq_ePg4oMCIepYgun_5piPqj0KAz0PSJfoE85Q_HvGgOT8JKiA6ej8401F_ftf-A' \
+  --compressed
+
+
+
+curl \
+  'https://www.googleapis.com/drive/v2/files/1HtyyXalQTua0S02Hw1sfJ1vQGONlZ1w4?key=AIzaSyBqzy_qnXlJbHr6pExKeow1NYJX4d2oTXY' \
+  --header 'Authorization: Bearer ya29.a0AfH6SMCLoh8YrZkaz9-TSMr38MaHs8vq73RvlYhGij0PLER5bxR6auyITvhwp3RYITm0hmLE4yzFVYqQb65tntm9h-2bvnpGXVNfKFnUMNtU9nbGHHO69sgnvBACEKcLkvlUIi-c_c2PHnxZSfZ44izOEExM5w' \
+  --header 'Accept: application/json' \
+  --compressed

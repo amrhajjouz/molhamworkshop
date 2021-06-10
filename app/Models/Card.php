@@ -18,6 +18,14 @@ class Card extends BaseModel
           return $this->morphTo();
      }
 
+     public function comments()
+     {
+          return $this->morphMany('App\Models\Comment', 'commentable');
+     }
+
+
+     
+
 
      public function save($options = []){
 

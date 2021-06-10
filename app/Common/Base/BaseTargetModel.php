@@ -45,6 +45,12 @@ class BaseTargetModel extends Model
         // return $this->morphMany('App\Models\Status', 'targetable', 'targetable_type', null, 'id');
     }
 
+    public function files()
+    {
+        return $this->morphMany('App\Models\File', 'fileable');
+    }
+
+
     public function save(array $options = [])
     {
         $newRecord = !($this->exists);

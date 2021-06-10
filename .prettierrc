@@ -1,6 +1,8 @@
 {
-  "tabWidth": 2,
+  "printWidth": 160,
+  "singleQuote": true,
   "useTabs": false,
-  "prettier.printWidth": 200,
-  "max-line-length": [true, { "limit": 180 }]
+  "tabWidth": 2,
+  "semi": true,
+  "bracketSpacing": true
 }

@@ -41,6 +41,8 @@ class AppServiceProvider extends ServiceProvider
             'event' => 'App\Models\Event',
             'fundraiser' => 'App\Models\Fundraiser',
             'status' => 'App\Models\Status',
+            'card' => 'App\Models\Card',
+            // 'comment' => 'App\Models\Comment',
         ]);
     }
 }

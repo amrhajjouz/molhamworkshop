@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Target;
 
 use App\Common\Base\{BaseController};
 use App\Common\Traits\{HasRetrieve};
+use App\Facades\Files;
 use Illuminate\Http\Request;
 
 use App\Facades\Helper;
-use App\Models\{Cases, Status, Note, NoteReview , Card};
+use App\Models\{Cases, Status, Note, NoteReview , Card, Comment, File};
 
 use App\Http\Requests\Target\Cases\{
     CreateRequest,
@@ -21,7 +22,9 @@ use App\Http\Requests\Target\Cases\{
     /////////////////////// Cards
     CreateCardRequest,
     UpdateCardRequest,
+    CreateCommentRequest
 };
+use App\Jobs\ImportDriveFile;
 
 class CaseController extends BaseController
 {
@@ -274,5 +277,49 @@ class CaseController extends BaseController
             throw $this->_exception($th->getMessage());
         }
     }
+
+    public function retrieve_card(Request $request, $case_id, Card $card)
+    {
+        try {
+            $card->comments;
+
+            return $this->_response($card);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+    public function create_comment(CreateCommentRequest $request,  $case_id , Card $card)
+    {
+        try {
+            $data = $request->validated();
+
+            $comment = new Comment();
+            $comment->body = $data['body'];
+
+            $card->comments()->save($comment);
+            return $this->_response($comment);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+    
+
+    /////////////////////// Attachments /////////////////////////
+
+    public function listing_attachments(Request $request, Cases $case)
+    {
+        try {
+
+            return $this->_response($case->files);
+        } catch (\Exception $th) {
+            throw $this->_exception($th->getMessage());
+        }
+    }
+
+
+
+
+    
     
 }

@@ -8,6 +8,34 @@
   </div>
 </div>
 
+<datatable datalist="attachments">
+  <table>
+    <thead>
+      <tr>
+        <th class="text-center">#</th>
+        <th class="text-center">الاسم</th>
+        <th class="text-center">خيارات</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="card in attachments.data">
+        <td class="align-middle text-center">{{ card.id }}</td>
+        <td class="align-middle text-center">{{ card.name }}</td>
+        <td class="align-middle text-center h2">
+          <dropdown>
+            <dropdown-item
+              href="javascript:;"
+              ng-click="showModal( 'edit' , card)"
+              ><i class="fe fe-edit-2"></i> تعديل</dropdown-item
+            >
+          </dropdown>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</datatable>
+
 <!-- 
 
 <h5>cards</h5>
@@ -49,7 +77,7 @@
     <modal-body>
       <form
         name="createUpdateAttachmentForm"
-        request="createUpdateCard"
+        request="createUpdateAttachment"
         id="myForm"
       >
         <div class="row">
@@ -59,20 +87,66 @@
               id="source"
               class="form-control"
               ng-model="attachmentSource"
-              ng-class="(createUpdateAttachmentForm.errors['source'] != null) ? 'is-invalid' : ''"
-              ng-error="createUpdateAttachmentForm.errors.attachmentSource"
+              ng-class="(createUpdateAttachment.errors['source'] != null) ? 'is-invalid' : ''"
+              ng-error="createUpdateAttachment.errors.attachmentSource"
               ng-change="handleChangeAttachmentSource(this)"
               required
             >
+              <option selected value="">اختر مصدر الملف</option>
               <option value="trello">trello</option>
-              <option selected="true" value="google">google</option>
+              <option value="googleDrive">googleDrive</option>
             </select>
           </div>
 
+          <!-- Google Drive  -->
+          <div class="row" ng-show="attachmentSource == 'googleDrive'">
+            <div class="col-12">
+              <button ng-show="isGoogleDriveSignedIn" ng-click="signOutGoogleDrive()">Sign Out</button>
+              <button ng-show="!isGoogleDriveSignedIn" ng-click="signInGoogleDrive()">Sign In</button>
+            </div>
+
+            {{selectedDriveFiles}}
+            <div>
+              <button
+                ng-click="getPrevData()"
+                ng-disabled="!drivePathes.length"
+              >
+                prev
+              </button>
+            </div>
+            <div ng-show="driveFileLoading">
+              <h4>loading ..</h4>
+            </div>
+            <div
+              class="col-4"
+              ng-repeat="file in driveFiles"
+              ng-show="!driveFileLoading"
+            >
+              <a href="#" ng-click="handleOpenDriveFolder(file)">
+                <img
+                  src="{{file.fileDetails.hasThumbnail ? file.fileDetails.webContentLink : file.fileDetails.iconLink}}"
+                  width="200"
+                  height="200"
+                />
+
+                <a
+                  ng-if="file.fileDetails.webContentLink"
+                  ng-click="handleAddDriveFile(file)"
+                  href="#"
+                >
+                  {{isFileDriveExistsInSelectedFiles(file) ? 'delete' : 'add'}}
+                </a>
+
+                <span>{{file.name}}</span>
+              </a>
+            </div>
+          </div>
+          <!-- End Google Drive  -->
+
           <!-- TRELLO  -->
-          <div class="col-12" ng-show="attachmentSource == 'trello'">
+          <div class="col-12" ng-if="attachmentSource == 'trello'">
             <h3>boards</h3>
-            <div ng-show="loadingBoards">loading ... </div>
+            <div ng-show="loadingBoards">loading ...</div>
             <div class="row" ng-show="!loadingBoards">
               <ul class="list-group">
                 <li class="list-group-item" ng-repeat="board in boards">
@@ -85,9 +159,8 @@
 
             <!-- cards -->
             <section ng-show="cards.length">
-
               <h3>cards</h3>
-              <div ng-show="loadingCards">loading ... </div>
+              <div ng-show="loadingCards">loading ...</div>
               <div class="cards" ng-show="!loadingCards && cards.length">
                 <ul class="list-group">
                   <li class="list-group-item" ng-repeat="card in cards">
@@ -96,6 +169,7 @@
                     ><span class="badge badge-danger">
                       {{card.badges.attachments}}</span
                     >
+                    <h2 class="text-success">{{getListName(card)}}</h2>
                   </li>
                 </ul>
               </div>
@@ -103,7 +177,7 @@
             <!-- End cards -->
 
             <!-- attachments -->
-            <div ng-show="loadingAttachments">loading ... </div>
+            <div ng-show="loadingAttachments">loading ...</div>
             <div
               class="row text-danger"
               ng-show="selectedCard && selectedCard.attachments.length == 0 && !loadingAttachments"
@@ -140,10 +214,13 @@
           <!-- END TRELLO  -->
         </div>
 
-        <submit-button form="createUpdateAttachmentForm" icon="fe fe-plus"
+        <button ng-click="createUpdateAttachments()">{{currentModalAction == 'add' ? "إضافة" : "تعديل" }}</button>
+        <!-- <submit-button form="createUpdateAttachmentForm" icon="fe fe-plus"
           >{{currentModalAction == 'add' ? "إضافة" : "تعديل" }}</submit-button
-        >
+        > -->
       </form>
     </modal-body>
   </modal>
 </div>
+
+{{boardLists}}

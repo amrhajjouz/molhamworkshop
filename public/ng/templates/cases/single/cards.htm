@@ -2,9 +2,7 @@
 <div class="row m-2">
   <div class="col-6"></div>
   <div class="col-6 text-left">
-    <button href="#" ng-click="showModal('add')" class="btn btn-primary">
-      <i class="fe fe-plus"></i>&nbsp;إضافة حزمة بيانات
-    </button>
+    <button href="#" ng-click="showModal('add')" class="btn btn-primary"><i class="fe fe-plus"></i>&nbsp;إضافة حزمة بيانات</button>
   </div>
 </div>
 
@@ -26,11 +24,7 @@
         <td class="align-middle text-center">{{ card.creator.name }}</td>
         <td class="align-middle text-center h2">
           <dropdown>
-            <dropdown-item
-              href="javascript:;"
-              ng-click="showModal( 'edit' , card)"
-              ><i class="fe fe-edit-2"></i> تعديل</dropdown-item
-            >
+            <dropdown-item href="javascript:;" ng-click="showModal( 'edit' , card)"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
           </dropdown>
         </td>
       </tr>
@@ -42,53 +36,124 @@
   <modal id="card-modal">
     <modal-title>
       <span>
-        <div ng-show="currentModalAction == 'add'">
-          <i class="fe fe-plus-circle"></i>&nbsp; اضافة حزمة بيانات جديدة
-        </div>
-        <div ng-show="currentModalAction == 'edit'">
-          <i class="fe fe-edit"></i>&nbsp; تعديل حزمة البيانات {{ selectedCard.id }}
-        </div>
+        <div ng-show="currentModalAction == 'add'"><i class="fe fe-plus-circle"></i>&nbsp; اضافة حزمة بيانات جديدة</div>
+        <div ng-show="currentModalAction == 'edit'"><i class="fe fe-edit"></i>&nbsp; تعديل حزمة البيانات {{ selectedCard.id }}</div>
       </span>
     </modal-title>
-      <modal-body>
-        <form
-          name="createUpdateCaseCardForm"
-          request="createUpdateCard"
-          id="myForm"
-        >
-          <div class="row">
-            <div class="col-12 col-md-6">
-              <div class="form-group">
-                <label for="name">الاسم </label>
-                <input
-                  id="name"
-                  type="text"
-                  class="form-control"
-                  ng-class="(createUpdateCard.errors.name != null) ? 'is-invalid' : ''"
-                  ng-model="selectedCard.name"
-                  ng-error="createUpdateCard.errors.name"
-                />
-              </div>
+    <modal-body>
+      <form name="createUpdateCaseCardForm" request="createUpdateCard" id="myForm">
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="name">الاسم </label>
+              <input
+                id="name"
+                type="text"
+                class="form-control"
+                ng-class="(createUpdateCard.errors.name != null) ? 'is-invalid' : ''"
+                ng-model="selectedCard.name"
+                ng-error="createUpdateCard.errors.name"
+              />
             </div>
-            <div class="col-12 col-md-6">
-              <div class="form-group">
-                <label for="description">الوصف </label>
-                <textarea
-                  id="description"
-                  type="text"
-                  class="form-control"
-                  ng-class="(createUpdateCard.errors.description != null) ? 'is-invalid' : ''"
-                  ng-model="selectedCard.description"
-                  ng-error="createUpdateCard.errors.description"
-                ></textarea>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="description">الوصف </label>
+              <textarea
+                id="description"
+                type="text"
+                class="form-control"
+                ng-class="(createUpdateCard.errors.description != null) ? 'is-invalid' : ''"
+                ng-model="selectedCard.description"
+                ng-error="createUpdateCard.errors.description"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <submit-button form="createUpdateCaseCardForm" icon="fe fe-plus">{{currentModalAction == 'add' ? "إضافة" : "تعديل" }}</submit-button>
+      </form>
+
+      <!-- comments -->
+
+      <div class="card p-5 mt-3" ng-show="currentModalAction=='edit'">
+        <div ng-show="loadingComments">جاري التحميل ..</div>
+        <div class="comment mb-3" ng-repeat="comment in comments" ng-show="!loadingComments">
+          <div class="row">
+            <div class="col-auto">
+              <!-- Avatar -->
+              <a class="avatar" href="profile-posts.html">
+                <img src="https://dashkit.goodthemes.co/assets/img/avatars/profiles/avatar-3.jpg" alt="..." class="avatar-img rounded-circle" />
+              </a>
+            </div>
+            <div class="col ms-n2">
+              <!-- Body -->
+              <div class="comment-body">
+                <div class="row">
+                  <div class="col">
+                    <!-- Title -->
+                    <h5 class="comment-title">{{comment.user.name}}</h5>
+                  </div>
+                  <div class="col-auto">
+                    <!-- Time -->
+                    <time class="comment-time"> {{comment.created_at}}</time>
+                  </div>
+                </div>
+                <!-- / .row -->
+
+                <!-- Text -->
+                <p class="comment-text">{{comment.body}}</p>
               </div>
             </div>
           </div>
+          <!-- / .row -->
+        </div>
 
-          <submit-button form="createUpdateCaseCardForm" icon="fe fe-plus"
-            >{{currentModalAction == 'add' ? "إضافة" : "تعديل" }}</submit-button
-          >
-        </form>
-      </modal-body>
+        <!-- Divider -->
+        <hr />
+
+        <!-- Form -->
+        <div class="row">
+          <div class="col-auto">
+            <!-- Avatar -->
+            <div class="avatar avatar-sm">
+              <img src="https://dashkit.goodthemes.co/assets/img/avatars/profiles/avatar-1.jpg" alt="..." class="avatar-img rounded-circle" />
+            </div>
+          </div>
+          <div class="col ms-n2">
+            <!-- Input -->
+            <form name="createCommentForm" request="createCommentRequest" id="commentForm" class="mt-1">
+              <label class="visually-hidden">اترك تعليقا ..</label>
+              <textarea
+                class="form-control form-control-flush"
+                data-autosize=""
+                rows="1"
+                placeholder="إنقر لإضافة تعليق"
+                style="overflow: hidden; overflow-wrap: break-word; height: 41px"
+                ng-model="newComment.body"
+                required
+              ></textarea>
+
+              <submit-button form="createCommentForm" icon="fe fe-plus">إضافة تعليق</submit-button>
+            </form>
+          </div>
+          <div class="col-auto align-self-end">
+            <!-- Icons -->
+            <div class="text-muted mb-2">
+              <a class="text-reset me-3" href="#" data-bs-toggle="tooltip" title="" data-bs-original-title="Add photo">
+                <i class="fe fe-camera"></i>
+              </a>
+              <a class="text-reset me-3" href="#" data-bs-toggle="tooltip" title="" data-bs-original-title="Attach file">
+                <i class="fe fe-paperclip"></i>
+              </a>
+              <a class="text-reset" href="#" data-bs-toggle="tooltip" title="" data-bs-original-title="Record audio">
+                <i class="fe fe-mic"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- / .row -->
+      </div>
+    </modal-body>
   </modal>
 </div>
