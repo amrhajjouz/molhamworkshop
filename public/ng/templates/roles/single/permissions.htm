@@ -1,0 +1,26 @@
+
+<include-header/>
+
+<datatable datalist="permissions">
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">الاسم</th>
+                <th class="text-center">خيارات</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr ng-repeat="d in permissions.data">
+                <td class="align-middle text-center">{{ d.id }}</td>
+                <td class="align-middle text-center">{{ d.name }}</td>
+                <td class="align-middle text-center h2">
+                    <dropdown>
+                        <dropdown-item href="#" ng-click="unassignPermission(d.id)"><i class="fe fe-x"></i> إلغاء الإسناد</dropdown-item>
+                    </dropdown>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</datatable>

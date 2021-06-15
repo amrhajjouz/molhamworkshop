@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DonorController;
+use App\Http\Controllers\{DonorController , RoleController , PermissionController}; 
 
 /*
 |--------------------------------------------------------------------------
@@ -35,5 +35,23 @@ Route::middleware('auth')->group(function ()  {
     Route::post('/donors', [DonorController::class, 'create']);
     Route::put('/donors', [DonorController::class, 'update']);
     Route::get('/donors/{id}', [DonorController::class, 'retrieve']);
+
+
+    /////////////////////// Roles /////////////////////////
+
+    Route::get('/roles', [RoleController::class, 'list']);
+    Route::post('/roles', [RoleController::class, 'create']);
+    Route::put('/roles', [RoleController::class, 'update']);
+    Route::get('/roles/{id}', [RoleController::class, 'retrieve']);
+    Route::get('/roles/{id}/permissions', [RoleController::class, 'list_permissions']);
+    Route::post('/roles/{role}/unassign', [RoleController::class, 'unassign_permissions']);
+
+    /////////////////////// Permission /////////////////////////
+
+    Route::get('/permissions', [PermissionController::class, 'list']);
+    Route::post('/permissions', [PermissionController::class, 'create']);
+    Route::put('/permissions', [PermissionController::class, 'update']);
+    Route::get('/permissions/{id}', [PermissionController::class, 'retrieve']);
+    
 
 });

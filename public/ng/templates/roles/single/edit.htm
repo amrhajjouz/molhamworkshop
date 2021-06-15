@@ -1,0 +1,17 @@
+<include-header/>
+
+<form class="row" name="myForm" request="updateRole">
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">الاسم</label>
+            <input type="text" class="form-control" ng-class="(updateRole.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="role.name" ng-change="updateRole.errors.name = null" placeholder="الاسم .." required>
+            <div ng-show="updateRole.errors.name != null" class="invalid-feedback">{{ updateRole.errors.name[0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+
+</form>

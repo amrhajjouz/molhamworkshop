@@ -44,5 +44,24 @@
             </ul>
         </div>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#general-navs" role="button" aria-expanded="false">
+            <i class="fe fe-lock"></i> إعدادات عامة
+        </a>
+        <div class="collapse" id="general-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('roles') }}" class="nav-link">
+                        الأدوار
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('permissions') }}" class="nav-link">
+                       الصلاحيات
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
 
 </ul>

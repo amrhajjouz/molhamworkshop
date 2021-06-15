@@ -1,0 +1,16 @@
+<page-header title="دور جديد" pretitle="الأدوار"></page-header>
+
+<form class="row" name="myForm" request="createRole">
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">الاسم</label>
+            <input type="text" class="form-control" ng-class="(createRole.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="role.name" ng-change="createRole.errors.name = null" placeholder="الاسم .." required>
+            <div ng-show="createRole.errors.name != null" class="invalid-feedback">{{ createRole.errors.name[0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="myForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>

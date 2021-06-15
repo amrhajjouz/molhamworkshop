@@ -1,0 +1,16 @@
+<page-header title="صلاحية جديدة" pretitle="الصلاحيات"></page-header>
+
+<form class="row" name="myForm" request="createPermission">
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">الاسم</label>
+            <input type="text" class="form-control" ng-class="(createPermission.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="permission.name" ng-change="createPermission.errors.name = null" placeholder="الاسم .." required>
+            <div ng-show="createPermission.errors.name != null" class="invalid-feedback">{{ createPermission.errors.name[0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="myForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>
