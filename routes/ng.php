@@ -17,6 +17,8 @@ return [
     'users.overview' => ['users/:id', 'users/overviewUserController', 'users.single.overview'],
     'users.edit' => ['users/:id/edit', 'users/editUserController', 'users.single.edit'],
     'users' => ['users', 'users/listUsersController', 'users.list'],
+    'users.permissions' => ['users/:id/permissions', 'users/listUserPermissionsController', 'users.single.permissions'],
+    'users.roles' => ['users/:id/roles', 'users/listUserRolesController', 'users.single.roles'],
 
     //Donors Routes
     'donors' => ['donors', 'donors/listDonorsController', 'donors.list'],

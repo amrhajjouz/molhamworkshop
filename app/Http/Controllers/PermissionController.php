@@ -2,27 +2,26 @@
 
 namespace App\Http\Controllers;
 
-  use App\Models\{Permission , Role};
- use Illuminate\Http\Request;
- use App\Http\Requests\Permission\{CreatePermissionRequest , UpdatePermissionRequest};
- use Illuminate\Support\Facades\Hash;
+use App\Models\{Permission, Role, User};
+use Illuminate\Http\Request;
+use App\Http\Requests\Permission\{CreatePermissionRequest, UpdatePermissionRequest};
+use Illuminate\Support\Facades\Hash;
 
- class PermissionController extends Controller
+class PermissionController extends Controller
 {
 
-    public function create (CreatePermissionRequest $request)
+    public function create(CreatePermissionRequest $request)
     {
         try {
             $data = $request->validated();
             $role = Permission::create($data);
             return response()->json($role);
-
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
 
-    public function update (UpdatePermissionRequest $request)
+    public function update(UpdatePermissionRequest $request)
     {
         try {
             $role = Permission::findOrFail($request->id);
@@ -35,7 +34,7 @@ namespace App\Http\Controllers;
         }
     }
 
-    public function retrieve ($id)
+    public function retrieve($id)
     {
         try {
             return response()->json(Permission::findOrFail($id));
@@ -44,15 +43,17 @@ namespace App\Http\Controllers;
         }
     }
 
-    public function list (Request $request) {
-        
-
-        
+    public function list(Request $request)
+    {
         try {
-            $search_query = ($request->has('q') ? [['name', 'like', '%' . $request->q . '%']] : null);
-            
-            $permissions = Permission::orderBy('id', 'desc')->where($search_query)->paginate(5)->withQueryString();
-            
+
+            $permissions = Permission::orderBy('id', 'desc')->where(function ($q) use ($request) {
+                if ($request->has('q')) {
+                    $q->where('name', 'like', '%' . $request->q . '%');
+                    $q->orWhere('ar_name', 'like', '%' . $request->q . '%');
+                }
+            })->paginate(5)->withQueryString();
+
             return response()->json($permissions);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -75,14 +76,24 @@ namespace App\Http\Controllers;
                     $q->orWhere('ar_name', 'like', "%" . $request->q . "%");
                 }
             })
-            ->where(function($q) use($request){
-                if ($request->has('role_id')) {
-                    $role = Role::find($request->role_id);
-                    if ($role) {
-                        $q->whereNotIn('id', $role->permissions()->pluck('permission_id'));
+                ->where(function ($q) use ($request) {
+                    //except permissions already assigned to this role
+                    if ($request->has('role_id')) {
+                        $role = Role::find($request->role_id);
+                        if ($role) {
+                            $q->whereNotIn('id', $role->permissions()->pluck('permission_id'));
+                        }
                     }
-                }
-            })
+                })
+                ->where(function ($q) use ($request) {
+                    //except permissions already assigned to this user
+                    if ($request->has('user_id')) {
+                        $user = User::find($request->user_id);
+                        if ($user) {
+                            $q->whereNotIn('id', $user->getDirectPermissions()->pluck('id'));
+                        }
+                    }
+                })
                 ->take(10)
                 ->get();
 
@@ -91,7 +102,7 @@ namespace App\Http\Controllers;
                 $obj = new \stdClass();
                 $obj->id = $item->id;
                 $obj->name = $item->ar_name;
-                $obj->text = $item->ar_name . ' - ' .$item->name;
+                $obj->text = $item->ar_name . ' - ' . $item->name;
 
                 $result[] = $obj;
             }
@@ -102,5 +113,4 @@ namespace App\Http\Controllers;
             throw $this->_exception($e->getMessage());
         }
     }
-
 }

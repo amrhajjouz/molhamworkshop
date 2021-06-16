@@ -30,6 +30,12 @@ Route::middleware('auth')->group(function ()  {
     Route::post('/users', [UserController::class, 'create']);
     Route::put('/users', [UserController::class, 'update']);
     Route::get('/users/{id}', [UserController::class, 'retrieve']);
+    Route::get('/users/{id}/roles', [UserController::class, 'list_roles']);
+    Route::post('/users/{user_id}/assign_roles', [UserController::class, 'assign_roles']);
+    Route::post('/users/{user_id}/unassign_role', [UserController::class, 'unassign_role']);
+    Route::get('/users/{id}/permissions', [UserController::class, 'list_permissions']);
+    Route::post('/users/{id}/assign_permissions', [UserController::class, 'assign_permissions']);
+    Route::post('/users/{id}/unassign_permission', [UserController::class, 'unassign_permission']);
 
     Route::get('/donors', [DonorController::class, 'list']);
     Route::post('/donors', [DonorController::class, 'create']);
@@ -42,6 +48,7 @@ Route::middleware('auth')->group(function ()  {
     Route::get('/roles', [RoleController::class, 'list']);
     Route::post('/roles', [RoleController::class, 'create']);
     Route::put('/roles', [RoleController::class, 'update']);
+    Route::get('/roles/search', [RoleController::class, 'search']);
     Route::get('/roles/{id}', [RoleController::class, 'retrieve']);
     Route::get('/roles/{id}/permissions', [RoleController::class, 'list_permissions']);
     Route::post('/roles/{role}/unassign', [RoleController::class, 'unassign_permissions']);

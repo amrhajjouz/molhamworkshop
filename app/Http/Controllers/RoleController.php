@@ -2,27 +2,26 @@
 
 namespace App\Http\Controllers;
 
-  use App\Models\{Donor , Permission, Role};
- use Illuminate\Http\Request;
- use App\Http\Requests\Role\{CreateRoleRequest , UpdateRoleRequest , AssignUnassignPermissionRequest};
- use Illuminate\Support\Facades\Hash;
+use App\Models\{Donor, Permission, Role, User};
+use Illuminate\Http\Request;
+use App\Http\Requests\Role\{CreateRoleRequest, UpdateRoleRequest, UnassignPermissionRequest, AssignPermissionRequest};
+use Illuminate\Support\Facades\Hash;
 
- class RoleController extends Controller
+class RoleController extends Controller
 {
 
-    public function create (CreateRoleRequest $request)
+    public function create(CreateRoleRequest $request)
     {
         try {
             $data = $request->validated();
             $role = Role::create($data);
             return response()->json($role);
-
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
 
-    public function update (UpdateRoleRequest $request)
+    public function update(UpdateRoleRequest $request)
     {
         try {
             $role = Role::findOrFail($request->id);
@@ -35,7 +34,7 @@ namespace App\Http\Controllers;
         }
     }
 
-    public function retrieve ($id)
+    public function retrieve($id)
     {
         try {
             return response()->json(Role::findOrFail($id));
@@ -44,40 +43,46 @@ namespace App\Http\Controllers;
         }
     }
 
-    public function list (Request $request) {
-        
+    public function list(Request $request)
+    {
 
-        
         try {
             $search_query = ($request->has('q') ? [['name', 'like', '%' . $request->q . '%']] : null);
-            
-            $roles = Role::orderBy('id', 'desc')->where($search_query)->paginate(5)->withQueryString();
-            
+
+            $roles = Role::orderBy('id', 'desc')->where(function ($q) use ($request) {
+                if ($request->has('q')) {
+                    $q->where('name', 'like', '%' . $request->q . '%');
+                    $q->orWhere('ar_name', 'like', '%' . $request->q . '%');
+                }
+            })->paginate(5)->withQueryString();
+
             return response()->json($roles);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
 
-    public function list_permissions (Request $request , $id) {
+    public function list_permissions(Request $request, $id)
+    {
         try {
             $role = Role::findOrFail($id);
-            
+
             $permissions = $role->permissions;
-            
+
             return response()->json($permissions);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
 
-    
-    public function unassign_permissions (AssignUnassignPermissionRequest $request , Role $role) {
+
+    public function unassign_permissions(UnassignPermissionRequest $request, Role $role)
+    {
         try {
             $data = $request->validated();
             $permission = Permission::findORfail($data['permission_id']);
 
-            if($role->hasPermissionTo($permission->name)){
+            if ($role->hasPermissionTo($permission->name)) {
                 $role->revokePermissionTo($permission->name);
             }
 
@@ -86,20 +91,73 @@ namespace App\Http\Controllers;
             return ['error' => $e->getMessage()];
         }
     }
-   
-    public function assign_permissions (AssignUnassignPermissionRequest $request , Role $role) {
+
+    public function assign_permissions(AssignPermissionRequest $request, Role $role)
+    {
         try {
             $data = $request->validated();
-            $permission = Permission::findORfail($data['permission_id']);
 
-            if($role->hasPermissionTo($permission->name)){
-                return response()->json($role);
+            foreach ($data['permission_ids'] as $key => $value) {
+                $permission = Permission::findORfail($value);
+                if ($role->hasPermissionTo($permission->name)) {
+                    continue;
+                }
+
+                $role->givePermissionTo($permission->name);
             }
 
-            $role->givePermissionTo($permission->name);
+
+
             return response()->json($role);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
+        }
+    }
+
+
+
+    public function search(Request $request)
+    {
+
+        try {
+
+            $result = [];
+            $data = null;
+
+            $data = Role::where(function ($q) use ($request) {
+                if ($request->has('q')) {
+                    $q->where('name', 'like', "%" . $request->q . "%");
+                    $q->orWhere('ar_name', 'like', "%" . $request->q . "%");
+                }
+            })
+                ->where(function ($q) use ($request) {
+                    //except permissions already assigned to this user
+                    if ($request->has('user_id')) {
+                        $user = User::find($request->user_id);
+                        if ($user) {
+                            $q->whereNotIn('id', $user->roles()->pluck('id'));
+                        }
+                    }
+                })
+
+
+                ->take(10)
+                ->get();
+
+            foreach ($data as $item) {
+
+                $obj = new \stdClass();
+                $obj->id = $item->id;
+                $obj->name = $item->ar_name;
+                $obj->text = $item->ar_name . ' - ' . $item->name;
+
+                $result[] = $obj;
+            }
+
+            return response()->json($result);
+        } catch (\Exception $e) {
+
+            throw $this->_exception($e->getMessage());
         }
     }
 }

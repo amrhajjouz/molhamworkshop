@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Role;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AssignUnassignPermissionRequest extends FormRequest
+class AssignRolesRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,9 @@ class AssignUnassignPermissionRequest extends FormRequest
      */
     public function rules()
     {
+        // dd($this->all());
         return [
-            'permission_id' => ['required' ,'exists:permissions,id'],
+            'role_ids' => ['required' ,'array'],
         ];
     }
 }
