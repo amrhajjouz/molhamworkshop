@@ -1,5 +1,8 @@
 function addRoleController($scope, $apiRequest, $page) {
-    $scope.role = {};
+    $scope.role = {
+        name:null,
+        ar_name:null,
+    };
 
     $scope.createRole = $apiRequest.config(
         {

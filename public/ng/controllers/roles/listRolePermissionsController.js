@@ -35,10 +35,12 @@ async function listRolePermissionsControllerInit($datalist, $location , $apiRequ
 function listRolePermissionsController($scope, $init, $page, $apiRequest) {
     $scope.roleId = $page.routeParams.id;
     $scope.permissions = $init;
+    $scope.selectedPermission = {
+        permission_id: null,
+        role_id: $scope.roleId,
+    };
 
     $scope.unassignPermission = async (permissionID) => {
-        console.log({ permissionID });
-        console.log({ roleId: $scope.roleId });
 
         if (!confirm("هل تريد التأكيد على إلغاء إسناد هذه الصلاحية ؟ ")) return;
 
@@ -55,10 +57,33 @@ function listRolePermissionsController($scope, $init, $page, $apiRequest) {
                     data: data,
                 },
                 function (response, data) {
-                    console.log({ data });
                     $page.reload();
                 }
             )
             .send();
     };
+
+  
+
+
+  $scope.assignPermission = $apiRequest.config(
+      {
+          method: "POST",
+          url: "roles/" + $scope.roleId + "/assign",
+          data:$scope.selectedPermission
+      },
+      function (response, data) {
+
+           $("#permission-modal").on("hidden.bs.modal", function (e) {
+               $page.reload();
+           });
+
+
+          $("#permission-modal").modal("hide");
+      }
+  );
+
+  $scope.showModal = function () {
+      $("#permission-modal").modal("show");
+  };
 }

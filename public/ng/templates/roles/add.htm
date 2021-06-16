@@ -5,8 +5,15 @@
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="name">الاسم</label>
-            <input type="text" class="form-control" ng-class="(createRole.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="role.name" ng-change="createRole.errors.name = null" placeholder="الاسم .." required>
+            <input type="text" class="form-control" ng-class="(createRole.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="role.name" ng-change="createRole.errors.name = null" placeholder="الاسم الانكليزي .." required>
             <div ng-show="createRole.errors.name != null" class="invalid-feedback">{{ createRole.errors.name[0] }}</div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="ar_name">الاسم العربي</label>
+            <input type="text" class="form-control" ng-class="(createRole.errors.ar_name != null) ? 'is-invalid' : ''" id="ar_name" ng-model="role.ar_name" ng-change="createRole.errors.ar_name = null" placeholder="الاسم العربي .." required>
+            <div ng-show="createRole.errors.ar_name != null" class="invalid-feedback">{{ createRole.errors.ar_name[0] }}</div>
         </div>
     </div>
 

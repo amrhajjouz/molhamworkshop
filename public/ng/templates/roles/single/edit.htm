@@ -9,6 +9,13 @@
             <div ng-show="updateRole.errors.name != null" class="invalid-feedback">{{ updateRole.errors.name[0] }}</div>
         </div>
     </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="ar_name">الاسم العربي</label>
+            <input type="text" class="form-control" ng-class="(updateRole.errors.ar_name != null) ? 'is-invalid' : ''" id="ar_name" ng-model="role.ar_name" ng-change="updateRole.errors.ar_name = null" placeholder="الاسم .." required>
+            <div ng-show="updateRole.errors.ar_name != null" class="invalid-feedback">{{ updateRole.errors.ar_name[0] }}</div>
+        </div>
+    </div>
 
     <div class="col-12">
         <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>

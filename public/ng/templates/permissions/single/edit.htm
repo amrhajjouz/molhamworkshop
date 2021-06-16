@@ -4,9 +4,17 @@
 
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="name">الاسم</label>
-            <input type="text" class="form-control" ng-class="(updatePermission.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="permission.name" ng-change="updatePermission.errors.name = null" placeholder="الاسم .." required>
+            <label for="name">الاسم الانكليزي</label>
+            <input type="text" class="form-control" ng-class="(updatePermission.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="permission.name" ng-change="updatePermission.errors.name = null" placeholder="الاسم الانكليزي.." required>
             <div ng-show="updatePermission.errors.name != null" class="invalid-feedback">{{ updatePermission.errors.name[0] }}</div>
+        </div>
+    </div>
+   
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="ar_name">الاسم العربي</label>
+            <input type="text" class="form-control" ng-class="(updatePermission.errors.ar_name != null) ? 'is-invalid' : ''" id="ar_name" ng-model="permission.ar_name" ng-change="updatePermission.errors.ar_name = null" placeholder="الاسم العربي .." required>
+            <div ng-show="updatePermission.errors.ar_name != null" class="invalid-feedback">{{ updatePermission.errors.ar_name[0] }}</div>
         </div>
     </div>
 

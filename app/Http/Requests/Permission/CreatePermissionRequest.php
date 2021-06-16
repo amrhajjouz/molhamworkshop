@@ -25,6 +25,7 @@ class CreatePermissionRequest extends FormRequest
     {
         return [
             'name' => ['required' ,'string', 'between:3,30' , 'unique:permissions,name'],
+            'ar_name' => ['required', 'string',],
         ];
     }
 }

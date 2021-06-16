@@ -59,4 +59,48 @@ namespace App\Http\Controllers;
         }
     }
 
+
+
+    public function search(Request $request)
+    {
+
+        try {
+
+            $result = [];
+            $data = null;
+
+            $data = Permission::where(function ($q) use ($request) {
+                if ($request->has('q')) {
+                    $q->where('name', 'like', "%" . $request->q . "%");
+                    $q->orWhere('ar_name', 'like', "%" . $request->q . "%");
+                }
+            })
+            ->where(function($q) use($request){
+                if ($request->has('role_id')) {
+                    $role = Role::find($request->role_id);
+                    if ($role) {
+                        $q->whereNotIn('id', $role->permissions()->pluck('permission_id'));
+                    }
+                }
+            })
+                ->take(10)
+                ->get();
+
+            foreach ($data as $item) {
+
+                $obj = new \stdClass();
+                $obj->id = $item->id;
+                $obj->name = $item->ar_name;
+                $obj->text = $item->ar_name . ' - ' .$item->name;
+
+                $result[] = $obj;
+            }
+
+            return response()->json($result);
+        } catch (\Exception $e) {
+
+            throw $this->_exception($e->getMessage());
+        }
+    }
+
 }

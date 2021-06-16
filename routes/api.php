@@ -45,12 +45,14 @@ Route::middleware('auth')->group(function ()  {
     Route::get('/roles/{id}', [RoleController::class, 'retrieve']);
     Route::get('/roles/{id}/permissions', [RoleController::class, 'list_permissions']);
     Route::post('/roles/{role}/unassign', [RoleController::class, 'unassign_permissions']);
+    Route::post('/roles/{role}/assign', [RoleController::class, 'assign_permissions']);
 
     /////////////////////// Permission /////////////////////////
 
     Route::get('/permissions', [PermissionController::class, 'list']);
     Route::post('/permissions', [PermissionController::class, 'create']);
     Route::put('/permissions', [PermissionController::class, 'update']);
+    Route::get('/permissions/search', [PermissionController::class, 'search']);
     Route::get('/permissions/{id}', [PermissionController::class, 'retrieve']);
     
 

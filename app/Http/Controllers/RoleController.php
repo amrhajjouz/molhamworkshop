@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
   use App\Models\{Donor , Permission, Role};
  use Illuminate\Http\Request;
- use App\Http\Requests\Role\{CreateRoleRequest , UpdateRoleRequest , UnassignPermissionRequest};
+ use App\Http\Requests\Role\{CreateRoleRequest , UpdateRoleRequest , AssignUnassignPermissionRequest};
  use Illuminate\Support\Facades\Hash;
 
  class RoleController extends Controller
@@ -72,7 +72,7 @@ namespace App\Http\Controllers;
     }
 
     
-    public function unassign_permissions (UnassignPermissionRequest $request , Role $role) {
+    public function unassign_permissions (AssignUnassignPermissionRequest $request , Role $role) {
         try {
             $data = $request->validated();
             $permission = Permission::findORfail($data['permission_id']);
@@ -81,6 +81,22 @@ namespace App\Http\Controllers;
                 $role->revokePermissionTo($permission->name);
             }
 
+            return response()->json($role);
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+   
+    public function assign_permissions (AssignUnassignPermissionRequest $request , Role $role) {
+        try {
+            $data = $request->validated();
+            $permission = Permission::findORfail($data['permission_id']);
+
+            if($role->hasPermissionTo($permission->name)){
+                return response()->json($role);
+            }
+
+            $role->givePermissionTo($permission->name);
             return response()->json($role);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];

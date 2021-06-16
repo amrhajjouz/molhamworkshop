@@ -9,7 +9,8 @@
         <thead>
             <tr>
                 <th class="text-center">#</th>
-                <th class="text-center">الاسم</th>
+                <th class="text-center">الاسم العربي</th>
+                <th class="text-center">الاسم الانكليزي</th>
                 <th class="text-center">خيارات</th>
             </tr>
         </thead>
@@ -17,6 +18,7 @@
         <tbody>
             <tr ng-repeat="d in permissions.data">
                 <td class="align-middle text-center">{{ d.id }}</td>
+                <td class="align-middle text-center">{{ d.ar_name }}</td>
                 <td class="align-middle text-center">{{ d.name }}</td>
                 <td class="align-middle text-center h2">
                     <dropdown>

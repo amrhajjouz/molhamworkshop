@@ -1,26 +1,71 @@
-
-<include-header/>
-
+<include-header />
+<div class="row m-2">
+    <div class="col-6"></div>
+    <div class="col-6 text-left">
+        <button href="#" ng-click="showModal('add')" class="btn btn-primary">
+            <i class="fe fe-plus"></i>&nbsp;إضافة صلاحية
+        </button>
+    </div>
+</div>
 <datatable datalist="permissions">
     <table>
         <thead>
             <tr>
                 <th class="text-center">#</th>
-                <th class="text-center">الاسم</th>
+                <th class="text-center">الاسم العربي</th>
+                <th class="text-center">الاسم الانكليزي</th>
                 <th class="text-center">خيارات</th>
             </tr>
         </thead>
-        
+
         <tbody>
             <tr ng-repeat="d in permissions.data">
                 <td class="align-middle text-center">{{ d.id }}</td>
+                <td class="align-middle text-center">{{ d.ar_name }}</td>
                 <td class="align-middle text-center">{{ d.name }}</td>
                 <td class="align-middle text-center h2">
                     <dropdown>
-                        <dropdown-item href="#" ng-click="unassignPermission(d.id)"><i class="fe fe-x"></i> إلغاء الإسناد</dropdown-item>
+                        <dropdown-item
+                            href="#"
+                            ng-click="unassignPermission(d.id)"
+                            ><i class="fe fe-x"></i> إلغاء
+                            الإسناد</dropdown-item
+                        >
                     </dropdown>
                 </td>
             </tr>
         </tbody>
     </table>
 </datatable>
+
+<!-- Create Update Modal -->
+<modal id="permission-modal">
+    <modal-title>
+        <span><i class="fe fe-plus-circle"></i>&nbsp; إضافة صلاحية</span>
+    </modal-title>
+    <modal-body>
+        <form
+            name="assignPermissionForm"
+            request="assignPermission"
+            model="selectedPermission"
+        >
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label for="permission_id">الصلاحية</label>
+                        <select2
+                            model="selectedPermission.permission_id"
+                            ajax-url="permissions/search?role_id={{roleId}}"
+                            error-model="assignPermission.errors.permission_id"
+                        >
+                        </select2>
+                    </div>
+                </div>
+            </div>
+
+            <submit-button form="assignPermissionForm" icon="fe fe-plus"
+                >اضافة</submit-button
+            >
+        </form>
+    </modal-body>
+</modal>
