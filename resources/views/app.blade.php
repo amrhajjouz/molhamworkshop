@@ -143,7 +143,30 @@
         var apiUrl = "{{ $api_url }}";
         var appDebug = {{ env('APP_DEBUG') }};
         var appTitle = $('title').text();
-        var auth = {id: "{{ auth()->user()->id }}", name: "{{ auth()->user()->name }}", email: "{{ auth()->user()->email }}"};
+        
+        var auth = {
+            
+            id: "{{ auth()->user()->id }}", 
+            name: "{{ auth()->user()->name }}", 
+            email: "{{ auth()->user()->email }}",
+            superAdmin: false,
+            
+            // All roles assigned to Auth
+            roles: [],
+            
+            // All permessions assigned and the permessions of the roles assigned to Auth
+            permessions: [],
+            
+            // returns true if permession exists in Auth permessions
+            can: function (permession) {
+                return true;
+            },
+            
+            // returns true if permession exists in Auth permessions
+            is: function (role) {
+                return true;
+            },
+        };
         
         var routes = JSON.parse(("{{ $routes->toJson() }}").replace(/&quot;/g,'"'));
         var locales = JSON.parse(("{{ $locales->toJson() }}").replace(/&quot;/g,'"'));
