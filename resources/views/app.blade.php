@@ -162,7 +162,7 @@
                 return true;
             },
             
-            // returns true if permession exists in Auth permessions
+            // returns true if role exists in Auth permessions
             is: function (role) {
                 return true;
             },
