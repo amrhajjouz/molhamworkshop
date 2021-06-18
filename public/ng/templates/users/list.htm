@@ -1,8 +1,7 @@
-<page-header title="قائمة المستخدمين" pretitle="المستخدمون">
+<page-header title="قائمة المستخدمين" pretitle="المستخدمون" ng-if="$auth.superAdmin">
   <a href="{{ $r('users.add') }}" class="btn btn-primary"> <i class="fe fe-plus"></i>&nbsp; مستخدم جديد </a>
 </page-header>
-
-<datatable datalist="users">
+<datatable datalist="users" ng-if="$auth.superAdmin">
   <table>
     <thead>
       <tr>

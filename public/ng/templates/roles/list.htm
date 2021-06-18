@@ -1,5 +1,5 @@
 <page-header title="قائمة الأدوار" pretitle="الأدوار">
-    <a href="{{ $r('roles.add') }}" class="btn btn-primary">
+    <a href="{{ $r('roles.add') }}" class="btn btn-primary" ng-if="$auth.can('create role')">
         <i class="fe fe-plus"></i>&nbsp; دور جديدة
     </a>
 </page-header>

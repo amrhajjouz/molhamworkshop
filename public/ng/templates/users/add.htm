@@ -1,6 +1,6 @@
 <page-header title="مستخدم جديد" pretitle="المستخدمون"></page-header>
 
-<form class="row" name="myForm" request="createUser">
+<form class="row" name="myForm" request="createUser" ng-if="$auth.superAdmin">
     
     <div class="col-12 col-md-6">
         <div class="form-group">

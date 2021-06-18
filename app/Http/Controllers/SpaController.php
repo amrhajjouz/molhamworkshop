@@ -56,7 +56,20 @@ class SpaController extends Controller
             
             foreach (['ar', 'en', 'fr', 'de', 'tr', 'es'] as $l) $locales[] = ['code' => $l, 'name' => getLocaleName($l), 'dir' => ($l == 'ar') ? 'rtl' : 'ltr', 'align' => ($l == 'ar') ? 'right' : 'left'];
             
-            return view('app', ['routes' => collect($routes), 'app_url' => $app_url, 'api_url' => $app_url . '/api/', 'locales' => $locales]);
+            $user = auth()->user();
+            // dd($user->getPermissionsViaRoles() ,$user->permissions);
+            // foreach ($user->roles as $role) {
+                
+            // }
+
+            $roles = $user->roles()->pluck('name')->toJson();
+            
+            $direct_permissions = $user->permissions()->pluck('name')->toArray();
+            $role_permissions = $user->getPermissionsViaRoles()->pluck('name')->toArray();
+
+            $all_permissions = array_merge($direct_permissions , $role_permissions);
+
+            return view('app', ['routes' => collect($routes), 'app_url' => $app_url, 'api_url' => $app_url . '/api/', 'locales' => $locales , 'roles'=> $roles , 'permissions'=> collect($all_permissions)->toJson()]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }

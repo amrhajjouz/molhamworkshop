@@ -6,7 +6,7 @@
         </a>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item" ng-if="$auth.superAdmin">
         <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#users-navs" role="button" aria-expanded="false">
             <i class="fe fe-users"></i> المستخدمون
         </a>
@@ -17,7 +17,7 @@
                         مستخدم جديد
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" >
                     <a href="{{ $r('users') }}" class="nav-link">
                         قائمة المستخدمين
                     </a>
@@ -30,14 +30,14 @@
             <i class="fe fe-book"></i> المتبرعون
         </a>
         <div class="collapse" id="donors-navs">
-            <ul class="nav nav-sm flex-column">
-                <li class="nav-item">
-                    <a href="{{ $r('donors.add') }}" class="nav-link">
+            <ul class="nav nav-sm flex-column" >
+                <li class="nav-item" ng-if="$auth.can('create donor')">
+                    <a href="{{ $r('donors.add') }}" class="nav-link" >
                         متبرع جديد
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ $r('donors') }}" class="nav-link">
+                    <a href="{{ $r('donors') }}" class="nav-link" ng-if="$auth.can('listing donors')">
                         قائمة المتبرعين
                     </a>
                 </li>

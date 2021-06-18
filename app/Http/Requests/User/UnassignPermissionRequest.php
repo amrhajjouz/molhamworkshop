@@ -13,7 +13,7 @@ class UnassignPermissionRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return  auth()->user()->super_admin;
     }
 
     /**

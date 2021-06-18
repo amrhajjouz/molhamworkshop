@@ -13,7 +13,8 @@ class UpdateDonorRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        $user = auth()->user();
+        return $user->super_admin || $user->can('update donor');;
     }
 
     /**

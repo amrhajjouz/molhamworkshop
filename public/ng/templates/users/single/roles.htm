@@ -1,11 +1,12 @@
 <include-header />
-<div class="row m-2">
+<div class="row m-2" ng-if="$auth.superAdmin">
   <div class="col-6"></div>
-  <div class="col-6 text-left">
-    <button href="#" ng-click="showModal('add')" class="btn btn-primary"><i class="fe fe-plus"></i>&nbsp;إضافة دور</button>
+  <div class="col-6 text-left" ng-if="$auth.superAdmin">
+    <button href="#" ng-click="showModal()" class="btn btn-primary"><i class="fe fe-plus"></i>&nbsp;إضافة دور</button>
   </div>
 </div>
-<datatable datalist="roles">
+
+<datatable datalist="roles" ng-if="$auth.superAdmin">
   <table>
     <thead>
       <tr>
@@ -22,7 +23,8 @@
         <td class="align-middle text-center">{{ d.ar_name }}</td>
         <td class="align-middle text-center">{{ d.name }}</td>
         <td class="align-middle text-center h2">
-          <dropdown>
+
+          <dropdown ng-if="$auth.superAdmin">
             <dropdown-item href="#" ng-click="unassignRole(d.id)"><i class="fe fe-x"></i> إلغاء الإسناد</dropdown-item>
           </dropdown>
         </td>

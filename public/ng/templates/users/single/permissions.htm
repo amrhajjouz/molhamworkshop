@@ -1,5 +1,5 @@
 <include-header />
-<div class="row m-2">
+<div class="row m-2" ng-if="$auth.superAdmin">
     <div class="col-6"></div>
     <div class="col-6 text-left">
         <button href="#" ng-click="showModal('add')" class="btn btn-primary">
@@ -7,7 +7,7 @@
         </button>
     </div>
 </div>
-<datatable datalist="permissions">
+<datatable datalist="permissions"ng-if="$auth.superAdmin">
     <table>
         <thead>
             <tr>
@@ -39,7 +39,7 @@
 </datatable>
 
 <!-- Create Update Modal -->
-<modal id="permission-modal">
+<modal id="permission-modal" ng-if="$auth.superAdmin">
     <modal-title>
         <span><i class="fe fe-plus-circle"></i>&nbsp; إضافة صلاحية</span>
     </modal-title>

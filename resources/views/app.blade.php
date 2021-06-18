@@ -137,7 +137,7 @@
     @foreach ($routes as $r)
     <script src="{{ asset('ng/controllers/' . $r['controller_path'] . '?t=' . time()) }}"></script>
     @endforeach
-
+{{-- {{dd(auth()->user()->super_admin)}} --}}
     <script>
         var appUrl = "{{ $app_url }}";
         var apiUrl = "{{ $api_url }}";
@@ -149,25 +149,35 @@
             id: "{{ auth()->user()->id }}", 
             name: "{{ auth()->user()->name }}", 
             email: "{{ auth()->user()->email }}",
-            superAdmin: false,
+            superAdmin: parseInt("{{auth()->user()->super_admin}}"),
             
             // All roles assigned to Auth
-            roles: [],
+            // roles: "{{$roles}}",
+
+            roles: {!! $roles !!},
+            // .replace(/&quot;/g,'"');,
             
             // All permessions assigned and the permessions of the roles assigned to Auth
-            permessions: [],
+            permessions: {!!$permissions!!},
             
             // returns true if permession exists in Auth permessions
             can: function (permession) {
-                return true;
+                 if(auth.superAdmin || auth.permessions.includes(permession)) return true
+                return false;
             },
             
             // returns true if role exists in Auth permessions
             is: function (role) {
-                return true;
+
+                if(auth.superAdmin || auth.roles.includes(role)) return true
+                
+                return false;
             },
         };
         
+        // auth.role = JSON.parse(auth.roles );
+
+        console.log({auth} )
         var routes = JSON.parse(("{{ $routes->toJson() }}").replace(/&quot;/g,'"'));
         var locales = JSON.parse(("{{ $locales->toJson() }}").replace(/&quot;/g,'"'));
         var app = angular.module("app", ["ngRoute"]);
