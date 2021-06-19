@@ -13,7 +13,11 @@ class AssignPermissionRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        $user = auth()->user();
+        if ($user->super_admin) {
+            return true;
+        }
+        return false;
     }
 
     /**

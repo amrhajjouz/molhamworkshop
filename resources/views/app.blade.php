@@ -162,22 +162,91 @@
             
             // returns true if permession exists in Auth permessions
             can: function (permession) {
-                 if(auth.superAdmin || auth.permessions.includes(permession)) return true
+
+                if(auth.superAdmin) return true;
+
+
+                if(Array.isArray(permession)){
+                    
+                    let can = true;
+
+                    permession.forEach(item=>{
+                        if(!auth.permessions.includes(item)){
+                            can = false;
+                            return ;
+                        }
+                    })
+                    
+                    return can;
+                }
+
+
+                 if( auth.permessions.includes(permession)) return true;
+
                 return false;
+            },
+            
+            canAny: function (permessions) {
+
+                if(auth.superAdmin) return true;
+
+                    let can = false;
+
+                    permessions.forEach(item=>{
+                        if(auth.permessions.includes(item)){
+                            can = true;
+                            return ;
+                        }
+                    })
+                    return can;
+
+
             },
             
             // returns true if role exists in Auth permessions
             is: function (role) {
+                if(auth.superAdmin) return true;
 
-                if(auth.superAdmin || auth.roles.includes(role)) return true
+                 if(Array.isArray(role)){
+                    let can = true;
+                    
+                    role.forEach(item=>{
+                        if(!auth.roles.includes(item)){
+                            can = false;
+                            return ;
+                        }
+                    })
+                    
+                    return can;
+                }
+
+                if( auth.roles.includes(role)) return true
                 
                 return false;
             },
+
+             isAny: function (roles) {
+
+                if(auth.superAdmin) return true;
+
+                    let is = false;
+
+                    roles.forEach(item=>{
+                        if(auth.roles.includes(item)){
+                            is = true;
+                            return ;
+                        }
+                    })
+                    return is;
+
+
+            },
         };
         
+        auth.canAny(['donors.create' , 'donors.view']);
+        console.log({auth})
         // auth.role = JSON.parse(auth.roles );
 
-        console.log({auth} )
         var routes = JSON.parse(("{{ $routes->toJson() }}").replace(/&quot;/g,'"'));
         var locales = JSON.parse(("{{ $locales->toJson() }}").replace(/&quot;/g,'"'));
         var app = angular.module("app", ["ngRoute"]);

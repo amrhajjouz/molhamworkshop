@@ -1,6 +1,6 @@
 <include-header/>
 
-<form class="row" name="myForm" request="updateDonor">
+<form class="row" name="myForm" request="updateDonor" ng-if="$auth.can('donors.update')">
 
     <div class="col-12 col-md-6">
         <div class="form-group">
@@ -48,7 +48,7 @@
         </div>
     </div>
     <div class="col-12">
-        <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
+        <submit-button  form="myForm" icon="fe fe-edit">تعديل</submit-button>
     </div>
 
 </form>

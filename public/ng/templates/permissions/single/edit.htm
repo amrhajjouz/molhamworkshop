@@ -9,12 +9,18 @@
             <div ng-show="updatePermission.errors.name != null" class="invalid-feedback">{{ updatePermission.errors.name[0] }}</div>
         </div>
     </div>
-   
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="ar_name">الاسم العربي</label>
-            <input type="text" class="form-control" ng-class="(updatePermission.errors.ar_name != null) ? 'is-invalid' : ''" id="ar_name" ng-model="permission.ar_name" ng-change="updatePermission.errors.ar_name = null" placeholder="الاسم العربي .." required>
-            <div ng-show="updatePermission.errors.ar_name != null" class="invalid-feedback">{{ updatePermission.errors.ar_name[0] }}</div>
+            <label for="description_ar">الوصف العربي</label>
+            <input type="text" class="form-control" ng-class="(updatePermission.errors.description_ar != null) ? 'is-invalid' : ''" id="description_ar" ng-model="permission.description_ar" ng-change="updatePermission.errors.description_ar = null" placeholder="الوصف العربي .." required>
+            <div ng-show="updatePermission.errors.description_ar != null" class="invalid-feedback">{{ updatePermission.errors.description_ar[0] }}</div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="description_en">الوصف الإنكليزي</label>
+            <input type="text" class="form-control" ng-class="(updatePermission.errors.description_en != null) ? 'is-invalid' : ''" id="description_en" ng-model="permission.description_en" ng-change="updatePermission.errors.description_en = null" placeholder="الوصف الإنكليزي .." required>
+            <div ng-show="updatePermission.errors.description_en != null" class="invalid-feedback">{{ updatePermission.errors.description_en[0] }}</div>
         </div>
     </div>
 

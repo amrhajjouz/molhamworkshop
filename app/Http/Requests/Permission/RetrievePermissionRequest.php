@@ -4,7 +4,7 @@ namespace App\Http\Requests\Permission;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreatePermissionRequest extends FormRequest
+class RetrievePermissionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,9 +28,6 @@ class CreatePermissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required' ,'string', 'between:3,30' , 'unique:permissions,name'],
-            'description_ar' => ['required', 'string',],
-            'description_en' => ['required', 'string',],
         ];
     }
 }

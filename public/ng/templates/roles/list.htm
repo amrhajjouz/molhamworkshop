@@ -1,5 +1,5 @@
 <page-header title="قائمة الأدوار" pretitle="الأدوار">
-    <a href="{{ $r('roles.add') }}" class="btn btn-primary" ng-if="$auth.can('create role')">
+    <a href="{{ $r('roles.add') }}" class="btn btn-primary" ng-if="$auth.can('roles.create')">
         <i class="fe fe-plus"></i>&nbsp; دور جديدة
     </a>
 </page-header>
@@ -9,8 +9,8 @@
         <thead>
             <tr>
                  <th class="text-center">#</th>
-                <th class="text-center">الاسم العربي</th>
-                <th class="text-center">الاسم الانكليزي</th>
+                <th class="text-center">الاسم </th>
+                <th class="text-center">الوصف العربي</th>
                 <th class="text-center">خيارات</th>
             </tr>
         </thead>
@@ -18,8 +18,8 @@
         <tbody>
             <tr ng-repeat="d in roles.data">
                 <td class="align-middle text-center">{{ d.id }}</td>
-                <td class="align-middle text-center">{{ d.ar_name }}</td>
                 <td class="align-middle text-center">{{ d.name }}</td>
+                <td class="align-middle text-center">{{ d.description_ar }}</td>
                 <td class="align-middle text-center h2">
                     <dropdown>
                         <dropdown-item href="{{ $r('roles.overview', {id: d.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>

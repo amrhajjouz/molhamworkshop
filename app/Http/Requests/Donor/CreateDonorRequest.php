@@ -14,7 +14,7 @@ class CreateDonorRequest extends FormRequest
     public function authorize(): bool
     {
         $user = auth()->user();
-        return $user->super_admin || $user->can('create donor');;
+        return $user->super_admin || $user->can('donors.add');;
 
     }
 

@@ -1,3 +1,4 @@
+<div  ng-if="$auth.superAdmin">
 <include-header />
 <div class="row m-2" ng-if="$auth.superAdmin">
     <div class="col-6"></div>
@@ -12,8 +13,8 @@
         <thead>
             <tr>
                 <th class="text-center">#</th>
-                <th class="text-center">الاسم العربي</th>
-                <th class="text-center">الاسم الانكليزي</th>
+                <th class="text-center">الاسم</th>
+                <th class="text-center">الوصف العربي</th>
                 <th class="text-center">خيارات</th>
             </tr>
         </thead>
@@ -21,8 +22,8 @@
         <tbody>
             <tr ng-repeat="d in permissions.data">
                 <td class="align-middle text-center">{{ d.id }}</td>
-                <td class="align-middle text-center">{{ d.ar_name }}</td>
                 <td class="align-middle text-center">{{ d.name }}</td>
+                <td class="align-middle text-center">{{ d.description_ar }}</td>
                 <td class="align-middle text-center h2">
                     <dropdown>
                         <dropdown-item
@@ -70,3 +71,4 @@
         </form>
     </modal-body>
 </modal>
+</div>

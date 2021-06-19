@@ -4,7 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\{Donor, Permission, Role, User};
 use Illuminate\Http\Request;
-use App\Http\Requests\Role\{CreateRoleRequest, UpdateRoleRequest, UnassignPermissionRequest, AssignPermissionRequest};
+use App\Http\Requests\Role\{
+    CreateRoleRequest,
+    UpdateRoleRequest,
+    UnassignPermissionRequest,
+    AssignPermissionRequest,
+    RetrieveRoleRequest,
+    ListRoleRequest,
+    ListRolePermissionsRequest,
+    SearchRoleRequest,
+};
 use Illuminate\Support\Facades\Hash;
 
 class RoleController extends Controller
@@ -34,7 +43,7 @@ class RoleController extends Controller
         }
     }
 
-    public function retrieve($id)
+    public function retrieve(RetrieveRoleRequest $request, $id)
     {
         try {
             return response()->json(Role::findOrFail($id));
@@ -43,7 +52,7 @@ class RoleController extends Controller
         }
     }
 
-    public function list(Request $request)
+    public function list(ListRoleRequest $request)
     {
 
         try {
@@ -62,7 +71,7 @@ class RoleController extends Controller
         }
     }
 
-    public function list_permissions(Request $request, $id)
+    public function list_permissions(ListRolePermissionsRequest $request, $id)
     {
         try {
             $role = Role::findOrFail($id);
@@ -116,7 +125,7 @@ class RoleController extends Controller
 
 
 
-    public function search(Request $request)
+    public function search(SearchRoleRequest $request)
     {
 
         try {

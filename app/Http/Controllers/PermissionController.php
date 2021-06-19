@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\{Permission, Role, User};
 use Illuminate\Http\Request;
-use App\Http\Requests\Permission\{CreatePermissionRequest, UpdatePermissionRequest};
+use App\Http\Requests\Permission\{CreatePermissionRequest, UpdatePermissionRequest , RetrievePermissionRequest , ListingPermissionRequest , SearchPermissionRequest };
 use Illuminate\Support\Facades\Hash;
 
 class PermissionController extends Controller
@@ -34,7 +34,7 @@ class PermissionController extends Controller
         }
     }
 
-    public function retrieve($id)
+    public function retrieve(RetrievePermissionRequest $request , $id)
     {
         try {
             return response()->json(Permission::findOrFail($id));
@@ -43,14 +43,14 @@ class PermissionController extends Controller
         }
     }
 
-    public function list(Request $request)
+    public function list(ListingPermissionRequest $request)
     {
         try {
 
             $permissions = Permission::orderBy('id', 'desc')->where(function ($q) use ($request) {
                 if ($request->has('q')) {
                     $q->where('name', 'like', '%' . $request->q . '%');
-                    $q->orWhere('ar_name', 'like', '%' . $request->q . '%');
+                    $q->orWhere('description_ar', 'like', '%' . $request->q . '%');
                 }
             })->paginate(5)->withQueryString();
 
@@ -62,7 +62,7 @@ class PermissionController extends Controller
 
 
 
-    public function search(Request $request)
+    public function search(SearchPermissionRequest $request)
     {
 
         try {
@@ -73,7 +73,8 @@ class PermissionController extends Controller
             $data = Permission::where(function ($q) use ($request) {
                 if ($request->has('q')) {
                     $q->where('name', 'like', "%" . $request->q . "%");
-                    $q->orWhere('ar_name', 'like', "%" . $request->q . "%");
+                    $q->orWhere('description_ar', 'like', "%" . $request->q . "%");
+                    $q->orWhere('description_en', 'like', "%" . $request->q . "%");
                 }
             })
                 ->where(function ($q) use ($request) {
@@ -101,8 +102,8 @@ class PermissionController extends Controller
 
                 $obj = new \stdClass();
                 $obj->id = $item->id;
-                $obj->name = $item->ar_name;
-                $obj->text = $item->ar_name . ' - ' . $item->name;
+                $obj->name = $item->description_ar;
+                $obj->text = $item->name . ' - ' . $item->description_ar;
 
                 $result[] = $obj;
             }

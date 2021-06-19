@@ -13,7 +13,11 @@ class UpdatePermissionRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        $user = auth()->user();
+        if ($user->super_admin) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -26,7 +30,8 @@ class UpdatePermissionRequest extends FormRequest
         return [
             'id' => ['required' , 'exists:permissions'],
             'name' => ['required' ,'string', 'between:3,30' , 'unique:permissions,name,'.$this->id],
-            'ar_name' => ['required', 'string',],
+            'description_ar' => ['required', 'string',],
+            'description_en' => ['required', 'string',],
         ];
     }
 }

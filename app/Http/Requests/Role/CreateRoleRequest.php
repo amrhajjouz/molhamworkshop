@@ -13,7 +13,11 @@ class CreateRoleRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        $user = auth()->user();
+        if ($user->super_admin) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -25,7 +29,8 @@ class CreateRoleRequest extends FormRequest
     {
         return [
             'name' => ['required' ,'string', 'between:3,100' ,'unique:roles,name'],
-            'ar_name' => ['required' ,'string',],
+            'description_ar' => ['required' ,'string',],
+            'description_en' => ['required' ,'string',],
         ];
     }
 }

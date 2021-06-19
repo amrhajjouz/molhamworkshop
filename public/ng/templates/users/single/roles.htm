@@ -1,18 +1,19 @@
-<include-header />
-<div class="row m-2" ng-if="$auth.superAdmin">
+<div  ng-if="$auth.superAdmin">
+  <include-header />
+<div class="row m-2">
   <div class="col-6"></div>
-  <div class="col-6 text-left" ng-if="$auth.superAdmin">
+  <div class="col-6 text-left">
     <button href="#" ng-click="showModal()" class="btn btn-primary"><i class="fe fe-plus"></i>&nbsp;إضافة دور</button>
   </div>
 </div>
 
-<datatable datalist="roles" ng-if="$auth.superAdmin">
+<datatable datalist="roles">
   <table>
     <thead>
       <tr>
         <th class="text-center">#</th>
-        <th class="text-center">الاسم العربي</th>
-        <th class="text-center">الاسم الانكليزي</th>
+        <th class="text-center">الاسم </th>
+        <th class="text-center">الوصف العربي</th>
         <th class="text-center">خيارات</th>
       </tr>
     </thead>
@@ -20,11 +21,11 @@
     <tbody>
       <tr ng-repeat="d in roles.data">
         <td class="align-middle text-center">{{ d.id }}</td>
-        <td class="align-middle text-center">{{ d.ar_name }}</td>
         <td class="align-middle text-center">{{ d.name }}</td>
+        <td class="align-middle text-center">{{ d.description_ar }}</td>
         <td class="align-middle text-center h2">
 
-          <dropdown ng-if="$auth.superAdmin">
+          <dropdown>
             <dropdown-item href="#" ng-click="unassignRole(d.id)"><i class="fe fe-x"></i> إلغاء الإسناد</dropdown-item>
           </dropdown>
         </td>
@@ -59,3 +60,5 @@
     </form>
   </modal-body>
 </modal>
+
+</div>

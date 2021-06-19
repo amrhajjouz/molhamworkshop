@@ -31,22 +31,22 @@
         </a>
         <div class="collapse" id="donors-navs">
             <ul class="nav nav-sm flex-column" >
-                <li class="nav-item" ng-if="$auth.can('create donor')">
+                <li class="nav-item" ng-if="$auth.canAny(['donors.add'])">
                     <a href="{{ $r('donors.add') }}" class="nav-link" >
                         متبرع جديد
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ $r('donors') }}" class="nav-link" ng-if="$auth.can('listing donors')">
+                    <a href="{{ $r('donors') }}" class="nav-link" ng-if="$auth.canAny(['donors.add' , 'donors.*' , 'donors.listing'])">
                         قائمة المتبرعين
                     </a>
                 </li>
             </ul>
         </div>
     </li>
-    <li class="nav-item">
+    <li class="nav-item" ng-if="$auth.superAdmin">
         <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#general-navs" role="button" aria-expanded="false">
-            <i class="fe fe-lock"></i> إعدادات عامة
+            <i class="fe fe-lock"></i> الإعدادات
         </a>
         <div class="collapse" id="general-navs">
             <ul class="nav nav-sm flex-column">
