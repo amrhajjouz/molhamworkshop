@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
             ['name' => 'donors.update', 'description_ar' => 'تعديل متبرع' ,'description_en' => " Lorem, ipsum dolor.",],
             ['name' => 'donors.delete', 'description_ar' => 'حذف متبرع' ,'description_en' => " Lorem, ipsum dolor.",],
             ['name' => 'donors.listing' , 'description_ar'=>'قائمة المتبرعين', 'description_en' => " Lorem, ipsum dolor.",],
+            ['name' => 'donors.*' , 'description_ar'=>' المتبرعين', 'description_en' => " Lorem, ipsum dolor.",],
             ['name' => 'site.*' , 'description_ar'=>'الموقع ', 'description_en' => " Lorem, ipsum dolor.",],
         ];
 
