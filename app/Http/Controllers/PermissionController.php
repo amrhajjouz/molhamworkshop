@@ -60,8 +60,6 @@ class PermissionController extends Controller
         }
     }
 
-
-
     public function search(SearchPermissionRequest $request)
     {
 
@@ -102,8 +100,8 @@ class PermissionController extends Controller
 
                 $obj = new \stdClass();
                 $obj->id = $item->id;
-                $obj->name = $item->description_ar;
-                $obj->text = $item->name . ' - ' . $item->description_ar;
+                $obj->name = $item->name;
+                $obj->text = $item->description_ar;
 
                 $result[] = $obj;
             }

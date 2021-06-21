@@ -14,8 +14,8 @@ class ListUserRolesRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
         return  auth()->user()->super_admin;
+        return true;
     }
     
     /**

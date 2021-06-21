@@ -84,7 +84,6 @@ class RoleController extends Controller
         }
     }
 
-
     public function unassign_permissions(UnassignPermissionRequest $request, Role $role)
     {
         try {
@@ -123,49 +122,38 @@ class RoleController extends Controller
         }
     }
 
-
-
     public function search(SearchRoleRequest $request)
     {
-
         try {
-
             $result = [];
             $data = null;
 
             $data = Role::where(function ($q) use ($request) {
                 if ($request->has('q')) {
                     $q->where('name', 'like', "%" . $request->q . "%");
-                    $q->orWhere('ar_name', 'like', "%" . $request->q . "%");
+                    $q->orWhere('description_ar', 'like', "%" . $request->q . "%");
+                    $q->orWhere('description_en', 'like', "%" . $request->q . "%");
+                }
+            })->where(function ($q) use ($request) {
+                //except permissions already assigned to this user
+                if ($request->has('user_id')) {
+                    $user = User::find($request->user_id);
+                    if ($user) {
+                        $q->whereNotIn('id', $user->roles()->pluck('id'));
+                    }
                 }
             })
-                ->where(function ($q) use ($request) {
-                    //except permissions already assigned to this user
-                    if ($request->has('user_id')) {
-                        $user = User::find($request->user_id);
-                        if ($user) {
-                            $q->whereNotIn('id', $user->roles()->pluck('id'));
-                        }
-                    }
-                })
-
-
                 ->take(10)
                 ->get();
-
             foreach ($data as $item) {
-
                 $obj = new \stdClass();
                 $obj->id = $item->id;
-                $obj->name = $item->ar_name;
-                $obj->text = $item->ar_name . ' - ' . $item->name;
-
+                $obj->name = $item->name;
+                $obj->text = $item->description_ar;
                 $result[] = $obj;
             }
-
             return response()->json($result);
         } catch (\Exception $e) {
-
             throw $this->_exception($e->getMessage());
         }
     }

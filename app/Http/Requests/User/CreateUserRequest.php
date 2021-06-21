@@ -29,6 +29,7 @@ class CreateUserRequest extends FormRequest
             'name' => ['required' ,'string', 'between:3,20'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8'],
+            'locale' => ['required', Rule::in(['ar', 'en']) ],
         ];
     }
     

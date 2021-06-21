@@ -76,7 +76,6 @@
 
                 <!-- Dropdown -->
                 <div class="dropdown">
-
                     <!-- Toggle -->
                     <a href="#">
                         <div class="avatar avatar-sm avatar-online">
@@ -165,27 +164,97 @@
             // returns true if permession exists in Auth permessions
             can: function(permession) {
 
-                if (auth.superAdmin) return true;
+                // if (auth.superAdmin) return true;
 
 
-                if (Array.isArray(permession)) {
 
+                /* 
+                 * if params equal string 
+                 */
+                let can = false;
+                if (!Array.isArray(permession)) {
 
-                    let can = true;
+                    auth.permessions.every(p => {
 
-                    permession.forEach(item => {
-                        if (!auth.permessions.includes(item)) {
-                            can = false;
+                        const splitAuthPermissions = p.split(".");
+                        const splitNeededPermission = permession.split(".");
+                        if (splitAuthPermissions[1] && splitAuthPermissions[1] == "*" &&
+                            splitAuthPermissions[0] == splitNeededPermission[0]) {
+                            can = true;
                             return;
                         }
+                    }); //end forEach
 
-                    })
+                    if (can === false && auth.permessions.includes(permession)) {
+                        can = true;
+                    }
 
                     return can;
-                }
+
+                } else {
 
 
-                if (auth.permessions.includes(permession)) return true;
+                    permession.forEach(p => {
+                        if (auth.permessions.includes(p)) {
+                            can = true;
+                        }else{
+                            can = false;
+                        }
+
+                        if(can===false){
+                            const splitNeededPermission = p.split(".");
+                            let index = auth.permessions.filter(p=> p.startsWith(splitNeededPermission[0]+".*")  )
+                            if(index.length) can = true;
+                        }
+
+                    });
+
+                    return can
+
+
+                    //   auth.permessions.forEach(authPermissionValue => {
+                    //     console.log({authPermissionValue})
+                    //     for (let i = 0; i < permession.length; i++) {
+
+
+                    //         continue;
+                    //         const item = permession[i];
+                    //         console.log({item});
+
+                    //         // if(i = 1){return}
+
+                    //         const splitAuthPermissions = authPermissionValue.split(".");
+                    //         const splitNeededPermission = item.split(".");
+
+                    //         console.log({splitAuthPermissions:splitAuthPermissions , splitNeededPermission:splitNeededPermission})
+
+                    //         if(splitAuthPermissions[1] && splitAuthPermissions)
+                    //         continue;
+                    //         if (!auth.permessions.includes(item)) {
+
+
+
+                    //             can = false;
+                    //             return;
+                    //         }
+                    //     }
+                    // })
+
+                } //end else
+
+
+
+
+                // if (Array.isArray(permession)) {
+                //     let can = true;
+                //     permession.forEach(item => {
+                //         if (!auth.permessions.includes(item)) {
+                //             can = false;
+                //             return;
+                //         }
+                //     })
+                //     return can;
+                // }
 
                 return false;
             },
@@ -219,6 +288,7 @@
 
                     if (auth.permessions.includes(item)) {
                         can = true;
+
                         return can;
                     }
                 })
@@ -268,12 +338,12 @@
             },
         };
 
-        // console.log({
-        //     canAny: auth.canAny(['donors.cae', 'donors.asd'])
-        // })
-        // console.log({
-        //     auth
-        // })
+        console.log({
+            can: auth.can(["donors.add" ])
+        })
+        console.log({
+            auth
+        })
         // auth.role = JSON.parse(auth.roles );
 
         var routes = JSON.parse(("{{ $routes->toJson() }}").replace(/&quot;/g, '"'));

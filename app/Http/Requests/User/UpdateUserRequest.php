@@ -30,6 +30,7 @@ class UpdateUserRequest extends FormRequest
             'name' => ['string', 'between:3,20'],
             'email' => ['email', Rule::unique('users', 'email')->ignore($this->input('id'))],
             'password' => ['string', 'min:8'],
+            'locale' => ['required', Rule::in(['ar', 'en'])],
         ];
     }
     

@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
             ['name' => 'donors.listing' , 'description_ar'=>'قائمة المتبرعين', 'description_en' => " Lorem, ipsum dolor.",],
             ['name' => 'donors.*' , 'description_ar'=>' المتبرعين', 'description_en' => " Lorem, ipsum dolor.",],
             ['name' => 'site.*' , 'description_ar'=>'الموقع ', 'description_en' => " Lorem, ipsum dolor.",],
+            ['name' => 'test.test' , 'description_ar'=>'تجريب ', 'description_en' => " Lorem, ipsum dolor.",],
         ];
 
 
