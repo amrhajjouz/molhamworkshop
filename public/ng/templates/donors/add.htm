@@ -1,6 +1,6 @@
 <page-header title="متبرع جديد" pretitle="المتبرعين"></page-header>
 
-<form class="row" name="myForm" request="createDonor">
+<form class="row" name="myForm" request="createDonor" ng-if="$auth.can('donors.create')">
 
 
     <div class="col-12 col-md-6">
@@ -48,6 +48,6 @@
         </div>
     </div>
     <div class="col-12">
-        <submit-button ng-if="$auth.can('donors.add')" form="myForm" icon="fe fe-plus">اضافة</submit-button>
+        <submit-button  form="myForm" icon="fe fe-plus">اضافة</submit-button>
     </div>
 </form>

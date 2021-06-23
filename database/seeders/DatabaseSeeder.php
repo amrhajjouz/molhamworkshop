@@ -17,12 +17,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
+
+        $amro =User::create([
             'name' => 'Developer User',
             'email' => 'admin@admin.com',
             'password' => Hash::make('12345678'),
+            'super_admin' => 1,
         ]);
-
         $mohamd =User::create([
             'name' => 'mohamd User',
             'email' => 'mohamd@admin.com',
@@ -32,19 +33,24 @@ class DatabaseSeeder extends Seeder
 
 
         $permissions = [
-            ['name' => 'donors.add', 'description_ar' => 'إضافة متبرع' ,'description_en' => " Lorem, ipsum dolor."],
-            ['name' => 'donors.update', 'description_ar' => 'تعديل متبرع' ,'description_en' => " Lorem, ipsum dolor.",],
-            ['name' => 'donors.delete', 'description_ar' => 'حذف متبرع' ,'description_en' => " Lorem, ipsum dolor.",],
-            ['name' => 'donors.listing' , 'description_ar'=>'قائمة المتبرعين', 'description_en' => " Lorem, ipsum dolor.",],
-            ['name' => 'donors.*' , 'description_ar'=>' المتبرعين', 'description_en' => " Lorem, ipsum dolor.",],
+            ['name' => 'donors.create', 'description_ar' => 'اضافة المتبرعين' ,'description_en' => "Create Donors"],
+            ['name' => 'donors.update', 'description_ar' => 'تعديل المتبرعين' ,'description_en' => "Update Donors",],
+            ['name' => 'donors.view', 'description_ar' => 'عرض المتبرعين' ,'description_en' => "View Donors",],
+            ['name' => 'donors.*' , 'description_ar'=> 'ادارة المتبرعين', 'description_en' => "Manage Donors",],
+
+            ['name' => 'writer.*' , 'description_ar'=>' المتبرعين', 'description_en' => " Lorem, ipsum dolor.",],
             ['name' => 'site.*' , 'description_ar'=>'الموقع ', 'description_en' => " Lorem, ipsum dolor.",],
             ['name' => 'test.test' , 'description_ar'=>'تجريب ', 'description_en' => " Lorem, ipsum dolor.",],
         ];
 
 
+
+
+
         foreach ($permissions  as $permission) {
             $p = Permission::create($permission);
             $mohamd->givePermissionTo($p);
+            $amro->givePermissionTo($p);
         }
 
 

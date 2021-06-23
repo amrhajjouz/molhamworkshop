@@ -11,25 +11,42 @@ class SpaController extends Controller
      *
      * @return void
      */
-    public function __construct ()
+    public function __construct()
     {
+
+
         $this->middleware('auth');
     }
-    
+
     /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index (Request $request , $url = null)
+    public function index(Request $request, $url = null)
     {
+
         try {
-            
+
+            $user = auth()->user();
+
+
+
             if ($request->is('api/*')) return response()->json(['error' => 'API Route not found'], 500);
-            
+
             $app_url =  url('');
             $routes = [];
-            foreach(include(base_path('routes/ng.php')) as $route_name => $r) {
+
+
+            $roles = $user->roles()->pluck('name')->toJson();
+
+            $direct_permissions = $user->permissions()->pluck('name')->toArray();
+            $role_permissions = $user->getPermissionsViaRoles()->pluck('name')->toArray();
+
+            $all_permissions = array_merge($direct_permissions, $role_permissions);
+
+
+            foreach (include(base_path('routes/ng.php')) as $route_name => $r) {
                 $route_url = ($r[0][0] == '/') ? $r[0] : '/' . $r[0];
                 $controller_path = $r[1] . '.js';
                 $controller_exploded_by_slash = explode('/', $r[1]);
@@ -38,12 +55,34 @@ class SpaController extends Controller
                 $template_id_exploded = explode('.', $r[2]);
                 array_pop($template_id_exploded);
                 $template_directory = implode('/', $template_id_exploded); //(count($a) > 0) ? implode('/', $a) : '';
-                $routes[] = ['name' => $route_name, 'url' =>  $route_url , 'controller_name' => $controller_name, 'controller_path' => $controller_path, 'template_directory' => $template_directory, 'template_id' => $r[2], 'template_path' => $template_path];
+
+                if (!isset($r[3])) {
+                    $r[3] = [];
+                }
+
+                foreach ($r[3]  as $permission) {
+                    if (!$user->super_admin) {
+                        if (!in_array($permission, $all_permissions)) {
+                            $exploded = explode('.', $permission);
+                            if (!in_array($exploded[0] . ".*", $all_permissions)) {
+                                continue 2;
+                            }
+                        }
+                    }
+                }
+
+
+                $routes[] = ['name' => $route_name, 'url' =>  $route_url, 'controller_name' => $controller_name, 'controller_path' => $controller_path, 'template_directory' => $template_directory, 'template_id' => $r[2], 'template_path' => $template_path, 'route_permissions' => isset($r[3]) ? $r[3] : []];
             }
-            
+
             $routes = collect($routes);
-            
+
+
             foreach ($routes as $r) {
+
+
+
+
                 if ($routes->where('controller_name', $r['controller_name'])->where('controller_path', '!=', $r['controller_path'])->count() > 0)
                     return response()->json(['error' => 'AngularJS Configuration Error: ' . $r['controller_name'] . ' must be a unique name for only one controller !'], 500);
                 if (!file_exists(public_path() . '/ng/controllers/' . $r['controller_path']))
@@ -51,25 +90,15 @@ class SpaController extends Controller
                 if (!file_exists(public_path() . '/ng/templates/' . $r['template_path']))
                     return response()->json(['error' => 'AngularJS Configuration Error: template file ' . $r['template_path'] . ' is not found !'], 500);
             }
-            
+
             $locales = collect([]);
-            
+
             foreach (['ar', 'en', 'fr', 'de', 'tr', 'es'] as $l) $locales[] = ['code' => $l, 'name' => getLocaleName($l), 'dir' => ($l == 'ar') ? 'rtl' : 'ltr', 'align' => ($l == 'ar') ? 'right' : 'left'];
-            
-            $user = auth()->user();
-            // dd($user->getPermissionsViaRoles() ,$user->permissions);
-            // foreach ($user->roles as $role) {
-                
-            // }
 
-            $roles = $user->roles()->pluck('name')->toJson();
-            
-            $direct_permissions = $user->permissions()->pluck('name')->toArray();
-            $role_permissions = $user->getPermissionsViaRoles()->pluck('name')->toArray();
 
-            $all_permissions = array_merge($direct_permissions , $role_permissions);
 
-            return view('app', ['routes' => collect($routes), 'app_url' => $app_url, 'api_url' => $app_url . '/api/', 'locales' => $locales , 'roles'=> $roles , 'permissions'=> collect($all_permissions)->toJson()]);
+
+            return view('app', ['routes' => collect($routes), 'app_url' => $app_url, 'api_url' => $app_url . '/api/', 'locales' => $locales, 'roles' => $roles, 'permissions' => collect($all_permissions)->toJson()]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }

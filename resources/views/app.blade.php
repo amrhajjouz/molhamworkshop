@@ -15,36 +15,34 @@
     <link rel="stylesheet" href="{{ asset('libs/select2/dist/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/flatpickr/dist/flatpickr.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
-
-
+    
+    
     <!-- Theme CSS -->
-
+    
     <link rel="stylesheet" href="{{ asset('css/theme.rtl.min.css') }}" id="stylesheetLight">
-    <link rel="stylesheet" href="{{ asset('css/custom.css') }}" id="stylesheetLight">
-
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}" id="stylesheetLight">    
+    
     <base href="{{ $app_url }}/">
-
+    
     <title>ورشة عمل فريق ملهم</title>
-
-    <style>
-        #loading-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0px;
-            height: 3px;
-            z-index: 9999;
-            box-shadow: 0px 0px 15px 0px #eee;
-            border-radius: 100px;
-        }
-
+    
+    <style>  #loading-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 0px;
+        height: 3px;
+        z-index: 9999;
+        box-shadow: 0px 0px 15px 0px #eee;
+        border-radius: 100px;
+    }
+    
     </style>
-
+    
 </head>
 
-<body dir="rtl" class="d-flex align-items-center cursor-wait"
-    ng-class="{'cursor-wait' : $page.loading || $page.sendingHttpRequest}">
-
+<body dir="rtl" class="d-flex align-items-center cursor-wait" ng-class="{'cursor-wait' : $page.loading || $page.sendingHttpRequest}">
+    
     <div id="loading-bar" class="bg-primary" ng-show="$page.loading"></div>
 
     <div id="page-spinner" class="container-fluid text-center">
@@ -56,43 +54,44 @@
             <span class="sr-only">Loading...</span>
         </div>
     </div>
-
+    
     <nav id="page-sidebar" class="navbar navbar-vertical fixed-right navbar-expand-md navbar-light d-none">
         <div class="container-fluid">
-
+            
             <!-- Toggler -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse"
-                aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
+            
             <!-- Brand -->
             <a class="navbar-brand" href="javascript:;" ng-click="$page.reload()">
                 <img src="{{ asset('img/logo.png') }}" class="navbar-brand-img mx-auto" alt="...">
             </a>
 
+             
             <!-- User (xs) -->
             <div class="navbar-user d-md-none">
-
+                
                 <!-- Dropdown -->
                 <div class="dropdown">
+                    
                     <!-- Toggle -->
                     <a href="#">
                         <div class="avatar avatar-sm avatar-online">
                             <img src="{{ asset('img/avatar.png') }}" class="avatar-img rounded-circle" alt="...">
                         </div>
                     </a>
-
+                    
                 </div>
-
+                
             </div>
-
+            
             <!-- Collapse -->
             <div class="collapse navbar-collapse" id="sidenavCollapse">
                 @include('sidenav')
             </div>
             <!-- / .navbar-collapse -->
-
+            
         </div>
     </nav>
 
@@ -103,18 +102,18 @@
     </div>
 
     <!-- Photo Viewer Modal -->
-    <div class="modal fade" id="image-lightbox-modal" tabindex="-1" role="dialog" aria-labelledby="image-lightbox-modal"
-        aria-hidden="true">
+   <!-- Photo Viewer Modal -->
+    <div class="modal fade" id="image-lightbox-modal" tabindex="-1" role="dialog" aria-labelledby="image-lightbox-modal" aria-hidden="true">
         <a href="javascript:;" class="modal-dismiss-icon display-4" data-dismiss="modal"><i class="fe fe-x"></i></a>
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-body px-0 py-0">
                     <img class="w-100 img-fluid">
-                </div>
+                </div> 
             </div>
         </div>
     </div>
-    <!-- End Photo Viewer Modal -->
+    <!-- End Photo Viewer Modal -->    
 
     <script src="{{ asset('libs/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
@@ -153,148 +152,76 @@
             superAdmin: parseInt("{{ auth()->user()->super_admin }}"),
 
             // All roles assigned to Auth
-            // roles: "{{ $roles }}",
-
             roles: {!! $roles !!},
-            // .replace(/&quot;/g,'"');,
 
             // All permessions assigned and the permessions of the roles assigned to Auth
             permessions: {!! $permissions !!},
 
             // returns true if permession exists in Auth permessions
             can: function(permession) {
-
-                // if (auth.superAdmin) return true;
-
-
-
+               
+                if (auth.superAdmin) return true;
                 /* 
                  * if params equal string 
                  */
                 let can = false;
                 if (!Array.isArray(permession)) {
-
-                    auth.permessions.every(p => {
-
+                    auth.permessions.forEach(p => {
                         const splitAuthPermissions = p.split(".");
                         const splitNeededPermission = permession.split(".");
-                        if (splitAuthPermissions[1] && splitAuthPermissions[1] == "*" &&
-                            splitAuthPermissions[0] == splitNeededPermission[0]) {
+                        if (splitAuthPermissions[1] && splitAuthPermissions[1] == "*" && splitAuthPermissions[0] == splitNeededPermission[0]) {
                             can = true;
-                            return;
+                            return can;
                         }
                     }); //end forEach
 
                     if (can === false && auth.permessions.includes(permession)) {
                         can = true;
                     }
-
                     return can;
-
                 } else {
-
-
                     permession.forEach(p => {
                         if (auth.permessions.includes(p)) {
                             can = true;
-                        }else{
+                        } else {
                             can = false;
                         }
-
-                        if(can===false){
+                        if (can === false) {
                             const splitNeededPermission = p.split(".");
-                            let index = auth.permessions.filter(p=> p.startsWith(splitNeededPermission[0]+".*")  )
-                            if(index.length) can = true;
+                            let index = auth.permessions.filter(p => p.startsWith(splitNeededPermission[0] +".*"))
+                            if (index.length) {
+                                can = true;
+                            }
                         }
 
                     });
 
                     return can
 
-
-                    //   auth.permessions.forEach(authPermissionValue => {
-                    //     console.log({authPermissionValue})
-                    //     for (let i = 0; i < permession.length; i++) {
-
-
-                    //         continue;
-                    //         const item = permession[i];
-                    //         console.log({item});
-
-                    //         // if(i = 1){return}
-
-                    //         const splitAuthPermissions = authPermissionValue.split(".");
-                    //         const splitNeededPermission = item.split(".");
-
-                    //         console.log({splitAuthPermissions:splitAuthPermissions , splitNeededPermission:splitNeededPermission})
-
-                    //         if(splitAuthPermissions[1] && splitAuthPermissions)
-                    //         continue;
-                    //         if (!auth.permessions.includes(item)) {
-
-
-
-                    //             can = false;
-                    //             return;
-                    //         }
-                    //     }
-                    // })
-
                 } //end else
-
-
-
-
-                // if (Array.isArray(permession)) {
-                //     let can = true;
-                //     permession.forEach(item => {
-                //         if (!auth.permessions.includes(item)) {
-                //             can = false;
-                //             return;
-                //         }
-                //     })
-                //     return can;
-                // }
 
                 return false;
             },
 
             canAny: function(permessions) {
                 if (auth.superAdmin) return true;
-
                 let can = false;
-
                 permessions.forEach(item => {
-
-
                     auth.permessions.forEach(p => {
-
                         const splitAuthPermissions = p.split(".");
                         const splitNeededPermission = item.split(".");
-
-                        if (
-                            splitAuthPermissions[1] &&
-                            splitAuthPermissions[1] == "*" &&
-                            splitNeededPermission[1] &&
-                            splitAuthPermissions[0] == splitNeededPermission[0]
-                        ) {
+                        if (splitAuthPermissions[1] && splitAuthPermissions[1] == "*" && splitNeededPermission[1] && splitAuthPermissions[0] == splitNeededPermission[0]) {
                             can = true;
                             return can;
                         }
-
-
-                    })
-
+                    });
 
                     if (auth.permessions.includes(item)) {
                         can = true;
-
                         return can;
                     }
-                })
+                });
                 return can;
-
-
             },
 
             // returns true if role exists in Auth permessions
@@ -338,13 +265,12 @@
             },
         };
 
-        console.log({
-            can: auth.can(["donors.add" ])
-        })
-        console.log({
-            auth
-        })
-        // auth.role = JSON.parse(auth.roles );
+        // console.log({
+        //     canAny: auth.canAny(["donors.creates.s" ,'asd.asd' , 'sdsd.sd'])
+        // })
+        // console.log({
+        //     auth:auth.permessions
+        // })
 
         var routes = JSON.parse(("{{ $routes->toJson() }}").replace(/&quot;/g, '"'));
         var locales = JSON.parse(("{{ $locales->toJson() }}").replace(/&quot;/g, '"'));

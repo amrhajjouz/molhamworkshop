@@ -14,6 +14,8 @@ use App\Http\Controllers\SpaController;
 |
 */
 
+
+
 require __DIR__.'/auth.php';
 
 Route::middleware('auth')->get('{url?}', [SpaController::class, 'index'])->where('url', '.*')->name('home');

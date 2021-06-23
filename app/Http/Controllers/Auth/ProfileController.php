@@ -43,6 +43,7 @@ class ProfileController extends Controller {
             $user = Auth::user();
             $user->name = $request->input('name');
             $user->email = $request->input('email');
+            $user->locale = $request->input('locale');
             $user->save();
 
             return response()->json([]);

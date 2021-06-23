@@ -145,11 +145,15 @@ class RoleController extends Controller
             })
                 ->take(10)
                 ->get();
+
+            $locale = app()->getLocale();
+
             foreach ($data as $item) {
+                $item = $item->toArray();
                 $obj = new \stdClass();
-                $obj->id = $item->id;
-                $obj->name = $item->name;
-                $obj->text = $item->description_ar;
+                $obj->id = $item['id'];
+                $obj->name = $item['name'];
+                $obj->text = $item['description_' . $locale];
                 $result[] = $obj;
             }
             return response()->json($result);
