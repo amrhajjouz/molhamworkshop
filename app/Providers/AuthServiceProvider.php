@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -26,10 +27,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::before(function ($user, $ability) {
-            
-            \Log::debug(__METHOD__ . '::Gate::before=>arguments:: ', func_get_args());
-
-            return $user->is_admin ? true : null;
+            return $user->hasRole('super_admin') ? true : false;
         });
 
 

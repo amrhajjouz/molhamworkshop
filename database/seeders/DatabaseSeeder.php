@@ -32,29 +32,16 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        $permissions = [
-            ['name' => 'donors.create', 'description_ar' => 'اضافة المتبرعين' ,'description_en' => "Create Donors"],
-            ['name' => 'donors.update', 'description_ar' => 'تعديل المتبرعين' ,'description_en' => "Update Donors",],
-            ['name' => 'donors.view', 'description_ar' => 'عرض المتبرعين' ,'description_en' => "View Donors",],
-            ['name' => 'donors.*' , 'description_ar'=> 'ادارة المتبرعين', 'description_en' => "Manage Donors",],
-
-            ['name' => 'writer.*' , 'description_ar'=>' المتبرعين', 'description_en' => " Lorem, ipsum dolor.",],
-            ['name' => 'site.*' , 'description_ar'=>'الموقع ', 'description_en' => " Lorem, ipsum dolor.",],
-            ['name' => 'test.test' , 'description_ar'=>'تجريب ', 'description_en' => " Lorem, ipsum dolor.",],
-        ];
-
-
-
-
-
-        foreach ($permissions  as $permission) {
-            $p = Permission::create($permission);
-            $mohamd->givePermissionTo($p);
-            $amro->givePermissionTo($p);
-        }
 
 
         /////////////////////// Roles /////////////////////////
+
+        DB::table('roles')->insert([
+            'name' => 'super admin',
+            'description_ar' => 'سوبر ادمن',
+            'description_en' => "Super Admin",
+            'guard_name' => 'web',
+        ]);
 
         DB::table('roles')->insert([
             'name' => 'manager',
@@ -80,6 +67,34 @@ class DatabaseSeeder extends Seeder
             'description_en' => " Lorem, ipsum dolor.",
             'guard_name' => 'web',
         ]);
+
+
+
+
+
+        $permissions = [
+            ['name' => 'donors.create', 'description_ar' => 'اضافة المتبرعين', 'description_en' => "Create Donors"],
+            ['name' => 'donors.update', 'description_ar' => 'تعديل المتبرعين', 'description_en' => "Update Donors",],
+            ['name' => 'donors.view', 'description_ar' => 'عرض المتبرعين', 'description_en' => "View Donors",],
+            ['name' => 'donors.*', 'description_ar' => 'ادارة المتبرعين', 'description_en' => "Manage Donors",],
+
+            ['name' => 'writer.*', 'description_ar' => ' المتبرعين', 'description_en' => " Lorem, ipsum dolor.",],
+            ['name' => 'site.*', 'description_ar' => 'الموقع ', 'description_en' => " Lorem, ipsum dolor.",],
+            ['name' => 'test.test', 'description_ar' => 'تجريب ', 'description_en' => " Lorem, ipsum dolor.",],
+        ];
+
+
+
+
+
+        foreach ($permissions  as $permission) {
+            $p = Permission::create($permission);
+            $mohamd->givePermissionTo($p);
+            $amro->givePermissionTo($p);
+        }
+
+        $mohamd->assignRole('super admin');
+        $amro->assignRole('super admin');
 
     }
 }

@@ -2,5 +2,5 @@
 
 <page-nav>
     <page-nav-item route="donors.overview" params="{id: donor.id}">نظرة عامة</page-nav-item>
-    <page-nav-item route="donors.edit" params="{id: donor.id}">تعديل المعلومات</page-nav-item>
+    <page-nav-item ng-if="$auth.can('donors.update')" route="donors.edit" params="{id: donor.id}">تعديل المعلومات</page-nav-item>
 </page-nav>

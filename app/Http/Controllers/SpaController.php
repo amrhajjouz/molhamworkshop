@@ -40,12 +40,8 @@ class SpaController extends Controller
 
             $roles = $user->roles()->pluck('name')->toJson();
 
-            $direct_permissions = $user->permissions()->pluck('name')->toArray();
-            $role_permissions = $user->getPermissionsViaRoles()->pluck('name')->toArray();
-
-            $all_permissions = array_merge($direct_permissions, $role_permissions);
-
-
+            $all_permissions = $user->getAllPermissions()->pluck('name')->toArray();
+            
             foreach (include(base_path('routes/ng.php')) as $route_name => $r) {
                 $route_url = ($r[0][0] == '/') ? $r[0] : '/' . $r[0];
                 $controller_path = $r[1] . '.js';

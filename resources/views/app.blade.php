@@ -265,12 +265,7 @@
             },
         };
 
-        // console.log({
-        //     canAny: auth.canAny(["donors.creates.s" ,'asd.asd' , 'sdsd.sd'])
-        // })
-        // console.log({
-        //     auth:auth.permessions
-        // })
+        console.log({auth});
 
         var routes = JSON.parse(("{{ $routes->toJson() }}").replace(/&quot;/g, '"'));
         var locales = JSON.parse(("{{ $locales->toJson() }}").replace(/&quot;/g, '"'));

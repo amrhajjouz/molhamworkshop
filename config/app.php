@@ -234,4 +234,12 @@ return [
 
     ],
 
+
+
+    /* 
+     * define super admin role_id 
+    */
+
+    'super_admin_role_id' => 1,
+    
 ];
