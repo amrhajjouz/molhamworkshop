@@ -2,7 +2,7 @@
 
 return [
 
-    // Route structure: {name} => [{url}, {controller_path}, {template_path}]
+    // Route structure: {name} => [{url}, {controller_path}, {template_path}, {permissions:array}]
 
     // Basic Routes
     'home' => ['/', 'homeController', 'home'],

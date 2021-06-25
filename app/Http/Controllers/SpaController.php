@@ -49,14 +49,8 @@ class SpaController extends Controller
                 $template_id_exploded = explode('.', $r[2]);
                 array_pop($template_id_exploded);
                 $template_directory = implode('/', $template_id_exploded); //(count($a) > 0) ? implode('/', $a) : '';
-
-                if (!isset($r[3])) {
-                    $r[3] = [];
-                }
-                /* 
-                 * if $r[3] is empty array that mean route is public  
-                */
-                if(sizeof($r[3]) !== 0){if(!$user->canAny($r[3])){continue;}}
+                
+                if (isset($r[3]) && !$user->canAny($r[3])) continue;
                 
                 $routes[] = ['name' => $route_name, 'url' =>  $route_url, 'controller_name' => $controller_name, 'controller_path' => $controller_path, 'template_directory' => $template_directory, 'template_id' => $r[2], 'template_path' => $template_path, 'route_permissions' => isset($r[3]) ? $r[3] : []];
             }

@@ -154,90 +154,80 @@
             // All roles assigned to Auth
             roles: {!! $roles !!},
             
-            // All permessions assigned and the permessions of the roles assigned to Auth
-            permessions: {!! $permissions !!},
+            // All permissions assigned and the permissions of the roles assigned to Auth
+            permissions: {!! $permissions !!},
             
-            // returns true if permession exists in Auth permessions
-            can: function(permession) {
-
-                let can = true;
-                if (!Array.isArray(permession)) {
-                    return this.hasPermission(permession)
-                } else {
-                    permession.forEach(p =>{
-                    let exists = this.hasPermission(p);
-                    if(!exists) can = false;
-                });
-                return can
-                } //end else
+            // returns true if permission exists in Auth permissions
+            can: function (permission) {
+                let allPermissionsExist = true;
+                if (!Array.isArray(permission))
+                    return this.hasPermission(permission);
+                else {
+                    permission.forEach (p => {
+                        if (!this.hasPermission(p)) allPermissionsExist = false;
+                    });
+                    return allPermissionsExist;
+                }
             },
-            canAny: function(permessions) {
-                let can = false
-                permessions.forEach(p =>{
-                    let exists = this.hasPermission(p);
-                    if(exists) can = true;
+            
+            canAny: function(permissions) {
+                let onePermissionExists = false
+                permissions.forEach(p => {
+                    if (this.hasPermission(p)) onePermissionExists = true;
                 });
-                return can;
+                return onePermissionExists;
             },
-            // returns true if role exists in Auth permessions
+            
+            // returns true if role exists in Auth roles
             is: function(role) {
                 if (auth.superAdmin) return true;
-
                 if (Array.isArray(role)) {
-                    let can = true;
-
-
+                    let allRolesExist = true;
                     role.forEach(item => {
                         if (!auth.roles.includes(item)) {
-                            can = false;
-                            return;
+                            allRolesExist = false;
+                            return ;
                         }
-                    })
-
-                    return can;
+                    });
+                    return allRolesExist;
                 }
-
-                if (auth.roles.includes(role)) return true
-
+                else if (auth.roles.includes(role)) return true;
+                
                 return false;
             },
-
+            
             isAny: function(roles) {
-
                 if (auth.superAdmin) return true;
-
-                let is = false;
-
+                let oneRoleExists = false;
                 roles.forEach(item => {
                     if (auth.roles.includes(item)) {
-                        is = true;
-                        return;
+                        oneRoleExists = true;
+                        return ;
                     }
-                })
-                return is;
-
-
+                });
+                return oneRoleExists;
             },
-            hasPermission:function(permission){
-                if(this.permessions.includes(permission))return true;
-                let splittedPermission = permission.split('.');
-
-                // let checkedItems = [];
-                // for(let i = 0; i< splittedPermission.length;i++){
-                //     checkedItems.push(splittedPermission[i]);
-                //     if(i==0&&splittedPermission[i]=="*"){
-                //         return true;
-                //     }else if(this.permessions.includes(`${checkedItems.join('.')}.*`)){
-                //         return true;
-                //     }
-                // }
-
-                let toMatch = splittedPermission.slice(0 , -1);
-                 for(let i = 0; i< this.permessions.length;i++){
-                    if(this.permessions[i] == "*")return true;
-                    else if(this.permessions.includes(`${toMatch.join('.')}.*`))return true;
+            
+            hasPermission: function (permission) {
+                if (this.permissions.includes(permission) || this.permissions.includes('*')) return true;
+                let permissionSplitted = permission.split('.'); // [p1,p2,p3,p4,p5] splitted from: p1.p2.p3.p4.p5
+                /*
+                    1 => p1.*
+                    2 => p1.p2.*
+                    3 => p1.p2.p3.*
+                    4 => p1.p2.p3.p4.*
+                */
+                for (i=1; i<permissionSplitted.length; i++) {
+                    if (this.permissions.includes(permissionSplitted.slice(0, i).join('.') + '.*')) return true;
                 }
                 return false;
+                
+                /*let toMatch = permissionSplitted.slice(0 , -1); // [p1,p2,p3,p4]
+                for (i =0; i<this.permissions.length;i++) {
+                    if(this.permissions[i] == "*")return true;
+                    else if(this.permissions.includes(`${toMatch.join('.')}.*`))return true;
+                }
+                return false;*/
             }
         };
 
