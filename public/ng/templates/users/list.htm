@@ -1,31 +1,30 @@
 <page-header title="قائمة المستخدمين" pretitle="المستخدمون">
-  <a href="{{ $r('users.add') }}" class="btn btn-primary"> <i class="fe fe-plus"></i>&nbsp; مستخدم جديد </a>
+    <a href="{{ $r('users.add') }}" class="btn btn-primary"> <i class="fe fe-plus"></i>&nbsp; مستخدم جديد </a>
 </page-header>
 <datatable datalist="users">
-  <table>
-    <thead>
-      <tr>
-        <th class="text-center">#</th>
-        <th class="text-center">الاسم</th>
-        <th class="text-center">البريد الالكتروني</th>
-        <th class="text-center">خيارات</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr ng-repeat="u in users.data">
-        <td class="align-middle text-center">{{ u.id }}</td>
-        <td class="align-middle text-center">{{ u.name }}</td>
-        <td class="align-middle text-center">{{ u.email }}</td>
-        <td class="align-middle text-center h2">
-          <dropdown>
-            <dropdown-item href="{{ $r('users.overview', {id: u.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
-            <dropdown-item href="{{ $r('users.edit', {id: u.id}) }}"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
-            <dropdown-item href="{{ $r('users.permissions', {id: u.id}) }}"><i class="fe fe-grid"></i> الصلاحيات</dropdown-item>
-            <dropdown-item href="{{ $r('users.roles', {id: u.id}) }}"><i class="fe fe-user-check"></i> الأدوار</dropdown-item>
-          </dropdown>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">الاسم</th>
+                <th class="text-center">البريد الالكتروني</th>
+                <th class="text-center">خيارات</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="u in users.data">
+                <td class="align-middle text-center">{{ u.id }}</td>
+                <td class="align-middle text-center">{{ u.name }}</td>
+                <td class="align-middle text-center">{{ u.email }}</td>
+                <td class="align-middle text-center h2">
+                    <dropdown>
+                        <dropdown-item href="{{ $r('users.overview', {id: u.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
+                        <dropdown-item href="{{ $r('users.edit', {id: u.id}) }}"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
+                        <dropdown-item href="{{ $r('users.permissions', {id: u.id}) }}"><i class="fe fe-grid"></i> الصلاحيات</dropdown-item>
+                        <dropdown-item href="{{ $r('users.roles', {id: u.id}) }}"><i class="fe fe-user-check"></i> الأدوار</dropdown-item>
+                    </dropdown>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </datatable>

@@ -13,7 +13,7 @@ class UnAssignRoleRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->super_admin;
+        return  auth()->user()->can("*");
     }
 
     /**

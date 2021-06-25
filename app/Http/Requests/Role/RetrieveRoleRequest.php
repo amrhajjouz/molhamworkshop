@@ -13,11 +13,7 @@ class RetrieveRoleRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = auth()->user();
-        if ($user->super_admin) {
-            return true;
-        }
-        return false;
+        return auth()->user()->can("*");
     }
 
     /**

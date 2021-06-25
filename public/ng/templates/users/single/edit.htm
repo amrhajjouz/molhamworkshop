@@ -1,42 +1,37 @@
 <include-header />
-
 <form class="row" name="myForm" request="updateUser">
-  <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="name">الاسم</label>
-      <input type="text" class="form-control" ng-class="(updateUser.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="user.name" ng-change="updateUser.errors.name = null" placeholder="الاسم .." required />
-      <div ng-show="updateUser.errors.name != null" class="invalid-feedback">{{ updateUser.errors.name[0] }}</div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">الاسم</label>
+            <input type="text" class="form-control" ng-class="(updateUser.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="user.name" ng-change="updateUser.errors.name = null" placeholder="الاسم .." required />
+            <div ng-show="updateUser.errors.name != null" class="invalid-feedback">{{ updateUser.errors.name[0] }}</div>
+        </div>
     </div>
-  </div>
-
-  <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="email">البريد الالكتروني</label>
-      <input type="email" class="form-control" ng-class="(updateUser.errors.email != null) ? 'is-invalid' : ''" id="email" ng-model="user.email" ng-change="updateUser.errors.email = null" placeholder="البريد الالكتروني .." autofocus="off" autocomplete="off" required />
-      <div ng-show="updateUser.errors.email != null" class="invalid-feedback">{{ updateUser.errors.email[0] }}</div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="email">البريد الالكتروني</label>
+            <input type="email" class="form-control" ng-class="(updateUser.errors.email != null) ? 'is-invalid' : ''" id="email" ng-model="user.email" ng-change="updateUser.errors.email = null" placeholder="البريد الالكتروني .." autofocus="off" autocomplete="off" required />
+            <div ng-show="updateUser.errors.email != null" class="invalid-feedback">{{ updateUser.errors.email[0] }}</div>
+        </div>
     </div>
-  </div>
-
-  <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="password">كلمة المرور</label>
-      <input type="password" class="form-control" ng-class="{'is-invalid' : updateUser.errors.password != null}" id="password" ng-model="user.password" ng-change="updateUser.errors.password = null" placeholder="كلمة المرور .." autofocus="off" autocomplete="off" required />
-      <div ng-show="updateUser.errors.password != null" class="invalid-feedback">{{ updateUser.errors.password[0] }}</div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="password">كلمة المرور</label>
+            <input type="password" class="form-control" ng-class="{'is-invalid' : updateUser.errors.password != null}" id="password" ng-model="user.password" ng-change="updateUser.errors.password = null" placeholder="كلمة المرور .." autofocus="off" autocomplete="off" required />
+            <div ng-show="updateUser.errors.password != null" class="invalid-feedback">{{ updateUser.errors.password[0] }}</div>
+        </div>
     </div>
-  </div>
-
-  <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="locale">اللغة الإفتراضية</label>
-      <select id="locale" class="custom-select" name="locale" ng-model="user.locale" ng-change="updateUser.errors.locale = null">
-        <option value="ar">العربية</option>
-        <option value="en">الإنكليزية</option>
-      </select>
-      <div ng-show="updateUser.errors.locale != null" class="invalid-feedback">{{ updateUser.errors.locale[0] }}</div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="locale">اللغة الإفتراضية</label>
+            <select id="locale" class="custom-select" name="locale" ng-model="user.locale" ng-change="updateUser.errors.locale = null">
+                <option value="ar">العربية</option>
+                <option value="en">الإنكليزية</option>
+            </select>
+            <div ng-show="updateUser.errors.locale != null" class="invalid-feedback">{{ updateUser.errors.locale[0] }}</div>
+        </div>
     </div>
-  </div>
-
-  <div class="col-12">
-    <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
-  </div>
+    <div class="col-12">
+        <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
 </form>

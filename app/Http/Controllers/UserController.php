@@ -83,8 +83,6 @@ class UserController extends Controller
         }
     }
 
-
-
     public function assign_roles(AssignRolesRequest $request, $user_id)
     {
         try {
@@ -108,7 +106,6 @@ class UserController extends Controller
         }
     }
 
-
     public function unassign_role(UnAssignRoleRequest $request, $user_id)
     {
         try {
@@ -125,8 +122,6 @@ class UserController extends Controller
             return ['error' => $e->getMessage()];
         }
     }
-
-
 
     public function list_permissions(Request $request, $id)
     {
@@ -163,12 +158,8 @@ class UserController extends Controller
     public function assign_permissions(AssignPermissionRequest $request, $id)
     {
         try {
-
-
             $data = $request->validated();
-
             $user = User::findOrFail($id);
-
             foreach ($data['permission_ids'] as $key => $value) {
                 $permission = Permission::findORfail($value);
                 if ($user->hasDirectPermission($permission->name)) {
@@ -176,7 +167,6 @@ class UserController extends Controller
                 }
                 $user->givePermissionTo($permission->name);
             }
-
             return response()->json($user);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];

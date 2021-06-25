@@ -128,7 +128,8 @@ class RoleController extends Controller
             $result = [];
             $data = null;
 
-            $data = Role::where(function ($q) use ($request) {
+            $data = Role::where('id', '>', 1)
+                ->where(function ($q) use ($request) {
                 if ($request->has('q')) {
                     $q->where('name', 'like', "%" . $request->q . "%");
                     $q->orWhere('description_ar', 'like', "%" . $request->q . "%");

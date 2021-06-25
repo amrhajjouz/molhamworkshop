@@ -1,9 +1,6 @@
 <page-header title="قائمة المتبرعين" pretitle="المتبرعين">
-    <a href="{{ $r('donors.add') }}" class="btn btn-primary" ng-if="$auth.canAny(['donors.create'])">
-        <i class="fe fe-plus"></i>&nbsp; متبرع جديد
-    </a>
+    <a href="{{ $r('donors.add') }}" class="btn btn-primary" ng-if="$auth.can('donors.create')"> <i class="fe fe-plus"></i>&nbsp; متبرع جديد </a>
 </page-header>
-
 <datatable datalist="donors">
     <table>
         <thead>
@@ -15,7 +12,6 @@
                 <th class="text-center">خيارات</th>
             </tr>
         </thead>
-        
         <tbody>
             <tr ng-repeat="d in donors.data">
                 <td class="align-middle text-center">{{ d.id }}</td>
@@ -25,7 +21,7 @@
                 <td class="align-middle text-center h2">
                     <dropdown>
                         <dropdown-item href="{{ $r('donors.overview', {id: d.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
-                        <dropdown-item href="{{ $r('donors.edit', {id: d.id}) }}"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
+                        <dropdown-item ng-if="$auth.can('donors.update')" href="{{ $r('donors.edit', {id: d.id}) }}"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
                     </dropdown>
                 </td>
             </tr>

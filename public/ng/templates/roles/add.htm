@@ -1,25 +1,23 @@
 <page-header title="دور جديد" pretitle="الأدوار"></page-header>
-
 <form class="row" name="myForm" request="createRole">
-
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="name">الاسم</label>
-            <input type="text" class="form-control" ng-class="(createRole.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="role.name" ng-change="createRole.errors.name = null" placeholder="الاسم الانكليزي .." required>
+            <input type="text" class="form-control" ng-class="(createRole.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="role.name" ng-change="createRole.errors.name = null" placeholder="الاسم الانكليزي .." required />
             <div ng-show="createRole.errors.name != null" class="invalid-feedback">{{ createRole.errors.name[0] }}</div>
         </div>
     </div>
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="description_ar">الوصف العربي</label>
-            <input type="text" class="form-control" ng-class="(createRole.errors.description_ar != null) ? 'is-invalid' : ''" id="description_ar" ng-model="role.description_ar" ng-change="createRole.errors.description_ar = null" placeholder="الوصف العربي .." required>
+            <input type="text" class="form-control" ng-class="(createRole.errors.description_ar != null) ? 'is-invalid' : ''" id="description_ar" ng-model="role.description_ar" ng-change="createRole.errors.description_ar = null" placeholder="الوصف العربي .." required />
             <div ng-show="createRole.errors.description_ar != null" class="invalid-feedback">{{ createRole.errors.description_ar[0] }}</div>
         </div>
     </div>
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="description_en">الوصف الانكليزي</label>
-            <input type="text" class="form-control" ng-class="(createRole.errors.description_en != null) ? 'is-invalid' : ''" id="description_en" ng-model="role.description_en" ng-change="createRole.errors.description_en = null" placeholder="الوصف الانكليزي .." required>
+            <input type="text" class="form-control" ng-class="(createRole.errors.description_en != null) ? 'is-invalid' : ''" id="description_en" ng-model="role.description_en" ng-change="createRole.errors.description_en = null" placeholder="الوصف الانكليزي .." required />
             <div ng-show="createRole.errors.description_en != null" class="invalid-feedback">{{ createRole.errors.description_en[0] }}</div>
         </div>
     </div>

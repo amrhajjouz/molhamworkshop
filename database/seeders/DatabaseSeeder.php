@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -22,13 +23,11 @@ class DatabaseSeeder extends Seeder
             'name' => 'Developer User',
             'email' => 'admin@admin.com',
             'password' => Hash::make('12345678'),
-            'super_admin' => 1,
         ]);
         $mohamd =User::create([
             'name' => 'mohamd User',
             'email' => 'mohamd@admin.com',
             'password' => Hash::make('123123'),
-            'super_admin' => 1,
         ]);
 
 
@@ -36,8 +35,8 @@ class DatabaseSeeder extends Seeder
 
         /////////////////////// Roles /////////////////////////
 
-        DB::table('roles')->insert([
-            'name' => 'super admin',
+       $super_admin = Role::create([
+            'name' => 'super-admin',
             'description_ar' => 'سوبر ادمن',
             'description_en' => "Super Admin",
             'guard_name' => 'web',
@@ -73,6 +72,7 @@ class DatabaseSeeder extends Seeder
 
 
         $permissions = [
+            ['name' => '*', 'description_ar' => '*', 'description_en' => "*"],
             ['name' => 'donors.create', 'description_ar' => 'اضافة المتبرعين', 'description_en' => "Create Donors"],
             ['name' => 'donors.update', 'description_ar' => 'تعديل المتبرعين', 'description_en' => "Update Donors",],
             ['name' => 'donors.view', 'description_ar' => 'عرض المتبرعين', 'description_en' => "View Donors",],
@@ -80,7 +80,8 @@ class DatabaseSeeder extends Seeder
 
             ['name' => 'writer.*', 'description_ar' => ' المتبرعين', 'description_en' => " Lorem, ipsum dolor.",],
             ['name' => 'site.*', 'description_ar' => 'الموقع ', 'description_en' => " Lorem, ipsum dolor.",],
-            ['name' => 'test.test', 'description_ar' => 'تجريب ', 'description_en' => " Lorem, ipsum dolor.",],
+            ['name' => 'test1.test2.*', 'description_ar' => 'تجريب ', 'description_en' => " Lorem, ipsum dolor.",],
+            // ['name' => 'test1.test2.test3.test4', 'description_ar' => 'تجريب ', 'description_en' => " Lorem, ipsum dolor.",],
         ];
 
 
@@ -89,12 +90,16 @@ class DatabaseSeeder extends Seeder
 
         foreach ($permissions  as $permission) {
             $p = Permission::create($permission);
-            $mohamd->givePermissionTo($p);
-            $amro->givePermissionTo($p);
+            if($p->name == "*"){
+                $super_admin->givePermissionTo($p->name);
+            }else{
+                $mohamd->givePermissionTo($p);
+                $amro->givePermissionTo($p);
+            }
         }
 
-        $mohamd->assignRole('super admin');
-        $amro->assignRole('super admin');
+        // $mohamd->assignRole('super-admin');
+        $amro->assignRole('super-admin');
 
     }
 }

@@ -1,7 +1,5 @@
 <page-header title="صلاحية جديدة" pretitle="الصلاحيات"></page-header>
-
 <form class="row" name="myForm" request="createPermission">
-
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="name">الاسم </label>
@@ -23,8 +21,6 @@
             <div ng-show="createPermission.errors.description_en != null" class="invalid-feedback">{{ createPermission.errors.description_en[0] }}</div>
         </div>
     </div>
-    
-
     <div class="col-12">
         <submit-button form="myForm" icon="fe fe-plus">اضافة</submit-button>
     </div>

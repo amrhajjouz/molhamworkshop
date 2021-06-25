@@ -1,13 +1,9 @@
 <include-header/>   
-
 <div class="header">
     <div class="header-body"><h1 class="header-title h3 font-weight-bold"> معلومات المستخدم</h1></div>
 </div>
-
 <div class="row">
-
     <div class="col-12 col-lg-6">
-
         <table>
             <tr>
                 <td class="text-muted py-3">الاسم</td>
@@ -22,11 +18,8 @@
                 <td class="py-3 pr-3">{{ user.locale == 'ar' ? 'العربية' : 'الإنكليزية' }}</td>
             </tr>
         </table>
-
     </div>
-
     <div class="col-12 col-lg-6">
-
         <table>
             <tr>
                 <td class="text-muted py-3">تاريخ الاضافة</td>
@@ -37,9 +30,6 @@
                 <td class="py-3 pr-3"><td class="py-3 pr-3"><span ng-bind="user.updated_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td></td>
             </tr>
         </table>
-    
     </div>
-    
 </div>
-
 <hr>

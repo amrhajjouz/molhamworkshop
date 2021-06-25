@@ -26,7 +26,9 @@
     
     <title>ورشة عمل فريق ملهم</title>
     
-    <style>  #loading-bar {
+    <style>
+    
+    #loading-bar {
         position: fixed;
         top: 0;
         left: 0;
@@ -44,7 +46,7 @@
 <body dir="rtl" class="d-flex align-items-center cursor-wait" ng-class="{'cursor-wait' : $page.loading || $page.sendingHttpRequest}">
     
     <div id="loading-bar" class="bg-primary" ng-show="$page.loading"></div>
-
+    
     <div id="page-spinner" class="container-fluid text-center">
         <div class="mb-4">
             <img src="{{ asset('img/logo.png') }}" class="mx-auto" height="50">
@@ -67,8 +69,7 @@
             <a class="navbar-brand" href="javascript:;" ng-click="$page.reload()">
                 <img src="{{ asset('img/logo.png') }}" class="navbar-brand-img mx-auto" alt="...">
             </a>
-
-             
+            
             <!-- User (xs) -->
             <div class="navbar-user d-md-none">
                 
@@ -100,9 +101,8 @@
             <div class="col-lg-11" ng-view></div>
         </div>
     </div>
-
+    
     <!-- Photo Viewer Modal -->
-   <!-- Photo Viewer Modal -->
     <div class="modal fade" id="image-lightbox-modal" tabindex="-1" role="dialog" aria-labelledby="image-lightbox-modal" aria-hidden="true">
         <a href="javascript:;" class="modal-dismiss-icon display-4" data-dismiss="modal"><i class="fe fe-x"></i></a>
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -114,10 +114,10 @@
         </div>
     </div>
     <!-- End Photo Viewer Modal -->    
-
+    
     <script src="{{ asset('libs/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ asset('libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-
+    
     <script src="{{ asset('libs/chart-js/dist/Chart.min.js') }}"></script>
     <script src="{{ asset('libs/highlightjs/highlight.pack.min.js') }}"></script>
     <script src="{{ asset('libs/flatpickr/dist/flatpickr.min.js') }}"></script>
@@ -127,17 +127,17 @@
     <script src="{{ asset('libs/dropzone/dist/min/dropzone.min.js') }}"></script>
     <script src="{{ asset('libs/select2/dist/js/select2.min.js') }}"></script>
     <script src="{{ asset('libs/chart-js/Chart.extension.min.js') }}"></script>
-
+    
     <script src="{{ asset('js/theme.min.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
-
+    
     <script src="{{ asset('js/angular.min.js') }}"></script>
     <script src="{{ asset('js/angular-route.js') }}"></script>
-
+    
     @foreach ($routes as $r)
-        <script src="{{ asset('ng/controllers/' . $r['controller_path'] . '?t=' . time()) }}"></script>
+    <script src="{{ asset('ng/controllers/' . $r['controller_path'] . '?t=' . time()) }}"></script>
     @endforeach
-    {{-- {{dd(auth()->user()->super_admin)}} --}}
+
     <script>
         var appUrl = "{{ $app_url }}";
         var apiUrl = "{{ $api_url }}";
@@ -149,81 +149,36 @@
             id: "{{ auth()->user()->id }}",
             name: "{{ auth()->user()->name }}",
             email: "{{ auth()->user()->email }}",
-            superAdmin: parseInt("{{ auth()->user()->super_admin }}"),
-
+            superAdmin: {!! $roles !!}.includes('super-admin'),
+            
             // All roles assigned to Auth
             roles: {!! $roles !!},
-
+            
             // All permessions assigned and the permessions of the roles assigned to Auth
             permessions: {!! $permissions !!},
-
+            
             // returns true if permession exists in Auth permessions
             can: function(permession) {
-               
-                if (auth.superAdmin) return true;
-                /* 
-                 * if params equal string 
-                 */
-                let can = false;
+
+                let can = true;
                 if (!Array.isArray(permession)) {
-                    auth.permessions.forEach(p => {
-                        const splitAuthPermissions = p.split(".");
-                        const splitNeededPermission = permession.split(".");
-                        if (splitAuthPermissions[1] && splitAuthPermissions[1] == "*" && splitAuthPermissions[0] == splitNeededPermission[0]) {
-                            can = true;
-                            return can;
-                        }
-                    }); //end forEach
-
-                    if (can === false && auth.permessions.includes(permession)) {
-                        can = true;
-                    }
-                    return can;
+                    return this.hasPermission(permession)
                 } else {
-                    permession.forEach(p => {
-                        if (auth.permessions.includes(p)) {
-                            can = true;
-                        } else {
-                            can = false;
-                        }
-                        if (can === false) {
-                            const splitNeededPermission = p.split(".");
-                            let index = auth.permessions.filter(p => p.startsWith(splitNeededPermission[0] +".*"))
-                            if (index.length) {
-                                can = true;
-                            }
-                        }
-
-                    });
-
-                    return can
-
+                    permession.forEach(p =>{
+                    let exists = this.hasPermission(p);
+                    if(!exists) can = false;
+                });
+                return can
                 } //end else
-
-                return false;
             },
-
             canAny: function(permessions) {
-                if (auth.superAdmin) return true;
-                let can = false;
-                permessions.forEach(item => {
-                    auth.permessions.forEach(p => {
-                        const splitAuthPermissions = p.split(".");
-                        const splitNeededPermission = item.split(".");
-                        if (splitAuthPermissions[1] && splitAuthPermissions[1] == "*" && splitNeededPermission[1] && splitAuthPermissions[0] == splitNeededPermission[0]) {
-                            can = true;
-                            return can;
-                        }
-                    });
-
-                    if (auth.permessions.includes(item)) {
-                        can = true;
-                        return can;
-                    }
+                let can = false
+                permessions.forEach(p =>{
+                    let exists = this.hasPermission(p);
+                    if(exists) can = true;
                 });
                 return can;
             },
-
             // returns true if role exists in Auth permessions
             is: function(role) {
                 if (auth.superAdmin) return true;
@@ -263,18 +218,37 @@
 
 
             },
+            hasPermission:function(permission){
+                if(this.permessions.includes(permission))return true;
+                let splittedPermission = permission.split('.');
+
+                // let checkedItems = [];
+                // for(let i = 0; i< splittedPermission.length;i++){
+                //     checkedItems.push(splittedPermission[i]);
+                //     if(i==0&&splittedPermission[i]=="*"){
+                //         return true;
+                //     }else if(this.permessions.includes(`${checkedItems.join('.')}.*`)){
+                //         return true;
+                //     }
+                // }
+
+                let toMatch = splittedPermission.slice(0 , -1);
+                 for(let i = 0; i< this.permessions.length;i++){
+                    if(this.permessions[i] == "*")return true;
+                    else if(this.permessions.includes(`${toMatch.join('.')}.*`))return true;
+                }
+                return false;
+            }
         };
 
-        console.log({auth});
+        console.log({auth})
 
         var routes = JSON.parse(("{{ $routes->toJson() }}").replace(/&quot;/g, '"'));
         var locales = JSON.parse(("{{ $locales->toJson() }}").replace(/&quot;/g, '"'));
         var app = angular.module("app", ["ngRoute"]);
 
         function $r(name, params = null, withBaseAppUrl = true) {
-
             var routeUrlPrefix = (withBaseAppUrl) ? appUrl : '';
-
             for (i = 0; i < routes.length; i++) {
                 if (name == routes[i].name) {
                     var routePath = routes[i].url;

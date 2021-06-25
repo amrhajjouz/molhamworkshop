@@ -13,11 +13,7 @@ class RetrievePermissionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $user = auth()->user();
-        if($user->super_admin) {
-            return true;
-        }
-        return false;
+        return  auth()->user()->can("*");
     }
 
     /**

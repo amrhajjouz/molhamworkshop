@@ -68,7 +68,8 @@ class PermissionController extends Controller
             $result = [];
             $data = null;
 
-            $data = Permission::where(function ($q) use ($request) {
+            $data = Permission::where('id' , '>' , 1)
+            ->where(function ($q) use ($request) {
                 if ($request->has('q')) {
                     $q->where('name', 'like', "%" . $request->q . "%");
                     $q->orWhere('description_ar', 'like', "%" . $request->q . "%");

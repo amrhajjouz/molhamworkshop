@@ -13,8 +13,7 @@ class UpdateDonorRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = auth()->user();
-        return $user->can('donors.update');;
+        return auth()->user()->can('donors.update');
     }
 
     /**

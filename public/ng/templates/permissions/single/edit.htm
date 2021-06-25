@@ -1,7 +1,5 @@
 <include-header/>
-
 <form class="row" name="myForm" request="updatePermission">
-
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="name">الاسم الانكليزي</label>
@@ -23,7 +21,6 @@
             <div ng-show="updatePermission.errors.description_en != null" class="invalid-feedback">{{ updatePermission.errors.description_en[0] }}</div>
         </div>
     </div>
-
     <div class="col-12">
         <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
     </div>

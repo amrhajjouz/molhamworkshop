@@ -30,13 +30,11 @@ class SpaController extends Controller
 
             $user = auth()->user();
 
-
-
             if ($request->is('api/*')) return response()->json(['error' => 'API Route not found'], 500);
 
             $app_url =  url('');
+           
             $routes = [];
-
 
             $roles = $user->roles()->pluck('name')->toJson();
 
@@ -55,30 +53,17 @@ class SpaController extends Controller
                 if (!isset($r[3])) {
                     $r[3] = [];
                 }
-
-                foreach ($r[3]  as $permission) {
-                    if (!$user->super_admin) {
-                        if (!in_array($permission, $all_permissions)) {
-                            $exploded = explode('.', $permission);
-                            if (!in_array($exploded[0] . ".*", $all_permissions)) {
-                                continue 2;
-                            }
-                        }
-                    }
-                }
-
-
+                /* 
+                 * if $r[3] is empty array that mean route is public  
+                */
+                if(sizeof($r[3]) !== 0){if(!$user->canAny($r[3])){continue;}}
+                
                 $routes[] = ['name' => $route_name, 'url' =>  $route_url, 'controller_name' => $controller_name, 'controller_path' => $controller_path, 'template_directory' => $template_directory, 'template_id' => $r[2], 'template_path' => $template_path, 'route_permissions' => isset($r[3]) ? $r[3] : []];
             }
 
             $routes = collect($routes);
 
-
             foreach ($routes as $r) {
-
-
-
-
                 if ($routes->where('controller_name', $r['controller_name'])->where('controller_path', '!=', $r['controller_path'])->count() > 0)
                     return response()->json(['error' => 'AngularJS Configuration Error: ' . $r['controller_name'] . ' must be a unique name for only one controller !'], 500);
                 if (!file_exists(public_path() . '/ng/controllers/' . $r['controller_path']))
@@ -90,10 +75,6 @@ class SpaController extends Controller
             $locales = collect([]);
 
             foreach (['ar', 'en', 'fr', 'de', 'tr', 'es'] as $l) $locales[] = ['code' => $l, 'name' => getLocaleName($l), 'dir' => ($l == 'ar') ? 'rtl' : 'ltr', 'align' => ($l == 'ar') ? 'right' : 'left'];
-
-
-
-
             return view('app', ['routes' => collect($routes), 'app_url' => $app_url, 'api_url' => $app_url . '/api/', 'locales' => $locales, 'roles' => $roles, 'permissions' => collect($all_permissions)->toJson()]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
