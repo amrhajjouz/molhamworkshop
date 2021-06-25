@@ -11,9 +11,9 @@ class CreatePermissionRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize(): bool
+    public function authorize()
     {
-        return  auth()->user()->can("*");
+        return auth()->user()->can("*");
     }
 
     /**

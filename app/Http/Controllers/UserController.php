@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\User\CreateUserRequest;
-use App\Http\Requests\User\{UpdateUserRequest, ListUserRolesRequest, AssignRolesRequest, UnAssignRoleRequest, AssignPermissionRequest, UnassignPermissionRequest};
+use App\Http\Requests\User\{UpdateUserRequest, ListUserRolesRequest, AssignRolesRequest, UnassignRoleRequest, AssignPermissionRequest, UnassignPermissionRequest};
 use App\Models\{User, Role, Permission};
 
 class UserController extends Controller
@@ -106,7 +106,7 @@ class UserController extends Controller
         }
     }
 
-    public function unassign_role(UnAssignRoleRequest $request, $user_id)
+    public function unassign_role(UnassignRoleRequest $request, $user_id)
     {
         try {
             $data = $request->validated();

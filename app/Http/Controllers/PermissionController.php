@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\{Permission, Role, User};
 use Illuminate\Http\Request;
-use App\Http\Requests\Permission\{CreatePermissionRequest, UpdatePermissionRequest , RetrievePermissionRequest , ListingPermissionRequest , SearchPermissionRequest };
+use App\Http\Requests\Permission\{CreatePermissionRequest, UpdatePermissionRequest , RetrievePermissionRequest , ListPermissionRequest , SearchPermissionRequest };
 use Illuminate\Support\Facades\Hash;
 
 class PermissionController extends Controller
@@ -43,7 +43,7 @@ class PermissionController extends Controller
         }
     }
 
-    public function list(ListingPermissionRequest $request)
+    public function list(ListPermissionRequest $request)
     {
         try {
 

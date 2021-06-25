@@ -13,12 +13,12 @@ return [
     'profile.password' => ['/profile/password', 'profile/profilePasswordController', 'profile.password'],
 
     // Users Routes
-    'users.add' => ['users/add', 'users/addUserController', 'users.add' , ['super_admin']],
-    'users.overview' => ['users/:id', 'users/overviewUserController', 'users.single.overview' , ['super_admin']],
-    'users.edit' => ['users/:id/edit', 'users/editUserController', 'users.single.edit' , ['super_admin']],
-    'users' => ['users', 'users/listUsersController', 'users.list' , ['super_admin']],
-    'users.permissions' => ['users/:id/permissions', 'users/listUserPermissionsController', 'users.single.permissions' , ['super_admin']],
-    'users.roles' => ['users/:id/roles', 'users/listUserRolesController', 'users.single.roles' , ['super_admin']],
+    'users.add' => ['users/add', 'users/addUserController', 'users.add' , ['*']],
+    'users.overview' => ['users/:id', 'users/overviewUserController', 'users.single.overview' , ['*']],
+    'users.edit' => ['users/:id/edit', 'users/editUserController', 'users.single.edit' , ['*']],
+    'users' => ['users', 'users/listUsersController', 'users.list' , ['*']],
+    'users.permissions' => ['users/:id/permissions', 'users/listUserPermissionsController', 'users.single.permissions' , ['*']],
+    'users.roles' => ['users/:id/roles', 'users/listUserRolesController', 'users.single.roles' , ['*']],
 
     //Donors Routes
     'donors' => ['donors', 'donors/listDonorsController', 'donors.list' , ['donors.view']],
@@ -27,17 +27,17 @@ return [
     'donors.edit' => ['donors/:id/edit', 'donors/editDonorController', 'donors.single.edit' , ['donors.update']],
 
     /////////////////////// Roles /////////////////////////
-    'roles' => ['roles', 'roles/listRolesController', 'roles.list' , ['super_admin']],
-    'roles.add' => ['roles/add', 'roles/addRoleController', 'roles.add' , ['super_admin']],
-    'roles.overview' => ['roles/:id', 'roles/overviewRoleController', 'roles.single.overview' , ['super_admin']],
-    'roles.edit' => ['roles/:id/edit', 'roles/editRoleController', 'roles.single.edit' , ['super_admin']],
-    'roles.permissions' => ['roles/:id/permissions', 'roles/listRolePermissionsController', 'roles.single.permissions' , ['super_admin']],
+    'roles' => ['roles', 'roles/listRolesController', 'roles.list' , ['*']],
+    'roles.add' => ['roles/add', 'roles/addRoleController', 'roles.add' , ['*']],
+    'roles.overview' => ['roles/:id', 'roles/overviewRoleController', 'roles.single.overview' , ['*']],
+    'roles.edit' => ['roles/:id/edit', 'roles/editRoleController', 'roles.single.edit' , ['*']],
+    'roles.permissions' => ['roles/:id/permissions', 'roles/listRolePermissionsController', 'roles.single.permissions' , ['*']],
 
     /////////////////////// Permissions /////////////////////////
-    'permissions' => ['permissions', 'permissions/listPermissionsController', 'permissions.list' , ['super_admin']],
-    'permissions.add' => ['permissions/add', 'permissions/addPermissionController', 'permissions.add' , ['super_admin']],
-    'permissions.overview' => ['permissions/:id', 'permissions/overviewPermissionController', 'permissions.single.overview' , ['super_admin']],
-    'permissions.edit' => ['permissions/:id/edit', 'permissions/editPermissionController', 'permissions.single.edit' , ['super_admin']],
+    'permissions' => ['permissions', 'permissions/listPermissionsController', 'permissions.list' , ['*']],
+    'permissions.add' => ['permissions/add', 'permissions/addPermissionController', 'permissions.add' , ['*']],
+    'permissions.overview' => ['permissions/:id', 'permissions/overviewPermissionController', 'permissions.single.overview' , ['*']],
+    'permissions.edit' => ['permissions/:id/edit', 'permissions/editPermissionController', 'permissions.single.edit' , ['*']],
 
 
 ];
