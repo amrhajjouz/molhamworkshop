@@ -19,7 +19,6 @@ class UserController extends Controller
     public function create(CreateUserRequest $request)
     {
         try {
-
             // Create User
             $user = User::create($request->validated());
 
@@ -32,10 +31,8 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request)
     {
         try {
-
             // Fetch User
             $user = User::findOrFail($request->id);
-
             // Update User
             $user->update($request->validated());
 
@@ -48,7 +45,6 @@ class UserController extends Controller
     public function retrieve($id)
     {
         try {
-
             // Fetch User and Return
             return response()->json(User::findOrFail($id));
         } catch (\Exception $e) {
@@ -60,9 +56,7 @@ class UserController extends Controller
     {
         try {
             $search_query = ($request->has('q') ? [['name', 'like', '%' . $request->q . '%']] : null);
-
             $users = User::orderBy('id', 'desc')->where($search_query)->paginate(5)->withQueryString();
-
             return response()->json($users);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -74,9 +68,7 @@ class UserController extends Controller
     {
         try {
             $user = User::findOrFail($user_id);
-
             $roles = $user->roles;
-
             return response()->json($roles);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -87,19 +79,12 @@ class UserController extends Controller
     {
         try {
             $data = $request->validated();
-
             $user = User::findOrFail($user_id);
-
-            foreach ($data['role_ids'] as $key => $value) {
+            foreach ($data['roles_ids'] as $key => $value) {
                 $role = Role::findORfail($value);
-                if ($user->hasRole($role->name)) {
-                    continue;
-                }
-
+                if ($user->hasRole($role->name)) continue;
                 $user->assignRole($role->name);
             }
-
-
             return response()->json($role);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -112,11 +97,7 @@ class UserController extends Controller
             $data = $request->validated();
             $user = User::findOrfail($user_id);
             $role = Role::findOrfail($data['role_id']);
-
-            if ($user->hasRole($role->name)) {
-                $user->removeRole($role->name);
-            }
-
+            if ($user->hasRole($role->name)) $user->removeRole($role->name);
             return response()->json($role);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -127,28 +108,19 @@ class UserController extends Controller
     {
         try {
             $user = User::findOrFail($id);
-
-            $permissions = $user->getDirectPermissions();
-
-            return response()->json($permissions);
+            return response()->json($user->getDirectPermissions());
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
 
-    public function unassign_permission(UnassignPermissionRequest $request,$id)
+    public function unassign_permission(UnassignPermissionRequest $request, $id)
     {
         try {
-
-
             $data = $request->validated();
             $user = User::findOrFail($id);
             $permission = Permission::findORfail($data['permission_id']);
-
-            if ($user->hasDirectPermission($permission->name)) {
-                $user->revokePermissionTo($permission->name);
-            }
-
+            if ($user->hasDirectPermission($permission->name)) $user->revokePermissionTo($permission->name);
             return response()->json($user);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -160,11 +132,9 @@ class UserController extends Controller
         try {
             $data = $request->validated();
             $user = User::findOrFail($id);
-            foreach ($data['permission_ids'] as $key => $value) {
+            foreach ($data['permissions_ids'] as $key => $value) {
                 $permission = Permission::findORfail($value);
-                if ($user->hasDirectPermission($permission->name)) {
-                    continue;
-                }
+                if ($user->hasDirectPermission($permission->name)) continue;
                 $user->givePermissionTo($permission->name);
             }
             return response()->json($user);

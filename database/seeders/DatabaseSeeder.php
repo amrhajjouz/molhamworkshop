@@ -18,7 +18,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
         $amro =User::create([
             'name' => 'Developer User',
             'email' => 'admin@admin.com',
@@ -29,12 +28,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'mohamd@admin.com',
             'password' => Hash::make('123123'),
         ]);
-
-
-
-
         /////////////////////// Roles /////////////////////////
-
        $super_admin = Role::create([
             'name' => 'super-admin',
             'description_ar' => 'سوبر ادمن',
@@ -67,26 +61,13 @@ class DatabaseSeeder extends Seeder
             'guard_name' => 'web',
         ]);
 
-
-
-
-
         $permissions = [
             ['name' => '*', 'description_ar' => '*', 'description_en' => "*"],
             ['name' => 'donors.create', 'description_ar' => 'اضافة المتبرعين', 'description_en' => "Create Donors"],
             ['name' => 'donors.update', 'description_ar' => 'تعديل المتبرعين', 'description_en' => "Update Donors",],
             ['name' => 'donors.view', 'description_ar' => 'عرض المتبرعين', 'description_en' => "View Donors",],
             ['name' => 'donors.*', 'description_ar' => 'ادارة المتبرعين', 'description_en' => "Manage Donors",],
-
-            ['name' => 'writer.*', 'description_ar' => ' المتبرعين', 'description_en' => " Lorem, ipsum dolor.",],
-            ['name' => 'site.*', 'description_ar' => 'الموقع ', 'description_en' => " Lorem, ipsum dolor.",],
-            ['name' => 'test1.test2.*', 'description_ar' => 'تجريب ', 'description_en' => " Lorem, ipsum dolor.",],
-            // ['name' => 'test1.test2.test3.test4', 'description_ar' => 'تجريب ', 'description_en' => " Lorem, ipsum dolor.",],
         ];
-
-
-
-
 
         foreach ($permissions  as $permission) {
             $p = Permission::create($permission);
@@ -98,7 +79,7 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        // $mohamd->assignRole('super-admin');
+        $mohamd->assignRole('super-admin');
         $amro->assignRole('super-admin');
 
     }

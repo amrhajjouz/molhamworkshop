@@ -30,8 +30,8 @@ function listUserPermissionsController($scope, $init, $page, $apiRequest) {
   $scope.userId = $page.routeParams.id;
   $scope.permissions = $init;
   $scope.selectedPermission = {
-    permission_ids: null,
-    user_id: $scope.userId,
+      permissions_ids: null,
+      user_id: $scope.userId,
   };
 
   $scope.unassignPermission = async (permissionID) => {

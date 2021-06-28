@@ -11,7 +11,7 @@ class CreateDonorRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize(): bool
+    public function authorize()
     {
         return auth()->user()->can('donors.create');;
 

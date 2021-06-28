@@ -36,7 +36,7 @@ function listRolePermissionsController($scope, $init, $page, $apiRequest) {
     $scope.roleId = $page.routeParams.id;
     $scope.permissions = $init;
     $scope.selectedPermission = {
-        permission_ids: null,
+        permissions_ids: null,
         role_id: $scope.roleId,
     };
 

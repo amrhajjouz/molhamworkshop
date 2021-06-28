@@ -25,21 +25,13 @@ class SpaController extends Controller
      */
     public function index(Request $request, $url = null)
     {
-
         try {
-
             $user = auth()->user();
-
             if ($request->is('api/*')) return response()->json(['error' => 'API Route not found'], 500);
-
             $app_url =  url('');
-           
             $routes = [];
-
             $roles = $user->roles()->pluck('name')->toJson();
-
             $all_permissions = $user->getAllPermissions()->pluck('name')->toArray();
-            
             foreach (include(base_path('routes/ng.php')) as $route_name => $r) {
                 $route_url = ($r[0][0] == '/') ? $r[0] : '/' . $r[0];
                 $controller_path = $r[1] . '.js';
@@ -49,14 +41,8 @@ class SpaController extends Controller
                 $template_id_exploded = explode('.', $r[2]);
                 array_pop($template_id_exploded);
                 $template_directory = implode('/', $template_id_exploded); //(count($a) > 0) ? implode('/', $a) : '';
-
-                if (!isset($r[3])) {
-                    $r[3] = [];
-                }
-                /* 
-                 * if $r[3] is empty array that mean route is public  
-                */
-                if(sizeof($r[3]) !== 0){if(!$user->canAny($r[3])){continue;}}
+                
+                if (isset($r[3]) && !$user->canAny($r[3])) continue;
                 
                 $routes[] = ['name' => $route_name, 'url' =>  $route_url, 'controller_name' => $controller_name, 'controller_path' => $controller_path, 'template_directory' => $template_directory, 'template_id' => $r[2], 'template_path' => $template_path, 'route_permissions' => isset($r[3]) ? $r[3] : []];
             }

@@ -145,103 +145,70 @@
         var appTitle = $('title').text();
 
         var auth = {
-
             id: "{{ auth()->user()->id }}",
             name: "{{ auth()->user()->name }}",
             email: "{{ auth()->user()->email }}",
             superAdmin: {!! $roles !!}.includes('super-admin'),
-            
-            // All roles assigned to Auth
+            /*
+            * All roles assigned to Auth
+            */ 
             roles: {!! $roles !!},
-            
-            // All permessions assigned and the permessions of the roles assigned to Auth
-            permessions: {!! $permissions !!},
-            
-            // returns true if permession exists in Auth permessions
-            can: function(permession) {
-
-                let can = true;
-                if (!Array.isArray(permession)) {
-                    return this.hasPermission(permession)
-                } else {
-                    permession.forEach(p =>{
-                    let exists = this.hasPermission(p);
-                    if(!exists) can = false;
-                });
-                return can
-                } //end else
+            /*
+            * All permissions assigned and the permissions of the roles assigned to Auth
+            */ 
+            permissions: {!! $permissions !!},
+            /*
+            * returns true if permission exists in Auth permissions
+            */ 
+            can: function (permission) {
+                let allPermissionsExist = true;
+                if (!Array.isArray(permission)) return this.hasPermission(permission);
+                else {
+                    permission.forEach (p => {if (!this.hasPermission(p)) allPermissionsExist = false;});
+                    return allPermissionsExist;
+                }
             },
-            canAny: function(permessions) {
-                let can = false
-                permessions.forEach(p =>{
-                    let exists = this.hasPermission(p);
-                    if(exists) can = true;
-                });
-                return can;
+            canAny: function(permissions) {
+                let onePermissionExists = false
+                permissions.forEach(p => {if (this.hasPermission(p)) onePermissionExists = true;});
+                return onePermissionExists;
             },
-            // returns true if role exists in Auth permessions
+            /*
+            * returns true if role exists in Auth roles
+            */ 
             is: function(role) {
                 if (auth.superAdmin) return true;
-
                 if (Array.isArray(role)) {
-                    let can = true;
-
-
+                    let allRolesExist = true;
                     role.forEach(item => {
                         if (!auth.roles.includes(item)) {
-                            can = false;
-                            return;
+                            allRolesExist = false;
+                            return ;
                         }
-                    })
-
-                    return can;
+                    });
+                    return allRolesExist;
                 }
-
-                if (auth.roles.includes(role)) return true
-
+                else if (auth.roles.includes(role)) return true;
                 return false;
             },
-
             isAny: function(roles) {
-
                 if (auth.superAdmin) return true;
-
-                let is = false;
-
+                let oneRoleExists = false;
                 roles.forEach(item => {
                     if (auth.roles.includes(item)) {
-                        is = true;
-                        return;
+                        oneRoleExists = true;
+                        return ;
                     }
-                })
-                return is;
-
-
+                });
+                return oneRoleExists;
             },
-            hasPermission:function(permission){
-                if(this.permessions.includes(permission))return true;
-                let splittedPermission = permission.split('.');
-
-                // let checkedItems = [];
-                // for(let i = 0; i< splittedPermission.length;i++){
-                //     checkedItems.push(splittedPermission[i]);
-                //     if(i==0&&splittedPermission[i]=="*"){
-                //         return true;
-                //     }else if(this.permessions.includes(`${checkedItems.join('.')}.*`)){
-                //         return true;
-                //     }
-                // }
-
-                let toMatch = splittedPermission.slice(0 , -1);
-                 for(let i = 0; i< this.permessions.length;i++){
-                    if(this.permessions[i] == "*")return true;
-                    else if(this.permessions.includes(`${toMatch.join('.')}.*`))return true;
-                }
+            hasPermission: function (permission) {
+                if (this.permissions.includes(permission) || this.permissions.includes('*')) return true;
+                let permissionSplitted = permission.split('.');
+                for (let i=1; i< permissionSplitted.length; i++) {if (this.permissions.includes(permissionSplitted.slice(0, i).join('.') + '.*')) return true; }
                 return false;
             }
         };
-
-        console.log({auth})
 
         var routes = JSON.parse(("{{ $routes->toJson() }}").replace(/&quot;/g, '"'));
         var locales = JSON.parse(("{{ $locales->toJson() }}").replace(/&quot;/g, '"'));

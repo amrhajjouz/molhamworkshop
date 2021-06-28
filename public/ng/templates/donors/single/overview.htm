@@ -1,5 +1,4 @@
 <include-header/>
-  
 <div class="header">
     <div class="header-body">
         <h1 class="header-title h3 font-weight-bold">
@@ -7,11 +6,8 @@
         </h1>
     </div>
 </div>
-
 <div class="row">
-
     <div class="col-12 col-lg-6">
-
         <table>
             <tr>
                 <td class="text-muted py-3">الاسم</td>
@@ -25,24 +21,18 @@
                 <td class="text-muted py-3">رقم الهاتف</td>
                 <td class="py-3 pr-3" dir="ltr">{{ donor.phone }}</td>
             </tr>
-            
             <tr>
                 <td class="text-muted py-3">رقم السويش</td>
                 <td class="py-3 pr-3" dir="ltr">{{ donor.swish_number }}</td>
             </tr>
         </table>
-
     </div>
-
     <div class="col-12 col-lg-6">
-
         <table>
-            
             <tr>
                 <td class="text-muted py-3">رقم الواتس اب</td>
                 <td class="py-3 pr-3" dir="ltr">{{ donor.whatsapp_number }}</td>
             </tr>
-            
             <tr>
                 <td class="text-muted py-3">تاريخ الاضافة</td>
                 <td class="py-3 pr-3"><span ng-bind="donor.created_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td>
@@ -52,10 +42,7 @@
                 <td class="py-3 pr-3"><span ng-bind="donor.updated_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td>
             </tr>
         </table>
-
     </div>
-
 </div>
-
 <hr>
 

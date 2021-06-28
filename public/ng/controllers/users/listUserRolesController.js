@@ -30,7 +30,7 @@ function listUserRolesController($scope, $init, $page, $apiRequest) {
   $scope.userId = $page.routeParams.id;
   $scope.roles = $init;
   $scope.selectedRoles = {
-    role_ids: [],
+    roles_ids: [],
     user_id: $scope.userId,
   };
 

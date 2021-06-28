@@ -5,8 +5,5 @@ use Spatie\Permission\Models\Permission as SpatieRPermissionModel;
 
 class Permission extends SpatieRPermissionModel
 {
-
-
-    
 }
 

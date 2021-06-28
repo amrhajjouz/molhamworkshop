@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Donor, Permission, Role, User};
-use Illuminate\Http\Request;
+use App\Models\{Permission, Role, User};
 use App\Http\Requests\Role\{
     CreateRoleRequest,
     UpdateRoleRequest,
@@ -14,11 +13,9 @@ use App\Http\Requests\Role\{
     ListRolePermissionsRequest,
     SearchRoleRequest,
 };
-use Illuminate\Support\Facades\Hash;
 
 class RoleController extends Controller
 {
-
     public function create(CreateRoleRequest $request)
     {
         try {
@@ -35,7 +32,6 @@ class RoleController extends Controller
         try {
             $role = Role::findOrFail($request->id);
             $data = $request->validated();
-
             $role->update($data);
             return response()->json($role);
         } catch (\Exception $e) {
@@ -54,17 +50,13 @@ class RoleController extends Controller
 
     public function list(ListRoleRequest $request)
     {
-
         try {
-            $search_query = ($request->has('q') ? [['name', 'like', '%' . $request->q . '%']] : null);
-
             $roles = Role::orderBy('id', 'desc')->where(function ($q) use ($request) {
                 if ($request->has('q')) {
                     $q->where('name', 'like', '%' . $request->q . '%');
                     $q->orWhere('ar_name', 'like', '%' . $request->q . '%');
                 }
             })->paginate(5)->withQueryString();
-
             return response()->json($roles);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -75,9 +67,7 @@ class RoleController extends Controller
     {
         try {
             $role = Role::findOrFail($id);
-
             $permissions = $role->permissions;
-
             return response()->json($permissions);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -89,11 +79,7 @@ class RoleController extends Controller
         try {
             $data = $request->validated();
             $permission = Permission::findORfail($data['permission_id']);
-
-            if ($role->hasPermissionTo($permission->name)) {
-                $role->revokePermissionTo($permission->name);
-            }
-
+            if ($role->hasPermissionTo($permission->name)) $role->revokePermissionTo($permission->name);
             return response()->json($role);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -104,32 +90,21 @@ class RoleController extends Controller
     {
         try {
             $data = $request->validated();
-
-            foreach ($data['permission_ids'] as $key => $value) {
+            foreach ($data['permissions_ids'] as $key => $value) {
                 $permission = Permission::findORfail($value);
-                if ($role->hasPermissionTo($permission->name)) {
-                    continue;
-                }
-
                 $role->givePermissionTo($permission->name);
             }
-
-
-
             return response()->json($role);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
 
-    public function search(SearchRoleRequest $request)
+    public function search (SearchRoleRequest $request)
     {
         try {
-            $result = [];
-            $data = null;
-
-            $data = Role::where('id', '>', 1)
-                ->where(function ($q) use ($request) {
+            $results = [];
+            $data = Role::where('id', '>', 1)->where(function ($q) use ($request) {
                 if ($request->has('q')) {
                     $q->where('name', 'like', "%" . $request->q . "%");
                     $q->orWhere('description_ar', 'like', "%" . $request->q . "%");
@@ -143,23 +118,14 @@ class RoleController extends Controller
                         $q->whereNotIn('id', $user->roles()->pluck('id'));
                     }
                 }
-            })
-                ->take(10)
-                ->get();
-
+            })->take(10)->get();
             $locale = app()->getLocale();
-
-            foreach ($data as $item) {
-                $item = $item->toArray();
-                $obj = new \stdClass();
-                $obj->id = $item['id'];
-                $obj->name = $item['name'];
-                $obj->text = $item['description_' . $locale];
-                $result[] = $obj;
+            foreach ($data as $p) {
+                $results[] = ['id' => $p['id'], 'text' => $p['description_' . $locale]];
             }
-            return response()->json($result);
+            return response()->json($results);
         } catch (\Exception $e) {
-            throw $this->_exception($e->getMessage());
+            throw response()->json($e->getMessage());
         }
     }
 }

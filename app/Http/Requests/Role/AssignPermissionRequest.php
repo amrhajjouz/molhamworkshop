@@ -25,7 +25,7 @@ class AssignPermissionRequest extends FormRequest
     {
         // dd($this->all());
         return [
-            'permission_ids' => ['required' ,'array'],
+            'permissions_ids' => ['required' ,'array'],
         ];
     }
 }

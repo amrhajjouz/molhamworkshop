@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\{Permission, Role, User};
-use Illuminate\Http\Request;
-use App\Http\Requests\Permission\{CreatePermissionRequest, UpdatePermissionRequest , RetrievePermissionRequest , ListPermissionRequest , SearchPermissionRequest };
-use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\Permission\{CreatePermissionRequest, UpdatePermissionRequest, RetrievePermissionRequest, ListPermissionRequest, SearchPermissionRequest};
 
 class PermissionController extends Controller
 {
@@ -26,7 +24,6 @@ class PermissionController extends Controller
         try {
             $role = Permission::findOrFail($request->id);
             $data = $request->validated();
-
             $role->update($data);
             return response()->json($role);
         } catch (\Exception $e) {
@@ -34,7 +31,7 @@ class PermissionController extends Controller
         }
     }
 
-    public function retrieve(RetrievePermissionRequest $request , $id)
+    public function retrieve(RetrievePermissionRequest $request, $id)
     {
         try {
             return response()->json(Permission::findOrFail($id));
@@ -46,14 +43,12 @@ class PermissionController extends Controller
     public function list(ListPermissionRequest $request)
     {
         try {
-
             $permissions = Permission::orderBy('id', 'desc')->where(function ($q) use ($request) {
                 if ($request->has('q')) {
                     $q->where('name', 'like', '%' . $request->q . '%');
                     $q->orWhere('description_ar', 'like', '%' . $request->q . '%');
                 }
             })->paginate(5)->withQueryString();
-
             return response()->json($permissions);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -62,20 +57,16 @@ class PermissionController extends Controller
 
     public function search(SearchPermissionRequest $request)
     {
-
         try {
-
-            $result = [];
-            $data = null;
-
-            $data = Permission::where('id' , '>' , 1)
-            ->where(function ($q) use ($request) {
-                if ($request->has('q')) {
-                    $q->where('name', 'like', "%" . $request->q . "%");
-                    $q->orWhere('description_ar', 'like', "%" . $request->q . "%");
-                    $q->orWhere('description_en', 'like', "%" . $request->q . "%");
-                }
-            })
+            $results = [];
+            $data = Permission::where('id', '>', 1)
+                ->where(function ($q) use ($request) {
+                    if ($request->has('q')) {
+                        $q->where('name', 'like', "%" . $request->q . "%");
+                        $q->orWhere('description_ar', 'like', "%" . $request->q . "%");
+                        $q->orWhere('description_en', 'like', "%" . $request->q . "%");
+                    }
+                })
                 ->where(function ($q) use ($request) {
                     //except permissions already assigned to this role
                     if ($request->has('role_id')) {
@@ -93,23 +84,11 @@ class PermissionController extends Controller
                             $q->whereNotIn('id', $user->getDirectPermissions()->pluck('id'));
                         }
                     }
-                })
-                ->take(10)
-                ->get();
+                })->take(10)->get();
+
             $locale = app()->getLocale();
-
-            foreach ($data as $item) {
-                $item = $item->toArray();
-
-                $obj = new \stdClass();
-                $obj->id = $item['id'];
-                $obj->name = $item['name'];
-                $obj->text = $item['description_'.$locale];
-
-                $result[] = $obj;
-            }
-
-            return response()->json($result);
+            foreach ($data as $p){$results[] = ['id' => $p['id'], 'text' => $p['description_' . $locale]];}
+            return response()->json($results);
         } catch (\Exception $e) {
 
             throw $this->_exception($e->getMessage());

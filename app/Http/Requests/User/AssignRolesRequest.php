@@ -23,9 +23,8 @@ class AssignRolesRequest extends FormRequest
      */
     public function rules()
     {
-        // dd($this->all());
         return [
-            'role_ids' => ['required' ,'array'],
+            'roles_ids' => ['required' ,'array'],
         ];
     }
 }
