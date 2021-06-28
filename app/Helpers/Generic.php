@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Activity;
+use App\Models\ActivityLog;
+
 function getLocaleName ($locale) {
     switch ($locale) {
         case 'ar' : return 'عربي'; break;
@@ -11,3 +14,15 @@ function getLocaleName ($locale) {
         default: return ; break;
     }
 }
+
+
+function createActivityLog( $loggable , $activity_name= "create_donor"  ,  $actor_type = "user"){
+        $activity = Activity::where('name' , $activity_name)->first();
+        if(!$activity) return false;
+
+        $log = new ActivityLog();
+        $log->activity_id = $activity->id;
+        $log->actor_type =  $actor_type;
+        return $loggable->avtivity_logs()->save($log);
+    
+    }

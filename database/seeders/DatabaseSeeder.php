@@ -67,6 +67,11 @@ class DatabaseSeeder extends Seeder
             ['name' => 'donors.update', 'description_ar' => 'تعديل المتبرعين', 'description_en' => "Update Donors",],
             ['name' => 'donors.view', 'description_ar' => 'عرض المتبرعين', 'description_en' => "View Donors",],
             ['name' => 'donors.*', 'description_ar' => 'ادارة المتبرعين', 'description_en' => "Manage Donors",],
+
+            ['name' => 'activities.create', 'description_ar' => 'اضافة النشاطات', 'description_en' => "Create activities"],
+            ['name' => 'activities.update', 'description_ar' => 'تعديل النشاطات', 'description_en' => "Update activities",],
+            ['name' => 'activities.view', 'description_ar' => 'عرض النشاطات', 'description_en' => "View activities",],
+            ['name' => 'activities.*', 'description_ar' => 'ادارة النشاطات', 'description_en' => "Manage activities",],
         ];
 
         foreach ($permissions  as $permission) {
@@ -82,5 +87,25 @@ class DatabaseSeeder extends Seeder
         $mohamd->assignRole('super-admin');
         $amro->assignRole('super-admin');
 
+
+
+        ////////activity
+        $activities = [
+            ['name' => 'create_donor', 'body_ar' => 'تم إضافة متبرع', 'body_en' => "Donors created"],
+            ['name' => 'update_donor', 'body_ar' => 'تم تعديل متبرع', 'body_en' => "Donor Updated",],
+            ['name' => 'view_donor', 'body_ar' => 'تم مشاهدة متبرع', 'body_en' => "Donors retrieved",],
+            ['name' => 'list_donors', 'body_ar' => 'تم استعراض المتبرعين ', 'body_en' => "Donors listed",],
+           
+            ['name' => 'create_user', 'body_ar' => 'تم إضافة مستخدم', 'body_en' => "users created"],
+            ['name' => 'update_user', 'body_ar' => 'تم تعديل مستخدم', 'body_en' => "user Updated",],
+            ['name' => 'view_user', 'body_ar' => 'تم مشاعدة مستخدم', 'body_en' => "users retrieved",],
+            ['name' => 'list_users', 'body_ar' => 'تم استعراض المستخدمين ', 'body_en' => "users listed",],
+        ];
+
+
+        foreach($activities  as $activity){
+            DB::table('activities')->insert($activity);
+         
+        }
     }
 }

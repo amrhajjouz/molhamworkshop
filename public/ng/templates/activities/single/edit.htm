@@ -1,0 +1,28 @@
+<include-header/>
+<form class="row" name="myForm" request="updateActivity">
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">الاسم</label>
+            <input type="text" class="form-control" ng-class="(updateActivity.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="activity.name" ng-change="updateActivity.errors.name = null" placeholder="اسم النشاط .." required>
+            <div ng-show="updateActivity.errors.name != null" class="invalid-feedback">{{ updateActivity.errors.name[0] }}</div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="body_ar">الوصف العربي</label>
+            <input type="text" class="form-control" ng-class="(updateActivity.errors.body_ar != null) ? 'is-invalid' : ''" id="body_ar" ng-model="activity.body_ar" ng-change="updateActivity.errors.body_ar = null" placeholder="الوصف العربي .." required>
+            <div ng-show="updateActivity.errors.body_ar != null" class="invalid-feedback">{{ updateActivity.errors.body_ar[0] }}</div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="body_en">الوصف الإنكليزي</label>
+            <input type="text" class="form-control" ng-class="(updateActivity.errors.body_en != null) ? 'is-invalid' : ''" id="body_en" ng-model="activity.body_en" ng-change="updateActivity.errors.body_en = null" placeholder="الوصف الإنكليزي .." required>
+            <div ng-show="updateActivity.errors.body_en != null" class="invalid-feedback">{{ updateActivity.errors.body_en[0] }}</div>
+        </div>
+    </div>
+    <div class="col-12">
+        <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+
+</form>

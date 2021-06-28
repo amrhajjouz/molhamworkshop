@@ -22,6 +22,7 @@
                     <dropdown>
                         <dropdown-item href="{{ $r('donors.overview', {id: d.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
                         <dropdown-item ng-if="$auth.can('donors.update')" href="{{ $r('donors.edit', {id: d.id}) }}"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
+                        <dropdown-item ng-if="$auth.can('donors.view')" href="{{ $r('donors.activity_logs', {id: d.id}) }}"><i class="fe fe-calendar"></i> سجل النشاطات</dropdown-item>
                     </dropdown>
                 </td>
             </tr>

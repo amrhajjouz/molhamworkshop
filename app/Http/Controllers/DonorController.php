@@ -6,6 +6,8 @@ use App\Http\Requests\Donor\UpdateDonorRequest;
 use App\Models\Donor;
 use Illuminate\Http\Request;
 use App\Http\Requests\Donor\CreateDonorRequest;
+use App\Models\Activity;
+use App\Models\ActivityLog;
 use Illuminate\Support\Facades\Hash;
 
 class DonorController extends Controller
@@ -17,6 +19,7 @@ class DonorController extends Controller
             $data = $request->validated();
             $data["password"] = Hash::make($request->password);
             $donor = Donor::create($data);
+            createActivityLog($donor, "create_donor");
             return response()->json($donor);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -32,6 +35,7 @@ class DonorController extends Controller
                 $input["password"] = Hash::make($request->password);
             }
             $donor->update($input);
+            createActivityLog($donor, "update_donor");
             return response()->json($donor);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -41,7 +45,10 @@ class DonorController extends Controller
     public function retrieve($id)
     {
         try {
-            return response()->json(Donor::findOrFail($id));
+            $donor = Donor::findOrFail($id);
+            createActivityLog( $donor ,"view_donor" );
+
+            return response()->json($donor);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
@@ -58,4 +65,17 @@ class DonorController extends Controller
             return ['error' => $e->getMessage()];
         }
     }
+   
+    public function list_activity_logs(Request $request ,Donor $donor)
+    {
+
+        try {
+            return response()->json($donor->list_activity_logs());
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+
+    
 }

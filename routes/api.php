@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{DonorController , RoleController , PermissionController}; 
+use App\Http\Controllers\{DonorController , RoleController , PermissionController, ActivityController}; 
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function ()  {
     Route::post('/donors', [DonorController::class, 'create']);
     Route::put('/donors', [DonorController::class, 'update']);
     Route::get('/donors/{id}', [DonorController::class, 'retrieve']);
+    Route::get('/donors/{donor}/activity_logs', [DonorController::class, 'list_activity_logs']);
 
 
     /////////////////////// Roles /////////////////////////
@@ -61,6 +62,13 @@ Route::middleware('auth')->group(function ()  {
     Route::put('/permissions', [PermissionController::class, 'update']);
     Route::get('/permissions/search', [PermissionController::class, 'search']);
     Route::get('/permissions/{id}', [PermissionController::class, 'retrieve']);
+    
+    /////////////////////// Activity /////////////////////////
+
+    Route::get('/activities', [ActivityController::class, 'list']);
+    Route::post('/activities', [ActivityController::class, 'create']);
+    Route::put('/activities', [ActivityController::class, 'update']);
+    Route::get('/activities/{id}', [ActivityController::class, 'retrieve']);
     
 
 });

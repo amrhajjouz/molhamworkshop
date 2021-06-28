@@ -25,6 +25,7 @@ return [
     'donors.add' => ['donors/add', 'donors/addDonorController', 'donors.add' , ['donors.create']],
     'donors.overview' => ['donors/:id', 'donors/overviewDonorController', 'donors.single.overview' , ['donors.view']],
     'donors.edit' => ['donors/:id/edit', 'donors/editDonorController', 'donors.single.edit' , ['donors.update']],
+    'donors.activity_logs' => ['donors/:id/activity_logs', 'donors/listDonorActivityLogController', 'donors.single.activity_logs' , ['donors.view']],
 
     /////////////////////// Roles /////////////////////////
     'roles' => ['roles', 'roles/listRolesController', 'roles.list' , ['*']],
@@ -38,6 +39,12 @@ return [
     'permissions.add' => ['permissions/add', 'permissions/addPermissionController', 'permissions.add' , ['*']],
     'permissions.overview' => ['permissions/:id', 'permissions/overviewPermissionController', 'permissions.single.overview' , ['*']],
     'permissions.edit' => ['permissions/:id/edit', 'permissions/editPermissionController', 'permissions.single.edit' , ['*']],
+
+    /////////////////////// Activities /////////////////////////
+    'activities' => ['activities', 'activities/listActivitiesController', 'activities.list' , ['*']],
+    'activities.add' => ['activities/add', 'activities/addActivityController', 'activities.add' , ['*']],
+    'activities.overview' => ['activities/:id', 'activities/overviewActivityController', 'activities.single.overview' , ['*']],
+    'activities.edit' => ['activities/:id/edit', 'activities/editActivityController', 'activities.single.edit' , ['*']],
 
 
 ];

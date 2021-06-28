@@ -1,0 +1,21 @@
+<include-header />
+<datatable datalist="activityLogs">
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">النشاط</th>
+                <th class="text-center">المستخدم</th>
+                <th class="text-center">التاريخ</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="act in activityLogs.data">
+                <td class="align-middle text-center">{{ act.id }}</td>
+                <td class="align-middle text-center">{{ act.activity.name }}</td>
+                <td class="align-middle text-center">{{ act.actor.name }}</td>
+                <td class="align-middle text-center">{{ act.created_at }}</td>
+            </tr>
+        </tbody>
+    </table>
+</datatable>

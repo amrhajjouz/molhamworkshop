@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,5 +25,26 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+
+        Relation::morphMap([
+            'user' => 'App\Models\User',
+            'donor' => 'App\Models\Donor',
+            'faq' => 'App\Models\Faq',
+            'publisher' => 'App\Models\Publisher',
+            'blog' => 'App\Models\Blog',
+            'page' => 'App\Models\Page',
+            'shortcut' => 'App\Models\Shortcut',
+            'shortcutkey' => 'App\Models\ShortcutKey',
+            'constant' => 'App\Models\Constant',
+            'cases' => 'App\Models\Cases',
+            'campaign' => 'App\Models\Campaign',
+            'sponsorship' => 'App\Models\Sponsorship',
+            'student' => 'App\Models\Student',
+            'event' => 'App\Models\Event',
+            'fundraiser' => 'App\Models\Fundraiser',
+            'status' => 'App\Models\Status',
+            'card' => 'App\Models\Card',
+            // 'comment' => 'App\Models\Comment',
+        ]);
     }
 }
