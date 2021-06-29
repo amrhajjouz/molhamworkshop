@@ -16,13 +16,20 @@ function getLocaleName ($locale) {
 }
 
 
-function createActivityLog( $loggable , $activity_name= "create_donor"  ,  $actor_type = "user"){
+function createActivityLog( $loggable , $activity_name  ,  $actor_type = "user" , $actor_id=null , $metadata=null){
         $activity = Activity::where('name' , $activity_name)->first();
         if(!$activity) return false;
 
         $log = new ActivityLog();
+        
         $log->activity_id = $activity->id;
         $log->actor_type =  $actor_type;
+        $log->actor_id =  $actor_id ?? auth()->id();
+
+        if($metadata){
+            $log->metadata =  $metadata;
+        }
+
         return $loggable->avtivity_logs()->save($log);
     
     }

@@ -19,7 +19,7 @@ class DonorController extends Controller
             $data = $request->validated();
             $data["password"] = Hash::make($request->password);
             $donor = Donor::create($data);
-            createActivityLog($donor, "create_donor");
+            $donor->activity_logs()->create(["activity_name" => "create_donor", "actor_type" => "user", "actor_id" => null, "metadata" => null]);
             return response()->json($donor);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -35,7 +35,7 @@ class DonorController extends Controller
                 $input["password"] = Hash::make($request->password);
             }
             $donor->update($input);
-            createActivityLog($donor, "update_donor");
+            $donor->activity_logs()->create(["activity_name" => "update_donor", "actor_type" => "user", "actor_id" => null, "metadata" => null]);
             return response()->json($donor);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -46,8 +46,6 @@ class DonorController extends Controller
     {
         try {
             $donor = Donor::findOrFail($id);
-            createActivityLog( $donor ,"view_donor" );
-
             return response()->json($donor);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -56,7 +54,6 @@ class DonorController extends Controller
 
     public function list(Request $request)
     {
-
         try {
             $search_query = ($request->has('q') ? [['name', 'like', '%' . $request->q . '%']] : null);
             $donors = Donor::orderBy('id', 'desc')->where($search_query)->paginate(5)->withQueryString();
@@ -65,17 +62,24 @@ class DonorController extends Controller
             return ['error' => $e->getMessage()];
         }
     }
-   
-    public function list_activity_logs(Request $request ,Donor $donor)
-    {
 
+    public function list_activity_logs(Request $request, Donor $donor)
+    {
         try {
-            return response()->json($donor->list_activity_logs());
+            $logs = $donor->activity_logs()
+                ->with(['actor'])
+                ->join('activities AS A', 'activity_logs.activity_id', 'A.id')
+                ->select('activity_logs.*', 'A.name AS activity_name')
+                ->where(function ($q) use ($request) {
+                    if ($request->has('q')) {
+                        $q->where('name', 'like', '%' . $request->q . '%');
+                        $q->orWhere('actor_type', 'like', '%' . $request->q . '%');
+                        $q->orWhere('A.name', 'like', '%' . $request->q . '%');
+                    }
+                })->paginate(5)->withQueryString();
+            return response()->json($logs);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
-
-
-    
 }

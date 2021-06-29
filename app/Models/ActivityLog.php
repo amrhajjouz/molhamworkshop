@@ -6,9 +6,30 @@ use Illuminate\Database\Eloquent\Model;
 
 class ActivityLog extends Model
 {
-    protected $table = 'activiy_logs';
+    protected $table = 'activity_logs';
     protected $guarded = [];
+    protected $appends = ['description'];
 
+    public function getDescriptionAttribute()
+    {
+        $activity = $this->activity->toArray();
+        $body = $activity['body_'. app()->getLocale()];
+        $patterns = $replacements = [];
+        $reps = (array)$this->metadata;
+        foreach ($reps as $key=>$val) {
+            $patterns[]     = '/\{\{' . $key . '\}\}/';
+            $replacements[] = $val;
+        }
+        return preg_replace($patterns, $replacements, $body);
+        // dd($body
+        // ,
+        // preg_match_all('#\{\{(.*?)\}\}#', $body , $matches),
+        // $matches ,
+        // preg_replace(is_array($matches[0])? $matches[0]:[$matches[0]], is_array($matches[1]) ? $matches[1] : [$matches[1]] , $body)
+        // );
+
+    }
+    
     public function loggable()
     {
         return $this->morphTo();
@@ -19,19 +40,38 @@ class ActivityLog extends Model
     }
 
     public function actor(){
-        return $this->hasOne('App\Models\User' ,'id' ,'actor_id');
+        return $this->morphTo(null , 'actor_type' , 'actor_id');
     }
-    
-    
+
+
+    public function setMetadataAttribute($meta)
+    {
+        if(is_array($meta)){
+            $this->attributes['metadata'] = json_encode($meta);
+        }else{
+            $this->attributes['metadata'] = $meta;
+        }
+
+    }
+   
+    public function getMetadataAttribute($meta)
+    {
+        return json_decode($meta);
+
+    }
 
 
     public function save($options = []){
         
-        $this->actor_id = auth()->id();
+        $activity = Activity::where('name' , $this->activity_name)->firstOrFail();
+        $this->actor_id =  $this->actor_id ?? auth()->id();
+        $this->activity_id = $activity->id;
+        $this->actor_type = $this->actor_type ?? "user";
+        unset($this->activity_name);
 
-        return parent::save();
+
+        return parent::save($options);
     }
     
-
 }
 

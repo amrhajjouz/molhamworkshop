@@ -21,7 +21,7 @@ class AvtivitiesLog extends Migration
             $table->integer("activity_id")->index();
             $table->string("actor_type")->index();
             $table->bigInteger("actor_id")->index();
-            $table->json("properties")->nullable();
+            $table->json("metadata")->nullable();
             $table->timestamps();
         });
     }

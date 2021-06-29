@@ -25,7 +25,7 @@ return [
     'donors.add' => ['donors/add', 'donors/addDonorController', 'donors.add' , ['donors.create']],
     'donors.overview' => ['donors/:id', 'donors/overviewDonorController', 'donors.single.overview' , ['donors.view']],
     'donors.edit' => ['donors/:id/edit', 'donors/editDonorController', 'donors.single.edit' , ['donors.update']],
-    'donors.activity_logs' => ['donors/:id/activity_logs', 'donors/listDonorActivityLogController', 'donors.single.activity_logs' , ['donors.view']],
+    'donors.activity_logs' => ['donors/:id/logs', 'donors/listDonorActivityLogController', 'donors.single.activity_logs' , ['donors.view']],
 
     /////////////////////// Roles /////////////////////////
     'roles' => ['roles', 'roles/listRolesController', 'roles.list' , ['*']],
