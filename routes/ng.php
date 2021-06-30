@@ -19,13 +19,15 @@ return [
     'users' => ['users', 'users/listUsersController', 'users.list' , ['*']],
     'users.permissions' => ['users/:id/permissions', 'users/listUserPermissionsController', 'users.single.permissions' , ['*']],
     'users.roles' => ['users/:id/roles', 'users/listUserRolesController', 'users.single.roles' , ['*']],
+    'users.logs' => ['users/:id/logs', 'users/listUserLogsController', 'users.single.logs', ['*']],
+    'users.activities' => ['users/:id/activities', 'users/listUserActivitiesController', 'users.single.activities', ['*']],
 
     //Donors Routes
     'donors' => ['donors', 'donors/listDonorsController', 'donors.list' , ['donors.view']],
     'donors.add' => ['donors/add', 'donors/addDonorController', 'donors.add' , ['donors.create']],
     'donors.overview' => ['donors/:id', 'donors/overviewDonorController', 'donors.single.overview' , ['donors.view']],
     'donors.edit' => ['donors/:id/edit', 'donors/editDonorController', 'donors.single.edit' , ['donors.update']],
-    'donors.activity_logs' => ['donors/:id/logs', 'donors/listDonorActivityLogController', 'donors.single.activity_logs' , ['donors.view']],
+    'donors.logs' => ['donors/:id/logs', 'donors/listDonorLogsController', 'donors.single.logs' , ['donors.view']],
 
     /////////////////////// Roles /////////////////////////
     'roles' => ['roles', 'roles/listRolesController', 'roles.list' , ['*']],

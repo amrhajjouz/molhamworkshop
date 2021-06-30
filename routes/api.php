@@ -36,12 +36,14 @@ Route::middleware('auth')->group(function ()  {
     Route::get('/users/{id}/permissions', [UserController::class, 'list_permissions']);
     Route::post('/users/{id}/assign_permissions', [UserController::class, 'assign_permissions']);
     Route::post('/users/{id}/unassign_permission', [UserController::class, 'unassign_permission']);
+    Route::get('/users/{user}/activity_logs', [UserController::class, 'listActivityLogs']);
+    Route::get('/users/{user}/activities', [UserController::class, 'listActivities']);
 
     Route::get('/donors', [DonorController::class, 'list']);
     Route::post('/donors', [DonorController::class, 'create']);
     Route::put('/donors', [DonorController::class, 'update']);
     Route::get('/donors/{id}', [DonorController::class, 'retrieve']);
-    Route::get('/donors/{donor}/activity_logs', [DonorController::class, 'list_activity_logs']);
+    Route::get('/donors/{donor}/activity_logs', [DonorController::class, 'listActivityLogs']);
 
 
     /////////////////////// Roles /////////////////////////

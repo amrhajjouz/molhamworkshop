@@ -1,4 +1,4 @@
-async function listDonorActivityLogControllerInit($datalist, $location, $datalist, $page) {
+async function listDonorLogsControllerInit($datalist, $location, $datalist, $page) {
     let activities = await $datalist(`donors/${$page.routeParams.id}/activity_logs`).load();
 
     activities.data.forEach((el) => {
@@ -9,7 +9,7 @@ async function listDonorActivityLogControllerInit($datalist, $location, $datalis
     return activities;
 }
 
-function listDonorActivityLogController($scope, $init, $page, $apiRequest) {
+function listDonorLogsController($scope, $init, $page, $apiRequest) {
     
 
     $scope.activityLogs = $init;

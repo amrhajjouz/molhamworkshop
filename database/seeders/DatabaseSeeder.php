@@ -96,6 +96,10 @@ class DatabaseSeeder extends Seeder
            
             ['name' => 'create_user', 'body_ar' => 'تم إضافة مستخدم', 'body_en' => "users created"],
             ['name' => 'update_user', 'body_ar' => 'تم تعديل مستخدم', 'body_en' => "user Updated",],
+            ['name' => 'assign_permission', 'body_ar' => 'تم إضافة صلاحية {{permission}}', 'body_en' => "permission {{permission}} has been assigned",],
+            ['name' => 'unassign_permission', 'body_ar' => 'تم إلغاء صلاحية {{permission}}', 'body_en' => "permission {{permission}} has been unassigned",],
+            ['name' => 'assign_role', 'body_ar' => 'تم إضافة دور {{role}}', 'body_en' => "role {{role}} has been assigned",],
+            ['name' => 'unassign_role', 'body_ar' => 'تم إلغاء دور {{role}}', 'body_en' => "role {{role}} has been unassigned",],
         ];
 
 

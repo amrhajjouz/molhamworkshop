@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\{UpdateUserRequest, ListUserRolesRequest, AssignRolesRequest, UnassignRoleRequest, AssignPermissionRequest, UnassignPermissionRequest};
 use App\Models\{User, Role, Permission};
@@ -21,7 +20,7 @@ class UserController extends Controller
         try {
             // Create User
             $user = User::create($request->validated());
-
+            $user->activityLogs()->create(["activity_name" => "create_user"]);
             return response()->json($user);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -33,8 +32,8 @@ class UserController extends Controller
         try {
             // Fetch User
             $user = User::findOrFail($request->id);
-            // Update User
             $user->update($request->validated());
+            $user->activityLogs()->create(["activity_name" => "update_user"]);
 
             return response()->json($user);
         } catch (\Exception $e) {
@@ -63,7 +62,6 @@ class UserController extends Controller
         }
     }
 
-
     public function list_roles(ListUserRolesRequest $request, $user_id)
     {
         try {
@@ -84,6 +82,7 @@ class UserController extends Controller
                 $role = Role::findORfail($value);
                 if ($user->hasRole($role->name)) continue;
                 $user->assignRole($role->name);
+                $user->activityLogs()->create(["activity_name" => "assign_role", 'metadata' => ['role' => $role->toArray()['description_' . app()->getLocale()]]]);
             }
             return response()->json($role);
         } catch (\Exception $e) {
@@ -97,7 +96,10 @@ class UserController extends Controller
             $data = $request->validated();
             $user = User::findOrfail($user_id);
             $role = Role::findOrfail($data['role_id']);
-            if ($user->hasRole($role->name)) $user->removeRole($role->name);
+            if ($user->hasRole($role->name)) {
+                $user->removeRole($role->name);
+                $user->activityLogs()->create(["activity_name" => "unassign_role", 'metadata' => ['role' => $role->toArray()['description_' . app()->getLocale()]]]);
+            }
             return response()->json($role);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -121,6 +123,7 @@ class UserController extends Controller
             $user = User::findOrFail($id);
             $permission = Permission::findORfail($data['permission_id']);
             if ($user->hasDirectPermission($permission->name)) $user->revokePermissionTo($permission->name);
+            $user->activityLogs()->create(["activity_name" => "unassign_permission" , 'metadata'=>['permission'=>$permission->toArray()['description_'.app()->getLocale()]]]);
             return response()->json($user);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -136,8 +139,48 @@ class UserController extends Controller
                 $permission = Permission::findORfail($value);
                 if ($user->hasDirectPermission($permission->name)) continue;
                 $user->givePermissionTo($permission->name);
+                $user->activityLogs()->create(["activity_name" => "assign_permission", 'metadata' => ['permission' => $permission->toArray()['description_' . app()->getLocale()]]]);
             }
             return response()->json($user);
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+    public function listActivityLogs(Request $request, User $user)
+    {
+        try {
+            $logs = $user->activityLogs()
+                ->with(['actor'])
+                ->join('activities AS A', 'activity_logs.activity_id', 'A.id')
+                ->select('activity_logs.*', 'A.name AS activity_name')
+                ->where(function ($q) use ($request) {
+                    if ($request->has('q')) {
+                        $q->where('name', 'like', '%' . $request->q . '%');
+                        $q->orWhere('actor_type', 'like', '%' . $request->q . '%');
+                        $q->orWhere('A.name', 'like', '%' . $request->q . '%');
+                    }
+                })->paginate(5)->withQueryString();
+            return response()->json($logs);
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+    public function listActivities(Request $request, User $user)
+    {
+        try {
+            $activities = $user->activities()
+                ->join('activities AS A', 'activity_logs.activity_id', 'A.id')
+                ->select('activity_logs.*', 'A.name AS activity_name')
+                ->where(function ($q) use ($request) {
+                    if ($request->has('q')) {
+                        $q->where('name', 'like', '%' . $request->q . '%');
+                        $q->orWhere('actor_type', 'like', '%' . $request->q . '%');
+                        $q->orWhere('A.name', 'like', '%' . $request->q . '%');
+                    }
+                })->paginate(5)->withQueryString();
+            return response()->json($activities);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }

@@ -6,8 +6,6 @@ use App\Http\Requests\Donor\UpdateDonorRequest;
 use App\Models\Donor;
 use Illuminate\Http\Request;
 use App\Http\Requests\Donor\CreateDonorRequest;
-use App\Models\Activity;
-use App\Models\ActivityLog;
 use Illuminate\Support\Facades\Hash;
 
 class DonorController extends Controller
@@ -19,7 +17,7 @@ class DonorController extends Controller
             $data = $request->validated();
             $data["password"] = Hash::make($request->password);
             $donor = Donor::create($data);
-            $donor->activity_logs()->create(["activity_name" => "create_donor", "actor_type" => "user", "actor_id" => null, "metadata" => null]);
+            $donor->activityLogs()->create(["activity_name" => "create_donor", "actor_type" => "user", "actor_id" => null, "metadata" => null]);
             return response()->json($donor);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -35,7 +33,7 @@ class DonorController extends Controller
                 $input["password"] = Hash::make($request->password);
             }
             $donor->update($input);
-            $donor->activity_logs()->create(["activity_name" => "update_donor", "actor_type" => "user", "actor_id" => null, "metadata" => null]);
+            $donor->activityLogs()->create(["activity_name" => "update_donor", "actor_type" => "user", "actor_id" => null, "metadata" => null]);
             return response()->json($donor);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -63,10 +61,10 @@ class DonorController extends Controller
         }
     }
 
-    public function list_activity_logs(Request $request, Donor $donor)
+    public function listActivityLogs(Request $request, Donor $donor)
     {
         try {
-            $logs = $donor->activity_logs()
+            $logs = $donor->activityLogs()
                 ->with(['actor'])
                 ->join('activities AS A', 'activity_logs.activity_id', 'A.id')
                 ->select('activity_logs.*', 'A.name AS activity_name')
