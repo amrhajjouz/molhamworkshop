@@ -14,7 +14,7 @@ class AvtivitiesLog extends Migration
     public function up()
     {
         //
-    Schema::create('activiy_logs', function (Blueprint $table) {
+    Schema::create('activity_logs', function (Blueprint $table) {
             $table->id();
             $table->bigInteger("loggable_id")->index();
             $table->string("loggable_type")->index();
