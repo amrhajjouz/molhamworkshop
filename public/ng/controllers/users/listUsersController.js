@@ -3,7 +3,5 @@ function listUsersControllerInit ($datalist, $location) {
 }
 
 function listUsersController ($scope, $init, $datalist) {
-
     $scope.users = $init;
-    
 }

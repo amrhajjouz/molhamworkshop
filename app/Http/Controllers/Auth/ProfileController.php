@@ -16,7 +16,7 @@ class ProfileController extends Controller {
         $this->middleware('auth');
     }
     
-    public function update_info (Request $request) {
+    public function updateInfo (Request $request) {
 
         try {
             
@@ -53,7 +53,7 @@ class ProfileController extends Controller {
         }
     }
     
-    public function change_password (Request $request) {
+    public function changePassword (Request $request) {
         
         $messages = [
             'new.required' => 'كلمة المرور حقل مطلوب',

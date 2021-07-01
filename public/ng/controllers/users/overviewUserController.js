@@ -3,9 +3,7 @@ function overviewUserControllerInit ($apiRequest, $page) {
 }
 
 function overviewUserController ($scope, $page, $apiRequest, $init) {
-    
     $scope.user = $init;
-    
     $scope.updateUser = $apiRequest.config({
         method : 'POST',
         url : 'users',

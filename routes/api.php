@@ -23,19 +23,19 @@ Route::middleware('auth')->group(function ()  {
         return $request->user();
     });
 
-    Route::post('/profile', [ProfileController::class, 'update_info']);
-    Route::post('/profile/password', [ProfileController::class, 'change_password']);
+    Route::post('/profile', [ProfileController::class, 'updateInfo']);
+    Route::post('/profile/password', [ProfileController::class, 'changePassword']);
 
     Route::get('/users', [UserController::class, 'list']);
     Route::post('/users', [UserController::class, 'create']);
     Route::put('/users', [UserController::class, 'update']);
     Route::get('/users/{id}', [UserController::class, 'retrieve']);
-    Route::get('/users/{id}/roles', [UserController::class, 'list_roles']);
-    Route::post('/users/{user_id}/assign_roles', [UserController::class, 'assign_roles']);
-    Route::post('/users/{user_id}/unassign_role', [UserController::class, 'unassign_role']);
-    Route::get('/users/{id}/permissions', [UserController::class, 'list_permissions']);
-    Route::post('/users/{id}/assign_permissions', [UserController::class, 'assign_permissions']);
-    Route::post('/users/{id}/unassign_permission', [UserController::class, 'unassign_permission']);
+    Route::get('/users/{id}/roles', [UserController::class, 'listRoles']);
+    Route::post('/users/{user_id}/assign_roles', [UserController::class, 'assignRoles']);
+    Route::post('/users/{user_id}/unassign_role', [UserController::class, 'unassignRole']);
+    Route::get('/users/{id}/permissions', [UserController::class, 'listPermissions']);
+    Route::post('/users/{id}/assign_permissions', [UserController::class, 'assignPermissions']);
+    Route::post('/users/{id}/unassign_permission', [UserController::class, 'unassignPermission']);
     Route::get('/users/{user}/activity_logs', [UserController::class, 'listActivityLogs']);
     Route::get('/users/{user}/activities', [UserController::class, 'listActivities']);
 
@@ -53,9 +53,9 @@ Route::middleware('auth')->group(function ()  {
     Route::put('/roles', [RoleController::class, 'update']);
     Route::get('/roles/search', [RoleController::class, 'search']);
     Route::get('/roles/{id}', [RoleController::class, 'retrieve']);
-    Route::get('/roles/{id}/permissions', [RoleController::class, 'list_permissions']);
-    Route::post('/roles/{role}/unassign', [RoleController::class, 'unassign_permissions']);
-    Route::post('/roles/{role}/assign', [RoleController::class, 'assign_permissions']);
+    Route::get('/roles/{id}/permissions', [RoleController::class, 'listPermissions']);
+    Route::post('/roles/{role}/unassign', [RoleController::class, 'unassignPermissions']);
+    Route::post('/roles/{role}/assign', [RoleController::class, 'assignPermissions']);
 
     /////////////////////// Permission /////////////////////////
 

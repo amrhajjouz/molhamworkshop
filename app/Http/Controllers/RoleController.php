@@ -63,7 +63,7 @@ class RoleController extends Controller
         }
     }
 
-    public function list_permissions(ListRolePermissionsRequest $request, $id)
+    public function listPermissions(ListRolePermissionsRequest $request, $id)
     {
         try {
             $role = Role::findOrFail($id);
@@ -74,7 +74,7 @@ class RoleController extends Controller
         }
     }
 
-    public function unassign_permissions(UnassignPermissionRequest $request, Role $role)
+    public function unassignPermissions(UnassignPermissionRequest $request, Role $role)
     {
         try {
             $data = $request->validated();
@@ -86,7 +86,7 @@ class RoleController extends Controller
         }
     }
 
-    public function assign_permissions(AssignPermissionRequest $request, Role $role)
+    public function assignPermissions(AssignPermissionRequest $request, Role $role)
     {
         try {
             $data = $request->validated();

@@ -3,7 +3,5 @@ function listDonorsControllerInit ($datalist, $location) {
 }
 
 function listDonorsController ($scope, $init, $datalist) {
-    
     $scope.donors = $init;
-    
 }

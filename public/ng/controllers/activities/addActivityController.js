@@ -1,6 +1,5 @@
 function addActivityController($scope, $apiRequest, $page) {
     $scope.activity = {};
-
     $scope.createActivity = $apiRequest.config(
         {
             method: 'POST',

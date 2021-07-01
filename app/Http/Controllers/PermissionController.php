@@ -85,12 +85,10 @@ class PermissionController extends Controller
                         }
                     }
                 })->take(10)->get();
-
             $locale = app()->getLocale();
             foreach ($data as $p){$results[] = ['id' => $p['id'], 'text' => $p['description_' . $locale]];}
             return response()->json($results);
         } catch (\Exception $e) {
-
             throw $this->_exception($e->getMessage());
         }
     }

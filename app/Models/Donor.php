@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Common\Traits\HasActivityLog;
+use App\Traits\HasActivityLog;
 
 class Donor extends Model
 {
@@ -14,10 +14,5 @@ class Donor extends Model
     protected $hidden = [
         'password',
     ];
-
-
-
-
-
 }
 

@@ -1,7 +1,5 @@
 function addDonorController ($scope, $apiRequest, $page) {
-
     $scope.donor = {};
-
     $scope.createDonor = $apiRequest.config({
         method: 'POST',
         url: 'donors',

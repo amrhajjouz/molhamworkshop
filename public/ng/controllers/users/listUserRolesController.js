@@ -22,7 +22,6 @@ async function listUserRolesControllerInit($datalist, $location, $apiRequest, $p
   };
   fakerPaginator.data = roles;
   fakerPaginator.total = roles.length;
-
   return fakerPaginator;
 }
 
@@ -36,24 +35,15 @@ function listUserRolesController($scope, $init, $page, $apiRequest) {
 
   $scope.unassignRole = async (roleId) => {
     if (!confirm('هل تريد التأكيد على إلغاء إسناد هذا الدور  ؟ ')) return;
-
-    const data = {
-      user_id: $scope.userId,
-      role_id: roleId,
-    };
-
-    $apiRequest
-      .config(
+    const data = { user_id: $scope.userId,role_id: roleId,};
+    $apiRequest.config(
         {
           method: 'POST',
           url: 'users/' + $scope.userId + '/unassign_role',
           data: data,
         },
-        function (response, data) {
-          $page.reload();
-        }
-      )
-      .send();
+        function (response, data) {$page.reload();}
+      ).send();
   };
 
   $scope.assignRoles = $apiRequest.config(
@@ -66,7 +56,6 @@ function listUserRolesController($scope, $init, $page, $apiRequest) {
       $('#role-modal').on('hidden.bs.modal', function (e) {
         $page.reload();
       });
-
       $('#role-modal').modal('hide');
     }
   );

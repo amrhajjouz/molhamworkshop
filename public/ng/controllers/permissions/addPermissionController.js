@@ -1,6 +1,5 @@
 function addPermissionController($scope, $apiRequest, $page) {
     $scope.permission = {};
-
     $scope.createPermission = $apiRequest.config(
         {
             method: "POST",

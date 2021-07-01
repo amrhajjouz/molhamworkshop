@@ -21,13 +21,6 @@ class ActivityLog extends Model
             $replacements[] = $val;
         }
         return preg_replace($patterns, $replacements, $body);
-        // dd($body
-        // ,
-        // preg_match_all('#\{\{(.*?)\}\}#', $body , $matches),
-        // $matches ,
-        // preg_replace(is_array($matches[0])? $matches[0]:[$matches[0]], is_array($matches[1]) ? $matches[1] : [$matches[1]] , $body)
-        // );
-
     }
     
     public function loggable()
@@ -43,33 +36,23 @@ class ActivityLog extends Model
         return $this->morphTo(null , 'actor_type' , 'actor_id');
     }
 
-
     public function setMetadataAttribute($meta)
     {
-        if(is_array($meta)){
-            $this->attributes['metadata'] = json_encode($meta);
-        }else{
-            $this->attributes['metadata'] = $meta;
-        }
-
+        if(is_array($meta)) $this->attributes['metadata'] = json_encode($meta);
+        else $this->attributes['metadata'] = $meta;
     }
    
     public function getMetadataAttribute($meta)
     {
         return json_decode($meta);
-
     }
 
-
     public function save($options = []){
-        
         $activity = Activity::where('name' , $this->activity_name)->firstOrFail();
         $this->actor_id =  $this->actor_id ?? auth()->id();
         $this->activity_id = $activity->id;
         $this->actor_type = $this->actor_type ?? "user";
         unset($this->activity_name);
-
-
         return parent::save($options);
     }
     

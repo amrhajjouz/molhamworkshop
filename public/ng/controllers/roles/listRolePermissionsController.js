@@ -1,11 +1,5 @@
 async function listRolePermissionsControllerInit($datalist, $location , $apiRequest , $page) {
-    // return $datalist("roles", true).load();
-
-    let Permissions = await $apiRequest
-        .config(`roles/${$page.routeParams.id}/permissions`, true)
-        .getData();
-
-
+  let Permissions = await $apiRequest.config(`roles/${$page.routeParams.id}/permissions`, true).getData();
   let fakerPaginator = {
       currentPage: 1,
       data: [],
@@ -26,10 +20,7 @@ async function listRolePermissionsControllerInit($datalist, $location , $apiRequ
   };
   fakerPaginator.data = Permissions;
   fakerPaginator.total = Permissions.length;
-
   return fakerPaginator;
-
-
 }
 
 function listRolePermissionsController($scope, $init, $page, $apiRequest) {
@@ -39,7 +30,6 @@ function listRolePermissionsController($scope, $init, $page, $apiRequest) {
         permissions_ids: null,
         role_id: $scope.roleId,
     };
-
     $scope.unassignPermission = async (permissionID) => {
 
         if (!confirm("هل تريد التأكيد على إلغاء إسناد هذه الصلاحية ؟ ")) return;
@@ -62,10 +52,6 @@ function listRolePermissionsController($scope, $init, $page, $apiRequest) {
             )
             .send();
     };
-
-  
-
-
   $scope.assignPermission = $apiRequest.config(
       {
           method: "POST",
@@ -73,12 +59,9 @@ function listRolePermissionsController($scope, $init, $page, $apiRequest) {
           data:$scope.selectedPermission
       },
       function (response, data) {
-
            $("#permission-modal").on("hidden.bs.modal", function (e) {
                $page.reload();
            });
-
-
           $("#permission-modal").modal("hide");
       }
   );

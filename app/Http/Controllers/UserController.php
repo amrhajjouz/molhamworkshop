@@ -62,7 +62,7 @@ class UserController extends Controller
         }
     }
 
-    public function list_roles(ListUserRolesRequest $request, $user_id)
+    public function listRoles(ListUserRolesRequest $request, $user_id)
     {
         try {
             $user = User::findOrFail($user_id);
@@ -73,7 +73,7 @@ class UserController extends Controller
         }
     }
 
-    public function assign_roles(AssignRolesRequest $request, $user_id)
+    public function assignRoles(AssignRolesRequest $request, $user_id)
     {
         try {
             $data = $request->validated();
@@ -82,7 +82,7 @@ class UserController extends Controller
                 $role = Role::findORfail($value);
                 if ($user->hasRole($role->name)) continue;
                 $user->assignRole($role->name);
-                $user->activityLogs()->create(["activity_name" => "assign_role", 'metadata' => ['role' => $role->toArray()['description_' . app()->getLocale()]]]);
+                $user->activityLogs()->create(["activity_name" => "assign_role", 'metadata' => ['role_ar' => $role->description_ar, 'role_en' => $role->description_en]]);
             }
             return response()->json($role);
         } catch (\Exception $e) {
@@ -90,7 +90,7 @@ class UserController extends Controller
         }
     }
 
-    public function unassign_role(UnassignRoleRequest $request, $user_id)
+    public function unassignRole(UnassignRoleRequest $request, $user_id)
     {
         try {
             $data = $request->validated();
@@ -98,7 +98,7 @@ class UserController extends Controller
             $role = Role::findOrfail($data['role_id']);
             if ($user->hasRole($role->name)) {
                 $user->removeRole($role->name);
-                $user->activityLogs()->create(["activity_name" => "unassign_role", 'metadata' => ['role' => $role->toArray()['description_' . app()->getLocale()]]]);
+                $user->activityLogs()->create(["activity_name" => "unassign_role", 'metadata' => ['role_ar' => $role->description_ar, 'role_en' => $role->description_en]]);
             }
             return response()->json($role);
         } catch (\Exception $e) {
@@ -106,7 +106,7 @@ class UserController extends Controller
         }
     }
 
-    public function list_permissions(Request $request, $id)
+    public function listPermissions(Request $request, $id)
     {
         try {
             $user = User::findOrFail($id);
@@ -116,21 +116,21 @@ class UserController extends Controller
         }
     }
 
-    public function unassign_permission(UnassignPermissionRequest $request, $id)
+    public function unassignPermission(UnassignPermissionRequest $request, $id)
     {
         try {
             $data = $request->validated();
             $user = User::findOrFail($id);
             $permission = Permission::findORfail($data['permission_id']);
             if ($user->hasDirectPermission($permission->name)) $user->revokePermissionTo($permission->name);
-            $user->activityLogs()->create(["activity_name" => "unassign_permission" , 'metadata'=>['permission'=>$permission->toArray()['description_'.app()->getLocale()]]]);
+            $user->activityLogs()->create(["activity_name" => "unassign_permission" , 'metadata'=>['permission_ar'=>$permission->description_ar , 'permission_en' => $permission->description_en]]);
             return response()->json($user);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
 
-    public function assign_permissions(AssignPermissionRequest $request, $id)
+    public function assignPermissions(AssignPermissionRequest $request, $id)
     {
         try {
             $data = $request->validated();
@@ -139,7 +139,7 @@ class UserController extends Controller
                 $permission = Permission::findORfail($value);
                 if ($user->hasDirectPermission($permission->name)) continue;
                 $user->givePermissionTo($permission->name);
-                $user->activityLogs()->create(["activity_name" => "assign_permission", 'metadata' => ['permission' => $permission->toArray()['description_' . app()->getLocale()]]]);
+                $user->activityLogs()->create(["activity_name" => "assign_permission", 'metadata' => ['permission_ar' => $permission->description_ar, 'permission_en' => $permission->description_en]]);
             }
             return response()->json($user);
         } catch (\Exception $e) {
