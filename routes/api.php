@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{DonorController , RoleController , PermissionController, ActivityController}; 
+use App\Http\Controllers\{DonorController , RoleController , PermissionController, ActivityController , EventController}; 
 
 /*
 |--------------------------------------------------------------------------
@@ -38,12 +38,14 @@ Route::middleware('auth')->group(function ()  {
     Route::post('/users/{id}/unassign_permission', [UserController::class, 'unassignPermission']);
     Route::get('/users/{user}/activity_logs', [UserController::class, 'listActivityLogs']);
     Route::get('/users/{user}/activities', [UserController::class, 'listActivities']);
+    Route::get('/users/{user}/event_logs', [UserController::class, 'listEventLogs']);
 
     Route::get('/donors', [DonorController::class, 'list']);
     Route::post('/donors', [DonorController::class, 'create']);
     Route::put('/donors', [DonorController::class, 'update']);
     Route::get('/donors/{id}', [DonorController::class, 'retrieve']);
     Route::get('/donors/{donor}/activity_logs', [DonorController::class, 'listActivityLogs']);
+    Route::get('/donors/{donor}/event_logs', [DonorController::class, 'listEventLogs']);
 
 
     /////////////////////// Roles /////////////////////////
@@ -71,6 +73,12 @@ Route::middleware('auth')->group(function ()  {
     Route::post('/activities', [ActivityController::class, 'create']);
     Route::put('/activities', [ActivityController::class, 'update']);
     Route::get('/activities/{id}', [ActivityController::class, 'retrieve']);
+  
+    /////////////////////// Event /////////////////////////
+    Route::get('/events', [EventController::class, 'list']);
+    Route::post('/events', [EventController::class, 'create']);
+    Route::put('/events', [EventController::class, 'update']);
+    Route::get('/events/{id}', [EventController::class, 'retrieve']);
     
 
 });

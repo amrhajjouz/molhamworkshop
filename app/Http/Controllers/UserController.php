@@ -21,6 +21,7 @@ class UserController extends Controller
             // Create User
             $user = User::create($request->validated());
             $user->activityLogs()->create(["activity_name" => "create_user"]);
+            $user->eventLogs()->create(["event_name" => "add_user", 'activity_name' => "add_user",]);
             return response()->json($user);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -34,7 +35,7 @@ class UserController extends Controller
             $user = User::findOrFail($request->id);
             $user->update($request->validated());
             $user->activityLogs()->create(["activity_name" => "update_user"]);
-
+            $user->eventLogs()->create(["event_name" => "update_user"]);
             return response()->json($user);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -83,6 +84,7 @@ class UserController extends Controller
                 if ($user->hasRole($role->name)) continue;
                 $user->assignRole($role->name);
                 $user->activityLogs()->create(["activity_name" => "assign_role", 'metadata' => ['role_ar' => $role->description_ar, 'role_en' => $role->description_en]]);
+                $user->eventLogs()->create(["event_name" => "assign_role", 'activity_name' => "assign_role", 'metadata' => ['role_ar' => $role->description_ar, 'role_en' => $role->description_en]]);
             }
             return response()->json($role);
         } catch (\Exception $e) {
@@ -99,6 +101,7 @@ class UserController extends Controller
             if ($user->hasRole($role->name)) {
                 $user->removeRole($role->name);
                 $user->activityLogs()->create(["activity_name" => "unassign_role", 'metadata' => ['role_ar' => $role->description_ar, 'role_en' => $role->description_en]]);
+                $user->eventLogs()->create(["event_name" => "unassign_role", 'activity_name' => "unassign_role", 'metadata' => ['role_ar' => $role->description_ar, 'role_en' => $role->description_en]]);
             }
             return response()->json($role);
         } catch (\Exception $e) {
@@ -123,7 +126,8 @@ class UserController extends Controller
             $user = User::findOrFail($id);
             $permission = Permission::findORfail($data['permission_id']);
             if ($user->hasDirectPermission($permission->name)) $user->revokePermissionTo($permission->name);
-            $user->activityLogs()->create(["activity_name" => "unassign_permission" , 'metadata'=>['permission_ar'=>$permission->description_ar , 'permission_en' => $permission->description_en]]);
+            $user->activityLogs()->create(["activity_name" => "unassign_permission", 'metadata' => ['permission_ar' => $permission->description_ar, 'permission_en' => $permission->description_en]]);
+            $user->eventLogs()->create(["event_name" => "unassign_permission", 'activity_name' => "unassign_permission", 'metadata' => ['permission_ar' => $permission->description_ar, 'permission_en' => $permission->description_en]]);
             return response()->json($user);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -140,6 +144,7 @@ class UserController extends Controller
                 if ($user->hasDirectPermission($permission->name)) continue;
                 $user->givePermissionTo($permission->name);
                 $user->activityLogs()->create(["activity_name" => "assign_permission", 'metadata' => ['permission_ar' => $permission->description_ar, 'permission_en' => $permission->description_en]]);
+                $user->eventLogs()->create(["event_name" => "assign_permission", 'activity_name' => "assign_permission", 'metadata' => ['permission_ar' => $permission->description_ar, 'permission_en' => $permission->description_en]]);
             }
             return response()->json($user);
         } catch (\Exception $e) {
@@ -181,6 +186,26 @@ class UserController extends Controller
                     }
                 })->paginate(5)->withQueryString();
             return response()->json($activities);
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+    public function listEventLogs(Request $request, User $user)
+    {
+        try {
+            $events = $user->eventLogs()
+                ->join('events AS EV', 'event_logs.event_id', 'EV.id')
+                // ->leftJoin('activities AS AC', 'event_logs.activity_id', 'AC.id')
+                ->select('event_logs.*', 'EV.name AS event_name')
+                ->where(function ($q) use ($request) {
+                    if ($request->has('q')) {
+                        $q->where('name', 'like', '%' . $request->q . '%');
+                        $q->orWhere('EV.name', 'like', '%' . $request->q . '%');
+                        // $q->orWhere('AC.name', 'like', '%' . $request->q . '%');
+                    }
+                })->paginate(5)->withQueryString();
+            return response()->json($events);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }

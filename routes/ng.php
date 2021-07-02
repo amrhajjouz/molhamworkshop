@@ -48,5 +48,9 @@ return [
     'activities.overview' => ['activities/:id', 'activities/overviewActivityController', 'activities.single.overview' , ['*']],
     'activities.edit' => ['activities/:id/edit', 'activities/editActivityController', 'activities.single.edit' , ['*']],
 
-
+    /////////////////////// Activities /////////////////////////
+    'events' => ['events', 'events/listEventsController', 'events.list' , ['*']],
+    'events.add' => ['events/add', 'events/addEventController', 'events.add' , ['*']],
+    'events.overview' => ['events/:id', 'events/overviewEventController', 'events.single.overview' , ['*']],
+    'events.edit' => ['events/:id/edit', 'events/editEventController', 'events.single.edit' , ['*']],
 ];

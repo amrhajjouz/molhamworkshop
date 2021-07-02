@@ -103,9 +103,21 @@ class DatabaseSeeder extends Seeder
         ];
 
 
-        foreach($activities  as $activity){
-            DB::table('activities')->insert($activity);
-         
-        }
+        foreach($activities  as $activity){DB::table('activities')->insert($activity);}
+     
+        ////////Events
+        $events = [
+            ['name' => 'add_donor', 'body_ar' => 'تم إضافة متبرع', 'body_en' => "Donors added"],
+            ['name' => 'update_donor', 'body_ar' => 'تم تعديل متبرع', 'body_en' => "Donor Updated",],
+           
+            ['name' => 'add_user', 'body_ar' => 'تم إضافة مستخدم', 'body_en' => "users added"],
+            ['name' => 'update_user', 'body_ar' => 'تم تعديل مستخدم', 'body_en' => "user Updated",],
+            ['name' => 'assign_permission', 'body_ar' => 'تم إضافة صلاحية {{permission_ar}}', 'body_en' => "permission {{permission_en}} has been assigned",],
+            ['name' => 'unassign_permission', 'body_ar' => 'تم إلغاء صلاحية {{permission_ar}}', 'body_en' => "permission {{permission_en}} has been unassigned",],
+            ['name' => 'assign_role', 'body_ar' => 'تم إضافة دور {{role_ar}}', 'body_en' => "role {{role_en}} has been assigned",],
+            ['name' => 'unassign_role', 'body_ar' => 'تم إلغاء دور {{role_ar}}', 'body_en' => "role {{role_en}} has been unassigned",],
+        ];
+        foreach($events  as $e){DB::table('events')->insert($e);}
+
     }
 }

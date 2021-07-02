@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AvtivitiesLog extends Migration
+class EventLogs extends Migration
 {
     /**
      * Run the migrations.
@@ -14,13 +14,12 @@ class AvtivitiesLog extends Migration
     public function up()
     {
         //
-    Schema::create('activity_logs', function (Blueprint $table) {
+        Schema::create('event_logs', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("loggable_id")->index();
-            $table->string("loggable_type")->index();
-            $table->integer("activity_id")->index();
-            $table->string("actor_type")->index();
-            $table->bigInteger("actor_id")->index();
+            $table->bigInteger("eventable_id")->index();
+            $table->string("eventable_type")->index();
+            $table->integer("event_id")->index();
+            $table->integer("activity_id")->index()->nullable();
             $table->json("metadata")->nullable();
             $table->timestamps();
         });
@@ -33,6 +32,6 @@ class AvtivitiesLog extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('activity_logs');
+        Schema::dropIfExists('event_logs');
     }
 }

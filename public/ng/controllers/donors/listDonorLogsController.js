@@ -4,8 +4,15 @@ async function listDonorLogsControllerInit($datalist, $location, $datalist, $pag
         el.created_at = el.created_at.split('T')[0];
         return el;
     });
-    return activities;
+   
+    let events = await $datalist(`donors/${$page.routeParams.id}/event_logs`).load();
+    events.data.forEach((el) => {
+        el.created_at = el.created_at.split('T')[0];
+        return el;
+    });
+    return {activities , events};
 }
 function listDonorLogsController($scope, $init, $page, $apiRequest) {
-    $scope.activityLogs = $init;
+    $scope.activityLogs = $init.activities;
+    $scope.eventLogs = $init.events;
 }

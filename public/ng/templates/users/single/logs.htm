@@ -19,3 +19,27 @@
         </tbody>
     </table>
 </datatable>
+
+
+<hr/>
+<br>
+<div><h3 class="pr-2">الأحداث</h3></div>
+
+<datatable datalist="eventLogs">
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">الوصف</th>
+                <th class="text-center">التاريخ</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="ev in eventLogs.data">
+                <td class="align-middle text-center">{{ ev.id }}</td>
+                <td class="align-middle text-center">{{ ev.description }}</td>
+                <td class="align-middle text-center">{{ ev.created_at }}</td>
+            </tr>
+        </tbody>
+    </table>
+</datatable>

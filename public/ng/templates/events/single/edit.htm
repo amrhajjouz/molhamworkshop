@@ -1,0 +1,27 @@
+<include-header/>
+<form class="row" name="myForm" request="updateEvent">
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">الاسم</label>
+            <input type="text" class="form-control" ng-class="(updateEvent.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="event.name" ng-change="updateEvent.errors.name = null" placeholder="اسم الحدث .." required>
+            <div ng-show="updateEvent.errors.name != null" class="invalid-feedback">{{ updateEvent.errors.name[0] }}</div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="body_ar">الوصف العربي</label>
+            <input type="text" class="form-control" ng-class="(updateEvent.errors.body_ar != null) ? 'is-invalid' : ''" id="body_ar" ng-model="event.body_ar" ng-change="updateEvent.errors.body_ar = null" placeholder="الوصف العربي .." required>
+            <div ng-show="updateEvent.errors.body_ar != null" class="invalid-feedback">{{ updateEvent.errors.body_ar[0] }}</div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="body_en">الوصف الإنكليزي</label>
+            <input type="text" class="form-control" ng-class="(updateEvent.errors.body_en != null) ? 'is-invalid' : ''" id="body_en" ng-model="event.body_en" ng-change="updateEvent.errors.body_en = null" placeholder="الوصف الإنكليزي .." required>
+            <div ng-show="updateEvent.errors.body_en != null" class="invalid-feedback">{{ updateEvent.errors.body_en[0] }}</div>
+        </div>
+    </div>
+    <div class="col-12">
+        <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+</form>
