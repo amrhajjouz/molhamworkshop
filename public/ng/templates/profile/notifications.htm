@@ -1,0 +1,21 @@
+<include-header />
+<datatable datalist="notifications">
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">الوصف</th>
+                <th class="text-center">الرابط</th>
+                <th class="text-center">التاريخ</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="noty in notifications.data">
+                <td class="align-middle text-center">{{ noty.id }}</td>
+                <td class="align-middle text-center">{{ noty.description }}</td>
+                <td class="align-middle text-center"><a  ng-if="noty.data.path" href="{{ noty.data.path }}">إضغط هنا</a></td>
+                <td class="align-middle text-center">{{ noty.created_at }}</td>
+            </tr>
+        </tbody>
+    </table>
+</datatable>

@@ -1,0 +1,34 @@
+<include-header/>
+<form class="row" name="myForm" request="updateNotification">
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">الاسم</label>
+            <input type="text" class="form-control" ng-class="(updateNotification.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="notification.name" ng-change="updateNotification.errors.name = null" placeholder="اسم الإشعار .." required>
+            <div ng-show="updateNotification.errors.name != null" class="invalid-feedback">{{ updateNotification.errors.name[0] }}</div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="body_ar">الوصف العربي</label>
+            <input type="text" class="form-control" ng-class="(updateNotification.errors.body_ar != null) ? 'is-invalid' : ''" id="body_ar" ng-model="notification.body_ar" ng-change="updateNotification.errors.body_ar = null" placeholder="الوصف العربي .." required>
+            <div ng-show="updateNotification.errors.body_ar != null" class="invalid-feedback">{{ updateNotification.errors.body_ar[0] }}</div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="body_en">الوصف الإنكليزي</label>
+            <input type="text" class="form-control" ng-class="(updateNotification.errors.body_en != null) ? 'is-invalid' : ''" id="body_en" ng-model="notification.body_en" ng-change="updateNotification.errors.body_en = null" placeholder="الوصف الإنكليزي .." required>
+            <div ng-show="updateNotification.errors.body_en != null" class="invalid-feedback">{{ updateNotification.errors.body_en[0] }}</div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="path">الرابط</label>
+            <input dir="ltr" type="text" class="form-control" ng-class="(updateNotification.errors.path != null) ? 'is-invalid' : ''" id="path" ng-model="notification.path" ng-change="updateNotification.errors.path = null" placeholder="الرابط التشعبي   .." required>
+            <div ng-show="updateNotification.errors.path != null" class="invalid-feedback">{{ updateNotification.errors.path[0] }}</div>
+        </div>
+    </div>
+    <div class="col-12">
+        <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+</form>

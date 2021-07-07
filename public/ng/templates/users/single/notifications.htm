@@ -1,0 +1,23 @@
+<include-header />
+<datatable datalist="notifications">
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">الوصف</th>
+                <th class="text-center">تاريخ القراءة</th>
+                <th class="text-center">التاريخ</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="n in notifications.data">
+                <td class="align-middle text-center">{{ n.id }}</td>
+                <td class="align-middle text-center">{{ n.description }}</td>
+                 <td class="align-middle text-center" ng-show="n.read_at">{{ n.read_at }}</td>
+                 <td class="align-middle text-center" ng-show="!n.read_at"><span class="badge badge-danger">لم يتم المشاهدة</span></td>
+                <td class="align-middle text-center">{{ n.created_at }}</td>
+            </tr>
+        </tbody>
+    </table>
+</datatable>

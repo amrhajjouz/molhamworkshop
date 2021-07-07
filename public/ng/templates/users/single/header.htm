@@ -1,6 +1,7 @@
 <page-header title="المستخدم {{ user.id }}" pretitle="المستخدمون"></page-header>
 
 <page-nav>
-    <page-nav-item route="users.overview" params="{id: user.id}">نظرة عامة</page-nav-item>
-    <page-nav-item route="users.edit" params="{id: user.id}">تعديل المعلومات</page-nav-item>
+    <page-nav-item route="users.overview" params="{id: $routeParams.id}">نظرة عامة</page-nav-item>
+    <page-nav-item route="users.edit" params="{id: $routeParams.id}">تعديل المعلومات</page-nav-item>
+    <page-nav-item route="users.notifications" params="{id: $routeParams.id}">الإشعارات </page-nav-item>
 </page-nav>

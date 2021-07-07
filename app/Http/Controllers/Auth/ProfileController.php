@@ -76,5 +76,25 @@ class ProfileController extends Controller {
         
         return response()->json([]);
     }
+
+
+
+    public function listNotifications(Request $request)
+    {
+        try {
+            $user = auth()->user();
+            $notifications = $user->notifications()
+                ->where(function ($q) use ($request) {
+                    if ($request->has('q')) {
+                        $q->where('name', 'like', '%' . $request->q . '%');
+                    }
+                })->paginate(5)->withQueryString();
+
+            $notifications->markAsRead();
+            return response()->json($notifications);
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
     
 }

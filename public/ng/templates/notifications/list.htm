@@ -1,0 +1,30 @@
+<page-header title="قائمة الإشعارات" pretitle="الإشعارات">
+    <a href="{{ $r('notifications.add') }}" class="btn btn-primary"> <i class="fe fe-plus"></i>&nbsp; إشعار جديد </a>
+</page-header>
+<datatable datalist="notifications">
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">الاسم</th>
+                <th class="text-center">الوصف العربي</th>
+                <th class="text-center">الوصف الإنكليزي</th>
+                <th class="text-center">خيارات</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="ev in notifications.data">
+                <td class="align-middle text-center">{{ ev.id }}</td>
+                <td class="align-middle text-center">{{ ev.name }}</td>
+                <td class="align-middle text-center">{{ ev.body_ar }}</td>
+                <td class="align-middle text-center">{{ ev.body_en }}</td>
+                <td class="align-middle text-center h2">
+                    <dropdown>
+                        <dropdown-item href="{{ $r('notifications.overview', {id: ev.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
+                        <dropdown-item href="{{ $r('notifications.edit', {id: ev.id}) }}"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
+                    </dropdown>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</datatable>

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
-
+use App\Models\Notification;
 use App\Models\User;
 
 class UserController extends Controller {
@@ -50,9 +50,28 @@ class UserController extends Controller {
     public function retrieve ($id) {
         
         try {
+            $user = User::findOrFail($id);
             
+
+            // $user->unreadNotifications->markAsRead();
+            // dd($user->unreadNotifications);
+
+            //THis way to send notification we have to pass variable in data array
+
+            // $user->notifications()->create(
+            //     [
+            //     "type" => "view_user",
+            //     'data' => [
+            //         'id' =>"$user->id", 
+            //         'user_id' => $user->id, 
+            //         'viewer_name' => $user->name, 
+            //         'date' => date('Y-dd-mm H:i:s' , time() ), 
+            //         'user_lang' => $user->lang, 
+            //     ]
+            // ]);
+
             // Fetch User and Return
-            return response()->json(User::findOrFail($id));            
+            return response()->json($user);            
             
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -73,5 +92,22 @@ class UserController extends Controller {
             return ['error' => $e->getMessage()];
         }
     }
+    
+
+
+    public function listNotifications(Request $request , User $user){
+        try {
+            $notifications = $user->notifications()
+                ->where(function ($q) use ($request) {
+                    if ($request->has('q')) {
+                        $q->where('type', 'like', '%' . $request->q . '%');
+                    }
+                })->paginate(5)->withQueryString();
+            return response()->json($notifications);
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+    
     
 }

@@ -1,0 +1,25 @@
+<include-header/>
+<div class="row">
+    <div class="col-12 col-lg-6">
+        <table>
+            <tr>
+                <td class="text-muted py-3">الاسم</td>
+                <td class="py-3 pr-3">{{ notification.name }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">الوصف العربي</td>
+                <td class="py-3 pr-3">{{ notification.body_ar }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">الوصف الانكليزي</td>
+                <td class="py-3 pr-3">{{ notification.body_en }}</td>
+            </tr>
+            <tr ng-if="notification.path">
+                <td class="text-muted py-3">الرابط </td>
+                <td class="py-3 pr-3">{{ notification.path }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<hr>
+
