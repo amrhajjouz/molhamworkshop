@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
-use App\Models\Notification;
 use App\Models\User;
 
 class UserController extends Controller {
@@ -58,17 +56,17 @@ class UserController extends Controller {
 
             //THis way to send notification we have to pass variable in data array
 
-            // $user->notifications()->create(
-            //     [
-            //     "type" => "view_user",
-            //     'data' => [
-            //         'id' =>"$user->id", 
-            //         'user_id' => $user->id, 
-            //         'viewer_name' => $user->name, 
-            //         'date' => date('Y-dd-mm H:i:s' , time() ), 
-            //         'user_lang' => $user->lang, 
-            //     ]
-            // ]);
+            $user->notifications()->create(
+                [
+                "type" => "view_user",
+                'data' => [
+                    'id' =>"$user->id", 
+                    'user_id' => "$user->id", 
+                    'viewer_name' => $user->name, 
+                    'date' => date('Y-dd-mm H:i:s' , time() ), 
+                    'user_lang' => $user->lang ?? "ar", 
+                ]
+            ]);
 
             // Fetch User and Return
             return response()->json($user);            

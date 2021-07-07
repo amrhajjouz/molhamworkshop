@@ -14,9 +14,9 @@
             <tr ng-repeat="n in notifications.data">
                 <td class="align-middle text-center">{{ n.id }}</td>
                 <td class="align-middle text-center">{{ n.description }}</td>
-                 <td class="align-middle text-center" ng-show="n.read_at">{{ n.read_at }}</td>
+                 <td class="align-middle text-center"  dir="ltr" ng-show="n.read_at">{{ n.read_at }}</td>
                  <td class="align-middle text-center" ng-show="!n.read_at"><span class="badge badge-danger">لم يتم المشاهدة</span></td>
-                <td class="align-middle text-center">{{ n.created_at }}</td>
+                <td class="align-middle text-center" dir="ltr">{{ n.created_at }}</td>
             </tr>
         </tbody>
     </table>

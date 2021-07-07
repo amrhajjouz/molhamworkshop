@@ -3,7 +3,7 @@
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="name">الاسم </label>
-            <input type="text" class="form-control" ng-class="(createNotification.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="notification.name" ng-change="createNotification.errors.name = null" placeholder="اسم الإشعار .." required>
+            <input dir="ltr" type="text" class="form-control" ng-class="(createNotification.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="notification.name" ng-change="createNotification.errors.name = null" placeholder="اسم الإشعار .." required>
             <div ng-show="createNotification.errors.name != null" class="invalid-feedback">{{ createNotification.errors.name[0] }}</div>
         </div>
     </div>
@@ -17,7 +17,7 @@
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="body_en">الوصف الانكليزي</label>
-            <input type="text" class="form-control" ng-class="(createNotification.errors.body_en != null) ? 'is-invalid' : ''" id="body_en" ng-model="notification.body_en" ng-change="createNotification.errors.body_en = null" placeholder="الوصف الانكليزي .." required>
+            <input  dir="ltr" type="text" class="form-control" ng-class="(createNotification.errors.body_en != null) ? 'is-invalid' : ''" id="body_en" ng-model="notification.body_en" ng-change="createNotification.errors.body_en = null" placeholder="الوصف الانكليزي .." required>
             <div ng-show="createNotification.errors.body_en != null" class="invalid-feedback">{{ createNotification.errors.body_en[0] }}</div>
         </div>
     </div>

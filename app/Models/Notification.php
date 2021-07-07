@@ -10,7 +10,22 @@ class Notification extends DatabaseNotification
 {
     protected $table = 'notifications';
     protected $guarded = [];
+    // protected $casts = [
+    //     'created_at' => 'datetime:Y-m-d H:i:s',
+        // 'read_at' => 'datetime:Y-m-d H:i:s',
+    // ];
+
+    public function getCreatedAtAttribute($date){
+        return date('Y-m-d H:i:s', strtotime($date));   
+    }
+    public function getReadAtAttribute($date){
+        if(!$date) return null;
+        return date('Y-m-d H:i:s', strtotime($date));   
+    }
     
+    // protected $dateFormat = 'Y-m-d H:i:s';
+
+
     protected $appends = ['description'];
 
     public function getDescriptionAttribute()
