@@ -9,6 +9,10 @@ class EventLog extends Model
     protected $table = 'event_logs';
     protected $guarded = [];
     protected $appends = ['description'];
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
+    ];
 
     public function getDescriptionAttribute()
     {

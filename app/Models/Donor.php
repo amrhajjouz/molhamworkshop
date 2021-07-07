@@ -11,8 +11,9 @@ class Donor extends Model
     use HasActivityLog , HasEventLog;
     
     protected  $fillable = ["name","phone","password","email","swish_number","whatsapp_number"];
-    protected $hidden = [
-        'password',
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
     ];
 }
 

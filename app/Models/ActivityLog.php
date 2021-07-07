@@ -9,7 +9,11 @@ class ActivityLog extends Model
     protected $table = 'activity_logs';
     protected $guarded = [];
     protected $appends = ['description'];
-
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
+    ];
+    
     public function getDescriptionAttribute()
     {
         $activity = $this->activity->toArray();

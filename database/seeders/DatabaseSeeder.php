@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Permission;
 use App\Models\Role;
-use App\Models\User;
+use App\Models\{User , Activity , Event};
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -103,7 +103,7 @@ class DatabaseSeeder extends Seeder
         ];
 
 
-        foreach($activities  as $activity){DB::table('activities')->insert($activity);}
+        foreach($activities  as $activity){Activity::create($activity);}
      
         ////////Events
         $events = [
@@ -117,7 +117,7 @@ class DatabaseSeeder extends Seeder
             ['name' => 'assign_role', 'body_ar' => 'تم إضافة دور {{role_ar}}', 'body_en' => "role {{role_en}} has been assigned",],
             ['name' => 'unassign_role', 'body_ar' => 'تم إلغاء دور {{role_ar}}', 'body_en' => "role {{role_en}} has been unassigned",],
         ];
-        foreach($events  as $e){DB::table('events')->insert($e);}
+        foreach($events  as $e){Event::create($e);}
 
     }
 }
