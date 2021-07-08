@@ -21,6 +21,25 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+        Schema::create('contents', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('contentable_type')->index();
+            $table->bigInteger('contentable_id')->index();
+            $table->string('locale')->index()->default('ar');
+            $table->string('name')->index();
+            $table->text('value');
+            $table->softDeletes();
+            $table->timestamps();
+        });
+
+        Schema::create('constants', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->boolean('plaintext')->index()->default(0);
+            $table->string('name')->unique();
+            $table->timestamps();
+        });
+       
     }
 
     /**
@@ -31,5 +50,7 @@ class CreateUsersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('users');
+        Schema::dropIfExists('contents');
+        Schema::dropIfExists('constants');
     }
 }

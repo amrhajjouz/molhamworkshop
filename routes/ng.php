@@ -24,5 +24,11 @@ return [
     'donors.overview' => ['donors/:id', 'donors/overviewDonorController', 'donors.single.overview'],
     'donors.edit' => ['donors/:id/edit', 'donors/editDonorController', 'donors.single.edit'],
 
+    /////////////////////// Constants /////////////////////////
+    'constants.add' => ['constants/add', 'constants/addConstantController', 'constants.add'],
+    'constants.overview' => ['constants/:id', 'constants/overviewConstantController', 'constants.single.overview'],
+    'constants.edit' => ['constants/:id/edit', 'constants/editConstantController', 'constants.single.edit'],
+    'constants' => ['constants', 'constants/listConstantsController', 'constants.list'],
+
 
 ];

@@ -1,0 +1,28 @@
+<page-header title="ثابت جديد" pretitle="الثوابت"></page-header>
+<form class="row" name="createConstantForm" request="createConstant">
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="plaintext">نص عادي </label>
+      <select id="plaintext" class="form-control" type="text" ng-model="constant.plaintext" ng-class="(createConstant.errors['plaintext'] != null) ? 'is-invalid' : ''" ng-change="createConstant.errors['plaintext'] = null" placeholder="اسم الثابت.." ng-error="createConstant.errors.plaintext" required >
+        <option ng-value="true">نعم</option>
+        <option ng-value="false">لا</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="name">اسم الثابت</label>
+      <input id="name" class="form-control" type="text" ng-model="constant.name" ng-class="(createConstant.errors['name'] != null) ? 'is-invalid' : ''" ng-change="createConstant.errors['name'] = null" placeholder="اسم الثابت.." ng-error="createConstant.errors.name" required />
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="value">المحتوى</label>
+      <textarea id="value" class="form-control" type="text" ng-model="constant.content.value" ng-class="(createConstant.errors['content.value'] != null) ? 'is-invalid' : ''" ng-change="createConstant.errors['content.value'] = null" ng-error="createConstant.errors.content.value" required ></textarea>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <submit-button form="createConstantForm" icon="fe fe-plus">اضافة</submit-button>
+  </div>
+</form>

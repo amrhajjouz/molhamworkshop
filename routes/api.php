@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DonorController;
+use App\Http\Controllers\{DonorController, ConstantController};
 
 /*
 |--------------------------------------------------------------------------
@@ -36,4 +36,12 @@ Route::middleware('auth')->group(function ()  {
     Route::put('/donors', [DonorController::class, 'update']);
     Route::get('/donors/{id}', [DonorController::class, 'retrieve']);
 
+    ////////////////// Constants // //////////////
+    Route::get('/constants', [ConstantController::class, 'list']);
+    Route::post('/constants', [ConstantController::class, 'create']);
+    Route::put('/constants', [ConstantController::class, 'update']);
+    Route::get('/constants/{id}', [ConstantController::class, 'retrieve']);
+    Route::put('/constants/{constant}/contents', [ConstantController::class, 'create_update_contents']);
+
 });
+
