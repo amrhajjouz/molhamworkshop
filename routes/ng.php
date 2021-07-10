@@ -30,5 +30,23 @@ return [
     'constants.edit' => ['constants/:id/edit', 'constants/editConstantController', 'constants.single.edit'],
     'constants' => ['constants', 'constants/listConstantsController', 'constants.list'],
 
+    /////////////////////// Shortcuts /////////////////////////
+    'shortcuts.add' => ['shortcuts/add', 'shortcuts/addShortcutController', 'shortcuts.add'],
+    'shortcuts.overview' => ['shortcuts/:id', 'shortcuts/overviewShortcutController', 'shortcuts.single.overview'],
+    'shortcuts.edit' => ['shortcuts/:id/edit', 'shortcuts/editShortcutController', 'shortcuts.single.edit'],
+    'shortcuts.keys' => ['shortcuts/:id/keys', 'shortcuts/listShortcutKeysController', 'shortcuts.single.keys'],
+    'shortcuts' => ['shortcuts', 'shortcuts/listShortcutsController', 'shortcuts.list'],
 
+    /////////////////////////// Pages Routes    ///////////////////
+    'pages.add' => ['pages/add', 'pages/addPageController', 'pages.add'],
+    'pages.overview' => ['pages/:id', 'pages/overviewPageController', 'pages.single.overview'],
+    'pages.edit' => ['pages/:id/edit', 'pages/editPageController', 'pages.single.edit'],
+    'pages' => ['pages', 'pages/listPagesController', 'pages.list'],
+
+    /////////////////////////// Blogs Routes    ///////////////////
+    'blogs.add' => ['blogs/add', 'blogs/addBlogController', 'blogs.add'],
+    'blogs.overview' => ['blogs/:id', 'blogs/overviewBlogController', 'blogs.single.overview'],
+    'blogs.edit' => ['blogs/:id/edit', 'blogs/editBlogController', 'blogs.single.edit'],
+    'blogs' => ['blogs', 'blogs/listBlogsController', 'blogs.list'],
+    
 ];

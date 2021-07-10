@@ -1,0 +1,12 @@
+<page-header title="تدوينة جديدة" pretitle="التدوينات"></page-header>
+<form class="row" name="createBlogForm" request="createBlog">
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="url">رابط التدوينة </label>
+      <input type="text" class="form-control" ng-class="(createBlog.errors.url != null) ? 'is-invalid' : ''" id="url" ng-model="blog.url" ng-change="createBlog.errors.url = null" placeholder="رابط التدوينة.." ng-error="createBlog.errors.url"/>
+    </div>
+  </div>
+  <div class="col-12">
+    <submit-button form="createBlogForm" icon="fe fe-plus">اضافة</submit-button>
+  </div>
+</form>
