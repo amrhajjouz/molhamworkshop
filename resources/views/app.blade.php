@@ -134,6 +134,15 @@
     <script src="{{ asset('js/angular.min.js') }}"></script>
     <script src="{{ asset('js/angular-route.js') }}"></script>
     
+
+    <!--  trello     -->
+    <script src="https://trello.com/1/client.js?key=478a021e0eee1bc54f97f29c1e6149f6"></script>
+    <script src="https://p.trellocdn.com/embed.min.js"></script>
+
+    <!-- Google drive -->
+    <script async defer src="https://apis.google.com/js/api.js"> onreadystatechange="if (this.readyState === 'complete') this.onload()"</script>
+
+
     @foreach ($routes as $r)
     <script src="{{ asset('ng/controllers/' . $r['controller_path'] . '?t=' . time()) }}"></script>
     @endforeach

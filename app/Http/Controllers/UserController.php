@@ -74,4 +74,16 @@ class UserController extends Controller {
         }
     }
     
+      /////////////////////// Attachments /////////////////////////
+
+      public function listing_attachments(Request $request, User $user)
+      {
+          try {
+  
+              return response()->json($user->files);
+          } catch (\Exception $ex) {
+            return ['error' => $ex->getMessage()];
+
+          }
+      }
 }

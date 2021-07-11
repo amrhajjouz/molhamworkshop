@@ -17,6 +17,7 @@ return [
     'users.overview' => ['users/:id', 'users/overviewUserController', 'users.single.overview'],
     'users.edit' => ['users/:id/edit', 'users/editUserController', 'users.single.edit'],
     'users' => ['users', 'users/listUsersController', 'users.list'],
+    'users.attachments' => ['users/:id/attachments', 'users/listUserAttachmentsController', 'users.single.attachments'],
 
     //Donors Routes
     'donors' => ['donors', 'donors/listDonorsController', 'donors.list'],

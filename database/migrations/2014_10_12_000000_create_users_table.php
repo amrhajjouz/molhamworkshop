@@ -21,6 +21,16 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+        Schema::create('files', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('fileable_id');
+            $table->string('fileable_type')->index();
+            $table->string('reference' , 100)->unique();
+            $table->text('name');
+            $table->text('extension');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -31,5 +41,6 @@ class CreateUsersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('users');
+        Schema::dropIfExists('files');
     }
 }

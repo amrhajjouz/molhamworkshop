@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function ()  {
     Route::post('/users', [UserController::class, 'create']);
     Route::put('/users', [UserController::class, 'update']);
     Route::get('/users/{id}', [UserController::class, 'retrieve']);
+    Route::get('/users/{user}/attachments', [UserController::class, 'listing_attachments']);
 
     Route::get('/donors', [DonorController::class, 'list']);
     Route::post('/donors', [DonorController::class, 'create']);
