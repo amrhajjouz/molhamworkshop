@@ -48,7 +48,7 @@ function listUserAttachmentsController($scope, $page, $apiRequest, $init) {
         let data = {};
 
         /*
-         * if source is google drive we have to pass google drive user access token beecause is reauired field
+        * if source is google drive we have to pass google drive user access token beecause is reauired field
          */
         if ($scope.attachmentSource == "googleDrive") {
             data.attachments = $scope.selectedDriveFiles;
@@ -59,7 +59,7 @@ function listUserAttachmentsController($scope, $page, $apiRequest, $init) {
          * define fileable_type & fileable_id because are required fields
          */
 
-        data.fileable_type = "cases";
+        data.fileable_type = "user";
         data.fileable_id = $page.routeParams.id;
         data.source = $scope.attachmentSource;
 
@@ -118,6 +118,8 @@ function listUserAttachmentsController($scope, $page, $apiRequest, $init) {
 
     //////////////////////////////////// TRELLO /////////////////////////
 
+    // {Board} => {Card} => {Attachment}
+
     /*
      * Reference to use window.Trello
      */
@@ -168,8 +170,7 @@ function listUserAttachmentsController($scope, $page, $apiRequest, $init) {
 
     $scope.getBoards = async () => {
         $scope.loadingBoards = true;
-        TRELLO.get(
-            "/members/me/boards",
+        TRELLO.get("/members/me/boards",
             (res) => {
                 $scope.boards = res;
                 $scope.loadingBoards = false;
@@ -246,8 +247,7 @@ function listUserAttachmentsController($scope, $page, $apiRequest, $init) {
         $scope.loadingAttachments = true;
         card.attachments = [];
         $scope.selectedCard = card;
-        TRELLO.get(
-            `/cards/${card.id}/attachments`,
+        TRELLO.get(`/cards/${card.id}/attachments`,
             (success) => {
                 $scope.selectedCard.attachments = success;
                 $scope.loadingAttachments = false;

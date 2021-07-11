@@ -14,7 +14,6 @@ class FileController extends Controller
     public function create(CreateRequest $request)
     {
         $data = $request->validated();
-
         $source = $data['source']; 
         if (!$source) {
             $source = 'upload';
