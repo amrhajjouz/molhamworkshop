@@ -51,13 +51,13 @@ class ImportDriveFile implements ShouldQueue
         echo "\n start import";
 
         $files_count  = 0;
-
         $file_data = null;
 
         /* 
          * api key for google drive app ,  exists in config to connect to ggoogle drive
          * required params  
         */
+
         $api_key = config('general.google_drive_api_key');
 
 
@@ -73,20 +73,23 @@ class ImportDriveFile implements ShouldQueue
         ];
 
         /* 
-         * init guzzle client 
+         * init new guzzle client 
         */
 
         $client = new Client();
 
 
         foreach ($this->attachments  as $attachment) {
-            try {/////////////////////// 
+            try {
+
                 /* 
-                 *  
-                */ /////////////////////////
+                 * googleDrive endpoint and pass file_id as paramere 
+                */ 
             
                 $url = "https://www.googleapis.com/drive/v2/files/" . $attachment['id'] . "?key=" . $api_key;
 
+
+                
                 $response = $client->request('GET', $url, [
                     'headers'        => $headers,
                     'decode_content' => true,
@@ -112,7 +115,7 @@ class ImportDriveFile implements ShouldQueue
 
 
                     /* 
-                     * mime2ext() custom helper function exists in Generic 
+                     * mime2ext() custom helper function exists in Generic file
                      * it take file mime type and return extension  or null
                     */
                     $extension  = mime2ext($attachment['mimeType']);
@@ -120,6 +123,7 @@ class ImportDriveFile implements ShouldQueue
                     /* 
                      * if extension = null we log mimetype to add it to  mime2ext()
                     */
+
                     if (!$extension) {
                         echo "\n this mime type does not exists : " . $attachment['mimeType'];
                     }
@@ -130,8 +134,15 @@ class ImportDriveFile implements ShouldQueue
                     */
                     $reference = Str::random(10);
                     $file_name = $reference . '.' . $extension;
+
+                    /*
+                    * Put response in file to save it
+                    */
                     $file = file_put_contents(storage_path('app/public/' . $file_name), $file_data);
 
+                    /*
+                    * generate reference for file model and sure to be unique
+                    */
                     do {
                         $reference = Str::random(10);
                     } while (File::where('reference', $reference)->exists());
@@ -148,6 +159,10 @@ class ImportDriveFile implements ShouldQueue
                         'extension' => $extension,
                         'reference' => $reference
                     ]);
+
+                    /*
+                    * increase file count to use it in log or any where 
+                    */
 
                     $files_count++;
 
