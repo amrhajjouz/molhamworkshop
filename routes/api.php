@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DonorController;
+use App\Http\Controllers\{DonorController , FileController};
 
 /*
 |--------------------------------------------------------------------------
@@ -36,5 +36,7 @@ Route::middleware('auth')->group(function ()  {
     Route::post('/donors', [DonorController::class, 'create']);
     Route::put('/donors', [DonorController::class, 'update']);
     Route::get('/donors/{id}', [DonorController::class, 'retrieve']);
+
+    Route::post('/files',  [FileController::class, 'create']);
 
 });

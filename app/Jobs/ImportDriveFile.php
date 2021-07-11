@@ -2,8 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Facades\Helper;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Str;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -128,12 +128,12 @@ class ImportDriveFile implements ShouldQueue
                      * generate random string and check if exists we generate it another time because reference is unique field 
                      * $file_name to save file in storage in this name , not in model
                     */
-                    $reference = Helper::generateRandomString(10);
+                    $reference = Str::random(10);
                     $file_name = $reference . '.' . $extension;
                     $file = file_put_contents(storage_path('app/public/' . $file_name), $file_data);
 
                     do {
-                        $reference = Helper::generateRandomString(10);
+                        $reference = Str::random(10);
                     } while (File::where('reference', $reference)->exists());
 
 
