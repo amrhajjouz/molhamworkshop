@@ -1,38 +1,35 @@
 async function listUserAttachmentsControllerInit(
-  $http,
-  $page,
-  $apiRequest,
-  $datalist
+    $http,
+    $page,
+    $apiRequest,
+    $datalist
 ) {
-  const attachments = await $apiRequest
-    .config("users/" + $page.routeParams.id + "/attachments")
-    .getData();
+    const attachments = await $apiRequest.config("users/" + $page.routeParams.id + "/attachments").getData();
+    let fakerPaginator = {
+        currentPage: 1,
+        data: [],
+        filtering: false,
+        filters: {},
+        lastPageUrl: "",
+        firstPageUrl: "",
+        from: 1,
+        lastPage: 1,
+        to: 1,
+        loaded: true,
+        loading: false,
+        pages: [1],
+        params: {},
+        total: 1,
+        q: "",
+        search: function (q) { },
+    };
 
-  let fakerPaginator = {
-    currentPage: 1,
-    data: [],
-    filtering: false,
-    filters: {},
-    lastPageUrl: "",
-    firstPageUrl: "",
-    from: 1,
-    lastPage: 1,
-    to: 1,
-    loaded: true,
-    loading: false,
-    pages: [1],
-    params: {},
-    total: 1,
-    q: "",
-    search: function (q) {},
-  };
+    fakerPaginator.data = attachments;
+    fakerPaginator.total = attachments.length;
 
-  fakerPaginator.data = attachments;
-  fakerPaginator.total = attachments.length;
-
-  return {
-    attachments: fakerPaginator,
-  };
+    return {
+        attachments: fakerPaginator,
+    };
 }
 
 function listUserAttachmentsController($scope, $page, $apiRequest, $init) {
@@ -43,6 +40,7 @@ function listUserAttachmentsController($scope, $page, $apiRequest, $init) {
     $scope.loadingAttachments = false;
     $scope.trelloInitialized = false;
     $scope.boardLists = [];
+    $scope.selectedTrelloAttachments = [];
 
     $scope.createUpdateAttachments = () => {
         let data = {};
@@ -53,49 +51,30 @@ function listUserAttachmentsController($scope, $page, $apiRequest, $init) {
         if ($scope.attachmentSource == "googleDrive") {
             data.attachments = $scope.selectedDriveFiles;
             data.accessToken = gapi.client.getToken().access_token;
+        } else if ($scope.attachmentSource == "trello") {
+            data.accessToken = TRELLO.token();
+            data.attachments = $scope.selectedTrelloAttachments;
         }
-
         /*
          * define fileable_type & fileable_id because are required fields
+         * define source that maybe (googleDrive , Trello , ...etc) 
          */
-
         data.fileable_type = "user";
         data.fileable_id = $page.routeParams.id;
         data.source = $scope.attachmentSource;
 
-        $apiRequest
-            .config(
-                {
-                    method: "POST",
-                    url: `files`,
-                    data: data,
-                },
+        $apiRequest.config({method: "POST",url: `files`,data: data,},
                 function (response, data) {
                     $("#attachment-modal").on("hidden.bs.modal", function (e) {
                         $page.reload();
                     });
-
                     $("#attachment-modal").modal("hide");
-
-                    // reinitialize note to default value after create or update
                 }
-            )
-            .send();
+            ).send();
     };
 
     $scope.showModal = function (action, data = {}) {
         $scope.currentModalAction = action;
-        switch (action) {
-            case "add":
-                // $scope.createUpdateAttachments.config.method = "POST";
-                break;
-            case "edit":
-                // $scope.createUpdateAttachments.config.method = action = "PUT";
-                break;
-            default:
-                break;
-        }
-
         $("#attachment-modal").modal("show");
     };
 
@@ -103,22 +82,18 @@ function listUserAttachmentsController($scope, $page, $apiRequest, $init) {
         $scope.attachmentSource = val.attachmentSource;
         $scope.boardLists = [];
         $scope.cards = [];
+        $scope.selectedTrelloAttachments = [];
+        
         switch ($scope.attachmentSource) {
-            case "trello":
-                $scope.initTrello();
-                break;
-            case "googleDrive":
-                $scope.initGoogleDrive();
-                break;
-
-            default:
-                break;
+            case "trello": $scope.initTrello();break;
+            case "googleDrive":$scope.initGoogleDrive();break;
+            default: alert('unrecognized type');break;
         }
     };
-
+    
     //////////////////////////////////// TRELLO /////////////////////////
 
-    // {Board} => {Card} => {Attachment}
+    // {Boardss} => {Cards} => {Attachments}
 
     /*
      * Reference to use window.Trello
@@ -220,12 +195,20 @@ function listUserAttachmentsController($scope, $page, $apiRequest, $init) {
         $scope.$evalAsync();
 
         $scope.boards.map((board) => {
+
             TRELLO.get(
                 `/boards/${boardId}/cards`,
                 (res) => {
+                    console.log({ res });
+                    console.log({ card: $scope.cards });
+
                     res.map((card) => {
                         card.attachments = [];
-                        $scope.cards.push(angular.copy(card));
+                        let cardExists = false;
+                        $scope.cards.map(c => {
+                            if (c.id == card.id) cardExists = true;
+                        })
+                        if (!cardExists) $scope.cards.push(angular.copy(card));
                         $scope.loadingCards = false;
                         $scope.$evalAsync();
                     });
@@ -249,6 +232,13 @@ function listUserAttachmentsController($scope, $page, $apiRequest, $init) {
         $scope.selectedCard = card;
         TRELLO.get(`/cards/${card.id}/attachments`,
             (success) => {
+
+                success = success.map(e => {
+                    e.cardId = card.id;
+                    return e;
+                });
+
+
                 $scope.selectedCard.attachments = success;
                 $scope.loadingAttachments = false;
                 $scope.$evalAsync();
@@ -263,7 +253,21 @@ function listUserAttachmentsController($scope, $page, $apiRequest, $init) {
 
     /////////////////////// Select Attachments /////////////////////////
     $scope.selectAttachment = (attachment) => {
-        alert("attachment url is : " + attachment.url);
+        let alreadyExists = false;
+        $scope.selectedTrelloAttachments.map((e) => {
+            if (e.id == attachment.id) {
+                alreadyExists = true;
+                return;
+            }
+        });
+        //delete attachment
+        if (alreadyExists) {
+            $scope.selectedTrelloAttachments = $scope.selectedTrelloAttachments.filter((el) => el.id != attachment.id);
+        }
+        else $scope.selectedTrelloAttachments.push(attachment);
+
+
+        //   $scope.selectedTrelloAttachments.push(attachment);
     };
     /////////////////////// End Select Attachments /////////////////////////
 

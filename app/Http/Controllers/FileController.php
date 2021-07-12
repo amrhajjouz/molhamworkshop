@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\File\{CreateRequest};
-use App\Jobs\ImportDriveFile;
+use App\Jobs\{ImportDriveFile, importTrelloFiles};
 
 class FileController extends Controller
 {
@@ -19,12 +19,9 @@ class FileController extends Controller
         */
         $data = $request->validated();
 
+        $source = $data['source'];
         
-        $source = $data['source']; 
-        if (!$source) {
-            $source = 'upload';
-        }
-
+        if (!$source) $source = 'upload';
 
         switch ($source) {
             case 'googleDrive':
@@ -32,20 +29,28 @@ class FileController extends Controller
                 /* 
                  * dispatch job to continue importing method and pass required data to job
                 */
-                 ImportDriveFile::dispatch([
+                ImportDriveFile::dispatch([
                     'attachments' => $data['attachments'],
                     'access_token' => $data['accessToken'],
                     'fileable_type' => $data['fileable_type'],
                     'fileable_id' => $data['fileable_id'],
                 ]);
-                return response()->json(['status'=> true]);
+                return response()->json(['status' => true]);
                 break;
-
+                /* 
+                 * dispatch job to continue importing files from Trello and pass required data to job
+                */
+            case "trello":
+                importTrelloFiles::dispatch([
+                    'attachments' => $data['attachments'],
+                    'access_token' => $data['accessToken'],
+                    'fileable_type' => $data['fileable_type'],
+                    'fileable_id' => $data['fileable_id'],
+                ]);
+                break;
             default:
-                # code...
+            return response()->json(['msg'=> 'upload method does not exists']);
                 break;
         }
-
-
     }
 }

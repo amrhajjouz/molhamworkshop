@@ -55,7 +55,7 @@ class UserController extends Controller {
             
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
-        }
+        }   
     }
     
     public function list (Request $request) {
