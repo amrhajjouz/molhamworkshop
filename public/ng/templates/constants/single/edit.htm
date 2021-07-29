@@ -1,35 +1,37 @@
 <include-header />
+
 <form class="row" name="updateConstantForm" request="updateConstant">
-  <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="plaintext">نص عادي </label>
-      <select id="plaintext" class="form-control" type="text" ng-model="constant.plaintext" ng-class="(updateConstant.errors['plaintext'] != null) ? 'is-invalid' : ''" ng-change="updateConstant.errors['plaintext'] = null" ng-error="updateConstant.errors.plaintext" required >
-        <option ng-value="true">نعم</option>
-        <option ng-value="false">لا</option>
-      </select>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="plaintext">نص عادي </label>
+            <select id="plaintext" class="form-control" type="text" ng-model="constant.plaintext" ng-class="(updateConstant.errors['plaintext'] != null) ? 'is-invalid' : ''" ng-change="updateConstant.errors['plaintext'] = null" ng-error="updateConstant.errors.plaintext" required>
+                <option ng-value="true">نعم</option>
+                <option ng-value="false">لا</option>
+            </select>
+        
+        </div>
     </div>
-  </div>
-  <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="name">اسم الثابت</label>
-      <input id="name" class="form-control" type="text" ng-model="constant.name" ng-class="(updateConstant.errors['name'] != null) ? 'is-invalid' : ''" ng-change="updateConstant.errors['name'] = null" placeholder="اسم الثابت.." ng-error="updateConstant.errors.name" required/>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">اسم الثابت</label>
+            <input id="name" dir="ltr" class="form-control" type="text" ng-model="constant.name" ng-class="(updateConstant.errors['name'] != null) ? 'is-invalid' : ''" ng-change="updateConstant.errors['name'] = null" placeholder="اسم الثابت.." ng-error="updateConstant.errors.name" required/>
+        </div>
     </div>
-  </div>
-  <div class="col-12">
-    <submit-button form="updateConstantForm" icon="fe fe-plus">تعديل</submit-button>
-  </div>
+    <div class="col-12">
+        <submit-button form="updateConstantForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
 </form>
 
 <content-card content-model="contents.body" content-title="المحتوى" content-name="body">
-  <form class="row" name="pageBodyContentForm" request="createUpdateBodyContent"model="bodyContent">
-    <div class="col-12">
-      <div class="form-group">
-        <label for="body-content" class="locale-label">عربي</label>
-        <textarea id="body-content" class="form-control" type="text" ng-model="bodyContent.value" ng-error="createUpdateBodyContent.errors.value"required></textarea>
-      </div>
-    </div>
-    <div class="col-12">
-      <submit-button form="pageBodyContentForm" icon="fe fe-edit">تعديل</submit-button>
-    </div>
-  </form>
+    <form class="row" name="pageBodyContentForm" request="createUpdateBodyContent" model="bodyContent">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="body-content" class="locale-label">عربي</label>
+                <textarea id="body-content" dir="{{ (bodyContent.locale == 'ar') ? 'rtl' : 'ltr' }}" class="form-control" type="text" ng-model="bodyContent.value" ng-error="createUpdateBodyContent.errors.value" required></textarea>
+            </div>
+        </div>
+        <div class="col-12">
+            <submit-button form="pageBodyContentForm" icon="fe fe-edit">تعديل</submit-button>
+        </div>
+    </form>
 </content-card>

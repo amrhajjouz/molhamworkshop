@@ -24,7 +24,7 @@ class ConstantController extends Controller
             $constant->plaintext = $data['plaintext'];
             $constant->name = $data['name'];
             $constant->save();
-            setContent($constant , $data['content']['name'] , $data['content']['value'] ,'ar' );
+            setContent($constant, $data['content']['name'], $data['content']['value'], 'ar');
             return response()->json($constant);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -34,7 +34,7 @@ class ConstantController extends Controller
     public function update(UpdateRequest $request)
     {
         try {
-
+            
             $data = $request->validated();
             $constant = $this->model::findOrFail($request->id);
             $constant->plaintext = $data['plaintext'];
@@ -79,6 +79,16 @@ class ConstantController extends Controller
         }
     }
 
+    public function listJson(Request $request) {
+        $constants = [];
+        foreach (Constant::with('contents')->get() as $c) {
+            $content = [];
+            foreach ($c['contents'] as $con) $content[$con['locale']] = $con['value'];
+            $constants[$c['name']] = $content;
+        }
+        return response()->json($constants);
+    }
+    
     public function create_update_contents(CreateUpdateContent $request, Constant $constant)
     {
         try {

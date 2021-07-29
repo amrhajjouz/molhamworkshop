@@ -24,5 +24,7 @@ function editConstantController($scope, $page, $apiRequest, $init) {
     method: "PUT",
     url: "constants/" + $page.routeParams.id + "/contents",
     data: $scope.bodyContent,
+  }, function () {
+      $page.reload();
   });
 }

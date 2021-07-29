@@ -21,22 +21,7 @@ class Molham extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
-
-        Schema::create('donors', function (Blueprint $table) {
-            $table->id();
-            $table->string("name", 30);
-            $table->string("email", 155);
-            $table->text("password");
-            $table->string("phone", 20)->nullable();
-            $table->string("swish_number", 20)->nullable();;
-            $table->string("whatsapp_number", 20)->nullable();
-            $table->boolean("subscribed_to_newsletter")->default(false);
-            $table->boolean("verified")->default(false);
-            $table->boolean("blocked")->default(false);
-            $table->boolean("closed")->default(false);
-            $table->timestamps();
-        });
-
+        
         Schema::create('contents', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('contentable_type')->index();
@@ -54,30 +39,6 @@ class Molham extends Migration
             $table->string('name')->unique();
             $table->timestamps();
         });
-
-        Schema::create('shortcuts', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('path')->index();
-            $table->timestamps();
-        });
-
-        Schema::create('shortcut_keys', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('shortcut_id');
-            $table->timestamps();
-        });
-
-        Schema::create('pages', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('url')->unique();
-            $table->timestamps();
-        });
-
-        Schema::create('blogs', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('url')->unique();
-            $table->timestamps();
-        });
     }
 
     /**
@@ -87,14 +48,8 @@ class Molham extends Migration
      */
     public function down()
     {
-        //
-        Schema::dropIfExists('donor');
         Schema::dropIfExists('users');
         Schema::dropIfExists('contents');
         Schema::dropIfExists('constants');
-        Schema::dropIfExists('shortcuts');
-        Schema::dropIfExists('shortcut_keys');
-        Schema::dropIfExists('pages');
-        Schema::dropIfExists('blogs');
     }
 }
