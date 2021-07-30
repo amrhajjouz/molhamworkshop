@@ -18,7 +18,9 @@ use App\Http\Controllers\{DonorController, ConstantController , ShortcutControll
 */
 
 Route::middleware('auth')->group(function ()  {
-
+    
+    Route::get('/constants/json', [ConstantController::class, 'listJson']);
+    
     Route::get('/auth', function (Request $request) {
         return $request->user();
     });
@@ -40,7 +42,6 @@ Route::middleware('auth')->group(function ()  {
     Route::get('/constants', [ConstantController::class, 'list']);
     Route::post('/constants', [ConstantController::class, 'create']);
     Route::put('/constants', [ConstantController::class, 'update']);
-    Route::get('/constants/json', [ConstantController::class, 'listJson']);
     Route::get('/constants/{id}', [ConstantController::class, 'retrieve']);
     Route::put('/constants/{constant}/contents', [ConstantController::class, 'create_update_contents']);
     
