@@ -27,9 +27,6 @@ class CreateDonorRequest extends FormRequest
             'name' => ['required' ,'string', 'between:3,30'],
             'email' => ['required' , 'email' , 'unique:donors,email'],
             'password' => ['required', 'string', 'min:8'],
-            'phone' => ['string', 'between:5,20'],
-            'whatsapp_number' => ['string', 'between:5,20'],
-            'swish_number' => ['string', 'max:20'],
         ];
     }
 }

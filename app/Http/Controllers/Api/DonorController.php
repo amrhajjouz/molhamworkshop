@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
  use App\Http\Requests\Donor\UpdateDonorRequest;
   use App\Models\Donor;
  use Illuminate\Http\Request;
  use App\Http\Requests\Donor\CreateDonorRequest;
-use App\Http\Requests\Donors\AuthenticateDonor;
+use App\Http\Requests\Donor\AuthenticateDonor;
 use Illuminate\Support\Facades\Hash;
 use Exception;
 

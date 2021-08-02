@@ -25,6 +25,11 @@ class CreateDonorTable extends Migration
             $table->boolean("verified")->default(false);
             $table->boolean("blocked")->default(false);
             $table->boolean("closed")->default(false);
+            $table->string("country_code")->nullable();
+            $table->enum("currency" , ['usd' , 'eur' , 'try' , 'sar'])->default("usd");
+            $table->enum("locale" , ['ar' , 'en' , 'fr' , 'de'])->default("ar");
+            $table->enum("theme_mode" , ['dark' , 'light'])->default("light");
+            $table->enum("theme_color" , ['primary' , 'green' , 'purple' , 'orange'])->default("primary");
             $table->timestamps();
         });
     }

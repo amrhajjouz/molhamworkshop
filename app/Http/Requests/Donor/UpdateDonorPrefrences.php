@@ -3,8 +3,9 @@
 namespace App\Http\Requests\Donor;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class   UpdateDonorRequest extends FormRequest
+class UpdateDonorPrefrences extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,12 +24,11 @@ class   UpdateDonorRequest extends FormRequest
      */
     public function rules()
     {
-        $user = $this->user();
-
         return [
-            'name' => 'required|string|min:3|max:50',
-            'country_code' => 'nullable|string|exists:countries,code',
-            'phone' => ['nullable', 'unique:donors,phone,' . $user->id, 'regex:/^([0-9\s\-\+\(\)]*)$/', 'starts_with:+,00', 'min:10', 'max:13']
+            'locale' => ['required' , Rule::in(['ar' , 'en' , 'fr' , 'de' , 'tr' , 'es'])],
+            'currency' => ['required' , Rule::in(['usd' , 'eur' , 'try' , 'sar' , 'aed' , 'jod'])],
+            'theme_mode' => ['required' , Rule::in(['light' , 'dark'])],
+            'theme_color' => ['required' , Rule::in(['primary' ,  'purple' , 'teal'])],
         ];
     }
 }

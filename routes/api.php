@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DonorController;
+use App\Http\Controllers\Api\{DonorController , AuthDonorController};
 
 /*
 |--------------------------------------------------------------------------
@@ -17,23 +17,20 @@ use App\Http\Controllers\DonorController;
 |
 */
 
-Route::middleware('auth')->group(function ()  {
 
-    Route::get('/auth', function (Request $request) {
-        return $request->user();
-    });
+Route::group(['middleware' => 'guest'],function () {
+    Route::post('/donors/authenticate' , [DonorController::class, 'authenticate'])->name('authenticate_donor');
+    Route::post('/donors' , [DonorController::class, 'create'])->name('create_donor');
+});
 
-    Route::post('/profile', [ProfileController::class, 'update_info']);
-    Route::post('/profile/password', [ProfileController::class, 'change_password']);
 
-    Route::get('/users', [UserController::class, 'list']);
-    Route::post('/users', [UserController::class, 'create']);
-    Route::put('/users', [UserController::class, 'update']);
-    Route::get('/users/{id}', [UserController::class, 'retrieve']);
-
-    Route::get('/donors', [DonorController::class, 'list']);
-    Route::post('/donors', [DonorController::class, 'create']);
-    Route::put('/donors', [DonorController::class, 'update']);
-    Route::get('/donors/{id}', [DonorController::class, 'retrieve']);
+Route::group(['middleware' => 'auth_donor'],function () {
+    Route::post('/donors/auth' , [AuthDonorController::class, 'update'])->name('update_auth_donor'); 
+    Route::post('/donors/auth/delete' , [AuthDonorController::class, 'delete'])->name('delete_auth_donor'); 
+    Route::get('/donors/auth' , [AuthDonorController::class, 'retrieve'])->name('retrieve_auth_donor'); 
+    Route::post('/donors/auth/email' , [AuthDonorController::class, 'changeEmail'])->name('change_auth_donor_email'); 
+    Route::post('/donors/auth/password' , [AuthDonorController::class, 'changePassword'])->name('change_auth_donor_password'); 
+    Route::post('/donors/auth/preferences' , [AuthDonorController::class, 'updatePreferences'])->name('update_auth_donor_prefrences'); 
+    Route::post('/donors/logout' , [AuthDonorController::class, 'logout'])->name('logout_donor'); 
 
 });

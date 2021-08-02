@@ -46,6 +46,11 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+        'donor' => [
+            'driver' => 'custom-token',
+            'provider' => 'token',
+            'hash' => false,
+        ],
     ],
 
     /*
@@ -69,6 +74,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+        'token' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Token::class,
         ],
 
         // 'users' => [
