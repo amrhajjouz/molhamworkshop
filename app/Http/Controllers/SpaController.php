@@ -25,7 +25,7 @@ class SpaController extends Controller
     {
         try {
             
-            if ($request->is('api/*')) return response()->json(['error' => 'API Route not found'], 500);
+            if ($request->is('api/dashboard/*')) return response()->json(['error' => 'API Route not found'], 500);
             
             $app_url =  url('');
             $routes = [];
@@ -56,7 +56,7 @@ class SpaController extends Controller
             
             foreach (['ar', 'en', 'fr', 'de', 'tr', 'es'] as $l) $locales[] = ['code' => $l, 'name' => getLocaleName($l), 'dir' => ($l == 'ar') ? 'rtl' : 'ltr', 'align' => ($l == 'ar') ? 'right' : 'left'];
             
-            return view('app', ['routes' => collect($routes), 'app_url' => $app_url, 'api_url' => $app_url . '/api/', 'locales' => $locales]);
+            return view('app', ['routes' => collect($routes), 'app_url' => $app_url, 'api_url' => $app_url . '/dashboard/api/', 'locales' => $locales]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
