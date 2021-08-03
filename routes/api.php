@@ -18,6 +18,7 @@ use App\Http\Controllers\{DonorController, ConstantController , ShortcutControll
 */
 
 Route::get('/constants/json', [ConstantController::class, 'listJson']);
+Route::get('/constants/json2', [ConstantController::class, 'listJson2']);
 
 Route::middleware('auth')->group(function ()  {
     

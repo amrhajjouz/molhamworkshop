@@ -89,6 +89,14 @@ class ConstantController extends Controller
         return response()->json($constants);
     }
     
+    public function listJson2(Request $request) {
+        $constants = [];
+        foreach (Constant::with('contents')->get() as $c) {
+            $content = [];
+            foreach ($c['contents'] as $con) $constants[$con['locale']][$c['name']] = $con['value'];
+        }
+        return response()->json($constants);
+    }
     public function create_update_contents(CreateUpdateContent $request, Constant $constant)
     {
         try {
