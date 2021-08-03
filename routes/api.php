@@ -30,7 +30,9 @@ Route::group(['middleware' => 'auth_donor'],function () {
     Route::get('/donors/auth' , [AuthDonorController::class, 'retrieve'])->name('retrieve_auth_donor'); 
     Route::post('/donors/auth/email' , [AuthDonorController::class, 'changeEmail'])->name('change_auth_donor_email'); 
     Route::post('/donors/auth/password' , [AuthDonorController::class, 'changePassword'])->name('change_auth_donor_password'); 
-    Route::post('/donors/auth/preferences' , [AuthDonorController::class, 'updatePreferences'])->name('update_auth_donor_prefrences'); 
+    Route::put('/donors/auth/preferences' , [AuthDonorController::class, 'updatePreferences'])->name('update_auth_donor_prefrences'); 
     Route::post('/donors/logout' , [AuthDonorController::class, 'logout'])->name('logout_donor'); 
+    Route::get('/donors/auth/notification_preferences' , [AuthDonorController::class, 'listNotificationPreferences'])->name('list_auth_donor_notification_preferences'); 
+    Route::put('/donors/auth/notification_preferences' , [AuthDonorController::class, 'updateNotificationPreferences'])->name('update_auth_donor_notification_preferences'); 
 
 });

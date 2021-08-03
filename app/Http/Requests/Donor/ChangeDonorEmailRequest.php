@@ -4,7 +4,7 @@ namespace App\Http\Requests\Donor;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AuthenticateDonor extends FormRequest
+class ChangeDonorEmailRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class AuthenticateDonor extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|max:255',
-            'password' => 'required',
+            'new_email' => "required|unique:donors,email,".$this->user()->id
         ];
     }
 }

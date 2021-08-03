@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\Donor;
 
+use App\Models\NotificationPreference;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class ChangeDonorPassword extends FormRequest
+class UpdateNotificationPreferences extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +25,10 @@ class ChangeDonorPassword extends FormRequest
      */
     public function rules()
     {
+        // dd();
         return [
-            'new_password' => "required|string|confirmed|between:8,20"
+            "preferences" => ['required' , 'array'],
+            "preferences.*" => [Rule::in(['newsletter' , 'subsciptions_2_days_reminder' , "subscriptions_1_week_reminder" , 'purposes_updates' , 'shared_links'])]
         ];
     }
 }

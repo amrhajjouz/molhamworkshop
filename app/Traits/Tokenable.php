@@ -1,20 +1,11 @@
 <?php
 namespace App\Traits;
 
-/**
- * HasToken
- */
-trait HasToken
+trait Tokenable
 {
-    
     public function tokens()
     {
         return $this->morphMany('App\Models\Token', 'tokenable');
-    }
-
-
-    public function getCurrentToken(){
-        return request()->bearerToken();
     }
 
     public function deleteAllTokens(){
