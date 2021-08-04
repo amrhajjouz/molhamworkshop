@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\NotificationType;
+namespace App\Http\Requests\NotificationTemplate;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
+class UpdateNotificationTemplateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'id' => ['required', 'exists:notifications_types'],
-            'name' => ['required', 'string', 'between:3,50' , 'unique:notifications_types,name,'.$this->id],
+            'name' => ['required', 'string', 'between:3,50', 'unique:notifications_types,name,' . $this->id],
             'body_ar' => ['required', 'string'],
             'body_en' => ['required', 'string'],
             'path' => ['nullable', 'string'],

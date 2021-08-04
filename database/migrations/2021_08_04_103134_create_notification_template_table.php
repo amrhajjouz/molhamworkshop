@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class NotificationTypes extends Migration
+class CreateNotificationTemplateTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,14 @@ class NotificationTypes extends Migration
      */
     public function up()
     {
-        //
-        Schema::create('notifications_types', function (Blueprint $table) {
+        Schema::create('notifications_templates', function (Blueprint $table) {
             $table->id();
-            $table->string("name", 50);
-            $table->text("body_ar");
-            $table->text("body_en");
+            $table->string("name", 50)->index();
+            $table->json("body");
             $table->text("path")->nullable();
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *
@@ -31,8 +28,6 @@ class NotificationTypes extends Migration
      */
     public function down()
     {
-        //
-        Schema::dropIfExists('notifications_types');
-
+        Schema::dropIfExists('notifications_templates');
     }
 }

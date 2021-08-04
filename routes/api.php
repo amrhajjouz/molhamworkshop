@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\ProfileController;
-use App\Http\Controllers\{UserController , NotificationTypeController};
+use App\Http\Controllers\{UserController , NotificationTemplateController};
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DonorController;
 
@@ -38,10 +38,10 @@ Route::middleware('auth')->group(function ()  {
     Route::put('/donors', [DonorController::class, 'update']);
     Route::get('/donors/{id}', [DonorController::class, 'retrieve']);
 
-    /////////////////////// NotificationType /////////////////////////
-    Route::get('/notifications_types', [NotificationTypeController::class, 'list']);
-    Route::post('/notifications_types', [NotificationTypeController::class, 'create']);
-    Route::put('/notifications_types', [NotificationTypeController::class, 'update']);
-    Route::get('/notifications_types/{id}', [NotificationTypeController::class, 'retrieve']);
+    /////////////////////// NotificationTemplate /////////////////////////
+    Route::get('/notifications_types', [NotificationTemplateController::class, 'list']);
+    Route::post('/notifications_types', [NotificationTemplateController::class, 'create']);
+    Route::put('/notifications_types', [NotificationTemplateController::class, 'update']);
+    Route::get('/notifications_types/{id}', [NotificationTemplateController::class, 'retrieve']);
     
 });

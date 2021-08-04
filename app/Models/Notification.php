@@ -4,7 +4,7 @@ namespace App\Models;
 
 use  Illuminate\Notifications\DatabaseNotification;
 
-use App\Models\{NotificationType};
+use App\Models\{NotificationTemplate};
 
 class Notification extends DatabaseNotification
 {
@@ -42,14 +42,14 @@ class Notification extends DatabaseNotification
         return $this->morphTo();
     }
 
-    public function notificationsType()
+    public function notificationTemplate()
     {
-        return $this->belongsTo('App\Models\NotificationType', 'type', 'name');
+        return $this->belongsTo('App\Models\NotificationTemplate', 'type', 'name');
     }
 
     public function save($options = [])
     {
-        $type = NotificationType::where('name', $this->type)->firstOrFail();
+        $type = NotificationTemplate::where('name', $this->type)->firstOrFail();
         if ($type->path) {
             $patterns = $replacements = [];
             $reps = (array)$this->data;

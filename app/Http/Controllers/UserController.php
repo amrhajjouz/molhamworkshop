@@ -8,49 +8,41 @@ use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
 
-class UserController extends Controller {
-    
-    public function __construct () {
+class UserController extends Controller
+{
+
+    public function __construct()
+    {
         $this->middleware('auth');
     }
-    
-    public function create (CreateUserRequest $request) {
-        
+
+    public function create(CreateUserRequest $request)
+    {
         try {
-            
-            // Create User
             $user = User::create($request->validated());
-            
             return response()->json($user);
-            
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
-    
-    public function update (UpdateUserRequest $request) {
-        
+
+    public function update(UpdateUserRequest $request)
+    {
         try {
-            
             // Fetch User
             $user = User::findOrFail($request->id);
-            
             // Update User
             $user->update($request->validated());
-            
             return response()->json($user);
-            
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
-    
-    public function retrieve ($id) {
-        
+
+    public function retrieve($id)
+    {
         try {
             $user = User::findOrFail($id);
-            
-
             // $user->unreadNotifications->markAsRead();
             // dd($user->unreadNotifications);
 
@@ -58,7 +50,7 @@ class UserController extends Controller {
 
             // $user->notifications()->create(
             //     [
-            //     "type" => "view_user",
+            //     "name" => "view_user",
             //     'data' => [
             //         'id' =>"$user->id", 
             //         'user_id' => "$user->id", 
@@ -67,33 +59,28 @@ class UserController extends Controller {
             //         // 'user_lang' => $user->lang ?? "ar", 
             //     ]
             // ]);
-
             // Fetch User and Return
-            return response()->json($user);            
-            
+            return response()->json($user);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
-    
-    public function list (Request $request) {
-        
+
+    public function list(Request $request)
+    {
         try {
-            
             $search_query = ($request->has('q') ? [['name', 'like', '%' . $request->q . '%']] : null);
-            
             $users = User::orderBy('id', 'desc')->where($search_query)->paginate(5)->withQueryString();
-            
-            return response()->json($users);  
-            
+            return response()->json($users);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
-    
 
 
-    public function listNotifications(Request $request , User $user){
+
+    public function listNotifications(Request $request, User $user)
+    {
         try {
             $notifications = $user->notifications()
                 ->where(function ($q) use ($request) {
@@ -106,6 +93,4 @@ class UserController extends Controller {
             return ['error' => $e->getMessage()];
         }
     }
-    
-    
 }
