@@ -8,15 +8,15 @@
             </tr>
             <tr>
                 <td class="text-muted py-3">الوصف العربي</td>
-                <td class="py-3 pr-3">{{ notification.body_ar }}</td>
+                <td class="py-3 pr-3">{{ notification.body.ar }}</td>
             </tr>
             <tr>
                 <td class="text-muted py-3">الوصف الانكليزي</td>
-                <td class="py-3 pr-3">{{ notification.body_en }}</td>
+                <td class="py-3 pr-3" dir="ltr">{{ notification.body.en }}</td>
             </tr>
             <tr ng-if="notification.path">
                 <td class="text-muted py-3">الرابط </td>
-                <td class="py-3 pr-3">{{ notification.path }}</td>
+                <td class="py-3 pr-3" dir="ltr">{{ notification.path }}</td>
             </tr>
         </table>
     </div>

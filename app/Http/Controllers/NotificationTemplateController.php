@@ -20,9 +20,9 @@ class NotificationTemplateController extends Controller
     public function update(UpdateNotificationTemplateRequest $request)
     {
         try {
-            $notification_template = NotificationTemplate::findOrFail($request->id);
-            $notification_template->update($request->validated());
-            return response()->json($notification_template);
+            $notificationTemplate = NotificationTemplate::findOrFail($request->id);
+            $notificationTemplate->update($request->validated());
+            return response()->json($notificationTemplate);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
         }
@@ -40,14 +40,14 @@ class NotificationTemplateController extends Controller
     public function list(Request $request)
     {
         try {
-            $notification_types = NotificationTemplate::orderBy('id', 'desc')->where(function ($q) use ($request) {
+            $notificationTemplate = NotificationTemplate::orderBy('id', 'desc')->where(function ($q) use ($request) {
                 if ($request->has('q')) {
                     $q->where('name', 'like', '%' . $request->q . '%');
-                    $q->orWhere('body_ar', 'like', '%' . $request->q . '%');
-                    $q->orWhere('body_en', 'like', '%' . $request->q . '%');
+                    $q->orWhere('body->ar', 'like', '%' . $request->q . '%');
+                    $q->orWhere('body->en', 'like', '%' . $request->q . '%');
                 }
             })->paginate(5)->withQueryString();
-            return response()->json($notification_types);
+            return response()->json($notificationTemplate);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
         }

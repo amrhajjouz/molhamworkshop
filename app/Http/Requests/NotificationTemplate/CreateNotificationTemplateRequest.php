@@ -26,9 +26,10 @@ class CreateNotificationTemplateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required' ,'string', 'between:3,50' , 'unique:notifications_types'],
-            'body_ar' => [ 'required' , 'string'],
-            'body_en' => [ 'required' , 'string'],
+            'name' => ['required' ,'string', 'between:3,50' , 'unique:notifications_templates'],
+            'body' => [ 'required' , 'array'],
+            'body.en' => [ 'required' , 'string'],
+            'body.ar' => [ 'required' , 'string'],
             'path' => [ 'nullable' , 'string'],
         ];
     }

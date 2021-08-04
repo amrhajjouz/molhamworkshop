@@ -25,10 +25,11 @@ class UpdateNotificationTemplateRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => ['required', 'exists:notifications_types'],
-            'name' => ['required', 'string', 'between:3,50', 'unique:notifications_types,name,' . $this->id],
-            'body_ar' => ['required', 'string'],
-            'body_en' => ['required', 'string'],
+            'id' => ['required', 'exists:notifications_templates'],
+            'name' => ['required', 'string', 'between:3,50', 'unique:notifications_templates,name,' . $this->id],
+            'body' => ['required', 'array'],
+            'body.en' => ['required', 'string'],
+            'body.ar' => ['required', 'string'],
             'path' => ['nullable', 'string'],
         ];
     }

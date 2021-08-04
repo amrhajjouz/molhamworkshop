@@ -16,7 +16,7 @@ class NotificationTypeSeeder extends Seeder
     public function run()
     {
         $notificationsTypes = [
-            ['name' => 'view_user', 'body' => ['ar'=>'تم مشاهد المستخدم  {{user_id}} , من قبل المستخدم {{viewer_name}}' ,  'en' => "user retrived {{date}}" ], "path" => url('/users/{{id}}/{{user_lang}}')],
+            ['name' => 'view_user', 'body' => ['ar' => 'تم مشاهد المستخدم  {user_id} , من قبل المستخدم {viewer_name}',  'en' => "user retrived {date}"], "path" => url('/users/{id}/{user_lang}')],
         ];
 
         foreach ($notificationsTypes  as $notification) {

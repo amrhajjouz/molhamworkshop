@@ -13,15 +13,15 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="ev in notifications.data">
-                <td class="align-middle text-center">{{ ev.id }}</td>
-                <td class="align-middle text-center">{{ ev.name }}</td>
-                <td class="align-middle text-center">{{ ev.body_ar }}</td>
-                <td class="align-middle text-center">{{ ev.body_en }}</td>
+            <tr ng-repeat="n in notifications.data">
+                <td class="align-middle text-center">{{ n.id }}</td>
+                <td class="align-middle text-center">{{ n.name }}</td>
+                <td class="align-middle text-center">{{ n.body.ar }}</td>
+                <td class="align-middle text-center">{{ n.body.en }}</td>
                 <td class="align-middle text-center h2">
                     <dropdown>
-                        <dropdown-item href="{{ $r('notifications.overview', {id: ev.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
-                        <dropdown-item href="{{ $r('notifications.edit', {id: ev.id}) }}"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
+                        <dropdown-item href="{{ $r('notifications.overview', {id: n.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
+                        <dropdown-item href="{{ $r('notifications.edit', {id: n.id}) }}"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
                     </dropdown>
                 </td>
             </tr>

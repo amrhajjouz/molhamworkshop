@@ -1,5 +1,5 @@
 function addNotificationController($scope, $apiRequest, $page) {
-    $scope.notification = {};
+    $scope.notification = {body:{ar:null , en:null}};
     $scope.createNotification = $apiRequest.config(
         {
             method: "POST",

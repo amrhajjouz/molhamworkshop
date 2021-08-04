@@ -83,15 +83,17 @@ class ProfileController extends Controller {
     {
         try {
             $user = auth()->user();
+            // dd($user->notifications);
             $notifications = $user->notifications()
-            ->join("notifications_types",function($j){
-                    $j->on('notifications.type' , "notifications_types.name" );
+            ->join("notifications_templates",function($j){
+                    $j->on('notifications.template_id' , "notifications_templates.id" );
             })
-            ->select('notifications.*' , "notifications_types.name"  )
+            ->select('notifications.*' , "notifications_templates.name"  )
             ->where(function ($q) use ($request) {
                 if ($request->has('q')) {
-                    $q->where('type', 'like', '%' . $request->q . '%');
-                    $q->orWhere('notifications_types.name', 'like', '%' . $request->q . '%');
+                    $q->where('notifications_templates.name', 'like', '%' . $request->q . '%');
+                    $q->orWhere('notifications.body->ar', 'like', '%' . $request->q . '%');
+                    $q->orWhere('notifications.body->en', 'like', '%' . $request->q . '%');
                 }
             })->paginate(5)->withQueryString();
 

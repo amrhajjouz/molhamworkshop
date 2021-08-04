@@ -10,15 +10,15 @@
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="body_ar">الوصف العربي</label>
-            <input type="text" class="form-control" ng-class="(updateNotification.errors.body_ar != null) ? 'is-invalid' : ''" id="body_ar" ng-model="notification.body_ar" ng-change="updateNotification.errors.body_ar = null" placeholder="الوصف العربي .." required>
-            <div ng-show="updateNotification.errors.body_ar != null" class="invalid-feedback">{{ updateNotification.errors.body_ar[0] }}</div>
+            <input type="text" class="form-control" ng-class="(updateNotification.errors.body.ar != null) ? 'is-invalid' : ''" id="body_ar" ng-model="notification.body.ar" ng-change="updateNotification.errors.body.ar = null" placeholder="الوصف العربي .." required>
+            <div ng-show="updateNotification.errors.body.ar != null" class="invalid-feedback">{{ updateNotification.errors.body.ar[0] }}</div>
         </div>
     </div>
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="body_en">الوصف الإنكليزي</label>
-            <input dir="ltr" type="text" class="form-control" ng-class="(updateNotification.errors.body_en != null) ? 'is-invalid' : ''" id="body_en" ng-model="notification.body_en" ng-change="updateNotification.errors.body_en = null" placeholder="الوصف الإنكليزي .." required>
-            <div ng-show="updateNotification.errors.body_en != null" class="invalid-feedback">{{ updateNotification.errors.body_en[0] }}</div>
+            <input dir="ltr" type="text" class="form-control" ng-class="(updateNotification.errors.body.en != null) ? 'is-invalid' : ''" id="body_en" ng-model="notification.body.en" ng-change="updateNotification.errors.body.en = null" placeholder="الوصف الإنكليزي .." required>
+            <div ng-show="updateNotification.errors.body.en != null" class="invalid-feedback">{{ updateNotification.errors.body.en[0] }}</div>
         </div>
     </div>
     <div class="col-12 col-md-6">
