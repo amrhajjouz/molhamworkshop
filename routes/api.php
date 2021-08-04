@@ -19,6 +19,9 @@ use App\Http\Controllers\Api\{DonorController , AuthDonorController};
 
 
 Route::group(['middleware' => 'guest'],function () {
+    Route::get('/test', function () {
+        return 'test';
+    });
     Route::post('/donors/authenticate' , [DonorController::class, 'authenticate'])->name('api.donors.authenticate');
     Route::post('/donors' , [DonorController::class, 'create'])->name('api.donors.create');
 });
