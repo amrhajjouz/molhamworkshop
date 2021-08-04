@@ -8,7 +8,6 @@ use App\Models\NotificationType;
 
 class NotificationTypeController extends Controller
 {
-
     public function create(CreateRequest $request)
     {
         try {
@@ -21,13 +20,14 @@ class NotificationTypeController extends Controller
     public function update(UpdateRequest $request)
     {
         try {
-            $activity = NotificationType::findOrFail($request->id);
-            $activity->update($request->validated());
-            return response()->json($activity);
+            $notification_type = NotificationType::findOrFail($request->id);
+            $notification_type->update($request->validated());
+            return response()->json($notification_type);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
+
     public function retrieve($id)
     {
         try {
@@ -40,17 +40,18 @@ class NotificationTypeController extends Controller
     public function list(Request $request)
     {
         try {
-            $activities = NotificationType::orderBy('id', 'desc')->where(function($q) use($request){
+            $notification_types = NotificationType::orderBy('id', 'desc')->where(function($q) use($request){
                 if($request->has('q')){
                     $q->where('name', 'like', '%' . $request->q . '%');
                     $q->orWhere('body_ar', 'like', '%' . $request->q . '%');
                     $q->orWhere('body_en', 'like', '%' . $request->q . '%');
                 }
             })->paginate(5)->withQueryString();
-            return response()->json($activities);
+            return response()->json($notification_types);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
+
 }
  
