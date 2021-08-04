@@ -6,6 +6,7 @@ use App\Traits\Tokenable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\{DonorNotificationPreference , NotificationPreference};
+
 class Donor extends Model
 {
     use Tokenable;
@@ -15,17 +16,15 @@ class Donor extends Model
         'password', 
     ];
 
-    public function country(){
+    public function country() {
         return $this->hasOne('App\Models\Country' , 'code' , 'country_code');
     }
    
-    public function notification_preferences(){
+    public function notification_preferences() {
         return $this->belongsToMany(NotificationPreference::class, 'donor_notification_preferences', 'donor_id' , 'preference_id');
     }
-
-
     
-    public function delete(){
+    public function delete() {
         $this->deleteAllTokens();
         return parent::delete();
     }

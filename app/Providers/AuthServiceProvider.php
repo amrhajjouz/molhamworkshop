@@ -26,27 +26,25 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        //
-
-        $token = Token::where('api_token', request()->bearerToken())->first();
-
-        if($token){
-            $this->app->rebinding('request', function ($app, $request) use ($token) {
-                $request->setUserResolver(function ($guard = null) use ($app , $request , $token) {
-                    if ($request->bearerToken()) {
-                        return $token->tokenable ?? null;
-                    }
-                    return null;
+        
+        if (request()->bearerToken() != null) {
+            
+            $token = Token::where('api_token', request()->bearerToken())->first();
+            
+            if ($token) {
+                $this->app->rebinding('request', function ($app, $request) use ($token) {
+                    $request->setUserResolver(function ($guard = null) use ($app , $request , $token) {
+                        if ($request->bearerToken()) {
+                            return $token->tokenable ?? null;
+                        }
+                        return null;
+                    });
+                    
+                    Auth::viaRequest('custom-token', function ($request) use($token){
+                        return $token->tokenable ??  null;
+                    });
                 });
-    
-                Auth::viaRequest('custom-token', function ($request) use($token){
-                    return $token->tokenable ??  null;
-                });
-    
-            });
+            }
         }
-
-
     }
 }

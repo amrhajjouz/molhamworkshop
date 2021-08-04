@@ -32,13 +32,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'mohamd@admin.com',
             'password' => Hash::make('123123'),
         ]);
-
-
         
-        DB::table('notification_preferences')->insert(['name' => 'newsletter']);
-        DB::table('notification_preferences')->insert(['name' => 'subsciptions_2_days_reminder']);
-        DB::table('notification_preferences')->insert(['name' => 'subscriptions_1_week_reminder']);
-        DB::table('notification_preferences')->insert(['name' => 'purposes_updates']);
-        DB::table('notification_preferences')->insert(['name' => 'shared_links']);
+        $this->call([
+            UserSeeder::class,
+            NotificationPrefernceSeeder::class,
+        ]);
+        
     }
 }

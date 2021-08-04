@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class DonorNotificationPrefrences extends Migration
+class CreateTokensTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class DonorNotificationPrefrences extends Migration
      */
     public function up()
     {
-        Schema::create('donor_notification_preferences', function (Blueprint $table) {
+        //
+        Schema::create('tokens', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger("donor_id")->index();
-            $table->bigInteger("preference_id")->index();
+            $table->string("tokenable_type",30)->index();
+            $table->bigInteger("tokenable_id")->index();
+            $table->string("api_token" , 60)->index();
+            $table->timestamps();
         });
     }
 
@@ -28,7 +31,7 @@ class DonorNotificationPrefrences extends Migration
     public function down()
     {
         //
-        Schema::dropIfExists('donor_notification_preferences');
+        Schema::dropIfExists('tokens');
 
     }
 }
