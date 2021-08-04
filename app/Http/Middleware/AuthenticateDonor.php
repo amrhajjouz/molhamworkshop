@@ -17,19 +17,18 @@ class AuthenticateDonor
      */
     public function handle(Request $request, Closure $next)
     {
-        $token= Token::where('api_token' , $request->bearerToken())->first();
+        $token = Token::where('access_token', $request->bearerToken())->first();
         if (!$token || !$request->user()) return $this->unauthenticated($request);
 
-        // if($request->user()){
-            app()->setlocale($request->user()->locale);
-        // }
+        app()->setlocale($request->user()->locale);
         return $next($request);
     }
 
 
-    private function unauthenticated(){
+    private function unauthenticated()
+    {
         return response()->json([
             'status' => 'Unauthorized'
-        ],401);
+        ], 401);
     }
 }

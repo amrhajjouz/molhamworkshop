@@ -3,14 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Donor;
-use Illuminate\Http\Request;
 use App\Http\Requests\Api\Donor\{CreateDonorRequest, AuthenticateDonorRequest};
 use Illuminate\Support\Facades\Hash;
 use Exception;
 
 class DonorController extends Controller
 {
-
     public function create(CreateDonorRequest $request)
     {
         try {
@@ -18,18 +16,17 @@ class DonorController extends Controller
             $data["password"] = Hash::make($request->password);
             $donor = Donor::create($data);
             $token = $donor->tokens()->create([]);
-            
             return response()->json([
                 'id' => $donor->id,
                 'name' => $donor->name,
                 'email' => $donor->email,
-                'api_token' => $token->api_token
+                'access_token' => $token->access_token
             ]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
         }
     }
-    
+
     public function authenticate(AuthenticateDonorRequest $request)
     {
         try {
@@ -44,7 +41,7 @@ class DonorController extends Controller
                 'id' => $donor->id,
                 'name' => $donor->name,
                 'email' => $donor->email,
-                'api_token' => $token->api_token
+                'access_token' => $token->access_token
             ]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()]);

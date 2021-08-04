@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Requests\Donor;
+namespace App\Http\Requests\Api\Donor;
+
 
 use Illuminate\Foundation\Http\FormRequest;
 

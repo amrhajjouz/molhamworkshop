@@ -18,7 +18,7 @@ class CreateTokensTable extends Migration
             $table->id();
             $table->string("tokenable_type",30)->index();
             $table->bigInteger("tokenable_id")->index();
-            $table->string("api_token" , 60)->index();
+            $table->string("access_token" , 60)->index();
             $table->timestamps();
         });
     }

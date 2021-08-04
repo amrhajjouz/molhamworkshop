@@ -19,20 +19,20 @@ use App\Http\Controllers\Api\{DonorController , AuthDonorController};
 
 
 Route::group(['middleware' => 'guest'],function () {
-    Route::post('/donors/authenticate' , [DonorController::class, 'authenticate'])->name('authenticate_donor');
-    Route::post('/donors' , [DonorController::class, 'create'])->name('create_donor');
+    Route::post('/donors/authenticate' , [DonorController::class, 'authenticate'])->name('api.donors.authenticate');
+    Route::post('/donors' , [DonorController::class, 'create'])->name('api.donors.create');
 });
 
 
 Route::group(['middleware' => 'auth_donor'],function () {
-    Route::post('/donors/auth' , [AuthDonorController::class, 'update'])->name('update_auth_donor'); 
-    Route::post('/donors/auth/delete' , [AuthDonorController::class, 'delete'])->name('delete_auth_donor'); 
-    Route::get('/donors/auth' , [AuthDonorController::class, 'retrieve'])->name('retrieve_auth_donor'); 
-    Route::post('/donors/auth/email' , [AuthDonorController::class, 'changeEmail'])->name('change_auth_donor_email'); 
-    Route::post('/donors/auth/password' , [AuthDonorController::class, 'changePassword'])->name('change_auth_donor_password'); 
-    Route::put('/donors/auth/preferences' , [AuthDonorController::class, 'updatePreferences'])->name('update_auth_donor_prefrences'); 
-    Route::post('/donors/logout' , [AuthDonorController::class, 'logout'])->name('logout_donor'); 
-    Route::get('/donors/auth/notification_preferences' , [AuthDonorController::class, 'listNotificationPreferences'])->name('list_auth_donor_notification_preferences'); 
-    Route::put('/donors/auth/notification_preferences' , [AuthDonorController::class, 'updateNotificationPreferences'])->name('update_auth_donor_notification_preferences'); 
+    Route::get('/donors/auth' , [AuthDonorController::class, 'retrieve'])->name('api.donors.auth.retrieve'); 
+    Route::post('/donors/logout' , [AuthDonorController::class, 'logout'])->name('api.donors.auth.logout'); 
+    Route::post('/donors/auth' , [AuthDonorController::class, 'update'])->name('api.donors.auth.update'); 
+    Route::post('/donors/auth/delete' , [AuthDonorController::class, 'delete'])->name('api.donors.auth.delete'); 
+    Route::post('/donors/auth/email' , [AuthDonorController::class, 'changeEmail'])->name('api.donors.auth.email.change'); 
+    Route::post('/donors/auth/password' , [AuthDonorController::class, 'changePassword'])->name('api.donors.auth.password.change'); 
+    Route::put('/donors/auth/preferences' , [AuthDonorController::class, 'updatePreferences'])->name('api.donors.auth.preferences.update'); 
+    Route::get('/donors/auth/notification_preferences' , [AuthDonorController::class, 'listNotificationPreferences'])->name('api.donors.auth.notification_preferences.list'); 
+    Route::put('/donors/auth/notification_preferences' , [AuthDonorController::class, 'updateNotificationPreferences'])->name('api.donors.auth.notification_preferences.update'); 
 
 });

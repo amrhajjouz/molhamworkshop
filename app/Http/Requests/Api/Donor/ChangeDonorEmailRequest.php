@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Donor;
+namespace App\Http\Requests\Api\Donor;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,7 +24,7 @@ class ChangeDonorEmailRequest extends FormRequest
     public function rules()
     {
         return [
-            'new_email' => "required|unique:donors,email,".$this->user()->id
+            'new_email' => "required|unique:donors,email," . $this->user()->id
         ];
     }
 }

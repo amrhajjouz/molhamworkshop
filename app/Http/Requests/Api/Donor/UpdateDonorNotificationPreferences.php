@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Donor;
+namespace App\Http\Requests\Api\Donor;
 
 use App\Models\NotificationPreference;
 use Illuminate\Foundation\Http\FormRequest;
@@ -25,10 +25,9 @@ class UpdateDonorNotificationPreferences extends FormRequest
      */
     public function rules()
     {
-        // dd();
         return [
-            "preferences" => ['required' , 'array'],
-            "preferences.*" => [Rule::in(['newsletter' , 'subsciptions_2_days_reminder' , "subscriptions_1_week_reminder" , 'purposes_updates' , 'shared_links'])]
+            "preferences" => ['required', 'array'],
+            "preferences.*" => [Rule::in(['newsletter', 'subsciptions_2_days_reminder', "subscriptions_1_week_reminder", 'purposes_updates', 'shared_links'])]
         ];
     }
 }

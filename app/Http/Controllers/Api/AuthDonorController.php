@@ -3,18 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\Donor\{UpdateDonorRequest, ChangeDonorEmailRequest , ChangeDonorPasswordRequest , UpdateDonorPrefrencesRequest , UpdateDonorNotificationPreferences};
-use App\Models\NotificationPreference;
-use App\Models\Donor;
-use App\Models\Token;
+use App\Http\Requests\Api\Donor\{UpdateDonorRequest, ChangeDonorEmailRequest, ChangeDonorPasswordRequest, UpdateDonorPrefrencesRequest, UpdateDonorNotificationPreferences};
+use App\Models\{Token, NotificationPreference};
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Exception;
 
 class AuthDonorController extends Controller
 {
-
-    public function update (UpdateDonorRequest $request)
+    public function update(UpdateDonorRequest $request)
     {
         try {
             $donor = $request->user();
@@ -40,15 +35,15 @@ class AuthDonorController extends Controller
         try {
             $donor = $request->user();
             return response()->json([
-                'id' => $donor->id ,
-                'name' => $donor->name ,
-                'email' => $donor->email ,
-                'phone' => $donor->phone ,
-                'country_code' => $donor->country_code ,
-                'currency' => $donor->currency ,
-                'locale' => $donor->locale ,
-                'theme_mode' => $donor->theme_mode ,
-                'theme_color' => $donor->theme_color ,
+                'id' => $donor->id,
+                'name' => $donor->name,
+                'email' => $donor->email,
+                'phone' => $donor->phone,
+                'country_code' => $donor->country_code,
+                'currency' => $donor->currency,
+                'locale' => $donor->locale,
+                'theme_mode' => $donor->theme_mode,
+                'theme_color' => $donor->theme_color,
             ]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
@@ -67,7 +62,7 @@ class AuthDonorController extends Controller
             return response()->json(['error' => $e->getMessage()]);
         }
     }
-  
+
     public function changeEmail(ChangeDonorEmailRequest $request)
     {
         try {
@@ -96,10 +91,10 @@ class AuthDonorController extends Controller
     public function logout(Request $request)
     {
         try {
-            Token::where('api_token' , $request->bearerToken())->delete();
+            Token::where('access_token', $request->bearerToken())->delete();
             return response()->json(null);
-        } catch(\Exception $e) {
-         return response()->json(['error' => $e->getMessage()]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 
@@ -108,20 +103,18 @@ class AuthDonorController extends Controller
         try {
             return response()->json($request->user()->notification_preferences()->pluck('name'));
         } catch (\Exception $e) {
-         return response()->json(['error' => $e->getMessage()]);
-        }
-    }
-   
-    public function updateNotificationPreferences(UpdateNotificationPreferences $request)
-    {
-        try {
-            $donor = $request->user();
-            $notificationPreferencesIds = NotificationPreferences::whereIn(['name', $request->validated()['preferences']]->get()->pluck('id'));
-            $request->user()->notification_preferences()->sync($notificationPreferencesIds);
-            return response()->json(null);
-        } catch(\Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
         }
     }
-   
+
+    public function updateNotificationPreferences(UpdateDonorNotificationPreferences $request)
+    {
+        try {
+            $notificationPreferencesIds = NotificationPreference::whereIn('name', $request->validated()['preferences'])->get()->pluck('id');
+            $request->user()->notification_preferences()->sync($notificationPreferencesIds);
+            return response()->json(null);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
 }

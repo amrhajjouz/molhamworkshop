@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class NotificationPreferenceSeeder extends Seeder
+class NotificationPrefernceSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -20,8 +20,8 @@ class Token extends Model
         
         if (!$this->exists) {
             do {
-                $this->api_token = Str::random(30);
-            } while (self::where('api_token' , $this->token)->exists());
+                $this->access_token = Str::random(30);
+            } while (self::where('access_token' , $this->token)->exists());
         }
         parent::save();
     }

@@ -20,23 +20,18 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => Hash::make('12345678'),
         ]);
-       
+
         DB::table('users')->insert([
             'name' => 'Mohammed Ghannoum',
             'email' => 'mohamd@admin.com',
             'password' => Hash::make('123123'),
         ]);
-        
-        DB::table('donors')->insert([
-            'name' => 'Mohammed Ghannoum',
-            'email' => 'mohamd@admin.com',
-            'password' => Hash::make('123123'),
-        ]);
-        
+
+
         $this->call([
             UserSeeder::class,
             NotificationPrefernceSeeder::class,
+            DonorSeeder::class,
         ]);
-        
     }
 }
