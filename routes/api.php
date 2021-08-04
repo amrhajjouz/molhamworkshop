@@ -20,7 +20,7 @@ use App\Http\Controllers\Api\{DonorController , AuthDonorController};
 
 Route::group(['middleware' => 'guest'],function () {
     Route::get('/test', function () {
-        return 'test';
+        return 'test2021';
     });
     Route::post('/donors/authenticate' , [DonorController::class, 'authenticate'])->name('api.donors.authenticate');
     Route::post('/donors' , [DonorController::class, 'create'])->name('api.donors.create');
@@ -37,5 +37,4 @@ Route::group(['middleware' => 'auth_donor'],function () {
     Route::put('/donors/auth/preferences' , [AuthDonorController::class, 'updatePreferences'])->name('api.donors.auth.preferences.update'); 
     Route::get('/donors/auth/notification_preferences' , [AuthDonorController::class, 'listNotificationPreferences'])->name('api.donors.auth.notification_preferences.list'); 
     Route::put('/donors/auth/notification_preferences' , [AuthDonorController::class, 'updateNotificationPreferences'])->name('api.donors.auth.notification_preferences.update'); 
-
 });
