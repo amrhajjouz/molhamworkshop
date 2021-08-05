@@ -66,38 +66,40 @@ class Notification extends DatabaseNotification
     public function save($options = [])
     {
         $template = NotificationTemplate::where('name', $this->name)->firstOrFail();
+
         unset($this->name);
+
         $this->template_id = $template->id;
 
         $allVariables = $replacements = $patterns = [];
         $matches = $this->extractString($template->path);
-        if ($matches[1]) $allVariables = $matches[1];
+        
+        if ($matches) $allVariables = $matches;
 
         foreach ($template->body as $str) {
             $matches = $this->extractString($str);
-            if ($matches[1]) foreach ($matches[1] as $m) $allVariables[] = $m;
+            if ($matches) foreach ($matches as $m) $allVariables[] = $m;
         }
-        
+
         $reps = (array)$this->data;
+
         foreach ($allVariables as $v) {
-            if (!array_key_exists($v, $reps)){
+            if (!array_key_exists($v, $reps)) {
                 throw new \Exception('missed data');
-            } 
-            else{
+            } else {
                 $replacements[$v] = $reps[$v];
                 $patterns[]     = '/\{' . $v . '\}/';
             }
         }
 
-        $this->body = ['en' => preg_replace($patterns, $replacements, $template->body['en']),'ar' => preg_replace($patterns, $replacements, $template->body['ar'])];
+        $this->body = ['en' => preg_replace($patterns, $replacements, $template->body['en']), 'ar' => preg_replace($patterns, $replacements, $template->body['ar'])];
         $this->path = preg_replace($patterns, $replacements, $template->path);
-        // dd($this->data , $replacements , array_diff_key( $replacements , $this->data));
         return parent::save($options);
     }
 
     protected function extractString($str)
     {
         preg_match_all("/\\{(.*?)\\}/", $str, $matches);
-        return $matches ?? null;
+        return $matches[1] ?? null;
     }
 }
