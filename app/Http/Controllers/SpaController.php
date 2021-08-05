@@ -29,7 +29,7 @@ class SpaController extends Controller
             
             $app_url =  url('');
             $routes = [];
-            foreach(include(base_path('routes/ng.php')) as $route_name => $r) {
+            foreach(include(base_path('routes/dashboard/ng.php')) as $route_name => $r) {
                 $route_url = ($r[0][0] == '/') ? $r[0] : '/' . $r[0];
                 $controller_path = $r[1] . '.js';
                 $controller_exploded_by_slash = explode('/', $r[1]);
