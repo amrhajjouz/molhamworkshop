@@ -29,7 +29,7 @@ Route::group(['middleware' => 'guest'],function () {
 
 Route::group(['middleware' => 'auth_donor'],function () {
     Route::get('/donors/auth' , [AuthDonorController::class, 'retrieve'])->name('api.donors.auth.retrieve'); 
-    Route::post('/donors/logout' , [AuthDonorController::class, 'logout'])->name('api.donors.auth.logout'); 
+    Route::post('/donors/auth/logout' , [AuthDonorController::class, 'logout'])->name('api.donors.auth.logout'); 
     Route::post('/donors/auth' , [AuthDonorController::class, 'update'])->name('api.donors.auth.update'); 
     Route::post('/donors/auth/delete' , [AuthDonorController::class, 'delete'])->name('api.donors.auth.delete'); 
     Route::post('/donors/auth/email' , [AuthDonorController::class, 'changeEmail'])->name('api.donors.auth.email.change'); 
