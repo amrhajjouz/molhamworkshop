@@ -20,7 +20,7 @@ class Token extends Model
         
         if (!$this->exists) {
             do {
-                $this->access_token = Str::random(30);
+                $this->access_token = Str::random(40);
             } while (self::where('access_token' , $this->token)->exists());
         }
         parent::save();
