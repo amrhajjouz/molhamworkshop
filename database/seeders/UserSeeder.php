@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('123123'),
         ]);
 
-        for ($i=1; $i<=500; $i++) {
+        for ($i=1; $i<=10; $i++) {
             DB::table('users')->insert([
                 'name' => 'Test User ' . $i,
                 'email' => 'test' . $i . '@test.com',

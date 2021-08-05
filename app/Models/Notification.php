@@ -80,7 +80,9 @@ class Notification extends DatabaseNotification
         
         $reps = (array)$this->data;
         foreach ($allVariables as $v) {
-            if (!array_key_exists($v, $reps))$replacements[$v]= ""; 
+            if (!array_key_exists($v, $reps)){
+                throw new \Exception('missed data');
+            } 
             else{
                 $replacements[$v] = $reps[$v];
                 $patterns[]     = '/\{' . $v . '\}/';
@@ -89,6 +91,7 @@ class Notification extends DatabaseNotification
 
         $this->body = ['en' => preg_replace($patterns, $replacements, $template->body['en']),'ar' => preg_replace($patterns, $replacements, $template->body['ar'])];
         $this->path = preg_replace($patterns, $replacements, $template->path);
+        // dd($this->data , $replacements , array_diff_key( $replacements , $this->data));
         return parent::save($options);
     }
 
