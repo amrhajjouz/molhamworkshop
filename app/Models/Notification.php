@@ -72,12 +72,12 @@ class Notification extends DatabaseNotification
         $this->template_id = $template->id;
 
         $allVariables = $replacements = $patterns = [];
-        $matches = $this->extractString($template->path);
+        $matches = $this->extractVariables($template->path);
         
         if ($matches) $allVariables = $matches;
 
         foreach ($template->body as $str) {
-            $matches = $this->extractString($str);
+            $matches = $this->extractVariables($str);
             if ($matches) foreach ($matches as $m) $allVariables[] = $m;
         }
 
@@ -92,14 +92,14 @@ class Notification extends DatabaseNotification
             }
         }
 
+        $notificationBody = [];
+        
+        //foreach ($template->body as $key => $value) {
+        //    $notificationBody[$key] = fillVariables($template->body[$key], $data);
+        //} 
+        
         $this->body = ['en' => preg_replace($patterns, $replacements, $template->body['en']), 'ar' => preg_replace($patterns, $replacements, $template->body['ar'])];
         $this->path = preg_replace($patterns, $replacements, $template->path);
         return parent::save($options);
-    }
-
-    protected function extractString($str)
-    {
-        preg_match_all("/\\{(.*?)\\}/", $str, $matches);
-        return $matches[1] ?? null;
     }
 }

@@ -11,3 +11,18 @@ function getLocaleName ($locale) {
         default: return ; break;
     }
 }
+
+function extractVariables($string)
+{
+    preg_match_all("/\\{(.*?)\\}/", $string, $matches);
+    return $matches[1] ?? null;
+}
+
+function fillVariables($string, $data)
+{
+    $patterns = [];
+    foreach ($data as $key => $value) {
+        $patterns[]     = '/\{' . $value . '\}/'; 
+    }
+    return preg_replace ($patterns, $data, $string);
+}

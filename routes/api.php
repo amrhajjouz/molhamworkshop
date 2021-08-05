@@ -17,6 +17,10 @@ use App\Http\Controllers\DonorController;
 |
 */
 
+Route::get('/test', function (Request $request) {
+    return fillVariables('My name is {name}, age is {age}', ['name' => 'Mohamd', 'age' => 27]);
+});
+
 Route::middleware('auth')->group(function ()  {
 
     Route::get('/auth', function (Request $request) {
