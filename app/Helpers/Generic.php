@@ -21,8 +21,6 @@ function extractVariables($string)
 function fillVariables($string, $data)
 {
     $patterns = [];
-    foreach ($data as $key => $value) {
-        $patterns[]     = '/\{' . $value . '\}/'; 
-    }
+    foreach ($data as $key => $value) { $patterns[]     = '/\{' . $key . '\}/'; }
     return preg_replace ($patterns, $data, $string);
 }

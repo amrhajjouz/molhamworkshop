@@ -50,16 +50,12 @@ class UserController extends Controller
 
             // $user->notifications()->create(
             //     [
-            //     "name" => "update_user",
+            //     "name" => "retrieve_user",
             //     'data' => [
-            //         // 'id' =>"$user->id", 
-            //         'id' =>"2", 
+            //         'viewer_name' => auth()->user()->name, 
+            //         'user_name' => auth()->user()->name, 
+            //         'time' =>time() ,
             //         'user_id' => "$user->id", 
-            //         // 'viewer_name' => $user->name, 
-            //         'creator_name' => auth()->user()->name, 
-            //         'name' => "naaaaame", 
-            //         // 'date' => date('Y-dd-mm H:i:s' , time() ), 
-            //         'user_lang' => $user->lang ?? "ar", 
             //     ]
             // ]);
             // Fetch User and Return
@@ -88,7 +84,8 @@ class UserController extends Controller
             $notifications = $user->notifications()
                 ->where(function ($q) use ($request) {
                     if ($request->has('q')) {
-                        $q->where('type', 'like', '%' . $request->q . '%');
+                        $q->where('body->ar', 'like', '%' . $request->q . '%');
+                        $q->orWhere('body->en', 'like', '%' . $request->q . '%');
                     }
                 })->paginate(5)->withQueryString();
             return response()->json($notifications);

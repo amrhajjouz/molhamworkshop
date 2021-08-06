@@ -14,8 +14,6 @@ class CreateNotificationTemplateRequest extends FormRequest
     public function authorize()
     {
         return true;
-        // return auth()->user()->can('events.create');;
-
     }
 
     /**
@@ -26,11 +24,11 @@ class CreateNotificationTemplateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required' ,'string', 'between:3,50' , 'unique:notifications_templates'],
-            'body' => [ 'required' , 'array'],
-            'body.en' => [ 'required' , 'string'],
-            'body.ar' => [ 'required' , 'string'],
-            'path' => [ 'nullable' , 'string'],
+            'name' => ['required', 'string', 'between:3,50', 'unique:notifications_templates'],
+            'body' => ['required', 'array'],
+            'body.en' => ['required', 'string'],
+            'body.ar' => ['required', 'string'],
+            'path' => ['nullable', 'string'],
         ];
     }
 }
