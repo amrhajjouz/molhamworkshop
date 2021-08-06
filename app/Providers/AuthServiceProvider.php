@@ -30,7 +30,6 @@ class AuthServiceProvider extends ServiceProvider
         if (request()->bearerToken() != null) {
             
             $token = Token::where('access_token', request()->bearerToken())->first();
-            
             if ($token) {
                 $this->app->rebinding('request', function ($app, $request) use ($token) {
                     $request->setUserResolver(function ($guard = null) use ($app , $request , $token) {

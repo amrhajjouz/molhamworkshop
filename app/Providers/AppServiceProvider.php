@@ -18,6 +18,10 @@ class AppServiceProvider extends ServiceProvider
         Relation::morphMap([
             'user' => 'App\Models\User',
             'donor' => 'App\Models\Donor',
+            // 'stripe_card' => 'App\Models\StripeCard',
+            // 'swish_account' => 'App\Models\SwishAccount',
+            // 'stripe_ideal_account' => 'App\Models\StripeIdealAccount',
+            // 'stripe_sofort_account' => 'App\Models\StripeSofortAccount',
         ]);
     }
 

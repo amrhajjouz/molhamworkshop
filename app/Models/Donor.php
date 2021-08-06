@@ -31,4 +31,8 @@ class Donor extends Model
         $this->deleteAllTokens();
         return parent::delete();
     }
+    
+    public function payment_methods(){
+        return $this->hasMany(PaymentMethod::class);
+    }
 }

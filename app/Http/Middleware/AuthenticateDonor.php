@@ -19,7 +19,6 @@ class AuthenticateDonor
     {
         $token = Token::where('access_token', $request->bearerToken())->first();
         if (!$token || !$request->user()) return $this->unauthenticated($request);
-
         app()->setlocale($request->user()->locale);
         return $next($request);
     }
@@ -27,8 +26,6 @@ class AuthenticateDonor
 
     private function unauthenticated()
     {
-        return response()->json([
-            'status' => 'Unauthorized'
-        ], 401);
+        return response()->json(['status' => 'Unauthorized'], 401);
     }
 }

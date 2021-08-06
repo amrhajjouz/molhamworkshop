@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\Api\Donor\{UpdateDonorRequest, ChangeDonorEmailRequest, ChangeDonorPasswordRequest, UpdateDonorPrefrencesRequest, UpdateDonorNotificationPreferences};
-use App\Models\{Token, NotificationPreference};
+use App\Models\{Token, NotificationPreference, PaymentMethod};
 use Illuminate\Support\Facades\Hash;
 
 class AuthDonorController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth_donor');
+    }
     public function update(UpdateDonorRequest $request)
     {
         try {
@@ -106,6 +109,7 @@ class AuthDonorController extends Controller
             return response()->json(['error' => $e->getMessage()]);
         }
     }
+   
 
     public function updateNotificationPreferences(UpdateDonorNotificationPreferences $request)
     {
@@ -113,6 +117,15 @@ class AuthDonorController extends Controller
             $notificationPreferencesIds = NotificationPreference::whereIn('name', $request->validated()['preferences'])->get()->pluck('id');
             $request->user()->notification_preferences()->sync($notificationPreferencesIds);
             return response()->json(null);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function listPaymentMethods(Request $request)
+    {
+        try {
+            return response()->json( $request->user()->payment_methods()->paginate(10)->withQueryString()->through(function($p){return $p->transform();}));
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
         }

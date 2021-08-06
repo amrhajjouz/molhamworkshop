@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\{DonorController , AuthDonorController};
+use App\Http\Controllers\Api\{DonorController , AuthDonorController , PaymentMethodController};
 
 /*
 |--------------------------------------------------------------------------
@@ -18,10 +18,7 @@ use App\Http\Controllers\Api\{DonorController , AuthDonorController};
 */
 
 
-Route::group(['middleware' => 'guest'],function () {
-    Route::get('/test', function () {
-        return 'test 2021';
-    });
+Route::group([],function () {
     Route::post('/donors/authenticate' , [DonorController::class, 'authenticate'])->name('api.donors.authenticate');
     Route::post('/donors' , [DonorController::class, 'create'])->name('api.donors.create');
 });
@@ -37,4 +34,8 @@ Route::group(['middleware' => 'auth_donor'],function () {
     Route::put('/donors/auth/preferences' , [AuthDonorController::class, 'updatePreferences'])->name('api.donors.auth.preferences.update'); 
     Route::get('/donors/auth/notification_preferences' , [AuthDonorController::class, 'listNotificationPreferences'])->name('api.donors.auth.notification_preferences.list'); 
     Route::put('/donors/auth/notification_preferences' , [AuthDonorController::class, 'updateNotificationPreferences'])->name('api.donors.auth.notification_preferences.update'); 
+    Route::get('/donors/auth/payment_methods' , [AuthDonorController::class, 'listPaymentMethods'])->name('api.donors.auth.payment_methods.list'); 
+    ///////////////////// PaymentMethod /////////////////////
+    Route::post('/payment_methods' , [PaymentMethodController::class, 'create'])->name('api.payment_methods.create'); 
+    Route::get('/payment_methods/{payment_method_id}' , [PaymentMethodController::class, 'retrieve'])->name('api.donors.payment_methods.retrieve'); 
 });
