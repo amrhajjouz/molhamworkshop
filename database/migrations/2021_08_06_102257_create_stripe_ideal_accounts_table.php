@@ -18,7 +18,6 @@ class CreateStripeIdealAccountsTable extends Migration
             $table->string('stripe_payment_method_id' , 50)->index();
             $table->string('owner_name' , 20)->index();
             $table->string('bank_name' , 50)->index();
-            $table->timestamps();
         });
     }
 

@@ -9,14 +9,15 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthDonorController extends Controller
 {
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('auth_donor');
     }
+
     public function update(UpdateDonorRequest $request)
     {
         try {
-            $donor = $request->user();
-            $donor->update($request->validated());
+            $request->user()->update($request->validated());
             return response()->json(null);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -90,7 +91,6 @@ class AuthDonorController extends Controller
         }
     }
 
-
     public function logout(Request $request)
     {
         try {
@@ -109,7 +109,6 @@ class AuthDonorController extends Controller
             return response()->json(['error' => $e->getMessage()]);
         }
     }
-   
 
     public function updateNotificationPreferences(UpdateDonorNotificationPreferences $request)
     {
@@ -125,7 +124,9 @@ class AuthDonorController extends Controller
     public function listPaymentMethods(Request $request)
     {
         try {
-            return response()->json( $request->user()->payment_methods()->paginate(10)->withQueryString()->through(function($p){return $p->transform();}));
+            return response()->json($request->user()->payment_methods->transform(function ($obj) {
+                return $obj->apiTransform();
+            }));
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
         }

@@ -18,7 +18,6 @@ class CreateStripeSofortAccountsTable extends Migration
             $table->string('stripe_payment_method_id' , 50)->index();
             $table->string('owner_name' , 20)->index();
             $table->string('country_code' , 2)->index();
-            $table->timestamps();
         });
     }
 

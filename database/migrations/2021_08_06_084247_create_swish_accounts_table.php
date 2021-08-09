@@ -16,7 +16,6 @@ class CreateSwishAccountsTable extends Migration
         Schema::create('swish_accounts', function (Blueprint $table) {
             $table->id();
             $table->integer('number')->index();
-            $table->timestamps();
         });
     }
 

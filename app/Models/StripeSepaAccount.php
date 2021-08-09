@@ -6,19 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class StripeSepaAccount extends Model
 {
-
-    protected $guardes = [];
+    protected $guarded = [];
     protected $table = "stripe_sepa_accounts";
-    protected $casts = ['created_at' => 'datetime:Y-m-d H:i:s', 'updated_at' => 'datetime:Y-m-d H:i:s' ];
+    public $timestamps = false;
 
     public function payment_methods()
     {
         return $this->morphMany('App\Models\PaymentMethod', 'methodable');
     }
 
-    
-    public function transform(){
-    //TODO
+    public function apiTransform()
+    {
+        $obj = $this->toArray();
+        return [
+            'id' => $obj['id'],
+            'stripe_payment_method_id' => $obj['stripe_payment_method_id'],
+            'iban' => $obj['iban'],
+        ];
     }
-
 }

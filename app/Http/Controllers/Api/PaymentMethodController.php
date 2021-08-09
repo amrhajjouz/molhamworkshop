@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\Api\PaymentMethod\{CreatePaymentMethodRequest};
+use App\Http\Requests\Api\PaymentMethod\{CreatePaymentMethodRequest, DeletePaymentMethodRequest};
 use App\Models\{PaymentMethod};
 use Illuminate\Support\Str;
 
 class PaymentMethodController extends Controller
 {
-
     public function create(CreatePaymentMethodRequest $request)
     {
         try {
@@ -26,28 +25,38 @@ class PaymentMethodController extends Controller
             ];
             $paymentMethod = new PaymentMethod();
             $paymentMethod->save($data);
-            return response()->json($paymentMethod->transform());
+            return response()->json($paymentMethod->apiTransform());
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
+
+    public function delete(DeletePaymentMethodRequest $request, $payment_method_id)
+    {
+        try {
+            PaymentMethod::findOrFail($payment_method_id)->delete();
+            return response(null);
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+    public function retrieve(Request $request, $payment_method_id)
+    {
+        try {
+            $paymentMethod = PaymentMethod::findOrFail($payment_method_id);
+            return response()->json($paymentMethod->apiTransform());
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
+
     public function update(Request $request)
     {
         try {
             //   TODO
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
-        }
-    }
-
-
-    public function retrieve(Request $request, $payment_method_id)
-    {
-        try {
-            $paymentMethod = PaymentMethod::findOrFail($payment_method_id);
-            return response()->json($paymentMethod->transform());
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
         }
     }
 }

@@ -6,19 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class SwishAccount extends Model
 {
-
-    protected $guardes = [];
+    protected $guarded = [];
     protected $table = "swish_accounts";
-    protected $casts = ['created_at' => 'datetime:Y-m-d H:i:s', 'updated_at' => 'datetime:Y-m-d H:i:s' ];
+    public $timestamps = false;
 
     public function payment_methods()
     {
         return $this->morphMany('App\Models\PaymentMethod', 'methodable');
     }
 
-    
-    public function transform(){
-    //TODO
+    public function apiTransform()
+    {
+        $obj = $this->toArray();
+        return [
+            'id' => $obj['id'],
+            'number' => $obj['number'],
+        ];
     }
-
 }

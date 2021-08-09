@@ -23,6 +23,6 @@ class Token extends Model
                 $this->access_token = Str::random(40);
             } while (self::where('access_token' , $this->token)->exists());
         }
-        parent::save();
+        return parent::save();
     }
 }

@@ -9,9 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class PaymentMethod extends Model
 {
     use SoftDeletes;
-
     protected $table = 'payment_methods';
-    protected $casts = ['deleted_at' => 'datetime:Y-m-d H:i:s', 'created_at' => 'datetime:Y-m-d H:i:s', 'updated_at' => 'datetime:Y-m-d H:i:s', 'visible' => "boolean"];
+    protected $casts = ['deleted_at' => 'datetime:Y-m-d H:i:s', 'created_at' => 'datetime:Y-m-d H:i:s', 'updated_at' => 'datetime:Y-m-d H:i:s', 'future_usage' => "boolean"];
 
     public function methodable()
     {
@@ -20,16 +19,12 @@ class PaymentMethod extends Model
 
     public function save(array $options = [])
     {
-
         $isNew = !$this->exists;
-
         if ($isNew) {
-
             $class = null;
             $this->future_usage = true;
             $this->type = $options['type'];
             $this->donor_id = auth('donor')->user()->id;
-
             switch ($options['type']) {
                 case 'cards': $class = StripeCard::class; break;
                 case 'swish_account':$class = SwishAccount::class;break;
@@ -38,28 +33,23 @@ class PaymentMethod extends Model
                 case 'sepa_account':$class = StripeSepaAccount::class;break;
                 default:throw new Exception('unrecognized type');break;
             }
-
-            $methodable = $this->saveMethodable($options,  $class);
+            // type is not passed into methodable
+            unset($options['type']);
+            $methodable =  $class::create($options);
             $this->methodable_type = $class;
             $this->methodable_id = $methodable->id;
         } else {
             dd('TODO');
         }
-
         return parent::save();
     }
 
-    public function saveMethodable($options, $model)
-    {
-        unset($options['type']);
-        return $model::create($options);
-    }
-
-    public function transform()
+    public function apiTransform()
     {
         return [
             'id' => $this->id,
-            $this->type => $this->methodable->transform()
+            'type' => $this->type ,
+            $this->type => $this->methodable->apiTransform()
         ];
     }
 }

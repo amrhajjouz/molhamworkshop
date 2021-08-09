@@ -17,7 +17,6 @@ class CreateStripeSepaAccountsTable extends Migration
             $table->id();
             $table->string('stripe_payment_method_id' , 50)->index();
             $table->string('iban' , 20)->index();
-            $table->timestamps();
         });
     }
 

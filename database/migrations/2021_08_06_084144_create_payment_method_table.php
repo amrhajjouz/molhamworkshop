@@ -18,7 +18,7 @@ class CreatePaymentMethodTable extends Migration
             $table->morphs('methodable');
             $table->string('type' , 20)->index();
             $table->bigInteger('donor_id')->index();
-            $table->boolean('future_usage')->default(0);
+            $table->boolean('future_usage')->default(1);
             $table->softDeletes();
             $table->timestamps();
         });

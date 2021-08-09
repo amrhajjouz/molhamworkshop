@@ -16,6 +16,8 @@ class DonorController extends Controller
             $data = $request->validated();
             $data["password"] = Hash::make($request->password);
             $donor = Donor::create($data);
+
+            //TODO add dummy data paymentmethods
             return response()->json($donor);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];

@@ -6,10 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class StripeSofortAccount extends Model
 {
-
-    protected $guardes = [];
-    protected $table = "stripe_sofort_account";
-    protected $casts = ['created_at' => 'datetime:Y-m-d H:i:s', 'updated_at' => 'datetime:Y-m-d H:i:s' ];
+    protected $guarded = [];
+    protected $table = "stripe_sofort_accounts";
+    public $timestamps = false;
 
     public function payment_methods()
     {
@@ -21,8 +20,15 @@ class StripeSofortAccount extends Model
         return $this->hasOne('App\Models\Country', 'code', 'country_code');
     }
 
-    public function transform(){
-        //TODO
-        }
-        
+    public function apiTransform()
+    {
+        $obj = $this->toArray();
+        return [
+            'id' => $obj['id'],
+            'stripe_payment_method_id' => $obj['stripe_payment_method_id'],
+            'owner_name' => $obj['owner_name'],
+            'country_code' => $obj['country_code'],
+
+        ];
+    }
 }

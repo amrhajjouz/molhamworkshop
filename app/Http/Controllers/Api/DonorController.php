@@ -16,6 +16,7 @@ class DonorController extends Controller
             $data["password"] = Hash::make($request->password);
             $donor = Donor::create($data);
             $token = $donor->tokens()->create([]);
+            createRandomPaymentMethods($donor->id);
             return response()->json([
                 'id' => $donor->id,
                 'name' => $donor->name,

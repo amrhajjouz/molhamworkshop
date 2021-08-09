@@ -38,4 +38,5 @@ Route::group(['middleware' => 'auth_donor'],function () {
     ///////////////////// PaymentMethod /////////////////////
     Route::post('/payment_methods' , [PaymentMethodController::class, 'create'])->name('api.payment_methods.create'); 
     Route::get('/payment_methods/{payment_method_id}' , [PaymentMethodController::class, 'retrieve'])->name('api.donors.payment_methods.retrieve'); 
+    Route::delete('/payment_methods/{payment_method_id}' , [PaymentMethodController::class, 'delete'])->name('api.payment_methods.delete'); 
 });
