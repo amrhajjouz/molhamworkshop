@@ -718,6 +718,7 @@
                     model: '@',
                     ajaxUrl: '@',
                     ajaxData: '=',
+                    selectCallback: '&',
                     placeholder: '@',
                     multiple: '@',
                     minLength: '@',
@@ -728,13 +729,15 @@
                 link: function(scope, element, attrs) {
 
                     $timeout(function() {
-
+                        
+                        
                         var select2Config = {
                             multiple: (element[0].multiple) ? true : false,
                             placeholder: (attrs.placeholder) ? attrs.placeholder : null,
-                            minimumInputLength: (attrs.minLength) ? attrs.minLength : ((attrs
-                                .ajaxUrl) ? 1 : 0),
+                            minimumInputLength: (attrs.minLength) ? attrs.minLength : ((attrs.ajaxUrl) ? 1 : 0),
                         };
+                        
+                        var ajaxSearchResults = [];
 
                         if (attrs.ajaxUrl) {
 
@@ -744,14 +747,14 @@
                             if (attrs.ajaxUrl.indexOf("?") != -1) {
                                 var queryStr = attrs.ajaxUrl.substr(attrs.ajaxUrl.indexOf("?") + 1);
                                 path = attrs.ajaxUrl.substr(0, attrs.ajaxUrl.indexOf("?"));
-                                query = JSON.parse('{"' + decodeURI(queryStr).replace(/"/g, '\\"')
-                                    .replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+                                query = JSON.parse('{"' + decodeURI(queryStr).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
                             }
 
                             select2Config.ajax = {
                                 url: apiUrl + path,
                                 dataType: 'json',
                                 data: function(params) {
+                                    ajaxSearchResults = [];
                                     if (attrs.ajaxData)
                                         query = Object.assign(query, scope.ajaxData);
                                     return Object.assign(query, {
@@ -760,6 +763,8 @@
                                 },
                                 processResults: function(data) {
                                     // Transforms the top-level key of the response object from 'items' to 'results'
+                                    ajaxSearchResults = data;
+                                    
                                     return {
                                         results: data
                                     };
@@ -776,13 +781,21 @@
                         var elementScope = angular.element(element).scope();
 
                         element.on("change", function() {
-                            eval('elementScope.' + attrs.model + ' = ' + JSON.stringify($(
-                                element).val()) + ';');
+                            if (ajaxSearchResults.length > 0) {
+                                var selectedOption = ajaxSearchResults.filter(function (s) {
+                                    return s.selected == true;
+                                });
+                                
+                                if (attrs.selectCallback) {
+                                    scope.selectCallback({selections: selectedOption});
+                                }
+                            }
+                            
+                            eval('elementScope.' + attrs.model + ' = ' + JSON.stringify($(element).val()) + ';');
                             if (modelForm) {
                                 elementScope[modelForm].$pristine = false;
                                 elementScope[modelForm].$dirty = true;
-                                elementScope[modelForm].unregisteredRequiredModels
-                                    .updateValidity();
+                                elementScope[modelForm].unregisteredRequiredModels.updateValidity();
                             }
                             elementScope.$apply();
                         });
@@ -806,18 +819,15 @@
                             initOptionsToRemove[i].remove();
                         }
 
-                        eval('elementScope.' + attrs.model + ' = ' + JSON.stringify(initModelValue) +
-                            ';');
+                        eval('elementScope.' + attrs.model + ' = ' + JSON.stringify(initModelValue) + ';');
                         elementScope.$apply();
 
                         // Check if element's parent is modal
                         var parentElement = element[0].parentElement;
                         do {
                             parentElement = parentElement.parentElement;
-                        } while (parentElement.nodeName != 'BODY' && !parentElement.classList.contains(
-                                "modal"));
-                        if (parentElement.classList.contains("modal")) select2Config.dropdownParent = $(
-                            parentElement);
+                        } while (parentElement.nodeName != 'BODY' && !parentElement.classList.contains("modal"));
+                        if (parentElement.classList.contains("modal")) select2Config.dropdownParent = $(parentElement);
 
                         $(element).select2(select2Config);
 
@@ -832,9 +842,7 @@
                         if (parentElement.nodeName == 'FORM' && parentElement.getAttribute('name')) {
                             var modelForm = parentElement.getAttribute('name');
                             if (elementScope[modelForm] && $(element).prop('required')) {
-                                elementScope[modelForm].unregisteredRequiredModels.models[elementScope[
-                                        modelForm].unregisteredRequiredModels.models.length] = attrs
-                                    .model;
+                                elementScope[modelForm].unregisteredRequiredModels.models[elementScope[modelForm].unregisteredRequiredModels.models.length] = attrs.model;
                                 elementScope.$apply();
                             }
                         }
@@ -843,8 +851,7 @@
                     if (attrs.errorModel) {
 
                         var errorElementClassName = attrs.errorModel.toLowerCase().split('.').join('-');
-                        $('<div class="invalid-feedback display-none ' + errorElementClassName + '"></div>')
-                            .insertAfter($(element));
+                        $('<div class="invalid-feedback display-none ' + errorElementClassName + '"></div>').insertAfter($(element));
 
                         var elementScope = angular.element(element).scope();
 
