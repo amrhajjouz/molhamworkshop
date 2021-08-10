@@ -1,0 +1,34 @@
+<page-header title="خطأ جديد" pretitle="الأخطاء"></page-header>
+<form class="row" name="myForm" request="createApiError">
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="code">رمز الخطأ</label>
+            <input type="text" class="form-control" ng-class="(createApiError.errors.code != null) ? 'is-invalid' : ''" id="code" ng-model="apiError.code" ng-change="createApiError.errors.code = null" placeholder="رمز الخطأ باللغة الإنكليزية .." required>
+            <div ng-show="createApiError.errors.code != null" class="invalid-feedback">{{ createApiError.errors.code[0] }}</div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="status">حالة الخطأ</label>
+            <input type="text" class="form-control" ng-class="(createApiError.errors.status != null) ? 'is-invalid' : ''" id="status" ng-model="apiError.status" ng-change="createApiError.errors.status = null" placeholder="حالة الخطأ .." autofocus="off" autocomplete="off" required>
+            <div ng-show="createApiError.errors.status != null" class="invalid-feedback">{{ createApiError.errors.status[0] }}</div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="ar">المحتوى العربي</label>
+            <input type="text" class="form-control" ng-class="(createApiError.errors['message.ar'] != null) ? 'is-invalid' : ''" id="ar" ng-model="apiError.message.ar" ng-change="createApiError.errors['message.ar'] = null" placeholder="المحتوى العربي الذي سيظهر .." autofocus="off" autocomplete="off" required>
+            <div ng-show="createApiError.errors['message.ar'] != null" class="invalid-feedback">{{ createApiError.errors['message.ar'][0] }}</div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="en">المحتوى الإنكليزي </label>
+            <input type="text" class="form-control" ng-class="(createApiError.errors['message.en'] != null) ? 'is-invalid' : ''" id="en" ng-model="apiError.message.en" ng-change="createApiError.errors['message.en'] = null" placeholder="المحتوى الإنكليزي الذي سيظهر .." autofocus="off" autocomplete="off" required>
+            <div ng-show="createApiError.errors['message.en'] != null" class="invalid-feedback">{{ createApiError.errors['message.en'][0] }}</div>
+        </div>
+    </div>
+    <div class="col-12">
+        <submit-button form="myForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>

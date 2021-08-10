@@ -24,5 +24,11 @@ return [
     'donors.overview' => ['donors/:id', 'donors/overviewDonorController', 'donors.single.overview'],
     'donors.edit' => ['donors/:id/edit', 'donors/editDonorController', 'donors.single.edit'],
 
+     //ApiError Routes
+     'apiErrors' => ['api_errors', 'api_errors/listApiErrorsController', 'api_errors.list'],
+     'apiErrors.add' => ['api_errors/add', 'api_errors/addApiErrorController', 'api_errors.add'],
+     'apiErrors.overview' => ['api_errors/:id', 'api_errors/overviewApiErrorController', 'api_errors.single.overview'],
+     'apiErrors.edit' => ['api_errors/:id/edit', 'api_errors/editApiErrorController', 'api_errors.single.edit'],
+
 
 ];

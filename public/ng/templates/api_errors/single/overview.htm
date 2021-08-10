@@ -1,0 +1,29 @@
+<include-header/>
+<div class="row">
+    <div class="col-12 col-lg-6">
+        <table>
+            <tr>
+                <td class="text-muted py-3">رمز الخطأ</td>
+                <td class="py-3 pr-3">{{ apiError.code }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">الخطأ باللغة العربية</td>
+                <td class="py-3 pr-3">{{ apiError.message.ar }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-12 col-lg-6">
+        <table>
+            <tr>
+                <td class="text-muted py-3">حالة الخطأ</td>
+                <td class="py-3 pr-3">{{ apiError.status }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">الخطأ باللغة الإنكليزية</td>
+                <td class="py-3 pr-3">{{ apiError.message.en }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<hr>
+

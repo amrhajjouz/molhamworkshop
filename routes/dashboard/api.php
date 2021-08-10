@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DonorController;
+use App\Http\Controllers\{DonorController , ApiErrorController};
 
 /*
 |--------------------------------------------------------------------------
@@ -35,5 +35,10 @@ Route::middleware('auth')->group(function ()  {
     Route::post('/donors', [DonorController::class, 'create']);
     Route::put('/donors', [DonorController::class, 'update']);
     Route::get('/donors/{id}', [DonorController::class, 'retrieve']);
+
+    Route::get('/api_errors', [ApiErrorController::class, 'list']);
+    Route::post('/api_errors', [ApiErrorController::class, 'create']);
+    Route::put('/api_errors', [ApiErrorController::class, 'update']);
+    Route::get('/api_errors/{id}', [ApiErrorController::class, 'retrieve']);
 
 });

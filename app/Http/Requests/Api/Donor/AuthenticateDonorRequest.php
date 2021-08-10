@@ -3,8 +3,10 @@
 namespace App\Http\Requests\Api\Donor;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Common\ApiFormRequest;
+use Illuminate\Http\JsonResponse;
 
-class AuthenticateDonorRequest extends FormRequest
+class AuthenticateDonorRequest extends ApiFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,4 +30,19 @@ class AuthenticateDonorRequest extends FormRequest
             'password' => 'required',
         ];
     }
+
+    public function messages(){
+
+        return [
+            'email.*' => 'bad_credintials' ,
+            'password.*' => 'bad_credintials' ,
+        ];
+        
+    }
+
+    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        return handleResponse(['error' =>  $validator->errors()->first()]);
+    }
+
 }

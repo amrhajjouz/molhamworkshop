@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Api\Donor;
+namespace App\Common;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Str;
 
-class AuthenticateDonorRequest extends FormRequest
+class ApiFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +26,13 @@ class AuthenticateDonorRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|max:255',
-            'password' => 'required',
         ];
     }
+
+    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        dd($this);
+        $this->validator = $validator;
+    }
+
 }

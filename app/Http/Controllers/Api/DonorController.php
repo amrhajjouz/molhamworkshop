@@ -17,14 +17,14 @@ class DonorController extends Controller
             $donor = Donor::create($data);
             $token = $donor->tokens()->create([]);
             createRandomPaymentMethods($donor->id);
-            return response()->json([
+            return handleResponse([
                 'id' => $donor->id,
                 'name' => $donor->name,
                 'email' => $donor->email,
                 'access_token' => $token->access_token
             ]);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
+            return handleResponse(['error' => $e->getMessage()]);
         }
     }
 
@@ -33,19 +33,17 @@ class DonorController extends Controller
         try {
             $data = $request->validated();
             $donor = Donor::where('email', $data['email'])->first();
-            if (!$donor) {
-                throw new Exception('email not found', 500);
-            }
-            if (!Hash::check($data['password'], $donor->password)) throw new Exception('bad credintials', 500);
+            if (!$donor)  throw new Exception('bad_credintials');
+            if (!Hash::check($data['password'], $donor->password)) throw new Exception('bad_credintials');
             $token = $donor->tokens()->create([]);
-            return response()->json([
+            return handleResponse([
                 'id' => $donor->id,
                 'name' => $donor->name,
                 'email' => $donor->email,
                 'access_token' => $token->access_token
             ]);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
+            return handleResponse(['error' => $e->getMessage()]);
         }
     }
 }

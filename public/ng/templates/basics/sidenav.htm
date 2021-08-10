@@ -44,5 +44,24 @@
             </ul>
         </div>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#errors-navs" role="button" aria-expanded="false">
+            <i class="fe fe-x"></i> الأخطاء
+        </a>
+        <div class="collapse" id="errors-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('apiErrors.add') }}" class="nav-link">
+                        خطأ جديد
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('apiErrors') }}" class="nav-link">
+                        قائمة الأخطاء
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
 
 </ul>
