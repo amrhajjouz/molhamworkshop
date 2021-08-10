@@ -625,24 +625,26 @@
         });
         
         app.directive('select2', function ($rootScope, $page, $timeout) {
-            
+
             return {
                 restrict: 'E',
                 transclude: true,
-                scope : {
-                    model : '@',
-                    ajaxUrl : '@',
-                    ajaxData : '=',
+                scope: {
+                    model: '@',
+                    ajaxUrl: '@',
+                    ajaxData: '=',
+                    selectCallback: '&',
                     placeholder: '@',
                     multiple: '@',
                     minLength: '@',
                     errorModel: '=',
                 },
-                replace : true,
+                replace: true,
                 template: '<select class="form-control" ng-transclude></select>',
-                link : function (scope, element, attrs) {
-                    
-                    $timeout(function () {
+                link: function(scope, element, attrs) {
+
+                    $timeout(function() {
+                        
                         
                         var select2Config = {
                             multiple: (element[0].multiple) ? true : false,
@@ -650,27 +652,34 @@
                             minimumInputLength: (attrs.minLength) ? attrs.minLength : ((attrs.ajaxUrl) ? 1 : 0),
                         };
                         
+                        var ajaxSearchResults = [];
+
                         if (attrs.ajaxUrl) {
-                            
+
                             var path = attrs.ajaxUrl;
                             var query = {};
-                            
+
                             if (attrs.ajaxUrl.indexOf("?") != -1) {
                                 var queryStr = attrs.ajaxUrl.substr(attrs.ajaxUrl.indexOf("?") + 1);
                                 path = attrs.ajaxUrl.substr(0, attrs.ajaxUrl.indexOf("?"));
-                                query = JSON.parse('{"' + decodeURI(queryStr).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+                                query = JSON.parse('{"' + decodeURI(queryStr).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
                             }
-                            
+
                             select2Config.ajax = {
                                 url: apiUrl + path,
                                 dataType: 'json',
-                                data: function (params) {
+                                data: function(params) {
+                                    ajaxSearchResults = [];
                                     if (attrs.ajaxData)
                                         query = Object.assign(query, scope.ajaxData);
-                                    return Object.assign(query, {q: params.term});
+                                    return Object.assign(query, {
+                                        q: params.term
+                                    });
                                 },
-                                processResults: function (data) {
+                                processResults: function(data) {
                                     // Transforms the top-level key of the response object from 'items' to 'results'
+                                    ajaxSearchResults = data;
+                                    
                                     return {
                                         results: data
                                     };
@@ -679,14 +688,24 @@
                             select2Config.delay = 250;
                             select2Config.allowClear = false;
                         }
-                        
+
                         if (element[0].multiple) {
                             element[0].setAttribute('multiple', 'multiple');
                         }
-                        
+
                         var elementScope = angular.element(element).scope();
-                        
-                        element.on("change", function () {
+
+                        element.on("change", function() {
+                            if (ajaxSearchResults.length > 0) {
+                                var selectedOption = ajaxSearchResults.filter(function (s) {
+                                    return s.selected == true;
+                                });
+                                
+                                if (attrs.selectCallback) {
+                                    scope.selectCallback({selections: selectedOption});
+                                }
+                            }
+                            
                             eval('elementScope.' + attrs.model + ' = ' + JSON.stringify($(element).val()) + ';');
                             if (modelForm) {
                                 elementScope[modelForm].$pristine = false;
@@ -695,46 +714,46 @@
                             }
                             elementScope.$apply();
                         });
-                        
+
                         var initOptions = element[0].getElementsByTagName('OPTION');
                         var initModelValue = [];
                         var initOptionsToRemove = [];
-                        
-                        for (i=0; i<initOptions.length; i++) {
+
+                        for (i = 0; i < initOptions.length; i++) {
                             if (attrs.ajaxUrl && !initOptions[i].selected)
-                                initOptionsToRemove.push(initOptions[i]);                            
-                            
+                                initOptionsToRemove.push(initOptions[i]);
+
                             if (element[0].multiple && initOptions[i].selected)
                                 initModelValue.push(initOptions[i].value);
                             else if (initOptions[i].selected) {
                                 initModelValue = initOptions[i].value;
                             }
                         }
-                        
-                        for (i=0; i<initOptionsToRemove.length; i++) {
+
+                        for (i = 0; i < initOptionsToRemove.length; i++) {
                             initOptionsToRemove[i].remove();
                         }
-                        
+
                         eval('elementScope.' + attrs.model + ' = ' + JSON.stringify(initModelValue) + ';');
                         elementScope.$apply();
-                        
+
                         // Check if element's parent is modal
                         var parentElement = element[0].parentElement;
                         do {
                             parentElement = parentElement.parentElement;
                         } while (parentElement.nodeName != 'BODY' && !parentElement.classList.contains("modal"));
                         if (parentElement.classList.contains("modal")) select2Config.dropdownParent = $(parentElement);
-                        
+
                         $(element).select2(select2Config);
-                        
+
                         var modelForm;
-                        
+
                         var parentElement = element[0].parentElement;
-                        
+
                         do {
                             parentElement = parentElement.parentElement;
                         } while (parentElement.nodeName != 'BODY' && parentElement.nodeName != 'FORM');
-                        
+
                         if (parentElement.nodeName == 'FORM' && parentElement.getAttribute('name')) {
                             var modelForm = parentElement.getAttribute('name');
                             if (elementScope[modelForm] && $(element).prop('required')) {
@@ -743,15 +762,15 @@
                             }
                         }
                     });
-                    
+
                     if (attrs.errorModel) {
-                        
+
                         var errorElementClassName = attrs.errorModel.toLowerCase().split('.').join('-');
                         $('<div class="invalid-feedback display-none ' + errorElementClassName + '"></div>').insertAfter($(element));
-                        
+
                         var elementScope = angular.element(element).scope();
-                        
-                        var clearError = function () {
+
+                        var clearError = function() {
                             if (scope.errorModel) {
                                 $(element).removeClass('is-invalid');
                                 $('.' + errorElementClassName).addClass('display-none');
@@ -759,7 +778,7 @@
                                 scope.errorModel = null;
                             }
                         };
-                        
+
                         $rootScope.$on('apiRequestError', function(event, options) {
                             var errors = eval('elementScope.' + attrs.errorModel);
                             if (errors) {
@@ -770,15 +789,15 @@
                                 clearError();
                             }
                         });
-                        
-                        element.on("change", function () {
+
+                        element.on("change", function() {
                             clearError();
                         });
-                        element.on("input", function () {
+                        element.on("input", function() {
                             clearError();
-                        }); 
+                        });
                     }
-                    
+
                 }
             };
         });
