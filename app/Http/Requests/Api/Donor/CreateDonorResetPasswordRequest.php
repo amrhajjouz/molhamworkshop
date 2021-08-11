@@ -4,7 +4,8 @@ namespace App\Http\Requests\Api\Donor;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AuthenticateDonorRequest extends FormRequest
+
+class CreateDonorResetPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,17 +24,11 @@ class AuthenticateDonorRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'email' => 'required|email|max:255',
-            'password' => 'required',
-        ];
+        return ['email' => 'required|email|exists:donors,email'];
     }
 
     public function messages()
     {
-        return [
-            'email.required' => 'bad_credintials',
-            'password.*' => 'bad_credintials',
-        ];
+        return ['email.*' => 'invalid_email'];
     }
 }

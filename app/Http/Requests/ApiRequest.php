@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Api\Donor;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Str;
 
-class AuthenticateDonorRequest extends FormRequest
+class ApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,16 +27,7 @@ class AuthenticateDonorRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|max:255',
-            'password' => 'required',
         ];
     }
 
-    public function messages()
-    {
-        return [
-            'email.required' => 'bad_credintials',
-            'password.*' => 'bad_credintials',
-        ];
-    }
 }

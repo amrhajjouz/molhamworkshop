@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Common;
+namespace App\Http\Requests\Api\Donor;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Str;
 
-class ApiFormRequest extends FormRequest
+
+class ConfirmDonorResetPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,13 +25,16 @@ class ApiFormRequest extends FormRequest
     public function rules()
     {
         return [
+            'token' => 'required|string|exists:donor_reset_password_requests,token',
+            'new_password' => 'required|min:8|confirmed'
         ];
     }
 
-    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    public function messages()
     {
-        dd($this);
-        $this->validator = $validator;
+        return [
+            'token.*' => 'invalid_token',
+            'new_password.*' => 'invalid_password',
+        ];
     }
-
 }

@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -45,8 +46,10 @@ class Handler extends ExceptionHandler
         $arr = explode('/' , request()->path());
         if(isset($arr[0]) && $arr[0]  == 'api'){
             $request->headers->set('Accept', 'application/json');
+            if($exception instanceof  ValidationException){
+                return handleResponse([sizeof($exception->errors()) == 1 ? 'errors' : "errors" =>  $exception->errors()]);
+            }
         }
-
         return parent::render($request, $exception);
     }
 }

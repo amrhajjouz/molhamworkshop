@@ -18,9 +18,9 @@ class AuthDonorController extends Controller
     {
         try {
             $request->user()->update($request->validated());
-            return response()->json(null);
+            return handleResponse(null);
         } catch (\Exception $e) {
-            return ['error' => $e->getMessage()];
+            return handleResponse(['error' => $e->getMessage()]);
         }
     }
 
@@ -28,9 +28,9 @@ class AuthDonorController extends Controller
     {
         try {
             $request->user()->delete();
-            return response()->json(null);
+            return handleResponse(null);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
+            return handleResponse(['error' => $e->getMessage()]);
         }
     }
 
@@ -38,7 +38,7 @@ class AuthDonorController extends Controller
     {
         try {
             $donor = $request->user();
-            return response()->json([
+            return handleResponse([
                 'id' => $donor->id,
                 'name' => $donor->name,
                 'email' => $donor->email,
@@ -50,7 +50,7 @@ class AuthDonorController extends Controller
                 'theme_color' => $donor->theme_color,
             ]);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
+            return handleResponse(['error' => $e->getMessage()]);
         }
     }
 
@@ -61,9 +61,9 @@ class AuthDonorController extends Controller
             $donor = $request->user();
             $donor->password = Hash::make($data['new_password']);
             $donor->save();
-            return response()->json(null);
+            return handleResponse(null);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
+            return handleResponse(['error' => $e->getMessage()]);
         }
     }
 
@@ -74,9 +74,9 @@ class AuthDonorController extends Controller
             $donor = $request->user();
             $donor->email = $data['new_email'];
             $donor->save();
-            return response()->json(null);
+            return handleResponse(null);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
+            return handleResponse(['error' => $e->getMessage()]);
         }
     }
 
@@ -85,9 +85,9 @@ class AuthDonorController extends Controller
         try {
             $donor = $request->user();
             $donor->update($request->validated());
-            return response()->json(null);
+            return handleResponse(null);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
+            return handleResponse(['error' => $e->getMessage()]);
         }
     }
 
@@ -95,18 +95,18 @@ class AuthDonorController extends Controller
     {
         try {
             Token::where('access_token', $request->bearerToken())->delete();
-            return response()->json(null);
+            return handleResponse(null);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
+            return handleResponse(['error' => $e->getMessage()]);
         }
     }
 
     public function listNotificationPreferences(Request $request)
     {
         try {
-            return response()->json($request->user()->notification_preferences()->pluck('name'));
+            return handleResponse($request->user()->notification_preferences()->pluck('name'));
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
+            return handleResponse(['error' => $e->getMessage()]);
         }
     }
 
@@ -115,20 +115,20 @@ class AuthDonorController extends Controller
         try {
             $notificationPreferencesIds = NotificationPreference::whereIn('name', $request->validated()['preferences'])->get()->pluck('id');
             $request->user()->notification_preferences()->sync($notificationPreferencesIds);
-            return response()->json(null);
+            return handleResponse(null);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
+            return handleResponse(['error' => $e->getMessage()]);
         }
     }
 
     public function listPaymentMethods(Request $request)
     {
         try {
-            return response()->json($request->user()->payment_methods->transform(function ($obj) {
+            return handleResponse($request->user()->payment_methods->transform(function ($obj) {
                 return $obj->apiTransform();
             }));
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
+            return handleResponse(['error' => $e->getMessage()]);
         }
     }
 }

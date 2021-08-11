@@ -25,9 +25,9 @@ class PaymentMethodController extends Controller
             ];
             $paymentMethod = new PaymentMethod();
             $paymentMethod->save($data);
-            return response()->json($paymentMethod->apiTransform());
+            return handleResponse($paymentMethod->apiTransform());
         } catch (\Exception $e) {
-            return ['error' => $e->getMessage()];
+            return handleResponse(['error' => $e->getMessage()]);
         }
     }
 
@@ -37,7 +37,7 @@ class PaymentMethodController extends Controller
             PaymentMethod::findOrFail($payment_method_id)->delete();
             return response(null);
         } catch (\Exception $e) {
-            return ['error' => $e->getMessage()];
+            return handleResponse(['error' => $e->getMessage()]);
         }
     }
 
@@ -45,9 +45,9 @@ class PaymentMethodController extends Controller
     {
         try {
             $paymentMethod = PaymentMethod::findOrFail($payment_method_id);
-            return response()->json($paymentMethod->apiTransform());
+            return handleResponse($paymentMethod->apiTransform());
         } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
+            return handleResponse(['error' => $e->getMessage()]);
         }
     }
 
@@ -56,7 +56,7 @@ class PaymentMethodController extends Controller
         try {
             //   TODO
         } catch (\Exception $e) {
-            return ['error' => $e->getMessage()];
+            return handleResponse(['error' => $e->getMessage()]);
         }
     }
 }
