@@ -10,7 +10,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable , Tokenable;
+    use HasFactory, Notifiable, Tokenable;
 
     /**
      * The attributes that are mass assignable.
@@ -41,12 +41,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    
-    public function country() {
-        return $this->hasOne('App\Models\Country' , 'code' , 'country_code');
-    }    
-    
-    public function delete() {
+
+    public function country()
+    {
+        return $this->hasOne('App\Models\Country', 'code', 'country_code');
+    }
+
+    public function delete()
+    {
         $this->deleteAllTokens();
         return parent::delete();
     }

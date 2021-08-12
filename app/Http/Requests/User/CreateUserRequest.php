@@ -28,8 +28,8 @@ class CreateUserRequest extends FormRequest
         return [
             'name' => ['required' ,'string', 'between:3,20'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:8'],
+            'password' => ['required', 'string', 'between:8,30'],
         ];
     }
-    
+
 }

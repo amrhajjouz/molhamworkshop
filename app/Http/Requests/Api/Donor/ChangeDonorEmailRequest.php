@@ -27,4 +27,12 @@ class ChangeDonorEmailRequest extends FormRequest
             'new_email' => "required|unique:donors,email," . $this->user()->id
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'new_email.required' => 'new_email_required',
+            'new_email.unique' => 'new_email_already_exists',
+        ];
+    }
 }

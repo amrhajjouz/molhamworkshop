@@ -26,7 +26,6 @@ Route::group([],function () {
     Route::post('/donors/reset_password/confirm' , [DonorController::class, 'confirmResetPasswordRequest'])->name('api.donors.reset_password.confirm'); 
 });
 
-
 Route::group(['middleware' => 'auth_donor'],function () {
     Route::get('/donors/auth' , [AuthDonorController::class, 'retrieve'])->name('api.donors.auth.retrieve'); 
     Route::post('/donors/auth/logout' , [AuthDonorController::class, 'logout'])->name('api.donors.auth.logout'); 
@@ -38,7 +37,8 @@ Route::group(['middleware' => 'auth_donor'],function () {
     Route::get('/donors/auth/notification_preferences' , [AuthDonorController::class, 'listNotificationPreferences'])->name('api.donors.auth.notification_preferences.list'); 
     Route::put('/donors/auth/notification_preferences' , [AuthDonorController::class, 'updateNotificationPreferences'])->name('api.donors.auth.notification_preferences.update'); 
     Route::get('/donors/auth/payment_methods' , [AuthDonorController::class, 'listPaymentMethods'])->name('api.donors.auth.payment_methods.list'); 
-
+    Route::post('/donors/auth/avatar' , [AuthDonorController::class, 'changeAvatar'])->name('api.donors.auth.avatar.change'); 
+    Route::delete('/donors/auth/avatar' , [AuthDonorController::class, 'removeAvatar'])->name('api.donors.auth.avatar.remove'); 
     ///////////////////// PaymentMethod /////////////////////
     Route::post('/payment_methods' , [PaymentMethodController::class, 'create'])->name('api.payment_methods.create'); 
     Route::get('/payment_methods/{payment_method_id}' , [PaymentMethodController::class, 'retrieve'])->name('api.donors.payment_methods.retrieve'); 

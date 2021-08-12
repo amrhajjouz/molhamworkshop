@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\ApiException;
 use Illuminate\Http\Request;
-use App\Http\Requests\Api\Donor\{UpdateDonorRequest, ChangeDonorEmailRequest, ChangeDonorPasswordRequest, UpdateDonorPrefrencesRequest, UpdateDonorNotificationPreferences};
-use App\Models\{Token, NotificationPreference, PaymentMethod};
+use App\Http\Requests\Api\Donor\{UpdateDonorRequest, ChangeDonorEmailRequest, ChangeDonorPasswordRequest, UpdateDonorPrefrencesRequest, UpdateDonorNotificationPreferences, ChangeDonorAvatarRequest};
+use App\Models\{Image, Token, NotificationPreference, PaymentMethod};
+use Exception;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AuthDonorController extends Controller
 {
@@ -20,7 +23,7 @@ class AuthDonorController extends Controller
             $request->user()->update($request->validated());
             return handleResponse(null);
         } catch (\Exception $e) {
-            return handleResponse(['error' => $e->getMessage()]);
+           throw new ApiException($e->getMessage());
         }
     }
 
@@ -30,7 +33,7 @@ class AuthDonorController extends Controller
             $request->user()->delete();
             return handleResponse(null);
         } catch (\Exception $e) {
-            return handleResponse(['error' => $e->getMessage()]);
+           throw new ApiException($e->getMessage());
         }
     }
 
@@ -50,7 +53,7 @@ class AuthDonorController extends Controller
                 'theme_color' => $donor->theme_color,
             ]);
         } catch (\Exception $e) {
-            return handleResponse(['error' => $e->getMessage()]);
+           throw new ApiException($e->getMessage());
         }
     }
 
@@ -63,7 +66,7 @@ class AuthDonorController extends Controller
             $donor->save();
             return handleResponse(null);
         } catch (\Exception $e) {
-            return handleResponse(['error' => $e->getMessage()]);
+           throw new ApiException($e->getMessage());
         }
     }
 
@@ -76,7 +79,7 @@ class AuthDonorController extends Controller
             $donor->save();
             return handleResponse(null);
         } catch (\Exception $e) {
-            return handleResponse(['error' => $e->getMessage()]);
+           throw new ApiException($e->getMessage());
         }
     }
 
@@ -87,7 +90,7 @@ class AuthDonorController extends Controller
             $donor->update($request->validated());
             return handleResponse(null);
         } catch (\Exception $e) {
-            return handleResponse(['error' => $e->getMessage()]);
+           throw new ApiException($e->getMessage());
         }
     }
 
@@ -97,7 +100,7 @@ class AuthDonorController extends Controller
             Token::where('access_token', $request->bearerToken())->delete();
             return handleResponse(null);
         } catch (\Exception $e) {
-            return handleResponse(['error' => $e->getMessage()]);
+           throw new ApiException($e->getMessage());
         }
     }
 
@@ -106,7 +109,7 @@ class AuthDonorController extends Controller
         try {
             return handleResponse($request->user()->notification_preferences()->pluck('name'));
         } catch (\Exception $e) {
-            return handleResponse(['error' => $e->getMessage()]);
+           throw new ApiException($e->getMessage());
         }
     }
 
@@ -117,7 +120,7 @@ class AuthDonorController extends Controller
             $request->user()->notification_preferences()->sync($notificationPreferencesIds);
             return handleResponse(null);
         } catch (\Exception $e) {
-            return handleResponse(['error' => $e->getMessage()]);
+           throw new ApiException($e->getMessage());
         }
     }
 
@@ -128,7 +131,31 @@ class AuthDonorController extends Controller
                 return $obj->apiTransform();
             }));
         } catch (\Exception $e) {
-            return handleResponse(['error' => $e->getMessage()]);
+           throw new ApiException($e->getMessage());
+        }
+    }
+
+    public function changeAvatar(ChangeDonorAvatarRequest $request)
+    {
+        try {
+            $request->user()->avatar()->delete();
+            $reference = Str::random(50);
+            do {$reference = Str::random(50);} while (Image::where('reference', $reference)->exists());
+            $request->validated()['avatar']->storeAs('public/avatars', $reference . "." . $request->validated()['avatar']->getClientOriginalExtension());
+            $request->user()->avatar()->create(['type' => "avatar", "reference" => $reference]);
+            return handleResponse(null);
+        } catch (\Exception $e) {
+           throw new ApiException($e->getMessage());
+        }
+    }
+
+    public function removeAvatar(Request $request)
+    {
+        try {
+            $request->user()->avatar()->delete();
+            return handleResponse(null);
+        } catch (\Exception $e) {
+            throw new ApiException($e->getMessage());
         }
     }
 }

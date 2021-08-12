@@ -26,15 +26,20 @@ class ConfirmDonorResetPasswordRequest extends FormRequest
     {
         return [
             'token' => 'required|string|exists:donor_reset_password_requests,token',
-            'new_password' => 'required|min:8|confirmed'
+            'new_password' => 'required|between:8,30|confirmed|string'
         ];
     }
 
     public function messages()
     {
         return [
-            'token.*' => 'invalid_token',
-            'new_password.*' => 'invalid_password',
+            'token.required' => 'token_required',
+            'token.exists' => 'token_does_not_exists',
+            'token.string' => 'invalid_token',
+            'new_password.required' => 'new_password_required',
+            'new_password.confirmed' => 'new_password_must_be_confirmed',
+            'new_password.string' => 'invalid_new_password',
+            'new_password.between' => 'the password should be between:8,30',
         ];
     }
 }

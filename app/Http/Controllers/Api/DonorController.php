@@ -68,11 +68,12 @@ class DonorController extends Controller
     {
         try {
             $data = $request->validated();
-            $resetPassword = DonorResetPasswordRequest::where('token', $data['token'])->where('expires_at', ">", Carbon::now()->toDateTimeString())->firstOrFail();
-            $donor = Donor::findOrFail($resetPassword->donor_id);
+            $resetPasswordRequest = DonorResetPasswordRequest::where('token', $data['token'])->where('expires_at', ">", Carbon::now()->toDateTimeString())->where('consumed', 0)->firstOrFail();
+            $donor = Donor::findOrFail($resetPasswordRequest->donor_id);
             $donor->password = Hash::make($data['new_password']);
             $donor->save();
-            $resetPassword->delete();
+            $resetPasswordRequest->consumed = true;
+            $resetPasswordRequest->save();
             return handleResponse(null);
         } catch (\Exception $e) {
             return handleResponse(['error' => $e->getMessage()]);
@@ -82,7 +83,7 @@ class DonorController extends Controller
     public function retrieveResetPasswordRequest($token)
     {
         try {
-            $resetPasswordRequest = DonorResetPasswordRequest::where('token', $token)->firstOrFail();
+            $resetPasswordRequest = DonorResetPasswordRequest::where('token', $token)->where('expires_at', ">", Carbon::now()->toDateTimeString())->where('consumed', 0)->firstOrFail();
             $donor = $resetPasswordRequest->donor;
             return handleResponse(['name' => $donor->name, 'email' => $donor->email]);
         } catch (\Exception $e) {

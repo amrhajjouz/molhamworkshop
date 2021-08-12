@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Traits;
 
 trait Tokenable
@@ -8,7 +9,8 @@ trait Tokenable
         return $this->morphMany('App\Models\Token', 'tokenable');
     }
 
-    public function deleteAllTokens(){
+    public function deleteAllTokens()
+    {
         $this->tokens()->delete();
     }
 }

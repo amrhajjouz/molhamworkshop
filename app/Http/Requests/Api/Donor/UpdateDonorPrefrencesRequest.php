@@ -32,4 +32,14 @@ class UpdateDonorPrefrencesRequest extends FormRequest
             'theme_color' => ['required', Rule::in(['primary',  'purple', 'teal'])],
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'locale.*' => 'invalid_locale',
+            'currency.*' => 'invalid_currency',
+            'theme_mode.*' => 'invalid_theme_mode',
+            'theme_color.*' => 'invalid_theme_color',
+        ];
+    }
 }

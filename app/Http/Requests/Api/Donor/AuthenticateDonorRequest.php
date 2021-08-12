@@ -32,8 +32,10 @@ class AuthenticateDonorRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.required' => 'bad_credintials',
-            'password.*' => 'bad_credintials',
+            'email.required' => 'email_required',
+            'email.email' => 'invalid_email',
+            'email.max' => 'invalid_email_length',
+            'password.required' => 'password_required',
         ];
     }
 }

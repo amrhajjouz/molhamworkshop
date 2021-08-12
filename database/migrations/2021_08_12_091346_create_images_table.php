@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDonorResetPasswordRequestsTable extends Migration
+class CreateImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateDonorResetPasswordRequestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('donor_reset_password_requests', function (Blueprint $table) {
+        Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->string('token' , 100)->unique();
-            $table->bigInteger('donor_id');
-            $table->boolean('consumed')->default(0);
-            $table->dateTime('expires_at');
+            $table->morphs('imageable');
+            $table->string('type' , 20);
+            $table->string('reference' , 50)->unique();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateDonorResetPasswordRequestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('donor_reset_password_requests');
+        Schema::dropIfExists('images');
     }
 }

@@ -4,15 +4,14 @@ namespace App\Http\Requests\Api\Donor;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-
-class CreateDonorResetPasswordRequest extends FormRequest
+class ChangeDonorAvatarRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -24,15 +23,16 @@ class CreateDonorResetPasswordRequest extends FormRequest
      */
     public function rules()
     {
-        return ['email' => 'required|email|exists:donors,email'];
+        return ['avatar' => ['required', 'image', 'max:3000', 'mimes:peg,bmp,png']];
     }
 
     public function messages()
     {
         return [
-            'email.required'=> 'email_required' ,
-            'email.email'=> 'invalid_email' ,
-            'email.exists'=> 'email_not_exist' ,
+            'avatar.required' => 'avatar_required',
+            'avatar.image' => 'invalid_avatar',
+            'avatar.mimes' => 'invalid_avatar',
+            'email.max' => 'invalid_size',
         ];
     }
 }

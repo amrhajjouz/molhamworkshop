@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Traits\Tokenable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\{NotificationPreference};
 
@@ -12,9 +11,7 @@ class Donor extends Model
     use Tokenable;
 
     protected  $fillable = ["name", "phone", "password", "email", "swish_number", "whatsapp_number", 'theme_mode', 'theme_color', 'locale', 'currency', 'country_code'];
-    protected $hidden = [
-        'password',
-    ];
+    protected $hidden = ['password'];
 
     public function country()
     {
@@ -31,8 +28,14 @@ class Donor extends Model
         $this->deleteAllTokens();
         return parent::delete();
     }
-    
-    public function payment_methods(){
+
+    public function payment_methods()
+    {
         return $this->hasMany(PaymentMethod::class);
+    }
+
+    public function avatar()
+    {
+        return $this->morphOne('App\Models\Image', 'imageable')->where('type' , 'avatar');
     }
 }

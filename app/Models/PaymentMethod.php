@@ -46,10 +46,6 @@ class PaymentMethod extends Model
 
     public function apiTransform()
     {
-        return [
-            'id' => $this->id,
-            'type' => $this->type ,
-            $this->type => $this->methodable->apiTransform()
-        ];
+        return ['id' => $this->id,'type' => $this->type ,$this->type => $this->methodable->apiTransform()];
     }
 }

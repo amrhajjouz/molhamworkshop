@@ -9,19 +9,20 @@ use Illuminate\Support\Str;
 class Token extends Model
 {
     use HasFactory;
-    
+
     protected $table = 'tokens';
-    
-    public function tokenable() {
+
+    public function tokenable()
+    {
         return $this->morphTo();
     }
-    
-    public function save(array $options = []){
-        
+
+    public function save(array $options = [])
+    {
         if (!$this->exists) {
             do {
                 $this->access_token = Str::random(40);
-            } while (self::where('access_token' , $this->token)->exists());
+            } while (self::where('access_token', $this->token)->exists());
         }
         return parent::save();
     }

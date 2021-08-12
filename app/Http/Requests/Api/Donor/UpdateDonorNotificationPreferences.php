@@ -30,4 +30,13 @@ class UpdateDonorNotificationPreferences extends FormRequest
             "preferences.*" => [Rule::in(['newsletter', 'subsciptions_2_days_reminder', "subscriptions_1_week_reminder", 'purposes_updates', 'shared_links'])]
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'preferences.required' => 'preferences_required',
+            'preferences.array' => 'preferences_must_be_array',
+            'preferences.*.*' => 'invalid_preferences_type',
+        ];
+    }
 }

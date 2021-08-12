@@ -30,6 +30,7 @@ class CreateDonorTable extends Migration
             $table->enum("locale" , ['ar' , 'en' , 'fr' , 'de'])->default("ar");
             $table->enum("theme_mode" , ['dark' , 'light'])->default("light");
             $table->enum("theme_color" , ['primary' , 'green' , 'purple' , 'orange'])->default("primary");
+            $table->bigInteger("avatar_image_id")->nullable();
             $table->timestamps();
         });
     }

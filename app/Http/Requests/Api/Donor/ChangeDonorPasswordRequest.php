@@ -24,8 +24,16 @@ class ChangeDonorPasswordRequest extends FormRequest
      */
     public function rules()
     {
+        return ['new_password' => "required|string|confirmed|between:8,20"];
+    }
+
+    public function messages()
+    {
         return [
-            'new_password' => "required|string|confirmed|between:8,20"
+            'new_password.required' => 'new_password_required',
+            'new_password.confirmed' => 'new_password_must_be_confirmed',
+            'new_password.string' => 'invalid_new_password',
+            'new_password.between' => 'the password should be between:8,30',
         ];
     }
 }
