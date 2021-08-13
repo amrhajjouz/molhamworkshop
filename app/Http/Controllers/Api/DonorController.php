@@ -7,6 +7,7 @@ use App\Http\Requests\Api\Donor\{CreateDonorRequest, AuthenticateDonorRequest, C
 use App\Models\DonorResetPasswordRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Facades\DonorMailer;
 use Exception;
 use Carbon\Carbon;
 
@@ -53,11 +54,17 @@ class DonorController extends Controller
     public function createResetPasswordRequest(CreateDonorResetPasswordRequest $request)
     {
         try {
+            
+            $donor = Donor::where('email', $request->validated()['email'])->first();
+            if (!$donor) throw new Exception('reset_donor_password_invalid_email');
+            
             $token = Str::random(100);
             do {
                 $token = Str::random(100);
             } while (DonorResetPasswordRequest::where('token', $token)->exists());
-            DonorResetPasswordRequest::create(['donor_id' => Donor::where('email', $request->validated()['email'])->firstOrFail()->id, 'token' => $token, 'expires_at' =>  Carbon::now()->addMinutes(10)->toDateTimeString()]);
+            
+            $donorResetPasswordRequest = DonorResetPasswordRequest::create(['donor_id' => $donor->id, 'token' => $token, 'expires_at' =>  Carbon::now()->addMinutes(10)->toDateTimeString()]);
+            return DonorMailer::sendResetPasswordLink($donor, $donorResetPasswordRequest->token);
             return handleResponse(null);
         } catch (\Exception $e) {
             return handleResponse(['error' => $e->getMessage()]);
