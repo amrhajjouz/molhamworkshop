@@ -26,17 +26,20 @@ class PaymentMethod extends Model
             $this->type = $options['type'];
             $this->donor_id = auth('donor')->user()->id;
             switch ($options['type']) {
-                case 'cards': $class = StripeCard::class; break;
+                case 'card': $class = StripeCard::class; break;
                 case 'swish_account':$class = SwishAccount::class;break;
                 case 'ideal_account':$class = StripeIdealAccount::class;break;
                 case 'sofort_account':$class = StripeSofortAccount::class;break;
                 case 'sepa_account':$class = StripeSepaAccount::class;break;
                 default:throw new Exception('unrecognized type');break;
             }
+
+    // dd(\Illuminate\Database\Eloquent\Relations\Relation::getMorphedModel('stripe_'.'card'));
+
             // type is not passed into methodable
             unset($options['type']);
-            $methodable =  $class::create($options);
-            $this->methodable_type = $class;
+            $methodable =  \Illuminate\Database\Eloquent\Relations\Relation::getMorphedModel('stripe_'.$this->type)::create($options);
+            $this->methodable_type = 'stripe_'.$this->type;
             $this->methodable_id = $methodable->id;
         } else {
             dd('TODO');
@@ -46,6 +49,7 @@ class PaymentMethod extends Model
 
     public function apiTransform()
     {
+        // dd($this , $this->methodable);
         return ['id' => $this->id,'type' => $this->type ,$this->type => $this->methodable->apiTransform()];
     }
 }

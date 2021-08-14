@@ -29,7 +29,7 @@ function handleResponse($response)
                 $errors[$key][] = ['code' => $msg, 'message' => $apiError->message[app()->getLocale()]];
             }
         }
-        return response()->json(['errors' => $errors] , 400);
+        return response()->json(['error'=> collect($errors)->first()[0] ,'errors' => $errors ] , 400);
     }
     else return response()->json($response);
 }

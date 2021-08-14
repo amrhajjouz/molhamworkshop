@@ -30,10 +30,10 @@ class ChangeDonorPasswordRequest extends FormRequest
     public function messages()
     {
         return [
-            'new_password.required' => 'new_password_required',
-            'new_password.confirmed' => 'new_password_must_be_confirmed',
+            'new_password.required' => 'invalid_new_password',
+            'new_password.confirmed' => 'new_password_not_confirmed',
             'new_password.string' => 'invalid_new_password',
-            'new_password.between' => 'the password should be between:8,30',
+            'new_password.between' => 'invalid_new_password_length',
         ];
     }
 }

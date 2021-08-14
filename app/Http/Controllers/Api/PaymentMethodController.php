@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\ApiException;
 use Illuminate\Http\Request;
 use App\Http\Requests\Api\PaymentMethod\{CreatePaymentMethodRequest, DeletePaymentMethodRequest};
 use App\Models\{PaymentMethod};
@@ -14,7 +15,7 @@ class PaymentMethodController extends Controller
         try {
             $brands = ['visa', 'master'];
             $data = [
-                'type' => "cards",
+                'type' => "card",
                 "stripe_payment_method_id" => $request->validated()['stripe_payment_method_id'],
                 'fingerprint' => Str::random(20),
                 'brand' => $brands[array_rand($brands)],
@@ -27,7 +28,7 @@ class PaymentMethodController extends Controller
             $paymentMethod->save($data);
             return handleResponse($paymentMethod->apiTransform());
         } catch (\Exception $e) {
-            return handleResponse(['error' => $e->getMessage()]);
+            throw new ApiException($e->getMessage());
         }
     }
 
@@ -35,9 +36,9 @@ class PaymentMethodController extends Controller
     {
         try {
             PaymentMethod::findOrFail($payment_method_id)->delete();
-            return response(null);
+            return handleResponse(null);
         } catch (\Exception $e) {
-            return handleResponse(['error' => $e->getMessage()]);
+            throw new ApiException($e->getMessage());
         }
     }
 
@@ -47,7 +48,7 @@ class PaymentMethodController extends Controller
             $paymentMethod = PaymentMethod::findOrFail($payment_method_id);
             return handleResponse($paymentMethod->apiTransform());
         } catch (\Exception $e) {
-            return handleResponse(['error' => $e->getMessage()]);
+            throw new ApiException($e->getMessage());
         }
     }
 
@@ -56,7 +57,7 @@ class PaymentMethodController extends Controller
         try {
             //   TODO
         } catch (\Exception $e) {
-            return handleResponse(['error' => $e->getMessage()]);
+            throw new ApiException($e->getMessage());
         }
     }
 }

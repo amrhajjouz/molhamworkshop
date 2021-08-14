@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\Donor;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class   UpdateDonorRequest extends FormRequest
 {
@@ -26,9 +27,11 @@ class   UpdateDonorRequest extends FormRequest
         $user = $this->user();
 
         return [
-            'name' => 'required|string|min:3|max:50',
-            'country_code' => 'nullable|string|exists:countries,code',
-            'phone' => ['nullable', 'unique:donors,phone,' . $user->id, 'regex:/^([0-9\s\-\+\(\)]*)$/', 'starts_with:+,00', 'min:10', 'max:13']
+            'name' => 'sometimes|string|min:3|max:50',
+            'country_code' => 'sometimes|string|exists:countries,code',
+            'phone' => ['sometimes', 'unique:donors,phone,' . $user->id, 'regex:/^([0-9\s\-\+\(\)]*)$/', 'starts_with:+,00', 'min:10', 'max:13'],
+            'locale' => ['sometimes', Rule::in(['ar', 'en', 'fr', 'de', 'tr', 'es'])],
+            'currency' => ['sometimes', Rule::in(['usd', 'eur', 'try', 'sar', 'aed', 'jod'])],
         ];
     }
 

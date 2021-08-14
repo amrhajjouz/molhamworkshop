@@ -30,9 +30,9 @@ class CreateDonorResetPasswordRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.required'=> 'email_required' ,
+            'email.required'=> 'invalid_email' ,
             'email.email'=> 'invalid_email' ,
-            'email.exists'=> 'email_not_exist' ,
+            'email.exists'=> 'email_not_exists' ,
         ];
     }
 }

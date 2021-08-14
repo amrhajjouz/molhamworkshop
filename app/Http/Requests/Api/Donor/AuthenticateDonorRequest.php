@@ -34,8 +34,8 @@ class AuthenticateDonorRequest extends FormRequest
         return [
             'email.required' => 'email_required',
             'email.email' => 'invalid_email',
-            'email.max' => 'invalid_email_length',
-            'password.required' => 'password_required',
+            'email.max' => 'invalid_email',
+            'password.required' => 'invalid_password',
         ];
     }
 }

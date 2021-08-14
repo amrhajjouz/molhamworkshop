@@ -15,7 +15,7 @@ class CreateDonorResetPasswordRequestsTable extends Migration
     {
         Schema::create('donor_reset_password_requests', function (Blueprint $table) {
             $table->id();
-            $table->string('token' , 100)->unique();
+            $table->string('code')->unique();
             $table->bigInteger('donor_id');
             $table->boolean('consumed')->default(0);
             $table->dateTime('expires_at');

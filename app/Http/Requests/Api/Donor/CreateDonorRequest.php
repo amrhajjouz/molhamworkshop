@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\Donor;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateDonorRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class CreateDonorRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize(): bool
+    public function authorize()
     {
         return true;
     }
@@ -27,18 +28,21 @@ class CreateDonorRequest extends FormRequest
             'name' => ['required', 'string', 'between:3,30'],
             'email' => ['required', 'email', 'unique:donors,email'],
             'password' => ['required', 'string', 'between:8,30'],
+            'locale' => ['sometimes', Rule::in(['ar', 'en', 'fr', 'de', 'tr', 'es'])],
+            'currency' => ['sometimes', Rule::in(['usd', 'eur', 'try', 'sar', 'aed', 'jod'])],
         ];
     }
 
-    public function messages(){
+    public function messages()
+    {
         return [
-            'name.required'=> 'name_required' ,
-            'name.between'=> 'invalid_name_length' ,
-            'email.required'=> 'email_required' ,
-            'email.email'=> 'invalid_email' ,
-            'email.unique'=> 'email_already_exist' ,
-            'password.required'=> 'password_required' ,
-            'password.between'=> 'the password should be between:8,30' ,
+            'name.required' => 'invalid_name',
+            'name.between' => 'invalid_name_length',
+            'email.required' => 'invalid_email',
+            'email.email' => 'invalid_email',
+            'email.unique' => 'email_already_exists',
+            'password.required' => 'invalid_password',
+            'password.between' => 'invalid_password_length',
         ];
     }
 }

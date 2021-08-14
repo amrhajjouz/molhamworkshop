@@ -10,7 +10,7 @@ class Donor extends Model
 {
     use Tokenable;
 
-    protected  $fillable = ["name", "phone", "password", "email", "swish_number", "whatsapp_number", 'theme_mode', 'theme_color', 'locale', 'currency', 'country_code'];
+    protected  $fillable = ["name", "phone", "password", "email", "swish_number", "whatsapp_number", 'locale', 'currency', 'country_code'];
     protected $hidden = ['password'];
 
     public function country()
@@ -36,6 +36,11 @@ class Donor extends Model
 
     public function avatar()
     {
-        return $this->morphOne('App\Models\Image', 'imageable')->where('type' , 'avatar');
+        return $this->morphOne('App\Models\Image', 'imageable')->where('type', 'avatar');
+    }
+
+    public function reset_password_requests()
+    {
+        return $this->hasMany('App\Models\DonorResetPasswordRequest', 'donor_id', 'id');
     }
 }

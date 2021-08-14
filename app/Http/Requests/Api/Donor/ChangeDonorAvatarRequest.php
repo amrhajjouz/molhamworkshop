@@ -23,16 +23,15 @@ class ChangeDonorAvatarRequest extends FormRequest
      */
     public function rules()
     {
-        return ['avatar' => ['required', 'image', 'max:3000', 'mimes:peg,bmp,png']];
+        return ['avatar' => ['required', 'image', 'max:3000']];
     }
 
     public function messages()
     {
         return [
-            'avatar.required' => 'avatar_required',
-            'avatar.image' => 'invalid_avatar',
-            'avatar.mimes' => 'invalid_avatar',
-            'email.max' => 'invalid_size',
+            'avatar.required' => 'image_invalid',
+            'avatar.image' => 'image_invalid',
+            'avatar.max' => 'invalid_image_size',
         ];
     }
 }

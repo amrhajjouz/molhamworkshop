@@ -22,7 +22,7 @@ Route::group([],function () {
     Route::post('/donors/authenticate' , [DonorController::class, 'authenticate'])->name('api.donors.authenticate');
     Route::post('/donors' , [DonorController::class, 'create'])->name('api.donors.create');
     Route::post('/donors/reset_password' , [DonorController::class, 'createResetPasswordRequest'])->name('api.donors.reset_password.request'); 
-    Route::get('/donors/reset_password/{token}' , [DonorController::class, 'retrieveResetPasswordRequest'])->name('api.donors.reset_password.request.retrieve'); 
+    Route::get('/donors/reset_password/{code}' , [DonorController::class, 'retrieveResetPasswordRequest'])->name('api.donors.reset_password.request.retrieve'); 
     Route::post('/donors/reset_password/confirm' , [DonorController::class, 'confirmResetPasswordRequest'])->name('api.donors.reset_password.confirm'); 
 });
 
@@ -33,7 +33,6 @@ Route::group(['middleware' => 'auth_donor'],function () {
     Route::post('/donors/auth/delete' , [AuthDonorController::class, 'delete'])->name('api.donors.auth.delete'); 
     Route::post('/donors/auth/email' , [AuthDonorController::class, 'changeEmail'])->name('api.donors.auth.email.change'); 
     Route::post('/donors/auth/password' , [AuthDonorController::class, 'changePassword'])->name('api.donors.auth.password.change'); 
-    Route::put('/donors/auth/preferences' , [AuthDonorController::class, 'updatePreferences'])->name('api.donors.auth.preferences.update'); 
     Route::get('/donors/auth/notification_preferences' , [AuthDonorController::class, 'listNotificationPreferences'])->name('api.donors.auth.notification_preferences.list'); 
     Route::put('/donors/auth/notification_preferences' , [AuthDonorController::class, 'updateNotificationPreferences'])->name('api.donors.auth.notification_preferences.update'); 
     Route::get('/donors/auth/payment_methods' , [AuthDonorController::class, 'listPaymentMethods'])->name('api.donors.auth.payment_methods.list'); 
