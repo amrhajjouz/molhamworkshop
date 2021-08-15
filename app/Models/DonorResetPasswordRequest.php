@@ -19,7 +19,6 @@ class DonorResetPasswordRequest extends Model
 
     public function save($options = [])
     {
-
         if(!$this->exists){
             $this->code = rand(100000 , 999999);
             do {
@@ -28,7 +27,6 @@ class DonorResetPasswordRequest extends Model
 
             $this->expires_at = Carbon::now()->addMinutes(20)->toDateTimeString();
         }
-
         return parent::save($options);
     }
 }
