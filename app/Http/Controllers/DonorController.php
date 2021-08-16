@@ -58,4 +58,14 @@ class DonorController extends Controller
             return ['error' => $e->getMessage()];
         }
     }
+
+    public function testApple(Request $request){
+        \Laravel\Socialite\Facades\Socialite::driver('apple')->redirect();
+    }
+    public function CallbackTestApple(Request $request){
+        $user = \Laravel\Socialite\Facades\Socialite::driver('github')->user();
+        // id
+        // name
+        // email
+    }
 }
