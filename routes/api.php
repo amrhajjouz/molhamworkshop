@@ -18,15 +18,15 @@ use App\Http\Controllers\Api\{DonorController , AuthDonorController , PaymentMet
 */
 
 
-Route::group([],function () {
+Route::group([], function () {
     Route::post('/donors/authenticate' , [DonorController::class, 'authenticate'])->name('api.donors.authenticate');
     Route::post('/donors' , [DonorController::class, 'create'])->name('api.donors.create');
-    Route::post('/donors/reset_password' , [DonorController::class, 'createResetPasswordRequest'])->name('api.donors.reset_password.request'); 
-    Route::get('/donors/reset_password/{code}' , [DonorController::class, 'retrieveResetPasswordRequest'])->name('api.donors.reset_password.request.retrieve'); 
-    Route::post('/donors/reset_password/confirm' , [DonorController::class, 'confirmResetPasswordRequest'])->name('api.donors.reset_password.confirm'); 
+    Route::post('/donors/reset_password' , [DonorController::class, 'createResetPasswordRequest'])->name('api.donors.reset_password_request.create'); 
+    Route::get('/donors/reset_password/{token}' , [DonorController::class, 'retrieveResetPasswordRequest'])->name('api.donors.reset_password_request.retrieve'); 
+    Route::post('/donors/reset_password/{token}/confirm' , [DonorController::class, 'confirmResetPasswordRequest'])->name('api.donors.reset_password_request.confirm'); 
 });
 
-Route::group(['middleware' => 'auth_donor'],function () {
+Route::group(['middleware' => 'auth_donor'], function () {
     Route::get('/donors/auth' , [AuthDonorController::class, 'retrieve'])->name('api.donors.auth.retrieve'); 
     Route::post('/donors/auth/logout' , [AuthDonorController::class, 'logout'])->name('api.donors.auth.logout'); 
     Route::post('/donors/auth' , [AuthDonorController::class, 'update'])->name('api.donors.auth.update'); 

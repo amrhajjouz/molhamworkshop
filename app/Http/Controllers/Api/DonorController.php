@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Http\Request;
 use App\Exceptions\ApiException;
 use App\Models\Donor;
 use App\Http\Requests\Api\Donor\{CreateDonorRequest, AuthenticateDonorRequest, CreateDonorResetPasswordRequest, ConfirmDonorResetPasswordRequest};
@@ -54,18 +55,32 @@ class DonorController extends Controller
             if (!$donor) throw new Exception('reset_donor_password_invalid_email');
             if ($donor->reset_password_requests()->where([['expires_at', ">", Carbon::now()->toDateTimeString()], ['consumed', 0]])->get()->count() >= 3) throw new ApiException('max_exceed_donor_reset_password_requests');
             $donorResetPasswordRequest = $donor->reset_password_requests()->create([]);
-            DonorMailer::sendResetPasswordLink($donor, $donorResetPasswordRequest->code);
-            return handleResponse(null);
+            // DonorMailer::sendResetPasswordCode($donor, $donorResetPasswordRequest->code);
+            return handleResponse(['token' => $donorResetPasswordRequest->token]);
         } catch (\Exception $e) {
             throw new ApiException($e->getMessage());
         }
     }
 
-    public function confirmResetPasswordRequest(ConfirmDonorResetPasswordRequest $request)
+    public function retrieveResetPasswordRequest(Request $request, $token)
+    {
+        try {
+            $resetPasswordRequest = DonorResetPasswordRequest::where([['token', $token], ['code', $request->code], ['expires_at', ">", Carbon::now()->toDateTimeString()], ['consumed', 0] , ['attempts' , '<' , 3]])->first();
+            if (!$resetPasswordRequest)  throw new Exception('invalid_donor_reset_password_request');
+            $resetPasswordRequest->attempts +=1;
+            $resetPasswordRequest->save();
+            $donor = $resetPasswordRequest->donor;
+            return handleResponse(['name' => $donor->name, 'email' => $donor->email]);
+        } catch (\Exception $e) {
+            throw new ApiException($e->getMessage());
+        }
+    }
+    
+    public function confirmResetPasswordRequest(ConfirmDonorResetPasswordRequest $request, $token)
     {
         try {
             $data = $request->validated();
-            $resetPasswordRequest = DonorResetPasswordRequest::where([['code', $data['code']], ['expires_at', ">", Carbon::now()->toDateTimeString()], ['consumed', 0]])->first();
+            $resetPasswordRequest = DonorResetPasswordRequest::where([['token', $token], ['code', $data['code']], ['expires_at', ">", Carbon::now()->toDateTimeString()], ['consumed', 0]])->first();
             if (!$resetPasswordRequest) throw new ApiException('invalid_confirm_donor_reset_password_request');
             $donor = Donor::findOrFail($resetPasswordRequest->donor_id);
             $donor->password = Hash::make($data['new_password']);
@@ -73,17 +88,6 @@ class DonorController extends Controller
             $resetPasswordRequest->consumed = true;
             $resetPasswordRequest->save();
             return handleResponse(null);
-        } catch (\Exception $e) {
-            throw new ApiException($e->getMessage());
-        }
-    }
-
-    public function retrieveResetPasswordRequest($code)
-    {
-        try {
-            $resetPasswordRequest = DonorResetPasswordRequest::where([['code', $code], ['expires_at', ">", Carbon::now()->toDateTimeString()], ['consumed', 0]])->firstOrFail();
-            $donor = $resetPasswordRequest->donor;
-            return handleResponse(['name' => $donor->name, 'email' => $donor->email]);
         } catch (\Exception $e) {
             throw new ApiException($e->getMessage());
         }

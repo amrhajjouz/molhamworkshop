@@ -33,3 +33,24 @@ function handleResponse($response)
     }
     else return response()->json($response);
 }
+
+function getMorphedModel ($morph)
+{
+    return \Illuminate\Database\Eloquent\Relations\Relation::getMorphedModel($morph);
+}
+
+function getPaymentMethodType ($methodableType)
+{
+    $paymentMethodType = null;
+    switch ($methodableType) {
+        case 'stripe_card': $paymentMethodType = 'card'; break;
+        case 'stripe_ideal_account': $paymentMethodType = 'ideal'; break;
+        case 'stripe_sofort_account': $paymentMethodType = 'sofort'; break;
+        case 'stripe_giropay_account': $paymentMethodType = 'giropay'; break;
+        case 'stripe_sepa_account': $paymentMethodType = 'sepa'; break;
+        case 'swish_account': $paymentMethodType = 'swish'; break;
+    }
+    return $paymentMethodType;
+}
+
+

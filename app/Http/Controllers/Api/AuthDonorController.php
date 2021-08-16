@@ -128,9 +128,7 @@ class AuthDonorController extends Controller
         try {
             $request->user()->avatar()->delete();
             $reference = Str::random(50);
-            do {
-                $reference = Str::random(50);
-            } while (Image::where('reference', $reference)->exists());
+            do {$reference = Str::random(50);} while (Image::where('reference', $reference)->exists());
             $request->validated()['avatar']->storeAs('public/avatars', $reference . "." . $request->validated()['avatar']->getClientOriginalExtension());
             $request->user()->avatar()->create(['type' => "avatar", "reference" => $reference]);
             return handleResponse(null);
