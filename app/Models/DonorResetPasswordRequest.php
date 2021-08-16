@@ -19,16 +19,15 @@ class DonorResetPasswordRequest extends Model
 
     public function save($options = [])
     {
-
-        if(!$this->exists){
-            $this->code = rand(100000 , 999999);
+        
+        if (!$this->exists) {
             do {
-                $this->code = rand(100000 , 999999);
-            } while (DonorResetPasswordRequest::where('code', $this->code)->exists());
-
+                $this->token = Str::random(100);
+            } while (DonorResetPasswordRequest::where('token', $this->token)->exists());
+            $this->code = rand(100000 , 999999);
             $this->expires_at = Carbon::now()->addMinutes(20)->toDateTimeString();
         }
-
+        
         return parent::save($options);
     }
 }

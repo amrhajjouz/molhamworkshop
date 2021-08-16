@@ -22,6 +22,9 @@ class AppServiceProvider extends ServiceProvider
             'swish_account' => 'App\Models\SwishAccount',
             'stripe_ideal_account' => 'App\Models\StripeIdealAccount',
             'stripe_sofort_account' => 'App\Models\StripeSofortAccount',
+            'stripe_sepa_account' => 'App\Models\StripeSepaAccount',
+            'stripe_giropay_account' => 'App\Models\StripeGiropayAccount',
+            'paypal_subscription' => 'App\Models\PaypalSubscription',
         ]);
     }
 

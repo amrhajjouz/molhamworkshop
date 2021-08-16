@@ -25,7 +25,7 @@ class ConfirmDonorResetPasswordRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required|string|exists:donor_reset_password_requests,code',
+            'code' => 'required|numeric|digits:6',
             'new_password' => 'required|between:8,30|confirmed|string'
         ];
     }
