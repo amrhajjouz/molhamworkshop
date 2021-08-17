@@ -9,6 +9,8 @@ use App\Models\{Image, Token, NotificationPreference};
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Aws\S3\S3Client;
+use Illuminate\Support\Facades\Storage;
 
 class AuthDonorController extends Controller
 {
@@ -129,8 +131,11 @@ class AuthDonorController extends Controller
             $request->user()->avatar()->delete();
             $reference = Str::random(50);
             do {$reference = Str::random(50);} while (Image::where('reference', $reference)->exists());
-            $request->validated()['avatar']->storeAs('public/avatars', $reference . "." . $request->validated()['avatar']->getClientOriginalExtension());
-            $request->user()->avatar()->create(['type' => "avatar", "reference" => $reference]);
+            $fileName = 'images/' . $reference . ".jpg";
+            $url = null;
+            Storage::disk('digitalocean')->put($fileName, file_get_contents($request->validated()['avatar']));
+            if (Storage::disk('digitalocean')->exists($fileName)) $url = Storage::disk("digitalocean")->url($fileName);
+            $request->user()->avatar()->create(['type' => "avatar", "reference" => $reference, 'url' => $url]);
             return handleResponse(null);
         } catch (\Exception $e) {
             throw new ApiException($e->getMessage());
