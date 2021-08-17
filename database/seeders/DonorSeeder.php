@@ -20,5 +20,23 @@ class DonorSeeder extends Seeder
             'email' => 'mohamd@admin.com',
             'password' => Hash::make('123123'),
         ]);
+        
+        DB::table('donors')->insert([
+            'name' => 'Khaled',
+            'email' => 'darkrideroffate@gmail.com',
+            'password' => Hash::make('12345678'),
+        ]);
+        
+        DB::table('donors')->insert([
+            'name' => 'Mohammad',
+            'email' => 'aliwi299@gmail.com',
+            'password' => Hash::make('12345678'),
+        ]);
+        
+        DB::table('donors')->insert([
+            'name' => 'Amr',
+            'email' => 'amr.hajjouz@gmail.com',
+            'password' => Hash::make('12345678'),
+        ]);
     }
 }
