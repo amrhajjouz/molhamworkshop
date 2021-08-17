@@ -10,7 +10,7 @@ class Donor extends Model
 {
     use Tokenable;
 
-    protected  $fillable = ["name", "phone", "password", "email", "swish_number", "whatsapp_number", 'locale', 'currency', 'country_code' , 'attempts'];
+    protected  $guarded = [];
     protected $hidden = ['password'];
 
     public function country()

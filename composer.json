@@ -17,7 +17,8 @@
         "laravel/tinker": "^2.5",
         "sendgrid/sendgrid": "^7.9",
         "socialiteproviders/apple": "^4.1",
-        "socialiteproviders/twitter": "^4.1"
+        "socialiteproviders/twitter": "^4.1",
+        "stripe/stripe-php": "^7.93"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",

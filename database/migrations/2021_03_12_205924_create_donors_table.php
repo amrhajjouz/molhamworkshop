@@ -19,7 +19,7 @@ class CreateDonorsTable extends Migration
             $table->string("email",155);
             $table->text("password");
             $table->string("phone",20)->nullable();
-            $table->string("swish_number",20)->nullable();;
+            $table->string("swish_number",20)->nullable();
             $table->string("whatsapp_number",20)->nullable();
             $table->boolean("subscribed_to_newsletter")->default(false);
             $table->boolean("verified")->default(false);
@@ -29,6 +29,7 @@ class CreateDonorsTable extends Migration
             $table->enum("currency" , ['usd' , 'eur' , 'try' , 'sar'])->default("usd");
             $table->enum("locale" , ['ar' , 'en' , 'fr' , 'de'])->default("ar");
             $table->bigInteger("avatar_image_id")->nullable();
+            $table->string("stripe_customer_id")->index()->nullable();
             $table->timestamps();
         });
     }

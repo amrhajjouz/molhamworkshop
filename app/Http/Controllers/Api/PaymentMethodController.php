@@ -5,33 +5,55 @@ namespace App\Http\Controllers\Api;
 use App\Exceptions\ApiException;
 use Illuminate\Http\Request;
 use App\Http\Requests\Api\PaymentMethod\{CreatePaymentMethodRequest, DeletePaymentMethodRequest};
-use App\Models\{PaymentMethod};
+use App\Models\{PaymentMethod, StripeCard};
 use Exception;
 use Illuminate\Support\Str;
+use Stripe\StripeClient;
 
 class PaymentMethodController extends Controller
 {
-    public function create(CreatePaymentMethodRequest $request)
+    public function create(Request $request)
     {
         try {
             
-            $brands = ['visa', 'master'];
-            $data = [
-                'donor_id' => auth('donor')->user()->id,
-                'methodable_type' => 'stripe_card',
-                'methodable' => [
-                    'stripe_payment_method_id' => $request->validated()['stripe_payment_method_id'],
-                    'fingerprint' => Str::random(20),
-                    'brand' => $brands[array_rand($brands)],
-                    'last4_digits' => rand(1000, 9999),
-                    'expiry_month' => rand(1, 12),
-                    'expiry_year' => rand(2021, 2030),
-                    'country_code' => "TR",
-                ],
-            ];
-            $paymentMethod = PaymentMethod::create($data);
-            return handleResponse($paymentMethod->apiTransform());
+            if (!$request->has('stripe_setup_intent_id')) throw new ApiException('invalid_request');
+            
+            $stripe = new StripeClient('sk_test_BQokikJOvBiI2HlWgH4olfQ2');         
+            
+            $setupIntent = $stripe->setupIntents->retrieve($request->stripe_setup_intent_id);
+            
+            if (true /*$setupIntent->status == 'succeeded'*/) {
+                
+                $stripePaymentMethod = $stripe->paymentMethods->retrieve($setupIntent->payment_method);
+                
+                if ($stripePaymentMethod->type == 'card') {
+                    
+                    if (StripeCard::where('stripe_payment_method_id', $stripePaymentMethod->id)->exists()) throw new ApiException('payment_method_already_exists');
+                    
+                    $data = [
+                        'donor_id' => auth('donor')->user()->id,
+                        'methodable_type' => 'stripe_card',
+                        'methodable' => [
+                            'stripe_payment_method_id' => $stripePaymentMethod->id,
+                            'fingerprint' => $stripePaymentMethod->card->fingerprint,
+                            'brand' => $stripePaymentMethod->card->brand,
+                            'last4_digits' => $stripePaymentMethod->card->last4,
+                            'expiry_month' => $stripePaymentMethod->card->exp_month,
+                            'expiry_year' => $stripePaymentMethod->card->exp_year,
+                            'country_code' => $stripePaymentMethod->card->country,
+                        ],
+                    ];
+                    
+                    $paymentMethod = PaymentMethod::create($data);
+                    return handleResponse($paymentMethod->apiTransform());
+                }
+                
+                else throw new ApiException('invalid_payment_method');
+                
+            } else throw new ApiException('invalid_payment_method');
+            
         } catch (\Exception $e) {
+            //return get_class ($e);
             throw new ApiException($e->getMessage());
         }
     }
