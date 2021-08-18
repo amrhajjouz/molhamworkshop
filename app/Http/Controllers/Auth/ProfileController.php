@@ -83,8 +83,8 @@ class ProfileController extends Controller {
     {
         try {
             $user = auth()->user();
-            // dd($user->notifications);
-            $notifications = $user->notifications()
+            
+            /*$notifications = $user->notifications()
             ->join("notifications_templates",function($j){
                     $j->on('notifications.template_id' , "notifications_templates.id" );
             })
@@ -95,9 +95,11 @@ class ProfileController extends Controller {
                     $q->orWhere('notifications.body->ar', 'like', '%' . $request->q . '%');
                     $q->orWhere('notifications.body->en', 'like', '%' . $request->q . '%');
                 }
-            })->paginate(5)->withQueryString();
-
+            })->paginate(5)->withQueryString();*/
+            
+            $notifications = $user->notifications()->paginate(2)->withQueryString();
             $notifications->markAsRead();
+            
             return response()->json($notifications);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
