@@ -6,11 +6,14 @@ use App\Exceptions\ApiException;
 use Illuminate\Http\Request;
 use App\Http\Requests\Api\Donor\{UpdateDonorRequest, ChangeDonorEmailRequest, ChangeDonorPasswordRequest, UpdateDonorNotificationPreferences, ChangeDonorAvatarRequest};
 use App\Models\{Image, Token, NotificationPreference};
+use App\Services\ImageCreator;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Aws\S3\S3Client;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManagerStatic as InterventionImage;
+
 
 class AuthDonorController extends Controller
 {
@@ -129,13 +132,7 @@ class AuthDonorController extends Controller
     {
         try {
             $request->user()->avatar()->delete();
-            $reference = Str::random(50);
-            do {$reference = Str::random(50);} while (Image::where('reference', $reference)->exists());
-            $fileName = 'images/' . $reference . ".jpg";
-            $url = null;
-            Storage::disk('digitalocean')->put($fileName, file_get_contents($request->validated()['avatar']));
-            if (Storage::disk('digitalocean')->exists($fileName)) $url = Storage::disk("digitalocean")->url($fileName);
-            $request->user()->avatar()->create(['type' => "avatar", "reference" => $reference, 'url' => $url]);
+            $imageModel = ImageCreator::createImage($request->validated()['avatar'] , ['imageable_type' => 'donor' , 'imageable_id' => $request->user()->id  , 'type' =>"avatar"]);
             return handleResponse(null);
         } catch (\Exception $e) {
             throw new ApiException($e->getMessage());
