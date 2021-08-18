@@ -48,16 +48,19 @@ class UserController extends Controller
 
             //THis way to send notification we have to pass variable in data array
 
-            // $user->notifications()->create(
-            //     [
-            //     "name" => "retrieve_user",
-            //     'data' => [
-            //         'viewer_name' => auth()->user()->name, 
-            //         'user_name' => auth()->user()->name, 
-            //         'time' =>time() ,
-            //         'user_id' => "$user->id", 
-            //     ]
-            // ]);
+            $user->notifications()->create(
+                [
+                "name" => "view_user",
+                'data' => [
+                    'viewer_name' => auth()->user()->name, 
+                    'user_name' => auth()->user()->name, 
+                    'time' =>time() ,
+                    'user_id' => "$user->id", 
+                    'date' => date("Y-M-D H:i:s" , time()), 
+                    'id' =>$user->id, 
+                    'user_lang' =>$user->lang, 
+                ]
+            ]);
             // Fetch User and Return
             return response()->json($user);
         } catch (\Exception $e) {
