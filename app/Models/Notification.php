@@ -46,10 +46,10 @@ class Notification extends DatabaseNotification
             unset($this->name);
             $this->template_id = $template->id;
             $allVariables = $replacements = $patterns = [];
-            $matches = extractVariables($template->path);
+            $matches = extractStringVariables($template->path);
             if ($matches) $allVariables = $matches;
             foreach ($template->body as $str) {
-                $matches = extractVariables($str);
+                $matches = extractStringVariables($str);
                 if ($matches) foreach ($matches as $m) $allVariables[] = $m;
             }
             foreach ($allVariables as $v) {
@@ -62,10 +62,10 @@ class Notification extends DatabaseNotification
             }
             $notificationBody = [];
             foreach ($template->body as $key => $value) {
-                $notificationBody[$key] = fillVariables($template->body[$key], $replacements);
+                $notificationBody[$key] = fillStringVariables($template->body[$key], $replacements);
             }
             $this->body = $notificationBody;
-            $this->path = fillVariables($template->path, $replacements);;
+            $this->path = fillStringVariables($template->path, $replacements);;
         }
         return parent::save($options);
     }

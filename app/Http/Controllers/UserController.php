@@ -48,19 +48,19 @@ class UserController extends Controller
 
             //THis way to send notification we have to pass variable in data array
 
-            $user->notifications()->create(
-                [
-                "name" => "view_user",
-                'data' => [
-                    'viewer_name' => auth()->user()->name, 
-                    'user_name' => auth()->user()->name, 
-                    'time' =>time() ,
-                    'user_id' => "$user->id", 
-                    'date' => date("Y-M-D H:i:s" , time()), 
-                    'id' =>$user->id, 
-                    'user_lang' =>$user->lang, 
-                ]
-            ]);
+            // $user->notifications()->create(
+            //     [
+            //     "name" => "view_user",
+            //     'data' => [
+            //         'viewer_name' => auth()->user()->name, 
+            //         'user_name' => auth()->user()->name, 
+            //         'time' =>time() ,
+            //         'user_id' => "$user->id", 
+            //         'date' => date("Y-M-D H:i:s" , time()), 
+            //         'id' =>$user->id, 
+            //         'user_lang' =>$user->lang, 
+            //     ]
+            // ]);
             // Fetch User and Return
             return response()->json($user);
         } catch (\Exception $e) {
@@ -90,7 +90,7 @@ class UserController extends Controller
                         $q->where('body->ar', 'like', '%' . $request->q . '%');
                         $q->orWhere('body->en', 'like', '%' . $request->q . '%');
                     }
-                })->paginate(5)->withQueryString();
+                })->paginate(2)->withQueryString();
             return response()->json($notifications);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];

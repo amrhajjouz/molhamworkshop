@@ -86,6 +86,7 @@ class ProfileController extends Controller
                 }
             })->paginate(5)->withQueryString();
             $notifications->markAsRead();
+            
             return response()->json($notifications);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
