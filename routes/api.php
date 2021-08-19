@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\{DonorController , AuthDonorController , PaymentMethodController};
+use App\Http\Controllers\Api\PaymentProvider\Stripe\{SetupIntentController};
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +17,6 @@ use App\Http\Controllers\Api\{DonorController , AuthDonorController , PaymentMet
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 
 Route::group([], function () {
     Route::post('/donors/authenticate' , [DonorController::class, 'authenticate'])->name('api.donors.authenticate');
@@ -39,11 +39,12 @@ Route::group(['middleware' => 'auth_donor'], function () {
     Route::get('/donors/auth/payment_methods' , [AuthDonorController::class, 'listPaymentMethods'])->name('api.donors.auth.payment_methods.list'); 
     Route::post('/donors/auth/avatar' , [AuthDonorController::class, 'changeAvatar'])->name('api.donors.auth.avatar.change'); 
     Route::delete('/donors/auth/avatar' , [AuthDonorController::class, 'removeAvatar'])->name('api.donors.auth.avatar.remove'); 
-    ///////////////////// PaymentMethod /////////////////////
+    
+    // PaymentMethod
     Route::post('/payment_methods' , [PaymentMethodController::class, 'create'])->name('api.payment_methods.create'); 
     Route::get('/payment_methods/{payment_method_id}' , [PaymentMethodController::class, 'retrieve'])->name('api.donors.payment_methods.retrieve'); 
     Route::delete('/payment_methods/{payment_method_id}' , [PaymentMethodController::class, 'delete'])->name('api.payment_methods.delete'); 
+    
+    // Stripe Routes
+    Route::post('/payment_providers/stripe/setup_intents' , [SetupIntentController::class, 'create'])->name('api.payment_providers.stripe.setup_intent.create'); 
 });
-
-
-
