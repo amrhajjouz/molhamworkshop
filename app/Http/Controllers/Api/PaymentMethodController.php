@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Exceptions\ApiException;
+use App\Exceptions\ApiErrorException;
 use Illuminate\Http\Request;
 use App\Http\Requests\Api\PaymentMethod\{CreatePaymentMethodRequest, DeletePaymentMethodRequest};
 use App\Models\{PaymentMethod, StripeCard};
@@ -16,7 +16,7 @@ class PaymentMethodController extends Controller
     {
         try {
             
-            if (!$request->has('stripe_setup_intent_id')) throw new ApiException('invalid_request');
+            if (!$request->has('stripe_setup_intent_id')) throw new ApiErrorException('invalid_request');
             
             $stripe = new StripeClient('sk_test_BQokikJOvBiI2HlWgH4olfQ2');         
             
@@ -28,7 +28,7 @@ class PaymentMethodController extends Controller
                 
                 if ($stripePaymentMethod->type == 'card') {
                     
-                    if (StripeCard::where('stripe_payment_method_id', $stripePaymentMethod->id)->exists()) throw new ApiException('payment_method_already_exists');
+                    if (StripeCard::where('stripe_payment_method_id', $stripePaymentMethod->id)->exists()) throw new ApiErrorException('payment_method_already_exists');
                     
                     $data = [
                         'donor_id' => auth('donor')->user()->id,
@@ -48,13 +48,13 @@ class PaymentMethodController extends Controller
                     return handleResponse($paymentMethod->apiTransform());
                 }
                 
-                else throw new ApiException('invalid_payment_method');
+                else throw new ApiErrorException('invalid_payment_method');
                 
-            } else throw new ApiException('invalid_payment_method');
+            } else throw new ApiErrorException('invalid_payment_method');
             
         } catch (\Exception $e) {
             //return get_class ($e);
-            throw new ApiException($e->getMessage());
+            throw new ApiErrorException($e);
         }
     }
 
@@ -66,7 +66,7 @@ class PaymentMethodController extends Controller
             $paymentMethod->delete();
             return handleResponse(null);
         } catch (\Exception $e) {
-            throw new ApiException($e->getMessage());
+            throw new ApiErrorException($e);
         }
     }
 
@@ -77,7 +77,7 @@ class PaymentMethodController extends Controller
             if (!$paymentMethod) throw new Exception('invalid_payment_method');
             return handleResponse($paymentMethod->apiTransform());
         } catch (\Exception $e) {
-            throw new ApiException($e->getMessage());
+            throw new ApiErrorException($e);
         }
     }
 
@@ -86,7 +86,7 @@ class PaymentMethodController extends Controller
         try {
             //   TODO
         } catch (\Exception $e) {
-            throw new ApiException($e->getMessage());
+            throw new ApiErrorException($e);
         }
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Exceptions\ApiException;
+use App\Exceptions\ApiErrorException;
 use App\Models\Donor;
 use App\Http\Requests\Api\Donor\{CreateDonorRequest, AuthenticateDonorRequest, CreateDonorResetPasswordRequest, ConfirmDonorResetPasswordRequest};
 use App\Models\DonorResetPasswordRequest;
@@ -34,7 +34,7 @@ class DonorController extends Controller
                 'access_token' => $token->access_token,
             ]);
         } catch (\Exception $e) {
-            throw new ApiException($e->getMessage());
+            throw new ApiErrorException($e);
         }
     }
 
@@ -48,7 +48,7 @@ class DonorController extends Controller
             $token = $donor->tokens()->create([]);
             return handleResponse(['id' => $donor->id, 'name' => $donor->name, 'email' => $donor->email, 'locale' => $donor->locale, 'currency' => $donor->currency, 'access_token' => $token->access_token]);
         } catch (\Exception $e) {
-            throw new ApiException($e->getMessage());
+            throw new ApiErrorException($e);
         }
     }
 
@@ -57,12 +57,12 @@ class DonorController extends Controller
         try {
             $donor = Donor::where('email', $request->validated()['email'])->first();
             if (!$donor) throw new Exception('reset_donor_password_invalid_email');
-            if ($donor->reset_password_requests()->where([['expires_at', ">", Carbon::now()->toDateTimeString()], ['consumed', 0]])->get()->count() >= 3) throw new ApiException('max_exceed_donor_reset_password_requests');
+            if ($donor->reset_password_requests()->where([['expires_at', ">", Carbon::now()->toDateTimeString()], ['consumed', 0]])->get()->count() >= 3) throw new ApiErrorException('max_exceed_donor_reset_password_requests');
             $donorResetPasswordRequest = $donor->reset_password_requests()->create([]);
             DonorMailer::sendResetPasswordCode($donor, $donorResetPasswordRequest->code);
             return handleResponse(['token' => $donorResetPasswordRequest->token]);
         } catch (\Exception $e) {
-            throw new ApiException($e->getMessage());
+            throw new ApiErrorException($e);
         }
     }
 
@@ -76,7 +76,7 @@ class DonorController extends Controller
             $donor = $resetPasswordRequest->donor;
             return handleResponse(['name' => $donor->name, 'email' => $donor->email]);
         } catch (\Exception $e) {
-            throw new ApiException($e->getMessage());
+            throw new ApiErrorException($e);
         }
     }
 
@@ -85,16 +85,16 @@ class DonorController extends Controller
         try {
             $data = $request->validated();
             $resetPasswordRequest = DonorResetPasswordRequest::where([['token', $token], ['code', $data['code']], ['expires_at', ">", Carbon::now()->toDateTimeString()], ['consumed', 0]])->first();
-            if (!$resetPasswordRequest) throw new ApiException('invalid_confirm_donor_reset_password_request');
+            if (!$resetPasswordRequest) throw new ApiErrorException('invalid_confirm_donor_reset_password_request');
             $donor = Donor::find($resetPasswordRequest->donor_id);
-            if (!$donor) throw new ApiException('invalid_donor');
+            if (!$donor) throw new ApiErrorException('invalid_donor');
             $donor->password = Hash::make($data['new_password']);
             $donor->save();
             $resetPasswordRequest->consumed = true;
             $resetPasswordRequest->save();
             return handleResponse(null);
         } catch (\Exception $e) {
-            throw new ApiException($e->getMessage());
+            throw new ApiErrorException($e);
         }
     }
 
@@ -102,14 +102,14 @@ class DonorController extends Controller
     {
         try {
             $donor = Donor::where('email_verification_token', $request->token)->first();
-            if (!$donor) throw new ApiException('invalid_donor');
+            if (!$donor) throw new ApiErrorException('invalid_donor');
             $donor->email_verification_token = null;
             $donor->verified = true;
             $donor->verified_at = date('Y-m-d H:i:s', time());
             $donor->save();
             return handleResponse(null);
         } catch (\Exception $e) {
-            throw new ApiException($e->getMessage());
+            throw new ApiErrorException($e);
         }
     }
 }

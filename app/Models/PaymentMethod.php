@@ -2,11 +2,8 @@
 
 namespace App\Models;
 
-use App\Exceptions\ApiException;
-use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\Relation;
 
 class PaymentMethod extends Model
 {

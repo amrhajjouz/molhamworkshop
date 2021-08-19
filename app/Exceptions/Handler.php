@@ -46,7 +46,7 @@ class Handler extends ExceptionHandler
         if ($request->is('api/*')) {
             $request->headers->set('Accept', 'application/json');
             if ($exception instanceof  ValidationException) return handleResponse(["errors" =>  $exception->errors()]);
-            if ($exception instanceof  ApiException) return handleResponse(["error" =>  $exception->getMessage()]);
+            if ($exception instanceof  ApiErrorException) return handleResponse(["error" =>  $exception->getMessage()]);
         }
         return parent::render($request, $exception);
     }

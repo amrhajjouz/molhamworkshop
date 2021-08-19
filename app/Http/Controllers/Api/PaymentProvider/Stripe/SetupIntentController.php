@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\PaymentProvider\Stripe;
 
 use App\Http\Controllers\Controller;
-use App\Exceptions\ApiException;
+use App\Exceptions\ApiErrorException;
 use Illuminate\Http\Request;
 use Exception;
 use Stripe\StripeClient;
@@ -14,7 +14,7 @@ class SetupIntentController extends Controller
     {
         try {
             
-            if (!$request->has('stripe_payment_method_id')) throw new ApiException('invalid_request');
+            if (!$request->has('stripe_payment_method_id')) throw new ApiErrorException('invalid_request');
             
             $stripe = new StripeClient('sk_test_BQokikJOvBiI2HlWgH4olfQ2');
             
@@ -30,7 +30,7 @@ class SetupIntentController extends Controller
             
             return handleResponse($setupIntent);
         } catch (\Exception $e) {
-            throw new ApiException($e->getMessage());
+            throw new ApiErrorException($e);
         }
     }
 }

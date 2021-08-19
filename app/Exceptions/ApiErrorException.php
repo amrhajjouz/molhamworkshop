@@ -4,6 +4,6 @@ namespace App\Exceptions;
 
 use Exception;
 
-class ApiException extends Exception
+class ApiErrorException extends Exception
 {
 }

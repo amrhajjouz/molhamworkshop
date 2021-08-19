@@ -27,11 +27,11 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('123123'),
         ]);
 
-
         $this->call([
             UserSeeder::class,
             NotificationPrefernceSeeder::class,
             DonorSeeder::class,
+            CountrySeeder::class,
         ]);
     }
 }
