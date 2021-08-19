@@ -24,6 +24,7 @@ Route::group([], function () {
     Route::post('/donors/reset_password' , [DonorController::class, 'createResetPasswordRequest'])->name('api.donors.reset_password_request.create'); 
     Route::post('/donors/reset_password/{token}' , [DonorController::class, 'retrieveResetPasswordRequest'])->name('api.donors.reset_password_request.retrieve'); 
     Route::post('/donors/reset_password/{token}/confirm' , [DonorController::class, 'confirmResetPasswordRequest'])->name('api.donors.reset_password_request.confirm'); 
+    Route::post('/donors/verify_email' , [DonorController::class, 'verifyEmail'])->name('api.donors.verify_email'); 
 });
 
 Route::group(['middleware' => 'auth_donor'], function () {

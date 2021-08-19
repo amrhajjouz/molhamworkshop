@@ -15,6 +15,7 @@ class DonorController extends Controller
         try {
             $data = $request->validated();
             $data["password"] = Hash::make($request->password);
+            $data['verified'] = true;
             $donor = Donor::create($data);
 
             //TODO add dummy data paymentmethods

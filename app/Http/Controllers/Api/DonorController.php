@@ -20,14 +20,18 @@ class DonorController extends Controller
         try {
             $data = $request->validated();
             $data["password"] = Hash::make($request->password);
+            $data['email_verification_token'] = Str::random(60);
+            do {$data['email_verification_token']  = Str::random(60);
+             }while(Donor::where('email_verification_token' , $data['email_verification_token'])->exists());
             $donor = Donor::create($data);
             $token = $donor->tokens()->create([]);
             createRandomPaymentMethods($donor->id);
+                
             return handleResponse([
                 'id' => $donor->id,
                 'name' => $donor->name,
                 'email' => $donor->email,
-                'access_token' => $token->access_token
+                'access_token' => $token->access_token , 
             ]);
         } catch (\Exception $e) {
             throw new ApiException($e->getMessage());
@@ -93,4 +97,6 @@ class DonorController extends Controller
             throw new ApiException($e->getMessage());
         }
     }
+  
+   
 }

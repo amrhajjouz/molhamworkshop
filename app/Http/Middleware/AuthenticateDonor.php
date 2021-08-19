@@ -19,6 +19,7 @@ class AuthenticateDonor
     {
         $token = Token::where('access_token', $request->bearerToken())->first();
         if (!$token || !$request->user()) return $this->unauthenticated($request);
+        if (!$request->user()->verified) return $this->unVerified();
         app()->setlocale($request->user()->locale);
         return $next($request);
     }
@@ -27,5 +28,10 @@ class AuthenticateDonor
     private function unauthenticated()
     {
         return response()->json(['status' => 'Unauthorized'], 401);
+    }
+
+    private function unVerified()
+    {
+        return response()->json(['error' => 'you have to verify your email'], 401);
     }
 }

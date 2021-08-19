@@ -11,7 +11,7 @@ class Donor extends Model
     use Tokenable;
 
     protected  $guarded = [];
-    protected $hidden = ['password'];
+    protected $hidden = ['password' , "email_verification_token"];
 
     public function country()
     {

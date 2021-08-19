@@ -30,6 +30,8 @@ class CreateDonorsTable extends Migration
             $table->enum("locale" , ['ar' , 'en' , 'fr' , 'de'])->default("ar");
             $table->bigInteger("avatar_image_id")->nullable();
             $table->string("stripe_customer_id")->index()->nullable();
+            $table->dateTime("verified_at")->nullable();
+            $table->string("email_verification_token" , 100)->unique()->nullable();
             $table->timestamps();
         });
     }

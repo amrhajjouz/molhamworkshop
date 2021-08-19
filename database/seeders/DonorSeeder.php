@@ -18,6 +18,7 @@ class DonorSeeder extends Seeder
         DB::table('donors')->insert([
             'name' => 'Mohammed Ghannoum',
             'email' => 'mohamd@admin.com',
+            'verified' => 1,
             'password' => Hash::make('123123'),
         ]);
         
@@ -25,18 +26,21 @@ class DonorSeeder extends Seeder
             'name' => 'Khaled',
             'email' => 'darkrideroffate@gmail.com',
             'password' => Hash::make('12345678'),
+            'verified' => 1,
         ]);
         
         DB::table('donors')->insert([
             'name' => 'Mohammad',
             'email' => 'aliwi299@gmail.com',
             'password' => Hash::make('12345678'),
+            'verified' => 1,
         ]);
         
         DB::table('donors')->insert([
             'name' => 'Amr',
             'email' => 'amr.hajjouz@gmail.com',
             'password' => Hash::make('12345678'),
+            'verified' => 1,
         ]);
     }
 }
