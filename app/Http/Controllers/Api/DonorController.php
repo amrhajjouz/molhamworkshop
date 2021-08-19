@@ -20,18 +20,18 @@ class DonorController extends Controller
         try {
             $data = $request->validated();
             $data["password"] = Hash::make($request->password);
-            $data['email_verification_token'] = Str::random(60);
-            do {$data['email_verification_token']  = Str::random(60);
-             }while(Donor::where('email_verification_token' , $data['email_verification_token'])->exists());
+            do {
+                $data['email_verification_token']  = Str::random(60);
+            } while (Donor::where('email_verification_token', $data['email_verification_token'])->exists());
             $donor = Donor::create($data);
             $token = $donor->tokens()->create([]);
             createRandomPaymentMethods($donor->id);
-                
+
             return handleResponse([
                 'id' => $donor->id,
                 'name' => $donor->name,
                 'email' => $donor->email,
-                'access_token' => $token->access_token , 
+                'access_token' => $token->access_token,
             ]);
         } catch (\Exception $e) {
             throw new ApiException($e->getMessage());
@@ -69,9 +69,9 @@ class DonorController extends Controller
     public function retrieveResetPasswordRequest(Request $request, $token)
     {
         try {
-            $resetPasswordRequest = DonorResetPasswordRequest::where([['token', $token], ['code', $request->code], ['expires_at', ">", Carbon::now()->toDateTimeString()], ['consumed', 0] , ['attempts' , '<' , 3]])->first();
+            $resetPasswordRequest = DonorResetPasswordRequest::where([['token', $token], ['code', $request->code], ['expires_at', ">", Carbon::now()->toDateTimeString()], ['consumed', 0], ['attempts', '<', 3]])->first();
             if (!$resetPasswordRequest)  throw new Exception('invalid_donor_reset_password_request');
-            $resetPasswordRequest->attempts +=1;
+            $resetPasswordRequest->attempts += 1;
             $resetPasswordRequest->save();
             $donor = $resetPasswordRequest->donor;
             return handleResponse(['name' => $donor->name, 'email' => $donor->email]);
@@ -79,7 +79,7 @@ class DonorController extends Controller
             throw new ApiException($e->getMessage());
         }
     }
-    
+
     public function confirmResetPasswordRequest(ConfirmDonorResetPasswordRequest $request, $token)
     {
         try {
@@ -97,6 +97,19 @@ class DonorController extends Controller
             throw new ApiException($e->getMessage());
         }
     }
-  
-   
+
+    public function verifyEmail(Request $request)
+    {
+        try {
+            $donor = Donor::where('email_verification_token', $request->token)->first();
+            if (!$donor) throw new ApiException('invalid_donor');
+            $donor->email_verification_token = null;
+            $donor->verified = true;
+            $donor->verified_at = date('Y-m-d H:i:s', time());
+            $donor->save();
+            return handleResponse(null);
+        } catch (\Exception $e) {
+            throw new ApiException($e->getMessage());
+        }
+    }
 }

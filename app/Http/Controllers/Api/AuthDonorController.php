@@ -6,14 +6,7 @@ use App\Exceptions\ApiException;
 use Illuminate\Http\Request;
 use App\Http\Requests\Api\Donor\{UpdateDonorRequest, ChangeDonorEmailRequest, ChangeDonorPasswordRequest, UpdateDonorNotificationPreferences, ChangeDonorAvatarRequest};
 use App\Models\{Image, Token, NotificationPreference};
-use App\Services\ImageCreator;
-use Exception;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Aws\S3\S3Client;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\ImageManagerStatic as InterventionImage;
-
 
 class AuthDonorController extends Controller
 {
@@ -55,6 +48,7 @@ class AuthDonorController extends Controller
                 'country_code' => $donor->country_code,
                 'currency' => $donor->currency,
                 'locale' => $donor->locale,
+                'avatar' => $donor->avatar->url ?? null
             ]);
         } catch (\Exception $e) {
             throw new ApiException($e->getMessage());
@@ -132,8 +126,8 @@ class AuthDonorController extends Controller
     {
         try {
             $request->user()->avatar()->delete();
-            $imageModel = ImageCreator::createImage($request->validated()['avatar'] , ['imageable_type' => 'donor' , 'imageable_id' => $request->user()->id  , 'type' =>"avatar"]);
-            return handleResponse(null);
+            $image = $request->user()->avatar()->create(["image" => $request->validated()["avatar"], "type" => "avatar"]);
+            return handleResponse($image->url);
         } catch (\Exception $e) {
             throw new ApiException($e->getMessage());
         }

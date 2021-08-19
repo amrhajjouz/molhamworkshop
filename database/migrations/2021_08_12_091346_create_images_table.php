@@ -17,7 +17,7 @@ class CreateImagesTable extends Migration
             $table->id();
             $table->morphs('imageable');
             $table->string('type' , 20);
-            $table->string('reference' , 50)->unique();
+            $table->string('reference' , 100)->unique();
             $table->softDeletes();
             $table->timestamps();
         });

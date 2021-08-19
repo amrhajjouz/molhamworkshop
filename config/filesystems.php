@@ -32,7 +32,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => storage_path(''),
         ],
 
         'public' => [
@@ -59,7 +59,9 @@ return [
             'endpoint' => env('DIGITALOCEAN_SPACES_ENDPOINT'),
             'region' => env('DIGITALOCEAN_SPACES_REGION'),
             'bucket' => env('DIGITALOCEAN_SPACES_BUCKET'),
-            'root' => storage_path(),
+            'root' => '',
+            'url' => env('DIGITALOCEAN_URL'),
+            'visibility' => 'public'
         ],
 
     ],
@@ -76,7 +78,8 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        // public_path('storage') => storage_path('app/public'),
+        ''=>'/omages'
     ],
 
 ];

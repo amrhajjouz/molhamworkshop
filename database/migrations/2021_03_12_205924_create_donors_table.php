@@ -22,14 +22,13 @@ class CreateDonorsTable extends Migration
             $table->string("swish_number",20)->nullable();
             $table->string("whatsapp_number",20)->nullable();
             $table->boolean("subscribed_to_newsletter")->default(false);
-            $table->boolean("verified")->default(false);
             $table->boolean("blocked")->default(false);
             $table->boolean("closed")->default(false);
             $table->string("country_code")->nullable();
             $table->enum("currency" , ['usd' , 'eur' , 'try' , 'sar'])->default("usd");
             $table->enum("locale" , ['ar' , 'en' , 'fr' , 'de'])->default("ar");
-            $table->bigInteger("avatar_image_id")->nullable();
             $table->string("stripe_customer_id")->index()->nullable();
+            $table->boolean("verified")->default(false);
             $table->dateTime("verified_at")->nullable();
             $table->string("email_verification_token" , 100)->unique()->nullable();
             $table->timestamps();

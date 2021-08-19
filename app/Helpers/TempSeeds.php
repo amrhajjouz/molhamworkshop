@@ -8,11 +8,13 @@ function createRandomPaymentMethods($donorId)
 {
     $faker = Faker\Factory::create();
     $methodables = [];
-    $methodables["stripe_ideal_account"] = StripeIdealAccount::create(["stripe_payment_method_id" => Str::random(20), "owner_name" => $faker->name, "bank_name" => $faker->name]);
-    $methodables["stripe_sepa_account"] = StripeSepaAccount::create(["stripe_payment_method_id" => Str::random(20), "iban" => $faker->postcode . $faker->postcode,]);
-    $methodables["stripe_sofort_account"] = StripeSofortAccount::create(["stripe_payment_method_id" => Str::random(20), "owner_name" => Str::substr($faker->name, 0, 10), "country_code" => Str::substr($faker->country, 0, 2),]);
-    $methodables["stripe_swish_account"] = SwishAccount::create(["number" => rand(100000, 99999999)]);
-    foreach ($methodables as $type => $methodable) {
-        DB::table('payment_methods')->insert(['methodable_id' => $methodable->id, 'methodable_type' => $type, "future_usage" => true, 'donor_id' => $donorId, "type" => $type]);
+    $methodables["stripe_ideal_account"] =["type"=>"ideal_account" , "methodable"=> StripeIdealAccount::create(["stripe_payment_method_id" => Str::random(20), "owner_name" => $faker->name, "bank_name" => $faker->name])];
+    $methodables["stripe_sepa_account"] = ["type"=>"sepa_account" , "methodable"=> StripeSepaAccount::create(["stripe_payment_method_id" => Str::random(20), "iban" => $faker->postcode . $faker->postcode,])];
+    $methodables["stripe_sofort_account"] = ["type"=>"sofort_account" , "methodable"=> StripeSofortAccount::create(["stripe_payment_method_id" => Str::random(20), "owner_name" => Str::substr($faker->name, 0, 10), "country_code" => Str::substr($faker->country, 0, 2),])];
+    $methodables["stripe_swish_account"] = ["type"=>"swish_account" , "methodable"=> SwishAccount::create(["number" => rand(100000, 99999999)])];
+    foreach ($methodables as $methodableType => $data) {
+        DB::table('payment_methods')->insert(['methodable_id' => $data['methodable']->id, 'methodable_type' => $methodableType, "future_usage" => true, 'donor_id' => $donorId, "type" => $data['type']]);
     }
 }
+
+
