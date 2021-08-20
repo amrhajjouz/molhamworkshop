@@ -53,4 +53,11 @@ function getPaymentMethodType ($methodableType)
     return $paymentMethodType;
 }
 
+function authDonor () {
+    return auth('donor')->user();
+}
+
+function stripeClient () {
+    return new \Stripe\StripeClient('sk_test_BQokikJOvBiI2HlWgH4olfQ2');
+}
 
