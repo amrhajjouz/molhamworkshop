@@ -1132,6 +1132,7 @@
                     pages: [],
                     
                     load : function (v = null) {
+                        console.log(this);
                         // send request to path?params&filters&q
                         var requestQuery = Object.assign(angular.copy(this.params), this.filters);
                         if (this.q) requestQuery.q = this.q; else delete requestQuery.q;
