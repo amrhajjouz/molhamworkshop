@@ -8,7 +8,6 @@
   </div>
 </div>
 
-{{selectedTrelloAttachments}}
 <datatable datalist="attachments">
   <table>
     <thead>
@@ -55,13 +54,18 @@
               ng-class="(createUpdateAttachment.errors['source'] != null) ? 'is-invalid' : ''"
               ng-error="createUpdateAttachment.errors.attachmentSource" ng-change="handleChangeAttachmentSource(this)"
               required>
-              <option selected value="">اختر مصدر الملف</option>
+              <option  value="">اختر مصدر الملف</option>
+              <option selected value="local">local computer</option>
               <option value="trello">trello</option>
               <option value="googleDrive">googleDrive</option>
             </select>
           </div>
-
+          <!-- local -->
+          <div class="row" ng-show="attachmentSource == 'local'">
+            <input type="file" ng-model="localeFile" id="file" onchange="angular.element(this).scope().handleChangeFile(this.files)">
+          </div>
           <!-- Google Drive  -->
+
           <div class="row" ng-show="attachmentSource == 'googleDrive'">
             <div class="col-12">
               <button ng-show="isGoogleDriveSignedIn" ng-click="signOutGoogleDrive()">Sign Out</button>
@@ -132,7 +136,7 @@
               <ul class="list-group">
                 <li class="list-group-item" ng-repeat="attachment in selectedCard.attachments">
                   <div>
-                    <a href="#"  ng-click="selectAttachment(attachment)">
+                    <a href="#" ng-click="selectAttachment(attachment)">
                       <img src="{{attachment.url}}" width="200" height="200" alt="" />
                       {{selectedTrelloAttachments.includes(attachment) ? 'delete' : 'add'}}
                     </a>

@@ -56,7 +56,7 @@ class importTrelloFiles implements ShouldQueue
         */
 
         $api_key = config('services.trello.key');
-
+        // dd($api_key);
 
         /* 
          * we have to set header accept application/json
@@ -64,6 +64,7 @@ class importTrelloFiles implements ShouldQueue
 
         $headers = [
             'Accept' => 'application/json',
+            "Authorization" => 'OAuth oauth_token=' . $this->access_token
         ];
 
         /* 
@@ -72,106 +73,115 @@ class importTrelloFiles implements ShouldQueue
 
         $client = new Client();
 
-        foreach ($this->attachments  as $attachment) {
-            try {
 
-                /* 
+        foreach ($this->attachments  as $attachment) {
+            // try {
+
+            /* 
                  * Trello end point to retrieve file and get download url
                  * we have to pass token as query parameter & this token taked from client 
-                */ 
-            
-                $url = "https://api.trello.com/1/cards/" .$attachment['cardId'] . "/attachments/" . $attachment['id'] . "?key=" . $api_key . "&token=".$this->access_token;
+                */
 
+            $url = "https://api.trello.com/1/cards/" . $attachment['cardId'] . "/attachments/" . $attachment['id'] . "?key=" . $api_key . "&token=" . $this->access_token;
+            // dd($attachment['cardId']  , $attachment['id'] , $api_key  , $this->access_token , $url );
+            // "Authorization: OAuth oauth_consumer_key=\"{{key}}\", oauth_token=\"{{token}}\""
+            //  https://api.trello.com/1/cards/5e839f3696a55979a932b3ad/attachments/5edfd184387b678655b58348/download/my_image.png
 
-                
-                $response = $client->request('GET', $url, [
-                    'headers'        => $headers,
-                    'decode_content' => true,
-                ]);
+            $headers ['Authorization'] = "Bearer $this->access_token";
+            $response = $client->request('GET', $url, [
+                'headers'        => $headers,
+                'decode_content' => true,
+            ]);
 
-                $data = json_decode($response->getBody()->getContents());
-
-                /* 
+            $data = json_decode($response->getBody()->getContents());
+            // dd($data , $api_key , $this->access_token );
+            /* 
                  * if first response success , will return link to download url
                  * so we take download link and request it for download 
                 */
+            // curl -H "Authorization: OAuth oauth_consumer_key=\"{{apiKey}}\", oauth_token=\"{{apiToken}}\"" https://api.trello.com/1/members/me;
+            // $headers = [
+            //     "Authorization: OAuth oauth_consumer_key=" . $api_key . ", oauth_token=" . $this->access_token,
+            // ];
 
-                if ($data && isset($data->url)) {
 
-                    /*
+
+            if ($data && isset($data->url)) {
+                /*
                     * request Trello after get download url and get file
                     */
-                    $res =  $client->request('GET', $data->url, [
-                        'headers'        => $headers,
-                        'decode_content' => true,
-                        'timeout' => 200 //second
-                    ]);
+                $data->url = $data->url . "?signature=signature&token=$this->access_token&key=$api_key";
+                // dd($data->url);
+                $res =  $client->request('GET', $data->url, [
+                    'headers'        => $headers,
+                    'decode_content' => true,
+                    'timeout' => 200 //second
+                ]);
 
-
-                    $file_data = $res->getBody()->getContents();
-
-                    /* 
+                $file_data = $res->getBody()->getContents();
+                /* 
                      * mime2ext() custom helper function exists in Generic file
                      * it take file mime type and return extension  or null
                     */
-                    $extension  = mime2ext($attachment['mimeType']);
+                $extension  = mime2ext($attachment['mimeType']);
 
-                    /* 
+                /* 
                      * if extension = null we log mimetype to add it to  mime2ext()
                     */
 
-                    if (!$extension) {
-                        echo "\n this mime type does not exists : " . $attachment['mimeType'];
-                    }
+                if (!$extension) {
+                    echo "\n this mime type does not exists : " . $attachment['mimeType'];
+                }
 
-                    /* 
+                /* 
                      * generate random string and check if exists we generate it another time because reference is unique field 
                      * $file_name to save file in storage in this name , not in model
                     */
-                    $reference = Str::random(10);
+                $reference = Str::random(10);
 
-                    /*
+                /*
                     * generate reference for file model and sure to be unique
                     */
 
-                    do {
-                        $reference = Str::random(10);
-                    } while (File::where('reference', $reference)->exists());
+                do {
+                    $reference = Str::random(10);
+                } while (File::where('reference', $reference)->exists());
 
 
 
-                    $file_name = $reference . '.' . $extension;
+                $file_name = $reference . '.' . $extension;
 
-                    /*
+                /*
                     * Put response in file to save it
                     */
-                    $file = file_put_contents(storage_path('app/public/' . $file_name), $file_data);
+                $file = file_put_contents(storage_path('app/public/' . $file_name), $file_data);
 
-                   
-                    /* 
+
+                /* 
                      * create file model after import file to storage 
                     */
 
-                    $created_file = File::create([
-                        'fileable_type' => $this->fileable_type,
-                        'fileable_id' => $this->fileable_id,
-                        'name' => $attachment['name'],
-                        'extension' => $extension,
-                        'reference' => $reference
-                    ]);
+                $created_file = File::create([
+                    'fileable_type' => $this->fileable_type,
+                    'fileable_id' => $this->fileable_id,
+                    'name' => $attachment['name'],
+                    'extension' => $extension,
+                    'reference' => $reference,
+                    'size' => $data->bytes /1000
+                ]);
 
-                    /*
+                /*
                     * increase file count to use it in log or any where else 
                     */
 
-                    $files_count++;
+                $files_count++;
 
-                    echo " \n file imported id = " . $created_file->id;
-                }
-            } catch (Exception $e) {
-                echo "\n error : " . $e->getMessage();
-                continue;
+                echo " \n file imported id = " . $created_file->id;
             }
+            // } catch (Exception $e) {
+            //     echo "\n error : " . $e->getMessage();
+            //     continue;
+            // }
         }
 
 

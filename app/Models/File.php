@@ -23,7 +23,6 @@ class File extends Model
      public function save($options = []){
 
           $is_new = !$this->exists;
-          $ret = null;
           
           if($is_new){
               
@@ -35,13 +34,9 @@ class File extends Model
                     $this->reference = $reference;
                }
                
-               $ret =  parent::save($options);
-          }else{
-               $ret =  parent::save($options);
-               
           }
           
-          return $ret;
+          return parent::save($options);
            
 
      }

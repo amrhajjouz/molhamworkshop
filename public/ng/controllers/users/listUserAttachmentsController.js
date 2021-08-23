@@ -32,19 +32,24 @@ async function listUserAttachmentsControllerInit(
     };
 }
 
-function listUserAttachmentsController($scope, $page, $apiRequest, $init) {
+function listUserAttachmentsController($scope, $page, $apiRequest, $init , $http) {
     $scope.attachments = $init.attachments;
-    $scope.attachmentSource = "";
+    $scope.attachmentSource = "local";
     $scope.loadingBoards = false;
     $scope.loadingCards = false;
     $scope.loadingAttachments = false;
     $scope.trelloInitialized = false;
     $scope.boardLists = [];
     $scope.selectedTrelloAttachments = [];
+    var fd = new FormData();
+    
+    $scope.handleChangeFile = files => {
+        fd.append('file' , document.getElementById('file').files[0]);
+        $scope.selectedFles = document.getElementById('file').files[0];
+    }
 
     $scope.createUpdateAttachments = () => {
         let data = {};
-
         /*
         * if source is google drive we have to pass google drive user access token beecause is reauired field
          */
@@ -53,7 +58,13 @@ function listUserAttachmentsController($scope, $page, $apiRequest, $init) {
             data.accessToken = gapi.client.getToken().access_token;
         } else if ($scope.attachmentSource == "trello") {
             data.accessToken = TRELLO.token();
+            console.log({token:TRELLO.token()});
+            
             data.attachments = $scope.selectedTrelloAttachments;
+            
+            // fd.append('attachments',  JSON.stringify($scope.selectedTrelloAttachments));
+
+            // fd.append('files', $scope.selectedFles[0]);  
         }
         /*
          * define fileable_type & fileable_id because are required fields
@@ -63,14 +74,19 @@ function listUserAttachmentsController($scope, $page, $apiRequest, $init) {
         data.fileable_id = $page.routeParams.id;
         data.source = $scope.attachmentSource;
 
-        $apiRequest.config({method: "POST",url: `files`,data: data,},
-                function (response, data) {
-                    $("#attachment-modal").on("hidden.bs.modal", function (e) {
-                        $page.reload();
-                    });
-                    $("#attachment-modal").modal("hide");
-                }
-            ).send();
+        fd.append('fileable_type', "user");
+        fd.append('fileable_id', $page.routeParams.id);
+        fd.append('source', $scope.attachmentSource);
+
+        // $apiRequest.config({ method: "POST", url: `files`, data: fd, headers: { 'Content-Type' : undefined}, file: $scope.selectedFles , transformRequest: angular.identity},
+        $apiRequest.config({ method: "POST", url: `files`, data: data},
+            function (response, data) {
+                $("#attachment-modal").on("hidden.bs.modal", function (e) {
+                    $page.reload();
+                });
+                $("#attachment-modal").modal("hide");
+            }
+        ).send();
     };
 
     $scope.showModal = function (action, data = {}) {
@@ -83,14 +99,15 @@ function listUserAttachmentsController($scope, $page, $apiRequest, $init) {
         $scope.boardLists = [];
         $scope.cards = [];
         $scope.selectedTrelloAttachments = [];
-        
+
         switch ($scope.attachmentSource) {
-            case "trello": $scope.initTrello();break;
-            case "googleDrive":$scope.initGoogleDrive();break;
-            default: alert('unrecognized type');break;
+            case "trello": $scope.initTrello(); break;
+            case "googleDrive": $scope.initGoogleDrive(); break;
+            case "local": ; break;
+            default: alert('unrecognized type'); break;
         }
     };
-    
+
     //////////////////////////////////// TRELLO /////////////////////////
 
     // {Boardss} => {Cards} => {Attachments}
@@ -227,6 +244,8 @@ function listUserAttachmentsController($scope, $page, $apiRequest, $init) {
     /////////////////////// Get Card Attachments /////////////////////////
 
     $scope.getCardAttachments = (card) => {
+        console.log(123 , {card} );
+        
         $scope.loadingAttachments = true;
         card.attachments = [];
         $scope.selectedCard = card;
@@ -253,6 +272,10 @@ function listUserAttachmentsController($scope, $page, $apiRequest, $init) {
 
     /////////////////////// Select Attachments /////////////////////////
     $scope.selectAttachment = (attachment) => {
+
+        // $apiRequest.config(attachment.url).getData();  
+        // $http.get(attachment.url);  
+        
         let alreadyExists = false;
         $scope.selectedTrelloAttachments.map((e) => {
             if (e.id == attachment.id) {
