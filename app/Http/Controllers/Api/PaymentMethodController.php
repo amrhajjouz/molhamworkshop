@@ -18,7 +18,7 @@ class PaymentMethodController extends Controller
             
             if (!$request->has('stripe_setup_intent_id')) throw new ApiErrorException('invalid_request');
             
-            $stripe = new StripeClient('sk_test_BQokikJOvBiI2HlWgH4olfQ2');         
+            $stripe = new StripeClient('sk_test_rWaVeJAcQYStJcShQeoxWUHg005redZKzG');         
             
             $setupIntent = $stripe->setupIntents->retrieve($request->stripe_setup_intent_id);
             

@@ -16,7 +16,7 @@ class SetupIntentController extends Controller
             
             if (!$request->has('stripe_payment_method_id')) throw new ApiErrorException('invalid_request');
             
-            $stripe = new StripeClient('sk_test_BQokikJOvBiI2HlWgH4olfQ2');
+            $stripe = new StripeClient('sk_test_rWaVeJAcQYStJcShQeoxWUHg005redZKzG');
             
             if (!auth('donor')->user()->stripe_customer_id) {
                 $customer = $stripe->customers->create(['name' => 'Donor ' . auth('donor')->user()->id]);
