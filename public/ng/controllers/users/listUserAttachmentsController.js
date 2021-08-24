@@ -58,14 +58,9 @@ function listUserAttachmentsController($scope, $page, $apiRequest, $init , $http
             data.accessToken = gapi.client.getToken().access_token;
         } else if ($scope.attachmentSource == "trello") {
             data.accessToken = TRELLO.token();
-            console.log({token:TRELLO.token()});
-            
             data.attachments = $scope.selectedTrelloAttachments;
-            
-            // fd.append('attachments',  JSON.stringify($scope.selectedTrelloAttachments));
-
-            // fd.append('files', $scope.selectedFles[0]);  
         }
+        
         /*
          * define fileable_type & fileable_id because are required fields
          * define source that maybe (googleDrive , Trello , ...etc) 

@@ -8,7 +8,7 @@ use App\Models\File;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image as InterventionImage;
+use GuzzleHttp\Client;
 
 class FileController extends Controller
 {
@@ -38,12 +38,13 @@ class FileController extends Controller
                 /* 
                  * dispatch job to continue importing method and pass required data to job
                 */
-                ImportDriveFile::dispatch([
-                    'attachments' => $data['attachments'],
-                    'access_token' => $data['accessToken'],
-                    'fileable_type' => $data['fileable_type'],
-                    'fileable_id' => $data['fileable_id'],
-                ]);
+                $this->saveGoogleDriveFiles($request);
+                // ImportDriveFile::dispatch([
+                //     'attachments' => $data['attachments'],
+                //     'access_token' => $data['accessToken'],
+                //     'fileable_type' => $data['fileable_type'],
+                //     'fileable_id' => $data['fileable_id'],
+                // ]);
                 return response()->json(['status' => true]);
                 break;
                 /* 
@@ -87,12 +88,52 @@ class FileController extends Controller
     private function saveTrelloFiles($request)
     {
         $data = $request->all();
+        $this->attachments = $data['attachments'];
+        $this->access_token = $data['accessToken'];
+        $this->fileable_type = $data['fileable_type'];
+        $this->fileable_id = $data['fileable_id'];
+        $file_data = null;
+        $api_key = config('services.trello.key');
+        $headers = ['Accept' => 'application/json', 'Authorization' => "Bearer $this->access_token"];
+        $client = new Client();
+        foreach ($this->attachments  as $attachment) {
+            $url = "https://api.trello.com/1/cards/" . $attachment['cardId'] . "/attachments/" . $attachment['id'] . "?key=" . $api_key . "&token=" . $this->access_token;
+            $response = $client->request('GET', $url, ['headers' => $headers, 'decode_content' => true]);
+            $data = json_decode($response->getBody()->getContents());
+            if ($data && isset($data->url)) {
+                $data->url = $data->url . "?signature=signature&token=$this->access_token&key=$api_key";
+                $res =  $client->request('GET', $data->url, ['headers' => $headers, 'decode_content' => true, 'timeout' => 200 /* econd*/]);
+                $file_data = $res->getBody()->getContents();
+                $extension  = mime2ext($attachment['mimeType']);
+                if (!$extension) {
+                } //TODO
+                do {
+                    $reference = Str::random(100);
+                } while (File::where('reference', $reference)->exists());
+                $file_name = $reference . '.' . $extension;
+                Storage::put('files/' . $file_name, $file_data);
+                File::create([
+                    'fileable_type' => $this->fileable_type,
+                    'fileable_id' => $this->fileable_id,
+                    'name' => $attachment['name'],
+                    'extension' => $extension,
+                    'reference' => $reference,
+                    'size' => $data->bytes / 1024,
+                    'upload_completed' => file_exists(storage_path('files/' . $file_name))
+                ]);
+            }
+        }
+    }
 
-        importTrelloFiles::dispatch([
-            'attachments' => $data['attachments'],
-            'access_token' => $data['accessToken'],
-            'fileable_type' => $data['fileable_type'],
-            'fileable_id' => $data['fileable_id'],
-        ]);
+    private function saveGoogleDriveFiles($request)
+    {
+// ImportDriveFile::dispatch([
+                //     'attachments' => $data['attachments'],
+                //     'access_token' => $data['accessToken'],
+                //     'fileable_type' => $data['fileable_type'],
+                //     'fileable_id' => $data['fileable_id'],
+                // ]);
     }
 }
+
+

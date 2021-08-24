@@ -12,6 +12,7 @@ use Illuminate\Queue\SerializesModels;
 use Exception;
 use GuzzleHttp\Client;
 use App\Models\File;
+use Illuminate\Support\Facades\Storage;
 
 class importTrelloFiles implements ShouldQueue
 {
@@ -56,7 +57,6 @@ class importTrelloFiles implements ShouldQueue
         */
 
         $api_key = config('services.trello.key');
-        // dd($api_key);
 
         /* 
          * we have to set header accept application/json
@@ -64,7 +64,7 @@ class importTrelloFiles implements ShouldQueue
 
         $headers = [
             'Accept' => 'application/json',
-            "Authorization" => 'OAuth oauth_token=' . $this->access_token
+            'Authorization' => "Bearer $this->access_token"
         ];
 
         /* 
@@ -75,7 +75,7 @@ class importTrelloFiles implements ShouldQueue
 
 
         foreach ($this->attachments  as $attachment) {
-            // try {
+            try {
 
             /* 
                  * Trello end point to retrieve file and get download url
@@ -83,35 +83,26 @@ class importTrelloFiles implements ShouldQueue
                 */
 
             $url = "https://api.trello.com/1/cards/" . $attachment['cardId'] . "/attachments/" . $attachment['id'] . "?key=" . $api_key . "&token=" . $this->access_token;
-            // dd($attachment['cardId']  , $attachment['id'] , $api_key  , $this->access_token , $url );
-            // "Authorization: OAuth oauth_consumer_key=\"{{key}}\", oauth_token=\"{{token}}\""
-            //  https://api.trello.com/1/cards/5e839f3696a55979a932b3ad/attachments/5edfd184387b678655b58348/download/my_image.png
 
-            $headers ['Authorization'] = "Bearer $this->access_token";
+            
+
             $response = $client->request('GET', $url, [
                 'headers'        => $headers,
                 'decode_content' => true,
             ]);
 
             $data = json_decode($response->getBody()->getContents());
-            // dd($data , $api_key , $this->access_token );
             /* 
                  * if first response success , will return link to download url
                  * so we take download link and request it for download 
                 */
-            // curl -H "Authorization: OAuth oauth_consumer_key=\"{{apiKey}}\", oauth_token=\"{{apiToken}}\"" https://api.trello.com/1/members/me;
-            // $headers = [
-            //     "Authorization: OAuth oauth_consumer_key=" . $api_key . ", oauth_token=" . $this->access_token,
-            // ];
-
-
 
             if ($data && isset($data->url)) {
                 /*
                     * request Trello after get download url and get file
                     */
                 $data->url = $data->url . "?signature=signature&token=$this->access_token&key=$api_key";
-                // dd($data->url);
+
                 $res =  $client->request('GET', $data->url, [
                     'headers'        => $headers,
                     'decode_content' => true,
@@ -137,14 +128,14 @@ class importTrelloFiles implements ShouldQueue
                      * generate random string and check if exists we generate it another time because reference is unique field 
                      * $file_name to save file in storage in this name , not in model
                     */
-                $reference = Str::random(10);
+
 
                 /*
                     * generate reference for file model and sure to be unique
                     */
 
                 do {
-                    $reference = Str::random(10);
+                    $reference = Str::random(100);
                 } while (File::where('reference', $reference)->exists());
 
 
@@ -154,7 +145,9 @@ class importTrelloFiles implements ShouldQueue
                 /*
                     * Put response in file to save it
                     */
-                $file = file_put_contents(storage_path('app/public/' . $file_name), $file_data);
+                    
+                // $file = file_put_contents(storage_path('app/public/' . $file_name), $file_data);
+                Storage::disk('local')->put('files/' . $file_name, $file_data);
 
 
                 /* 
@@ -167,7 +160,7 @@ class importTrelloFiles implements ShouldQueue
                     'name' => $attachment['name'],
                     'extension' => $extension,
                     'reference' => $reference,
-                    'size' => $data->bytes /1000
+                    'size' => $data->bytes / 1024
                 ]);
 
                 /*
@@ -178,10 +171,10 @@ class importTrelloFiles implements ShouldQueue
 
                 echo " \n file imported id = " . $created_file->id;
             }
-            // } catch (Exception $e) {
-            //     echo "\n error : " . $e->getMessage();
-            //     continue;
-            // }
+            } catch (Exception $e) {
+                echo "\n error : " . $e->getMessage();
+                continue;
+            }
         }
 
 
