@@ -108,7 +108,7 @@ class FileController extends Controller
                 if (!$extension) {
                 } //TODO
                 do {
-                    $reference = Str::random(100);
+                    $reference = Str::random(100) ;
                 } while (File::where('reference', $reference)->exists());
                 $file_name = $reference . '.' . $extension;
                 Storage::put('files/' . $file_name, $file_data);
@@ -117,7 +117,7 @@ class FileController extends Controller
                     'fileable_id' => $this->fileable_id,
                     'name' => $attachment['name'],
                     'extension' => $extension,
-                    'reference' => $reference,
+                    'reference' => $file_name,
                     'size' => $data->bytes / 1024,
                     'upload_completed' => file_exists(storage_path('files/' . $file_name))
                 ]);
@@ -127,13 +127,49 @@ class FileController extends Controller
 
     private function saveGoogleDriveFiles($request)
     {
-// ImportDriveFile::dispatch([
-                //     'attachments' => $data['attachments'],
-                //     'access_token' => $data['accessToken'],
-                //     'fileable_type' => $data['fileable_type'],
-                //     'fileable_id' => $data['fileable_id'],
-                // ]);
+        $data = $request->all();
+
+        $this->attachments = $data['attachments'];
+        $this->access_token = $data['accessToken'];
+        $this->fileable_type = $data['fileable_type'];
+        $this->fileable_id = $data['fileable_id'];
+
+        $file_data = null;
+        $api_key = config('general.google_drive_api_key');
+        $headers = [
+            'Accept' => 'gzip',
+            'Accept-Encoding' => 'application/json',
+            'Authorization' => 'Bearer ' . $this->access_token,
+        ];
+        $client = new Client(['verify' => false ]);
+        foreach ($this->attachments  as $attachment) {
+            try {
+                $url = "https://www.googleapis.com/drive/v2/files/" . $attachment['id'] . "?key=" . $api_key;
+                $response = $client->request('GET', $url, ['headers' => $headers, 'decode_content' => true]);
+                $data = json_decode($response->getBody()->getContents());
+                
+                if ($data && isset($data->downloadUrl)) {
+                    $res =  $client->request('GET', $data->downloadUrl, ['headers' => $headers, 'decode_content' => true, 'timeout' => 200 /*second*/]);
+                    $file_data = $res->getBody()->getContents();
+                    $extension  = mime2ext($attachment['mimeType']);
+                    if (!$extension) {/*TODO*/}
+                    do {$reference = Str::random(100);} while (File::where('reference', $reference)->exists());
+                    $file_name = $reference . '.' . $extension;
+                    Storage::disk('local')->put('files/' . $file_name, $file_data);
+                    File::create([
+                        'fileable_type' => $this->fileable_type,
+                        'fileable_id' => $this->fileable_id,
+                        'name' => $attachment['name'],
+                        'extension' => $extension,
+                        'reference' => $reference , 
+                        'size' => filesize(storage_path('app/files/' . $file_name)) /1024 , 
+                        'upload_completed' => file_exists(storage_path('app/files/' . $file_name))
+                    ]);
+                }
+            } catch (Exception $e) {
+                echo "\n error : " . $e->getMessage();
+                continue;
+            }
+        }
     }
 }
-
-
