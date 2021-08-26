@@ -79,7 +79,7 @@ class DonorController extends Controller
             $donor = $resetPasswordRequest->donor;
             return handleResponse(['name' => $donor->name, 'email' => $donor->email]);
         } catch (\Exception $e) {
-            return ['error' => ['code' => $e->getMessage(), 'message' => 'Something Error']];
+            //return ['error' => ['code' => $e->getMessage(), 'message' => 'Something Error']];
             throw new ApiErrorException($e);
         }
     }
