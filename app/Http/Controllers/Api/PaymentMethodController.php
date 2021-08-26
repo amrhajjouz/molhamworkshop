@@ -28,7 +28,7 @@ class PaymentMethodController extends Controller
                 
                 if ($stripePaymentMethod->type == 'card') {
                     
-                    if (StripeCard::where('stripe_payment_method_id', $stripePaymentMethod->id)->exists()) throw new ApiErrorException('payment_method_already_exists');
+                    if (StripeCard::where([['stripe_payment_method_id', $stripePaymentMethod->id], ['fingerprint', $stripePaymentMethod->card->fingerprint]])->exists()) throw new ApiErrorException('payment_method_already_exists');
                     
                     $data = [
                         'donor_id' => auth('donor')->user()->id,

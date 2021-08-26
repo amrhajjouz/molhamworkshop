@@ -36,13 +36,15 @@ class CreateDonorRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'invalid_name',
-            'name.between' => 'invalid_name_length',
-            'email.required' => 'invalid_email',
-            'email.email' => 'invalid_email',
-            'email.unique' => 'email_already_exists',
-            'password.required' => 'invalid_password',
-            'password.between' => 'invalid_password_length',
+            'name.required' => 'invalid_donor_name',
+            'name.between' => 'invalid_donor_name_length',
+            'email.required' => 'invalid_donor_email',
+            'email.email' => 'invalid_donor_email',
+            'email.unique' => 'donor_email_already_exists',
+            'password.required' => 'invalid_donor_password',
+            'password.between' => 'invalid_donor_password_length',
+            'locale.*' => 'invalid_donor_locale',
+            'currency.*' => 'invalid_donor_currency',
         ];
     }
 }

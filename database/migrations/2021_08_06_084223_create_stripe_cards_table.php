@@ -16,7 +16,7 @@ class CreateStripeCardsTable extends Migration
         Schema::create('stripe_cards', function (Blueprint $table) {
             $table->id();
             $table->string('stripe_payment_method_id' , 50)->index();
-            $table->string('fingerprint' , 50)->unique();
+            $table->string('fingerprint' , 50)->index();
             $table->string('brand' , 20)->index();
             $table->integer('last4_digits')->index();
             $table->integer('expiry_month')->index();
