@@ -54,6 +54,7 @@ class PaymentMethodController extends Controller
             
         } catch (\Exception $e) {
             //return get_class ($e);
+            return ['error' => ['code' => $e->getMessage(), 'message' => 'Something Error']];
             throw new ApiErrorException($e);
         }
     }
