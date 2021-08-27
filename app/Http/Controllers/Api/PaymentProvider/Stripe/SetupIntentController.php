@@ -30,7 +30,7 @@ class SetupIntentController extends Controller
             
             return handleResponse($setupIntent);
         } catch (\Exception $e) {
-            throw new ApiErrorException($e);
+            throw new ApiErrorException($e->getMessage());
         }
     }
 }

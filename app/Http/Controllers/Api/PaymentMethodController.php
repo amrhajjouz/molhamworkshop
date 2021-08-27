@@ -53,9 +53,7 @@ class PaymentMethodController extends Controller
             } else throw new ApiErrorException('invalid_payment_method');
             
         } catch (\Exception $e) {
-            //return get_class ($e);
-            return ['error' => ['code' => $e->getMessage(), 'message' => 'Something Error']];
-            throw new ApiErrorException($e);
+            throw new ApiErrorException($e->getMessage());
         }
     }
 
@@ -67,7 +65,7 @@ class PaymentMethodController extends Controller
             $paymentMethod->delete();
             return handleResponse(null);
         } catch (\Exception $e) {
-            throw new ApiErrorException($e);
+            throw new ApiErrorException($e->getMessage());
         }
     }
 
@@ -78,7 +76,7 @@ class PaymentMethodController extends Controller
             if (!$paymentMethod) throw new Exception('invalid_payment_method');
             return handleResponse($paymentMethod->apiTransform());
         } catch (\Exception $e) {
-            throw new ApiErrorException($e);
+            throw new ApiErrorException($e->getMessage());
         }
     }
 
@@ -87,7 +85,7 @@ class PaymentMethodController extends Controller
         try {
             //   TODO
         } catch (\Exception $e) {
-            throw new ApiErrorException($e);
+            throw new ApiErrorException($e->getMessage());
         }
     }
 }

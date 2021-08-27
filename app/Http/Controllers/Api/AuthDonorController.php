@@ -22,7 +22,7 @@ class AuthDonorController extends Controller
             $request->user()->update($request->validated());
             return handleResponse(null);
         } catch (\Exception $e) {
-            throw new ApiErrorException($e);
+            throw new ApiErrorException($e->getMessage());
         }
     }
 
@@ -32,7 +32,7 @@ class AuthDonorController extends Controller
             $request->user()->delete();
             return handleResponse(null);
         } catch (\Exception $e) {
-            throw new ApiErrorException($e);
+            throw new ApiErrorException($e->getMessage());
         }
     }
 
@@ -51,7 +51,7 @@ class AuthDonorController extends Controller
                 'avatar' => $donor->avatar->url ?? null
             ]);
         } catch (\Exception $e) {
-            throw new ApiErrorException($e);
+            throw new ApiErrorException($e->getMessage());
         }
     }
 
@@ -64,7 +64,7 @@ class AuthDonorController extends Controller
             $donor->save();
             return handleResponse(null);
         } catch (\Exception $e) {
-            throw new ApiErrorException($e);
+            throw new ApiErrorException($e->getMessage());
         }
     }
 
@@ -77,7 +77,7 @@ class AuthDonorController extends Controller
             $donor->save();
             return handleResponse(null);
         } catch (\Exception $e) {
-            throw new ApiErrorException($e);
+            throw new ApiErrorException($e->getMessage());
         }
     }
 
@@ -87,7 +87,7 @@ class AuthDonorController extends Controller
             Token::where('access_token', $request->bearerToken())->delete();
             return handleResponse(null);
         } catch (\Exception $e) {
-            throw new ApiErrorException($e);
+            throw new ApiErrorException($e->getMessage());
         }
     }
 
@@ -96,7 +96,7 @@ class AuthDonorController extends Controller
         try {
             return handleResponse($request->user()->notification_preferences()->pluck('name'));
         } catch (\Exception $e) {
-            throw new ApiErrorException($e);
+            throw new ApiErrorException($e->getMessage());
         }
     }
 
@@ -107,7 +107,7 @@ class AuthDonorController extends Controller
             $request->user()->notification_preferences()->sync($notificationPreferencesIds);
             return handleResponse(null);
         } catch (\Exception $e) {
-            throw new ApiErrorException($e);
+            throw new ApiErrorException($e->getMessage());
         }
     }
 
@@ -118,7 +118,7 @@ class AuthDonorController extends Controller
                 return $obj->apiTransform();
             }));
         } catch (\Exception $e) {
-            throw new ApiErrorException($e);
+            throw new ApiErrorException($e->getMessage());
         }
     }
 
@@ -129,7 +129,7 @@ class AuthDonorController extends Controller
             $image = $request->user()->avatar()->create(["image" => $request->validated()["avatar"], "type" => "avatar"]);
             return handleResponse($image->url);
         } catch (\Exception $e) {
-            throw new ApiErrorException($e);
+            throw new ApiErrorException($e->getMessage());
         }
     }
 
@@ -139,7 +139,7 @@ class AuthDonorController extends Controller
             $request->user()->avatar()->delete();
             return handleResponse(null);
         } catch (\Exception $e) {
-            throw new ApiErrorException($e);
+            throw new ApiErrorException($e->getMessage());
         }
     }
 }

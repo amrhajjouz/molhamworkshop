@@ -37,7 +37,7 @@ class DonorController extends Controller
                 'access_token' => $token->access_token,
             ]);
         } catch (\Exception $e) {
-            throw new ApiErrorException($e);
+            throw new ApiErrorException($e->getMessage());
         }
     }
 
@@ -51,7 +51,7 @@ class DonorController extends Controller
             $token = $donor->tokens()->create([]);
             return handleResponse(['id' => $donor->id, 'name' => $donor->name, 'email' => $donor->email, 'locale' => $donor->locale, 'currency' => $donor->currency, 'access_token' => $token->access_token]);
         } catch (\Exception $e) {
-            throw new ApiErrorException($e);
+            throw new ApiErrorException($e->getMessage());
         }
     }
 
@@ -65,7 +65,7 @@ class DonorController extends Controller
             DonorMailer::sendResetPasswordCode($donor->name, $donor->email, $donorResetPasswordRequest->code);
             return handleResponse(['token' => $donorResetPasswordRequest->token]);
         } catch (\Exception $e) {
-            throw new ApiErrorException($e);
+            throw new ApiErrorException($e->getMessage());
         }
     }
 
@@ -79,8 +79,7 @@ class DonorController extends Controller
             $donor = $resetPasswordRequest->donor;
             return handleResponse(['name' => $donor->name, 'email' => $donor->email]);
         } catch (\Exception $e) {
-            //return ['error' => ['code' => $e->getMessage(), 'message' => 'Something Error']];
-            throw new ApiErrorException($e);
+            throw new ApiErrorException($e->getMessage());
         }
     }
 
@@ -98,7 +97,7 @@ class DonorController extends Controller
             $resetPasswordRequest->save();
             return handleResponse(null);
         } catch (\Exception $e) {
-            throw new ApiErrorException($e);
+            throw new ApiErrorException($e->getMessage());
         }
     }
 
@@ -113,7 +112,7 @@ class DonorController extends Controller
             $donor->save();
             return handleResponse(null);
         } catch (\Exception $e) {
-            throw new ApiErrorException($e);
+            throw new ApiErrorException($e->getMessage());
         }
     }
 }
