@@ -71,7 +71,7 @@ class ConstantController extends Controller
                         $q->orWhere('CAR.value', 'like', '%' .  $request->q . '%');
                     }
                 })
-                ->paginate(10)
+                ->paginate(2000)
                 ->withQueryString();;
             return response()->json($constants);
         } catch (\Exception $e) {
