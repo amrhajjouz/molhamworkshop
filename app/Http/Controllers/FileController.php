@@ -80,7 +80,7 @@ class FileController extends Controller
         if (!$file) throw new Exception('missed data');
 
         Storage::disk('local')->put('images/' . $reference . '.jpg', file_get_contents($file));
-        $fileModel = File::create(['size' => $file->getSize(), 'fileable_type' => $data['fileable_type'], 'fileable_id' => $data['fileable_id'], 'name' => $file->getClientOriginalName(), 'extension' => $file->extension()]);
+        File::create(['size' => $file->getSize(), 'fileable_type' => $data['fileable_type'], 'fileable_id' => $data['fileable_id'], 'name' => $file->getClientOriginalName(), 'extension' => $file->extension()]);
 
         return response()->json(null);
     }
@@ -92,35 +92,26 @@ class FileController extends Controller
         $this->access_token = $data['accessToken'];
         $this->fileable_type = $data['fileable_type'];
         $this->fileable_id = $data['fileable_id'];
-        $file_data = null;
-        $api_key = config('services.trello.key');
+        $fileData = null;
+        $apiKey = config('services.trello.key');
         $headers = ['Accept' => 'application/json', 'Authorization' => "Bearer $this->access_token"];
         $client = new Client();
         foreach ($this->attachments  as $attachment) {
-            $url = "https://api.trello.com/1/cards/" . $attachment['cardId'] . "/attachments/" . $attachment['id'] . "?key=" . $api_key . "&token=" . $this->access_token;
+            $url = "https://api.trello.com/1/cards/" . $attachment['cardId'] . "/attachments/" . $attachment['id'] . "?key=" . $apiKey . "&token=" . $this->access_token;
             $response = $client->request('GET', $url, ['headers' => $headers, 'decode_content' => true]);
             $data = json_decode($response->getBody()->getContents());
             if ($data && isset($data->url)) {
-                $data->url = $data->url . "?signature=signature&token=$this->access_token&key=$api_key";
-                $res =  $client->request('GET', $data->url, ['headers' => $headers, 'decode_content' => true, 'timeout' => 200 /* econd*/]);
-                $file_data = $res->getBody()->getContents();
+                $data->url = $data->url . "?signature=signature&token=$this->access_token&key=$apiKey";
+                $binaryResponse =  $client->request('GET', $data->url, ['headers' => $headers, 'decode_content' => true, 'timeout' => 200 /* econd*/]);
+                $fileData = $binaryResponse->getBody()->getContents();
                 $extension  = mime2ext($attachment['mimeType']);
                 if (!$extension) {
                 } //TODO
-                do {
-                    $reference = Str::random(100) ;
-                } while (File::where('reference', $reference)->exists());
-                $file_name = $reference . '.' . $extension;
-                Storage::put('files/' . $file_name, $file_data);
-                File::create([
-                    'fileable_type' => $this->fileable_type,
-                    'fileable_id' => $this->fileable_id,
-                    'name' => $attachment['name'],
-                    'extension' => $extension,
-                    'reference' => $file_name,
-                    'size' => $data->bytes / 1024,
-                    'upload_completed' => file_exists(storage_path('files/' . $file_name))
-                ]);
+                do {$reference = Str::random(100) ;} while (File::where('reference', $reference)->exists());
+                $fileName = $reference . '.' . $extension;
+                Storage::put('files/' . $fileName, $fileData);
+                File::create(['fileable_type' => $this->fileable_type,'fileable_id' => $this->fileable_id,'name' => $attachment['name'],'extension' => $extension,'reference' => $fileName,'size' => $data->bytes / 1024,'upload_completed' => file_exists(storage_path('files/' . $fileName))]);
+                return response()->json(null);
             }
         }
     }
@@ -134,39 +125,28 @@ class FileController extends Controller
         $this->fileable_type = $data['fileable_type'];
         $this->fileable_id = $data['fileable_id'];
 
-        $file_data = null;
-        $api_key = config('general.google_drive_api_key');
-        $headers = [
-            'Accept' => 'gzip',
-            'Accept-Encoding' => 'application/json',
-            'Authorization' => 'Bearer ' . $this->access_token,
-        ];
+        $fileData = null;
+        $apiKey = config('general.google_drive_api_key');
+        $headers = ['Accept' => 'gzip','Accept-Encoding' => 'application/json','Authorization' => 'Bearer ' . $this->access_token,];
         $client = new Client(['verify' => false ]);
         foreach ($this->attachments  as $attachment) {
             try {
-                $url = "https://www.googleapis.com/drive/v2/files/" . $attachment['id'] . "?key=" . $api_key;
+                $url = "https://www.googleapis.com/drive/v2/files/" . $attachment['id'] . "?key=" . $apiKey;
                 $response = $client->request('GET', $url, ['headers' => $headers, 'decode_content' => true]);
                 $data = json_decode($response->getBody()->getContents());
-                
                 if ($data && isset($data->downloadUrl)) {
-                    $res =  $client->request('GET', $data->downloadUrl, ['headers' => $headers, 'decode_content' => true, 'timeout' => 200 /*second*/]);
-                    $file_data = $res->getBody()->getContents();
+                    $binaryResponse =  $client->request('GET', $data->downloadUrl, ['headers' => $headers, 'decode_content' => true, 'timeout' => 200 /*second*/]);
+                    $fileData = $binaryResponse->getBody()->getContents();
                     $extension  = mime2ext($attachment['mimeType']);
                     if (!$extension) {/*TODO*/}
                     do {$reference = Str::random(100);} while (File::where('reference', $reference)->exists());
-                    $file_name = $reference . '.' . $extension;
-                    Storage::disk('local')->put('files/' . $file_name, $file_data);
-                    File::create([
-                        'fileable_type' => $this->fileable_type,
-                        'fileable_id' => $this->fileable_id,
-                        'name' => $attachment['name'],
-                        'extension' => $extension,
-                        'reference' => $reference , 
-                        'size' => filesize(storage_path('app/files/' . $file_name)) /1024 , 
-                        'upload_completed' => file_exists(storage_path('app/files/' . $file_name))
-                    ]);
+                    $fileName = $reference . '.' . $extension;
+                    Storage::put('files/' . $fileName, $fileData);
+                    File::create(['fileable_type' => $this->fileable_type,'fileable_id' => $this->fileable_id,'name' => $attachment['name'],'extension' => $extension,'reference' => $reference , 'size' => filesize(storage_path('app/files/' . $fileName)) /1024 , 'upload_completed' => file_exists(storage_path('app/files/' . $fileName))]);
+                    return response()->json(null);
                 }
             } catch (Exception $e) {
+                //TODO : catch error
                 echo "\n error : " . $e->getMessage();
                 continue;
             }

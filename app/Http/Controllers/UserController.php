@@ -78,7 +78,7 @@ class UserController extends Controller {
       public function listing_attachments(Request $request, User $user)
       {
           try {
-              return response()->json($user->files);
+              return response()->json($user->files()->orderBy('id' , 'desc')->get());
           } catch (\Exception $ex) {
             return ['error' => $ex->getMessage()];
 
