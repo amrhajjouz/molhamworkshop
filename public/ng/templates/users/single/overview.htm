@@ -17,10 +17,22 @@
                 <td class="text-muted py-3">اللغة الإفتراضية </td>
                 <td class="py-3 pr-3">{{ user.locale == 'ar' ? 'العربية' : 'الإنكليزية' }}</td>
             </tr>
+            <tr>
+                <td class="text-muted py-3">القسم</td>
+                <td class="py-3 pr-3">{{ user.section.name }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">المنصب</td>
+                <td class="py-3 pr-3">{{ user.title.name }}</td>
+            </tr>
         </table>
     </div>
     <div class="col-12 col-lg-6">
         <table>
+            <tr>
+                <td class="text-muted py-3">المدير المباشر</td>
+                <td class="py-3 pr-3">{{ user.direct_manager.email }}</td>
+            </tr>
             <tr>
                 <td class="text-muted py-3">تاريخ الاضافة</td>
                 <td class="py-3 pr-3"><td class="py-3 pr-3"><span ng-bind="user.created_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td></td>

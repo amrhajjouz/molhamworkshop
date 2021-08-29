@@ -19,6 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->enum('locale' , ['ar' , 'en'])->default('ar');
+            $table->bigInteger('direct_manager_id')->nullable()->index();
+            $table->bigInteger('title_id')->nullable()->index();
+            $table->bigInteger('section_id')->nullable()->index();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -20,8 +20,8 @@
             <tr ng-repeat="d in permissions.data">
                 <td class="align-middle text-center">{{ d.id }}</td>
                 <td class="align-middle text-center">{{ d.name }}</td>
-                <td class="align-middle text-center">{{ d.description_ar }}</td>
-                <td class="align-middle text-center">{{ d.description_en }}</td>
+                <td class="align-middle text-center">{{ d.title.ar}}</td>
+                <td class="align-middle text-center">{{ d.title.en }}</td>
                 <td class="align-middle text-center h2">
                     <dropdown>
                         <dropdown-item href="#" ng-click="unassignPermission(d.id)"><i class="fe fe-x"></i> إلغاء الإسناد</dropdown-item>

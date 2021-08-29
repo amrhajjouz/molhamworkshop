@@ -1,0 +1,5 @@
+<page-header title="القسم {{ $routeParams.id }}" pretitle="الأقسام"></page-header>
+<page-nav>
+    <page-nav-item route="sections.overview" params="{id: $routeParams.id}">نظرة عامة</page-nav-item>
+    <page-nav-item ng-if="$auth.can('sections.update')" route="sections.edit" params="{id: $routeParams.id}">تعديل المعلومات</page-nav-item>
+</page-nav>

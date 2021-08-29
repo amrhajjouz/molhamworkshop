@@ -25,8 +25,11 @@ class CreateRoleRequest extends FormRequest
     {
         return [
             'name' => ['required' ,'string', 'between:3,100' ,'unique:roles,name'],
-            'description_ar' => ['required' ,'string',],
-            'description_en' => ['required' ,'string',],
+            'title' => ['required' ,'array',],
+            'title.en' => ['required' ,'string', 'between:3,30'],
+            'title.ar' => ['required' ,'string', 'between:3,30'],
+            'has_multiple_assignees' => ['required' , 'boolean'],
+            'section_id' => ['required' , 'exists:sections,id'],
         ];
     }
 }

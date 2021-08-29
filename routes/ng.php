@@ -19,25 +19,26 @@ return [
     'users' => ['users', 'users/listUsersController', 'users.list' , ['*']],
     'users.permissions' => ['users/:id/permissions', 'users/listUserPermissionsController', 'users.single.permissions' , ['*']],
     'users.roles' => ['users/:id/roles', 'users/listUserRolesController', 'users.single.roles' , ['*']],
-
     //Donors Routes
     'donors' => ['donors', 'donors/listDonorsController', 'donors.list' , ['donors.view']],
     'donors.add' => ['donors/add', 'donors/addDonorController', 'donors.add' , ['donors.create']],
     'donors.overview' => ['donors/:id', 'donors/overviewDonorController', 'donors.single.overview' , ['donors.view']],
     'donors.edit' => ['donors/:id/edit', 'donors/editDonorController', 'donors.single.edit' , ['donors.update']],
-
     /////////////////////// Roles /////////////////////////
     'roles' => ['roles', 'roles/listRolesController', 'roles.list' , ['*']],
     'roles.add' => ['roles/add', 'roles/addRoleController', 'roles.add' , ['*']],
     'roles.overview' => ['roles/:id', 'roles/overviewRoleController', 'roles.single.overview' , ['*']],
     'roles.edit' => ['roles/:id/edit', 'roles/editRoleController', 'roles.single.edit' , ['*']],
     'roles.permissions' => ['roles/:id/permissions', 'roles/listRolePermissionsController', 'roles.single.permissions' , ['*']],
-
     /////////////////////// Permissions /////////////////////////
     'permissions' => ['permissions', 'permissions/listPermissionsController', 'permissions.list' , ['*']],
     'permissions.add' => ['permissions/add', 'permissions/addPermissionController', 'permissions.add' , ['*']],
     'permissions.overview' => ['permissions/:id', 'permissions/overviewPermissionController', 'permissions.single.overview' , ['*']],
     'permissions.edit' => ['permissions/:id/edit', 'permissions/editPermissionController', 'permissions.single.edit' , ['*']],
-
+    //Sections Routes
+    'sections' => ['sections', 'sections/listSectionsController', 'sections.list' , ['sections.view']],
+    'sections.add' => ['sections/add', 'sections/addSectionController', 'sections.add' , ['sections.create']],
+    'sections.overview' => ['sections/:id', 'sections/overviewSectionController', 'sections.single.overview' , ['sections.view']],
+    'sections.edit' => ['sections/:id/edit', 'sections/editSectionController', 'sections.single.edit' , ['sections.update']],
 
 ];

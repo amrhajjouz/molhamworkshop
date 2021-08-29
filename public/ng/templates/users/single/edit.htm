@@ -31,6 +31,31 @@
             <div ng-show="updateUser.errors.locale != null" class="invalid-feedback">{{ updateUser.errors.locale[0] }}</div>
         </div>
     </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="title_id">المنصب</label>
+            <select2 model="user.title_id" ajax-url="titles/search" error-model="updateUser.errors.title_id"> 
+                <option value="{{user.title_id}}">{{user.title.name}}</option>
+            </select2>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="section_id">القسم</label>
+            <select2 model="user.section_id" ajax-url="sections/search" error-model="updateUser.errors.section_id"> 
+                <option value="{{user.section_id}}">{{user.section.name}}</option>
+            </select2>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="direct_manager_id">المدير المباشر</label>
+            <select2 model="user.direct_manager_id" ajax-url="users/search?except={{user.id}}" error-model="updateUser.errors.direct_manager_id">
+                <option value="{{user.direct_manager_id}}">{{user.direct_manager.email}}</option>
+            </select2>
+        </div>
+    </div>
     <div class="col-12">
         <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
     </div>

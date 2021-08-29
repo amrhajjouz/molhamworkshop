@@ -9,18 +9,42 @@
     </div>
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="description_ar">الوصف العربي</label>
-            <input type="text" class="form-control" ng-class="(updateRole.errors.description_ar != null) ? 'is-invalid' : ''" id="description_ar" ng-model="role.description_ar" ng-change="updateRole.errors.description_ar = null" placeholder="الوصف .." required />
-            <div ng-show="updateRole.errors.description_ar != null" class="invalid-feedback">{{ updateRole.errors.description_ar[0] }}</div>
+            <label for="title_ar">الوصف العربي</label>
+            <input type="text" class="form-control" ng-class="(updateRole.errors['title.ar'] != null) ? 'is-invalid' : ''" id="title_ar" ng-model="role.title.ar" ng-change="updateRole.errors['title.ar'] = null" placeholder="الوصف .." required />
+            <div ng-show="updateRole.errors['title.ar'] != null" class="invalid-feedback">{{ updateRole.errors['title.ar'][0] }}</div>
         </div>
     </div>
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="description_en">الوصف الإنكليزي</label>
-            <input type="text" class="form-control" ng-class="(updateRole.errors.description_en != null) ? 'is-invalid' : ''" id="description_en" ng-model="role.description_en" ng-change="updateRole.errors.description_en = null" placeholder="الوصف .." required />
-            <div ng-show="updateRole.errors.description_en != null" class="invalid-feedback">{{ updateRole.errors.description_en[0] }}</div>
+            <label for="title_en">الوصف الإنكليزي</label>
+            <input type="text" class="form-control" ng-class="(updateRole.errors['title.en'] != null) ? 'is-invalid' : ''" id="title_en" ng-model="role.title.en" ng-change="updateRole.errors['title.en'] = null" placeholder="الوصف .." required />
+            <div ng-show="updateRole.errors['title.en'] != null" class="invalid-feedback">{{ updateRole.errors['title.en'][0] }}</div>
         </div>
     </div>
+
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="section_id">القسم</label>
+            <select2 model="role.section_id" ajax-url="sections/search" error-model="updateRole.errors.section_id" required> 
+                <option value="{{role.section_id}}">{{role.section.name}}</option>
+            </select2>
+            <div ng-show="updateRole.errors['section_id'] != null" class="invalid-feedback">{{ updateRole.errors['section_id'][0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="has_multiple_assignees">يمكن إسنادها لأكثر من مستخدم</label>
+            <select id="has_multiple_assignees" class="custom-select" name="has_multiple_assignees" ng-model="role.has_multiple_assignees" ng-change="updateRole.errors.has_multiple_assignees = null" ng-init="role.has_multiple_assignees == true ? role.has_multiple_assignees = '1' : role.has_multiple_assignees = '0'">
+                <option value="1">نعم</option>
+                <option value="0">لا</option>
+            </select>
+            <div ng-show="updateRole.errors['has_multiple_assignees'] != null" class="invalid-feedback">{{ updateRole.errors['has_multiple_assignees'][0] }}</div>
+        </div>
+    </div>
+
+
     <div class="col-12">
         <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
     </div>

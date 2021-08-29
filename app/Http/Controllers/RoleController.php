@@ -42,7 +42,7 @@ class RoleController extends Controller
     public function retrieve(RetrieveRoleRequest $request, $id)
     {
         try {
-            return response()->json(Role::findOrFail($id));
+            return response()->json(Role::findOrFail($id)->transform());
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
@@ -54,7 +54,8 @@ class RoleController extends Controller
             $roles = Role::orderBy('id', 'desc')->where(function ($q) use ($request) {
                 if ($request->has('q')) {
                     $q->where('name', 'like', '%' . $request->q . '%');
-                    $q->orWhere('ar_name', 'like', '%' . $request->q . '%');
+                    $q->orWhere('title->ar', 'like', '%' . $request->q . '%');
+                    $q->orWhere('title->en', 'like', '%' . $request->q . '%');
                 }
             })->paginate(5)->withQueryString();
             return response()->json($roles);
@@ -107,10 +108,11 @@ class RoleController extends Controller
             $data = Role::where('id', '>', 1)->where(function ($q) use ($request) {
                 if ($request->has('q')) {
                     $q->where('name', 'like', "%" . $request->q . "%");
-                    $q->orWhere('description_ar', 'like', "%" . $request->q . "%");
-                    $q->orWhere('description_en', 'like', "%" . $request->q . "%");
+                    $q->orWhere('title->ar', 'like', "%" . $request->q . "%");
+                    $q->orWhere('title->en', 'like', "%" . $request->q . "%");
                 }
-            })->where(function ($q) use ($request) {
+            })
+            ->where(function ($q) use ($request) {
                 //except permissions already assigned to this user
                 if ($request->has('user_id')) {
                     $user = User::find($request->user_id);
@@ -118,14 +120,15 @@ class RoleController extends Controller
                         $q->whereNotIn('id', $user->roles()->pluck('id'));
                     }
                 }
-            })->take(10)->get();
+            })
+            ->take(10)->get();
             $locale = app()->getLocale();
-            foreach ($data as $p) {
-                $results[] = ['id' => $p['id'], 'text' => $p['description_' . $locale]];
+            foreach ($data as $r) {
+                $results[] = ['id' => $r['id'], 'text' => $r['title'][$locale]];
             }
             return response()->json($results);
         } catch (\Exception $e) {
-            throw response()->json($e->getMessage());
+            return response()->json($e->getMessage());
         }
     }
 }

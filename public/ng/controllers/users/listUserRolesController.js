@@ -20,6 +20,7 @@ async function listUserRolesControllerInit($datalist, $location, $apiRequest, $p
     q: '',
     search: function (q) {},
   };
+  roles.forEach(r=> r.title = JSON.parse(r.title));
   fakerPaginator.data = roles;
   fakerPaginator.total = roles.length;
 

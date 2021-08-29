@@ -26,8 +26,11 @@ class UpdateRoleRequest extends FormRequest
         return [
             'id' => ['required' ,'exists:roles'],
             'name' => ['required' ,'string', 'between:3,30' , 'unique:roles,name,'.$this->id],
-            'description_ar' => ['required', 'string',],
-            'description_en' => ['required', 'string',],
+            'title' => ['required' ,'array',],
+            'title.en' => ['required' ,'string', 'between:3,30'],
+            'title.ar' => ['required' ,'string', 'between:3,30'],
+            'has_multiple_assignees' => ['required' , 'boolean'],
+            'section_id' => ['required' , 'exists:sections,id'],
         ];
     }
 }

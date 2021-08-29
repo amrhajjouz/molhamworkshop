@@ -1,7 +1,7 @@
 async function listRolePermissionsControllerInit($datalist, $location , $apiRequest , $page) {
     // return $datalist("roles", true).load();
 
-    let Permissions = await $apiRequest
+    let permissions = await $apiRequest
         .config(`roles/${$page.routeParams.id}/permissions`, true)
         .getData();
 
@@ -24,8 +24,10 @@ async function listRolePermissionsControllerInit($datalist, $location , $apiRequ
       q: "",
       search: function (q) {},
   };
-  fakerPaginator.data = Permissions;
-  fakerPaginator.total = Permissions.length;
+  
+  permissions.forEach(p=> p.title = JSON.parse(p.title))
+  fakerPaginator.data = permissions;
+  fakerPaginator.total = permissions.length;
 
   return fakerPaginator;
 

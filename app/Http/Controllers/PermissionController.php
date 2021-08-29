@@ -46,7 +46,8 @@ class PermissionController extends Controller
             $permissions = Permission::orderBy('id', 'desc')->where(function ($q) use ($request) {
                 if ($request->has('q')) {
                     $q->where('name', 'like', '%' . $request->q . '%');
-                    $q->orWhere('description_ar', 'like', '%' . $request->q . '%');
+                    $q->orWhere('title->ar', 'like', '%' . $request->q . '%');
+                    $q->orWhere('title->en', 'like', '%' . $request->q . '%');
                 }
             })->paginate(5)->withQueryString();
             return response()->json($permissions);
@@ -63,8 +64,8 @@ class PermissionController extends Controller
                 ->where(function ($q) use ($request) {
                     if ($request->has('q')) {
                         $q->where('name', 'like', "%" . $request->q . "%");
-                        $q->orWhere('description_ar', 'like', "%" . $request->q . "%");
-                        $q->orWhere('description_en', 'like', "%" . $request->q . "%");
+                        $q->orWhere('title->ar', 'like', "%" . $request->q . "%");
+                        $q->orWhere('title->en', 'like', "%" . $request->q . "%");
                     }
                 })
                 ->where(function ($q) use ($request) {
@@ -84,10 +85,11 @@ class PermissionController extends Controller
                             $q->whereNotIn('id', $user->getDirectPermissions()->pluck('id'));
                         }
                     }
-                })->take(10)->get();
+                })
+                ->take(10)->get();
 
             $locale = app()->getLocale();
-            foreach ($data as $p){$results[] = ['id' => $p['id'], 'text' => $p['description_' . $locale]];}
+            foreach ($data as $p){$results[] = ['id' => $p['id'], 'text' => $p['title'][$locale]];}
             return response()->json($results);
         } catch (\Exception $e) {
 

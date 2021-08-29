@@ -22,6 +22,9 @@ class User extends Authenticatable
         'email',
         'password',
         'locale',
+        'section_id' ,
+        'direct_manager_id' ,
+        'title_id' ,
     ];
 
     /**
@@ -43,4 +46,26 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         // 'super_admin' => 'boolean',
     ];
+
+    public function section(){
+        return $this->hasOne(Section::class , 'id' , 'section_id');
+    }
+
+    public function direct_manager(){
+        return $this->hasOne(self::class , 'id' , 'direct_manager_id');
+    }
+
+    public function title(){
+        return $this->hasOne(Title::class , 'id' , 'title_id');
+    }
+
+    public function transform(){
+        $user = $this->toArray();
+        $locale = app()->getLocale();
+        return array_merge($user , [
+            'section' => [ 'name' => $this->section->name[$locale]] ,
+            'title' => [ 'name' => $this->title->name[$locale]] ,
+            'direct_manager' => [ 'email' => $this->direct_manager->email] ,
+        ]);
+    }
 }

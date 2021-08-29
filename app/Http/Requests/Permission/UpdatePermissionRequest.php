@@ -26,8 +26,9 @@ class UpdatePermissionRequest extends FormRequest
         return [
             'id' => ['required' , 'exists:permissions'],
             'name' => ['required' ,'string', 'between:3,30' , 'unique:permissions,name,'.$this->id],
-            'description_ar' => ['required', 'string',],
-            'description_en' => ['required', 'string',],
+            'title' => ['required' ,'array',],
+            'title.en' => ['required' ,'string', 'between:3,30'],
+            'title.ar' => ['required' ,'string', 'between:3,30'],
         ];
     }
 }

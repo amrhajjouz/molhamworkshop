@@ -5,5 +5,7 @@ use Spatie\Permission\Models\Permission as SpatieRPermissionModel;
 
 class Permission extends SpatieRPermissionModel
 {
+    protected $casts = ['title'=>'json'];
+    
 }
 

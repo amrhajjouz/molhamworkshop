@@ -19,7 +19,7 @@
             <tr ng-repeat="d in roles.data">
                 <td class="align-middle text-center">{{ d.id }}</td>
                 <td class="align-middle text-center">{{ d.name }}</td>
-                <td class="align-middle text-center">{{ d.description_ar }}</td>
+                <td class="align-middle text-center">{{ d.title.ar }}</td>
                 <td class="align-middle text-center h2">
                     <dropdown>
                         <dropdown-item href="#" ng-click="unassignRole(d.id)"><i class="fe fe-x"></i> إلغاء الإسناد</dropdown-item>

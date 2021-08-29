@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\User\CreateUserRequest;
-use App\Http\Requests\User\{UpdateUserRequest, ListUserRolesRequest, AssignRolesRequest, UnassignRoleRequest, AssignPermissionRequest, UnassignPermissionRequest};
+use App\Http\Requests\User\{UpdateUserRequest, ListUserRolesRequest, AssignRolesRequest, UnassignRoleRequest, AssignPermissionRequest, SearchUserRequest, UnassignPermissionRequest};
 use App\Models\{User, Role, Permission};
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -21,7 +22,6 @@ class UserController extends Controller
         try {
             // Create User
             $user = User::create($request->validated());
-
             return response()->json($user);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -34,7 +34,9 @@ class UserController extends Controller
             // Fetch User
             $user = User::findOrFail($request->id);
             // Update User
-            $user->update($request->validated());
+            $data = $request->validated();
+            $data['passwoed'] = Hash::make($data['password']);
+            $user->update($data);
 
             return response()->json($user);
         } catch (\Exception $e) {
@@ -46,7 +48,8 @@ class UserController extends Controller
     {
         try {
             // Fetch User and Return
-            return response()->json(User::findOrFail($id));
+            $user = User::findOrFail($id)->transform();
+            return response()->json($user);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
@@ -140,6 +143,30 @@ class UserController extends Controller
             return response()->json($user);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
+        }
+    }
+
+    public function search (SearchUserRequest $request)
+    {
+        try {
+            $results = [];
+            $data = User::where(function ($q) use ($request) {
+                if ($request->has('q')) {
+                    $q->where('email', 'like', "%" . $request->q . "%");
+                    $q->orWhere('name', 'like', "%" . $request->q . "%");
+                }
+            })->where(function($q)use($request){
+                if($request->has('except')){
+                    $q->where('id' , '!=' , $request->except);
+                }
+            })
+            ->take(10)->get();
+            foreach ($data as $u) {
+                $results[] = ['id' => $u['id'], 'text' => $u['email']];
+            }
+            return response()->json($results);
+        } catch (\Exception $e) {
+            throw response()->json($e->getMessage());
         }
     }
 }

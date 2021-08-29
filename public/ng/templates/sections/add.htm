@@ -1,0 +1,26 @@
+<page-header title="قسم جديد" pretitle="الأقسام"></page-header>
+<form class="row" name="myForm" request="createSection">
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name_ar">الاسم العربي</label>
+            <input type="text" class="form-control" ng-class="(createSection.errors['name.ar'] != null) ? 'is-invalid' : ''" id="name_ar" ng-model="section.name.ar" ng-change="createSection.errors['name.ar'] = null" placeholder="الاسم باللغة العربية .." required />
+            <div ng-show="createSection.errors['name.ar'] != null" class="invalid-feedback">{{ createSection.errors['name.ar'][0] }}</div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name_en">الاسم الإنكليزي</label>
+            <input dir="ltr" type="text" class="form-control" ng-class="(createSection.errors['name.en'] != null) ? 'is-invalid' : ''" id="name_en" ng-model="section.name.en" ng-change="createSection.errors['name.en'] = null" placeholder="الاسم باللغة الإنكليزية .." required />
+            <div ng-show="createSection.errors['name.en'] != null" class="invalid-feedback">{{ createSection.errors['name.en'][0] }}</div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="parent_id">القسم الأب</label>
+            <select2 model="section.parent_id" ajax-url="sections/search" error-model="createSection.errors.parent_id"> </select2>
+        </div>
+    </div>
+    <div class="col-12">
+        <submit-button form="myForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>

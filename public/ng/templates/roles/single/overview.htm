@@ -8,11 +8,19 @@
             </tr>
             <tr>
                 <td class="text-muted py-3">الوصف العربي</td>
-                <td class="py-3 pr-3">{{ role.description_ar }}</td>
+                <td class="py-3 pr-3">{{ role.title.ar }}</td>
             </tr>
             <tr>
                 <td class="text-muted py-3">الوصف الإنكليزي</td>
-                <td class="py-3 pr-3">{{ role.description_en }}</td>
+                <td class="py-3 pr-3">{{ role.title.en }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">القسم</td>
+                <td class="py-3 pr-3">{{ role.section.name }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">يمكن اسنادها لأكثر من مستخدم</td>
+                <td class="py-3 pr-3">{{ role.has_multiple_assignees == true ? 'نعم' : 'لا' }}</td>
             </tr>
         </table>
     </div>

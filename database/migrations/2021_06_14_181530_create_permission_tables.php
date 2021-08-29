@@ -23,8 +23,7 @@ class CreatePermissionTables extends Migration
         Schema::create($tableNames['permissions'], function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');       // For MySQL 8.0 use string('name', 125);
-            $table->string('description_ar')->nullable();       // For MySQL 8.0 use string('name', 125);
-            $table->string('description_en')->nullable();       // For MySQL 8.0 use string('name', 125);
+            $table->json('title')->nullable();
             $table->string('guard_name')->default('web'); // For MySQL 8.0 use string('guard_name', 125);
             $table->timestamps();
 
@@ -34,8 +33,10 @@ class CreatePermissionTables extends Migration
         Schema::create($tableNames['roles'], function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');       // For MySQL 8.0 use string('name', 125);
-            $table->string('description_ar')->nullable();       // For MySQL 8.0 use string('name', 125);
-            $table->string('description_en')->nullable();       // For MySQL 8.0 use string('name', 125);
+            $table->json('title')->nullable();
+            $table->boolean('has_multiple_assignees')->default(0);
+            $table->bigInteger('section_id')->nullable();
+            
             $table->string('guard_name'); // For MySQL 8.0 use string('guard_name', 125);
             $table->timestamps();
 

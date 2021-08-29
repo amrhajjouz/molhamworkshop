@@ -30,6 +30,9 @@ class CreateUserRequest extends FormRequest
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8'],
             'locale' => ['required', Rule::in(['ar', 'en']) ],
+            'direct_manager_id' => ['sometimes',  'exists:users,id'],
+            'title_id' => ['required',  'exists:titles,id'],
+            'section_id' => ['required',  'exists:sections,id'],
         ];
     }
     
