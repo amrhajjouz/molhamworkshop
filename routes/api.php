@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DonorController;
+use App\Http\Controllers\{DonorController, PlaceController , CountryController};
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +17,7 @@ use App\Http\Controllers\DonorController;
 |
 */
 
-Route::middleware('auth')->group(function ()  {
+Route::middleware('auth')->group(function () {
 
     Route::get('/auth', function (Request $request) {
         return $request->user();
@@ -36,4 +36,13 @@ Route::middleware('auth')->group(function ()  {
     Route::put('/donors', [DonorController::class, 'update']);
     Route::get('/donors/{id}', [DonorController::class, 'retrieve']);
 
+    /////////////////////// Places /////////////////////////
+    Route::get('/places', [PlaceController::class, 'list']);
+    Route::post('/places', [PlaceController::class, 'create']);
+    Route::put('/places', [PlaceController::class, 'update']);
+    Route::get('/places/search', [PlaceController::class, 'search']);
+    Route::get('/places/{id}', [PlaceController::class, 'retrieve']);
+
+     ////////////////// COUNTRY //////////////
+     Route::get('/countries', [CountryController::class, 'list']);
 });
