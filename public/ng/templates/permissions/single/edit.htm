@@ -17,7 +17,7 @@
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="title_en">الوصف الإنكليزي</label>
-            <input type="text" class="form-control" ng-class="(updatePermission.errors['title.en'] != null) ? 'is-invalid' : ''" id="title_en" ng-model="permission.title.en" ng-change="updatePermission.errors['title.en'] = null" placeholder="الوصف الإنكليزي .." required>
+            <input dir="ltr" type="text" class="form-control" ng-class="(updatePermission.errors['title.en'] != null) ? 'is-invalid' : ''" id="title_en" ng-model="permission.title.en" ng-change="updatePermission.errors['title.en'] = null" placeholder="الوصف الإنكليزي .." required>
             <div ng-show="updatePermission.errors['title.en'] != null" class="invalid-feedback">{{ updatePermission.errors['title.en'][0] }}</div>
         </div>
     </div>
