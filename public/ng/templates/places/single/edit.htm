@@ -4,38 +4,37 @@
   <div class="col-12 col-md-6">
     <div class="form-group">
       <label for="name">اسم المكان</label>
-      <input id="name" class="form-control" type="text" ng-class="(updatePlace.errors.name != null) ? 'is-invalid' : ''" ng-model="object.name" ng-change="updatePlace.errors.name = null" placeholder="الاسم.." ng-error="updatePlace.errors.name" required/>
+      <input id="name" class="form-control" type="text" ng-class="(updatePlace.errors.name != null) ? 'is-invalid' : ''" ng-model="place.name" ng-change="updatePlace.errors.name = null" placeholder="الاسم.." ng-error="updatePlace.errors.name" required/>
     </div>
   </div>
 
   <div class="col-12 col-md-6">
     <div class="form-group">
       <label for="type">النوع</label>
-      <select id="type" class="form-control" ng-model="object.type" ng-class="(updatePlace.errors.type != null) ? 'is-invalid' : ''" ng-options="type.id as type.name for type in types" ng-change="updatePlace.errors.type = null" placeholder="يرجى اختيار نوع.." ng-error="updatePlace.errors.type" required ></select>
+      <select id="type" class="form-control" ng-model="place.type" ng-class="(updatePlace.errors.type != null) ? 'is-invalid' : ''" ng-options="type.id as type.name for type in types" ng-change="updatePlace.errors.type = null" placeholder="يرجى اختيار نوع.." ng-error="updatePlace.errors.type" required ></select>
     </div>
   </div>
 
-  <div class="col-12 col-md-6" ng-show="object.type == 'province'">
+  <div class="col-12 col-md-6" ng-show="place.type == 'province'">
     <div class="form-group">
       <label for="name">الدولة</label>
-      <select
-        id="country_code" class="form-control" ng-model="object.country_code" ng-class="(updatePlace.errors.country_code != null) ? 'is-invalid' : ''" ng-change="updatePlace.errors.country_code = null" ng-options="country.code as country.name.ar for country in countries" ng-error="updatePlace.errors.country_code"></select>
+      <select id="country_code" class="form-control" ng-model="place.country_code" ng-class="(updatePlace.errors.country_code != null) ? 'is-invalid' : ''" ng-change="updatePlace.errors.country_code = null" ng-options="country.code as country.name.ar for country in countries" ng-error="updatePlace.errors.country_code"></select>
     </div>
   </div>
-  <div class="col-12 col-md-6" ng-show="!['province' , 'city'].includes(object.type) && object.type != 'city'">
+  <div class="col-12 col-md-6" ng-show="!['province' , 'city'].includes(place.type) && place.type != 'city'">
     <div class="form-group">
       <label for="parent_type">نوع المكان الذي تتبع له</label>
-      <select id="parent_type" class="form-control" ng-model="object.parent_type" ng-class="(updatePlace.errors.parent_type != null) ? 'is-invalid' : ''" ng-change="handleChangeParentType()" ng-error="updatePlace.errors.parent_type">
+      <select id="parent_type" class="form-control" ng-model="place.parent_type" ng-class="(updatePlace.errors.parent_type != null) ? 'is-invalid' : ''" ng-change="handleChangeParentType()" ng-error="updatePlace.errors.parent_type">
         <option ng-value="'city'">مدينة</option>
         <option ng-value="'province'">محافظة</option>
       </select>
     </div>
   </div>
 
-  <div class="col-12 col-md-6" ng-show="object.type=='city' || object.type != 'province' && object.parent_type">
+  <div class="col-12 col-md-6" ng-show="place.type=='city' || place.type != 'province' && place.parent_type">
     <div class="form-group">
       <label for="parent_id">المكان الذي تتبع له</label>
-      <select id="parent_id" class="form-control" ng-model="object.parent_id" ng-class="(updatePlace.errors.parent_id != null) ? 'is-invalid' : ''" ng-change="updatePlace.errors.parent_id = null" ng-options="item.id as item.name for item in parentPlaces" ng-error="updatePlace.errors.parent_id"></select>
+      <select id="parent_id" class="form-control" ng-model="place.parent_id" ng-class="(updatePlace.errors.parent_id != null) ? 'is-invalid' : ''" ng-change="updatePlace.errors.parent_id = null" ng-options="item.id as item.name for item in parentPlaces" ng-error="updatePlace.errors.parent_id"></select>
     </div>
   </div>
 

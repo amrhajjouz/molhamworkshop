@@ -2,18 +2,12 @@
 
 namespace App\Models;
 
-
-use App\Models\{Cases, Country};
+use App\Models\{Country};
 
 class Place extends BaseModel
 {
     protected $table = 'places';
-    protected $guarded= [];
-
-    public function cases()
-    {
-        return $this->morphedByMany(Cases::class, 'placeable');
-    }
+    protected $guarded = [];
 
     public function parent()
     {
@@ -25,39 +19,29 @@ class Place extends BaseModel
         return $this->hasOne(Country::class, 'code', 'country_code');
     }
 
-    public function transform()
-    {
-        $object = $this->toArray();
-        $parent = $this->parent;
-        $country = $this->country;
-        $locale = app()->getLocale();
-        if($country) $country->name = json_decode($country->name);
-        if ($parent) {
-            $parent->parent;
-        }
-
-        unset($this->parent);
-        return array_merge($object, [
-            'parent' => $parent,
-            'country' => $country ? ['name' => $country->name[$locale]] : null
-        ]);
-    }
-
     public function save($options = [])
     {
         if ($this->type !== "province")
             $this->country_code = null;
-
         return parent::save();
     }
-
 
     /*
      * optional transform this object and get long path of place with parents names 
      */
-
-    public function long_name()
-     {
-          return \App\Facades\Helper::getFullNamePlace($this);
-     }
+    public function getFullNamePlace()
+    {
+        $text = $this->name;
+        $object = $this;
+        //if type = province that main it has no parent place
+        if ($this->type == 'province' && isset($this->country_code)) {
+            return json_decode($object->country->name, true)["ar"] . "-" . $text;
+        }
+        while (isset($object->parent)) {
+            $object = $object->parent;
+            $text =  $object->name . '-' . $text;
+            if (!is_null($object->country_code)) $text = json_decode($object->country->name, true)["ar"] . "-" . $text;
+        }
+        return $text;
+    }
 }

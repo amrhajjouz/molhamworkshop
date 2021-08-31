@@ -1,5 +1,5 @@
 async function editPlaceControllerInit($http, $page, $apiRequest) {
-  const object = await $apiRequest
+  const place = await $apiRequest
     .config("places/" + $page.routeParams.id)
     .getData();
 
@@ -7,14 +7,14 @@ async function editPlaceControllerInit($http, $page, $apiRequest) {
   countries.forEach(c => c.name = JSON.parse(c.name));
   
   let url = "places/search";
-  if (object.parent) {
-    object.parent_type = object.parent.type;
-    url += "?type=" + object.parent.type;
+  if (place.parent) {
+    place.parent_type = place.parent.type;
+    url += "?type=" + place.parent.type;
   }
   const parentPlaces = await $apiRequest.config(url).getData();
 
   return {
-    object: object,
+    place: place,
     countries: countries,
     parentPlaces: parentPlaces,
   };
@@ -28,7 +28,7 @@ function editPlaceController($scope, $page, $apiRequest, $init) {
     { id: "village", name: "قرية" },
   ];
 
-  $scope.object = $init.object;
+  $scope.place = $init.place;
 
   $scope.countries = $init.countries;
   $scope.parentPlaces = $init.parentPlaces;
@@ -39,7 +39,7 @@ function editPlaceController($scope, $page, $apiRequest, $init) {
     if (type && type == "city") {
       url = `places/search?type=province`;
     } else {
-      url = `places/search?type=${$scope.object.parent_type}`;
+      url = `places/search?type=${$scope.place.parent_type}`;
     }
     $scope.parentPlaces = await $apiRequest.config(url).getData();
     $scope.$evalAsync();
@@ -47,14 +47,14 @@ function editPlaceController($scope, $page, $apiRequest, $init) {
 
   $scope.handleChangeType = async () => {
     $scope.createPlace.errors.type = null;
-    if ($scope.object.type == "city") $scope.handleChangeParentType("city");
+    if ($scope.place.type == "city") $scope.handleChangeParentType("city");
   };
 
   $scope.updatePlace = $apiRequest.config(
     {
       method: "PUT",
       url: "places",
-      data: $scope.object,
+      data: $scope.place,
     },
     function (response, data) {}
   );

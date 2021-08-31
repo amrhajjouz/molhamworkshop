@@ -17,7 +17,7 @@ function addPlaceController($scope, $location, $apiRequest, $page, $init) {
     { id: "village", name: "قرية" },
   ];
 
-  $scope.object = { name: null, parent_id: null, type: "province", country_code: null, parent_type: false,};
+  $scope.place = { name: null, parent_id: null, type: "province", country_code: null, parent_type: false, };
 
   $scope.places = $init.places;
   $scope.countries = $init.countries;
@@ -29,7 +29,7 @@ function addPlaceController($scope, $location, $apiRequest, $page, $init) {
     if (type && type == "city") {
       url = `places/search?type=province`;
     } else {
-      url = `places/search?type=${$scope.object.parent_type}`;
+      url = `places/search?type=${$scope.place.parent_type}`;
     }
     $scope.parentPlaces = await $apiRequest.config(url).getData();
     $scope.$evalAsync();
@@ -37,14 +37,14 @@ function addPlaceController($scope, $location, $apiRequest, $page, $init) {
 
   $scope.handleChangeType = async () => {
     $scope.createPlace.errors.type = null;
-    if ($scope.object.type == "city") $scope.handleChangeParentType("city");
+    if ($scope.place.type == "city") $scope.handleChangeParentType("city");
   };
 
   $scope.createPlace = $apiRequest.config(
     {
       method: "POST",
       url: "places",
-      data: $scope.object,
+      data: $scope.place,
     },
     function (response, data) {
       $page.navigate("places.overview", { id: data.id });
