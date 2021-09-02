@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\User\CreateUserRequest;
-use App\Http\Requests\User\{UpdateUserRequest, ListUserRolesRequest, AssignRolesRequest, UnassignRoleRequest, AssignPermissionRequest, SearchUserRequest, UnassignPermissionRequest};
+use App/Http/Controllers/UserController.php
+use App\Http\Requests\User\{CreateUserRequest, UpdateUserRequest, ListUserRolesRequest, AssignRolesRequest, UnassignRoleRequest, AssignPermissionRequest, SearchUserRequest, UnassignPermissionRequest};
 use App\Models\{User, Role, Permission};
 use Illuminate\Support\Facades\Hash;
 

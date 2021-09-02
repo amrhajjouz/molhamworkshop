@@ -11,3 +11,18 @@ function getLocaleName ($locale) {
         default: return ; break;
     }
 }
+
+function getCombinedCsv ($csvPath, $header = null) {
+    $rows = array_map('str_getcsv', file($csvPath));
+    $header = array_shift($rows);
+    foreach($header as $i => $key) $header[$i] = str_replace(' ', '_', strtolower($key));
+    $csv = array();
+    foreach ($rows as $row) {
+        $csv[] = array_combine($header, $row);
+    }
+    return $csv;
+}
+
+function getCsvRows ($csvPath) {
+    return array_map('str_getcsv', file($csvPath));
+}

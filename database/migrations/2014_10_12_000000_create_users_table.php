@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->bigInteger('direct_manager_id')->nullable()->index();
             $table->bigInteger('title_id')->nullable()->index();
             $table->bigInteger('section_id')->nullable()->index();
+            $table->text('bio')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
