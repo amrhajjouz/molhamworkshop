@@ -8,6 +8,7 @@ class Place extends BaseModel
 {
     protected $table = 'places';
     protected $guarded = [];
+    protected $casts = ['name' => 'json'];
 
     public function parent()
     {
@@ -31,16 +32,15 @@ class Place extends BaseModel
      */
     public function getFullNamePlace()
     {
-        $text = $this->name;
+        $locale = app()->getLocale();
         $object = $this;
+        $text = $this->name[$locale];
         //if type = province that main it has no parent place
-        if ($this->type == 'province' && isset($this->country_code)) {
-            return json_decode($object->country->name, true)["ar"] . "-" . $text;
-        }
+        if ($this->type == 'province' && isset($this->country_code)) return $object->country->name[$locale] . ", " . $text;
         while (isset($object->parent)) {
             $object = $object->parent;
-            $text =  $object->name . '-' . $text;
-            if (!is_null($object->country_code)) $text = json_decode($object->country->name, true)["ar"] . "-" . $text;
+            $text =  $object->name[$locale] . ', ' . $text;
+            if (!is_null($object->country_code)) $text = $object->country->name[$locale] . ", " . $text;
         }
         return $text;
     }

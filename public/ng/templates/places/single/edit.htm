@@ -3,8 +3,15 @@
 <form class="row" name="updatePlaceForm" request="updatePlace">
   <div class="col-12 col-md-6">
     <div class="form-group">
-      <label for="name">اسم المكان</label>
-      <input id="name" class="form-control" type="text" ng-class="(updatePlace.errors.name != null) ? 'is-invalid' : ''" ng-model="place.name" ng-change="updatePlace.errors.name = null" placeholder="الاسم.." ng-error="updatePlace.errors.name" required/>
+      <label for="name_ar">اسم المكان العربي</label>
+      <input id="name_ar" class="form-control" type="text" ng-class="(updatePlace.errors['name.ar'] != null) ? 'is-invalid' : ''" ng-model="place.name.ar" ng-change="updatePlace.errors['name.ar'] = null" placeholder="الاسم العربي.." ng-error="updatePlace.errors['name.ar']" required/>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="name_en">اسم المكان الإنكليزي</label>
+      <input id="name_en" class="form-control" type="text" ng-class="(updatePlace.errors['name.en'] != null) ? 'is-invalid' : ''" ng-model="place.name.en" ng-change="updatePlace.errors['name.en'] = null" placeholder="الاسم الإنكليزي.." ng-error="updatePlace.errors['name.en']" required/>
     </div>
   </div>
 
@@ -25,16 +32,18 @@
     <div class="form-group">
       <label for="parent_type">نوع المكان الذي تتبع له</label>
       <select id="parent_type" class="form-control" ng-model="place.parent_type" ng-class="(updatePlace.errors.parent_type != null) ? 'is-invalid' : ''" ng-change="handleChangeParentType()" ng-error="updatePlace.errors.parent_type">
-        <option ng-value="'city'">مدينة</option>
-        <option ng-value="'province'">محافظة</option>
+        <option value="city">مدينة</option>
+        <option value="province">محافظة</option>
       </select>
     </div>
   </div>
 
-  <div class="col-12 col-md-6" ng-show="place.type=='city' || place.type != 'province' && place.parent_type">
+  <div class="col-12 col-md-6" ng-show="place.type != 'province' && place.parent_type">
     <div class="form-group">
       <label for="parent_id">المكان الذي تتبع له</label>
-      <select id="parent_id" class="form-control" ng-model="place.parent_id" ng-class="(updatePlace.errors.parent_id != null) ? 'is-invalid' : ''" ng-change="updatePlace.errors.parent_id = null" ng-options="item.id as item.name for item in parentPlaces" ng-error="updatePlace.errors.parent_id"></select>
+      <select2 model="place.parent_id" ajax-url="places/search" error-model="updatePlace.errors.parent_id" ajax-data="{type: place.type == 'city' ? 'city' : place.parent_type}" >
+        <option value="{{place.parent_id}}">{{place.parent.name}}</option>
+      </select2>
     </div>
   </div>
 

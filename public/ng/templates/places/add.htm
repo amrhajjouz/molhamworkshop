@@ -1,9 +1,17 @@
 <page-header title="مكان جديد" pretitle="الأماكن"></page-header>
 <form class="row" name="createPlaceForm" request="createPlace">
+  
   <div class="col-12 col-md-6">
     <div class="form-group">
-      <label for="name">اسم المكان</label>
-      <input id="name" class="form-control" type="text" ng-model="place.name" ng-class="(createPlace.errors.name != null) ? 'is-invalid' : ''" ng-change="createPlace.errors.name = null" placeholder="الاسم.." ng-error="createPlace.errors.name" required/>
+      <label for="name_ar">اسم المكان العربي</label>
+      <input id="name_ar" class="form-control" type="text" ng-model="place.name.ar" ng-class="(createPlace.errors['name.ar'] != null) ? 'is-invalid' : ''" ng-change="createPlace.errors['name.ar'] = null" placeholder="الاسم العربي.." ng-error="createPlace.errors['name.ar'][0]" required/>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="name_en">اسم المكان الإنكليزي</label>
+      <input id="name_en" class="form-control" type="text" ng-model="place.name.en" ng-class="(createPlace.errors['name.en'] != null) ? 'is-invalid' : ''" ng-change="createPlace.errors['name.en'] = null" placeholder="الاسم الإنكليزي.." ng-error="createPlace.errors['name.en']" required/>
     </div>
   </div>
 
@@ -29,11 +37,10 @@
       </select>
     </div>
   </div>
-
   <div class="col-12 col-md-6" ng-show="place.type=='city' || place.type != 'province' && place.parent_type">
     <div class="form-group">
       <label for="parent_id">المكان الذي تتبع له</label>
-      <select id="parent_id" class="form-control" ng-model="place.parent_id" ng-class="(createPlace.errors.parent_id != null) ? 'is-invalid' : ''" ng-options="item.id as item.name for item in parentPlaces" ng-change="createPlace.errors.parent_id = null"></select>
+      <select2 model="place.parent_id" ajax-url="places/search" ajax-data="{type: place.type == 'city' ? 'city' : place.parent_type}" error-model="createPlace.errors.parent_id" id="parent_id"></select2>
     </div>
   </div>
 

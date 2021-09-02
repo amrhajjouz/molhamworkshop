@@ -8,4 +8,5 @@ class Country extends BaseModel
    protected  $guarded = [];
    protected $casts = ['name' => 'json', 'nationality' => 'json'];
    public $timestamps = false;
+
 }

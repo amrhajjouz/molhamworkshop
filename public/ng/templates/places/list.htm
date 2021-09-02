@@ -9,7 +9,7 @@
       <thead>
         <tr>
           <th class="text-center">#</th>
-          <th class="text-center">الاسم</th>
+          <th class="text-center">الاسم العربي</th>
           <th class="text-center">الاسم الكامل</th>
           <th class="text-center">النوع</th>
           <th class="text-center">خيارات</th>
@@ -19,7 +19,7 @@
       <tbody>
         <tr ng-repeat="place in places.data">
           <td class="align-middle text-center">{{ place.id }}</td>
-          <td class="align-middle text-center">{{ place.name }}</td>
+          <td class="align-middle text-center">{{ place.name.ar }}</td>
           <td class="align-middle text-center">{{ place.long_name }}</td>
           <td class="align-middle text-center">{{ place.type }}</td>
           <td class="align-middle text-center h2">

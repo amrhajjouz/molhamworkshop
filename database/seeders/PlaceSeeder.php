@@ -14,11 +14,11 @@ class PlaceSeeder extends Seeder
      */
     public function run()
     {
-        Place::create(['name' => 'ادلب','type' => 'province','country_code' => "SY"]);
-        Place::create(['name' => 'سراقب','type' => 'city','parent_id' => 1,]);
-        Place::create(['name' => 'افس','type' => 'village','parent_id' => 2]);
-        Place::create(['name' => 'بنش','type' => 'city']);
-        Place::create(['name' => "جبلة",'type' => 'city']);
-        Place::create(['name' => 'بانياس','type' => 'city']);
+        Place::create(['name' => ['ar'=>'ادلب' , 'en'=>"idlep"],'type' => 'province','country_code' => "SY"]);
+        Place::create(['name' =>['ar'=> 'سراقب' , 'en'=>'saraqep'] ,'type' => 'city','parent_id' => 1,]);
+        Place::create(['name' => ['ar'=>'افس' , 'en'=>'afes'],'type' => 'village','parent_id' => 2]);
+        Place::create(['name' =>['ar'=> 'بنش' , 'en' => 'Binnish'],'type' => 'city']);
+        Place::create(['name' => ['ar'=>"جبلة" , 'en' => 'jablah'],'type' => 'city']);
+        Place::create(['name' => ['ar' => 'بانياس' , 'en' => 'Bnias'] ,'type' => 'city']);
     }
 }
