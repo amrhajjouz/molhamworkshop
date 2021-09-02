@@ -27,9 +27,8 @@ class DonorController extends Controller
             $donor = Donor::create($data);
             $token = $donor->tokens()->create([]);
             createRandomPaymentMethods($donor->id);
-            
+            createRandomDonorSavedItem($donor);
             DonorMailer::sendEmailVerification($donor->name, $donor->email, $donor->email_verification_token);
-            
             return handleResponse([
                 'id' => $donor->id,
                 'name' => $donor->name,

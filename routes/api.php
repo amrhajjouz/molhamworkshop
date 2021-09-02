@@ -39,6 +39,8 @@ Route::group(['middleware' => 'auth_donor'], function () {
     Route::get('/donors/auth/payment_methods' , [AuthDonorController::class, 'listPaymentMethods'])->name('api.donors.auth.payment_methods.list'); 
     Route::post('/donors/auth/avatar' , [AuthDonorController::class, 'changeAvatar'])->name('api.donors.auth.avatar.change'); 
     Route::delete('/donors/auth/avatar' , [AuthDonorController::class, 'removeAvatar'])->name('api.donors.auth.avatar.remove'); 
+    Route::get('/donors/auth/saved_items' , [AuthDonorController::class, 'listSavedItems'])->name('api.donors.auth.saved_items.list'); 
+    // Route::post('/donors/auth/saved_items' , [AuthDonorController::class, 'listSavedItems'])->name('api.donors.auth.saved_items.create'); 
     
     // PaymentMethod
     Route::post('/payment_methods' , [PaymentMethodController::class, 'create'])->name('api.payment_methods.create'); 

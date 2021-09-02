@@ -11,7 +11,7 @@ class Donor extends Model
     use Tokenable;
 
     protected  $guarded = [];
-    protected $hidden = ['password' , "email_verification_token"];
+    protected $hidden = ['password', "email_verification_token"];
 
     public function country()
     {
@@ -42,5 +42,16 @@ class Donor extends Model
     public function reset_password_requests()
     {
         return $this->hasMany('App\Models\DonorResetPasswordRequest', 'donor_id', 'id');
+    }
+
+    public function donation_items()
+    {
+        return $this->morphMany('App\Models\DonationItem', 'purpose');
+    }
+
+    public function saved_items()
+    {
+        return $this->hasMany('App\Models\SavedItem' , 'donor_id');
+        // return $this->morphMany('App\Models\SavedItem', 'saveable');
     }
 }

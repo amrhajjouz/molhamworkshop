@@ -142,4 +142,17 @@ class AuthDonorController extends Controller
             throw new ApiErrorException($e->getMessage());
         }
     }
+
+    public function listSavedItems(Request $request)
+    {
+        try {
+            return handleResponse(
+                $request->user()->saved_items()->get()->map(function ($item) {
+                    return ['saveable_id' => $item->saveable_id, 'saveable_type' => $item->saveable_type,];
+                })
+            );
+        } catch (\Exception $e) {
+            throw new ApiErrorException($e->getMessage());
+        }
+    }
 }

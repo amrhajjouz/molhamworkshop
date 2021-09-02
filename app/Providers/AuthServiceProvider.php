@@ -26,7 +26,6 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        
         if (request()->bearerToken() != null) {
             
             $token = Token::where('access_token', request()->bearerToken())->first();
