@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
                 'name' => 'Test User ' . $i,
                 'email' => 'test' . $i . '@test.com',
                 'password' => Hash::make('12345678'),
+                'locale' => 'ar',
             ]);
         }
     }

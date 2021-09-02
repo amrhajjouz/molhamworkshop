@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\Controller;
+    
 class SpaController extends Controller
 {
     /**
@@ -25,20 +26,20 @@ class SpaController extends Controller
     {
         try {
             
-            if ($request->is('api/*')) return response()->json(['error' => 'API Route not found'], 500);
+            if ($request->is('dashboard/api/*')) return response()->json(['error' => 'API Route not found'], 500);
             
-            $app_url =  url('');
+            $appUrl =  url('');
             $routes = [];
-            foreach(include(base_path('routes/ng.php')) as $route_name => $r) {
-                $route_url = ($r[0][0] == '/') ? $r[0] : '/' . $r[0];
-                $controller_path = $r[1] . '.js';
-                $controller_exploded_by_slash = explode('/', $r[1]);
-                $controller_name = end($controller_exploded_by_slash);
-                $template_path = str_replace('.', '/', $r[2]) . '.htm';
-                $template_id_exploded = explode('.', $r[2]);
-                array_pop($template_id_exploded);
-                $template_directory = implode('/', $template_id_exploded); //(count($a) > 0) ? implode('/', $a) : '';
-                $routes[] = ['name' => $route_name, 'url' =>  $route_url , 'controller_name' => $controller_name, 'controller_path' => $controller_path, 'template_directory' => $template_directory, 'template_id' => $r[2], 'template_path' => $template_path];
+            foreach(include(base_path('routes/dashboard/ng.php')) as $routeName => $r) {
+                $routeUrl = ($r[0][0] == '/') ? $r[0] : '/' . $r[0];
+                $controllerPath = $r[1] . '.js';
+                $controllerExplodedBySlash = explode('/', $r[1]);
+                $controllerName = end($controllerExplodedBySlash);
+                $templatePath = str_replace('.', '/', $r[2]) . '.htm';
+                $templateIdExploded = explode('.', $r[2]);
+                array_pop($templateIdExploded);
+                $templateDirectory = implode('/', $templateIdExploded); //(count($a) > 0) ? implode('/', $a) : '';
+                $routes[] = ['name' => $routeName, 'url' =>  $routeUrl , 'controller_name' => $controllerName, 'controller_path' => $controllerPath, 'template_directory' => $templateDirectory, 'template_id' => $r[2], 'template_path' => $templatePath];
             }
             
             $routes = collect($routes);
@@ -56,7 +57,7 @@ class SpaController extends Controller
             
             foreach (['ar', 'en', 'fr', 'de', 'tr', 'es'] as $l) $locales[] = ['code' => $l, 'name' => getLocaleName($l), 'dir' => ($l == 'ar') ? 'rtl' : 'ltr', 'align' => ($l == 'ar') ? 'right' : 'left'];
             
-            return view('app', ['routes' => collect($routes), 'app_url' => $app_url, 'api_url' => $app_url . '/api/', 'locales' => $locales]);
+            return view('app', ['routes' => collect($routes), 'appUrl' => $appUrl, 'apiUrl' => $appUrl . '/dashboard/api/', 'locales' => $locales]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }

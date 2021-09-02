@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
- use App\Http\Requests\Donor\UpdateDonorRequest;
-  use App\Models\Donor;
- use Illuminate\Http\Request;
- use App\Http\Requests\Donor\CreateDonorRequest;
- use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Donor;
+use App\Http\Requests\Donor\{CreateDonorRequest, UpdateDonorRequest};
+use App\Http\Controllers\Controller;
 
- class DonorController extends Controller
+class DonorController extends Controller
 {
 
     public function create (CreateDonorRequest $request)
@@ -29,7 +29,7 @@ namespace App\Http\Controllers;
         try {
             $donor = Donor::findOrFail($request->id);
             $input = $request->validated();
-            if(isset($input["password"])){
+            if(isset($input["password"])) {
                 $input["password"] = Hash::make($request->password);
             }
 
@@ -49,7 +49,8 @@ namespace App\Http\Controllers;
         }
     }
 
-    public function list (Request $request) {
+    public function list (Request $request)
+    {
         
         try {
             $search_query = ($request->has('q') ? [['name', 'like', '%' . $request->q . '%']] : null);
