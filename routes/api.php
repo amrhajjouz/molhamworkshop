@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\{DonorController , AuthDonorController , PaymentMethodController};
+use App\Http\Controllers\Api\{DonorController , AuthDonorController , PaymentMethodController, SubscriptionController};
 use App\Http\Controllers\Api\PaymentProvider\Stripe\{SetupIntentController};
 
 /*
@@ -40,7 +40,10 @@ Route::group(['middleware' => 'auth_donor'], function () {
     Route::post('/donors/auth/avatar' , [AuthDonorController::class, 'changeAvatar'])->name('api.donors.auth.avatar.change'); 
     Route::delete('/donors/auth/avatar' , [AuthDonorController::class, 'removeAvatar'])->name('api.donors.auth.avatar.remove'); 
     Route::get('/donors/auth/saved_items' , [AuthDonorController::class, 'listSavedItems'])->name('api.donors.auth.saved_items.list'); 
-    // Route::post('/donors/auth/saved_items' , [AuthDonorController::class, 'listSavedItems'])->name('api.donors.auth.saved_items.create'); 
+    Route::post('/donors/auth/saved_items' , [AuthDonorController::class, 'createSavedItem'])->name('api.donors.auth.saved_items.create'); 
+    
+    //Subscriptions
+    Route::post('/subscriptions' , [SubscriptionController::class, 'create'])->name('api.subscriptions.create'); 
     
     // PaymentMethod
     Route::post('/payment_methods' , [PaymentMethodController::class, 'create'])->name('api.payment_methods.create'); 

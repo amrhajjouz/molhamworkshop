@@ -18,7 +18,7 @@ function createRandomPaymentMethods($donorId)
 }
 
 
-function createRandomDonorSavedItem(Donor $donor)
+function createRandomDonorSavedItems(Donor $donor)
 {
     $donor->saved_items()->create(['saveable_type' => 'user', 'saveable_id' => 1]);
     $donor->saved_items()->create(['saveable_type' => 'user', 'saveable_id' => 2]);

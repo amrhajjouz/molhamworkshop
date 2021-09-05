@@ -52,6 +52,10 @@ class Donor extends Model
     public function saved_items()
     {
         return $this->hasMany('App\Models\SavedItem' , 'donor_id');
-        // return $this->morphMany('App\Models\SavedItem', 'saveable');
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany('App\Models\Subscription' , 'donor_id');
     }
 }

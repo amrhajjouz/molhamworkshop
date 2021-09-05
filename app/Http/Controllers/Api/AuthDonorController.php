@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Exceptions\ApiErrorException;
 use Illuminate\Http\Request;
 use App\Http\Requests\Api\Donor\{UpdateDonorRequest, ChangeDonorEmailRequest, ChangeDonorPasswordRequest, UpdateDonorNotificationPreferences, ChangeDonorAvatarRequest};
+use App\Http\Requests\Api\SavedItem\CreateSavedItemRequest;
 use App\Models\{Image, Token, NotificationPreference};
 use Illuminate\Support\Facades\Hash;
 
@@ -155,4 +156,16 @@ class AuthDonorController extends Controller
             throw new ApiErrorException($e->getMessage());
         }
     }
+
+    public function createSavedItem(CreateSavedItemRequest $request)
+    {
+        try {
+            $request->user()->saved_items()->firstOrCreate($request->validated());
+            return handleResponse(null);
+        } catch (\Exception $e) {
+            throw new ApiErrorException($e->getMessage());
+        }
+    }
+
+
 }
