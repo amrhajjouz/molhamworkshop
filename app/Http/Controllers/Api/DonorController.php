@@ -58,9 +58,13 @@ class DonorController extends Controller
     {
         try {
             $donor = Donor::where('email', $request->validated()['email'])->first();
-            if (!$donor) throw new Exception('reset_donor_password_invalid_email');
-            if ($donor->reset_password_requests()->where([['expires_at', ">", Carbon::now()->toDateTimeString()], ['consumed', 0]])->get()->count() >= 3) throw new ApiErrorException('max_exceed_donor_reset_password_requests');
-            $donorResetPasswordRequest = $donor->reset_password_requests()->create([]);
+            if (!$donor)
+                throw new Exception('reset_donor_password_invalid_email');
+            
+            if ($donor->resetPasswordRequests()->where([['expires_at', ">", Carbon::now()->toDateTimeString()], ['consumed', 0]])->get()->count() >= 3)
+                throw new ApiErrorException('max_exceed_donor_reset_password_requests');
+            
+            $donorResetPasswordRequest = $donor->resetPasswordRequests()->create([]);
             DonorMailer::sendResetPasswordCode($donor->name, $donor->email, $donorResetPasswordRequest->code);
             return handleResponse(['token' => $donorResetPasswordRequest->token]);
         } catch (\Exception $e) {

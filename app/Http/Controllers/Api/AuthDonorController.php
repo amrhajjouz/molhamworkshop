@@ -95,7 +95,7 @@ class AuthDonorController extends Controller
     public function listNotificationPreferences(Request $request)
     {
         try {
-            return handleResponse($request->user()->notification_preferences()->pluck('name'));
+            return handleResponse($request->user()->notificationPreferences()->pluck('name'));
         } catch (\Exception $e) {
             throw new ApiErrorException($e->getMessage());
         }
@@ -105,7 +105,7 @@ class AuthDonorController extends Controller
     {
         try {
             $notificationPreferencesIds = NotificationPreference::whereIn('name', $request->validated()['preferences'])->get()->pluck('id');
-            $request->user()->notification_preferences()->sync($notificationPreferencesIds);
+            $request->user()->notificationPreferences()->sync($notificationPreferencesIds);
             return handleResponse(null);
         } catch (\Exception $e) {
             throw new ApiErrorException($e->getMessage());
@@ -115,7 +115,7 @@ class AuthDonorController extends Controller
     public function listPaymentMethods(Request $request)
     {
         try {
-            return handleResponse($request->user()->payment_methods->transform(function ($obj) {
+            return handleResponse($request->user()->paymentMethods->transform(function ($obj) {
                 return $obj->apiTransform();
             }));
         } catch (\Exception $e) {
@@ -148,7 +148,7 @@ class AuthDonorController extends Controller
     {
         try {
             return handleResponse(
-                $request->user()->saved_items()->get()->map(function ($item) {
+                $request->user()->savedItems()->get()->map(function ($item) {
                     return ['saveable_id' => $item->saveable_id, 'saveable_type' => $item->saveable_type,];
                 })
             );
