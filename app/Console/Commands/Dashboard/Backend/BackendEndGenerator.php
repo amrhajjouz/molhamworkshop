@@ -20,6 +20,9 @@ class BackendEndGenerator extends DashboardGenerator
         $words = $this->GetStringRewords($name);
 
         foreach ($this->choices as $key => $choice) {
+            if($this->choices[$key] == false){
+                continue;
+            }
             switch ($key) {
                 case "Model":
                     $this->RunCommand("make:model {$words['pascal']}");
