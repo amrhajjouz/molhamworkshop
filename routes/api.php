@@ -22,7 +22,7 @@ use App\Http\Controllers\Api\PaymentProvider\Stripe\{SetupIntentController};
 Route::get('/test', function () {
     
     $cardExistsForAuth = false;
-    return \App\Models\StripeCard::with('payment_method')->where('fingerprint', 'HYumAOu91ekiPONh')->get();
+    return \App\Models\StripeCard::with('paymentMethod')->where('fingerprint', 'HYumAOu91ekiPONh')->get();
     foreach (\App\Models\StripeCard::with('paymentMethod')->where('fingerprint', 'HYumAOu91ekiPONh')->get() as $c) {
         return $c->paymentMethod;
         if ($c->paymentMethod->donor_id == 3)
