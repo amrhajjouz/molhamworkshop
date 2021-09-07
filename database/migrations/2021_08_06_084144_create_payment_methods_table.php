@@ -16,7 +16,7 @@ class CreatePaymentMethodsTable extends Migration
         Schema::create('payment_methods', function (Blueprint $table) {
             $table->id();
             $table->morphs('methodable');
-            $table->string('type' , 30)->index();
+            $table->string('type', 30)->index();
             $table->bigInteger('donor_id')->index();
             $table->boolean('future_usage')->default(1);
             $table->timestamps();

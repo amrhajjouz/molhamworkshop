@@ -16,7 +16,7 @@ class CreateStripeSofortAccountsTable extends Migration
         Schema::create('stripe_sofort_accounts', function (Blueprint $table) {
             $table->id();
             $table->string('stripe_payment_method_id' , 50)->index();
-            $table->string('owner_name' , 20)->index();
+            $table->string('owner_name' , 50)->index();
             $table->string('country_code' , 2)->index();
         });
     }

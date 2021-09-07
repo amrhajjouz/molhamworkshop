@@ -28,24 +28,34 @@ class PaymentMethodController extends Controller
                 
                 if ($stripePaymentMethod->type == 'card') {
                     
-                    if (StripeCard::where([['stripe_payment_method_id', $stripePaymentMethod->id], ['fingerprint', $stripePaymentMethod->card->fingerprint]])->exists()) throw new ApiErrorException('payment_method_already_exists');
+                    $cardExistsForAuth = false;
                     
-                    $data = [
-                        'donor_id' => auth('donor')->user()->id,
-                        'methodable_type' => 'stripe_card',
-                        'methodable' => [
-                            'stripe_payment_method_id' => $stripePaymentMethod->id,
-                            'fingerprint' => $stripePaymentMethod->card->fingerprint,
-                            'brand' => $stripePaymentMethod->card->brand,
-                            'last4_digits' => $stripePaymentMethod->card->last4,
-                            'expiry_month' => $stripePaymentMethod->card->exp_month,
-                            'expiry_year' => $stripePaymentMethod->card->exp_year,
-                            'country_code' => $stripePaymentMethod->card->country,
-                        ],
-                    ];
+                    foreach (StripeCard::where('fingerprint', $stripePaymentMethod->card->fingerprint)->get() as $c) {
+                        if ($c->paymentMethod->donor_id == authDonor()->id)
+                            $cardExistsForAuth = true;
+                    }
                     
-                    $paymentMethod = PaymentMethod::create($data);
-                    return handleResponse($paymentMethod->apiTransform());
+                    if ($cardExistsForAuth)
+                        throw new ApiErrorException('payment_method_already_exists');
+                    else {
+                        
+                        $data = [
+                            'donor_id' => auth('donor')->user()->id,
+                            'methodable_type' => 'stripe_card',
+                            'methodable' => [
+                                'stripe_payment_method_id' => $stripePaymentMethod->id,
+                                'fingerprint' => $stripePaymentMethod->card->fingerprint,
+                                'brand' => $stripePaymentMethod->card->brand,
+                                'last4_digits' => $stripePaymentMethod->card->last4,
+                                'expiry_month' => $stripePaymentMethod->card->exp_month,
+                                'expiry_year' => $stripePaymentMethod->card->exp_year,
+                                'country_code' => $stripePaymentMethod->card->country,
+                            ],
+                        ];
+                        
+                        $paymentMethod = PaymentMethod::create($data);
+                        return handleResponse($paymentMethod->apiTransform());
+                    }
                 }
                 
                 else throw new ApiErrorException('invalid_payment_method');

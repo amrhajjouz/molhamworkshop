@@ -21,7 +21,7 @@ class CreateStripeCardsTable extends Migration
             $table->integer('last4_digits')->index();
             $table->integer('expiry_month')->index();
             $table->integer('expiry_year')->index();
-            $table->string('country_code' , 2)->index();
+            $table->string('country_code', 2)->index();
         });
     }
 

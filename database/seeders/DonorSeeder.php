@@ -42,5 +42,7 @@ class DonorSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'verified' => 1,
         ]);
+        
+        for ($i=1; $i<=4; $i++) createRandomPaymentMethods($i);
     }
 }

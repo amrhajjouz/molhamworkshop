@@ -18,7 +18,7 @@ class Donor extends Model
         return $this->hasOne('App\Models\Country', 'code', 'country_code');
     }
 
-    public function notification_preferences()
+    public function notificationPreferences()
     {
         return $this->belongsToMany(NotificationPreference::class, 'donor_notification_preferences', 'donor_id', 'preference_id');
     }
@@ -29,7 +29,7 @@ class Donor extends Model
         return parent::delete();
     }
 
-    public function payment_methods()
+    public function paymentMethods()
     {
         return $this->hasMany(PaymentMethod::class);
     }
@@ -39,17 +39,17 @@ class Donor extends Model
         return $this->morphOne('App\Models\Image', 'imageable')->where('type', 'avatar');
     }
 
-    public function reset_password_requests()
+    public function resetPasswordRequests()
     {
         return $this->hasMany('App\Models\DonorResetPasswordRequest', 'donor_id', 'id');
     }
 
-    public function donation_items()
+    public function donationItems()
     {
         return $this->morphMany('App\Models\DonationItem', 'purpose');
     }
 
-    public function saved_items()
+    public function savedItems()
     {
         return $this->hasMany('App\Models\SavedItem' , 'donor_id');
     }

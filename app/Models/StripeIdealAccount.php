@@ -11,9 +11,9 @@ class StripeIdealAccount extends Model
     protected $table = "stripe_ideal_accounts";
     public $timestamps = false;
 
-    public function payment_methods()
+    public function paymentMethod()
     {
-        return $this->morphMany('App\Models\PaymentMethod', 'methodable');
+        return $this->morphOne('App\Models\PaymentMethod', 'methodable');
     }
 
     public function apiTransform()
