@@ -22,7 +22,7 @@ class PaymentMethodController extends Controller
             
             $setupIntent = $stripe->setupIntents->retrieve($request->stripe_setup_intent_id);
             
-            if (true /*$setupIntent->status == 'succeeded'*/) {
+            if ($setupIntent->status == 'succeeded') {
                 
                 $stripePaymentMethod = $stripe->paymentMethods->retrieve($setupIntent->payment_method);
                 
@@ -30,8 +30,8 @@ class PaymentMethodController extends Controller
                     
                     $cardExistsForAuth = false;
                     
-                    foreach (StripeCard::where('fingerprint', $stripePaymentMethod->card->fingerprint)->get() as $c) {
-                        if ($c->paymentMethod->donor_id == authDonor()->id)
+                    foreach (StripeCard::with('paymentMethod')->where('fingerprint', $stripePaymentMethod->card->fingerprint)->get() as $c) {
+                        if ($c->paymentMethod && $c->paymentMethod->donor_id == authDonor()->id)
                             $cardExistsForAuth = true;
                     }
                     
