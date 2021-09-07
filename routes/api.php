@@ -23,7 +23,7 @@ Route::get('/test', function () {
     
     $cardExistsForAuth = false;
     
-    foreach (StripeCard::where('fingerprint', 'HYumAOu91ekiPONh')->get() as $c) {
+    foreach (\App\Models\StripeCard::where('fingerprint', 'HYumAOu91ekiPONh')->get() as $c) {
         if ($c->paymentMethod->donor_id == 3)
             $cardExistsForAuth = true;
     }
