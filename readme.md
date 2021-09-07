@@ -15,7 +15,10 @@
 
         email: admin@admin.com
         password: 12345678    
+  
+- Generate new ng view and controller by typing 
 
+        php artisan make:dashboard-crud payment_order // this will generate paymentOrder and files
 
 # SPA Files
 

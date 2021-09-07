@@ -23,6 +23,4 @@ return [
     'donors.add' => ['donors/add', 'donors/addDonorController', 'donors.add'],
     'donors.overview' => ['donors/:id', 'donors/overviewDonorController', 'donors.single.overview'],
     'donors.edit' => ['donors/:id/edit', 'donors/editDonorController', 'donors.single.edit'],
-
-
 ];

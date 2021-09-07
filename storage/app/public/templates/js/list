@@ -1,0 +1,7 @@
+function list{pascal}ControllerInit ($page, $datalist) {
+    return $datalist('{snake}', true).load();
+}
+
+function list{pascal}Controller ($scope, $init) {
+   $scope.{plural} = $init;
+}
