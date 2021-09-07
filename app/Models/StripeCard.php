@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class StripeCard extends Model
 {
     protected $guarded = [];
+    protected $appends = ['last4_digits'];
     protected $table = "stripe_cards";
     public $timestamps = false;
 
@@ -18,6 +19,10 @@ class StripeCard extends Model
     public function country()
     {
         return $this->hasOne('App\Models\Country', 'code', 'country_code');
+    }
+    
+    public function getLast4DigitsAttribute () {
+        return sprintf('%04d', $this->attributes['last4_digits']);
     }
 
     public function apiTransform()
