@@ -20,8 +20,15 @@ use App\Http\Controllers\Api\PaymentProvider\Stripe\{SetupIntentController};
 */
 
 Route::get('/test', function () {
-    for($i=0; $i<=30; $i++) createRandomPaymentMethods(2);
-    return;
+    
+    $cardExistsForAuth = false;
+    
+    foreach (StripeCard::where('fingerprint', 'HYumAOu91ekiPONh')->get() as $c) {
+        if ($c->paymentMethod->donor_id == 3)
+            $cardExistsForAuth = true;
+    }
+    
+    return $cardExistsForAuth;
     /*return \App\Models\SwishAccount::find(1)->paymentMethod;
     return createRandomPaymentMethods(4);
     $stripe = new StripeClient('sk_test_rWaVeJAcQYStJcShQeoxWUHg005redZKzG');
