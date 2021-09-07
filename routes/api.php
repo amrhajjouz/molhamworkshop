@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\{DonorController , AuthDonorController , PaymentMethodController, SubscriptionController};
 use App\Http\Controllers\Api\PaymentProvider\Stripe\{SetupIntentController};
+//use Stripe\StripeClient;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,30 @@ use App\Http\Controllers\Api\PaymentProvider\Stripe\{SetupIntentController};
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('/test', function () {
+    return for($i=0; $i<=30; $i++) createRandomPaymentMethods(2);
+    /*return \App\Models\SwishAccount::find(1)->paymentMethod;
+    return createRandomPaymentMethods(4);
+    $stripe = new StripeClient('sk_test_rWaVeJAcQYStJcShQeoxWUHg005redZKzG');
+    try {
+        //return $stripe->setupIntents->retrieve('seti_1JPM9M2eZvKYlo2CH4ji1fNNs');
+        //return $stripe->paymentMethods->attach('pm_1JRxZlHChY2eOuBQu02dRkqW', ['customer' => 'cus_K67XXPDN5B09pD']);
+        return $stripe->paymentMethods->retrieve('pm_1JRyKCHChY2eOuBQBsFciHsd', []);
+
+        return $stripe->paymentMethods->create([
+            'type' => 'card',
+            'card' => [
+                'number' => '4242424242424242',
+                'exp_month' => 8,
+                'exp_year' => 2022,
+                'cvc' => '314',
+            ],
+        ]);
+    } catch (\Exception $e) {
+        return $e;
+    }*/
+});
 
 Route::group([], function () {
     Route::post('/donors/authenticate' , [DonorController::class, 'authenticate'])->name('api.donors.authenticate');
