@@ -152,7 +152,7 @@ class AuthDonorController extends Controller
             
             return handleResponse(
                 $request->user()->savedItems()->get()->map(function ($item) {
-                    return ['title' => $dummyTitle, $item->saveable_id, 'saveable_type' => $item->saveable_type, 'saveable_id' => $item->saveable_id];
+                    return ['title' => $dummyTitle, 'saveable_type' => $item->saveable_type, 'saveable_id' => $item->saveable_id];
                 })
             );
         } catch (\Exception $e) {
