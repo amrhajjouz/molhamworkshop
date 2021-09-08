@@ -151,7 +151,7 @@ class AuthDonorController extends Controller
             $dummyTitle = (app()->getLocale() == 'ar') ? 'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى،' : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';
             
             return handleResponse(
-                $request->user()->savedItems()->get()->map(function ($item, $dummyTitle) {
+                $request->user()->savedItems()->get()->map(function ($item) use ($dummyTitle) {
                     return ['title' => $dummyTitle, 'saveable_type' => $item->saveable_type, 'saveable_id' => $item->saveable_id];
                 })
             );
