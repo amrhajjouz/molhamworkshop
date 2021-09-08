@@ -163,7 +163,7 @@ class AuthDonorController extends Controller
     public function createSavedItem(CreateSavedItemRequest $request)
     {
         try {
-            $request->user()->saved_items()->firstOrCreate($request->validated());
+            $request->user()->savedItems()->firstOrCreate($request->validated());
             return handleResponse(null);
         } catch (\Exception $e) {
             throw new ApiErrorException($e->getMessage());
