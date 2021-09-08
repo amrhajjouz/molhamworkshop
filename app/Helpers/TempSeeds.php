@@ -22,7 +22,7 @@ function createRandomDonorSavedItems(Donor $donor)
 {
     $saveable_types = ['case', 'campaign', 'sponsorship', 'event', 'post'];
     for ($i=1; $i<=15; $i++) {
-        $donor->savedItems()->create(['saveable_type' => $saveable_types[rand(0,3)], 'saveable_id' => 1]);
+        $donor->savedItems()->create(['saveable_type' => $saveable_types[rand(0,3)], 'saveable_id' => rand(1, 100)]);
     }
 }
 
