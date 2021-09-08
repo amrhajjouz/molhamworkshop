@@ -1,50 +1,29 @@
 <page-header title="مكان جديد" pretitle="الأماكن"></page-header>
+
 <form class="row" name="createPlaceForm" request="createPlace">
-  
-  <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="name_ar">اسم المكان العربي</label>
-      <input id="name_ar" class="form-control" type="text" ng-model="place.name.ar" ng-class="(createPlace.errors['name.ar'] != null) ? 'is-invalid' : ''" ng-change="createPlace.errors['name.ar'] = null" placeholder="الاسم العربي.." ng-error="createPlace.errors['name.ar'][0]" required/>
-    </div>
-  </div>
 
-  <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="name_en">اسم المكان الإنكليزي</label>
-      <input id="name_en" class="form-control" type="text" ng-model="place.name.en" ng-class="(createPlace.errors['name.en'] != null) ? 'is-invalid' : ''" ng-change="createPlace.errors['name.en'] = null" placeholder="الاسم الإنكليزي.." ng-error="createPlace.errors['name.en']" required/>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name_ar">اسم المكان العربي</label>
+            <input id="name_ar" class="form-control" type="text" ng-model="place.name.ar" placeholder="الاسم العربي.." ng-error="createPlace.errors.name.ar" required>
+        </div>
     </div>
-  </div>
 
-  <div class="col-12 col-md-6">
-    <div class="form-group">
-      <label for="type">النوع</label>
-      <select id="type" class="form-control" ng-model="place.type" ng-class="(createPlace.errors.type != null) ? 'is-invalid' : ''" ng-change="handleChangeType()" ng-options="type.id as type.name for type in types" placeholder="يرجى اختيار نوع.." ng-error="createPlace.errors.type"></select>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name_en">اسم المكان الإنكليزي</label>
+            <input id="name_en" class="form-control" type="text" ng-model="place.name.en" placeholder="الاسم الإنكليزي.." ng-error="createPlace.errors.name.en" required>
+        </div>
     </div>
-  </div>
+    
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="parent_id">المكان الأب</label>
+            <select2 id="parent_id" model="place.parent_id" ajax-url="places/search" error-model="createPlace.errors.parent_id"></select2>
+        </div>
+    </div>
 
-  <div class="col-12 col-md-6" ng-show="place.type == 'province'">
-    <div class="form-group">
-      <label for="country_code">الدولة</label>
-      <select id="country_code" class="form-control" ng-model="place.country_code" ng-change="createPlace.errors.country_code = null" ng-class="(createPlace.errors.country_code != null) ? 'is-invalid' : ''" ng-options="country.code as country.name.ar for country in countries" ng-error="createPlace.errors.country_code"></select>
+    <div class="col-12">
+        <submit-button form="createPlaceForm" icon="fe fe-plus">اضافة</submit-button>
     </div>
-  </div>
-  <div class="col-12 col-md-6" ng-show="!['province' , 'city'].includes(place.type) && place.type != 'city'">
-    <div class="form-group">
-      <label for="parent_type">نوع المكان الذي تتبع له</label>
-      <select id="parent_type" class="form-control" ng-class="(createPlace.errors.parent_type != null) ? 'is-invalid' : ''" ng-model="place.parent_type" ng-change="handleChangeParentType()" ng-error="createPlace.errors.parent_type">
-        <option ng-value="'city'">مدينة</option>
-        <option ng-value="'province'">محافظة</option>
-      </select>
-    </div>
-  </div>
-  <div class="col-12 col-md-6" ng-show="place.type=='city' || place.type != 'province' && place.parent_type">
-    <div class="form-group">
-      <label for="parent_id">المكان الذي تتبع له</label>
-      <select2 model="place.parent_id" ajax-url="places/search" ajax-data="{type: place.type == 'city' ? 'city' : place.parent_type}" error-model="createPlace.errors.parent_id" id="parent_id"></select2>
-    </div>
-  </div>
-
-  <div class="col-12">
-    <submit-button form="createPlaceForm" icon="fe fe-plus">اضافة</submit-button>
-  </div>
 </form>
