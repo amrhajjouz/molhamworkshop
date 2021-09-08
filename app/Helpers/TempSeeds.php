@@ -20,10 +20,10 @@ function createRandomPaymentMethods($donorId)
 
 function createRandomDonorSavedItems(Donor $donor)
 {
-    $donor->saved_items()->create(['saveable_type' => 'user', 'saveable_id' => 1]);
-    $donor->saved_items()->create(['saveable_type' => 'user', 'saveable_id' => 2]);
-    $donor->saved_items()->create(['saveable_type' => 'donor', 'saveable_id' => 1]);
-    $donor->saved_items()->create(['saveable_type' => 'donor', 'saveable_id' => 2]);
+    $saveable_types = ['case', 'campaign', 'sponsorship', 'event', 'post'];
+    for ($i=1; $i<=15; $i++) {
+        $donor->savedItems()->create(['saveable_type' => $saveable_types[rand(0,3)], 'saveable_id' => 1]);
+    }
 }
 
 function createRandomSubscriptions($donorId)
