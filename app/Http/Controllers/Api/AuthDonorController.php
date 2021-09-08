@@ -147,9 +147,12 @@ class AuthDonorController extends Controller
     public function listSavedItems(Request $request)
     {
         try {
+            
+            $dummyTitle = (app()->getLocale() == 'ar') ? 'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى،' : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';
+            
             return handleResponse(
                 $request->user()->savedItems()->get()->map(function ($item) {
-                    return ['saveable_id' => $item->saveable_id, 'saveable_type' => $item->saveable_type,];
+                    return ['title' => $dummyTitle => $item->saveable_id, 'saveable_type' => $item->saveable_type, 'saveable_id' => $item->saveable_id];
                 })
             );
         } catch (\Exception $e) {
