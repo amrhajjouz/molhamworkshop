@@ -23,8 +23,8 @@ class DatabaseSeeder extends Seeder
 
 
         $this->call([
-            PlaceSeeder::class , 
             CountrySeeder::class , 
+            PlaceSeeder::class , 
         ]);
     }
 }

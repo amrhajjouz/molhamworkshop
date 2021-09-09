@@ -10,8 +10,7 @@
         <tr>
           <th class="text-center">#</th>
           <th class="text-center">الاسم العربي</th>
-          <th class="text-center">الاسم الكامل</th>
-          <th class="text-center">النوع</th>
+          <th class="text-center">الاسم العربي الكامل</th>
           <th class="text-center">خيارات</th>
         </tr>
       </thead>
@@ -20,8 +19,7 @@
         <tr ng-repeat="place in places.data">
           <td class="align-middle text-center">{{ place.id }}</td>
           <td class="align-middle text-center">{{ place.name.ar }}</td>
-          <td class="align-middle text-center">{{ place.long_name }}</td>
-          <td class="align-middle text-center">{{ place.type }}</td>
+          <td class="align-middle text-center">{{ place.fullname.ar }}</td>
           <td class="align-middle text-center h2">
             <dropdown>
               <dropdown-item href="{{ $r('places.overview', {id: place.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>

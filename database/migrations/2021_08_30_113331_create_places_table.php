@@ -16,9 +16,9 @@ class CreatePlacesTable extends Migration
         Schema::create('places', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('parent_id')->index()->nullable();
+            $table->json('fullname')->required();
             $table->json('name')->nullable();
             $table->string('country_code')->index()->nullable();
-            $table->enum('type' ,['province' , 'city' ,'village' , 'district' ] )->index()->default('city');
             $table->timestamps();
         });
     }

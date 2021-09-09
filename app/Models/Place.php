@@ -8,22 +8,28 @@ class Place extends BaseModel
 {
     protected $table = 'places';
     protected $guarded = [];
-    protected $casts = ['name' => 'json'];
+    protected $casts = ['name' => 'json', 'fullname' => 'json'];
 
     public function parent()
     {
-        return $this->hasOne(self::class, 'id', 'parent_id');
+        return $this->belongsTo(self::class, 'parent_id', 'id');
     }
 
     public function country()
     {
-        return $this->hasOne(Country::class, 'code', 'country_code');
+        return $this->hasOne(Country::class, 'code' , 'country_code');
     }
 
     public function save($options = [])
     {
-        if ($this->type !== "province")
-            $this->country_code = null;
+        if (isset($this->parent)) {
+            $this->country_code = $this->parent->country_code;
+        }
+
+        $fullname = $this->getFullNamePlace();
+        // $this->fullname = ['ar' => $fullname['ar'], 'en' => $fullname['en'],];
+        $this->fullname = $this->getFullNamePlace();
+
         return parent::save();
     }
 
@@ -32,16 +38,16 @@ class Place extends BaseModel
      */
     public function getFullNamePlace()
     {
-        $locale = app()->getLocale();
         $object = $this;
-        $text = $this->name[$locale];
-        //if type = province that main it has no parent place
-        if ($this->type == 'province' && isset($this->country_code)) return $object->country->name[$locale] . ", " . $text;
+        $arFullname =  $this->name['ar'];
+        $enFullname =  $this->name['en'];
         while (isset($object->parent)) {
             $object = $object->parent;
-            $text =  $object->name[$locale] . ', ' . $text;
-            if (!is_null($object->country_code)) $text = $object->country->name[$locale] . ", " . $text;
+            $arFullname .=  ', ' . $object->name['ar'];
+            $enFullname .=  ', ' . $object->name['en'];
         }
-        return $text;
+        return [
+            'ar' => $arFullname .  ', ' . $object->country->name['ar'] , "en" => $enFullname .  ', ' . $object->country->name['en']
+        ];
     }
 }

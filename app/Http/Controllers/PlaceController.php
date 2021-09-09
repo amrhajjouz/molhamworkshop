@@ -37,6 +37,8 @@ class PlaceController extends Controller
                 if($request->has('q')){
                     $q->where('name->ar', 'like', '%' . $request->q . '%');
                     $q->orWhere('name->en', 'like', '%' . $request->q . '%');
+                    $q->orWhere('fullname->ar', 'like', '%' . $request->q . '%');
+                    $q->orWhere('fullname->en', 'like', '%' . $request->q . '%');
                 }
             })->paginate(10)->withQueryString()->through(function ($place) {
                 $place->long_name = $place->getFullNamePlace();
@@ -54,14 +56,12 @@ class PlaceController extends Controller
                 if ($request->has('q')) {
                     $q->where('name->ar', 'like', "%" . $request->q . "%");
                     $q->orWhere('name->en', 'like', "%" . $request->q . "%");
-                }
-            })->where(function ($q) use ($request) {
-                if ($request->has('type')) {
-                    $q->where('type', $request->type);
+                    $q->orWhere('fullname->ar', 'like', "%" . $request->q . "%");
+                    $q->orWhere('fullname->en', 'like', "%" . $request->q . "%");
                 }
             })->take(10)->get()->map(function($place){
-                $name = $place->getFullNamePlace();
-                return  ['id'=>$place->id , 'name'=>$name , 'text'=>$name ]; });
+                $locale = app()->getLocale();
+                return  ['id'=>$place->id , 'name'=>$place->name[$locale] , 'text'=>$place->name[$locale]]; });
             return response()->json($places);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -83,7 +83,6 @@ class PlaceController extends Controller
                 'parent' => $parent ? [
                     'id' => $parent->id , 
                     'name' => $parent->name[$locale] ,
-                    'type'=>$parent->type ,
                 ]:null,
                 'country' => $country ? ['name' => $country->name[$locale]] : null
             ]));

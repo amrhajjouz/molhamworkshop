@@ -26,15 +26,22 @@
                 <hr>
                 <div class="row align-items-center">
                     <div class="col">
-                        <h4 class="mb-0 text-muted">النوع</h4>
+                        <h4 class="mb-0 text-muted">اسم المكان الكامل العربي</h4>
                     </div>
                     <div class="col-auto">
-                        <h4>{{ place.type }}</h4>
+                        <h4>{{ place.fullname.ar }}</h4>
                     </div>
                 </div>
-                <div ng-show="place.country.name">
-                    <hr />
+                <hr>
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">اسم المكان الكامل الإنكليزي</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ place.fullname.en }}</h4>
+                    </div>
                 </div>
+                <hr>
                 <div class="row align-items-center" ng-show="place.country.name">
                     <div class="col">
                         <h4 class="mb-0 text-muted">الدولة</h4>
