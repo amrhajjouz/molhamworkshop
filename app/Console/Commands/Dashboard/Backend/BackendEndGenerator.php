@@ -63,7 +63,7 @@ class BackendEndGenerator extends DashboardGenerator
 
         $contents = $this->ReplaceContents("templates/controller/controller",$name);
 
-        $path = app_path("Http\Controllers\Dashboard");
+        $path = app_path("Http/Controllers/Dashboard");
 
         $file = $path . "/$fileControllerName";
 
