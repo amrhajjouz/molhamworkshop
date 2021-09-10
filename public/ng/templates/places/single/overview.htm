@@ -1,0 +1,57 @@
+<include-header />
+
+<div class="row">
+    <div class="col-12 col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-header-title">معلومات المكان</h4>
+            </div>
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">اسم المكان العربي</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ place.name.ar }}</h4>
+                    </div>
+                </div>
+                <hr>
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">اسم المكان الإنكليزي</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ place.name.en }}</h4>
+                    </div>
+                </div>
+                <hr>
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">اسم المكان الكامل العربي</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ place.fullname.ar }}</h4>
+                    </div>
+                </div>
+                <hr>
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">اسم المكان الكامل الإنكليزي</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ place.fullname.en }}</h4>
+                    </div>
+                </div>
+                <hr>
+                <div class="row align-items-center" ng-show="place.country.name">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">الدولة</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ place.country.name.ar }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

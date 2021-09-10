@@ -23,4 +23,11 @@ return [
     'donors.add' => ['donors/add', 'donors/addDonorController', 'donors.add'],
     'donors.overview' => ['donors/:id', 'donors/overviewDonorController', 'donors.single.overview'],
     'donors.edit' => ['donors/:id/edit', 'donors/editDonorController', 'donors.single.edit'],
+
+    /////////////////////// Places /////////////////////////
+    'places.add' => ['places/add', 'places/addPlaceController', 'places.add'],
+    'places.overview' => ['places/:id', 'places/overviewPlaceController', 'places.single.overview'],
+    'places.edit' => ['places/:id/edit', 'places/editPlaceController', 'places.single.edit'],
+    'places' => ['places', 'places/listPlacesController', 'places.list'],
+
 ];
