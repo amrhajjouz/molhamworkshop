@@ -1,0 +1,14 @@
+function edit{pascal}ControllerInit ($page, $apiRequest) {
+    return $apiRequest.config('{snake}/' + $page.routeParams.id).getData();
+}
+
+function edit{pascal}Controller ($scope, $apiRequest, $init) {
+   $scope.{singular} = $init;
+      $scope.update{pascal} = $apiRequest.config({
+          method : 'PUT',
+          url : '{snake}',
+          data : $scope.{singular},
+      }, function (response, data) {
+
+      });
+}

@@ -1,0 +1,7 @@
+function overView{pascal}ControllerInit ($apiRequest, $page) {
+    return $apiRequest.config('{snake}/' + $page.routeParams.id).getData();
+}
+
+function overview{pascal}Controller ($scope, $init) {
+    $scope.{singular} = $init;
+}

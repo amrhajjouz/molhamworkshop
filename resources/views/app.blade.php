@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="{{ asset('css/theme.rtl.min.css') }}" id="stylesheetLight">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}" id="stylesheetLight">    
     
-    <base href="{{ $app_url }}/">
+    <base href="{{ $appUrl }}/">
     
     <title>ورشة عمل فريق ملهم</title>
     
@@ -128,19 +128,22 @@
     <script src="{{ asset('libs/select2/dist/js/select2.min.js') }}"></script>
     <script src="{{ asset('libs/chart-js/Chart.extension.min.js') }}"></script>
     
+    
     <script src="{{ asset('js/theme.min.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
     
     <script src="{{ asset('js/angular.min.js') }}"></script>
     <script src="{{ asset('js/angular-route.js') }}"></script>
     
+    <script src='https://cdn.tiny.cloud/1/4kk8tz5ese5e7gxt6eh30b4z20xcv4wzbw3ynq2qzqzr07j6/tinymce/5/tinymce.min.js' referrerpolicy="origin"></script>
+    
     @foreach ($routes as $r)
     <script src="{{ asset('ng/controllers/' . $r['controller_path'] . '?t=' . time()) }}"></script>
     @endforeach
 
     <script>
-        var appUrl = "{{ $app_url }}";
-        var apiUrl = "{{ $api_url }}";
+        var appUrl = "{{ $appUrl }}";
+        var apiUrl = "{{ $apiUrl }}";
         var appDebug = {{ env('APP_DEBUG') }};
         var appTitle = $('title').text();
         var auth = {id: "{{ auth()->user()->id }}", name: "{{ auth()->user()->name }}", email: "{{ auth()->user()->email }}"};
@@ -388,7 +391,7 @@
                 
                 link : function (scope, element, attrs, ctrls, transclude) {
                     scope.sidenavTemplateUrl = function () {
-                        return '{{ $app_url }}/ng/templates/basics/sidenav.htm?t={{ time() }}';
+                        return '{{ $appUrl }}/ng/templates/basics/sidenav.htm?t={{ time() }}';
                     };
                 },
                 
@@ -405,7 +408,7 @@
                 link : function (scope, element, attrs, ctrls, transclude) {
                     scope.includedTemplateUrl = function () {
                         var templatePath = attrs.url.replace('.', '/') + '.htm';
-                        return '{{ $app_url }}/ng/templates/' + templatePath  + '?t={{ time() }}';
+                        return '{{ $appUrl }}/ng/templates/' + templatePath  + '?t={{ time() }}';
                     };
                     $page.includedTemplate = {url: attrs.url, loaded: false};
                 },
@@ -423,7 +426,7 @@
                 link : function (scope, element, attrs, ctrls, transclude) {
                     
                     scope.headerTemplateUrl = function () {
-                        return '{{ $app_url }}/ng/templates/' + $rootScope.currentTemplateDirectory + '/header.htm' + '?t={{ time() }}';
+                        return '{{ $appUrl }}/ng/templates/' + $rootScope.currentTemplateDirectory + '/header.htm' + '?t={{ time() }}';
                     };
                     $page.headerTemplate = {loaded: false};
                 },
@@ -710,6 +713,7 @@
                             if (modelForm) {
                                 elementScope[modelForm].$pristine = false;
                                 elementScope[modelForm].$dirty = true;
+                                elementScope[modelForm].$submitted = false;
                                 elementScope[modelForm].unregisteredRequiredModels.updateValidity();
                             }
                             elementScope.$apply();
@@ -798,6 +802,91 @@
                         });
                     }
 
+                }
+            };
+        });
+        
+        app.directive('tinyEditor', function ($rootScope, $page, $timeout) {
+            
+            return {
+                restrict: 'E',
+                transclude: true,
+                scope : {
+                    model : '@',
+                    placeholder : '@',
+                    errorModel: '=',
+                },
+                replace : true,
+                template: '<textarea class="form-control" placeholder="@{{ placeholder }}" ng-transclude></textarea>',
+                link : function (scope, element, attrs, ctrl, transclude) {
+                    
+                    $timeout(function () {
+                        
+                        tinymce.remove();
+                        
+                        tinymce.init({
+                            selector: '#' + attrs.id,
+                            //plugins: 'advlist link image lists directionality fullscreen table quickbars wordcount hr media',
+                            //toolbar: 'fullscreen | undo redo | styleselect | alignleft aligncenter alignright | bold italic undeline | lineheight | hr | blockquote forecolor backcolor fontsizeselect | numlist bullist | table | link quickimage | media | rtl ltr | removeformat | wordcount',
+                            plugins: '',
+                            toolbar: 'fullscreen | undo redo | styleselect | alignleft aligncenter alignright | bold italic undeline | lineheight | hr | blockquote forecolor backcolor fontsizeselect | numlist bullist | table | link | media | rtl ltr | removeformat | wordcount',
+                            //images_upload_handler: tiny_image_upload_handler,
+                            directionality : (attrs.dir != undefined) ? attrs.dir : 'ltr',
+                            image_title: true,
+                            menubar: 'edit view insert format tools',
+                            setup: function(editor) {
+                                editor.on('change', function(e) {
+                                    onChangeContent(editor);
+                                });
+                                
+                                editor.on('keyup', function(e) {
+                                    onChangeContent(editor);
+                                });
+                            },
+                            fullpage_default_font_family: "'Times New Roman', Georgia, Serif;"
+                        });
+                        
+                        var elementScope = angular.element(element).scope();
+                        eval('elementScope.' + scope.model + ' = $(element).html();');
+                        
+                        var onChangeContent = function (editor) {
+                            
+                            var editorContent = encodeHTML(editor.getContent());
+                            
+                            eval('elementScope.' + scope.model + ' = editorContent;');
+                            
+                            if (modelForm) {
+                                elementScope[modelForm].$pristine = false;
+                                elementScope[modelForm].$dirty = true;
+                                elementScope[modelForm].$submitted = false;
+                                elementScope[modelForm].unregisteredRequiredModels.updateValidity();
+                            }
+                            
+                            elementScope.$apply();
+                        }
+
+                        function encodeHTML(html) {
+                            return document.createElement( 'div' ).appendChild( document.createTextNode( html ) ).parentNode.innerHTML;
+                        };
+                        
+                        var modelForm;
+
+                        var parentElement = element[0].parentElement;
+
+                        do {
+                            parentElement = parentElement.parentElement;
+                        } while (parentElement.nodeName != 'BODY' && parentElement.nodeName != 'FORM');
+
+                        if (parentElement.nodeName == 'FORM' && parentElement.getAttribute('name')) {
+                            var modelForm = parentElement.getAttribute('name');
+                            if (elementScope[modelForm] && $(element).prop('required')) {
+                                elementScope[modelForm].unregisteredRequiredModels.models[elementScope[modelForm].unregisteredRequiredModels.models.length] = attrs.model;
+                                elementScope.$apply();
+                            }
+                        }
+                        
+                    });
+                    
                 }
             };
         });
@@ -1005,6 +1094,121 @@
                                         '</div>' +
                                         '<div class="col my-0">' +
                                             '<div class="text-left h4 mt-2">النتائج : <span dir="ltr">@{{ datalist.from }} <i class="fe fe-arrow-right"></i> @{{ datalist.to }}</span></div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>'+
+                            '</div>'
+            };
+        });
+        
+        app.directive('simpleDatatable', function ($rootScope, $page, $filter, $timeout) {
+            
+            return {
+                restrict: 'E',
+                transclude: true,
+                scope : {
+                    data: '=',
+                    search: '@',
+                },
+                replace : true,
+                link : function (scope, element, attrs) {
+                    
+                    var tablesElements = element[0].getElementsByTagName('table');
+                    if (tablesElements.length > 0) {
+                        for (i=0; i<tablesElements.length; i++) {
+                            tablesElements[i].classList.add('table');
+                            tablesElements[i].classList.add('table-sm');
+                            tablesElements[i].classList.add('card-table');
+                        }
+                    }
+                    
+                    var data = angular.copy(scope.data);
+                    scope.totalDataItems = data.length;
+                    
+                    var searchInput = element[0].getElementsByClassName('search')[0];
+                    //searchInput.value = scope.datalist.q;
+                    
+                    $(searchInput).on('input', function(e) {
+                        search(searchInput.value);
+                    });
+                    
+                    $(searchInput).on('change', function(e) {
+                        search(searchInput.value);
+                    });
+                    
+                    /*$(searchInput).on('keypress', function(e) {
+                        if (e.which == 13 && (searchInput.value != '')) {
+                            search(searchInput.value);
+                        }
+                    });*/
+                    
+                    var datatableScope = angular.element(element).scope();
+                    
+                    function search (q) {
+                        console.log(q);
+                        if (q != '')
+                            scope.data = $filter('filter')(angular.copy(data), q);
+                        else 
+                            scope.data = angular.copy(data);
+                        scope.$apply();
+                    }
+                    
+                },
+                template : '<div>' +
+                                '<div class="card">' +
+                                    '<div class="card-header">' +
+                                        '<div class="row align-items-center">' +
+                                            '<div class="col">' +
+                                                '<div class="input-group input-group-flush input-group-merge">' +
+                                                    '<input type="search" class="form-control form-control-prepended search" ng-model="search" placeholder="اكتب كلمة للبحث  ...">'+
+                                                    '<div class="input-group-prepend">' +
+                                                        '<div class="input-group-text">' +
+                                                            '<span class="fe fe-search"></span>' +
+                                                        '</div>' +
+                                                    '</div>' +
+                                                '</div>'+
+                                            '</div>'+
+                                            '<div class="col-auto">' +
+                                                //'<button ng-show="datalist.nextPageUrl" ng-click="datalist.nextPage();" class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top" title="الصفحة التالية">' +
+                                                //    '<i class="fe fe-arrow-right"></i>' +
+                                                //'</button>'+
+                                                //'<button ng-show="datalist.prevPageUrl" ng-click="datalist.prevPage();" class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top" title="الصفحة السابقة">' +
+                                                //    '<i class="fe fe-arrow-left"></i>' +
+                                                //'</button>  '+
+                                                //'<button class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top" title="خيارات الفلترة والعرض">' +
+                                                //    '<i class="fe fe-sliders"></i>' +
+                                                //'</button> ' +
+                                                //'<button class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top" title="تصدير القائمة الى ملف CSV">' +
+                                                //    '<i class="fe fe-download"></i>' +
+                                                //'</button>' +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="table-responsive">' +
+                                        '<ng-transclude></ng-transclude>' +
+                                        '<table>' +
+                                            '<tbody ng-show="totalDataItems == 0">' +
+                                                '<tr>' +
+                                                    '<td class="text-center">' +
+                                                        '<div class="pt-3 pb-2 h4">لا يوجد أية عناصر في هذه القائمة</div>' +
+                                                    '</td>' +
+                                                '</tr>' +
+                                            '</tbody>' +
+                                            '<tbody ng-show="totalDataItems > 0 && data.length == 0">' +
+                                                '<tr>' +
+                                                    '<td class="text-center">' +
+                                                        '<div class="pt-3 pb-2 h4" ng-show="data.length == 0">لا يوجد أية عناصر حسب خيارات البحث والفلترة</div>' +
+                                                    '</td>' +
+                                                '</tr>' +
+                                            '</tbody>' +
+                                        '</table>' +
+                                    '</div>' +
+                                    '<div class="card-footer d-flex justify-content-between" ng-hide="totalDataItems == 0">' +
+                                        '<div class="col my-0">' +
+                                            '<div class="text-right h4 mt-2">العدد الكلي : @{{ totalDataItems }}</div>' +
+                                        '</div>' +
+                                        '<div class="col-auto my-0">' +
+                                            '<div class="text-right h4 mt-2">العدد حسب خيارات البحث والفلترة : @{{ data.length }}</div>' +
                                         '</div>' +
                                     '</div>' +
                                 '</div>'+
