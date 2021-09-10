@@ -25,11 +25,9 @@ class Place extends BaseModel
         if (isset($this->parent)) {
             $this->country_code = $this->parent->country_code;
         }
-
-        $fullname = $this->getFullNamePlace();
-        // $this->fullname = ['ar' => $fullname['ar'], 'en' => $fullname['en'],];
+        
         $this->fullname = $this->getFullNamePlace();
-
+        
         return parent::save();
     }
 
@@ -46,8 +44,6 @@ class Place extends BaseModel
             $arFullname .=  ', ' . $object->name['ar'];
             $enFullname .=  ', ' . $object->name['en'];
         }
-        return [
-            'ar' => $arFullname .  ', ' . $object->country->name['ar'] , "en" => $enFullname .  ', ' . $object->country->name['en']
-        ];
+        return ['ar' => $arFullname .  ', ' . $object->country->name['ar'] , 'en' => $enFullname .  ', ' . $object->country->name['en']];
     }
 }

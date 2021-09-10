@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\Place\{CreatePlaceRequest, UpdatePlaceRequest};
 use App\Models\{Place};
+use App\Http\Controllers\Controller;
 
 class PlaceController extends Controller
 {
@@ -14,7 +15,7 @@ class PlaceController extends Controller
         try {
             return response()->json(Place::create($request->validated()));
         } catch (\Exception $e) {
-            return ['error' => $e->getMessage()];
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 
@@ -26,26 +27,23 @@ class PlaceController extends Controller
             $place->update($data);
             return response()->json($place);
         } catch (\Exception $e) {
-            return ['error' => $e->getMessage()];
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 
     public function list(Request $request)
     {
         try {
-            return response()->json(Place::orderBy('id', 'desc')->where(function($q) use ($request){
-                if($request->has('q')){
+            return response()->json(Place::orderBy('id', 'desc')->where(function($q) use ($request) {
+                if ($request->has('q')) {
                     $q->where('name->ar', 'like', '%' . $request->q . '%');
                     $q->orWhere('name->en', 'like', '%' . $request->q . '%');
                     $q->orWhere('fullname->ar', 'like', '%' . $request->q . '%');
                     $q->orWhere('fullname->en', 'like', '%' . $request->q . '%');
                 }
-            })->paginate(10)->withQueryString()->through(function ($place) {
-                $place->long_name = $place->getFullNamePlace();
-                return $place;
-            }));
+            })->paginate(10)->withQueryString());
         } catch (\Exception $e) {
-            return ['error' => $e->getMessage()];
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 
@@ -56,38 +54,25 @@ class PlaceController extends Controller
                 if ($request->has('q')) {
                     $q->where('name->ar', 'like', "%" . $request->q . "%");
                     $q->orWhere('name->en', 'like', "%" . $request->q . "%");
-                    $q->orWhere('fullname->ar', 'like', "%" . $request->q . "%");
-                    $q->orWhere('fullname->en', 'like', "%" . $request->q . "%");
+                    //$q->orWhere('fullname->ar', 'like', "%" . $request->q . "%");
+                    //$q->orWhere('fullname->en', 'like', "%" . $request->q . "%");
                 }
-            })->take(10)->get()->map(function($place){
-                $locale = app()->getLocale();
-                return  ['id'=>$place->id , 'name'=>$place->name[$locale] , 'text'=>$place->name[$locale]]; });
+            })->take(10)->get()->map(function($place) {
+                return  ['id'=> $place->id, 'text' => $place->fullname[app()->getLocale()]]; 
+            });
             return response()->json($places);
         } catch (\Exception $e) {
-            return ['error' => $e->getMessage()];
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 
     public function retrieve($id)
     {
         try {
-            $place = Place::findOrFail($id);
-            $parent = $place->parent;
-            $country = $place->country;
-            $locale = app()->getLocale();
-
-            if ($parent) {
-                $parent->parent;
-            }
-            return  response()->json(array_merge($place->toArray(), [
-                'parent' => $parent ? [
-                    'id' => $parent->id , 
-                    'name' => $parent->name[$locale] ,
-                ]:null,
-                'country' => $country ? ['name' => $country->name[$locale]] : null
-            ]));
+            $place = Place::with(['parent', 'country'])->where('id', $id)->firstOrFail();
+            return response()->json($place);
         } catch (\Exception $e) {
-            return ['error' => $e->getMessage()];
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 

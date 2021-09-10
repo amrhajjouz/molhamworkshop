@@ -14,16 +14,16 @@ class PlaceSeeder extends Seeder
      */
     public function run()
     {
-        Place::create(['name' => ['ar'=>'ادلب' , 'en'=>"Idlep"], 'country_code' => "SY"]);
+        Place::create(['name' => ['ar'=>'ادلب' , 'en'=>"Idlib"], 'country_code' => "SY"]);
         Place::create(['name' => ['ar'=>'دمشق' , 'en'=>"Damascus"], 'country_code' => "SY"]);
-        Place::create(['name' => ['ar'=>'اللاذقية' , 'en'=>"Lattakia"], 'country_code' => "SY"]);
+        Place::create(['name' => ['ar'=>'اللاذقية' , 'en'=>"Latakia"], 'country_code' => "SY"]);
         Place::create(['name' => ['ar'=>'حلب' , 'en'=>"Aleppo"], 'country_code' => "SY"]);
-        Place::create(['name' => ['ar'=>'ديرالزور' , 'en'=>"Dir Alzor"], 'country_code' => "SY"]);
+        Place::create(['name' => ['ar'=>'ديرالزور' , 'en'=>"Deir Alzor"], 'country_code' => "SY"]);
         Place::create(['name' => ['ar'=>'حمص' , 'en'=>"Homs"], 'country_code' => "SY"]);
         Place::create(['name' => ['ar'=>'حماه' , 'en'=>"Hama"], 'country_code' => "SY"]);
         
         Place::create(['name' => ['ar'=>'اسطنبول' , 'en'=>"Istanbul"], 'country_code' => "TR"]);
-        Place::create(['name' => ['ar'=>'غازي عينتاب' , 'en'=>"Gaziantep"], 'country_code' => "TR"]);
+        Place::create(['name' => ['ar'=>'غازي عنتاب' , 'en'=>"Gaziantep"], 'country_code' => "TR"]);
         Place::create(['name' => ['ar'=>'هاتاي' , 'en'=>"Hatay"], 'country_code' => "TR"]);
         Place::create(['name' => ['ar'=>'أنقرة' , 'en'=>"Ankara"], 'country_code' => "TR"]);
 
@@ -32,5 +32,6 @@ class PlaceSeeder extends Seeder
         Place::create(['name' =>['ar'=> 'بنش' , 'en' => 'Binnish'],'country_code' => "SY"]);
         Place::create(['name' => ['ar'=>"جبلة" , 'en' => 'jablah'],'country_code' => "SY"]);
         Place::create(['name' => ['ar' => 'بانياس' , 'en' => 'Bnias'] ,'country_code' => "SY"]);
+        Place::create(['name' => ['ar' => 'نزب' , 'en' => 'Nizip'],'parent_id' => 9 ,'country_code' => "TR"]);
     }
 }
