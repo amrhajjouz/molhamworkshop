@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\DonorController;
-
+use App\Http\Controllers\Dashboard\{CaseController , CountryController , CategoryController};
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,15 +17,15 @@ use App\Http\Controllers\Dashboard\DonorController;
 |
 */
 
-Route::middleware('auth')->group(function ()  {
-    
+Route::middleware('auth')->group(function () {
+
     Route::get('/auth', function (Request $request) {
         return $request->user();
     });
 
     Route::post('/profile', [ProfileController::class, 'update_info']);
     Route::post('/profile/password', [ProfileController::class, 'change_password']);
-    
+
     Route::get('/users', [UserController::class, 'list']);
     Route::post('/users', [UserController::class, 'create']);
     Route::put('/users', [UserController::class, 'update']);
@@ -36,4 +36,17 @@ Route::middleware('auth')->group(function ()  {
     Route::put('/donors', [DonorController::class, 'update']);
     Route::get('/donors/{id}', [DonorController::class, 'retrieve']);
 
+    ////////////////// COUNTRY //////////////
+    Route::get('/countries', [CountryController::class, 'list']);
+
+     ////////////////// CATEGORY //////////////
+     Route::get('/categories', [CategoryController::class, 'list']);
+
+    //////////////////CASES //////////////
+    Route::get('/cases', [CaseController::class, 'list']);
+    Route::post('/cases', [CaseController::class, 'create']);
+    Route::put('/cases', [CaseController::class, 'update']);
+    Route::get('/cases/{id}', [CaseController::class, 'retrieve']);
+
+    
 });

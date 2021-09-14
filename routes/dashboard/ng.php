@@ -24,5 +24,9 @@ return [
     'donors.overview' => ['donors/:id', 'donors/overviewDonorController', 'donors.single.overview'],
     'donors.edit' => ['donors/:id/edit', 'donors/editDonorController', 'donors.single.edit'],
 
-
+     //////////////////////// Cases Routes //////////////////////
+     'cases.add' => ['programs/medical/cases/add', 'cases/addCaseController', 'cases.add'],
+     'cases.overview' => ['programs/medical/cases/:id', 'cases/overviewCaseController', 'cases.single.overview'],
+     'cases.edit' => ['programs/medical/cases/:id/edit', 'cases/editCaseController', 'cases.single.edit'],
+     'cases' => ['programs/medical/cases', 'cases/listCasesController', 'cases.list'],
 ];

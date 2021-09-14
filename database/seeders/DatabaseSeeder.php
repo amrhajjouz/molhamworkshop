@@ -20,5 +20,16 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => Hash::make('12345678'),
         ]);
+        DB::table('users')->insert([
+            'name' => 'Mohamd Ghanoum',
+            'email' => 'mohamd@admin.com',
+            'password' => Hash::make('123123'),
+        ]);
+
+        $this->call([
+            CountrySeeder::class ,
+            CategorySeeder::class ,
+        ]);
+
     }
 }
