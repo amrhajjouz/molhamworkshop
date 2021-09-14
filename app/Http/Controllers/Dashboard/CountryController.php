@@ -6,7 +6,6 @@ use App\Models\Country;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-
 class CountryController extends Controller
 {
     public function list(Request $request)

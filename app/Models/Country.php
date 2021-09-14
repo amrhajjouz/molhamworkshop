@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Model\BaseModel;
+
 class Country extends BaseModel
 {
    protected $table = "countries";

@@ -7,6 +7,8 @@ use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\DonorController;
 use App\Http\Controllers\Dashboard\PlaceController;
 use App\Http\Controllers\Dashboard\CountryController;
+use App\Http\Controllers\Dashboard\CaseController;
+use App\Http\Controllers\Dashboard\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,15 +21,15 @@ use App\Http\Controllers\Dashboard\CountryController;
 |
 */
 
-Route::middleware('auth')->group(function ()  {
-    
+Route::middleware('auth')->group(function () {
+
     Route::get('/auth', function (Request $request) {
         return $request->user();
     });
 
     Route::post('/profile', [ProfileController::class, 'update_info']);
     Route::post('/profile/password', [ProfileController::class, 'change_password']);
-    
+
     Route::get('/users', [UserController::class, 'list']);
     Route::post('/users', [UserController::class, 'create']);
     Route::put('/users', [UserController::class, 'update']);
@@ -48,4 +50,14 @@ Route::middleware('auth')->group(function ()  {
     // Country Routes
     Route::get('/countries', [CountryController::class, 'list']);
     Route::get('/countries/search', [CountryController::class, 'search']);
+
+     Route::get('/categories', [CategoryController::class, 'list']);
+
+    // Cases 
+    Route::get('/cases', [CaseController::class, 'list']);
+    Route::post('/cases', [CaseController::class, 'create']);
+    Route::put('/cases', [CaseController::class, 'update']);
+    Route::get('/cases/{id}', [CaseController::class, 'retrieve']);
+
+    
 });
