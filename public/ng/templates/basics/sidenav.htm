@@ -45,6 +45,34 @@
         </div>
     </li>
     
+
+    <li class="nav-item">
+        <a
+            class="nav-link"
+            href="javascript:;"
+            data-toggle="collapse"
+            data-target="#places-navs"
+            role="button"
+            aria-expanded="false"
+        >
+            <i class="fe fe-map"></i> الأماكن
+        </a>
+        <div class="collapse" id="places-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('places.add') }}" class="nav-link">
+                        مكان جديد
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('places') }}" class="nav-link">
+                        قائمة الأماكن
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+
 </ul>
 
 <hr class="navbar-divider my-3">

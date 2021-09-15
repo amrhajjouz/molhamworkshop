@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Http\Controllers\Dashboard;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\{pascal}\{Create{pascal}Request, Update{pascal}Request,List{pascal}Request,Delete{pascal}Request,Retrieve{pascal}Request};
+use App\Models\{pascal};
+
+class {pascal}Controller extends Controller {
+
+    public function create (Create{pascal}Request $request) {
+        try {
+            ${singular} = {pascal}::create($request->validated());
+
+            return response()->json(${singular});
+        } catch (\Exception $e) {
+            return response(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function update (Update{pascal}Request $request) {
+        try {
+            ${singular} = {pascal}::findOrFail($request->id);
+
+            ${singular}->update($request->validated());
+
+            return response()->json(${singular});
+        } catch (\Exception $e) {
+            return response(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function retrieve ($id, Retrieve{pascal}Request $request) {
+        try {
+            return response()->json({pascal}::findOrFail($id));
+        } catch (\Exception $e) {
+            return response(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function list (List{pascal}Request $request) {
+
+        try {
+            ${plural} = {pascal}::orderBy('id', 'desc')->paginate(5);
+
+            return response()->json(${plural});
+
+        } catch (\Exception $e) {
+            return response(['error' => $e->getMessage()], 500);
+        }
+    }
+}

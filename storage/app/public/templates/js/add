@@ -1,0 +1,16 @@
+function add{pascal}ControllerInit () {
+    return [];
+}
+
+function add{pascal}Controller ($scope, $apiRequest, $page) {
+
+    $scope.{singular} = {};
+
+    $scope.create{pascal} = $apiRequest.config({
+        method: 'POST',
+        url: '{snake}',
+        data: $scope.{singular},
+    }, function (response, data) {
+        $page.navigate('{kebab}.overview', {id: data.id});
+    });
+}

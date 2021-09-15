@@ -6,6 +6,8 @@ use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\DonorController;
 use App\Http\Controllers\Dashboard\{CaseController , CountryController , CategoryController};
+use App\Http\Controllers\Dashboard\PlaceController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -30,7 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/users', [UserController::class, 'create']);
     Route::put('/users', [UserController::class, 'update']);
     Route::get('/users/{id}', [UserController::class, 'retrieve']);
-
+    
     Route::get('/donors', [DonorController::class, 'list']);
     Route::post('/donors', [DonorController::class, 'create']);
     Route::put('/donors', [DonorController::class, 'update']);
@@ -43,6 +45,20 @@ Route::middleware('auth')->group(function () {
      Route::get('/categories', [CategoryController::class, 'list']);
 
     //////////////////CASES //////////////
+    // Place Routes
+    Route::get('/places', [PlaceController::class, 'list']);
+    Route::post('/places', [PlaceController::class, 'create']);
+    Route::put('/places', [PlaceController::class, 'update']);
+    Route::get('/places/search', [PlaceController::class, 'search']);
+    Route::get('/places/{id}', [PlaceController::class, 'retrieve']);
+
+    // Country Routes
+    Route::get('/countries', [CountryController::class, 'list']);
+    Route::get('/countries/search', [CountryController::class, 'search']);
+
+     Route::get('/categories', [CategoryController::class, 'list']);
+
+    // Cases 
     Route::get('/cases', [CaseController::class, 'list']);
     Route::post('/cases', [CaseController::class, 'create']);
     Route::put('/cases', [CaseController::class, 'update']);
