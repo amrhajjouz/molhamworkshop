@@ -4,6 +4,13 @@ function listCurrencyControllerInit ($page, $datalist) {
 
 function listCurrencyController ($scope, $init,$apiRequest, $page) {
    $scope.currencies = $init;
-
+   $scope.removeCurrency = (id)=>{
+          $apiRequest.config({
+                    method: 'DELETE',
+                    url: 'currencies/'+ id,
+                }, function (response, data) {
+                    $page.reload();
+                }).send();
+      }
 
 }

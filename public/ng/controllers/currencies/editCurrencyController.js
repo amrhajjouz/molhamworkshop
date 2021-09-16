@@ -14,10 +14,5 @@ function editCurrencyController ($scope, $apiRequest,$page, $init) {
           });
       });
       $scope.delete = ''
-      $scope.removeCurrency = $apiRequest.config({
-          method: 'DELETE',
-          url: 'currencies/'+ $page.routeParams.id,
-      }, function (response, data) {
-          $page.navigate('currencies');
-      });
+
 }

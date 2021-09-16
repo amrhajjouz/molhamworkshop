@@ -28,6 +28,7 @@
                     <dropdown>
                         <dropdown-item href="{{ $r('currencies.overview', {id: x.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
                         <dropdown-item href="{{ $r('currencies.edit', {id: x.id}) }}"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
+                        <dropdown-item ng-click='removeCurrency(x.id)'><i class="fe fe-trash-2"></i> جدف</dropdown-item>
                     </dropdown>
                 </td>
             </tr>

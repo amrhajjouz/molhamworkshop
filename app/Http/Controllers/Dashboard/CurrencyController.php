@@ -61,7 +61,7 @@ class CurrencyController extends Controller {
     public function remove ($id) {
           try {
               Currency::destroy($id);
-              return response()->status(200);
+              return response()->json();
           } catch (\Exception $e) {
               return response(['error' => $e->getMessage()], 500);
           }
