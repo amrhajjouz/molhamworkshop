@@ -1,0 +1,36 @@
+<page-header title="" pretitle=""></page-header>
+
+<form class="row" name="currencyForm" request="createCurrency">
+
+   <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="code">كود العملة</label>
+            <input id="code" class="form-control" type="text" ng-model="currency.code" placeholder="كود العملة.." ng-error="createCurrency.errors.code" required>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+          <div class="form-group">
+              <label for="name">اسم العملة</label>
+              <input id="name" class="form-control" type="text" ng-model="currency.name" placeholder="اسم العملة.." ng-error="createCurrency.errors.name" required>
+          </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+          <div class="form-group">
+              <label for="symbol">رمز العملة</label>
+              <input id="symbol" class="form-control" type="text" ng-model="currency.symbol" placeholder="رمز العملة.." ng-error="createCurrency.errors.symbol" required>
+          </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+          <div class="form-group">
+              <label for="symbol_native">رمز العملة المحلي</label>
+              <input id="symbol_native" class="form-control" type="text" ng-model="currency.symbol_native" placeholder="رمز العملة المحلي.." ng-error="createCurrency.errors.symbol_native" required>
+          </div>
+      </div>
+
+    <div class="col-12">
+        <submit-button form="currencyForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>

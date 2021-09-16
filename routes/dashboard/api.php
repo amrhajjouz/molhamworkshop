@@ -7,6 +7,7 @@ use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\DonorController;
 use App\Http\Controllers\Dashboard\PlaceController;
 use App\Http\Controllers\Dashboard\CountryController;
+use App\Http\Controllers\Dashboard\CurrencyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,19 +21,19 @@ use App\Http\Controllers\Dashboard\CountryController;
 */
 
 Route::middleware('auth')->group(function ()  {
-    
+
     Route::get('/auth', function (Request $request) {
         return $request->user();
     });
 
     Route::post('/profile', [ProfileController::class, 'update_info']);
     Route::post('/profile/password', [ProfileController::class, 'change_password']);
-    
+
     Route::get('/users', [UserController::class, 'list']);
     Route::post('/users', [UserController::class, 'create']);
     Route::put('/users', [UserController::class, 'update']);
     Route::get('/users/{id}', [UserController::class, 'retrieve']);
-    
+
     Route::get('/donors', [DonorController::class, 'list']);
     Route::post('/donors', [DonorController::class, 'create']);
     Route::put('/donors', [DonorController::class, 'update']);
@@ -48,4 +49,11 @@ Route::middleware('auth')->group(function ()  {
     // Country Routes
     Route::get('/countries', [CountryController::class, 'list']);
     Route::get('/countries/search', [CountryController::class, 'search']);
+
+
+    Route::get('/currencies', [CurrencyController::class, 'list']);
+    Route::post('/currencies', [CurrencyController::class, 'create']);
+    Route::put('/currencies', [CurrencyController::class, 'update']);
+    Route::get('/currencies/{id}', [CurrencyController::class, 'retrieve']);
+    Route::delete('/currencies/{id}', [CurrencyController::class, 'remove']);
 });

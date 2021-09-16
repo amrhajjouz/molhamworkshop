@@ -1,0 +1,48 @@
+<include-header />
+
+<div class="row">
+    <div class="col-12 col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-header-title">معلومات العملة</h4>
+            </div>
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">كود العملة</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ currency.code }}</h4>
+                    </div>
+                </div>
+                <hr>
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">اسم العملة</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ currency.name }}</h4>
+                    </div>
+                </div>
+                <hr>
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">رمز العملة</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ currency.symbol }}</h4>
+                    </div>
+                </div>
+                <hr>
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">رمز العملة المحلي</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ currency.symbol_native }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -30,4 +30,10 @@ return [
     'places.edit' => ['places/:id/edit', 'places/editPlaceController', 'places.single.edit'],
     'places' => ['places', 'places/listPlacesController', 'places.list'],
 
+    /////////////////////// Currencies /////////////////////////
+    'currencies.add' => ['currencies/add', 'currencies/addCurrencyController', 'currencies.add'],
+    'currencies.overview' => ['currencies/:id', 'currencies/overviewCurrencyController', 'currencies.single.overview'],
+    'currencies.edit' => ['currencies/:id/edit', 'currencies/editCurrencyController', 'currencies.single.edit'],
+    'currencies' => ['currencies', 'currencies/listCurrencyController', 'currencies.list'],
+
 ];

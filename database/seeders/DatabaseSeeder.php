@@ -23,8 +23,9 @@ class DatabaseSeeder extends Seeder
 
 
         $this->call([
-            CountrySeeder::class , 
-            PlaceSeeder::class , 
+            CountrySeeder::class ,
+            PlaceSeeder::class ,
+            CurrencySeeder::class ,
         ]);
     }
 }
