@@ -4,7 +4,4 @@ function overviewCaseControllerInit($apiRequest, $page) {
 
 function overviewCaseController($scope, $page, $apiRequest, $init) {
   $scope.case = $init;
-  $scope.updateUser = $apiRequest.config({ method: "POST", url: "cases", data: $scope.case, }, function (response, data) { }
-
-  );
 }

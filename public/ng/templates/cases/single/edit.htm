@@ -18,7 +18,10 @@
   <div class="col-12 col-md-6">
     <div class="form-group">
       <label for="country_code">الدولة</label>
-      <select id="country_code" class="form-control" ng-model="case.country_code"  ng-options="country.code as country.name.ar for country in countries" required ng-error="updateCaseRequest.errors.country_code"></select>
+      <select2 model="case.country_code" ajax-url="countries/search" error-model="updateCaseRequest.errors.country_code" required>
+        <option value="{{case.country_code}}">{{case.country.name}}</option>
+      </select2>
+
     </div>
   </div>
 
@@ -56,6 +59,15 @@
     <div class="form-group">
       <label for="status">الحالة</label>
       <select id="status" class="form-control" ng-model="case.status"  ng-options="status.id as status.name for status in statuses" ng-error="updateCaseRequest.errors.status" required></select>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="form-group">
+      <label for="place_id">المكان</label>
+      <select2 model="case.place_id" ajax-url="places/search" error-model="updateCaseRequest.errors.place_id" required>
+      <option value="{{case.place.id}}">{{case.place.name}}</option>
+      </select2>
     </div>
   </div>
 

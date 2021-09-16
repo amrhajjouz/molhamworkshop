@@ -31,6 +31,7 @@ class CreateCaseRequest extends FormRequest
             'target.beneficiaries_count' => ['required' ,'numeric', 'min:1'],
             'target.required' => ['required' ,'numeric' , 'min:1'],
             'status' => ['required' , Rule::in(['funded' , 'unfunded' , 'canceled','spent'])],
+            'place_id' => ['required' , 'exists:places,id'],
         ];
     }
     

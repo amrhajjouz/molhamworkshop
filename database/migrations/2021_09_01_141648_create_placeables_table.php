@@ -18,7 +18,6 @@ class CreatePlaceablesTable extends Migration
             $table->bigInteger('place_id')->index();
             $table->string('placeable_type')->index();
             $table->bigInteger('placeable_id')->index();
-            $table->timestamps();
         });
     }
 

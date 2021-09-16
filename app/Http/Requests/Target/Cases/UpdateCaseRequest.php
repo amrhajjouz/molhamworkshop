@@ -36,6 +36,7 @@ class UpdateCaseRequest extends FormRequest
             'target.documented' => ['required' ,'boolean'],
             'target.hidden' => ['required' ,'boolean'],
             'status' => ['required' , Rule::in(['funded' , 'unfunded' , 'canceled','spent'])],
+            'place_id' => ['required' , 'exists:places,id'],
         ];
     }
     

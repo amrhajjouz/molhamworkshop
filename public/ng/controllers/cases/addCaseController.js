@@ -1,14 +1,7 @@
 async function addCaseControllerInit($apiRequest) {
   return {
-    countries: await $apiRequest.config("countries").getData(),
-    categories: await $apiRequest
-      .config("categories?created_for=Cases")
-      .getData(),
-    // places: await $apiRequest.config("places").getData(),
   };
 }
-
-
 
 function addCaseController($scope, $location, $apiRequest, $page, $init) {
   $scope.statuses = [
@@ -26,15 +19,10 @@ function addCaseController($scope, $location, $apiRequest, $page, $init) {
       beneficiaries_count: 1,
       hidden: false,
       required: 1,
-      category_id: null,
     },
-    // place_id: null,
-    // admins_ids: [],
+    place_id: null,
   };
 
-  $scope.countries = $init.countries;
-  $scope.categories = $init.categories;
-  // $scope.places = $init.places;
 
   $scope.createCaseRequest = $apiRequest.config(
     {
