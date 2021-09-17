@@ -1,40 +1,37 @@
 <page-header title="قائمة الحالات" pretitle="الحالات">
-  <a href="{{ $r('cases.add') }}" class="btn btn-primary">
-    <i class="fe fe-plus"></i>&nbsp; حالة جديدة
-  </a>
+    <a href="{{ $r('cases.add') }}" class="btn btn-primary"> <i class="fe fe-plus"></i>&nbsp; حالة جديدة </a>
 </page-header>
 
 <datatable datalist="cases">
-  <table>
-    <thead>
-      <tr>
-        <th class="text-center">#</th>
-        <th class="text-center">الاسم</th>
-        <th class="text-center">الرقم</th>
-        <th class="text-center">الحالة</th>
-        <th class="text-center">خيارات</th>
-      </tr>
-    </thead>
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">الاسم</th>
+                <th class="text-center">الرقم</th>
+                <th class="text-center">الحالة</th>
+                <th class="text-center">خيارات</th>
+            </tr>
+        </thead>
 
-    <tbody>
-      <tr ng-repeat="case in cases.data">
-        <td class="align-middle text-center">{{ case.id }}</td>
-        <td class="align-middle text-center">{{ case.beneficiary_name }}</td>
-        <td class="align-middle text-center">{{ case.serial_number }}</td>
-        <td class="align-middle text-center">
-          <span class="badge badge-soft-info" ng-if="case.status =='unfunded'"><i class="fe fe-x"></i>غير مكفولة</span>
-          <span class="badge badge-soft-success" ng-if="case.status =='funded'"><i class="fe fe-check"></i>تم كفالتها</span>
-          <span class="badge badge-soft-danger" ng-if="case.status =='canceled'"><i class="fe fe-x"></i>ملغاة</span>
-          <span class="badge badge-soft-secondary" ng-if="case.status =='spent'"><i class="fe fe-check"></i>تم
-            صرفها</span>
-        </td>
-        <td class="align-middle text-center h2">
-          <dropdown>
-            <dropdown-item href="{{ $r('cases.overview', {id: case.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
-            <dropdown-item href="{{ $r('cases.edit', {id: case.id}) }}"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
-          </dropdown>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+        <tbody>
+            <tr ng-repeat="case in cases.data">
+                <td class="align-middle text-center">{{ case.id }}</td>
+                <td class="align-middle text-center">{{ case.beneficiary_name }}</td>
+                <td class="align-middle text-center">{{ case.serial_number }}</td>
+                <td class="align-middle text-center">
+                    <span class="badge badge-soft-info" ng-if="case.status =='unfunded'"><i class="fe fe-x"></i>غير مكفولة</span>
+                    <span class="badge badge-soft-success" ng-if="case.status =='funded'"><i class="fe fe-check"></i>تم كفالتها</span>
+                    <span class="badge badge-soft-danger" ng-if="case.status =='canceled'"><i class="fe fe-x"></i>ملغاة</span>
+                    <span class="badge badge-soft-secondary" ng-if="case.status =='spent'"><i class="fe fe-check"></i>تم صرفها</span>
+                </td>
+                <td class="align-middle text-center h2">
+                    <dropdown>
+                        <dropdown-item href="{{ $r('cases.overview', {id: case.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
+                        <dropdown-item href="{{ $r('cases.edit', {id: case.id}) }}"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
+                    </dropdown>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </datatable>

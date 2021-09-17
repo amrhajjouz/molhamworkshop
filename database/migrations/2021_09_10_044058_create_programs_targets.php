@@ -16,6 +16,7 @@ class CreateProgramsTargets extends Migration
         Schema::create('programs_targets', function (Blueprint $table) {
             $table->id();
             $table->string('reference' , 15)->unique();
+            $table->string('code' , 20)->unique(); // TODO => for each targetable model 
             $table->morphs('targetable');
             $table->bigInteger('program_id')->index()->nullable();
             $table->bigInteger('category_id')->index()->nullable();
@@ -28,7 +29,7 @@ class CreateProgramsTargets extends Migration
             $table->boolean('archived')->index()->default(0);
             $table->boolean('documented')->index()->default(0);
             $table->boolean('hidden')->index()->default(1);
-            $table->boolean('posted')->index()->default(0);
+            // $table->boolean('posted')->index()->default(0); TODO : when posted at equal null that mean posted = false
             $table->dateTime('posted_at')->nullable();
             $table->dateTime('canceled_at')->nullable();
             $table->timestamps();

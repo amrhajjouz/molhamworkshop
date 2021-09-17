@@ -35,7 +35,6 @@ class BaseTargetModel extends BaseModel
             $this->target()->update($options['target']);
         }
 
-
         return parent::save();
     }
 }

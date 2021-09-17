@@ -48,16 +48,3 @@ function getCsvRows($csvPath)
 
 
 
-/*
-    * Mohamd
-    * Generate serial number for case model
-    * syntax => year - month - number case in this month
-    */
-function getCaseSerialNumber()
-{
-    $year = date("Y");
-    $month = date("m");
-    $casesInThisMonth = Cases::whereYear('created_at', $year)->whereMonth('created_at', $month)->count();
-    $serialNumber = $year . $month . ($casesInThisMonth + 1);
-    return $serialNumber;
-}
