@@ -1,0 +1,43 @@
+<!-- <include-header /> -->
+
+<div class="header">
+    <div class="header-body">
+        <h1 class="header-title h3 font-weight-bold">
+            معلومات الموظف
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-12 col-lg-6">
+
+        <table>
+            <tr>
+                <td class="text-muted py-3">اسم الموظف</td>
+                <td class="py-3 pr-3">{{ employee.first_name }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">كنية الموظف</td>
+                <td class="py-3 pr-3" dir="ltr">{{ employee.last_name }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">المكان الوظيفي</td>
+                <td class="py-3 pr-3" dir="ltr">{{ employee.occupation }}</td>
+            </tr>
+
+            <tr>
+                <td class="text-muted py-3">رقم الهاتف</td>
+                <td class="py-3 pr-3" dir="ltr">{{ employee.phone ? employee.phone : '--'}}</td>
+            </tr>
+        </table>
+
+    </div>
+
+
+
+</div>
+
+</div>
+
+<hr>

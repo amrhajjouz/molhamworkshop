@@ -1,0 +1,37 @@
+<page-header title="موظف جديد" pretitle="الموظفين"></page-header>
+
+<form class="row" name="createEmployeeForm" request="createEmployee">
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="first_name">اسم الموظف الاول</label>
+            <input id="first_name" class="form-control" type="text" ng-model="employee.first_name"
+                placeholder="الاسم .." ng-error="createEmployee.errors.first_name" required>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="last_name">كنية الموظف</label>
+            <input id="last_name" class="form-control" type="text" ng-model="employee.last_name" placeholder="كنية"
+                ng-error="createEmployee.errors.last_name" required>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="occupation">المكان الوظيفي</label>
+            <input id="occupation" class="form-control" type="text" ng-model="employee.occupation"
+                placeholder="المكان الوظيفي" ng-error="createEmployee.errors.occupation" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="phone"> رقم الهاتف</label>
+        <input id="phone" class="form-control" type="tel" ng-model="employee.phone" placeholder="المكان الوظيفي"
+            ng-error="createEmployee.errors.phone">
+    </div>
+
+    <div class="col-12">
+        <submit-button form="createEmployeeForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>

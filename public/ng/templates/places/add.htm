@@ -1,0 +1,29 @@
+<page-header title="مكان جديد" pretitle="الأماكن"></page-header>
+
+<form class="row" name="createPlaceForm" request="createPlace">
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name_ar">اسم المكان العربي</label>
+            <input id="name_ar" class="form-control" type="text" ng-model="place.name.ar" placeholder="الاسم العربي.." ng-error="createPlace.errors.name.ar" required>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name_en">اسم المكان الإنكليزي</label>
+            <input dir="ltr" id="name_en" class="form-control" type="text" ng-model="place.name.en" placeholder="الاسم الإنكليزي.." ng-error="createPlace.errors.name.en" required>
+        </div>
+    </div>
+    
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="parent_id">المكان الأب</label>
+            <select2 id="parent_id" model="place.parent_id" ajax-url="places/search" error-model="createPlace.errors.parent_id"></select2>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="createPlaceForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>

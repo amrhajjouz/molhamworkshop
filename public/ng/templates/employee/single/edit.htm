@@ -1,0 +1,39 @@
+<page-header title="موظف جديد" pretitle="الموظفين"></page-header>
+
+<form class="row" name="updateEmployeeForm" request="updateEmployee">
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="first_name">اسم الموظف الاول</label>
+            <input id="first_name" class="form-control" type="text" ng-model="employee.first_name"
+                placeholder="الاسم .." ng-error="updateEmployee.errors.first_name" required>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="last_name">كنية الموظف</label>
+            <input id="last_name" class="form-control" type="text" ng-model="employee.last_name" placeholder="كنية"
+                ng-error="updateEmployee.errors.last_name" autofocus="off" autocomplete="off" required>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="occupation">المكان الوظيفي</label>
+            <input id="occupation" class="form-control" type="text" ng-model="employee.occupation"
+                placeholder="المكان الوظيفي" ng-error="updateEmployee.errors.occupation" autofocus="off"
+                autocomplete="off" required>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="phone"> رقم الهاتف</label>
+            <input id="phone" class="form-control" type="tel" ng-model="employee.phone" placeholder="المكان الوظيفي"
+                ng-error="createEmployee.errors.phone">
+        </div>
+    </div>
+    <div class="col-12">
+        <submit-button form="updateEmployeeForm" icon="fe fe-plus">تعديل</submit-button>
+    </div>
+</form>

@@ -1,0 +1,90 @@
+<ul class="navbar-nav">
+
+    <li class="nav-item">
+        <a id="home-nav" class="nav-link" href="{{ $r('home') }}">
+            <i class="fe fe-home"></i> البداية
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#users-navs" role="button"
+            aria-expanded="false">
+            <i class="fe fe-users"></i> المستخدمون
+        </a>
+        <div class="collapse" id="users-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('users.add') }}" class="nav-link">
+                        مستخدم جديد
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('users') }}" class="nav-link">
+                        قائمة المستخدمين
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#donors-navs" role="button"
+            aria-expanded="false">
+            <i class="fe fe-book"></i> المتبرعون
+        </a>
+        <div class="collapse" id="donors-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('donors.add') }}" class="nav-link">
+                        متبرع جديد
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('donors') }}" class="nav-link">
+                        قائمة المتبرعين
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#places-navs" role="button"
+            aria-expanded="false">
+            <i class="fe fe-map"></i> الأماكن
+        </a>
+        <div class="collapse" id="places-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('places.add') }}" class="nav-link">
+                        مكان جديد
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('places') }}" class="nav-link">
+                        قائمة الأماكن
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#employees-navs" role="button"
+            aria-expanded="false">
+            <i class="fe fe-map"></i> الموظفين
+        </a>
+        <div class="collapse" id="employees-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('employees.add') }}" class="nav-link">
+                        موظف جديد
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('employees') }}" class="nav-link">
+                        قائمة الموظفين
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+</ul>

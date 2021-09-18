@@ -1,0 +1,39 @@
+<page-header title="قائمة الموظفين" pretitle="الموظفين">
+    <a href="{{ $r('employees.add') }}" class="btn btn-primary">
+        <i class="fe fe-plus"></i>&nbsp; موظف جديد
+    </a>
+</page-header>
+
+<datatable datalist="employees">
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">اسم الموظف</th>
+                <th class="text-center">كنية الموظف</th>
+                <th class="text-center">المكان الوظيفي</th>
+                <th class="text-center">الرقم </th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="u in employees.data">
+                <td class="align-middle text-center">{{ u.id }}</td>
+                <td class="align-middle text-center">{{ u.first_name }}</td>
+                <td class="align-middle text-center">{{ u.last_name }}</td>
+                <td class="align-middle text-center">{{ u.occupation }}</td>
+                <td class="align-middle text-center">{{ u.phone ? u.phone : '--' }}</td>
+
+                <td class="align-middle text-center h2">
+                    <dropdown>
+                        <dropdown-item href="{{ $r('employees.overview', {id: u.id}) }}"><i class="fe fe-eye"></i> نظرة
+                            عامة</dropdown-item>
+                        <dropdown-item href="{{ $r('employees.edit', {id: u.id}) }}"><i class="fe fe-edit-2"></i> تعديل
+                        </dropdown-item>
+                    </dropdown>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</datatable>
