@@ -1,0 +1,95 @@
+<page-header title="قائمة الحسابات " pretitle="الحسابات">
+</page-header>
+
+<simple-datatable data="accounts">
+    <table>
+        <thead>
+        <tr>
+            <th class="text-center">رقم الحساب</th>
+            <th class="text-center">رمز الحساب</th>
+            <th class="text-center">اسم الحساب</th>
+            <th class="text-center">العملة </th>
+            <th class="text-center">الدولة </th>
+            <th class="text-center">الرصيد الحالي </th>
+            <th class="text-center">الحساب الفرعي</th>
+            <th class="text-center">خيارات</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="d in accounts">
+            <td class="align-middle text-center">{{ d.id }}</td>
+            <td class="align-middle text-center">{{ d.code }}</td>
+            <td class="align-middle text-center">{{ d.name }}</td>
+            <td class="align-middle text-center">{{ d.currency }}</td>
+            <td class="align-middle text-center">{{ d.country_code }}</td>
+            <td class="align-middle text-center">{{ d.balance }}</td>
+            <td class="align-middle text-center">{{ d.main_name_account_branch }}</td>
+            <td class="align-middle text-center h2">
+                <dropdown>
+                    <dropdown-item href="{{ $r('accounts.overview', {id: d.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
+                    <dropdown-item  ng-click="showAccountModal(d);" ><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
+                </dropdown>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</simple-datatable>
+
+
+
+<modal id="account-update-modal">
+    <modal-title>
+        <span><i class="fe fe-plus-circle"></i>&nbsp; تعديل حساب جديد</span>
+    </modal-title>
+
+    <modal-body>
+        <form name="accountModalForm" request="updateAccount" model="account">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label>اسم الحساب الفرعي (عربي)</label>
+                        <input ng-model="account.name.ar" ng-minlength="1" class="form-control"
+                               placeholder="الإسم بالعربي"
+                               required>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label>اسم الحساب الفرعي (إنجليزي)</label>
+                        <input ng-model="account.name.en" ng-minlength="1" class="form-control"
+                               placeholder="الإسم بالإنجليزي"
+                               required>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label>وصف الحساب الفرعي بالعربي</label>
+                        <textarea ng-model="account.description.ar" class="form-control"
+                                  placeholder="وصف الحساب الفرعي بالعربي">
+                </textarea>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label>وصف الحساب الفرعي بالإنجليزي</label>
+                        <textarea ng-model="account.description.en" class="form-control"
+                                  placeholder="وصف الحساب الفرعي بالإنجليزي">
+                </textarea>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label>نسبة الاقتطاع الافتراضية</label>
+                        <select2
+                            model="account.default_deduction_ratio_id"
+                            placeholder="نسبة الاقتطاع الافتراضية"
+                            ajax-url="deduction_ratios/search">
+                        </select2>
+                    </div>
+                </div>
+            </div>
+            <submit-button form="accountModalForm" icon="fe fe-edit">تعديل</submit-button>
+        </form>
+    </modal-body>
+</modal>

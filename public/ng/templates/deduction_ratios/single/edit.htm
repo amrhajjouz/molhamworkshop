@@ -1,0 +1,39 @@
+<include-header/>
+<form class="row" name="DeductionRatiosForm" request="updateDeductionRatios" model="deductionRatios">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class=" col-md-6">
+                <div class="form-group">
+                    <label>الإسم بالعربي</label>
+                    <input ng-model="deductionRatios.name.ar" ng-minlength="1" class="form-control" placeholder="الإسم بالعربي"
+                           required>
+                </div>
+            </div>
+            <div class=" col-md-6">
+                <div class="form-group">
+                    <label>الإسم بالإنجليزي</label>
+                    <input ng-model="deductionRatios.name.en" ng-minlength="1" class="form-control" placeholder="الإسم بالإنجليزي" required>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label>الوصف بالعربي</label>
+                    <textarea ng-model="deductionRatios.description.ar" class="form-control" placeholder="الوصف بالعربي">
+                </textarea>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label>الوصف بالإنجليزي</label>
+                    <textarea ng-model="deductionRatios.description.en" class="form-control" placeholder="الوصف بالإنجليزي">
+                </textarea>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-12">
+        <submit-button form="DeductionRatiosForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>

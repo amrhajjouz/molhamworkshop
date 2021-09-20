@@ -1,7 +1,9 @@
 <page-header title="مستخدم جديد" pretitle="المستخدمون"></page-header>
+{{ $title }}
+{{ $page.routeName }}
 
 <form class="row" name="myForm" request="createUser">
-    
+
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="name">الاسم</label>
@@ -9,7 +11,7 @@
             <div ng-show="createUser.errors.name != null" class="invalid-feedback">{{ createUser.errors.name[0] }}</div>
         </div>
     </div>
-    
+
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="email">البريد الالكتروني</label>
@@ -17,7 +19,7 @@
             <div ng-show="createUser.errors.email != null" class="invalid-feedback">{{ createUser.errors.email[0] }}</div>
         </div>
     </div>
-    
+
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="password">كلمة المرور</label>
@@ -25,9 +27,9 @@
             <div ng-show="createUser.errors.password != null" class="invalid-feedback">{{ createUser.errors.email[0] }}</div>
         </div>
     </div>
-    
-    <div class="col-12">        
+
+    <div class="col-12">
         <submit-button form="myForm" icon="fe fe-plus">اضافة</submit-button>
-    </div>  
-    
+    </div>
+
 </form>

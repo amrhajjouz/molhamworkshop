@@ -44,6 +44,44 @@
             </ul>
         </div>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#accounts-navs" role="button" aria-expanded="false">
+            <i class="fe fe-award"></i> قسم الحسابات
+        </a>
+        <div class="collapse" id="accounts-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('account-branches.main') }}" class="nav-link">
+                        قائمة الفروع
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('accounts') }}" class="nav-link">
+                        قائمة الحسابات
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#deduction_ratios" role="button" aria-expanded="false">
+            <i class="ml-3 fa fa-pie-chart"></i> قسم نسب الاقتطاع
+        </a>
+        <div class="collapse" id="deduction_ratios">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('deduction-ratios.add') }}" class="nav-link">
+                        اضافة نسبة اقتطاع
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('deduction-ratios') }}" class="nav-link">
+                        عرض نسب الإقتطاع
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
 
     <li class="nav-item">
         <a
