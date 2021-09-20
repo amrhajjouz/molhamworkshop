@@ -1,7 +1,7 @@
-function listSpaceControllerInit ($page, $datalist) {
-    return $datalist('spaces', true).load();
+function listSpaceControllerInit($page, $datalist) {
+          return $datalist("spaces", true).load();
 }
 
-function listSpaceController ($scope, $init) {
-   $scope.spaces = $init;
+function listSpaceController($scope, $init) {
+          $scope.spaces = $init;
 }

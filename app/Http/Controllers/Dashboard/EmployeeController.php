@@ -12,9 +12,9 @@ class EmployeeController extends Controller {
  
     
     public function create (CreateEmployeeRequest $request) {
-        Log::info('Showing the user profile for user: '.$request);
+        Log::info('Showing request: '.$request);
         try {
-            $employee = Employee::create($request->all());
+            $employee = Employee::create($request->validated());
 
             return response()->json($employee);
         } catch (\Exception $e) {
@@ -26,7 +26,7 @@ class EmployeeController extends Controller {
         try {
             $employee = Employee::findOrFail($request->id);
 
-            $employee->update($request->all());
+            $employee->update($request->validated());
 
             return response()->json($employee);
         } catch (\Exception $e) {
@@ -35,7 +35,7 @@ class EmployeeController extends Controller {
     }
 
     public function retrieve ($id, RetrieveEmployeeRequest $request) {
-        try {
+        try {   
             return response()->json(Employee::findOrFail($id));
         } catch (\Exception $e) {
             return response(['error' => $e->getMessage()], 500);
@@ -61,6 +61,18 @@ class EmployeeController extends Controller {
                 }
             })->paginate(10)->withQueryString());
 
+        } catch (\Exception $e) {
+            return response(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function delete ($id) {
+        Log::info('Showing id: '.$id);
+        try {
+            $employee = Employee::findOrFail($id);
+            $employee->delete();
+            // Employee::destroy($id);
+            return response()->json();
         } catch (\Exception $e) {
             return response(['error' => $e->getMessage()], 500);
         }

@@ -56,5 +56,6 @@ Route::middleware('auth')->group(function ()  {
    Route::put('/employees', [EmployeeController::class, 'update']);
    Route::get('/employees/search', [EmployeeController::class, 'search']);
    Route::get('/employees/{id}', [EmployeeController::class, 'retrieve']);
+   Route::delete('/employees/{id}', [EmployeeController::class, 'delete']);
 });
  

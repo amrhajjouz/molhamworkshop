@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\User\{CreateUserRequest, UpdateUserRequest};
-
+use App\Models\Employee;
 use App\Models\User;
 
 class UserController extends Controller {
@@ -70,6 +70,14 @@ class UserController extends Controller {
             
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
+        }
+    }
+    public function destroy ($id) {
+        try {
+            Employee::destroy($id);
+            return response()->json();
+        } catch (\Exception $e) {
+            return response(['error' => $e->getMessage()], 500);
         }
     }
     

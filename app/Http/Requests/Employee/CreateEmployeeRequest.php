@@ -16,7 +16,7 @@ class CreateEmployeeRequest extends FormRequest
         return true;
     }
 
-    /**
+     /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -24,7 +24,10 @@ class CreateEmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+          'first_name' => ['required' ,'string'],
+          'last_name' => ['required' ,'string'],
+          'occupation' => ['required' ,'string'],
+        
         ];
     }
 }

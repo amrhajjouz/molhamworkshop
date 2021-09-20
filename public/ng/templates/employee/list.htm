@@ -31,6 +31,9 @@
                             عامة</dropdown-item>
                         <dropdown-item href="{{ $r('employees.edit', {id: u.id}) }}"><i class="fe fe-edit-2"></i> تعديل
                         </dropdown-item>
+                        <dropdown-item href="javascript:;" ng-click='deleteEmployee(u.id)'><i
+                                class="fe fe-trash-2 text-danger"></i> حذف
+                        </dropdown-item>
                     </dropdown>
                 </td>
             </tr>

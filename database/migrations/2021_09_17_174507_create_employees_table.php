@@ -20,6 +20,8 @@ class CreateEmployeesTable extends Migration
             $table->string('last_name');
             $table->string('occupation');
             $table->string('phone')->nullable();
+            $table->softDeletes();
+
         });
 
         
@@ -33,5 +35,8 @@ class CreateEmployeesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('employees');
+        Schema::table('flights', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 }
