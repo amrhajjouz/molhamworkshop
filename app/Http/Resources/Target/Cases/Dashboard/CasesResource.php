@@ -32,6 +32,8 @@ class CasesResource extends JsonResource
                 'documented' => $target->documented,
                 'hidden' => $target->hidden,
                 'archived' => $target->archived,
+                'code' => $target->code,
+                'posted_at' => $target->posted_at,
                 'category' => [
                     'name' => $target->category->name,
                 ],

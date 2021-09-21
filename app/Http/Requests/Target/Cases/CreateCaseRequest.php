@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests\Target\Cases;
 
+use App\Models\Place;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class CreateCaseRequest extends FormRequest
 {
@@ -16,7 +18,7 @@ class CreateCaseRequest extends FormRequest
     {
         return true;
     }
-    
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -25,21 +27,20 @@ class CreateCaseRequest extends FormRequest
     public function rules()
     {
         return [
-            'beneficiary_name' => ['required' ,'string', 'between:3,100'],
-            'country_code' => ['required' ,'string' , 'exists:countries,code'],
-            'target' => ['required' ,'array'],
-            'target.beneficiaries_count' => ['required' ,'numeric', 'min:1'],
-            'target.required' => ['required' ,'numeric' , 'min:1'],
-            'target.hidden' => ['required' ,'boolean'],
-            'status' => ['required' , Rule::in(['funded' , 'unfunded' , 'canceled','spent'])],
-            'place_id' => ['required' , 'exists:places,id'],
+            'beneficiary_name' => ['required', 'string', 'between:3,100'],
+            'country_code' => ['required', 'string', 'exists:countries,code', Rule::in(['SY', 'TR', 'LB', 'JO', 'EG'])],
+            'target' => ['required', 'array'],
+            'target.beneficiaries_count' => ['required', 'numeric', 'min:1'],
+            'target.required' => ['required', 'numeric', 'min:1'],
+            'target.hidden' => ['required', 'boolean'],
+            'place_id' => ['required', 'exists:places,id'],
         ];
     }
 
-
-
-    //TODO : place->country_code ;
-    // prpareForValidation
-    // sy , lb => lebanon , tr , jo => jordon , eg
-    
+    protected function prepareForValidation()
+    {
+        $place = Place::find($this->place_id);
+        if (!$place || !$place->country_code) throw ValidationException::withMessages(['place_id' => 'invalid place']);
+        $this->merge(['country_code' => $place->country_code,]);
+    }
 }

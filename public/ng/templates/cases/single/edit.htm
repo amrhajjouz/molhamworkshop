@@ -17,52 +17,6 @@
 
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="country_code">الدولة</label>
-            <select2 model="case.country_code" ajax-url="countries/search" error-model="updateCaseRequest.errors.country_code" required>
-                <option value="{{case.country_code}}">{{case.country.name}}</option>
-            </select2>
-        </div>
-    </div>
-
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="archived">مؤرشفة</label>
-            <select id="archived" class="form-control" ng-model="case.target.archived" ng-class="(updateCaseRequest.errors['target.archived'] != null) ? 'is-invalid' : ''" ng-change="upsdateCase.errors['target.archived'] = null" ng-error="updateCaseRequest.errors.target.archived" required>
-                <option ng-value="true">نعم</option>
-                <option ng-value="false">لا</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="documented">موثقة</label>
-            <select id="documented" class="form-control" ng-model="case.target.documented" ng-class="(updateCaseRequest.errors['target.documented'] != null) ? 'is-invalid' : ''" ng-change="updateCaseRequest.errors['target.documented'] = null" ng-error="updateCaseRequest.errors.target.documented" required>
-                <option ng-value="true">نعم</option>
-                <option ng-value="false">لا</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="hidden">مخفية</label>
-            <select id="hidden" class="form-control" ng-model="case.target.hidden" ng-class="(updateCaseRequest.errors['target.hidden'] != null) ? 'is-invalid' : ''" ng-change="updateCaseRequest.errors['target.hidden'] = null" ng-error="updateCaseRequest.errors.target.hidden" required>
-                <option ng-value="true">نعم</option>
-                <option ng-value="false">لا</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="status">الحالة</label>
-            <select id="status" class="form-control" ng-model="case.status" ng-options="status.id as status.name for status in statuses" ng-error="updateCaseRequest.errors.status" required></select>
-        </div>
-    </div>
-
-    <div class="col-12 col-md-6">
-        <div class="form-group">
             <label for="place_id">المكان</label>
             <select2 model="case.place_id" ajax-url="places/search" error-model="updateCaseRequest.errors.place_id" required>
                 <option value="{{case.place.id}}">{{case.place.name}}</option>

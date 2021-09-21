@@ -18,7 +18,7 @@ class CaseController extends Controller
     public function list(Request $request)
     {
         try {
-            return response()->json(Cases::orderBy('id', 'desc')->where(function ($q) use ($request) {
+            return response()->json(Cases::with('target')->orderBy('id', 'desc')->where(function ($q) use ($request) {
                 if ($request->has('q')) {
                     $q->where('beneficiary_name', 'like', '%' . $request->q . '%');
                     $q->orWhere('serial_number', 'like', '%' . $request->q . '%');

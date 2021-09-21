@@ -40,7 +40,32 @@ class Target extends BaseModel
             do {
                 $this->reference = Str::random(15);
             } while (self::where('reference', $this->reference)->exists());
+
+            $this->code = $this->getApproriateCode();
         }
         return parent::save($options);
+    }
+
+    private function getApproriateCode()
+    {
+        switch ($this->targetable_type) {
+            case "cases":
+                return "CAS" . $this->targetable_id;
+                break;
+
+            default:
+                return null;
+                break;
+        }
+        /*
+    CAM1000
+    SPO1000
+    EVE1000
+    CAM
+    SPO
+    EVE
+    PRO
+    FUN
+    */
     }
 }

@@ -8,7 +8,7 @@
             <tr>
                 <th class="text-center">#</th>
                 <th class="text-center">الاسم</th>
-                <th class="text-center">الرقم</th>
+                <th class="text-center">الرقم التسلسلي</th>
                 <th class="text-center">الحالة</th>
                 <th class="text-center">خيارات</th>
             </tr>
@@ -29,6 +29,13 @@
                     <dropdown>
                         <dropdown-item href="{{ $r('cases.overview', {id: case.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
                         <dropdown-item href="{{ $r('cases.edit', {id: case.id}) }}"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
+                        <dropdown-item href="#" ng-show="!case.target.hidden" ng-click="hideTargetRequest(case.target_id)"><i class="fe fe-eye-off"></i> إخفاء</dropdown-item>
+                        <dropdown-item href="#" ng-show="case.target.hidden" ng-click="unHideTargetRequest(case.target_id)"><i class="fe fe-rotate-cw"></i> إظهار</dropdown-item>
+                        <dropdown-item href="#" ng-show="!case.target.archived" ng-click="archiveTargetRequest(case.target_id)" ng-click=""><i class="fe fe-archive"></i> أرشفة</dropdown-item>
+                        <dropdown-item href="#" ng-show="case.target.archived" ng-click="unArchiveTargetRequest(case.target_id)" ng-click=""><i class="fe fe-arrow-left"></i> إلغاء الأرشفة</dropdown-item>
+                        <dropdown-item href="#" ng-show="!case.target.documented" ng-click="documentTargetRequest(case.target_id)" ng-click=""><i class="fe fe-check"></i> توثيق</dropdown-item>
+                        <dropdown-item href="#" ng-show="case.target.documented" ng-click="unDocumentTargetRequest(case.target_id)" ng-click=""><i class="fe fe-shield-off"></i> إلغاء التوثيق</dropdown-item>
+                        <dropdown-item href="#" ng-show="!case.target.posted_at" ng-click="postTargetRequest(case.target_id)" ng-click=""><i class="fe fe-share"></i> نشر</dropdown-item>
                     </dropdown>
                 </td>
             </tr>
