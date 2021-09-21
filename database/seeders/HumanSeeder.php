@@ -18,10 +18,10 @@ class HumanSeeder extends Seeder
         for ($i=1; $i<=100; $i++) {
             DB::table('humans')->insert([
                 'name' => 'Name User ' . $i,
-                /*'last_name' => 'Last Name User ' . $i,
+                'last_name' => 'Last Name User ' . $i,
                 'father' => 'Father User ' . $i,
                 'mother' => 'Mother User ' . $i,
-                'email' => 'test' . $i . '@test.com',*/
+                'email' => 'test' . $i . '@test.com',
             ]);
         }
     }

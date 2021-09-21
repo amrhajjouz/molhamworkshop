@@ -1,16 +1,45 @@
+<include-header/>
 
 <div class="header">
     <div class="header-body">
         <h1 class="header-title h3 font-weight-bold">
-           Humans معلومات
+           معلومات الموظف
         </h1>
     </div>
 </div>
 
 <div class="row">
+
     <div class="col-12 col-lg-6">
 
+        <table>
+            <tr>
+                <td class="text-muted py-3">الاسم</td>
+                <td class="py-3 pr-3">{{ human.name }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">البريد الالكتروني</td>
+                <td class="py-3 pr-3">{{ human.email }}</td>
+            </tr>
+        </table>
+
     </div>
+
+    <div class="col-12 col-lg-6">
+
+        <table>
+            <tr>
+                <td class="text-muted py-3">تاريخ الاضافة</td>
+                <td class="py-3 pr-3"><td class="py-3 pr-3"><span ng-bind="human.created_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td></td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ اخر تعديل</td>
+                <td class="py-3 pr-3"><td class="py-3 pr-3"><span ng-bind="human.updated_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td></td>
+            </tr>
+        </table>
+
+    </div>
+
 </div>
 
 <hr>

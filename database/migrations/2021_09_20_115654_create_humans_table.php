@@ -16,10 +16,10 @@ class CreateHumansTable extends Migration
         Schema::create('humans', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            /*$table->string('last_name');
+            $table->string('last_name');
             $table->string('father');
             $table->string('mother');
-            $table->string('email')->unique();*/
+            $table->string('email')->unique();
             $table->timestamps();
         });
     }

@@ -1,6 +1,46 @@
-<page-header title="" pretitle=""></page-header>
+<include-header/>
 
 <form class="row" name="humanForm" request="updateHuman">
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">الاسم</label>
+            <input type="text" class="form-control" ng-class="(updateHuman.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="human.name" ng-change="updateHuman.errors.name = null" placeholder="الاسم .." required>
+            <div ng-show="updateHuman.errors.name != null" class="invalid-feedback">{{ updateHuman.errors.name[0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="last_name">الكنية</label>
+            <input type="text" class="form-control" ng-class="(updateHuman.errors.last_name != null) ? 'is-invalid' : ''" id="last_name" ng-model="human.last_name" ng-change="updateHuman.errors.last_name = null" placeholder="الكنية .." required>
+            <div ng-show="updateHuman.errors.last_name != null" class="invalid-feedback">{{ updateHuman.errors.last_name[0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="father">الاب</label>
+            <input type="text" class="form-control" ng-class="(updateHuman.errors.father != null) ? 'is-invalid' : ''" id="father" ng-model="human.father" ng-change="updateHuman.errors.father = null" placeholder="الاب .." required>
+            <div ng-show="updateHuman.errors.father != null" class="invalid-feedback">{{ updateHuman.errors.father[0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="mother">الام</label>
+            <input type="text" class="form-control" ng-class="(updateHuman.errors.mother != null) ? 'is-invalid' : ''" id="mother" ng-model="human.mother" ng-change="updateHuman.errors.mother = null" placeholder="الام .." required>
+            <div ng-show="updateHuman.errors.mother != null" class="invalid-feedback">{{ updateHuman.errors.mother[0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="email">البريد الالكتروني</label>
+            <input type="email" class="form-control" ng-class="(updateHuman.errors.email != null) ? 'is-invalid' : ''" id="email" ng-model="human.email" ng-change="updateHuman.errors.email = null" placeholder="البريد الالكتروني .." required>
+            <div ng-show="updateHuman.errors.email != null" class="invalid-feedback">{{ updateHuman.errors.email[0] }}</div>
+        </div>
+    </div>
 
     <div class="col-12">
         <submit-button form="humanForm" icon="fe fe-plus">تعديل</submit-button>

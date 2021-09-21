@@ -2,6 +2,7 @@
 
 <form class="row" name="humanForm" request="createHuman">
 
+
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="name">الاسم</label>
@@ -10,7 +11,7 @@
         </div>
     </div>
 
-    <!--<div class="col-12 col-md-6">
+    <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="last_name">الكنية</label>
             <input type="text" class="form-control" ng-class="(createHuman.errors.last_name != null) ? 'is-invalid' : ''" id="last_name" ng-model="human.last_name" ng-change="createHuman.errors.last_name = null" placeholder="الكنية .." required>
@@ -40,9 +41,12 @@
             <input type="email" class="form-control" ng-class="(createHuman.errors.email != null) ? 'is-invalid' : ''" id="email" ng-model="human.email" ng-change="createHuman.errors.email = null" placeholder="البريد الالكتروني .." required>
             <div ng-show="createHuman.errors.email != null" class="invalid-feedback">{{ createHuman.errors.email[0] }}</div>
         </div>
-    </div>-->
+    </div>
 
     <div class="col-12">
-        <submit-button form="HumanForm" icon="fe fe-plus">اضافة</submit-button>
+        <submit-button form="humanForm" icon="fe fe-plus">اضافة</submit-button>
     </div>
 </form>
+
+
+

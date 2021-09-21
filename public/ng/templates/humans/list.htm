@@ -10,10 +10,10 @@
             <tr>
                 <th class="text-center">#</th>
                 <th class="text-center">الإسم</th>
-                <!--<th class="text-center">الكنية</th>
+                <th class="text-center">الكنية</th>
                 <th class="text-center">الاب</th>
                 <th class="text-center">الام</th>
-                <th class="text-center">الايميل</th>-->
+                <th class="text-center">الايميل</th>
                 <th class="text-center">خيارات</th>
             </tr>
         </thead>
@@ -22,10 +22,10 @@
             <tr ng-repeat="x in humans.data">
                 <td class="align-middle text-center">{{ x.id }}</td>
                 <td class="align-middle text-center">{{ x.name }}</td>
-                <!--<td class="align-middle text-center">{{ x.last_name }}</td>
+                <td class="align-middle text-center">{{ x.last_name }}</td>
                 <td class="align-middle text-center">{{ x.father }}</td>
                 <td class="align-middle text-center">{{ x.mother }}</td>
-                <td class="align-middle text-center">{{ x.email }}</td>-->
+                <td class="align-middle text-center">{{ x.email }}</td>
                 <td class="align-middle text-center h2">
                     <dropdown>
                         <dropdown-item href="{{ $r('humans.overview', {id: x.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>

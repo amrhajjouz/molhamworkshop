@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Human;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateHumanRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class UpdateHumanRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +25,12 @@ class UpdateHumanRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'id' => ['required', 'exists:humans'],
+            'name' => ['required' ,'string'],
+            'last_name' => ['required' ,'string'],
+            'father' => ['required' ,'string'],
+            'mother' => ['required' ,'string'],
+            'email' => ['email', Rule::unique('humans', 'email')->ignore($this->input('id'))],
         ];
     }
 }

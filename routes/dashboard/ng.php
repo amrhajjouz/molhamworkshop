@@ -32,13 +32,9 @@ return [
 
     /////////////////////// Humans /////////////////////////
     'humans.add' => ['humans/add', 'humans/addHumanController', 'humans.add'],
-    //'humans.overview' => ['humans/:id', 'humans/overviewHumanController', 'humans.single.overview'],
-    //'humans.edit' => ['humans/:id/edit', 'humans/editHumanController', 'humans.single.edit'],
+    'humans.overview' => ['humans/:id', 'humans/overviewHumanController', 'humans.single.overview'],
+    'humans.edit' => ['humans/:id/edit', 'humans/editHumanController', 'humans.single.edit'],
     'humans' => ['humans', 'humans/listHumanController', 'humans.list'],
-
-
-
-
 
 
 

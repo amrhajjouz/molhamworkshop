@@ -25,10 +25,10 @@ class CreateHumanRequest extends FormRequest
     {
         return [
             'name' => ['required' ,'string'],
-            /*'last_name' => ['required' ,'string'],
+            'last_name' => ['required' ,'string'],
             'father' => ['required' ,'string'],
             'mother' => ['required' ,'string'],
-            'email' => ['required', 'email', 'unique:humans,email'],*/
+            'email' => ['required', 'email', 'unique:humans,email'],
         ];
     }
 }

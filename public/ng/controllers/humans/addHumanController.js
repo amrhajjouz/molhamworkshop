@@ -1,6 +1,6 @@
-async function addHumanControllerInit($apiRequest) {
+/*async function addHumanControllerInit($apiRequest) {
 
-}
+}*/
 
 function addHumanController ($scope, $location, $apiRequest, $page) {
 
