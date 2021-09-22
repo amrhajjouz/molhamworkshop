@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Target;
+namespace App\Http\Requests\Target\Cases;
 
+use App\Models\Cases;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ArchiveTargetRequest extends FormRequest
+class DocumentTargetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +25,7 @@ class ArchiveTargetRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => ['required' , 'exists:programs_targets,id'] , 
-            'targetable_type' => ['required' , 'string'], 
+            'id' => ['required' , 'exists:'.Cases::getTableName().',id'] , 
         ];
     }
 

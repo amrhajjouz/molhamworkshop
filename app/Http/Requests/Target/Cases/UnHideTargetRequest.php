@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Requests\Target;
+namespace App\Http\Requests\Target\Cases;
 
+use App\Models\Cases;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UnHideTargetRequest extends FormRequest
@@ -24,8 +25,7 @@ class UnHideTargetRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => ['required' , 'exists:programs_targets,id'] , 
-            'targetable_type' => ['required' , 'string'], 
+            'id' => ['required' , 'exists:'.Cases::getTableName().',id'] , 
         ];
     }
 

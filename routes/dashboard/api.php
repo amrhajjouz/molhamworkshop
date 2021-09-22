@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\DonorController;
-use App\Http\Controllers\Dashboard\{CaseController, CountryController, CategoryController, TargetController};
+use App\Http\Controllers\Dashboard\{CaseController, CountryController, CategoryController};
 use App\Http\Controllers\Dashboard\PlaceController;
 
 /*
@@ -57,13 +57,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/cases', [CaseController::class, 'create']);
     Route::put('/cases', [CaseController::class, 'update']);
     Route::get('/cases/{id}', [CaseController::class, 'retrieve']);
-    
-    // Target Routes
-    Route::post('/targets/{id}/hide', [TargetController::class, 'hide']);
-    Route::post('/targets/{id}/un_hide', [TargetController::class, 'unHide']);
-    Route::post('/targets/{id}/archive', [TargetController::class, 'archive']);
-    Route::post('/targets/{id}/un_archive', [TargetController::class, 'unArchive']);
-    Route::post('/targets/{id}/post', [TargetController::class, 'post']);
-    Route::post('/targets/{id}/document', [TargetController::class, 'document']);
-    Route::post('/targets/{id}/un_document', [TargetController::class, 'unDocument']);
+    Route::post('/cases/{id}/hide', [CaseController::class, 'hide']);
+    Route::post('/cases/{id}/un_hide', [CaseController::class, 'unHide']);
+    Route::post('/cases/{id}/archive', [CaseController::class, 'archive']);
+    Route::post('/cases/{id}/un_archive', [CaseController::class, 'unArchive']);
+    Route::post('/cases/{id}/post', [CaseController::class, 'post']);
+    Route::post('/cases/{id}/document', [CaseController::class, 'document']);
+    Route::post('/cases/{id}/un_document', [CaseController::class, 'unDocument']);
 });

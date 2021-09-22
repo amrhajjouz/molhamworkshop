@@ -1,10 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Target;
+namespace App\Http\Requests\Target\Cases;
 
+use App\Models\Cases;
+use App\Models\Place;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
-class DocumentTargetRequest extends FormRequest
+class PostTargetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +28,7 @@ class DocumentTargetRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => ['required' , 'exists:programs_targets,id'] , 
-            'targetable_type' => ['required' , 'string'], 
+            'id' => ['required' , 'exists:'.Cases::getTableName().',id'] , 
         ];
     }
 

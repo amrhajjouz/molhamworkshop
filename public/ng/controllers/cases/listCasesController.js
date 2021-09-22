@@ -5,51 +5,51 @@ async function listCasesControllerInit($datalist) {
 function listCasesController($scope, $init, $apiRequest, $page) {
     $scope.cases = $init;
 
-    $scope.hideTargetRequest = (targetId) => {
+    $scope.hideTargetRequest = (caseId) => {
         $apiRequest
-            .config({ method: 'POST', url: `targets/${targetId}/hide`, data: { id: targetId, targetable_type: 'cases', targetable_id: $page.routeParams.id } }, function (response, data) {
+            .config({ method: 'POST', url: `cases/${caseId}/hide`, data: { id: caseId } }, function (response, data) {
                 $page.reload();
             }).send();
     };
 
-    $scope.unHideTargetRequest = (targetId) => {
+    $scope.unHideTargetRequest = (caseId) => {
         $apiRequest
-            .config({ method: 'POST', url: `targets/${targetId}/un_hide`, data: { id: targetId, targetable_type: 'cases', targetable_id: $page.routeParams.id } }, function (response, data) {
+            .config({ method: 'POST', url: `cases/${caseId}/un_hide`, data: { id: caseId } }, function (response, data) {
                 $page.reload();
             }).send();
     };
 
-    $scope.archiveTargetRequest = (targetId) => {
+    $scope.archiveTargetRequest = (caseId) => {
         $apiRequest
-            .config({ method: 'POST', url: `targets/${targetId}/archive`, data: { id: targetId, targetable_type: 'cases', targetable_id: $page.routeParams.id } }, function (response, data) {
+            .config({ method: 'POST', url: `cases/${caseId}/archive`, data: { id: caseId } }, function (response, data) {
                 $page.reload();
             }).send();
     };
 
-    $scope.unArchiveTargetRequest = (targetId) => {
+    $scope.unArchiveTargetRequest = (caseId) => {
         $apiRequest
-            .config({ method: 'POST', url: `targets/${targetId}/un_archive`, data: { id: targetId, targetable_type: 'cases', targetable_id: $page.routeParams.id } }, function (response, data) {
+            .config({ method: 'POST', url: `cases/${caseId}/un_archive`, data: { id: caseId } }, function (response, data) {
                 $page.reload();
             }).send();
     };
 
-    $scope.postTargetRequest = (targetId) => {
+    $scope.postTargetRequest = (caseId) => {
         $apiRequest
-            .config({ method: 'POST', url: `targets/${targetId}/post`, data: { id: targetId, targetable_type: 'cases', targetable_id: $page.routeParams.id } }, function (response, data) {
+            .config({ method: 'POST', url: `cases/${caseId}/post`, data: { id: caseId } }, function (response, data) {
                 $page.reload();
             }).send();
     };
 
-    $scope.documentTargetRequest = (targetId) => {
+    $scope.documentTargetRequest = (caseId) => {
         $apiRequest
-            .config({ method: 'POST', url: `targets/${targetId}/document`, data: { id: targetId, targetable_type: 'cases', targetable_id: $page.routeParams.id } }, function (response, data) {
+            .config({ method: 'POST', url: `cases/${caseId}/document`, data: { id: caseId } }, function (response, data) {
                 $page.reload();
             }).send();
     };
 
-    $scope.unDocumentTargetRequest = (targetId) => {
+    $scope.unDocumentTargetRequest = (caseId) => {
         $apiRequest
-            .config({ method: 'POST', url: `targets/${targetId}/un_document`, data: { id: targetId, targetable_type: 'cases', targetable_id: $page.routeParams.id } }, function (response, data) {
+            .config({ method: 'POST', url: `cases/${caseId}/un_document`, data: { id: caseId } }, function (response, data) {
                 $page.reload();
             }).send();
     };
