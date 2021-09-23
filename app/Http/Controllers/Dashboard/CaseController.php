@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\{Cases};
-use App\Http\Requests\Target\Cases\{CreateCaseRequest, UpdateCaseRequest, ArchiveTargetRequest,  DocumentTargetRequest, HideTargetRequest, PostTargetRequest, UnArchiveTargetRequest, UnDocumentTargetRequest, UnHideTargetRequest};
+use App\Http\Requests\Target\Cases\{CreateCaseRequest, UpdateCaseRequest, ArchiveCaseRequest,  DocumentCaseRequest, HideCaseRequest, PostCaseRequest, UnarchiveCaseRequest, UndocumentCaseRequest, UnhideCaseRequest};
 use App\Http\Resources\Target\Cases\Dashboard\CasesResource;
 
 class CaseController extends Controller
@@ -62,64 +62,64 @@ class CaseController extends Controller
 
     ////////////////////// Case Target's Actions /////////////////////
 
-    public function post(PostTargetRequest $request, $id)
+    public function markAsPosted(PostCaseRequest $request, $id)
     {
         try {
-            return response()->json(Cases::findOrFail($id)->makePosted());
+            return response()->json(Cases::findOrFail($id)->markAsPosted());
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
 
-    public function document(DocumentTargetRequest $request, $id)
+    public function markAsDocumented(DocumentCaseRequest $request, $id)
     {
         try {
-            return response()->json(Cases::findOrFail($id)->makeDocumented());
+            return response()->json(Cases::findOrFail($id)->markAsDocumented());
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
 
-    public function Undocument(UnDocumentTargetRequest $request, $id)
+    public function markAsUndocumented(UndocumentCaseRequest $request, $id)
     {
         try {
-            return response()->json(Cases::findOrFail($id)->makeUndocumented());
+            return response()->json(Cases::findOrFail($id)->markAsUndocumented());
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
 
-    public function archive(ArchiveTargetRequest $request, $id)
+    public function markAsArchived(ArchiveCaseRequest $request, $id)
     {
         try {
-            return response()->json(Cases::findOrFail($id)->makeArchived());
+            return response()->json(Cases::findOrFail($id)->markAsArchived());
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
 
-    public function unArchive(UnArchiveTargetRequest $request, $id)
+    public function markAsUnarchived(UnarchiveCaseRequest $request, $id)
     {
         try {
-            return response()->json(Cases::findOrFail($id)->makeUnarchived());
+            return response()->json(Cases::findOrFail($id)->markAsUnarchived());
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
 
-    public function hide(HideTargetRequest $request, $id)
+    public function markAsHidden(HideCaseRequest $request, $id)
     {
         try {
-            return response()->json(Cases::findOrFail($id)->makeAsHidden());
+            return response()->json(Cases::findOrFail($id)->markAsHidden());
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
 
-    public function Unhide(UnHideTargetRequest $request, $id)
+    public function markAsVisible(UnhideCaseRequest $request, $id)
     {
         try {
-            return response()->json(Cases::findOrFail($id)->makeAsUnhidden());
+            return response()->json(Cases::findOrFail($id)->markAsVisible());
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }

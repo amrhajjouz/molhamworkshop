@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Target\Cases;
+namespace App\Http\Requests\Target;
 
 use App\Models\Cases;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UnHideTargetRequest extends FormRequest
+class UnDocumentTargetRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

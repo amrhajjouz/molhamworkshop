@@ -3,12 +3,9 @@
 namespace App\Http\Requests\Target\Cases;
 
 use App\Models\Cases;
-use App\Models\Place;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
 
-class PostTargetRequest extends FormRequest
+class UndocumentCaseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

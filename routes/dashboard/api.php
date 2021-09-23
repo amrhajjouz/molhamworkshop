@@ -57,11 +57,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/cases', [CaseController::class, 'create']);
     Route::put('/cases', [CaseController::class, 'update']);
     Route::get('/cases/{id}', [CaseController::class, 'retrieve']);
-    Route::post('/cases/{id}/hide', [CaseController::class, 'hide']);
-    Route::post('/cases/{id}/un_hide', [CaseController::class, 'unHide']);
-    Route::post('/cases/{id}/archive', [CaseController::class, 'archive']);
-    Route::post('/cases/{id}/un_archive', [CaseController::class, 'unArchive']);
-    Route::post('/cases/{id}/post', [CaseController::class, 'post']);
-    Route::post('/cases/{id}/document', [CaseController::class, 'document']);
-    Route::post('/cases/{id}/un_document', [CaseController::class, 'unDocument']);
+    Route::post('/cases/{id}/hide', [CaseController::class, 'markAsHidden']);
+    Route::post('/cases/{id}/unhide', [CaseController::class, 'markAsVisible']);
+    Route::post('/cases/{id}/archive', [CaseController::class, 'markAsArchived']);
+    Route::post('/cases/{id}/unarchive', [CaseController::class, 'markAsUnarchived']);
+    Route::post('/cases/{id}/post', [CaseController::class, 'markAsPosted']);
+    Route::post('/cases/{id}/document', [CaseController::class, 'markAsDocumented']);
+    Route::post('/cases/{id}/undocument', [CaseController::class, 'markAsUndocumented']);
 });

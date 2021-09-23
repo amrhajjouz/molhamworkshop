@@ -5,7 +5,7 @@ namespace App\Http\Requests\Target\Cases;
 use App\Models\Cases;
 use Illuminate\Foundation\Http\FormRequest;
 
-class DocumentTargetRequest extends FormRequest
+class HideCaseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

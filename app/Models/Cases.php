@@ -22,7 +22,7 @@ class Cases extends BaseTargetModel
      {
           $isNew = !$this->exists;
           $options['target'] = $this->target;
-          $place_id = $this->place_id;
+          $placeId = $this->place_id;
           unset($this->target);
           unset($this->place_id);
           if ($isNew) {
@@ -32,7 +32,7 @@ class Cases extends BaseTargetModel
                unset($options['target']['category']);
           }
           $case = parent::save(['target' => $options['target']]);
-          $this->places()->sync([$place_id]);
+          $this->places()->sync([$placeId]);
           return $case;
      }
 

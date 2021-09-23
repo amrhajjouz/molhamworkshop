@@ -41,37 +41,37 @@ class BaseTargetModel extends BaseModel
 
     /////////////////////////// Target Actions //////////////////////////
 
-    public function makePosted()
+    public function markAsPosted()
     {
         return $this->target->update(['posted_at' => date('Y-m-d H:i:s', time())]);
     }
 
-    public function makeDocumented()
+    public function markAsDocumented()
     {
         return $this->target->update(['documented' => true]);
     }
 
-    public function makeUndocumented()
+    public function markAsUndocumented()
     {
         return $this->target->update(['documented' => false]);
     }
 
-    public function makeArchived()
+    public function markAsArchived()
     {
         return $this->target->update(['archived' => true]);
     }
 
-    public function makeUnarchived()
+    public function markAsUnarchived()
     {
         return $this->target->update(['archived' => false]);
     }
 
-    public function makeAsHidden()
+    public function markAsHidden()
     {
         return $this->target->update(['hidden' => true]);
     }
 
-    public function makeAsUnhidden()
+    public function markAsVisible()
     {
         return $this->target->update(['hidden' => false]);
     }
