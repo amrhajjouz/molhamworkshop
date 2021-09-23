@@ -84,4 +84,14 @@ class HumanController extends Controller {
         }
     }
 
+    public function delete($id)
+    {
+        try {
+            $humans =  Human::find($id)->delete();
+            return response()->json($humans);
+        } catch (\Exception $e) {
+            return back()->with('success', 'Human Deleted successfully');
+        }
+    }
+
 }

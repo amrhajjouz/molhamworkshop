@@ -54,6 +54,8 @@ Route::middleware('auth')->group(function ()  {
     Route::put('/humans', [HumanController::class, 'update']);
     Route::get('/humans/search', [HumanController::class, 'search']);
     Route::get('/humans/{id}', [HumanController::class, 'retrieve']);
+    Route::delete('/humans/{id}', [HumanController::class, 'delete']);
+
 
     // Country Routes
     Route::get('/countries', [CountryController::class, 'list']);
