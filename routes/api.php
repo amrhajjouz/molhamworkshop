@@ -6,6 +6,8 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\{DonorController , AuthDonorController , PaymentMethodController, SubscriptionController};
 use App\Http\Controllers\Api\PaymentProvider\Stripe\{SetupIntentController};
+use App\Http\Controllers\ReviewController;
+
 //use Stripe\StripeClient;
 
 /*
@@ -76,6 +78,13 @@ Route::group(['middleware' => 'auth_donor'], function () {
     Route::get('/donors/auth/saved_items' , [AuthDonorController::class, 'listSavedItems'])->name('api.donors.auth.saved_items.list'); 
     Route::post('/donors/auth/saved_items' , [AuthDonorController::class, 'createSavedItem'])->name('api.donors.auth.saved_items.create'); 
     
+    //Reviews
+    Route::post('/reviews' , [ReviewController::class, 'create'])->name('api.reviews.create'); 
+    Route::get('/reviews' , [ReviewController::class, 'list'])->name('api.reviews.list'); 
+    Route::put('/reviews/{id}' , [ReviewController::class, 'update'])->name('api.reviews.update'); 
+    Route::delete('/reviews/{id}' , [ReviewController::class, 'delete'])->name('api.reviews.delete'); 
+
+
     //Subscriptions
     Route::post('/subscriptions' , [SubscriptionController::class, 'create'])->name('api.subscriptions.create'); 
     
