@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Review;
+namespace App\Http\Requests\Api\Feedback;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class CreateReviewRequest extends FormRequest
+class UpdateFeedbackRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +24,8 @@ class CreateReviewRequest extends FormRequest
     public function rules()
     {
         return [
-            'content' => ['required', 'string', 'between:10,500'],
+            'title' => ['required', 'string', 'between:5,50'],
+            'content' => ['required', 'string', 'between:10,1000'],
         ];
     }
 }

@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Exceptions\ApiErrorException;
 use Illuminate\Http\Request;
 use App\Http\Requests\Api\Donor\{UpdateDonorRequest, ChangeDonorEmailRequest, ChangeDonorPasswordRequest, UpdateDonorNotificationPreferences, ChangeDonorAvatarRequest};
-use App\Http\Requests\Api\SavedItem\CreateSavedItemRequest;
-use App\Models\{Image, Token, NotificationPreference};
+use App\Models\{Token, NotificationPreference};
 use Illuminate\Support\Facades\Hash;
 
 class AuthDonorController extends Controller
@@ -147,9 +146,7 @@ class AuthDonorController extends Controller
     public function listSavedItems(Request $request)
     {
         try {
-            
             $dummyTitle = (app()->getLocale() == 'ar') ? 'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى،' : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';
-            
             return handleResponse(
                 $request->user()->savedItems()->get()->map(function ($item) use ($dummyTitle) {
                     return ['title' => $dummyTitle, 'saveable_type' => $item->saveable_type, 'saveable_id' => $item->saveable_id];
@@ -160,15 +157,13 @@ class AuthDonorController extends Controller
         }
     }
 
-    public function createSavedItem(CreateSavedItemRequest $request)
+    public function listReviews(Request $request)
     {
-        try {
-            $request->user()->savedItems()->firstOrCreate($request->validated());
-            return handleResponse(null);
-        } catch (\Exception $e) {
-            throw new ApiErrorException($e->getMessage());
-        }
+        return response()->json(authDonor()->reviews()->get(['content', 'created_at']));
     }
 
-
+    public function listFeedbacks(Request $request)
+    {
+        return response()->json(authDonor()->feedbacks()->get(['content', 'title', 'reviewed', 'created_at']));
+    }
 }

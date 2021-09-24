@@ -4,9 +4,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\{DonorController , AuthDonorController , PaymentMethodController, SubscriptionController};
+use App\Http\Controllers\Api\{DonorController , AuthDonorController , FeedbackController, PaymentMethodController, SubscriptionController , ReviewController , SavedItemController};
 use App\Http\Controllers\Api\PaymentProvider\Stripe\{SetupIntentController};
-use App\Http\Controllers\ReviewController;
 
 //use Stripe\StripeClient;
 
@@ -76,13 +75,23 @@ Route::group(['middleware' => 'auth_donor'], function () {
     Route::post('/donors/auth/avatar' , [AuthDonorController::class, 'changeAvatar'])->name('api.donors.auth.avatar.change'); 
     Route::delete('/donors/auth/avatar' , [AuthDonorController::class, 'removeAvatar'])->name('api.donors.auth.avatar.remove'); 
     Route::get('/donors/auth/saved_items' , [AuthDonorController::class, 'listSavedItems'])->name('api.donors.auth.saved_items.list'); 
-    Route::post('/donors/auth/saved_items' , [AuthDonorController::class, 'createSavedItem'])->name('api.donors.auth.saved_items.create'); 
+    Route::get('/donors/auth/reviews' , [AuthDonorController::class, 'listReviews'])->name('api.donors.auth.reviews.list'); 
+    Route::get('/donors/auth/feedbacks' , [AuthDonorController::class, 'listFeedbacks'])->name('api.donors.auth.feedbacks.list'); 
     
-    //Reviews
-    Route::post('/reviews' , [ReviewController::class, 'create'])->name('api.reviews.create'); 
-    Route::get('/reviews' , [ReviewController::class, 'list'])->name('api.reviews.list'); 
-    Route::put('/reviews/{id}' , [ReviewController::class, 'update'])->name('api.reviews.update'); 
-    Route::delete('/reviews/{id}' , [ReviewController::class, 'delete'])->name('api.reviews.delete'); 
+    //SavedItem
+    Route::post('/saved_items' , [SavedItemController::class, 'create'])->name('api.saved_items.create'); 
+    Route::delete('/saved_items/{id}' , [SavedItemController::class, 'delete'])->name('api.saved_items.delete'); 
+
+     //Review
+     Route::post('/reviews' , [ReviewController::class, 'create'])->name('api.reviews.create'); 
+     Route::get('/reviews' , [ReviewController::class, 'list'])->name('api.reviews.list'); 
+     Route::put('/reviews/{id}' , [ReviewController::class, 'update'])->name('api.reviews.update'); 
+     Route::delete('/reviews/{id}' , [ReviewController::class, 'delete'])->name('api.reviews.delete'); 
+
+      //Feedbacks
+      Route::post('/feedbacks' , [FeedbackController::class, 'create'])->name('api.feedbacks.create'); 
+      Route::put('/feedbacks/{id}' , [FeedbackController::class, 'update'])->name('api.feedbacks.update'); 
+      Route::delete('/feedbacks/{id}' , [FeedbackController::class, 'delete'])->name('api.feedbacks.delete'); 
 
 
     //Subscriptions

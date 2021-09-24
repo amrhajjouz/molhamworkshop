@@ -51,11 +51,21 @@ class Donor extends Model
 
     public function savedItems()
     {
-        return $this->hasMany('App\Models\SavedItem' , 'donor_id');
+        return $this->hasMany('App\Models\SavedItem', 'donor_id');
     }
 
     public function subscriptions()
     {
-        return $this->hasMany('App\Models\Subscription' , 'donor_id');
+        return $this->hasMany('App\Models\Subscription', 'donor_id');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany('App\Models\Review', 'donor_id');
+    }
+
+    public function feedbacks()
+    {
+        return $this->hasMany('App\Models\Feedback', 'donor_id');
     }
 }

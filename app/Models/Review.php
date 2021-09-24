@@ -16,7 +16,6 @@ class Review extends Model
         return $this->belongsTo("App\Models\Donor", 'donor_id');
     }
 
-
     public function save($options = [])
     {
         if (!$this->exists) {
