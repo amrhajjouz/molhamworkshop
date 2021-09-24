@@ -1,0 +1,41 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateStockReturnsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('stock_returns', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('stock_card_id')->constrained();
+            $table->foreignId('stock_release_id')->constrained();
+            $table->integer('quantity');
+            $table->date('return_date');
+
+            //not needed since release has the same column
+            $table->foreignId('receiver_id');
+
+            $table->foreignId('warehouse_keeper_id');
+            $table->enum('status', ['pending', 'verified', 'rejected']);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('stock_returns');
+    }
+}
