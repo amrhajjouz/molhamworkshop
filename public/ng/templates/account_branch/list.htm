@@ -3,7 +3,6 @@
         <i class="fe fe-plus"></i>&nbsp; حساب جديد
     </a>
 </page-header>
-
 <simple-datatable data="accountBranches">
     <table>
         <thead>
@@ -12,7 +11,6 @@
             <th class="text-center">رمز الحساب</th>
             <th class="text-center">اسم الحساب</th>
             <th class="text-center">الرصيد الحالي</th>
-            <th class="text-center">البلد</th>
             <th class="text-center">الحساب الأب</th>
             <th class="text-center">خيارات</th>
         </tr>
@@ -21,9 +19,8 @@
         <tr ng-repeat="d in accountBranches">
             <td class="align-middle text-center">{{ d.id }}</td>
             <td class="align-middle text-center">{{ d.code }}</td>
-            <td class="align-middle text-center">{{ d.name }}</td>
+            <td class="align-middle text-center">{{ d.name.ar }} <br>{{ d.name.en }}</td>
             <td class="align-middle text-center">{{ d.balance }}</td>
-            <td class="align-middle text-center">{{ d.country_code }}</td>
             <td class="align-middle text-center">{{ d.title_name }}</td>
             <td class="align-middle text-center h2">
                 <dropdown>
@@ -42,7 +39,6 @@
         </tbody>
     </table>
 </simple-datatable>
-
 <modal id="account-branch-modal">
     <modal-title>
         <span ng-show="currentAccountBranchModalAction == 'add'"><i class="fe fe-plus-circle"></i>&nbsp; اضافة فرع جديد</span>
@@ -57,7 +53,7 @@
                         <select2
                             model="accountBranch.parent_id"
                             placeholder="نوع الحساب"
-                            ajax-url="account-branches/search"
+                            ajax-url="account_branches/search"
                             ajax-data="{type: 'title'}"
                             select-callback="onSelected(selections)">
                         </select2>
@@ -87,7 +83,6 @@
         </form>
     </modal-body>
 </modal>
-
 <modal id="account-create-modal">
     <modal-title>
         <span><i class="fe fe-plus-circle"></i>&nbsp; اضافة حساب جديد</span>

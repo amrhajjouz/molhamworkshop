@@ -1,10 +1,14 @@
-function listAccountsControllerInit($apiRequest) {
-    return $apiRequest.config("accounts").getData();
+async function listAccountsControllerInit($apiRequest) {
+    return {
+        accounts: await $apiRequest.config("accounts").getData(),
+        deduction_ratios: await $apiRequest.config("deduction_ratios").getData()
+    };
 }
 
-function listAccountsController($scope, $init,$apiRequest) {
-    $scope.accounts = $init;
-
+function listAccountsController($scope, $init, $apiRequest) {
+    $scope.accounts = $init.accounts;
+    $scope.deductionRatios = $init.deduction_ratios;
+    $scope.account = {};
     $scope.showAccountModal = function (data) {
         $scope.account = angular.copy(data);
         $('#account-update-modal').modal('show');

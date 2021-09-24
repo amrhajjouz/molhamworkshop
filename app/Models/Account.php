@@ -23,7 +23,7 @@ class Account extends BaseModel
     {
         return $this->BelongsTo(AccountBranch::class, "branch_id")->with("parentAccountBranch");
     }
-
+    
     public function getMainNameAccountBranchAttribute(){
         return $this->parentAccountBranch->name;
     }

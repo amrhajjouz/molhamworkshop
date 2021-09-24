@@ -29,7 +29,7 @@ return [
     'places.overview' => ['places/:id', 'places/overviewPlaceController', 'places.single.overview'],
     'places.edit' => ['places/:id/edit', 'places/editPlaceController', 'places.single.edit'],
     'places' => ['places', 'places/listPlacesController', 'places.list'],
-    
+
     //account Routes
     'account-branches.main' => ['account-branches/main', 'account_branch/listAccountBranchesController', 'account_branch.list'],
     'account-branches.overview' => ['account-branches/:id/overview', 'account_branch/overviewAccountBranchesController', 'account_branch.single.overview'],
@@ -41,5 +41,4 @@ return [
     'deduction-ratios' => ['deduction-ratios', 'deduction_ratios/listDeductionRatiosController', 'deduction_ratios.list'],
     'deduction-ratios.add' => ['deduction-ratios/add', 'deduction_ratios/addDeductionRatiosController', 'deduction_ratios.add'],
     'deduction-ratios.edit' => ['deduction-ratios/:id/edit', 'deduction_ratios/editDeductionRatiosController', 'deduction_ratios.single.edit'],
-    'deduction-ratios.accounts' => ['deduction-ratios/:id/accounts', 'deduction_ratios/listDeductionRatiosAccountController', 'deduction_ratios.single.accounts'],
 ];

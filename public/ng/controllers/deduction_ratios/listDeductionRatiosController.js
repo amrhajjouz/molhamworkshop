@@ -11,7 +11,9 @@ function listDeductionRatiosController($scope, $init, $apiRequest) {
         $apiRequest.config({
             method: 'DELETE',
             url: `deduction_ratios/${id}`,
-        }, function () {
+        }, async function () {
+            $scope.deductionRatios = await $apiRequest.config("deduction_ratios").getData()
+            $scope.$apply()
         }).send()
     }
 }

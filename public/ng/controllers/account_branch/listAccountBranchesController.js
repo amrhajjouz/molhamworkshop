@@ -41,7 +41,7 @@ function listAccountBranchesController($scope, $page, $init, $apiRequest) {
     });
 
     $scope.createUpdateAccountBranch = $apiRequest.config({
-        url: `account_-branches`,
+        url: `account_branches`,
         data: $scope.accountBranch,
     }, async function () {
         $scope.accountBranches = await $apiRequest.config("account_branches").getData()

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DeductionRatios extends Model
@@ -12,7 +12,7 @@ class DeductionRatios extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ["name", "description", "ratio"];
+    protected $fillable = ["name", "description", "ratio", "account_id"];
 
     protected $casts = [
         'name' => 'array',
@@ -20,9 +20,9 @@ class DeductionRatios extends Model
         'ratio' => 'float',
     ];
 
-    public function deductionRatiosAccount(): HasMany
+    public function account(): belongsTo
     {
-        return $this->hasMany(DeductionRatiosAccount::class, "deduction_ratio_id");
+        return $this->belongsTo(Account::class, "account_id", "id");
     }
 
     public function scopeSearchByName($query, $input)

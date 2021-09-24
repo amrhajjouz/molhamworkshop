@@ -11,7 +11,7 @@
             <th class="text-center">الرقم</th>
             <th class="text-center">الإسم</th>
             <th class="text-center">النسبة</th>
-            <th class="text-center">الحسابات المرتبطة</th>
+            <th class="text-center">الحساب المرتبط</th>
             <th class="text-center">خيارات</th>
         </tr>
         </thead>
@@ -20,12 +20,9 @@
             <td class="align-middle text-center">{{ d.id }}</td>
             <td class="align-middle text-center">{{ d.name }}</td>
             <td class="align-middle text-center">{{ d.ratio }}</td>
-            <td class="align-middle text-center">{{ d.targets }}</td>
+            <td class="align-middle text-center">{{ d.account_name }}</td>
             <td class="align-middle text-center h2">
                 <dropdown>
-                    <dropdown-item href="{{ $r('deduction-ratios.accounts', {id: d.id}) }}"><i class="fa fa-pie-chart"></i>
-                        حسابات نسب الإقتطاع
-                    </dropdown-item>
                     <dropdown-item href="{{ $r('deduction-ratios.edit', {id: d.id}) }}"><i class="fe fe-edit-2"></i>
                         تعديل
                     </dropdown-item>

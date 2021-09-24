@@ -20,11 +20,11 @@
         <tr ng-repeat="d in accounts">
             <td class="align-middle text-center">{{ d.id }}</td>
             <td class="align-middle text-center">{{ d.code }}</td>
-            <td class="align-middle text-center">{{ d.name }}</td>
+            <td class="align-middle text-center">{{ d.name.ar }}<br>{{ d.name.en }}</td>
             <td class="align-middle text-center">{{ d.currency }}</td>
             <td class="align-middle text-center">{{ d.country_code }}</td>
             <td class="align-middle text-center">{{ d.balance }}</td>
-            <td class="align-middle text-center">{{ d.main_name_account_branch }}</td>
+            <td class="align-middle text-center">{{ d.main_name_account_branch.ar }} <br> {{ d.main_name_account_branch.en }}</td>
             <td class="align-middle text-center h2">
                 <dropdown>
                     <dropdown-item href="{{ $r('accounts.overview', {id: d.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
@@ -35,8 +35,6 @@
         </tbody>
     </table>
 </simple-datatable>
-
-
 
 <modal id="account-update-modal">
     <modal-title>
@@ -81,10 +79,9 @@
                 <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label>نسبة الاقتطاع الافتراضية</label>
-                        <select2
-                            model="account.default_deduction_ratio_id"
-                            placeholder="نسبة الاقتطاع الافتراضية"
-                            ajax-url="deduction_ratios/search">
+                        <select2 model="account.default_deduction_ratio_id" placeholder="نسبة الاقتطاع الافتراضية" ng-init="0">
+                            <option disabled selected></option>
+                            <option ng-repeat="ratio in deductionRatios" ng-value="ratio.id">{{ratio.name}} </option>
                         </select2>
                     </div>
                 </div>

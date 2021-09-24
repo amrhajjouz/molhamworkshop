@@ -23,17 +23,9 @@ class DeductionRatiosController extends Controller
     {
         try {
             $deductionRatio = $request->validated();
-            $targets = $deductionRatio['targets'];
-            unset($deductionRatio['targets']);
 
-            DB::beginTransaction();
-            $deductionRatio = DeductionRatios::create($deductionRatio);
+            DeductionRatios::create($deductionRatio);
 
-            foreach ($targets as $target) {
-                $deductionRatio->DeductionRatiosAccount()->create($target);
-            }
-
-            DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
             return response(['error' => $e->getMessage()], 500);
@@ -75,7 +67,7 @@ class DeductionRatiosController extends Controller
             DB::beginTransaction();
             $deductionRatio = DeductionRatios::findOrFail($id);
             $deductionRatio->delete($id);
-            Account::where("deduction_ratio_id", $id)->update(["deduction_ratio_id" => null]);
+            Account::where("default_deduction_ratio_id", $id)->update(["default_deduction_ratio_id" => null]);
             DB::commit();
         } catch (Exception $e) {
             return response(['error' => $e->getMessage()], 500);
@@ -90,17 +82,15 @@ class DeductionRatiosController extends Controller
     public function list()
     {
         try {
-            return DeductionRatios::select("id", "name", "ratio")
-                ->with(["deductionRatiosAccount:id,account_id,deduction_ratio_id", "deductionRatiosAccount.account:id,name"])
+            return DeductionRatios::select("id", "name", "ratio", "account_id")
+                ->with(["account:id,name"])
                 ->get()
                 ->map(function ($deductionRatio) {
                     return [
                         "id" => $deductionRatio->id,
                         "name" => $deductionRatio->name[app()->getlocale()],
                         "ratio" => $deductionRatio->ratio,
-                        "targets" => implode(",", $deductionRatio->deductionRatiosAccount->map(function ($deductionRatiosAccount) {
-                            return $deductionRatiosAccount->account->name[app()->getlocale()];
-                        })->toArray())
+                        "account_name" => $deductionRatio->account->name[app()->getlocale()]
                     ];
                 });
         } catch (Exception $e) {

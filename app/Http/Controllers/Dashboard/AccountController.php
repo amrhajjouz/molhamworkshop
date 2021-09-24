@@ -72,8 +72,8 @@ class AccountController extends Controller
     public function list()
     {
         try {
-            return Account::select("id", "name", "currency", "country_code", "code", "balance", "description", "branch_id", "default_deduction_ratio_id")
-                ->get()
+            return Account::get(
+                ["id", "name", "currency", "country_code", "code", "balance", "description", "branch_id", "default_deduction_ratio_id"])
                 ->makeHidden("parentAccountBranch")
                 ->append("main_name_account_branch");
         } catch (Exception $e) {
@@ -85,8 +85,7 @@ class AccountController extends Controller
     {
         try {
             $accounts = Account::searchByName(request()->q)
-                ->select("name", "id")
-                ->get()
+                ->get(["name", "id"])
                 ->map(function ($account) {
                     return [
                         "id" => $account->id,
