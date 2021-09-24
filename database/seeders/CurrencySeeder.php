@@ -15,9 +15,9 @@ class CurrencySeeder extends Seeder
     public function run()
     {
         DB::table('currencies')->insert([
-            ['code' => 'USD', "symbol" => "$"],
-            ['code' => 'TRY', "symbol" => "$"],
-            ['code' => 'SAR', "symbol" => "$"],
+            ['code' => 'USD', "symbol" => "$", "rate" => "1"],
+            ['code' => 'TRY', "symbol" => "₺", "rate" => "8.86"],
+            ['code' => 'SAR', "symbol" => "£", "rate" => "3490"],
         ]);
     }
 }

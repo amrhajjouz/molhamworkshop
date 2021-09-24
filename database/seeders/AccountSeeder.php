@@ -2,41 +2,46 @@
 
 namespace Database\Seeders;
 
-use App\Models\Account;
 use App\Models\AccountBranch;
+use Faker\Generator;
+use Illuminate\Container\Container;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class AccountSeeder extends Seeder
 {
+    protected $faker;
+
+    public function __construct()
+    {
+        $this->faker = $this->withFaker();
+    }
+
+    protected function withFaker()
+    {
+        return Container::getInstance()->make(Generator::class);
+    }
+
     /**
      * Run the database seeds.
-     *
      * @return void
      */
     public function run()
     {
-        /* START READING FROM CSV*/
-        $csvPath = Storage::disk('public')->path("accounts_list.csv");
-        $rows = array_map('str_getcsv', file($csvPath));
-        $header = array_shift($rows);
-        /* END READING FROM CSV*/
-
-        /*Export the received data into perfect array then into database*/
-        $array = array();
-        foreach ($rows as $row) {
-            $combinedArray = array_combine($header, $row); // part of the csv work
-
-            if ($combinedArray["parent_id"] == "null") {
-                $combinedArray["parent_id"] = null;
-            }
-            $combinedArray["name"] = json_encode(["ar" => $combinedArray["name_ar"], "en" => $combinedArray["name_en"]], JSON_UNESCAPED_UNICODE);
-
-            unset($combinedArray["name_ar"]);
-            unset($combinedArray["name_en"]);
-            $array[] = $combinedArray;
+        for ($i = 1; $i <= 50; $i++) {
+           $accountBranch =  AccountBranch::whereType("main")->inRandomOrder()->first();
+           $count = count($accountBranch->childAccounts) + 1;
+            DB::table('accounts')->insert([
+                'name' => '{"ar": "'.$this->faker->word.'","ar": "'.$this->faker->word.'"}',
+                'description' => '{"ar": "'.$this->faker->word.'","ar": "'.$this->faker->word.'"}',
+                'branch_id' => $accountBranch->id,
+                'code' => $accountBranch->code."-".$count,
+                'country_code' => "AD",
+                'currency' => 'USD',
+                'income' => 0,
+                'outcome' => 0,
+                'balance' => 0,
+            ]);
         }
-
-        AccountBranch::insert($array);
     }
 }

@@ -4,8 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Country;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class CountrySeeder extends Seeder
 {
@@ -269,8 +267,8 @@ class CountrySeeder extends Seeder
         foreach ($countries as $country) {
             Country::create([
                 'code' => $country['code'],
-                'name' => json_decode($country['name'] , true),
-                'nationality' => json_decode($country['nationality'] , true),
+                'name' => json_decode($country['name'], true),
+                'nationality' => json_decode($country['nationality'], true),
                 'dial_code' => $country['dial_code']
             ]);
         }

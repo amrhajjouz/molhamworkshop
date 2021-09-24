@@ -10,6 +10,7 @@ class Account extends BaseModel
     use HasFactory;
 
     protected $fillable = ["name",  "description", "branch_id",  "default_deduction_ratio_id", "currency", "code", "income", "outcome", "balance"];
+    protected $guarded = ["code"];
 
     public static $countryCodeDefault = "TR";
     public static $currencyDefault = "USD";
@@ -23,7 +24,7 @@ class Account extends BaseModel
     {
         return $this->BelongsTo(AccountBranch::class, "branch_id")->with("parentAccountBranch");
     }
-    
+
     public function getMainNameAccountBranchAttribute(){
         return $this->parentAccountBranch->name;
     }

@@ -2,19 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class AccountBranch extends Model
 {
-    protected $fillable = ["name", "type", "description", "parent_id", "country_code", "code",  "balance"];
-
+    const MainTitleCodeId = ["10", "11", "12", "13", "14", "15"];
+    protected $fillable = ["name", "type", "description", "parent_id", "country_code", "code", "balance"];
+    protected $guarded = ["code"];
     protected $casts = [
         'name' => 'array',
         'description' => 'array',
     ];
-    const MainTitleCodeId = ["10", "11", "12", "13", "14", "15"];
 
     public function parentAccountBranch(): BelongsTo
     {
@@ -23,7 +22,7 @@ class AccountBranch extends Model
 
     public function childAccounts()
     {
-        return $this->hasMany(Account::class, "branch_id","id");
+        return $this->hasMany(Account::class, "branch_id", "id");
     }
 
     public function childBranchAccounts()
@@ -47,23 +46,23 @@ class AccountBranch extends Model
         return $query->where('type', $input);
     }
 
-    public function getIsMainTitleAttribute()
-    {
-        return isset($this->code) && in_array($this->code, self::MainTitleCodeId);
-    }
-
     public function getIsChildOfMainTitleAttribute()
     {
-        if($this->type == "category"){
+        if ($this->type == "category") {
             return false;
         }
 
-        if($this->type == "title")
+        if ($this->type == "title")
             return $this->getIsMainTitleAttribute();
 
         $details = $this->getParentListDetails();
         $code = $details["title"]["code"];
         return isset($code) && in_array($code, self::MainTitleCodeId);
+    }
+
+    public function getIsMainTitleAttribute()
+    {
+        return isset($this->code) && in_array($this->code, self::MainTitleCodeId);
     }
 
     private function getParentListDetails(): array
@@ -97,10 +96,11 @@ class AccountBranch extends Model
      */
     public function getNextExpectedCodeAttribute(): string
     {
-       if (isset($this->parentAccountBranch) && isset($this->childBranchAccounts)) {
+        if (isset($this->parentAccountBranch) && isset($this->childBranchAccounts)) {
             $nextExpectedNumber = count($this->childBranchAccounts) + 1;
             $parentAccountBranchCodeId = $this->parentAccountBranch->code;
             return "$parentAccountBranchCodeId-{$this->code}-{$nextExpectedNumber}";
         }
         return '';
-    }}
+    }
+}

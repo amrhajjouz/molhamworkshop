@@ -16,4 +16,13 @@ class CurrencyController extends Controller
             return response(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function getRate(Currency $currency)
+    {
+        try {
+            return response()->json($currency->rate);
+        } catch (Exception $e) {
+            return response(['error' => $e->getMessage()], 500);
+        }
+    }
 }
