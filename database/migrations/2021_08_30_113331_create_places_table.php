@@ -20,6 +20,10 @@ class CreatePlacesTable extends Migration
             $table->json('name')->nullable();
             $table->string('country_code')->index()->nullable();
             $table->timestamps();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->foreign('created_by')->references('id')->on('users');
+            $table->foreign('updated_by')->references('id')->on('users');
         });
     }
 
