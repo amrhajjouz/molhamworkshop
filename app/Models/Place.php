@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\{Country};
-
 class Place extends BaseModel
 {
     protected $table = 'places';
@@ -17,7 +15,7 @@ class Place extends BaseModel
 
     public function country()
     {
-        return $this->hasOne(Country::class, 'code' , 'country_code');
+        return $this->hasOne(Country::class, 'code', 'country_code');
     }
 
     public function save($options = [])
@@ -25,25 +23,25 @@ class Place extends BaseModel
         if (isset($this->parent)) {
             $this->country_code = $this->parent->country_code;
         }
-        
+
         $this->fullname = $this->getFullNamePlace();
-        
+
         return parent::save();
     }
 
     /*
-     * optional transform this object and get long path of place with parents names 
+     * optional transform this object and get long path of place with parents names
      */
     public function getFullNamePlace()
     {
         $object = $this;
-        $arFullname =  $this->name['ar'];
-        $enFullname =  $this->name['en'];
+        $arFullname = $this->name['ar'];
+        $enFullname = $this->name['en'];
         while (isset($object->parent)) {
             $object = $object->parent;
-            $arFullname .=  ', ' . $object->name['ar'];
-            $enFullname .=  ', ' . $object->name['en'];
+            $arFullname .= ', ' . $object->name['ar'];
+            $enFullname .= ', ' . $object->name['en'];
         }
-        return ['ar' => $arFullname .  ', ' . $object->country->name['ar'] , 'en' => $enFullname .  ', ' . $object->country->name['en']];
+        return ['ar' => $arFullname . ', ' . $object->country->name['ar'], 'en' => $enFullname . ', ' . $object->country->name['en']];
     }
 }
