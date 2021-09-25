@@ -71,4 +71,47 @@
             </ul>
         </div>
     </li>
+    <li class="nav-item">
+        <a
+            class="nav-link"
+            href="javascript:;"
+            data-toggle="collapse"
+            data-target="#warehouses-category-navs"
+            role="button"
+            aria-expanded="false"
+        >
+            <i class="fe fe-box"></i>  المستودعات و المشاريع
+        </a>
+        <div class="collapse" id="warehouses-category-navs">
+            <ul class="nav nav-sm flex-column">
+
+                <li class="nav-item">
+                    <a
+                        class="nav-link"
+                        href="javascript:;"
+                        data-toggle="collapse"
+                        data-target="#warehouses-navs"
+                        role="button"
+                        aria-expanded="false"
+                    >
+                        <i class="fe fe-feather"></i> المستودعات
+                    </a>
+                    <div class="collapse" id="warehouses-navs">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="{{ $r('warehouses.add') }}" class="nav-link">
+                                    مستودع جديد
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ $r('warehouses') }}" class="nav-link">
+                                    قائمة المستودعات
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </li>
 </ul>

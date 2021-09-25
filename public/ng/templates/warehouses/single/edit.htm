@@ -1,0 +1,71 @@
+<include-header />
+
+<form class="row" name="warehouseForm" request="updateWarehouse">
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="code">كود المستودع</label>
+            <input id="code" class="form-control" type="text" ng-model="warehouse.code" placeholder="كود المستودع.." ng-error="createWarehouse.errors.code" required>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="place_id">المكان</label>
+            <select2 id="place_id" model="warehouse.place_id" ajax-url="places/search" error-model="createWarehouse.errors.place_id"></select2>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="length">طول المستودع (متر)</label>
+            <input id="length" class="form-control" type="text" ng-model="warehouse.length" placeholder="طول المستودع (متر).." ng-error="createWarehouse.errors.length" required>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="width">عرض المستودع (متر)</label>
+            <input id="width" class="form-control" type="text" ng-model="warehouse.width" placeholder="عرض المستودع (متر).." ng-error="createWarehouse.errors.width" required>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="height">ارتفاع المستودع (متر)</label>
+            <input id="height" class="form-control" type="text" ng-model="warehouse.height" placeholder="ارتفاع المستودع (متر).." ng-error="createWarehouse.errors.height" required>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="latitude">خط عرض احداثيات المستودع</label>
+            <input id="latitude" class="form-control" type="text" ng-model="warehouse.latitude" placeholder="خط عرض احداثيات المستودع.." ng-error="createWarehouse.errors.latitude" required>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="longitude">خط طول احداثيات المستودع</label>
+            <input id="longitude" class="form-control" type="text" ng-model="warehouse.longitude" placeholder="خط طول احداثيات المستودع.." ng-error="createWarehouse.errors.longitude" required>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="contract_starting_date">تاريخ بداية عقد المستودع</label>
+            <input id="contract_starting_date" date-picker class="form-control" ng-model="warehouse.contract_starting_date" placeholder="تاريخ بداية عقد المستودع.." ng-error="createWarehouse.errors.contract_starting_date" required>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="contract_ending_date">تاريخ انتهاء عقد المستودع</label>
+            <input id="contract_ending_date" date-picker class="form-control" ng-model="warehouse.contract_ending_date" placeholder="تاريخ انتهاء عقد المستودع.." ng-error="createWarehouse.errors.contract_ending_date" required>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="keeper_id">رقم تعريف امين المستودع</label>
+            <input id="keeper_id" class="form-control" ng-model="warehouse.keeper_id" placeholder="رقم تعريف امين المستودع.." ng-error="createWarehouse.errors.keeper_id" required>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="warehouseForm" icon="fe fe-plus">تعديل</submit-button>
+    </div>
+</form>

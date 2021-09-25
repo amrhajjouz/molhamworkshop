@@ -1,0 +1,106 @@
+<include-header />
+
+
+<div class="row">
+    <div class="col-12 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-header-title">معلومات المستودع</h4>
+            </div>
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">كود المستودع</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ warehouse.code }}</h4>
+                    </div>
+                </div>
+                <hr>
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">طول المستودع</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ warehouse.length }}</h4>
+                    </div>
+                </div>
+                <hr>
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">عرض المستودع</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ warehouse.width }}</h4>
+                    </div>
+                </div>
+                <hr>
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">ارتفاع المستودع</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ warehouse.height }}</h4>
+                    </div>
+                </div>
+                <hr>
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">مكان المستودع</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ warehouse.place.fullname.ar }}</h4>
+                    </div>
+                </div>
+                <hr>
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">خط عرض احداثيات المستودع</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ warehouse.latitude }}</h4>
+                    </div>
+                </div>
+                <hr>
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">خط طول احداثيات المستودع</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ warehouse.longitude }}</h4>
+                    </div>
+                </div>
+                <hr>
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">تاريخ بداية عقد المستودع</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ warehouse.contract_starting_date }}</h4>
+                    </div>
+                </div>
+                <hr>
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">تاريخ انتهاء عقد المستودع</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ warehouse.contract_ending_date }}</h4>
+                    </div>
+                </div>
+                <hr>
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h4 class="mb-0 text-muted">رقم تعريف حارس المستودع</h4>
+                    </div>
+                    <div class="col-auto">
+                        <h4>{{ warehouse.keeper_id }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+

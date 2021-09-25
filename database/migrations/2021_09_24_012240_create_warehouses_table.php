@@ -16,12 +16,12 @@ class CreateWarehousesTable extends Migration
         Schema::create('warehouses', function (Blueprint $table) {
             $table->id();
             $table->string('code', 30);
-            $table->foreignId('place_id');
+            $table->foreignId('place_id')->constrained();
             $table->float('length', 20, 2);
             $table->float('width', 20, 2);
             $table->float('height', 20, 2);
-            $table->float('latitude', 20, 2);
-            $table->float('longitude', 20, 2);
+            $table->decimal('latitude', 10, 8);
+            $table->decimal('longitude', 11, 8);
             $table->date('contract_starting_date');
             $table->date('contract_ending_date');
             $table->foreignId('keeper_id');

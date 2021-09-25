@@ -30,4 +30,10 @@ return [
     'places.edit' => ['places/:id/edit', 'places/editPlaceController', 'places.single.edit'],
     'places' => ['places', 'places/listPlacesController', 'places.list'],
 
+    /////////////////////// Warehouses /////////////////////////
+    'warehouses.add' => ['warehouses/add', 'warehouses/addWarehouseController', 'warehouses.add'],
+    'warehouses.overview' => ['warehouses/:id', 'warehouses/overviewWarehouseController', 'warehouses.single.overview'],
+    'warehouses.edit' => ['warehouses/:id/edit', 'warehouses/editWarehouseController', 'warehouses.single.edit'],
+    'warehouses' => ['warehouses', 'warehouses/listWarehousesController', 'warehouses.list'],
+
 ];
