@@ -19,7 +19,10 @@
     
     <!-- Theme CSS -->
     
+    <!-- Should be changed -->
     <link rel="stylesheet" href="{{ asset('css/theme.rtl.min.css') }}" id="stylesheetLight">
+    <!-- Should be changed -->
+    
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}" id="stylesheetLight">    
     
     <base href="{{ $appUrl }}/">
@@ -128,8 +131,10 @@
     <script src="{{ asset('libs/select2/dist/js/select2.min.js') }}"></script>
     <script src="{{ asset('libs/chart-js/Chart.extension.min.js') }}"></script>
     
-    
+    <!-- Should be changed -->
     <script src="{{ asset('js/theme.min.js') }}"></script>
+    <!-- Should be changed -->
+    
     <script src="{{ asset('js/custom.js') }}"></script>
     
     <script src="{{ asset('js/angular.min.js') }}"></script>
