@@ -34,7 +34,7 @@ class ReviewController extends Controller
     public function list(Request $request)
     {
         try {
-            $reviews = Review::orderBy('id', 'desc')->paginate(20)->withQueryString();
+            $reviews = Review::orderBy('id', 'desc')->paginate(2)->withQueryString();
             $reviews->getCollection()->transform(function ($review, $key) {
                 $donor = $review->donor;
                 return [
