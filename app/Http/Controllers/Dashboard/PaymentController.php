@@ -1,0 +1,85 @@
+<?php
+
+namespace App\Http\Controllers\Dashboard;
+use App\Http\Controllers\Controller;
+use App\Http\Services\Payments\PaymentService;
+use App\Http\Requests\Payment\{CreatePaymentRequest, ListPaymentRequest, RetrievePaymentRequest, UpdatePaymentRequest};
+use App\Models\Account;
+use App\Models\Payment;
+use Exception;
+
+class PaymentController extends Controller
+{
+    protected $paymentService;
+
+    public function __construct(PaymentService $paymentService)
+    {
+        parent::__construct();
+        $this->paymentService = $paymentService;
+    }
+
+    public function create(CreatePaymentRequest $request)
+    {
+        try {
+            $this->paymentService->CreatePayment($request->validated());
+
+            return response()->json(1);
+        } catch (Exception $e) {
+            return response(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function update(UpdatePaymentRequest $request)
+    {
+        try {
+            $payment = Payment::findOrFail($request->id);
+
+            $payment->update($request->validated());
+
+            return response()->json($payment);
+        } catch (Exception $e) {
+            return response(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function retrieve($id, RetrievePaymentRequest $request)
+    {
+        try {
+            return response()->json(Payment::findOrFail($id));
+        } catch (Exception $e) {
+            return response(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function list(ListPaymentRequest $request)
+    {
+        try {
+            $payments = Payment::orderBy('id', 'desc')->paginate(5);
+
+            return response()->json($payments);
+
+        } catch (Exception $e) {
+            return response(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function searchPaymentAccount(ListPaymentRequest $request)
+    {
+        try {
+            $list = ["1-10", "1-11", "1-12", "1-13"];
+
+            $accounts = Account::searchByPrefixCodeList($list)->searchByName(request()->q)->with("accountCurrency")->get()->map(function ($account) {
+                return [
+                    "fx_rate" => $account->accountCurrency->rate,
+                    "currency" => $account->currency,
+                    "id" => $account->id,
+                    "text" => $account->name[app()->getlocale()],
+                ];
+            });
+
+            return response()->json($accounts);
+        } catch (Exception $e) {
+            return response(['error' => $e->getMessage()], 500);
+        }
+    }
+}

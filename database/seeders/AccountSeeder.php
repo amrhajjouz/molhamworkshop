@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\AccountBranch;
+use App\Models\Currency;
 use Faker\Generator;
 use Illuminate\Container\Container;
 use Illuminate\Database\Seeder;
@@ -30,6 +31,7 @@ class AccountSeeder extends Seeder
     {
         for ($i = 1; $i <= 50; $i++) {
            $accountBranch =  AccountBranch::whereType("main")->inRandomOrder()->first();
+           $currency = Currency::inRandomOrder()->first()->code;
            $count = count($accountBranch->childAccounts) + 1;
             DB::table('accounts')->insert([
                 'name' => '{"ar": "'.$this->faker->word.'","ar": "'.$this->faker->word.'"}',
@@ -37,7 +39,7 @@ class AccountSeeder extends Seeder
                 'branch_id' => $accountBranch->id,
                 'code' => $accountBranch->code."-".$count,
                 'country_code' => "AD",
-                'currency' => 'USD',
+                'currency' => $currency,
                 'income' => 0,
                 'outcome' => 0,
                 'balance' => 0,

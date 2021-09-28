@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Donor extends Model
 {
-    protected  $fillable = ["name","phone","password","email","swish_number","whatsapp_number"];
+    protected $fillable = ["name", "phone", "password", "email", "swish_number", "whatsapp_number"];
     protected $hidden = [
         'password',
     ];

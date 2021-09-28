@@ -55,7 +55,7 @@ class AccountBranchSeeder extends Seeder
         AccountBranch::insert($array);
 
         for ($i = 1; $i <= 3; $i++) {
-            $accountBranch = AccountBranch::whereType("title")->inRandomOrder()->first();
+            $accountBranch = AccountBranch::whereType("title")->whereIn("code",[10,11,12,13])->inRandomOrder()->first();
             DB::table('account_branches')->insert([
                 'name' => '{"ar": "Main '.$this->faker->word.'","ar": "Main '.$this->faker->word.'"}',
                 'parent_id' => $accountBranch->id,

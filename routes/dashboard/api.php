@@ -6,10 +6,11 @@ use App\Http\Controllers\Dashboard\CountryController;
 use App\Http\Controllers\Dashboard\CurrencyController;
 use App\Http\Controllers\Dashboard\DeductionRatiosController;
 use App\Http\Controllers\Dashboard\DonorController;
+use App\Http\Controllers\Dashboard\PaymentController;
 use App\Http\Controllers\Dashboard\PlaceController;
 use App\Http\Controllers\Dashboard\ProfileController;
-use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\PurposeController;
+use App\Http\Controllers\Dashboard\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -42,8 +43,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/donors', [DonorController::class, 'list']);
     Route::post('/donors', [DonorController::class, 'create']);
     Route::put('/donors', [DonorController::class, 'update']);
+    Route::get('/donors/search', [DonorController::class, 'search']);
     Route::get('/donors/{id}', [DonorController::class, 'retrieve']);
-
     // Place Routes
     Route::get('/places', [PlaceController::class, 'list']);
     Route::post('/places', [PlaceController::class, 'create']);
@@ -82,7 +83,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/deduction_ratios/{accountId}', [DeductionRatiosController::class, 'retrieve']);
     Route::delete('/deduction_ratios/{deductionRatios}', [DeductionRatiosController::class, 'delete']);
 
-    //account branches
-    Route::get('/purpose/search', [PurposeController::class, 'search']);
+    //purposes
+    Route::get('/purposes/search', [PurposeController::class, 'search']);
+
+    //payments
+    Route::post('/payments', [PaymentController::class, 'create']);
+    Route::get('/payments/accounts', [PaymentController::class, 'searchPaymentAccount']);
 
 });

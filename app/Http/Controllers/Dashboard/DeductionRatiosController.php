@@ -108,11 +108,11 @@ class DeductionRatiosController extends Controller
         try {
             return DeductionRatios::searchByName($request->q)->select("id", "name", "ratio")
                 ->get()
-                ->map(function ($account) {
+                ->map(function ($ratio) {
                     return [
-                        "id" => $account->id,
-                        "text" => $account->name[app()->getlocale()],
-                        "ratio" => $account->ratio,
+                        "id" => $ratio->id,
+                        "text" => $ratio->name[app()->getlocale()],
+                        "ratio" => $ratio->ratio,
                     ];
                 });
         } catch (Exception $e) {

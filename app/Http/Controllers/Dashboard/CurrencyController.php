@@ -17,10 +17,10 @@ class CurrencyController extends Controller
         }
     }
 
-    public function getRate(Currency $currency)
+    public function getRate($currency)
     {
         try {
-            return response()->json($currency->rate);
+            return response()->json(Currency::where(['code' => $currency])->firstOrFail()->rate);
         } catch (Exception $e) {
             return response(['error' => $e->getMessage()], 500);
         }

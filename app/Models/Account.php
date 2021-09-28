@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Account extends BaseModel
 {
@@ -20,9 +21,19 @@ class Account extends BaseModel
         'description' => 'array',
     ];
 
+    public function defaultDeductionRatio(): belongsTo
+    {
+        return $this->belongsTo(DeductionRatios::class, "default_deduction_ratio_id");
+    }
+
     public function parentAccountBranch(): BelongsTo
     {
         return $this->BelongsTo(AccountBranch::class, "branch_id")->with("parentAccountBranch");
+    }
+
+    public function accountCurrency(): BelongsTo
+    {
+        return $this->BelongsTo(Currency::class, "currency","code");
     }
 
     public function getMainNameAccountBranchAttribute(){
@@ -34,5 +45,18 @@ class Account extends BaseModel
         if ($input == null)
             return $query;
         return $query->where('name', 'like', "%{$input}%");
+    }
+
+    public function scopeSearchByPrefixCodeList($query, $list)
+    {
+        if($list == null){
+            return null;
+        }
+
+        return $query->Where(function ($query) use ($list) {
+            foreach ($list as $item) {
+                $query->orwhere('code', 'like', $item . '%');
+            }
+        });
     }
 }
