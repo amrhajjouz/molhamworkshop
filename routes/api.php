@@ -60,6 +60,7 @@ Route::group([], function () {
     Route::post('/donors/reset_password/{token}' , [DonorController::class, 'retrieveResetPasswordRequest'])->name('api.donors.reset_password_request.retrieve'); 
     Route::post('/donors/reset_password/{token}/confirm' , [DonorController::class, 'confirmResetPasswordRequest'])->name('api.donors.reset_password_request.confirm'); 
     Route::post('/donors/verify_email' , [DonorController::class, 'verifyEmail'])->name('api.donors.verify_email'); 
+    Route::get('/reviews' , [ReviewController::class, 'list'])->name('api.reviews.list'); 
 });
 
 Route::group(['middleware' => 'auth_donor'], function () {
@@ -84,7 +85,6 @@ Route::group(['middleware' => 'auth_donor'], function () {
 
      //Review
      Route::post('/reviews' , [ReviewController::class, 'create'])->name('api.reviews.create'); 
-     Route::get('/reviews' , [ReviewController::class, 'list'])->name('api.reviews.list'); 
      Route::put('/reviews/{id}' , [ReviewController::class, 'update'])->name('api.reviews.update'); 
      Route::delete('/reviews/{id}' , [ReviewController::class, 'delete'])->name('api.reviews.delete'); 
 
