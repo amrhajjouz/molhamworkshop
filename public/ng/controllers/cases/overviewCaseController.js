@@ -1,5 +1,5 @@
 function overviewCaseControllerInit($apiRequest, $page) {
-  return $apiRequest.config("cases/" + $page.routeParams.id).getData();
+  return $apiRequest.config("programs/medical/cases/" + $page.routeParams.id).getData();
 }
 
 function overviewCaseController($scope, $page, $apiRequest, $init) {

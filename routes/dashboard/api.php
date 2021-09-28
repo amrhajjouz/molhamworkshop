@@ -5,8 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\DonorController;
-use App\Http\Controllers\Dashboard\{CaseController, CountryController, CategoryController};
+use App\Http\Controllers\Dashboard\{CountryController, CategoryController};
 use App\Http\Controllers\Dashboard\PlaceController;
+use App\Http\Controllers\Dashboard\Program\Medical\{CaseController};
 
 /*
 |--------------------------------------------------------------------------
@@ -53,15 +54,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/countries/search', [CountryController::class, 'search']);
 
     // Cases Routes
-    Route::get('/cases', [CaseController::class, 'list']);
-    Route::post('/cases', [CaseController::class, 'create']);
-    Route::put('/cases', [CaseController::class, 'update']);
-    Route::get('/cases/{id}', [CaseController::class, 'retrieve']);
-    Route::post('/cases/{id}/hide', [CaseController::class, 'markAsHidden']);
-    Route::post('/cases/{id}/unhide', [CaseController::class, 'markAsVisible']);
-    Route::post('/cases/{id}/archive', [CaseController::class, 'markAsArchived']);
-    Route::post('/cases/{id}/unarchive', [CaseController::class, 'markAsUnarchived']);
-    Route::post('/cases/{id}/post', [CaseController::class, 'markAsPosted']);
-    Route::post('/cases/{id}/document', [CaseController::class, 'markAsDocumented']);
-    Route::post('/cases/{id}/undocument', [CaseController::class, 'markAsUndocumented']);
+    Route::get('/programs/medical/cases', [CaseController::class, 'list']);
+    Route::post('/programs/medical/cases', [CaseController::class, 'create']);
+    Route::put('/programs/medical/cases', [CaseController::class, 'update']);
+    Route::get('/programs/medical/cases/{id}', [CaseController::class, 'retrieve']);
+    Route::post('/programs/medical/cases/{id}/hide', [CaseController::class, 'markAsHidden']);
+    Route::post('/programs/medical/cases/{id}/unhide', [CaseController::class, 'markAsVisible']);
+    Route::post('/programs/medical/cases/{id}/archive', [CaseController::class, 'markAsArchived']);
+    Route::post('/programs/medical/cases/{id}/unarchive', [CaseController::class, 'markAsUnarchived']);
+    Route::post('/programs/medical/cases/{id}/post', [CaseController::class, 'markAsPosted']);
+    Route::post('/programs/medical/cases/{id}/document', [CaseController::class, 'markAsDocumented']);
+    Route::post('/programs/medical/cases/{id}/undocument', [CaseController::class, 'markAsUndocumented']);
 });

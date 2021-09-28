@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\Dashboard\Program\Medical;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\{Cases};
-use App\Http\Requests\Target\Cases\{CreateCaseRequest, UpdateCaseRequest, ArchiveCaseRequest,  DocumentCaseRequest, HideCaseRequest, PostCaseRequest, UnarchiveCaseRequest, UndocumentCaseRequest, UnhideCaseRequest};
+use App\Models\{Cases, Target};
+use App\Http\Requests\Program\Medical\Cases\{CreateCaseRequest, UpdateCaseRequest, ArchiveCaseRequest,  DocumentCaseRequest, HideCaseRequest, PostCaseRequest, UnarchiveCaseRequest, UndocumentCaseRequest, UnhideCaseRequest};
 use App\Http\Resources\Target\Cases\Dashboard\CasesResource;
 
 class CaseController extends Controller
@@ -18,12 +18,14 @@ class CaseController extends Controller
     public function list(Request $request)
     {
         try {
-            return response()->json(Cases::with('target')->orderBy('id', 'desc')->where(function ($q) use ($request) {
-                if ($request->has('q')) {
-                    $q->where('beneficiary_name', 'like', '%' . $request->q . '%');
-                    $q->orWhere('serial_number', 'like', '%' . $request->q . '%');
-                }
-            })->paginate(10)->withQueryString());
+            return response()->json(Cases::join(Target::getTableName() . " AS T", 'programs_cases.target_id', "=", 'T.id')
+                ->select('programs_cases.*', "T.required", "T.beneficiaries_count", "T.is_hidden", "T.archived", "T.posted_at", "T.documented")
+                ->orderBy('id', 'desc')->where(function ($q) use ($request) {
+                    if ($request->has('q')) {
+                        $q->where('beneficiary_name', 'like', '%' . $request->q . '%');
+                        $q->orWhere('serial_number', 'like', '%' . $request->q . '%');
+                    }
+                })->paginate(10)->withQueryString());
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }

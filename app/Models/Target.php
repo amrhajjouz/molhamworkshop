@@ -11,7 +11,7 @@ class Target extends BaseModel
     protected $guarded = [];
     protected $casts = [
         'documented' => 'boolean',
-        'hidden' => 'boolean',
+        'is_hidden' => 'boolean',
         'archived' => 'boolean',
         'created_at' =>  'datetime:Y-m-d H:i:s',
         'updated_at' =>  'datetime:Y-m-d H:i:s',

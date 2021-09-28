@@ -28,7 +28,7 @@ class CreateProgramsTargets extends Migration
             $table->integer('beneficiaries_count')->index()->default(0);
             $table->boolean('archived')->index()->default(0);
             $table->boolean('documented')->index()->default(0);
-            $table->boolean('hidden')->index()->default(1);
+            $table->boolean('is_hidden')->index()->default(1);
             $table->dateTime('posted_at')->nullable();
             $table->dateTime('canceled_at')->nullable();
             $table->timestamps();

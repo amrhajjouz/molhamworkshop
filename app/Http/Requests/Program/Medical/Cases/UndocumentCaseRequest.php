@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Target\Cases;
+namespace App\Http\Requests\Program\Medical\Cases;
 
 use App\Models\Cases;
-use App\Models\Place;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
 
-class PostCaseRequest extends FormRequest
+class UndocumentCaseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,8 +25,7 @@ class PostCaseRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => ['required' , 'exists:'.Cases::getTableName().',id'] , 
+            'id' => ['required', 'exists:' . Cases::getTableName() . ',id'],
         ];
     }
-
 }

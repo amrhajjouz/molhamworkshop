@@ -68,11 +68,11 @@ class BaseTargetModel extends BaseModel
 
     public function markAsHidden()
     {
-        return $this->target->update(['hidden' => true]);
+        return $this->target->update(['is_hidden' => true]);
     }
 
     public function markAsVisible()
     {
-        return $this->target->update(['hidden' => false]);
+        return $this->target->update(['is_hidden' => false]);
     }
 }

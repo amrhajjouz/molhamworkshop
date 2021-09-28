@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Target\Cases;
+namespace App\Http\Requests\Program\Medical\Cases;
 
 use App\Models\Cases;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ArchiveCaseRequest extends FormRequest
+class UnhideCaseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,7 @@ class ArchiveCaseRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => ['required' , 'exists:'.Cases::getTableName().',id'] , 
+            'id' => ['required', 'exists:' . Cases::getTableName() . ',id'],
         ];
     }
-
 }

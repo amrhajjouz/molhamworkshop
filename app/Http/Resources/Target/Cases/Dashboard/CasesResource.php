@@ -26,17 +26,16 @@ class CasesResource extends JsonResource
             'country' => [
                 'name' => $this->country->name[$locale],
             ],
-            'target' => [
-                'required' => $target->required,
-                'beneficiaries_count' => $target->beneficiaries_count,
-                'documented' => $target->documented,
-                'hidden' => $target->hidden,
-                'archived' => $target->archived,
-                'code' => $target->code,
-                'posted_at' => $target->posted_at,
-                'category' => [
-                    'name' => $target->category->name,
-                ],
+            //target
+            'required' => $target->required,
+            'beneficiaries_count' => $target->beneficiaries_count,
+            'documented' => $target->documented,
+            'is_hidden' => $target->is_hidden,
+            'archived' => $target->archived,
+            'code' => $target->code,
+            'posted_at' => $target->posted_at,
+            'category' => [
+                'name' => $target->category->name,
             ],
             'place' => [
                 'id' => $place->id,

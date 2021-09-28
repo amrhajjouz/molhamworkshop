@@ -21,13 +21,20 @@ class Cases extends BaseTargetModel
      public function save(array $options = [])
      {
           $isNew = !$this->exists;
-          $options['target'] = $this->target;
+          //extract target fields from this 
+          $options['target'] = [];
+          foreach (['required', 'beneficiaries_count',  'is_hidden', 'category_id'] as $field) {
+               if (isset($this->$field)) {
+                    $options['target'][$field] = $this->$field;
+                    unset($this->$field);
+               }
+          }
+
           $placeId = $this->place_id;
-          unset($this->target);
           unset($this->place_id);
+
           if ($isNew) {
                $this->serial_number = $this->getCaseSerialNumber();
-               $options['target']['category_id'] = Category::where('created_for', 'Cases')->where('name', 'طبية')->first()->id;
           } else {
                unset($options['target']['category']);
           }

@@ -11,7 +11,7 @@
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="beneficiaries_count">عدد المستفيدين</label>
-            <input id="beneficiaries_count" class="form-control" type="number" ng-model="case.target['beneficiaries_count']" ng-class="(updateCaseRequest.errors['target.beneficiaries_count'] != null) ? 'is-invalid' : ''" ng-change="updateCaseRequest.errors['target.beneficiaries_count']= null" ng-error="updateCaseRequest.errors.target.beneficiaries_count" required />
+            <input id="beneficiaries_count" class="form-control" type="number" ng-model="case['beneficiaries_count']" ng-error="updateCaseRequest.errors.beneficiaries_count" required />
         </div>
     </div>
 

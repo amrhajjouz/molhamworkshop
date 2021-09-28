@@ -9,14 +9,14 @@
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="beneficiaries_count">عدد المستفيدين</label>
-            <input id="beneficiaries_count" class="form-control" type="number" ng-model="case.target['beneficiaries_count']" required min="1" ng-error="createCaseRequest.errors['target.beneficiaries_count'][0]" />
+            <input id="beneficiaries_count" class="form-control" type="number" ng-model="case['beneficiaries_count']" required min="1" ng-error="createCaseRequest.errors['beneficiaries_count'][0]" />
         </div>
     </div>
 
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="hidden">مخفية</label>
-            <select id="hidden" class="form-control" ng-model="case.target.hidden" ng-error="createCaseRequest.errors['target.hidden']" required>
+            <label for="is_hidden">مخفية</label>
+            <select id="is_hidden" class="form-control" ng-model="case.is_hidden" ng-error="createCaseRequest.errors['is_hidden']" required>
                 <option ng-value="true">نعم</option>
                 <option ng-value="false">لا</option>
             </select>
@@ -25,7 +25,7 @@
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="required">المبلغ المطلوب</label>
-            <input id="required" class="form-control" type="number" ng-model="case.target['required']" ng-class="(createCaseRequest.errors['target.required'] != null) ? 'is-invalid' : ''" ng-change="createCaseRequest.errors['target.required'] = null" ng-error="createCaseRequest.errors['target.required']" required min="1" />
+            <input id="required" class="form-control" type="number" ng-model="case['required']" ng-error="createCaseRequest.errors['required']" required min="1" />
         </div>
     </div>
 
