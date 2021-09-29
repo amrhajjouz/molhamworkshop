@@ -6,7 +6,7 @@ function listLoanRequestController ($scope, $apiRequest, $init, $page) {
 
     $scope.loanRequests = $init;
 
-    //Delete Human
+    //Delete
     $scope.deleteLoanRequestController = function (id) {
         var result = confirm("هل تريد الحذف؟");
         if (result) {

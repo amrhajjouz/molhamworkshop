@@ -24,6 +24,7 @@
                     <dropdown>
                         <dropdown-item href="{{ $r('advance-payment-requests.overview', {id: x.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
                         <dropdown-item href="{{ $r('advance-payment-requests.edit', {id: x.id}) }}"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
+                        <dropdown-item href="#" ng-click="deleteAdvancePaymentRequestController(x.id)"><i class="fe fe-delete"></i> حذف</dropdown-item>
                     </dropdown>
                 </td>
             </tr>
