@@ -8,6 +8,8 @@ use App\Http\Controllers\Dashboard\DonorController;
 use App\Http\Controllers\Dashboard\PlaceController;
 use App\Http\Controllers\Dashboard\CountryController;
 use App\Http\Controllers\Dashboard\HumanController;
+use App\Http\Controllers\Dashboard\LoanRequestController;
+use App\Http\Controllers\Dashboard\AdvancePaymentRequestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +57,22 @@ Route::middleware('auth')->group(function ()  {
     Route::get('/humans/search', [HumanController::class, 'search']);
     Route::get('/humans/{id}', [HumanController::class, 'retrieve']);
     Route::delete('/humans/{id}', [HumanController::class, 'delete']);
+
+    // Loan Requests Routes
+    Route::get('/loan_requests', [LoanRequestController::class, 'list']);
+    Route::post('/loan_requests', [LoanRequestController::class, 'create']);
+    Route::put('/loan_requests', [LoanRequestController::class, 'update']);
+    Route::get('/loan_requests/search', [LoanRequestController::class, 'search']);
+    Route::get('/loan_requests/{id}', [LoanRequestController::class, 'retrieve']);
+    Route::delete('/loan_requests/{id}', [LoanRequestController::class, 'delete']);
+
+    // Advance Payment Request Routes
+    Route::get('/advance_payment_requests', [AdvancePaymentRequestController::class, 'list']);
+    Route::post('/advance_payment_requests', [AdvancePaymentRequestController::class, 'create']);
+    Route::put('/advance_payment_requests', [AdvancePaymentRequestController::class, 'update']);
+    Route::get('/advance_payment_requests/search', [AdvancePaymentRequestController::class, 'search']);
+    Route::get('/advance_payment_requests/{id}', [AdvancePaymentRequestController::class, 'retrieve']);
+    Route::delete('/advance_payment_requests/{id}', [AdvancePaymentRequestController::class, 'delete']);
 
 
     // Country Routes

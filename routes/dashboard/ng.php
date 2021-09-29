@@ -36,7 +36,16 @@ return [
     'humans.edit' => ['humans/:id/edit', 'humans/editHumanController', 'humans.single.edit'],
     'humans' => ['humans', 'humans/listHumanController', 'humans.list'],
 
+    /////////////////////// Loan Requests /////////////////////////
+    'loan-requests.add' => ['loan-requests/add', 'loanRequest/addLoanRequestController', 'loanRequest.add'],
+    'loan-requests.overview' => ['loan-requests/:id', 'loanRequest/overviewLoanRequestController', 'loanRequest.single.overview'],
+    'loan-requests.edit' => ['loan-requests/:id/edit', 'loanRequest/editLoanRequestController', 'loanRequest.single.edit'],
+    'loan-requests' => ['loan-requests', 'loanRequest/listLoanRequestController', 'loanRequest.list'],
 
-
+    /////////////////////// Advance Payment Requests /////////////////////////
+    'advance-payment-requests.add' => ['advance-payment-requests/add', 'advancePaymentRequest/addAdvancePaymentRequestController', 'advancePaymentRequest.add'],
+    'advance-payment-requests.overview' => ['advance-payment-requests/:id', 'advancePaymentRequest/overviewAdvancePaymentRequestController', 'advancePaymentRequest.single.overview'],
+    'advance-payment-requests.edit' => ['advance-payment-requests/:id/edit', 'advancePaymentRequest/editAdvancePaymentRequestController', 'advancePaymentRequest.single.edit'],
+    'advance-payment-requests' => ['advance-payment-requests', 'advancePaymentRequest/listAdvancePaymentRequestController', 'advancePaymentRequest.list'],
 
 ];

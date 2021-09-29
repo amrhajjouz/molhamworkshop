@@ -32,8 +32,6 @@ class CreateHumansTable extends Migration
      */
     public function down()
     {
-        /*Schema::dropIfExists('humans');*/
-
         Schema::table('humans', function (Blueprint $table) {
             $table->dropSoftDeletes();
         });

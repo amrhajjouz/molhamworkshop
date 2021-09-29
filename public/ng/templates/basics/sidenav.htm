@@ -25,6 +25,7 @@
             </ul>
         </div>
     </li>
+
     <li class="nav-item">
         <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#donors-navs" role="button" aria-expanded="false">
             <i class="fe fe-book"></i> المتبرعون
@@ -81,7 +82,7 @@
             role="button"
             aria-expanded="false"
         >
-            <i class="fe fe-map"></i> الموارد البشرية
+            <i class="fe fe-user"></i> الموارد البشرية
         </a>
         <div class="collapse" id="humans-navs">
             <ul class="nav nav-sm flex-column">
@@ -94,6 +95,52 @@
                     <a href="{{ $r('humans') }}" class="nav-link">
                         قائمة الموظفين
                     </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <!--Loan Requests-->
+    <li class="nav-item">
+        <a
+            class="nav-link"
+            href="javascript:;"
+            data-toggle="collapse"
+            data-target="#loan-requests-navs"
+            role="button"
+            aria-expanded="false"
+        >
+        <i class="fe fe-grid"></i>طلبات القروض
+        </a>
+        <div class="collapse" id="loan-requests-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('loan-requests.add') }}" class="nav-link">طلب قرض</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('loan-requests') }}" class="nav-link">قائمة القروض</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <!--Advance Payment Requests-->
+    <li class="nav-item">
+        <a
+            class="nav-link"
+            href="javascript:;"
+            data-toggle="collapse"
+            data-target="#advance-payment-requests-navs"
+            role="button"
+            aria-expanded="false"
+        >
+            <i class="fe fe-grid"></i>طلبات السلف
+        </a>
+        <div class="collapse" id="advance-payment-requests-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('advance-payment-requests.add') }}" class="nav-link">طلب سلفة</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('advance-payment-requests') }}" class="nav-link">قائمة السلف</a>
                 </li>
             </ul>
         </div>

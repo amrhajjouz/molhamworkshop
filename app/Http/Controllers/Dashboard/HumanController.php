@@ -90,7 +90,7 @@ class HumanController extends Controller {
             $humans =  Human::find($id)->delete();
             return response()->json($humans);
         } catch (\Exception $e) {
-            return back()->with('success', 'Human Deleted successfully');
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 

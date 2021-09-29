@@ -1,0 +1,42 @@
+<page-header title="طلب سلفة" pretitle="السلف"></page-header>
+
+<form class="row" name="advancePaymentRequestForm" request="createAdvancePaymentRequest">
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="amount">مقدار السلفة بالدولار</label>
+            <input type="number" class="form-control" ng-class="(createAdvancePaymentRequest.errors.amount != null) ? 'is-invalid' : ''" id="amount" ng-model="advancePaymentRequest.amount" ng-change="createAdvancePaymentRequest.errors.amount = null" placeholder="مقدار السلفة بالدولار .." required>
+            <div ng-show="createAdvancePaymentRequest.errors.amount != null" class="invalid-feedback">{{ createAdvancePaymentRequest.errors.amount[0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="receiving_date">تاريخ استلام السلفة</label>
+            <input id="receiving_date" date-picker class="form-control" ng-model="advancePaymentRequest.receiving_date" placeholder="تاريخ استلام السلفة.." ng-error="createAdvancePaymentRequest.errors.receiving_date" required>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="percentage_to_salary">نسبة السلفة من الراتب الأساسي</label>
+            <select class="form-control" ng-class="(createAdvancePaymentRequest.errors.percentage_to_salary != null) ? 'is-invalid' : ''" id="percentage_to_salary" ng-model="advancePaymentRequest.percentage_to_salary" ng-change="createAdvancePaymentRequest.errors.percentage_to_salary = null">
+                <option value="25%" selected="selected">25%</option>
+                <option value="50%" >50%</option>
+            </select>
+            <div ng-show="createAdvancePaymentRequest.errors.status != null" class="invalid-feedback">{{ createAdvancePaymentRequest.errors.percentage_to_salary[0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="details">سبب السلفة</label>
+            <textarea rows="5" cols="5" class="form-control" ng-class="(createAdvancePaymentRequest.errors.details != null) ? 'is-invalid' : ''" id="details" ng-model="advancePaymentRequest.details" ng-change="createAdvancePaymentRequest.errors.details = null" placeholder="سبب السلفة .." required></textarea>
+            <div ng-show="createAdvancePaymentRequest.errors.details != null" class="invalid-feedback">{{ createAdvancePaymentRequest.errors.details[0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="advancePaymentRequestForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>

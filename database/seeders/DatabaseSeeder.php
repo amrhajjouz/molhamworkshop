@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\LoanRequest;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -23,9 +24,10 @@ class DatabaseSeeder extends Seeder
 
 
         $this->call([
-            CountrySeeder::class , 
-            PlaceSeeder::class , 
-            HumanSeeder::class ,
+            CountrySeeder::class,
+            PlaceSeeder::class,
+            HumanSeeder::class,
+            //LoanRequestSeeder::class,
         ]);
     }
 }

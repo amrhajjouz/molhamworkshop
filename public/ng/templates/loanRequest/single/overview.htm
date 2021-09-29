@@ -1,0 +1,55 @@
+<include-header/>
+
+<div class="header">
+    <div class="header-body">
+        <h1 class="header-title h3 font-weight-bold">
+           معلومات القرض
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-lg-6">
+        <table>
+            <tr>
+                <td class="text-muted py-3">صاحب القرض</td>
+                <td class="py-3 pr-3">{{ loanRequest.user.name }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">مقدار القرض</td>
+                <td class="py-3 pr-3">{{ loanRequest.amount }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ استلاف القرض</td>
+                <td class="py-3 pr-3">{{ loanRequest.receiving_date }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ إعادة القرض</td>
+                <td class="py-3 pr-3">{{ loanRequest.return_date }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">حالة القرض</td>
+                <td class="py-3 pr-3">{{ loanRequest.status }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تفاصيل القرض</td>
+                <td class="py-3 pr-3">{{ loanRequest.details }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-12 col-lg-6">
+        <table>
+            <tr>
+                <td class="text-muted py-3">تاريخ الاضافة</td>
+                <td class="py-3 pr-3"><td class="py-3 pr-3"><span ng-bind="loanRequest.created_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td></td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ اخر تعديل</td>
+                <td class="py-3 pr-3"><td class="py-3 pr-3"><span ng-bind="loanRequest.updated_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<hr>
+

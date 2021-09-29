@@ -805,6 +805,15 @@
                 }
             };
         });
+
+        app.directive('datePicker',function($rootScope, $page, $timeout) {
+            return {
+                restrict: 'A',
+                link: function (scope, element, attrs) {
+                    flatpickr('#'+attrs.id,{});
+                }
+            }
+        });
         
         app.directive('tinyEditor', function ($rootScope, $page, $timeout) {
             

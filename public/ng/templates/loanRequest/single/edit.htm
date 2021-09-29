@@ -1,0 +1,52 @@
+<include-header/>
+
+<form class="row" name="loanRequestForm" request="updateLoanRequest">
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="amount">مقدار القرض بالدولار</label>
+            <input type="number" class="form-control" ng-class="(updateLoanRequest.errors.amount != null) ? 'is-invalid' : ''" id="amount" ng-model="loanRequest.amount" ng-change="updateLoanRequest.errors.amount = null" placeholder="مقدار القرض بالدولار .." required>
+            <div ng-show="updateLoanRequest.errors.amount != null" class="invalid-feedback">{{ updateLoanRequest.errors.amount[0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="receiving_date">تاريخ استلام القرض</label>
+            <input id="receiving_date" date-picker class="form-control" ng-model="loanRequest.receiving_date" placeholder="تاريخ استلام القرض .." ng-error="updateLoanRequest.errors.receiving_date" required>
+            <div ng-show="updateLoanRequest.errors.receiving_date != null" class="invalid-feedback">{{ updateLoanRequest.errors.receiving_date[0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="return_date">تاريخ ارجاع القرض</label>
+            <input class="form-control" date-picker ng-class="(updateLoanRequest.errors.return_date != null) ? 'is-invalid' : ''" id="return_date" ng-model="loanRequest.return_date" ng-change="updateLoanRequest.errors.return_date = null" placeholder="تاريخ استرجاع القرض .." required>
+            <div ng-show="updateLoanRequest.errors.return_date != null" class="invalid-feedback">{{ updateLoanRequest.errors.return_date[0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="status">حالة القرض</label>
+            <select class="form-control" ng-class="(updateLoanRequest.errors.status != null) ? 'is-invalid' : ''" id="status" ng-model="loanRequest.status" ng-change="updateLoanRequest.errors.status = null">
+                <option value="pending" selected="selected">قيد الإنتظار</option>
+                <option value="under_review" >قيد المراجعة</option>
+                <option value="accepted">مقبول</option>
+            </select>
+            <div ng-show="updateLoanRequest.errors.status != null" class="invalid-feedback">{{ updateLoanRequest.errors.status[0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="details">سبب القرض</label>
+            <textarea rows="5" cols="5" class="form-control" ng-class="(createLoanRequest.errors.details != null) ? 'is-invalid' : ''" id="details" ng-model="loanRequest.details" ng-change="createLoanRequest.errors.details = null" placeholder="سبب القرض .." required></textarea>
+            <div ng-show="createLoanRequest.errors.details != null" class="invalid-feedback">{{ createLoanRequest.errors.details[0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="loanRequestForm" icon="fe fe-plus">تعديل</submit-button>
+    </div>
+</form>
