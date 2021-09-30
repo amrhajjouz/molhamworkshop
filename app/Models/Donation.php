@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Traits\HasAppendablePagination;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,6 +11,7 @@ class Donation extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use HasAppendablePagination;
 
     protected $fillable = ["reference", "method", "payment_id", "donor_id", "country_code", "locale", "amount", "currency", "received_at", "fee",  "section_id", "targetable_id", "program_id", "purpose_id", "usd_amount", "deduction_ratio_id"];
 
@@ -33,5 +35,15 @@ class Donation extends Model
     public function country()
     {
         return $this->belongsTo(Country::class, "country_code", "code");
+    }
+
+    public function getDonorNameAttribute()
+    {
+        return ["name"=>$this->donor->name,"email"=>$this->donor->email];
+    }
+
+    public function getCountryNameAttribute()
+    {
+        return $this->country->name;
     }
 }

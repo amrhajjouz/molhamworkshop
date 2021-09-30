@@ -11,6 +11,7 @@ use App\Http\Controllers\Dashboard\PlaceController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\PurposeController;
 use App\Http\Controllers\Dashboard\UserController;
+use App\Http\Controllers\Dashboard\DonationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -87,6 +88,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/purposes/search', [PurposeController::class, 'search']);
 
     //payments
+    Route::get('/donations', [DonationController::class, 'list']);
+    Route::get('/payments', [PaymentController::class, 'list']);
     Route::post('/payments', [PaymentController::class, 'create']);
     Route::get('/payments/accounts', [PaymentController::class, 'searchPaymentAccount']);
 

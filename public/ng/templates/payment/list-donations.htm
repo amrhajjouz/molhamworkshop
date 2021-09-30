@@ -1,0 +1,37 @@
+<page-header title="قائمة  التبرعات" pretitle="التبرعات ">
+</page-header>
+<datatable  datalist="donations">
+    <table class="table table-sm card-table">
+        <thead>
+        <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">المبلغ</th>
+            <th class="text-center">رسوم الدفع</th>
+            <th class="text-center">العملة</th>
+            <th class="text-center">طريقة الدفع</th>
+            <th class="text-center">تاريخ الاستقبال</th>
+            <th class="text-center">تاريخ الاضافة</th>
+            <th class="text-center">المتبرع</th>
+            <th class="text-center">البلد</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-show="donations.length == 0">
+            <td colspan="10" class="text-center">
+                <div class="pt-3 pb-2 h4" ng-show="donations.length == 0">لا يوجد أية عناصر في هذه القائمة</div>
+            </td>
+        </tr>
+        <tr ng-repeat="u in donations.data" >
+            <td class="align-middle text-center" >{{ u.id }}</td>
+            <td class="align-middle text-center">{{ u.amount }}</td>
+            <td class="align-middle text-center">{{ u.fee }}</td>
+            <td class="align-middle text-center">{{ u.currency }}</td>
+            <td class="align-middle text-center">{{ u.method }}</td>
+            <td class="align-middle text-center datatable-date">{{ u.received_at }}</td>
+            <td class="align-middle text-center datatable-date">{{ u.created_at }}</td>
+            <td class="align-middle text-center">{{ u.donor_name.name }}<br>{{ u.donor_name.email }}</td>
+            <td class="align-middle text-center">{{ u.country_name.ar }}</td>
+        </tr>
+        </tbody>
+    </table>
+</datatable>

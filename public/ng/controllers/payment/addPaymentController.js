@@ -169,11 +169,6 @@ function addPaymentController($scope, $apiRequest, $page, $init) {
         url: 'payments',
         data: $scope.payment,
     }, function (response, data) {
-        alert("done")
-        //    init($scope); //reset everything
+         $page.navigate('payments');
     });
-
-    $scope.navigateToPaymentList = function () {
-        $page.navigate('payments');
-    }
 }

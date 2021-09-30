@@ -31,9 +31,23 @@ class PurposesSeeder extends Seeder
     {
        $types = ["تبرع زكاة","دعم اداري","الحالة","الحملة","الكفالة","المناسبة"];
 
+        for ($i = 0; $i <= 1; $i++) {
+            $account = Account::inRandomOrder()->first();
+
+            DB::table('purposes')->insert([
+                'name' => $types[$i],
+                'title' => $types[$i],
+                'account_id' => $account->id,
+                'program_id' => $account->id,
+                'section_id' => $account->id,
+                'targetable_type' => $this->faker->name,
+                'targetable_id' => $account->id,
+            ]);
+        }
+
         for ($i = 1; $i <= 50; $i++) {
             $account = Account::inRandomOrder()->first();
-            $rand = rand(0,5);
+            $rand = rand(2,5);
             $name =rand(0,10000)." {$types[$rand]}";
             DB::table('purposes')->insert([
                 'name' => $name,

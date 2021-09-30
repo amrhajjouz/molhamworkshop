@@ -15,7 +15,7 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->string('reference'); //todo: check with amr the name here again , we should distinguish between the auto generated and the manual payment
+            $table->string('reference');
             $table->enum('status',["processing","paid","expired","failed"]);
             $table->enum('method', ["cash", "transfer", "card(stripe)", "paypal(paypal)", "ideal", "giropay", "sofort"]);
             $table->decimal('amount', $precision = 12, $scale = 2);

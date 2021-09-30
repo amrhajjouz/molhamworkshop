@@ -51,13 +51,15 @@ class PaymentController extends Controller
         }
     }
 
-    public function list(ListPaymentRequest $request)
+
+    public function list()
     {
         try {
-            $payments = Payment::orderBy('id', 'desc')->paginate(5);
-
-            return response()->json($payments);
-
+            return Payment::orderBy('id', 'desc')
+                ->with("donor:id,name,email")
+                ->select(["id", "amount", "currency", "status", "donor_id", "received_at", "created_at", "notes", "fee"])
+                ->PaginateWithAppends(["donor_name"])
+                ->hidden(["donor", "donor_id"]);
         } catch (Exception $e) {
             return response(['error' => $e->getMessage()], 500);
         }
