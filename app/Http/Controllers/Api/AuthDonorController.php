@@ -164,6 +164,6 @@ class AuthDonorController extends Controller
 
     public function listFeedbacks(Request $request)
     {
-        return response()->json(authDonor()->feedbacks()->get(['content', 'title', 'reviewed', 'created_at']));
+        return response()->json(authDonor()->feedbacks()->get(['id', 'content', 'title', 'reviewed', 'created_at']));
     }
 }
