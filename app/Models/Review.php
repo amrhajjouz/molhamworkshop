@@ -23,4 +23,8 @@ class Review extends Model
         }
         return parent::save($options);
     }
+    
+    public function getCreatedAtAttribute ($datetime) {
+        return date('Y-m-d H:i:s', strtotime($this->attributes['created_at']));
+    } 
 }
