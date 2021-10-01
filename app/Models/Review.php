@@ -27,4 +27,8 @@ class Review extends Model
     public function getCreatedAtAttribute ($datetime) {
         return date('Y-m-d H:i:s', strtotime($this->attributes['created_at']));
     } 
+    
+    public function getUpdatedAtAttribute ($datetime) {
+        return date('Y-m-d H:i:s', strtotime($this->attributes['updated_at']));
+    } 
 }
