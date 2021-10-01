@@ -16,4 +16,10 @@ use App\Http\Controllers\SpaController;
 
 require __DIR__.'/auth.php';
 
+Route::get('/test', function () {
+    print url('login') . '<br>';
+    print route('login');
+    return ;
+});
+
 Route::middleware('auth')->get('{url?}', [SpaController::class, 'index'])->where('url', '.*')->name('home');
