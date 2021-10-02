@@ -41,7 +41,7 @@
                 </p>
                 
                 <!-- Form -->
-                <form method="post" action="{{ str_replace('http', 'https', route('login')) }}">
+                <form method="post" action="{{ route('login') }}">
         
                     {{ csrf_field() }}
                     
