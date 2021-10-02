@@ -141,7 +141,7 @@
     <script>
         var appUrl = "{{ $app_url }}";
         var apiUrl = "{{ $api_url }}";
-        var appDebug = {{ env('APP_DEBUG') ?? true }};
+        var appDebug = {{ env('APP_DEBUG') ?? 'true' }};
         var appTitle = $('title').text();
         var auth = {id: "{{ auth()->user()->id }}", name: "{{ auth()->user()->name }}", email: "{{ auth()->user()->email }}"};
         
