@@ -12,7 +12,7 @@ class Payment extends BaseModel
     use SoftDeletes;
     use HasAppendablePagination;
 
-    protected $fillable = ["reference", "donor_id", "notes", "received_at", "currency", "status", "fee", "fx_rate", "method", "amount"];
+    protected $fillable = ["reference", "donor_id", "notes", "received_at", "currency", "status", "fee", "fx_rate", "method", "amount", "targetable_type"];
     protected $casts = [
         'created_at' => 'datetime:Y-m-d h:i',
         'received_at' => 'datetime:Y-m-d h:i',

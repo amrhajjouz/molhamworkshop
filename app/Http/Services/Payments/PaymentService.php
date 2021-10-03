@@ -2,7 +2,9 @@
 
 namespace App\Http\Services\Payments;
 
+use App\Http\Services\Transactions\TransactionService;
 use App\Models\Account;
+use App\Models\Journals;
 use App\Models\Payment;
 use App\Models\Purpose;
 use Exception;
@@ -11,6 +13,17 @@ use Illuminate\Support\Str;
 
 class PaymentService
 {
+    /**
+     * @var TransactionService
+     */
+    private $transactionService;
+
+    public function __construct(TransactionService $transactionService)
+    {
+
+        $this->transactionService = $transactionService;
+    }
+
     /**
      * @throws Exception
      */
@@ -39,7 +52,7 @@ class PaymentService
 
             DB::beginTransaction();
 
-           $paymentResult = Payment::create($payment);
+            $paymentResult = Payment::create($payment);
 
             foreach ($purposes as $item) {
                 $purpose = Purpose::whereId($item["purpose_id"])->firstOrFail();
@@ -51,6 +64,7 @@ class PaymentService
                     "amount" => $item["amount"],
                     "received_at" => $paymentResult->received_at,
                     "targetable_id" => $purpose->targetable_id,
+                    "targetable_type" => null, //todo
                     "donor_id" => $paymentResult->donor_id,
                     "currency" => $paymentResult->currency,
                     "section_id" => $purpose->section_id,
@@ -62,7 +76,16 @@ class PaymentService
                 ));
             }
 
+            $journal = Journals::create([
+                "type" => "payment",
+                "note" => $paymentResult->notes,
+                "journalable_id" => $purpose->targetable_id,
+            ]);
+
             DB::commit();
+
+            $this->transactionService->Process($journal->id);
+
         } catch (Exception  $e) {
             DB::rollBack();
             throw new Exception($e->getMessage());

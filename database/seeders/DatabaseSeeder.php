@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
             DeductionRatioSeeder::class,
             PlaceSeeder::class,
             PurposesSeeder::class,
+            ProgramSeeder::class,
+            SectionSeeder::class,
         ]);
     }
 }

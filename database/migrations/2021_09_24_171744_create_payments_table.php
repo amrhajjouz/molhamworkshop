@@ -25,11 +25,15 @@ class CreatePaymentsTable extends Migration
             $table->text("notes")->nullable();
             $table->foreign('donor_id')->references('id')->on('donors');
             $table->datetime('received_at');
+            $table->datetime('handled_at')->nullable();
+            $table->enum('locale', ["ar", "en", "fr", "de", "tr", "es"]);
             $table->softDeletes();
             $table->timestamps();
+            $table->unsignedBigInteger('account_id');
             $table->unsignedBigInteger('donor_id');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
+            $table->foreign('account_id')->references('id')->on('accounts');
             $table->foreign('created_by')->references('id')->on('users');
             $table->foreign('updated_by')->references('id')->on('users');
         });
