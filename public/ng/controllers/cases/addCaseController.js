@@ -7,7 +7,7 @@ function addCaseController($scope, $location, $apiRequest, $page, $init) {
             data: $scope.case,
         },
         function (response, data) {
-            $page.navigate('cases.overview', { id: data.id });
+            $page.navigate('programs.medical.cases.overview', { id: data.id });
         }
     );
 }

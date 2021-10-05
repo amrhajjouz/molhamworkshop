@@ -5,7 +5,7 @@ namespace App\Http\Requests\Program\Medical\Cases;
 use App\Models\Cases;
 use Illuminate\Foundation\Http\FormRequest;
 
-class HideCaseRequest extends FormRequest
+class DocumentMedicalCaseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

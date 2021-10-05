@@ -43,9 +43,9 @@ class BaseTargetModel extends BaseModel
 
     public function markAsPosted()
     {
-        return $this->target->update(['posted_at' => date('Y-m-d H:i:s', time())]);
+        return $this->target->update(['published_at' => date('Y-m-d H:i:s', time())]);
     }
-
+  
     public function markAsDocumented()
     {
         return $this->target->update(['documented' => true]);
@@ -74,5 +74,10 @@ class BaseTargetModel extends BaseModel
     public function markAsVisible()
     {
         return $this->target->update(['is_hidden' => false]);
+    }
+  
+    public function markAsPublishable()
+    {
+        return $this->target->update(['publishable' => true]);
     }
 }

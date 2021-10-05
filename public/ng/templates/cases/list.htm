@@ -1,5 +1,5 @@
 <page-header title="قائمة الحالات" pretitle="الحالات">
-    <a href="{{ $r('cases.add') }}" class="btn btn-primary"> <i class="fe fe-plus"></i>&nbsp; حالة جديدة </a>
+    <a href="{{ $r('programs.medical.cases.add') }}" class="btn btn-primary"> <i class="fe fe-plus"></i>&nbsp; حالة جديدة </a>
 </page-header>
 
 <datatable datalist="cases">
@@ -27,15 +27,17 @@
                 </td>
                 <td class="align-middle text-center h2">
                     <dropdown>
-                        <dropdown-item href="{{ $r('cases.overview', {id: case.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
-                        <dropdown-item href="{{ $r('cases.edit', {id: case.id}) }}"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
+                        <dropdown-item href="{{ $r('programs.medical.cases.overview', {id: case.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
+                        <dropdown-item href="{{ $r('programs.medical.cases.edit', {id: case.id}) }}"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
+                        <dropdown-item href="{{ $r('programs.medical.cases.contents', {id: case.id}) }}"><i class="fe fe-align-justify"></i> المحتوى</dropdown-item>
                         <dropdown-item href="#" ng-show="!case.is_hidden" ng-click="hideCaseRequest(case.id)"><i class="fe fe-eye-off"></i> إخفاء</dropdown-item>
                         <dropdown-item href="#" ng-show="case.is_hidden" ng-click="unhideCaseRequest(case.id)"><i class="fe fe-rotate-cw"></i> إظهار</dropdown-item>
                         <dropdown-item href="#" ng-show="!case.archived" ng-click="archiveCaseRequest(case.id)" ng-click=""><i class="fe fe-archive"></i> أرشفة</dropdown-item>
                         <dropdown-item href="#" ng-show="case.archived" ng-click="unarchiveCaseRequest(case.id)" ng-click=""><i class="fe fe-arrow-left"></i> إلغاء الأرشفة</dropdown-item>
                         <dropdown-item href="#" ng-show="!case.documented" ng-click="documentCaseRequest(case.id)" ng-click=""><i class="fe fe-check"></i> توثيق</dropdown-item>
                         <dropdown-item href="#" ng-show="case.documented" ng-click="undocumentCaseRequest(case.id)" ng-click=""><i class="fe fe-shield-off"></i> إلغاء التوثيق</dropdown-item>
-                        <dropdown-item href="#" ng-show="!case.posted_at" ng-click="postCaseRequest(case.id)" ng-click=""><i class="fe fe-share"></i> نشر</dropdown-item>
+                        <dropdown-item href="#" ng-show="!case.published_at" ng-click="postCaseRequest(case.id)" ng-click=""><i class="fe fe-share"></i> نشر</dropdown-item>
+                        <dropdown-item href="#" ng-show="!case.publishable" ng-click="publishableCaseRequest(case.id)" ng-click=""><i class="fe fe-share"></i> امكانية النشر</dropdown-item>
                     </dropdown>
                 </td>
             </tr>

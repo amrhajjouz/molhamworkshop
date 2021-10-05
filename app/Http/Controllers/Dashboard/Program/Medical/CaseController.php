@@ -5,8 +5,20 @@ namespace App\Http\Controllers\Dashboard\Program\Medical;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\{Cases, Target};
-use App\Http\Requests\Program\Medical\Cases\{CreateCaseRequest, UpdateCaseRequest, ArchiveCaseRequest,  DocumentCaseRequest, HideCaseRequest, PostCaseRequest, UnarchiveCaseRequest, UndocumentCaseRequest, UnhideCaseRequest};
-use App\Http\Resources\Target\Cases\Dashboard\CasesResource;
+use App\Http\Requests\Program\Medical\Cases\{
+    CreateMedicalCaseRequest,
+    UpdateMedicalCaseRequest,
+    ArchiveMedicalCaseRequest,
+    DocumentMedicalCaseRequest,
+    HideMedicalCaseRequest,
+    PostMedicalCaseRequest,
+    UnarchiveMedicalCaseRequest,
+    UndocumentMedicalCaseRequest,
+    UnhideMedicalCaseRequest,
+    UpdateMedicalCaseContentsRequest,
+    PublishableMedicalCaseRequest ,
+};
+use App\Http\Resources\Dashboard\Program\Medical\Cases\{CasesListResource, SingleCaseResource};
 
 class CaseController extends Controller
 {
@@ -18,24 +30,22 @@ class CaseController extends Controller
     public function list(Request $request)
     {
         try {
-            return response()->json(Cases::join(Target::getTableName() . " AS T", 'programs_cases.target_id', "=", 'T.id')
-                ->select('programs_cases.*', "T.required", "T.beneficiaries_count", "T.is_hidden", "T.archived", "T.posted_at", "T.documented")
-                ->orderBy('id', 'desc')->where(function ($q) use ($request) {
-                    if ($request->has('q')) {
-                        $q->where('beneficiary_name', 'like', '%' . $request->q . '%');
-                        $q->orWhere('serial_number', 'like', '%' . $request->q . '%');
-                    }
-                })->paginate(10)->withQueryString());
+            return response()->json(new CasesListResource(Cases::with('target')->orderBy('id', 'desc')->where(function ($q) use ($request) {
+                if ($request->has('q')) {
+                    $q->where('beneficiary_name', 'like', '%' . $request->q . '%');
+                    $q->orWhere('serial_number', 'like', '%' . $request->q . '%');
+                }
+            })->paginate(10)->withQueryString()));
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
 
-    public function create(CreateCaseRequest $request)
+    public function create(CreateMedicalCaseRequest $request)
     {
         try {
             $case = Cases::create($request->validated());
-            return response()->json(new CasesResource($case));
+            return response()->json(new SingleCaseResource($case));
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
@@ -44,18 +54,29 @@ class CaseController extends Controller
     public function retrieve($id)
     {
         try {
-            return response()->json(new CasesResource(Cases::findOrFail($id)));
+            return response()->json(new SingleCaseResource(Cases::findOrFail($id)));
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
 
-    public function update(UpdateCaseRequest $request)
+    public function update(UpdateMedicalCaseRequest $request)
     {
         try {
             $case = Cases::findOrFail($request->id);
             $case->update($request->validated());
-            return response()->json(new CasesResource($case));
+            return response()->json(new SingleCaseResource($case));
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+    public function updateCaseContents(UpdateMedicalCaseContentsRequest $request, $id)
+    {
+        try {
+            $case = Cases::findOrFail($id);
+            $case->target->update($request->validated());
+            return response()->json(new SingleCaseResource($case));
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
@@ -64,7 +85,7 @@ class CaseController extends Controller
 
     ////////////////////// Case Target's Actions /////////////////////
 
-    public function markAsPosted(PostCaseRequest $request, $id)
+    public function markAsPosted(PostMedicalCaseRequest $request, $id)
     {
         try {
             return response()->json(Cases::findOrFail($id)->markAsPosted());
@@ -73,7 +94,7 @@ class CaseController extends Controller
         }
     }
 
-    public function markAsDocumented(DocumentCaseRequest $request, $id)
+    public function markAsDocumented(DocumentMedicalCaseRequest $request, $id)
     {
         try {
             return response()->json(Cases::findOrFail($id)->markAsDocumented());
@@ -82,7 +103,7 @@ class CaseController extends Controller
         }
     }
 
-    public function markAsUndocumented(UndocumentCaseRequest $request, $id)
+    public function markAsUndocumented(UndocumentMedicalCaseRequest $request, $id)
     {
         try {
             return response()->json(Cases::findOrFail($id)->markAsUndocumented());
@@ -91,7 +112,7 @@ class CaseController extends Controller
         }
     }
 
-    public function markAsArchived(ArchiveCaseRequest $request, $id)
+    public function markAsArchived(ArchiveMedicalCaseRequest $request, $id)
     {
         try {
             return response()->json(Cases::findOrFail($id)->markAsArchived());
@@ -100,7 +121,7 @@ class CaseController extends Controller
         }
     }
 
-    public function markAsUnarchived(UnarchiveCaseRequest $request, $id)
+    public function markAsUnarchived(UnarchiveMedicalCaseRequest $request, $id)
     {
         try {
             return response()->json(Cases::findOrFail($id)->markAsUnarchived());
@@ -109,7 +130,7 @@ class CaseController extends Controller
         }
     }
 
-    public function markAsHidden(HideCaseRequest $request, $id)
+    public function markAsHidden(HideMedicalCaseRequest $request, $id)
     {
         try {
             return response()->json(Cases::findOrFail($id)->markAsHidden());
@@ -118,10 +139,19 @@ class CaseController extends Controller
         }
     }
 
-    public function markAsVisible(UnhideCaseRequest $request, $id)
+    public function markAsVisible(UnhideMedicalCaseRequest $request, $id)
     {
         try {
             return response()->json(Cases::findOrFail($id)->markAsVisible());
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+   
+    public function markAsPublishable(PublishableMedicalCaseRequest $request, $id)
+    {
+        try {
+            return response()->json(Cases::findOrFail($id)->markAsPublishable());
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }

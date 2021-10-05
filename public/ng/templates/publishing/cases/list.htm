@@ -1,0 +1,42 @@
+<page-header title="قائمة الحالات" pretitle="الحالات">
+</page-header>
+
+<datatable datalist="cases">
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">العنوان </th>
+                <th class="text-center">en</th>
+                <th class="text-center">fr</th>
+                <th class="text-center">de</th>
+                <th class="text-center">tr</th>
+                <th class="text-center">es</th>
+                <th class="text-center">خيارات</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="case in cases.data">
+                <td class="align-middle text-center">{{ case.id }}</td>
+                <td class="align-middle text-center" ng-if="case.title.ar.value">{{ case.title.ar.value }}</td>
+                <td class="align-middle text-center" ng-if="!case.title.ar.value">
+                    <span class="badge badge-danger">
+                        لايوجد عنوان بعد
+                    </span>
+                </td>
+                <td class="align-middle text-center">{{ case.available_locales.en ? 'نعم' : 'لا'}}</td>
+                <td class="align-middle text-center">{{ case.available_locales.fr ? 'نعم' : 'لا'}}</td>
+                <td class="align-middle text-center">{{ case.available_locales.de ? 'نعم' : 'لا'}}</td>
+                <td class="align-middle text-center">{{ case.available_locales.tr ? 'نعم' : 'لا'}}</td>
+                <td class="align-middle text-center">{{ case.available_locales.es ? 'نعم' : 'لا'}}</td>
+                <td class="align-middle text-center h2">
+                    <dropdown>
+                        <dropdown-item href="{{ $r('translation.cases.overview', {id: case.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
+                        <dropdown-item href="{{ $r('translation.cases.edit', {id: case.id}) }}"><i class="fe fe-edit-2"></i> تعديل الترجمة</dropdown-item>
+                    </dropdown>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</datatable>

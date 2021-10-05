@@ -26,11 +26,16 @@ class CreateProgramsTargets extends Migration
             $table->integer('spent')->index()->default(0);
             $table->integer('left')->index()->default(0);
             $table->integer('beneficiaries_count')->index()->default(0);
+            $table->json('title')->nullable();
+            $table->json('description')->nullable();
+            $table->json('details')->nullable();
             $table->boolean('archived')->index()->default(0);
             $table->boolean('documented')->index()->default(0);
             $table->boolean('is_hidden')->index()->default(1);
-            $table->dateTime('posted_at')->nullable();
+            $table->boolean('publishable')->index()->default(0);
+            $table->dateTime('published_at')->nullable();
             $table->dateTime('canceled_at')->nullable();
+            $table->json('available_locales');
             $table->timestamps();
         });
     }

@@ -1,101 +1,97 @@
 <ul class="navbar-nav">
-
     <li class="nav-item">
-        <a id="home-nav" class="nav-link" href="{{ $r('home') }}">
-            <i class="fe fe-home"></i> البداية
-        </a>
+        <a id="home-nav" class="nav-link" href="{{ $r('home') }}"> <i class="fe fe-home"></i> البداية </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#users-navs" role="button" aria-expanded="false">
-            <i class="fe fe-users"></i> المستخدمون
-        </a>
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#users-navs" role="button" aria-expanded="false"> <i class="fe fe-users"></i> المستخدمون </a>
         <div class="collapse" id="users-navs">
             <ul class="nav nav-sm flex-column">
                 <li class="nav-item">
-                    <a href="{{ $r('users.add') }}" class="nav-link">
-                        مستخدم جديد
-                    </a>
+                    <a href="{{ $r('users.add') }}" class="nav-link"> مستخدم جديد </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ $r('users') }}" class="nav-link">
-                        قائمة المستخدمين
-                    </a>
+                    <a href="{{ $r('users') }}" class="nav-link"> قائمة المستخدمين </a>
                 </li>
             </ul>
         </div>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#donors-navs" role="button" aria-expanded="false">
-            <i class="fe fe-book"></i> المتبرعون
-        </a>
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#donors-navs" role="button" aria-expanded="false"> <i class="fe fe-book"></i> المتبرعون </a>
         <div class="collapse" id="donors-navs">
             <ul class="nav nav-sm flex-column">
                 <li class="nav-item">
-                    <a href="{{ $r('donors.add') }}" class="nav-link">
-                        متبرع جديد
-                    </a>
+                    <a href="{{ $r('donors.add') }}" class="nav-link"> متبرع جديد </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ $r('donors') }}" class="nav-link">
-                        قائمة المتبرعين
-                    </a>
+                    <a href="{{ $r('donors') }}" class="nav-link"> قائمة المتبرعين </a>
                 </li>
             </ul>
         </div>
     </li>
-    
 
     <li class="nav-item">
-        <a
-            class="nav-link"
-            href="javascript:;"
-            data-toggle="collapse"
-            data-target="#places-navs"
-            role="button"
-            aria-expanded="false"
-        >
-            <i class="fe fe-map"></i> الأماكن
-        </a>
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#places-navs" role="button" aria-expanded="false"> <i class="fe fe-map"></i> الأماكن </a>
         <div class="collapse" id="places-navs">
             <ul class="nav nav-sm flex-column">
                 <li class="nav-item">
-                    <a href="{{ $r('places.add') }}" class="nav-link">
-                        مكان جديد
-                    </a>
+                    <a href="{{ $r('places.add') }}" class="nav-link"> مكان جديد </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ $r('places') }}" class="nav-link">
-                        قائمة الأماكن
-                    </a>
+                    <a href="{{ $r('places') }}" class="nav-link"> قائمة الأماكن </a>
                 </li>
             </ul>
         </div>
     </li>
-
 </ul>
 
-<hr class="navbar-divider my-3">
+<hr class="navbar-divider my-3" />
 
 <ul class="navbar-nav">
+    <h6 class="navbar-heading">البرامج</h6>
 
-    <h6 class="navbar-heading">
-        البرامج
-    </h6>
-    
     <li class="nav-item">
-        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#medical-program-navs" role="button" aria-expanded="false">
-            <i class="fe fe-book"></i> البرنامج الطبي
-        </a>
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#medical-program-navs" role="button" aria-expanded="false"> <i class="fe fe-book"></i> البرنامج الطبي </a>
         <div class="collapse" id="medical-program-navs">
             <ul class="nav nav-sm flex-column">
                 <li class="nav-item">
-                    <a href="{{ $r('cases') }}" class="nav-link">
-                        الحالات
-                    </a>
+                    <a href="{{ $r('programs.medical.cases') }}" class="nav-link"> الحالات </a>
                 </li>
             </ul>
         </div>
     </li>
+</ul>
 
+
+<hr class="navbar-divider my-3" />
+
+<ul class="navbar-nav">
+    <h6 class="navbar-heading">الترجمة</h6>
+
+    <li class="nav-item">
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#translation-program-cases-navs" role="button" aria-expanded="false"> <i class="fe fe-globe"></i> الأقسام </a>
+        <div class="collapse" id="translation-program-cases-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('translation.cases') }}" class="nav-link"> الحالات </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+</ul>
+
+
+<hr class="navbar-divider my-3" />
+<ul class="navbar-nav">
+    <h6 class="navbar-heading">قسم النشر</h6>
+    <li class="nav-item">
+        <!-- <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#publishing-program-cases-navs" role="button" aria-expanded="false"> <i class="fe fe-share"></i> قسم النشر </a> -->
+        <!-- <div class="collapse" id="publishing-program-cases-navs"> -->
+            <!-- <ul class="nav nav-sm flex-column"> -->
+                <li class="nav-item">
+                    <a href="{{ $r('publishing.cases') }}" class="nav-link"> <i class="fe fe-share"></i> الحالات </a>
+                </li>
+            <!-- </ul> -->
+        <!-- </div> -->
+    </li>
 </ul>

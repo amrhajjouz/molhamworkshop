@@ -53,4 +53,11 @@ function listCasesController($scope, $init, $apiRequest, $page) {
                 $page.reload();
             }).send();
     };
+   
+    $scope.publishableCaseRequest = (caseId) => {
+        $apiRequest
+            .config({ method: 'POST', url: `programs/medical/cases/${caseId}/publishable`, data: { id: caseId } }, function (response, data) {
+                $page.reload();
+            }).send();
+    };
 }

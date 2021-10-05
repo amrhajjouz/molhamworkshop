@@ -26,6 +26,9 @@ class AppServiceProvider extends ServiceProvider
     {
         Relation::morphMap([
             'cases' => 'App\Models\Cases',
+            'target' => 'App\Models\Target',
+            'place' => 'App\Models\Place',
+            'donor' => 'App\Models\Donor',
         ]);
     }
 }

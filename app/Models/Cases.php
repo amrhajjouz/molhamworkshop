@@ -9,9 +9,9 @@ class Cases extends BaseTargetModel
 {
      use HasPlace;
 
+     
      protected $table = 'programs_cases';
      protected $guarded = [];
-
 
      public function country()
      {
@@ -20,7 +20,7 @@ class Cases extends BaseTargetModel
 
      public function save(array $options = [])
      {
-          $isNew = !$this->exists;
+         $isNewCase = !$this->exists;
           //extract target fields from this 
           $options['target'] = [];
           foreach (['required', 'beneficiaries_count',  'is_hidden', 'category_id'] as $field) {
@@ -29,11 +29,9 @@ class Cases extends BaseTargetModel
                     unset($this->$field);
                }
           }
-
           $placeId = $this->place_id;
           unset($this->place_id);
-
-          if ($isNew) {
+          if ($isNewCase) {
                $this->serial_number = $this->getCaseSerialNumber();
           } else {
                unset($options['target']['category']);
@@ -41,6 +39,7 @@ class Cases extends BaseTargetModel
           $case = parent::save(['target' => $options['target']]);
           $this->places()->sync([$placeId]);
           return $case;
+
      }
 
      private function getCaseSerialNumber()
@@ -50,4 +49,5 @@ class Cases extends BaseTargetModel
           $casesInThisMonth = Cases::whereYear('created_at', $year)->whereMonth('created_at', $month)->count();
           return $year . $month . ($casesInThisMonth + 1);
      }
+
 }

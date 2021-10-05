@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Target\Cases\Dashboard;
+namespace App\Http\Resources\Dashboard\Program\Medical\Cases;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CasesResource extends JsonResource
+class SingleCaseResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -31,9 +31,13 @@ class CasesResource extends JsonResource
             'beneficiaries_count' => $target->beneficiaries_count,
             'documented' => $target->documented,
             'is_hidden' => $target->is_hidden,
+            'title' => $target->title,
+            'description' => $target->description,
+            'details' => $target->details,
             'archived' => $target->archived,
             'code' => $target->code,
-            'posted_at' => $target->posted_at,
+            'published_at' => $target->published_at,
+            'publishable' => $target->publishable,
             'category' => [
                 'name' => $target->category->name,
             ],
@@ -43,6 +47,5 @@ class CasesResource extends JsonResource
             ]
         ];
 
-        return parent::toArray($request);
     }
 }

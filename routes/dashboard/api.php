@@ -65,4 +65,20 @@ Route::middleware('auth')->group(function () {
     Route::post('/programs/medical/cases/{id}/post', [CaseController::class, 'markAsPosted']);
     Route::post('/programs/medical/cases/{id}/document', [CaseController::class, 'markAsDocumented']);
     Route::post('/programs/medical/cases/{id}/undocument', [CaseController::class, 'markAsUndocumented']);
+    Route::post('/programs/medical/cases/{id}/publishable', [CaseController::class, 'markAsPublishable']);
+    Route::put('/programs/medical/cases/{id}/contents', [CaseController::class, 'updateCaseContents']);
+
+
+    Route::group(['namespace' => 'App\Http\Controllers\Dashboard',], function () {
+        //Translation -> Cases
+        Route::get('/translation/cases' , 'Translation\CaseController@list');
+        Route::get('/translation/cases/{id}' , 'Translation\CaseController@retrieve');
+        Route::put('/translation/cases' , 'Translation\CaseController@update');
+       
+        //Publishing -> Cases
+        Route::get('/publishing/cases' , 'Publishing\CaseController@list');
+        // Route::get('/translation/cases/{id}' , 'Translation\CaseController@retrieve');
+        // Route::put('/translation/cases' , 'Translation\CaseController@update');
+    });
+
 });

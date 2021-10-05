@@ -1,6 +1,7 @@
 <page-header title="الحالة  {{ $routeParams.id }}" pretitle="الحالات"></page-header>
 
 <page-nav>
-    <page-nav-item route="cases.overview" params="{id: $routeParams.id}">نظرة عامة</page-nav-item>
-    <page-nav-item route="cases.edit" params="{id: $routeParams.id}">تعديل المعلومات</page-nav-item>
+    <page-nav-item route="programs.medical.cases.overview" params="{id: $routeParams.id}">نظرة عامة</page-nav-item>
+    <page-nav-item route="programs.medical.cases.edit" params="{id: $routeParams.id}">تعديل المعلومات</page-nav-item>
+    <page-nav-item route="programs.medical.cases.contents" params="{id: $routeParams.id}">المحتوى</page-nav-item>
 </page-nav>
