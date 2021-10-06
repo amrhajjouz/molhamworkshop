@@ -39,3 +39,30 @@ function createRandomSubscriptions($donorId)
         DB::table('payment_methods')->insert(['methodable_id' => $data['methodable']->id, 'methodable_type' => $methodableType, "future_usage" => true, 'donor_id' => $donorId, "type" => $data['type']]);
     }*/
 }
+
+
+function listDummyCases($length = 20){
+    $faker = Faker\Factory::create();
+
+    $cases = [];
+    for ($i = 1; $i <= $length; $i++) {
+        $cases[] = [
+            'id' => $i,
+            'title' => (object)['ar' => (object)['value'=> $faker->word , 'auto_generated'=>$faker->boolean]],
+            'description' => (object)['ar' => (object)['value'=> $faker->text , 'auto_generated'=>$faker->boolean]],
+            'details' => (object)['ar' => (object)['value'=> '<p>'.$faker->text . "</p>" , 'auto_generated'=>$faker->boolean]],
+            'required' => (object)['usd' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000) , 'eur' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000) , 'try' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000)],
+            'received' => (object)['usd' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000) , 'eur' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000) , 'try' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000)],
+            'donation' => [],
+            'liked_by_auth' => $faker->boolean,
+            'funded_by_auth' => $faker->boolean,
+            'saved_by_auth' => $faker->boolean,
+            'likes_count' => $faker->numberBetween($min = 3, $max = 1000),
+            'urgent' => $faker->boolean,
+            'published_at' => date('Y-m-d H:i:s' , $faker->unixTime($max = 'now')),
+            'preview_images' => null,
+            'funded' => $faker->boolean,
+        ];
+    }
+    return $cases ;
+}

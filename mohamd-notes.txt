@@ -1,0 +1,36 @@
+
+قسم الترجمة ---> sinenav
+
+    - Route : translation
+    - sections : 
+        غايات  التبرع -> الحالات
+        translation/cases
+
+            listing : id , target.title.ar , target.title.en , english , fr , gr ,tr , esp , options
+                options : view , update translation
+
+                overview: translation/cases/{id}/overview
+                
+                edit: translation/cases/{id}/edit
+                    title , description , details all in en
+ 
+
+
+
+ add two columns to contents : 
+ title :{
+     value:"" , 
+     auto_generated : boolean , 
+     spelling_checked: boolean
+ }
+
+
+ add postable to target => fegault false;
+
+
+
+ icon publishable in list medical cases
+ medical => cases => actions => hide markAsPublished
+ publishing => cases => actions => markAsPublishedAt => must be all contents fields in arabic
+ publishing => cases => actions =>تعيين كتم تدقيقها لغويا + نشر 
+ translation => cases =>list  => where ready_to_publish && published_at != null

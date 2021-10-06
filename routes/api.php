@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\{DonorController , AuthDonorController , FeedbackController, PaymentMethodController, SubscriptionController , ReviewController , SavedItemController};
 use App\Http\Controllers\Api\PaymentProvider\Stripe\{SetupIntentController};
+use App\Http\Controllers\Api\Targetable\CaseController;
 
 //use Stripe\StripeClient;
 
@@ -104,4 +105,7 @@ Route::group(['middleware' => 'auth_donor'], function () {
     
     // Stripe Routes
     Route::post('/payment_providers/stripe/setup_intents' , [SetupIntentController::class, 'create'])->name('api.payment_providers.stripe.setup_intent.create'); 
+
+    //Cases
+    Route::get('/cases' , [CaseController::class, 'list'])->name('api.cases.list'); 
 });
