@@ -30,4 +30,7 @@ return [
     'places.edit' => ['places/:id/edit', 'places/editPlaceController', 'places.single.edit'],
     'places' => ['places', 'places/listPlacesController', 'places.list'],
 
+    /////////////////////// Tree /////////////////////////
+    'tree' => ['/tree', 'treeController', 'tree'],
+
 ];

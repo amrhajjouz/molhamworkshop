@@ -1,0 +1,25 @@
+//
+// caret.scss
+// Extended from Quill Editor
+//
+
+//
+// RTL Overrides =====================================
+//
+
+.ql-editor {
+  text-align: right;
+}
+
+// Toolbar
+.ql-formats {
+  &:first-child {
+    padding-left: 0.5rem;
+    padding-right: 0;
+  }
+
+  &:last-child {
+    padding-right: 0.5rem;
+    padding-left: 0;
+  }
+}

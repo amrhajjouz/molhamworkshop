@@ -1,0 +1,16 @@
+//
+// floating-labels.scss
+// Extended from Bootstrap
+//
+
+//
+// RTL Overrides =====================================
+//
+
+.form-floating {
+  > label {
+    left: auto;
+    right: 0;
+    transform-origin: right 0;
+  }
+}

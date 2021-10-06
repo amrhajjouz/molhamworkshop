@@ -8,21 +8,21 @@
     
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="name">الاسم</label>
+            <label class="form-label" for="name">الاسم</label>
             <input type="text" class="form-control" id="name" ng-model="profile.name" ng-init="profile.name = auth.name" ng-change="updateProfile.error = ''" placeholder="الاسم الخاص بالحساب ..">
         </div>
     </div>
     
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="email">البريد الالكتروني</label>
+            <label class="form-label" for="email">البريد الالكتروني</label>
             <input type="email" class="form-control" id="email" ng-model="profile.email" ng-init="profile.email = auth.email" ng-change="updateProfile.error = ''" placeholder="البريد الالكتروني الخاص بالحساب .." autofocus="off" autocomplete="off">
         </div>
     </div>
     
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="locale">لغة العرض</label>
+            <label class="form-label" for="locale">لغة العرض</label>
             <select id="locale" class="custom-select" name="locale" ng-model="profile.locale" ng-init="profile.locale = auth.locale" ng-change="updateProfile.errors.locale = null">
                 <option value="ar">العربية</option>
                 <option value="en">الإنكليزية</option>
@@ -33,7 +33,7 @@
     
     <div class="col-12">
         <div class="form-group">
-            <label for="bio">السيرة الذاتية</label>
+            <label class="form-label" for="bio">السيرة الذاتية</label>
             <tiny-editor id="bio" dir="rtl" model="profile.bio" placeholder="نبذة عن سيرتك الذاتية ..">
                 {{ auth.bio }}
             </tiny-editor>

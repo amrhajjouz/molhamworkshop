@@ -24,10 +24,10 @@
 <div class="mt-auto"></div>
 
 <!-- User (md) -->
-<div class="navbar-user d-none d-md-flex" id="sidenavUser">
+<div class="navbar-user d-none d-md-flex" id="sidebarUser">
 
     <!-- Dropup -->
-    <div class="dropup text-center">
+    <div class="text-center">
 
         <!-- Toggle -->
         <a href="{{ $r('profile.info') }}">

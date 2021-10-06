@@ -1,0 +1,28 @@
+// 
+// list-group.scss
+// Extended from Bootstrap
+//
+
+// 
+// RTL Bootstrap Overrides =====================================
+//
+
+.list-group {
+  padding-right: 0; // reset padding because ul and ol
+  padding-left: 0; // reset padding because ul and ol
+}
+
+
+//
+// Theme ===================================
+//
+
+
+// Activity
+
+.list-group-activity .list-group-item:not(:last-child)::before {
+  left: auto;
+  right: $avatar-size-sm / 2;
+  border-left: unset;
+  border-right: $border-width solid $border-color;
+}

@@ -4,7 +4,7 @@
     
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="name">الاسم</label>
+            <label class="form-label" for="name">الاسم</label>
             <input type="text" class="form-control" ng-class="(createUser.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="user.name" ng-change="createUser.errors.name = null" placeholder="الاسم .." required>
             <div ng-show="createUser.errors.name != null" class="invalid-feedback">{{ createUser.errors.name[0] }}</div>
         </div>
@@ -12,7 +12,7 @@
     
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="email">البريد الالكتروني</label>
+            <label class="form-label" for="email">البريد الالكتروني</label>
             <input type="email" class="form-control" ng-class="(createUser.errors.email != null) ? 'is-invalid' : ''" id="email" ng-model="user.email" ng-change="createUser.errors.email = null" placeholder="البريد الالكتروني .." autofocus="off" autocomplete="off" required>
             <div ng-show="createUser.errors.email != null" class="invalid-feedback">{{ createUser.errors.email[0] }}</div>
         </div>
@@ -20,7 +20,7 @@
     
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="password">كلمة المرور</label>
+            <label class="form-label" for="password">كلمة المرور</label>
             <input type="password" class="form-control" ng-class="(createUser.errors.password != null) ? 'is-invalid' : ''" id="password" ng-model="user.password" ng-change="createUser.errors.password = null" placeholder="كلمة المرور .." autofocus="off" autocomplete="off" required>
             <div ng-show="createUser.errors.password != null" class="invalid-feedback">{{ createUser.errors.email[0] }}</div>
         </div>

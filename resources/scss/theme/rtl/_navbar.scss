@@ -1,0 +1,131 @@
+//
+// navbar.scss
+// Extended from Bootstrap
+//
+
+
+//
+// RTL Bootstrap Overrides =======================
+//
+
+
+// Navbar nav
+//
+// Custom navbar navigation (doesn't require `.nav`, but does make use of `.nav-link`).
+
+.navbar-nav {
+  padding-left: unset;
+  padding-right: 0;
+}
+
+// Navbar navigaton
+
+.navbar-nav .nav-link {
+  &.active {
+    &:before {
+      left: auto;
+      right: 0;
+      border-left: unset;
+      border-right: 2px solid $primary;
+    }
+  }
+}
+
+// Navbar dropdowns
+
+.navbar-nav .dropdown-menu .dropdown-menu {
+  margin-left: unset;
+  margin-right: $dropdown-item-padding-x / 2;
+}
+
+//
+// Theme ===================================
+//
+
+// Vertical
+//
+// Creates a vertically aligned version of the navbar
+
+.navbar-vertical {
+  .navbar-nav .nav-link[data-bs-toggle="collapse"] {
+    &:after {
+      margin-left: unset;
+      margin-right: auto;
+    }
+  }
+
+  .navbar-nav .nav .nav-link {
+    padding-left: $navbar-vertical-padding-x;
+    padding-right: $navbar-padding-x + $navbar-icon-min-width;
+  }
+
+  .navbar-nav .nav .nav .nav-link {
+    padding-left: $navbar-vertical-padding-x;
+    padding-right: $navbar-padding-x * 1.5 + $navbar-icon-min-width;
+  }
+
+  .navbar-nav .nav .nav .nav .nav-link {
+    padding-left: $navbar-vertical-padding-x;
+    padding-right: $navbar-padding-x * 2 + $navbar-icon-min-width;
+  }
+
+  // Expanded
+  // 
+  // Expanded navbar specific styles
+
+  &.navbar-expand {
+
+    @each $breakpoint, $value in $grid-breakpoints {
+
+      &-#{$breakpoint} {
+
+        @include media-breakpoint-up(#{$breakpoint}) {
+
+          &.fixed-start {
+            left: auto;
+            right: 0;
+            border-width: 0 0 0 1px;
+          }
+
+          &.fixed-end {
+            right: auto;
+            left: 0;
+            border-width: 0 1px 0 0;
+          }
+
+          .navbar-nav {
+            flex-direction: column;
+            margin-left: -$navbar-vertical-padding-x;
+            margin-right: -$navbar-vertical-padding-x;
+          }
+
+          .navbar-nav .nav-link {
+            &.active {
+              &:before {
+                left: auto;
+                right: 0;
+                border-left: 0;
+                border-right: 2px solid $primary;
+              }
+            }
+          }
+
+          .navbar-nav .nav .nav-link {
+            padding-left: $navbar-vertical-padding-x;
+            padding-right: $navbar-vertical-padding-x + $navbar-icon-min-width;
+          }
+
+          .navbar-nav .nav .nav .nav-link {
+            padding-left: $navbar-vertical-padding-x;
+            padding-right: $navbar-vertical-padding-x * 1.5 + $navbar-icon-min-width;
+          }
+
+          .navbar-nav .nav .nav .nav .nav-link {
+            padding-left: $navbar-vertical-padding-x;
+            padding-right: $navbar-vertical-padding-x * 2 + $navbar-icon-min-width;
+          }
+        }
+      }
+    }
+  }
+}

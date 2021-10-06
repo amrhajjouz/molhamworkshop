@@ -7,7 +7,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#users-navs" role="button" aria-expanded="false">
+        <a class="nav-link" href="javascript:;" data-bs-toggle="collapse" data-bs-target="#users-navs" role="button" aria-expanded="false">
             <i class="fe fe-users"></i> المستخدمون
         </a>
         <div class="collapse" id="users-navs">
@@ -26,7 +26,7 @@
         </div>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#donors-navs" role="button" aria-expanded="false">
+        <a class="nav-link" href="javascript:;" data-bs-toggle="collapse" data-bs-target="#donors-navs" role="button" aria-expanded="false">
             <i class="fe fe-book"></i> المتبرعون
         </a>
         <div class="collapse" id="donors-navs">
@@ -49,8 +49,8 @@
         <a
             class="nav-link"
             href="javascript:;"
-            data-toggle="collapse"
-            data-target="#places-navs"
+            data-bs-toggle="collapse"
+            data-bs-target="#places-navs"
             role="button"
             aria-expanded="false"
         >
@@ -70,5 +70,17 @@
                 </li>
             </ul>
         </div>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ $r('tree') }}">
+            <i class="fe fe-list"></i> شجرة الأعضاء
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a id="modeBtn" class="nav-link" href="javascript:;">
+            <i class="fe fe-moon"></i> الوضع الليلي
+        </a>
     </li>
 </ul>

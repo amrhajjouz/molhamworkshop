@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+const mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -11,8 +11,14 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js').postCss('resources/css/app.css', 'public/css', [
-    require('postcss-import'),
-    require('tailwindcss'),
-    require('autoprefixer'),
-]);
+mix.sass("resources/scss/libs.scss", "public/css")
+.sass("resources/scss/theme.scss", "public/css")
+.sass("resources/scss/theme-dark.scss", "public/css")
+.sass("resources/scss/theme-rtl.scss", "public/css")
+.sass("resources/scss/theme-rtl-dark.scss", "public/css").sourceMaps();
+
+mix.js("resources/js/theme.js", "public/js").sourceMaps();
+
+mix.copy("resources/img", "public/img");
+
+mix.copy("resources/fonts", "public/fonts");

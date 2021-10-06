@@ -1,0 +1,94 @@
+//
+// RTL avatar.scss
+// Dashkit component
+//
+
+
+.avatar {
+
+  // Loads mask images so they don't lag on hover
+
+  &:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    background-image: url(#{$path-to-img}/masks/avatar-status-rtl.svg),
+    url(#{$path-to-img}/masks/avatar-group-rtl.svg),
+    url(#{$path-to-img}/masks/avatar-group-hover-rtl.svg),
+    url(#{$path-to-img}/masks/avatar-group-hover-last-rtl.svg);
+  }
+}
+
+// Status
+
+.avatar-online,
+.avatar-offline {
+
+  &::before {
+    right: auto;
+    left: 5%;
+  }
+
+  .avatar-img {
+    mask-image: url(#{$path-to-img}/masks/avatar-status-rtl.svg);
+    mask-size: 100% 100%;
+  }
+}
+
+// Group
+
+.avatar-group {
+  // Shift every next avatar left
+
+  .avatar + .avatar {
+    margin-left: unset;
+    margin-right: -$avatar-size-base / 4;
+  }
+
+  .avatar-xs + .avatar-xs {
+    margin-left: unset;
+    margin-right: -$avatar-size-xs / 4;
+  }
+
+  .avatar-sm + .avatar-sm {
+    margin-left: unset;
+    margin-right: -$avatar-size-sm / 4;
+  }
+
+  .avatar-lg + .avatar-lg {
+    margin-left: unset;
+    margin-right: -$avatar-size-lg / 4;
+  }
+
+  .avatar-xl + .avatar-xl {
+    margin-left: unset;
+    margin-right: -$avatar-size-xl / 4;
+  }
+
+  .avatar-xxl + .avatar-xxl {
+    margin-left: unset;
+    margin-right: -$avatar-size-xxl / 4;
+  }
+
+  // Add some spacing between avatars
+
+  .avatar:not(:last-child) {
+    mask-image: url(#{$path-to-img}/masks/avatar-group-rtl.svg);
+  }
+
+  // Bring an avatar to front on hover
+
+  .avatar:hover {
+    mask-image: none;
+    z-index: 1;
+    + .avatar {
+      mask-image: url(#{$path-to-img}/masks/avatar-group-hover-rtl.svg);
+
+      &:last-child {
+        mask-image: url(#{$path-to-img}/masks/avatar-group-hover-last-rtl.svg);
+      }
+    }
+  }
+
+}

@@ -1,0 +1,32 @@
+//
+// offcanvas.scss
+// Extended from Bootstrap
+//
+
+
+//
+// RTL Bootstrap Overrides =======================
+//
+
+
+.offcanvas-header {
+  .btn-close {
+    margin: ($offcanvas-padding-y / -2) auto ($offcanvas-padding-y / -2) ($offcanvas-padding-x / -2);
+  }
+}
+
+.offcanvas-start {
+  left: auto;
+  right: 0;
+  border-right: unset;
+  border-left: $offcanvas-border-width solid $offcanvas-border-color;
+  transform: translateX(100%);
+}
+
+.offcanvas-end {
+  right: auto;
+  left: 0;
+  border-left: unset;
+  border-right: $offcanvas-border-width solid $offcanvas-border-color;
+  transform: translateX(-100%);
+}

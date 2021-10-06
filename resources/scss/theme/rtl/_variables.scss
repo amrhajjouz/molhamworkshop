@@ -1,0 +1,31 @@
+//
+// variables.scss
+// Extended from Bootstrap
+//
+
+//
+// RTL Overrides ===================================
+//
+
+$negative-spacers: if(
+  $enable-negative-margins,
+  negativify-map($spacers),
+  null
+) !default;
+
+// scss-docs-start form-floating-variables
+$form-floating-label-transform: scale(0.85) translateY(-0.5rem)
+  translateX(-0.15rem) !default;
+// scss-docs-end form-floating-variables
+
+// scss-docs-start form-select-variables
+$form-select-padding-x: $input-padding-x !default;
+$form-select-bg-position: left $form-select-padding-x center !default;
+// scss-docs-end form-select-variables
+
+
+// Spinners
+
+// scss-docs-start spinner-variables
+$spinner-vertical-align:  -.25em !default;
+// scss-docs-end spinner-variables
