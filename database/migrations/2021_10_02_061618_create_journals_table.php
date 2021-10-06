@@ -14,10 +14,10 @@ class CreateJournalsTable extends Migration
     {
         Schema::create('journals', function (Blueprint $table) {
             $table->id();
-            $table->string("notes");
+            $table->string("notes")->nullable();
             $table->enum("type",["payment","voucher","payout","payment_request"]);
-            $table->string("journalable_type");
-            $table->unsignedBigInteger('related_to');
+            $table->morphs('journalable');
+            $table->unsignedBigInteger('related_to')->nullable();
             $table->foreign('related_to')->references('id')->on('journals');
             $table->timestamps();
         });

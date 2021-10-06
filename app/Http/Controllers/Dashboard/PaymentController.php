@@ -70,7 +70,7 @@ class PaymentController extends Controller
         try {
             $list = ["1-10", "1-11", "1-12", "1-13"];
 
-            $accounts = Account::searchByPrefixCodeList($list)->searchByName(request()->q)->with("accountCurrency")->get()->map(function ($account) {
+            $accounts = Account::searchByPrefixCodeList($list)->searchByName($request->q)->with("accountCurrency")->get()->map(function ($account) {
                 return [
                     "fx_rate" => $account->accountCurrency->rate,
                     "currency" => $account->currency,

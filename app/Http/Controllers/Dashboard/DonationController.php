@@ -15,7 +15,7 @@ class DonationController extends Controller
 
             return Donation::orderBy('id', 'desc')
                 ->with("donor:id,name,email", "country:code,name")
-                ->select(["fee", "amount","usd_amount", "program_name", "section_name","purpose_name", "currency", "method", "received_at", "created_at"])
+                ->select(["fee", "amount","usd_amount", "program_id", "section_id","purpose_id", "currency", "method", "received_at", "created_at"])
                 ->addSelect($extraColumns)
                 ->PaginateWithAppends(["donor_name", "country_name"])
                 ->hidden(["donor", "country"])

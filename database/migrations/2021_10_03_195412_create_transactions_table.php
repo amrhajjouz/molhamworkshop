@@ -15,15 +15,15 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('	journal_id');
+            $table->unsignedBigInteger('journal_id');
             $table->decimal('amount', $precision = 12, $scale = 2);
             $table->string("currency", 10);
             $table->decimal('fx_rate', $precision = 12, $scale = 2)->default(0);
             $table->enum('method', ["cash", "transfer", "card(stripe)", "paypal(paypal)", "ideal", "giropay", "sofort"]);
             $table->unsignedBigInteger("account_id");
-            $table->unsignedBigInteger('section_id');
-            $table->unsignedBigInteger('program_id');
-            $table->unsignedBigInteger('related_to');
+            $table->unsignedBigInteger('section_id')->nullable();
+            $table->unsignedBigInteger('program_id')->nullable();;
+            $table->unsignedBigInteger('related_to')->nullable();;
             $table->timestamps();//todo: add forign-keys
         });
     }

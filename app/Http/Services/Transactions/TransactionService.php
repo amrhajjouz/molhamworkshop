@@ -2,33 +2,13 @@
 
 namespace App\Http\Services\Transactions;
 
-use App\Models\Journals;
-use Exception;
-use Illuminate\Support\Facades\DB;
-
 class TransactionService
 {
-    public function Process($journalId)
+    public function calculateAmountAndDeductionRatio($amount, $deductionRatioRate): array
     {
-        $journal = Journals::find($journalId);
-        switch ($journal->type) {
-            case "manual_payment":
-                $this->processManualPayment($journal);
-        }
-    }
+        $deductedAmount = ($amount * $deductionRatioRate) / 100;
 
-    /**
-     * @throws Exception
-     */
-    private function processManualPayment($journal)
-    {
-        try {
-            DB::beginTransaction();
+        return ["deductedAmount" => $deductedAmount, "netAmount" => $amount - $deductedAmount];
 
-            DB::commit();
-        } catch (Exception  $e) {
-            DB::rollBack();
-            throw new Exception($e->getMessage());
-        }
     }
 }

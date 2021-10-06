@@ -1,5 +1,10 @@
-<page-header title="قائمة  الدفعات" pretitle="الدفعات">
+
+<page-header title="قائمة الدفعات" pretitle="الدفعات">
+    <a href="{{ $r('payments.add') }}" class="btn btn-primary">
+        <i class="fe fe-plus"></i>&nbsp; دفعة جديدة
+    </a>
 </page-header>
+
 <datatable  datalist="payments">
     <table class="table table-sm card-table">
         <thead>

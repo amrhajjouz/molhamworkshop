@@ -22,9 +22,9 @@ class DatabaseSeeder extends Seeder
             AccountSeeder::class,
             DeductionRatioSeeder::class,
             PlaceSeeder::class,
-            PurposesSeeder::class,
             ProgramSeeder::class,
             SectionSeeder::class,
+            PurposesSeeder::class,
         ]);
     }
 }

@@ -2,9 +2,10 @@
 
 namespace App\Http\Services\Payments;
 
+use App\Http\Services\Transactions\TransactionFactoryService;
 use App\Http\Services\Transactions\TransactionService;
 use App\Models\Account;
-use App\Models\Journals;
+use App\Models\DeductionRatios;
 use App\Models\Payment;
 use App\Models\Purpose;
 use Exception;
@@ -18,7 +19,7 @@ class PaymentService
      */
     private $transactionService;
 
-    public function __construct(TransactionService $transactionService)
+    public function __construct(TransactionFactoryService $transactionService)
     {
 
         $this->transactionService = $transactionService;
@@ -46,7 +47,7 @@ class PaymentService
 
             $payment["received_at"] = date("Y-m-d", strtotime($payment["received_at"]));
             $payment["currency"] = $account->currency;
-            $payment["method"] = "cash";
+            $payment["method"] = "cash"; //todo later with the correct one
             $payment["status"] = "paid";
             $payment["amount"] = collect($purposes)->sum("amount");
 
@@ -56,10 +57,12 @@ class PaymentService
 
             foreach ($purposes as $item) {
                 $purpose = Purpose::whereId($item["purpose_id"])->firstOrFail();
+                $deductionRatio = DeductionRatios::whereId($item["deduction_ratio_id"])->firstOrFail(["id","account_id"]);
 
                 $paymentResult->donations()->create(array(
                     "usd_amount" => $item["amount"] / $paymentResult->fx_rate,
-                    "deduction_ratio_id" => $item["deduction_ratio_id"],
+                    "deduction_ratio_id" => $deductionRatio->id,
+                    "deduction_account_id" => $deductionRatio->account_id,
                     "country_code" => $payment["country_code"],
                     "amount" => $item["amount"],
                     "received_at" => $paymentResult->received_at,
@@ -71,15 +74,14 @@ class PaymentService
                     "program_id" => $purpose->program_id,
                     "purpose_id" => $purpose->id,
                     "reference" => Str::uuid(),
-                    "method" => "cash",
+                    "method" => $paymentResult->method,
                     "fee" => 0,
                 ));
             }
 
-            $journal = Journals::create([
-                "type" => "payment",
-                "note" => $paymentResult->notes,
-                "journalable_id" => $purpose->targetable_id,
+            $journal = $paymentResult->journal()->create([
+                "type" => "payment", //todo later with the correct one
+                "notes" => $paymentResult->notes,
             ]);
 
             DB::commit();

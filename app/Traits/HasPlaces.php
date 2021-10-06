@@ -2,7 +2,6 @@
 
 namespace App\Traits;
 
-
 trait HasPlaces
 {
     public function places()

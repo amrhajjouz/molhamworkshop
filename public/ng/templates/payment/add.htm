@@ -39,7 +39,8 @@
         <div class="row">
             <label>سعر صرف الدولار</label>
             <div class="input-group mb-3" dir="ltr">
-                <input ng-model="payment.fx_rate" type="text" class="form-control" ng-change="onFxCurrencyChange()" placeholder="سعر صرف الدولار">
+                <input ng-model="payment.fx_rate" type="text" class="form-control" ng-change="onFxCurrencyChange()"
+                       placeholder="سعر صرف الدولار">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" ng-click="updateFxCurrency()" type="button"><span
                         class="fe fe-refresh-ccw me-4"></span></button>
@@ -67,7 +68,6 @@
         </div>
     </div>
 
-
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label>المتبرع</label>
@@ -84,8 +84,16 @@
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label>قيمة الدفعة بالدولار</label>
-            <input class="form-control" ng-change="onExpectedTotalAmountChange()" ng-model="payment.expectedTotalAmountInFx"
+            <input class="form-control" ng-change="onExpectedTotalAmountChange()"
+                   ng-model="payment.expectedTotalAmountInFx"
                    placeholder="قيمة الدفعة بالدولار" required>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label>الوصف</label>
+            <textarea ng-model="payment.notes" class="form-control" placeholder="الوصف"></textarea>
         </div>
     </div>
 
@@ -143,9 +151,11 @@
                     </tr>
                     </tbody>
                 </table>
+
                 <button type="button" class="btn btn-white action-btn add-new-record" ng-click="addNewPurpose()">
                     <span class="fe fe-plus-square"></span>
                 </button>
+
             </div>
             <div class="progress progress-sm" ng-show="payment.expectedTotalAmount >= 0" dir="ltr">
                 <div class="progress-bar"
@@ -182,11 +192,8 @@
 
     <div class="col-12">
         <div class="row">
-            <submit-button class="mx-2"  form="PaymentForm" icon="fe fe-plus">حفظ
+            <submit-button class="mx-2" form="PaymentForm" icon="fe fe-plus">حفظ
             </submit-button>
         </div>
     </div>
 </form>
-
-<pre dir="ltr" style="text-align: left;">  {{ payment | json}}</pre>
-
