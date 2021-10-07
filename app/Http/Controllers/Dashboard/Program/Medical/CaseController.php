@@ -16,7 +16,7 @@ use App\Http\Requests\Program\Medical\Cases\{
     UndocumentMedicalCaseRequest,
     UnhideMedicalCaseRequest,
     UpdateMedicalCaseContentsRequest,
-    PublishableMedicalCaseRequest ,
+    ReadyToPublishMedicalCaseRequest ,
 };
 use App\Http\Resources\Dashboard\Program\Medical\Cases\{CasesListResource, SingleCaseResource};
 
@@ -85,14 +85,14 @@ class CaseController extends Controller
 
     ////////////////////// Case Target's Actions /////////////////////
 
-    public function markAsPosted(PostMedicalCaseRequest $request, $id)
-    {
-        try {
-            return response()->json(Cases::findOrFail($id)->markAsPosted());
-        } catch (\Exception $e) {
-            return ['error' => $e->getMessage()];
-        }
-    }
+    // public function markAsPosted(PostMedicalCaseRequest $request, $id)
+    // {
+    //     try {
+    //         return response()->json(Cases::findOrFail($id)->markAsPosted());
+    //     } catch (\Exception $e) {
+    //         return ['error' => $e->getMessage()];
+    //     }
+    // }
 
     public function markAsDocumented(DocumentMedicalCaseRequest $request, $id)
     {
@@ -148,10 +148,10 @@ class CaseController extends Controller
         }
     }
    
-    public function markAsPublishable(PublishableMedicalCaseRequest $request, $id)
+    public function markAsReadyToPublish(ReadyToPublishMedicalCaseRequest $request, $id)
     {
         try {
-            return response()->json(Cases::findOrFail($id)->markAsPublishable());
+            return response()->json(Cases::findOrFail($id)->markAsReadyToPublish());
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }

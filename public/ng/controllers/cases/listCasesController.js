@@ -33,12 +33,12 @@ function listCasesController($scope, $init, $apiRequest, $page) {
             }).send();
     };
 
-    $scope.postCaseRequest = (caseId) => {
-        $apiRequest
-            .config({ method: 'POST', url: `programs/medical/cases/${caseId}/post`, data: { id: caseId } }, function (response, data) {
-                $page.reload();
-            }).send();
-    };
+    // $scope.postCaseRequest = (caseId) => {
+    //     $apiRequest
+    //         .config({ method: 'POST', url: `programs/medical/cases/${caseId}/post`, data: { id: caseId } }, function (response, data) {
+    //             $page.reload();
+    //         }).send();
+    // };
 
     $scope.documentCaseRequest = (caseId) => {
         $apiRequest
@@ -54,9 +54,9 @@ function listCasesController($scope, $init, $apiRequest, $page) {
             }).send();
     };
    
-    $scope.publishableCaseRequest = (caseId) => {
+    $scope.readyToPublishCaseRequest = (caseId) => {
         $apiRequest
-            .config({ method: 'POST', url: `programs/medical/cases/${caseId}/publishable`, data: { id: caseId } }, function (response, data) {
+            .config({ method: 'POST', url: `programs/medical/cases/${caseId}/ready_to_publish`, data: { id: caseId } }, function (response, data) {
                 $page.reload();
             }).send();
     };

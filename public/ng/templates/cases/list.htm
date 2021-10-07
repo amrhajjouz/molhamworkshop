@@ -36,8 +36,8 @@
                         <dropdown-item href="#" ng-show="case.archived" ng-click="unarchiveCaseRequest(case.id)" ng-click=""><i class="fe fe-arrow-left"></i> إلغاء الأرشفة</dropdown-item>
                         <dropdown-item href="#" ng-show="!case.documented" ng-click="documentCaseRequest(case.id)" ng-click=""><i class="fe fe-check"></i> توثيق</dropdown-item>
                         <dropdown-item href="#" ng-show="case.documented" ng-click="undocumentCaseRequest(case.id)" ng-click=""><i class="fe fe-shield-off"></i> إلغاء التوثيق</dropdown-item>
-                        <dropdown-item href="#" ng-show="!case.published_at" ng-click="postCaseRequest(case.id)" ng-click=""><i class="fe fe-share"></i> نشر</dropdown-item>
-                        <dropdown-item href="#" ng-show="!case.publishable" ng-click="publishableCaseRequest(case.id)" ng-click=""><i class="fe fe-share"></i> امكانية النشر</dropdown-item>
+                        <!-- <dropdown-item href="#" ng-show="!case.published_at" ng-click="postCaseRequest(case.id)" ng-click=""><i class="fe fe-share"></i> نشر</dropdown-item> -->
+                        <dropdown-item href="#" ng-show="!case.ready_to_publish" ng-click="readyToPublishCaseRequest(case.id)" ng-click=""><i class="fe fe-share"></i> امكانية النشر</dropdown-item>
                     </dropdown>
                 </td>
             </tr>

@@ -10,6 +10,16 @@ class Target extends BaseModel
 {
     use HasContents;
     protected $contentFields = ['details', 'description', 'title'];
+    // $appends = ['proofreadable']; Todo 
+    // @return array
+    // => ['ar' => boolean , 'en'=>boolean]
+    //iterate on getLocaleName()  and treturn 6 keys
+    
+    // [
+    // 'ar' => true ,
+    // 'en' => false
+    // ]
+
 
     protected $table = "programs_targets";
     protected $guarded = [];
@@ -17,7 +27,7 @@ class Target extends BaseModel
         'documented' => 'boolean',
         'is_hidden' => 'boolean',
         'archived' => 'boolean',
-        'publishable' => 'boolean',
+        'ready_to_publish' => 'boolean',
         'created_at' =>  'datetime:Y-m-d H:i:s',
         'updated_at' =>  'datetime:Y-m-d H:i:s',
         'published_at' =>  'datetime:Y-m-d H:i:s',
@@ -44,30 +54,32 @@ class Target extends BaseModel
 
     public function save(array $options = [])
     {
-        if (!($this->exists)) {
+        $isNewTarget = !($this->exists);
+        if ($isNewTarget) {
             do {
                 $this->reference = Str::random(15);
             } while (self::where('reference', $this->reference)->exists());
 
             $this->code = $this->getApproriateCode();
 
-            $this->available_locales = ['ar' => false,'en' => false,'de' => false,'tr' => false,'fr' => false,'es' => false,];
-        }
-        foreach ($this->contentFields as $field) {
-            if (isset($this->$field)) {
-                $fieldNewValue = self::find($this->id)->$field;
-                $availableLocales = $this->available_locales;
-                
-                foreach ($this->$field as $locale => $value) {
-                    $availableLocales[$locale] = true;
-                    $fieldNewValue[$locale] = ['value' => $value , 'proofreading_checked' => false , 'auto_generated' => false];
-                    $this->contents()->firstOrCreate(['name' => $field, 'value' => $value, 'locale' => $locale , 'proofreading_checked' => false , 'auto_generated' => false]);
+            $this->available_locales = ['ar' => false, 'en' => false, 'de' => false, 'tr' => false, 'fr' => false, 'es' => false,];
+        } else {
+            $target = self::findOrFail($this->id);
+            foreach ($this->contentFields as $field) {
+                if (isset($this->$field)) {
+                    $fieldNewValue = $target->$field;
+                    if($fieldNewValue == $this->$field) {continue;} //temporary
+                    $availableLocales = $this->available_locales;
+                    foreach ($this->$field as $locale => $value) {
+                        $availableLocales[$locale] = true;
+                        $fieldNewValue[$locale] = ['value' => $value, 'proofread' => false, 'auto_generated' => false];
+                        $this->contents()->firstOrCreate(['name' => $field, 'value' => $value, 'locale' => $locale, 'proofread' => false, 'auto_generated' => false]);
+                    }
+                    $this->$field = $fieldNewValue;
+                    $this->available_locales = $availableLocales;
                 }
-                $this->$field = $fieldNewValue;
-                $this->available_locales = $availableLocales; 
             }
         }
-
         $target = parent::save($options);
 
         return $target;

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Dashboard\Publishing;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\{Cases};
-use App\Http\Requests\Translation\Cases\{UpdateCaseContentsRequest};
+use App\Http\Requests\Publishing\Cases\{PublishCaseRequest , ProofreadCaseRequest};
 use App\Http\Resources\Dashboard\Program\Medical\Cases\{CasesListResource, SingleCaseResource};
 
 class CaseController extends Controller
@@ -25,7 +25,7 @@ class CaseController extends Controller
                 }
             })
             ->whereHas('target' ,  function($query){
-                 $query->where('publishable' ,'=', 1);
+                 $query->where('ready_to_publish' ,'=', 1);
             })
             ->paginate(10)->withQueryString()));
         } catch (\Exception $e) {
@@ -34,21 +34,39 @@ class CaseController extends Controller
     }
 
 
-    public function retrieve($id)
+    // public function retrieve($id)
+    // {
+    //     try {
+    //         return response()->json(new SingleCaseResource(Cases::findOrFail($id)));
+    //     } catch (\Exception $e) {
+    //         return ['error' => $e->getMessage()];
+    //     }
+    // }
+
+    // public function update(UpdateCaseContentsRequest $request)
+    // {
+    //     try {
+    //         $case = Cases::findOrFail($request->id);
+    //         $case->target->update($request->validated());
+    //         return response()->json(new SingleCaseResource($case));
+    //     } catch (\Exception $e) {
+    //         return ['error' => $e->getMessage()];
+    //     }
+    // }
+
+    public function markAsPublished(PublishCaseRequest $request, $id)
     {
         try {
-            return response()->json(new SingleCaseResource(Cases::findOrFail($id)));
+            return response()->json(Cases::findOrFail($id)->markAsPosted());
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
-
-    public function update(UpdateCaseContentsRequest $request)
+   
+    public function markAsrofread(ProofreadCaseRequest $request, $id)
     {
         try {
-            $case = Cases::findOrFail($request->id);
-            $case->target->update($request->validated());
-            return response()->json(new SingleCaseResource($case));
+            return response()->json(Cases::findOrFail($id)->markAsProofread());
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }

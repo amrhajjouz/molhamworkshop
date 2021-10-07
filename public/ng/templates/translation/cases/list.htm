@@ -20,8 +20,8 @@
         <tbody>
             <tr ng-repeat="case in cases.data">
                 <td class="align-middle text-center">{{ case.id }}</td>
-                <td class="align-middle text-center">{{ case.title.ar }}</td>
-                <td class="align-middle text-center">{{ case.title.en }}</td>
+                <td class="align-middle text-center">{{ case.title.ar.value }}</td>
+                <td class="align-middle text-center">{{ case.title.en.value }}</td>
                 <td class="align-middle text-center">{{ case.available_locales.en ? 'نعم' : 'لا'}}</td>
                 <td class="align-middle text-center">{{ case.available_locales.fr ? 'نعم' : 'لا'}}</td>
                 <td class="align-middle text-center">{{ case.available_locales.de ? 'نعم' : 'لا'}}</td>

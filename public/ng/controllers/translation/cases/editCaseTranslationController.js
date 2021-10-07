@@ -9,9 +9,9 @@ function editCaseTranslationController($scope, $page, $apiRequest, $init) {
 
     // temporary just for test contents with en lang
     $scope.case.locale = 'en'; 
-    $scope.case.title = $scope.case.title.en.value;
-    $scope.case.description = $scope.case.description.en;
-    $scope.case.details = $scope.case.details.en.value;
+    $scope.case.title = $scope.case.title.en ? $scope.case.title.en.value : '';
+    $scope.case.description = $scope.case.description.en ? $scope.case.description.en.value : '';
+    $scope.case.details = $scope.case.details.en ? $scope.case.details.en.value : '';
 
     $scope.updateCaseTranslationRequest = $apiRequest.config(
         {

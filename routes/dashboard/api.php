@@ -62,10 +62,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/programs/medical/cases/{id}/unhide', [CaseController::class, 'markAsVisible']);
     Route::post('/programs/medical/cases/{id}/archive', [CaseController::class, 'markAsArchived']);
     Route::post('/programs/medical/cases/{id}/unarchive', [CaseController::class, 'markAsUnarchived']);
-    Route::post('/programs/medical/cases/{id}/post', [CaseController::class, 'markAsPosted']);
+    // Route::post('/programs/medical/cases/{id}/post', [CaseController::class, 'markAsPosted']);
     Route::post('/programs/medical/cases/{id}/document', [CaseController::class, 'markAsDocumented']);
     Route::post('/programs/medical/cases/{id}/undocument', [CaseController::class, 'markAsUndocumented']);
-    Route::post('/programs/medical/cases/{id}/publishable', [CaseController::class, 'markAsPublishable']);
+    Route::post('/programs/medical/cases/{id}/ready_to_publish', [CaseController::class, 'markAsReadyToPublish']);
     Route::put('/programs/medical/cases/{id}/contents', [CaseController::class, 'updateCaseContents']);
 
 
@@ -77,6 +77,8 @@ Route::middleware('auth')->group(function () {
        
         //Publishing -> Cases
         Route::get('/publishing/cases' , 'Publishing\CaseController@list');
+        Route::post('/publishing/cases/{id}/publish' , 'Publishing\CaseController@markAsPublished');
+        Route::post('/publishing/cases/{id}/proofread' , 'Publishing\CaseController@markAsrofread');
         // Route::get('/translation/cases/{id}' , 'Translation\CaseController@retrieve');
         // Route::put('/translation/cases' , 'Translation\CaseController@update');
     });

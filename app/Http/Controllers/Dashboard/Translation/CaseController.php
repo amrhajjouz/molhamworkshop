@@ -23,7 +23,11 @@ class CaseController extends Controller
                     $q->where('beneficiary_name', 'like', '%' . $request->q . '%');
                     $q->orWhere('serial_number', 'like', '%' . $request->q . '%');
                 }
-            })->paginate(10)->withQueryString()));
+            })
+            ->whereHas('target' ,  function($query){
+                $query->where('ready_to_publish' ,'=', 1);
+                $query->where('published_at' ,'!=', null);
+           })->paginate(10)->withQueryString()));
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }

@@ -37,7 +37,7 @@ class SingleCaseResource extends JsonResource
             'archived' => $target->archived,
             'code' => $target->code,
             'published_at' => $target->published_at,
-            'publishable' => $target->publishable,
+            'ready_to_publish' => $target->ready_to_publish,
             'category' => [
                 'name' => $target->category->name,
             ],

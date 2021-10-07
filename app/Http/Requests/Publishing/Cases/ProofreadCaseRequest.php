@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Program\Medical\Cases;
+namespace App\Http\Requests\Publishing\Cases;
 
 use App\Models\Cases;
+use App\Models\Place;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
-class PublishableMedicalCaseRequest extends FormRequest
+class ProofreadCaseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +28,8 @@ class PublishableMedicalCaseRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => ['required', 'exists:' . Cases::getTableName() . ',id'],
+            'id' => ['required' , 'exists:'.Cases::getTableName() . ',id']
         ];
     }
+
 }

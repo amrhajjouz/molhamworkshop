@@ -76,8 +76,29 @@ class BaseTargetModel extends BaseModel
         return $this->target->update(['is_hidden' => false]);
     }
   
-    public function markAsPublishable()
+    public function markAsReadyToPublish()
     {
-        return $this->target->update(['publishable' => true]);
+        return $this->target->update(['ready_to_publish' => true]);
+    }
+   
+    public function markAsProofread()
+    {
+        $contentsFields = ['title' , 'description' , 'details'];
+        $target = $this->target;
+        foreach ($contentsFields as $field) {
+            $fieldNewValue = $target->$field;
+            foreach ($target->$field as $locale => $value) {
+                if(isset($target->$field[$locale]['proofread'])){
+                    $fieldNewValue[$locale]['proofread'] = true;
+                }
+            }
+            $target->$field = $fieldNewValue;
+        }
+        $target->save();
+        $target->contents()->whereIn('name' , ['details' , 'description' , 'title'])->orderBy('id' , 'desc')->get()->map(function($content){
+            $content->proofread = true;
+            $content->save();
+        });
+        return true;
     }
 }

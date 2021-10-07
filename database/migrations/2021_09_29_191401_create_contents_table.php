@@ -20,7 +20,7 @@ class CreateContentsTable extends Migration
             $table->string('name' , 100);
             $table->text('value');
             $table->boolean('auto_generated')->default(1);
-            $table->boolean('proofreading_checked')->default(1);
+            $table->boolean('proofread')->default(1);
             $table->timestamps();
         });
     }

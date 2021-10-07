@@ -27,7 +27,7 @@ class CasesListResource extends JsonResource
                 'documented' => $case->target->documented ,
                 'required' => $case->target->required ,
                 'published_at' => $case->target->published_at ,
-                'publishable' => $case->target->publishable ,
+                'ready_to_publish' => $case->target->ready_to_publish ,
                 'title' => $case->target->title ,
                 'available_locales'=>$case->target->available_locales
             ];

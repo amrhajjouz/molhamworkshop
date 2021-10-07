@@ -32,7 +32,7 @@ class CreateProgramsTargets extends Migration
             $table->boolean('archived')->index()->default(0);
             $table->boolean('documented')->index()->default(0);
             $table->boolean('is_hidden')->index()->default(1);
-            $table->boolean('publishable')->index()->default(0);
+            $table->boolean('ready_to_publish')->index()->default(0);
             $table->dateTime('published_at')->nullable();
             $table->dateTime('canceled_at')->nullable();
             $table->json('available_locales');
