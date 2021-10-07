@@ -66,3 +66,13 @@ function listDummyCases($length = 20){
     }
     return $cases ;
 }
+
+function retrieveDummyCase(){
+    $faker = Faker\Factory::create();
+    return [
+            'id' => request()->id,
+            'title' => (object)['ar' => (object)['value'=> $faker->word , 'auto_generated'=>$faker->boolean]],
+            'description' => (object)['ar' => (object)['value'=> $faker->text , 'auto_generated'=>$faker->boolean]],
+            'details' => (object)['ar' => (object)['value'=> '<p>'.$faker->text . "</p>" , 'auto_generated'=>$faker->boolean]],
+        ];
+}

@@ -24,4 +24,13 @@ class CaseController extends Controller
             return ['error' => $e->getMessage()];
         }
     }
+   
+    public function retrieve(Request $request , $id)
+    {
+        try {
+            return response()->json(retrieveDummyCase());
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
 }

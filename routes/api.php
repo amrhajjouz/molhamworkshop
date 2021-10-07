@@ -108,4 +108,5 @@ Route::group(['middleware' => 'auth_donor'], function () {
 
     //Cases
     Route::get('/cases' , [CaseController::class, 'list'])->name('api.cases.list'); 
+    Route::get('/cases/{id}' , [CaseController::class, 'retrieve'])->name('api.cases.retrieve'); 
 });
