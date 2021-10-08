@@ -34,8 +34,8 @@ class AccountSeeder extends Seeder
            $currency = Currency::inRandomOrder()->first()->code;
            $count = count($accountBranch->childAccounts) + 1;
             DB::table('accounts')->insert([
-                'name' => '{"ar": "'.$this->faker->word.'","ar": "'.$this->faker->word.'"}',
-                'description' => '{"ar": "'.$this->faker->word.'","ar": "'.$this->faker->word.'"}',
+                'name' => '{"ar": "'.$this->faker->firstName.'","ar": "'.$this->faker->firstName.'"}',
+                'description' => '{"ar": "'.$this->faker->firstName.'","ar": "'.$this->faker->firstName.'"}',
                 'branch_id' => $accountBranch->id,
                 'code' => $accountBranch->code."-".$count,
                 'country_code' => "AD",

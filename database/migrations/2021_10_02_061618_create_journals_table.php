@@ -15,7 +15,7 @@ class CreateJournalsTable extends Migration
         Schema::create('journals', function (Blueprint $table) {
             $table->id();
             $table->string("notes")->nullable();
-            $table->enum("type",["payment","voucher","payout","payment_request"]);
+            $table->enum("type",["manual_payment","e_payment","manual_journal","refund","reversal","voucher","payout","transfer","relocate","payment_request"]);
             $table->morphs('journalable');
             $table->unsignedBigInteger('related_to')->nullable();
             $table->foreign('related_to')->references('id')->on('journals');

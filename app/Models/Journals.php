@@ -18,6 +18,6 @@ class Journals extends Model
 
     public function transactions()
     {
-        return $this->hasMany(Transactions::class,"journal_id","id");
+        return $this->hasMany(Transaction::class,"journal_id","id");
     }
 }

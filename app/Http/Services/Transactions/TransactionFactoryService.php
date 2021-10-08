@@ -24,7 +24,7 @@ class TransactionFactoryService
     {
         $journal = Journals::find($journalId);
         switch ($journal->type) {
-            case "payment": //todo later to the correct one
+            case "manual_payment":
                 $this->manualTransactionService->processManualPayment($journal);
         }
     }

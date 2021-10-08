@@ -80,7 +80,7 @@ class PaymentService
             }
 
             $journal = $paymentResult->journal()->create([
-                "type" => "payment", //todo later with the correct one
+                "type" => "manual_payment", //todo later with the correct one
                 "notes" => $paymentResult->notes,
             ]);
 

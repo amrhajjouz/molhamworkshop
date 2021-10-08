@@ -1,0 +1,29 @@
+<page-header title="قائمة الدفعات " pretitle="الحسابات"></page-header>
+<datatable  datalist="transactions">
+    <table>
+        <thead>
+        <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">المبلغ</th>
+            <th class="text-center">العملة</th>
+            <th class="text-center">سعر الصرف</th>
+            <th class="text-center">المبلغ بالدولار</th>
+            <th class="text-center">البرنانج</th>
+            <th class="text-center">القسم</th>
+            <th class="text-center">النوع</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="d in transactions.data">
+            <td class="align-middle text-center">{{ d.id }}</td>
+            <td class="align-middle text-center">{{ d.amount }}</td>
+            <td class="align-middle text-center">{{ d.currency }}</td>
+            <td class="align-middle text-center">{{ d.fx_rate }}</td>
+            <td class="align-middle text-center">{{ d.usd_amount }}</td>
+            <td class="align-middle text-center">{{ d.program_name  }}</td>
+            <td class="align-middle text-center">{{ d.section_name }}</td>
+            <td class="align-middle text-center">{{ d.journal_type}}</td>
+        </tr>
+        </tbody>
+    </table>
+</datatable>

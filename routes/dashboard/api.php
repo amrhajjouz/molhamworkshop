@@ -10,6 +10,7 @@ use App\Http\Controllers\Dashboard\PaymentController;
 use App\Http\Controllers\Dashboard\PlaceController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\PurposeController;
+use App\Http\Controllers\Dashboard\TransactionController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\DonationController;
 use Illuminate\Http\Request;
@@ -92,5 +93,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/payments', [PaymentController::class, 'list']);
     Route::post('/payments', [PaymentController::class, 'create']);
     Route::get('/payments/accounts', [PaymentController::class, 'searchPaymentAccount']);
+
+    //transactions
+    Route::get('/transactions/{accountId}', [TransactionController::class, 'list']);
 
 });

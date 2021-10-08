@@ -43,6 +43,7 @@ return [
     'deduction-ratios.edit' => ['deduction-ratios/:id/edit', 'deduction_ratios/editDeductionRatiosController', 'deduction_ratios.single.edit'],
 
     //payment
+    'transactions.list' => ['transactions/:account_id', 'transaction/listTransactionsController', 'transaction.list'],
     'payments' => ['payments', 'payment/listPaymentController', 'payment.list'],
     'donations' => ['donations', 'payment/listDonationController', 'payment.list-donations'],
     'payments.add' => ['payments/add', 'payment/addPaymentController', 'payment.add'],
