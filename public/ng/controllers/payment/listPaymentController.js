@@ -6,6 +6,11 @@ async function listPaymentControllerInit($page, $datalist) {
 
 function listPaymentController($scope, $init, $apiRequest) {
     $scope.payments = $init.payments;
+    $scope.payment = {};
+    $scope.showReversalModal = function (paymentId) {
+        $scope.payment.paymentId = paymentId;
+        $('#payment-confirmation').modal('show');
+    }
 
     $scope.reverse = function (paymentId) {
         //todo: confirm first
