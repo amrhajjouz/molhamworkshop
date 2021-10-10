@@ -16,7 +16,7 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->string('reference');
-            $table->enum('status',["processing","paid","expired","failed"]);
+            $table->enum('status',["processing","paid","expired","failed","reversal"]);
             $table->enum('method', ["cash", "transfer", "card(stripe)", "paypal(paypal)", "ideal", "giropay", "sofort"]);
             $table->decimal('amount', $precision = 12, $scale = 2);
             $table->decimal('fee', $precision = 12, $scale = 2)->default(0);

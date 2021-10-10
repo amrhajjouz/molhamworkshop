@@ -92,6 +92,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/donations', [DonationController::class, 'list']);
     Route::get('/payments', [PaymentController::class, 'list']);
     Route::post('/payments', [PaymentController::class, 'create']);
+    Route::post('/payments/{paymentId}/reverse', [PaymentController::class, 'reverse']);
+    Route::post('/payments/{id}/refund', [PaymentController::class, 'refund']);
     Route::get('/payments/accounts', [PaymentController::class, 'searchPaymentAccount']);
 
     //transactions

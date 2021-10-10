@@ -1,9 +1,16 @@
 <?php
 
 namespace App\Http\Controllers\Dashboard;
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Payment\{CreatePaymentRequest,
+    ListPaymentRequest,
+    RetrievePaymentRequest,
+    ReversePaymentRequest,
+    UpdatePaymentRequest
+};
 use App\Http\Services\Payments\PaymentService;
-use App\Http\Requests\Payment\{CreatePaymentRequest, ListPaymentRequest, RetrievePaymentRequest, UpdatePaymentRequest};
+use App\Http\Services\Transactions\ReversalTransactionService;
 use App\Models\Account;
 use App\Models\Payment;
 use Exception;
@@ -12,18 +19,34 @@ class PaymentController extends Controller
 {
     protected $paymentService;
 
-    public function __construct(PaymentService $paymentService)
+    //todo: when we get all the service. we should have 1 service to do everything
+    /**
+     * @var ReversalTransactionService
+     */
+    private $reversalTransactionService;
+
+    public function __construct(PaymentService $paymentService, ReversalTransactionService $reversalTransactionService)
     {
         parent::__construct();
         $this->paymentService = $paymentService;
+        $this->reversalTransactionService = $reversalTransactionService;
     }
 
     public function create(CreatePaymentRequest $request)
     {
         try {
             $this->paymentService->CreatePayment($request->validated());
+        } catch (Exception $e) {
+            return response(['error' => $e->getMessage()], 500);
+        }
+    }
 
-            return response()->json(1);
+    public function reverse($paymentId, ReversePaymentRequest $request)
+    {
+        try {
+            $payment = Payment::with("journal")->whereId($paymentId)->firstOrFail();
+
+            $this->reversalTransactionService->processReversalTransaction($payment->journal, $request->notes);
         } catch (Exception $e) {
             return response(['error' => $e->getMessage()], 500);
         }

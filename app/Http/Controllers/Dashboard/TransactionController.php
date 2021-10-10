@@ -10,7 +10,6 @@ use Exception;
 
 class TransactionController extends Controller
 {
-
     public function list($accountId)
     {
         try {
