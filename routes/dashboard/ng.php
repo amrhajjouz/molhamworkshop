@@ -25,11 +25,11 @@ return [
     'donors.edit' => ['donors/:id/edit', 'donors/editDonorController', 'donors.single.edit'],
 
     //////////////////////// Cases Routes //////////////////////
-    'programs.medical.cases.add' => ['programs/medical/cases/add', 'cases/addCaseController', 'cases.add'],
-    'programs.medical.cases.overview' => ['programs/medical/cases/:id', 'cases/overviewCaseController', 'cases.single.overview'],
-    'programs.medical.cases.edit' => ['programs/medical/cases/:id/edit', 'cases/editCaseController', 'cases.single.edit'],
-    'programs.medical.cases.contents' => ['programs/medical/cases/:id/contents', 'cases/contentCaseController', 'cases.single.contents'],
-    'programs.medical.cases' => ['programs/medical/cases', 'cases/listCasesController', 'cases.list'],
+    'programs.medical.cases.add' => ['programs/medical/cases/add', 'medical/cases/addCaseController', 'medical/cases.add'],
+    'programs.medical.cases.overview' => ['programs/medical/cases/:id', 'medical/cases/overviewCaseController', 'medical/cases.single.overview'],
+    'programs.medical.cases.edit' => ['programs/medical/cases/:id/edit', 'medical/cases/editCaseController', 'medical/cases.single.edit'],
+    'programs.medical.cases.contents' => ['programs/medical/cases/:id/contents', 'medical/cases/contentCaseController', 'medical/cases.single.contents'],
+    'programs.medical.cases' => ['programs/medical/cases', 'medical/cases/listCasesController', 'medical/cases.list'],
     
     // Places
     'places.add' => ['places/add', 'places/addPlaceController', 'places.add'],
@@ -45,6 +45,6 @@ return [
   
     //////////////////////// Publishing Routes //////////////////////
     'publishing.cases' => ['publishing/cases', 'publishing/cases/listCasesPublishingController', 'publishing.cases.list'],
-    // 'publishing.cases.overview' => ['publishing/cases/:id', 'publishing/cases/overviewCaseTranslationController', 'publishing.cases.single.overview'],
-    // 'publishing.cases.edit' => ['publishing/cases/:id/edit', 'publishing/cases/editCaseTranslationController', 'publishing.cases.single.edit'],
+    'publishing.cases.overview' => ['publishing/cases/:id', 'publishing/cases/overviewCasePublishingController', 'publishing.cases.single.overview'],
+    'publishing.cases.edit' => ['publishing/cases/:id/edit', 'publishing/cases/editCasePublishingController', 'publishing.cases.single.edit'],
 ];

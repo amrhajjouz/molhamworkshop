@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
-class UpdateCaseContentsRequest extends FormRequest
+class UpdateTranslationCaseContentsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,7 +19,7 @@ class UpdateCaseContentsRequest extends FormRequest
     {
         return true;
     }
-
+ 
     /**
      * Get the validation rules that apply to the request.
      *
@@ -36,16 +36,27 @@ class UpdateCaseContentsRequest extends FormRequest
     }
     public function validated()
     {
-        $locale = $this->validator->validated()['locale'];
         return  [
             'title' => [
-                $locale => $this->title , 
+                'en' => [
+                    'value' =>  $this->title,
+                    'proofread' => false,
+                    'auto_generated' => false,
+                ],
             ],
             'description' => [
-                $locale => $this->description , 
+                'en' => [
+                    'value' =>  $this->description,
+                    'proofread' => false,
+                    'auto_generated' => false,
+                ],
             ],
             'details' => [
-                $locale => $this->details , 
+                'en' => [
+                    'value' =>  $this->details,
+                    'proofread' => false,
+                    'auto_generated' => false,
+                ],
             ],
         ];
     }

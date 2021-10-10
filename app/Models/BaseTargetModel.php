@@ -81,24 +81,23 @@ class BaseTargetModel extends BaseModel
         return $this->target->update(['ready_to_publish' => true]);
     }
    
-    public function markAsProofread()
+    public function markAsProofread($targetLocale)
     {
         $contentsFields = ['title' , 'description' , 'details'];
         $target = $this->target;
         foreach ($contentsFields as $field) {
             $fieldNewValue = $target->$field;
             foreach ($target->$field as $locale => $value) {
-                if(isset($target->$field[$locale]['proofread'])){
-                    $fieldNewValue[$locale]['proofread'] = true;
+                if(isset($target->$field[$targetLocale])){
+                    $fieldNewValue[$targetLocale]['proofread'] = true;
                 }
             }
             $target->$field = $fieldNewValue;
         }
         $target->save();
-        $target->contents()->whereIn('name' , ['details' , 'description' , 'title'])->orderBy('id' , 'desc')->get()->map(function($content){
-            $content->proofread = true;
-            $content->save();
-        });
+        foreach ($contentsFields as $field) {
+            $target->contents()->where('name' ,$field)->where('locale' , $targetLocale)->orderBy('id' , 'desc')->first()->update(['proofread' => true]);
+        }   
         return true;
     }
 }

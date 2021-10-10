@@ -1,4 +1,4 @@
-<page-header title="قائمة الحالات" pretitle="الحالات">
+<page-header title="قائمة الحالات" pretitle="قسم النشر">
 </page-header>
 
 <datatable datalist="cases">
@@ -32,7 +32,9 @@
                 <td class="align-middle text-center">{{ case.available_locales.es ? 'نعم' : 'لا'}}</td>
                 <td class="align-middle text-center h2">
                     <dropdown>
-                        <dropdown-item href="#" ng-show="!case.proofread" ng-click="proofreadCaseRequest(case.id)"><i class="fe fe-terminal"></i>  تعيين كتم تدقيقها</dropdown-item>
+                        <dropdown-item href="{{ $r('publishing.cases.overview', {id: case.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
+                        <dropdown-item href="{{ $r('publishing.cases.edit', {id: case.id}) }}"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
+                        <dropdown-item href="#" ng-show="canProofread(case)" ng-click="proofreadCaseRequest(case.id)"><i class="fe fe-terminal"></i>  تعيين كتم تدقيقها</dropdown-item>
                         <dropdown-item href="#" ng-show="!case.published_at" ng-click="publishCaseRequest(case.id)"><i class="fe fe-share"></i> نشر</dropdown-item>
                     </dropdown>
                 </td>

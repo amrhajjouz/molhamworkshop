@@ -10,17 +10,7 @@ class Target extends BaseModel
 {
     use HasContents;
     protected $contentFields = ['details', 'description', 'title'];
-    // $appends = ['proofreadable']; Todo 
-    // @return array
-    // => ['ar' => boolean , 'en'=>boolean]
-    //iterate on getLocaleName()  and treturn 6 keys
-    
-    // [
-    // 'ar' => true ,
-    // 'en' => false
-    // ]
-
-
+    protected $appends = ['proofreadable'];
     protected $table = "programs_targets";
     protected $guarded = [];
     protected $casts = [
@@ -59,26 +49,9 @@ class Target extends BaseModel
             do {
                 $this->reference = Str::random(15);
             } while (self::where('reference', $this->reference)->exists());
-
             $this->code = $this->getApproriateCode();
-
             $this->available_locales = ['ar' => false, 'en' => false, 'de' => false, 'tr' => false, 'fr' => false, 'es' => false,];
         } else {
-            $target = self::findOrFail($this->id);
-            foreach ($this->contentFields as $field) {
-                if (isset($this->$field)) {
-                    $fieldNewValue = $target->$field;
-                    if($fieldNewValue == $this->$field) {continue;} //temporary
-                    $availableLocales = $this->available_locales;
-                    foreach ($this->$field as $locale => $value) {
-                        $availableLocales[$locale] = true;
-                        $fieldNewValue[$locale] = ['value' => $value, 'proofread' => false, 'auto_generated' => false];
-                        $this->contents()->firstOrCreate(['name' => $field, 'value' => $value, 'locale' => $locale, 'proofread' => false, 'auto_generated' => false]);
-                    }
-                    $this->$field = $fieldNewValue;
-                    $this->available_locales = $availableLocales;
-                }
-            }
         }
         $target = parent::save($options);
 
@@ -106,5 +79,22 @@ class Target extends BaseModel
     PRO
     FUN
     */
+    }
+
+
+
+    public function getProofreadableAttribute()
+    {
+        $proofreadable = [];
+        foreach (getAvailableLocales() as $locale => $arName) {
+            $proofreaded = true;
+            foreach ($this->contentFields as $field) {
+                if (!isset($this->$field[$locale]) || !$this->$field[$locale]['value']) {
+                    $proofreaded = false;
+                }
+            }
+            $proofreadable[$locale] = $proofreaded;
+        }
+        return $proofreadable;
     }
 }

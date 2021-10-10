@@ -74,13 +74,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/translation/cases' , 'Translation\CaseController@list');
         Route::get('/translation/cases/{id}' , 'Translation\CaseController@retrieve');
         Route::put('/translation/cases' , 'Translation\CaseController@update');
+        Route::post('/translation/cases/{id}/proofread' , 'Translation\CaseController@markAsProofread');
        
         //Publishing -> Cases
         Route::get('/publishing/cases' , 'Publishing\CaseController@list');
+        Route::get('/publishing/cases/{id}' , 'Publishing\CaseController@retrieve');
+        Route::put('/publishing/cases' , 'Publishing\CaseController@update');
         Route::post('/publishing/cases/{id}/publish' , 'Publishing\CaseController@markAsPublished');
-        Route::post('/publishing/cases/{id}/proofread' , 'Publishing\CaseController@markAsrofread');
-        // Route::get('/translation/cases/{id}' , 'Translation\CaseController@retrieve');
-        // Route::put('/translation/cases' , 'Translation\CaseController@update');
+        Route::post('/publishing/cases/{id}/proofread' , 'Publishing\CaseController@markAsProofread');
     });
 
 });

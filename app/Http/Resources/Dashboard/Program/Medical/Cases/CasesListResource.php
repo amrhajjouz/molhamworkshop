@@ -29,6 +29,9 @@ class CasesListResource extends JsonResource
                 'published_at' => $case->target->published_at ,
                 'ready_to_publish' => $case->target->ready_to_publish ,
                 'title' => $case->target->title ,
+                'description' => $case->target->description ,
+                'details' => $case->target->details ,
+                'proofreadable' => $case->target->proofreadable ,
                 'available_locales'=>$case->target->available_locales
             ];
         });

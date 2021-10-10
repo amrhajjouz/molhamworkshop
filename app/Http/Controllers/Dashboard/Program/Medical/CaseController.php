@@ -11,12 +11,11 @@ use App\Http\Requests\Program\Medical\Cases\{
     ArchiveMedicalCaseRequest,
     DocumentMedicalCaseRequest,
     HideMedicalCaseRequest,
-    PostMedicalCaseRequest,
     UnarchiveMedicalCaseRequest,
     UndocumentMedicalCaseRequest,
     UnhideMedicalCaseRequest,
     UpdateMedicalCaseContentsRequest,
-    ReadyToPublishMedicalCaseRequest ,
+    ReadyToPublishMedicalCaseRequest,
 };
 use App\Http\Resources\Dashboard\Program\Medical\Cases\{CasesListResource, SingleCaseResource};
 
@@ -75,7 +74,7 @@ class CaseController extends Controller
     {
         try {
             $case = Cases::findOrFail($id);
-            $case->target->update($request->validated());
+            $case->target->updateContentFields($request->validated());
             return response()->json(new SingleCaseResource($case));
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -85,14 +84,6 @@ class CaseController extends Controller
 
     ////////////////////// Case Target's Actions /////////////////////
 
-    // public function markAsPosted(PostMedicalCaseRequest $request, $id)
-    // {
-    //     try {
-    //         return response()->json(Cases::findOrFail($id)->markAsPosted());
-    //     } catch (\Exception $e) {
-    //         return ['error' => $e->getMessage()];
-    //     }
-    // }
 
     public function markAsDocumented(DocumentMedicalCaseRequest $request, $id)
     {
@@ -147,7 +138,7 @@ class CaseController extends Controller
             return ['error' => $e->getMessage()];
         }
     }
-   
+
     public function markAsReadyToPublish(ReadyToPublishMedicalCaseRequest $request, $id)
     {
         try {

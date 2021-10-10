@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Program\Medical\Cases;
+namespace App\Http\Requests\Publishing\Cases;
 
-use App\Models\Cases;
-use App\Models\Place;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
 
-class UpdateMedicalCaseContentsRequest extends FormRequest
+class UpdatePublishingCaseContentsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,15 +25,14 @@ class UpdateMedicalCaseContentsRequest extends FormRequest
     public function rules()
     {
         return [
+            'locale' => ['required' , Rule::in(['ar' , 'en' , 'fr' , 'de' , 'tr' , 'es'])],
             'title' => ['required', 'string', 'between:3,100'],
             'description' => ['required', 'string', 'between:3,1000'],
             'details' => ['required', 'string', 'between:3,1000'],
         ];
     }
-
     public function validated()
     {
-        // $validated = $this->validator->validated();
         return  [
             'title' => [
                 'ar' => [
@@ -61,4 +57,5 @@ class UpdateMedicalCaseContentsRequest extends FormRequest
             ],
         ];
     }
+
 }

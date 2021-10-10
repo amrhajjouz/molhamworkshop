@@ -1,18 +1,18 @@
 <include-header />
 
-<form class="row" name="updateCaseContentForm" request="updateCaseTranslationRequest">
-
+<form class="row" name="updateCaseForm" request="updateCaseRequest">
+  
     <div class="col-12">
         <div class="form-group">
             <label for="title">العنوان </label>
-            <input id="title" class="form-control" type="text" ng-model="case.title" ng-error="updateCaseTranslationRequest.errors.title" required placeholder="ادخل العنوان باللغة العربية..."/>
+            <input id="title" class="form-control" type="text" ng-model="case.title" ng-error="updateCaseContentsRequest.errors.title" required placeholder="ادخل العنوان باللغة العربية..."/>
         </div>
     </div>
 
     <div class="col-12">
         <div class="form-group">
             <label for="description" class="locale-label">الوصف</label>
-            <textarea id="description" class="form-control" type="text" ng-model="case.description" ng-error="updateCaseTranslationRequest.errors.description" required placeholder="ادخل الوصف باللغة العربية..."></textarea>
+            <textarea id="description" class="form-control" type="text" ng-model="case.description" ng-error="updateCaseContentsRequest.errors.description" required placeholder="ادخل الوصف باللغة العربية..."></textarea>
         </div>
     </div>
 
@@ -25,6 +25,6 @@
    
 
     <div class="col-12">
-        <submit-button form="updateCaseContentForm" icon="fe fe-edit">تعديل</submit-button>
+        <submit-button form="updateCaseForm" icon="fe fe-edit">تعديل</submit-button>
     </div>
 </form>

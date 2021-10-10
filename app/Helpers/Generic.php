@@ -29,6 +29,19 @@ function getLocaleName($locale)
     }
 }
 
+
+function getAvailableLocales()
+{
+    return [
+        'ar' => 'عربي',
+        'en' => 'انجليزي',
+        'fr' => 'فرنسي',
+        'de' => 'ألماني',
+        'tr' => 'تركي',
+        'es' => 'اسباني',
+    ];
+}
+
 function getCombinedCsv($csvPath, $header = null)
 {
     $rows = array_map('str_getcsv', file($csvPath));
@@ -45,6 +58,3 @@ function getCsvRows($csvPath)
 {
     return array_map('str_getcsv', file($csvPath));
 }
-
-
-
