@@ -62,6 +62,11 @@ Route::group([], function () {
     Route::post('/donors/reset_password/{token}/confirm' , [DonorController::class, 'confirmResetPasswordRequest'])->name('api.donors.reset_password_request.confirm'); 
     Route::post('/donors/verify_email' , [DonorController::class, 'verifyEmail'])->name('api.donors.verify_email'); 
     Route::get('/reviews' , [ReviewController::class, 'list'])->name('api.reviews.list'); 
+    
+    //Cases
+    Route::get('/cases' , [CaseController::class, 'list'])->name('api.cases.list'); 
+    Route::get('/cases/{id}' , [CaseController::class, 'retrieve'])->name('api.cases.retrieve');
+
 });
 
 Route::group(['middleware' => 'auth_donor'], function () {
@@ -106,7 +111,4 @@ Route::group(['middleware' => 'auth_donor'], function () {
     // Stripe Routes
     Route::post('/payment_providers/stripe/setup_intents' , [SetupIntentController::class, 'create'])->name('api.payment_providers.stripe.setup_intent.create'); 
 
-    //Cases
-    Route::get('/cases' , [CaseController::class, 'list'])->name('api.cases.list'); 
-    Route::get('/cases/{id}' , [CaseController::class, 'retrieve'])->name('api.cases.retrieve'); 
 });
