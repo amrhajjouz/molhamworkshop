@@ -9,6 +9,7 @@ function addPaymentController($scope, $apiRequest, $page, $init) {
 //todo : move all snake case scope to camelCase :/
     $scope.countries = $init.countries;
     $scope.deductionRatios = $init.deduction_ratios;
+    $scope.selectedCurrency = null;
 
     function init() {
         $scope.selectedAccount = {};
@@ -18,6 +19,7 @@ function addPaymentController($scope, $apiRequest, $page, $init) {
             account_name: '-',
             program_name: '-',
             name: '-',
+            account_currency: '-',
             title: '-',
             amount: 0,
             ratio: 0,
@@ -38,7 +40,7 @@ function addPaymentController($scope, $apiRequest, $page, $init) {
 
     init();
 
-    $scope.onAnyAmountChange = function(){
+    $scope.onAnyAmountChange = function () {
         $scope.payment.expectedTotalAmount = $scope.payment.expectedTotalAmountInFx * $scope.payment.fx_rate
         $scope.totalCalculation();
         $scope.updatePercentage();
@@ -53,6 +55,7 @@ function addPaymentController($scope, $apiRequest, $page, $init) {
     $scope.onAccountSelection = function (selections) {
         $scope.selectedAccount = selections[0];
         $scope.payment.fx_rate = selections[0].fx_rate;
+        $scope.selectedCurrency  = selections[0].currency;
         $scope.onAnyAmountChange();
     }
 
@@ -89,7 +92,7 @@ function addPaymentController($scope, $apiRequest, $page, $init) {
         const selected = selections[0];
         item.title = selected.title;
         item.name = selected.name;
-        item.currency = selected.currency;
+        item.account_currency = selected.account_currency;
         item.program_name = selected.program_name;
         item.account_name = selected.account_name;
         item.section_name = selected.section_name;
@@ -169,6 +172,6 @@ function addPaymentController($scope, $apiRequest, $page, $init) {
         url: 'payments',
         data: $scope.payment,
     }, function (response, data) {
-         $page.navigate('payments');
+        $page.navigate('payments');
     });
 }

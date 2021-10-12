@@ -34,7 +34,8 @@ class PurposesSeeder extends Seeder
        $types = ["تبرع زكاة","دعم اداري","الحالة","الحملة","الكفالة","المناسبة"];
 
         for ($i = 0; $i <= 1; $i++) {
-            $account = Account::inRandomOrder()->first();
+            $account = Account::where("currency","usd")->inRandomOrder()->firstOrFail(); //todo: confirm the currency part with amr
+
             $section = Section::inRandomOrder()->first();
             $program = Program::inRandomOrder()->first();
 

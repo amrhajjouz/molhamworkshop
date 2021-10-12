@@ -2,6 +2,7 @@
 
 namespace App\Http\Services\Transactions;
 
+use App\Models\Account;
 use App\Models\Donation;
 use App\Models\Journals;
 use App\Models\Payment;
@@ -34,6 +35,10 @@ class ManualTransactionService extends TransactionService
 
     private function manualDonationTransactionHandler(Payment $payment, Donation $donation, Journals $journal)
     {
+        $paymentAccount = Account::find($payment->account_id);
+
+        $paymentAccount->income($payment->amount);
+
         $deductionRatio = $donation->deductionRatio;
 
         $amountDetails = $this->calculateAmountAndDeductionRatio($donation->amount, $deductionRatio->ratio);
@@ -47,6 +52,8 @@ class ManualTransactionService extends TransactionService
             "account_id" => $payment->account_id, //Atef account id
         ]);
 
+        $paymentAccount->income($payment->amount);
+
         //create deduction transaction to atef account
         $assetDeductedTransaction = $journal->transactions()->create([
             "amount" => $amountDetails["deductedAmount"],
@@ -55,6 +62,8 @@ class ManualTransactionService extends TransactionService
             "method" => $payment->method,
             "account_id" => $payment->account_id, //Atef account id
         ]);
+
+        $paymentAccount->income($amountDetails["deductedAmount"]); //todo: check this again with amr
 
         $purposeAccountId = $donation->purpose->account_id;
 

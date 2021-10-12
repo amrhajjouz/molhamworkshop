@@ -20,6 +20,20 @@ class Account extends BaseModel
         'description' => 'array',
     ];
 
+    public function income($amount)
+    {
+        $this->income = $this->income + $amount;
+        $this->balance = $this->balance + $amount;
+        $this->save();
+    }
+
+    public function outcome($amount)
+    {
+        $this->outcome = $this->outcome + $amount;
+        $this->balance = $this->balance - $amount;
+        $this->save();
+    }
+
     public function defaultDeductionRatio(): belongsTo
     {
         return $this->belongsTo(DeductionRatios::class, "default_deduction_ratio_id");

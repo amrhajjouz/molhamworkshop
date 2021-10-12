@@ -35,6 +35,11 @@ class Payment extends BaseModel
         return $this->belongsTo(Donor::class);
     }
 
+    public function scopePaidOnly($query)
+    {
+        return $this->where("status", "paid");
+    }
+
     public function getDonorNameAttribute()
     {
         return [

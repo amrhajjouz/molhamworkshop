@@ -9,7 +9,8 @@ class Journals extends Model
 {
     use HasFactory;
 
-    protected $guarded = ["type", "notes"];
+    protected $fillable = ["notes"];
+    protected $guarded = ["type"];
 
     public function journalable()
     {

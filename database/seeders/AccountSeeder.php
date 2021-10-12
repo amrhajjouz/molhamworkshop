@@ -29,9 +29,13 @@ class AccountSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 1; $i <= 50; $i++) {
-           $accountBranch =  AccountBranch::whereType("main")->inRandomOrder()->first();
-           $currency = Currency::inRandomOrder()->first()->code;
+         for ($i = 1; $i <= 50; $i++) {
+           $accountBranch =  AccountBranch::whereType("main")->with("parentAccountBranch")->inRandomOrder()->first();
+           if($accountBranch->is_child_of_main_title){
+               $currency = Currency::inRandomOrder()->first()->code;
+           }else{
+               $currency = "usd";
+           }
            $count = count($accountBranch->childAccounts) + 1;
             DB::table('accounts')->insert([
                 'name' => '{"ar": "'.$this->faker->firstName.'","ar": "'.$this->faker->firstName.'"}',

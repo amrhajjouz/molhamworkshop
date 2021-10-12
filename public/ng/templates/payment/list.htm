@@ -41,10 +41,11 @@
             </td>
             <td class="align-middle text-center h2">
                 <dropdown>
-                    <dropdown-item ng-click="showReversalModal(u.id)" href="javascript:;"><i
-                        class="fe fe-x-circle text-danger"></i> Cancel Payment
+                    <dropdown-item ng-click="showReversalModal(u.id)" href="javascript:;" ng-show="u.status == 'paid'">
+                        <i class="fe fe-x-circle text-danger"></i> Cancel Payment
                     </dropdown-item>
-                    <dropdown-item href="javascript:;"><i class="fe fe-rotate-ccw text-danger"></i> Refund Payment
+                    <dropdown-item href="javascript:;" ng-show="u.status == 'paid'">
+                        <i class="fe fe-rotate-ccw text-danger"></i> Refund Payment
                     </dropdown-item>
                 </dropdown>
             </td>
@@ -76,7 +77,7 @@
                 </div>
             </div>
             <div class="col-12 ">
-                <button type="button" class="btn btn-danger btn-block" ng-disabled="payment.confirmation != payment.paymentId || payment.confirmation== undefined">
+                <button ng-click="reverse()" type="button" class="btn btn-danger btn-block" ng-disabled="payment.confirmation != payment.paymentId || payment.confirmation== undefined">
                     إلغاء
                 </button>
             </div>

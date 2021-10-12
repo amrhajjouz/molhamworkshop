@@ -15,7 +15,7 @@ class PurposeController extends Controller
                 ->searchBy("title", request("q"))
                 ->with("section:id,name",
                     "program:id,name",
-                    "account:id,name,default_deduction_ratio_id",
+                    "account:id,name,currency,default_deduction_ratio_id",
                     "account.defaultDeductionRatio:id,ratio,name->ar as title")
                 ->get()
                 ->map(function ($purpose) {
@@ -25,6 +25,7 @@ class PurposeController extends Controller
                         "title" => $purpose->title,
                         "name" => $purpose->name,
                         "account_name" => $purpose->account->name[app()->getlocale()],
+                        "account_currency" => $purpose->account->currency,
                         "targetable_type" => $purpose->name,
                         "section_name" => $purpose->section->name[app()->getlocale()],
                         "program_name" => $purpose->program->name[app()->getlocale()],

@@ -12,14 +12,14 @@ function listPaymentController($scope, $init, $apiRequest) {
         $('#payment-confirmation').modal('show');
     }
 
-    $scope.reverse = function (paymentId) {
-        //todo: confirm first
+    $scope.reverse = function () {
         $apiRequest.config({
             method: 'POST',
-            url: `payments/${paymentId}/reverse`,
-            data: {notes: "test"}
+            url: `payments/${$scope.payment.paymentId}/reverse`,
+            data: $scope.payment
         }, function (response, data) {
-
+            $scope.payments.load();
+            $('#payment-confirmation').modal('hide');
         }).send();
     }
 

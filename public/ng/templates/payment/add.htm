@@ -37,7 +37,7 @@
 
     <div class="col-12 col-md-6 col-xl-4">
         <div class="row">
-            <label>سعر صرف الدولار</label>
+            <label>سعر صرف الدولار <span ng-show="selectedCurrency!=null"> مقابل {{selectedCurrency}}</span></label>
             <div class="input-group mb-3" dir="ltr">
                 <input ng-model="payment.fx_rate" type="text" class="form-control" ng-change="onFxCurrencyChange()"
                        placeholder="سعر صرف الدولار">
@@ -100,57 +100,61 @@
     <div class="col-12">
         <div class="card mb-0" style="border-bottom-right-radius:0">
             <div class="card-body text-center p-1">
-                <table class="table table-sm table-nowrap table-striped mb-0">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">المبلغ بالعملة الأصلية</th>
-                        <th scope="col">الغاية</th>
-                        <th scope="col">الوصف</th>
-                        <th scope="col">اسم الحساب</th>
-                        <th scope="col">نسبة الإقتطاع</th>
-                        <th scope="col">المبلغ المقتطع بالعملة الأصلية</th>
-                        <th scope="col">البرنامج</th>
-                        <th scope="col">القسم</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="item in payment.purposes track by $index" class="position-relative">
-                        <th scope="row">{{$index + 1}}</th>
-                        <td style="width:100px">
-                            <input ng-change="onItemAmountChange(item)" ng-model="item.amount" class="form-control"
-                                   placeholder="قيمة الدفعة بالعملة المتغير"
-                                   required>
-                        </td>
-                        <td style="width:200px">
-                            <select2
-                                model="item.purpose_id"
-                                placeholder="الغاية"
-                                ajax-url="purposes/search"
-                                select-callback="onPurposeSelection(item,$index,selections)">
-                            </select2>
-                        </td>
-                        <td>{{item.name}}</td>
-                        <td>{{item.account_name}}</td>
-                        <td style="width:100px">
-                            <select2 id="deduction_ratios_{{$index}}"
-                                     model="item.deduction_ratio_id"
-                                     placeholder="نسبة الاقتطاع الافتراضية"
-                                     ajax-url="deduction_ratios/search"
-                                     select-callback="onDeductionRatioSelection(item,selections)">
-                            </select2>
-                        </td>
-                        <td>{{item.deduction_ratio_amount}}</td>
-                        <td>{{item.program_name}}</td>
-                        <td>{{item.section_name}}
-                            <button type="button" class="btn btn-white action-btn delete-record"
-                                    ng-click="deletePurpose(item)" ng-show="!$last">
-                                <span class="fe fe-minus-square"></span>
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-sm table-nowrap table-striped mb-0">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">المبلغ بالعملة الأصلية</th>
+                            <th scope="col">العملة</th>
+                            <th scope="col">الغاية</th>
+                            <th scope="col">الوصف</th>
+                            <th scope="col">اسم الحساب</th>
+                            <th scope="col">نسبة الإقتطاع</th>
+                            <th scope="col">المبلغ المقتطع بالعملة الأصلية</th>
+                            <th scope="col">البرنامج</th>
+                            <th scope="col">القسم</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in payment.purposes track by $index" class="position-relative">
+                            <th scope="row">{{$index + 1}}</th>
+                            <td style="width:100px">
+                                <input ng-change="onItemAmountChange(item)" ng-model="item.amount" class="form-control"
+                                       placeholder="قيمة الدفعة بالعملة المتغير"
+                                       required>
+                            </td>
+                            <td>{{item.account_currency}}</td>
+                            <td style="width:200px">
+                                <select2
+                                    model="item.purpose_id"
+                                    placeholder="الغاية"
+                                    ajax-url="purposes/search"
+                                    select-callback="onPurposeSelection(item,$index,selections)">
+                                </select2>
+                            </td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.account_name}}</td>
+                            <td style="width:100px">
+                                <select2 id="deduction_ratios_{{$index}}"
+                                         model="item.deduction_ratio_id"
+                                         placeholder="نسبة الاقتطاع الافتراضية"
+                                         ajax-url="deduction_ratios/search"
+                                         select-callback="onDeductionRatioSelection(item,selections)">
+                                </select2>
+                            </td>
+                            <td>{{item.deduction_ratio_amount}}</td>
+                            <td>{{item.program_name}}</td>
+                            <td>{{item.section_name}}
+                                <button type="button" class="btn btn-white action-btn delete-record"
+                                        ng-click="deletePurpose(item)" ng-show="!$last">
+                                    <span class="fe fe-minus-square"></span>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
 
                 <button type="button" class="btn btn-white action-btn add-new-record" ng-click="addNewPurpose()">
                     <span class="fe fe-plus-square"></span>
