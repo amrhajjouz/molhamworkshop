@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\Schema;
 
 trait HasContents
 {
@@ -24,9 +25,12 @@ trait HasContents
                     $this->contents()->firstOrCreate(['name' => $field, 'value' => $value['value'], 'locale' => $locale, 'proofread' => $value['proofread'], 'auto_generated' => $value['auto_generated']]);
                 }
                 $this->$field = $fieldNewValue;
-                $this->available_locales = $availableLocales;
+                if(Schema::hasColumn($this->getTable(), "available_locales")){
+                    $this->available_locales = $availableLocales;
+                }
             }
         }
         return $this->save();
     }
+    
 }

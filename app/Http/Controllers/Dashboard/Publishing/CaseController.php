@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\{Cases};
 use App\Http\Requests\Publishing\Cases\{PublishCaseRequest , ProofreadPublishingCaseRequest, UpdatePublishingCaseContentsRequest};
-use App\Http\Requests\Translation\Cases\UpdateCaseContentsRequest;
 use App\Http\Resources\Dashboard\Program\Medical\Cases\{CasesListResource, SingleCaseResource};
 
 class CaseController extends Controller

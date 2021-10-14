@@ -6,6 +6,7 @@ use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\DonorController;
 use App\Http\Controllers\Dashboard\{CountryController, CategoryController};
+use App\Http\Controllers\Dashboard\Media\SocialMediaPost\SocialMediaPostController;
 use App\Http\Controllers\Dashboard\PlaceController;
 use App\Http\Controllers\Dashboard\Program\Medical\{CaseController};
 
@@ -62,11 +63,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/programs/medical/cases/{id}/unhide', [CaseController::class, 'markAsVisible']);
     Route::post('/programs/medical/cases/{id}/archive', [CaseController::class, 'markAsArchived']);
     Route::post('/programs/medical/cases/{id}/unarchive', [CaseController::class, 'markAsUnarchived']);
-    // Route::post('/programs/medical/cases/{id}/post', [CaseController::class, 'markAsPosted']);
     Route::post('/programs/medical/cases/{id}/document', [CaseController::class, 'markAsDocumented']);
     Route::post('/programs/medical/cases/{id}/undocument', [CaseController::class, 'markAsUndocumented']);
     Route::post('/programs/medical/cases/{id}/ready_to_publish', [CaseController::class, 'markAsReadyToPublish']);
     Route::put('/programs/medical/cases/{id}/contents', [CaseController::class, 'updateCaseContents']);
+
+     // Media Routes
+     Route::get('/media/social_media_posts', [SocialMediaPostController::class, 'list']);
+     Route::post('/media/social_media_posts', [SocialMediaPostController::class, 'create']);
+     Route::put('/media/social_media_posts', [SocialMediaPostController::class, 'update']);
+     Route::get('/media/social_media_posts/{id}', [SocialMediaPostController::class, 'retrieve']);
+     Route::post('/media/social_media_posts/{id}/proofread', [SocialMediaPostController::class, 'markAsProofread']);
 
 
     Route::group(['namespace' => 'App\Http\Controllers\Dashboard',], function () {
@@ -75,6 +82,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/translation/cases/{id}' , 'Translation\CaseController@retrieve');
         Route::put('/translation/cases' , 'Translation\CaseController@update');
         Route::post('/translation/cases/{id}/proofread' , 'Translation\CaseController@markAsProofread');
+        
+        //Translation -> SocialMedia
+        Route::get('/translation/social_media_posts' , 'Translation\TranslationSocialMediaPostController@list');
+        Route::get('/translation/social_media_posts/{id}' , 'Translation\TranslationSocialMediaPostController@retrieve');
+        Route::put('/translation/social_media_posts' , 'Translation\TranslationSocialMediaPostController@update');
+        Route::post('/translation/social_media_posts/{id}/proofread' , 'Translation\TranslationSocialMediaPostController@markAsProofread');
        
         //Publishing -> Cases
         Route::get('/publishing/cases' , 'Publishing\CaseController@list');

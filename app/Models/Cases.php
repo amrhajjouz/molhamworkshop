@@ -8,7 +8,6 @@ use App\Traits\HasPlace;
 class Cases extends BaseTargetModel
 {
      use HasPlace;
-
      
      protected $table = 'programs_cases';
      protected $guarded = [];

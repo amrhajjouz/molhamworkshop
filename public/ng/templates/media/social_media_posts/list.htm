@@ -1,0 +1,35 @@
+<page-header title="قائمة المنشورات" pretitle="منشورات وسائل التواصل">
+    <a href="{{ $r('media.social_media_posts.add') }}" class="btn btn-primary"> <i class="fe fe-plus"></i>&nbsp; منشور جديد </a>
+</page-header>
+
+<datatable datalist="posts">
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">المحتوى العربي</th>
+                <th class="text-center">تم النشر</th>
+
+                <th class="text-center">خيارات</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="post in posts.data">
+                <td class="align-middle text-center">{{ post.id }}</td>
+                <td class="align-middle text-center">{{ post.body.ar.value }}</td>
+                <td class="align-middle text-center" ng-if="post.ready_to_publish"><span class="text-success">نعم</span></td>
+                <td class="align-middle text-center" ng-if="!post.ready_to_publish"><span class="text-danger">لا</span></td>
+                <td class="align-middle text-center" ng-if=" post.body.ar.proofread"><span class="text-success">نعم</span></td>
+                <td class="align-middle text-center" ng-if="! post.body.ar.proofread"><span class="text-danger">لا</span></td>
+                <td class="align-middle text-center h2">
+                    <dropdown>
+                        <dropdown-item href="{{ $r('media.social_media_posts.overview', {id: post.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
+                        <dropdown-item href="{{ $r('media.social_media_posts.edit', {id: post.id}) }}"><i class="fe fe-edit-2"></i> تعديل المعلومات</dropdown-item>
+                        <dropdown-item href="#" ng-show="canProofread(post)" ng-click="proofreadPostRequest(post.id)"><i class="fe fe-terminal"></i>  تعيين كتم تدقيقها</dropdown-item>
+                    </dropdown>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</datatable>

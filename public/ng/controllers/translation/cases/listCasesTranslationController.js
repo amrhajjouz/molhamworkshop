@@ -4,8 +4,6 @@ async function listCasesTranslationControllerInit($datalist) {
 
 function listCasesTranslationController($scope, $init, $apiRequest, $page) {
     $scope.cases = $init;
-
-    $scope.cases = $init;
     $scope.canProofread = (caseObject) => {
         let canProofread = true;
         if(caseObject.proofreadable['en'] == false) canProofread = false;

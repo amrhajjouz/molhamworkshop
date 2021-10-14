@@ -29,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
             'target' => 'App\Models\Target',
             'place' => 'App\Models\Place',
             'donor' => 'App\Models\Donor',
+            'social_media_posts' => 'App\Models\SocialMediaPost',
         ]);
     }
 }

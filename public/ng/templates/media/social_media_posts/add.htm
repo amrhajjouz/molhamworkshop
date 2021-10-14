@@ -1,0 +1,15 @@
+<page-header title=" منشور جديد" pretitle="منشورات وسائل التواصل"></page-header>
+<form class="row" name="createSocialMediaPostForm" request="createSocialMediaPostRequest">
+
+    <div class="col-12">
+        <div class="form-group">
+            <label for="body">محتوى المنشور</label>
+            <tiny-editor id="body" dir="rtl" model="socialMediaPost.body" placeholder="ادخل محتوى المنشور باللغة العربية..."> {{ socialMediaPost.body }} </tiny-editor>
+        </div>
+    </div>
+   
+
+    <div class="col-12">
+        <submit-button form="createSocialMediaPostForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>
