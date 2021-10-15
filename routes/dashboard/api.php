@@ -74,6 +74,8 @@ Route::middleware('auth')->group(function () {
      Route::put('/media/social_media_posts', [SocialMediaPostController::class, 'update']);
      Route::get('/media/social_media_posts/{id}', [SocialMediaPostController::class, 'retrieve']);
      Route::post('/media/social_media_posts/{id}/proofread', [SocialMediaPostController::class, 'markAsProofread']);
+     Route::post('/media/social_media_posts/{id}/approve', [SocialMediaPostController::class, 'markAsApproved']);
+     Route::post('/media/social_media_posts/{id}/reject', [SocialMediaPostController::class, 'markAsRejected']);
 
 
     Route::group(['namespace' => 'App\Http\Controllers\Dashboard',], function () {

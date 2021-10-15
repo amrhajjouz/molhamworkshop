@@ -15,9 +15,15 @@ class CreateSocialMediaPostsTable extends Migration
     {
         Schema::create('social_media_posts', function (Blueprint $table) {
             $table->id();
+            $table->string('description')->index();
             $table->json('body');
             $table->boolean('ready_to_publish')->default(0);
             $table->datetime('published_at')->nullable();
+            $table->enum('status' , ['pending' , 'approved' , 'rejected'])->index()->default('pending');
+            $table->bigInteger('rejected_by')->nullable();
+            $table->datetime('rejected_at')->nullable();
+            $table->bigInteger('approved_by')->nullable();
+            $table->datetime('approved_at')->nullable();
             $table->timestamps();
         });
     }

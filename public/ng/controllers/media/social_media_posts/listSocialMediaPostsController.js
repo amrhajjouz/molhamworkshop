@@ -21,5 +21,19 @@ function listSocialMediaPostsController($scope, $init, $apiRequest, $page) {
                 $page.reload();
             }).send();
     };
+   
+    $scope.approvePostRequest = (postId) => {
+        $apiRequest
+            .config({ method: 'POST', url: `media/social_media_posts/${postId}/approve`, data: { id: postId } }, function (response, data) {
+                $page.reload();
+            }).send();
+    };
+   
+    $scope.rejectPostRequest = (postId) => {
+        $apiRequest
+            .config({ method: 'POST', url: `media/social_media_posts/${postId}/reject`, data: { id: postId } }, function (response, data) {
+                $page.reload();
+            }).send();
+    };
 
 }

@@ -1,5 +1,5 @@
 function addSocialMediaPostController($scope, $location, $apiRequest, $page, $init) {
-    $scope.socialMediaPost = { body: null, };
+    $scope.socialMediaPost = { body: null, description:""};
     $scope.createSocialMediaPostRequest = $apiRequest.config(
         {
             method: 'POST',

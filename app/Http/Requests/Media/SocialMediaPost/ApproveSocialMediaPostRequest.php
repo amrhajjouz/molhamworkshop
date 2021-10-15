@@ -2,13 +2,14 @@
 
 namespace App\Http\Requests\Media\SocialMediaPost;
 
-use App\Models\Category;
+use App\Models\Cases;
 use App\Models\Place;
+use App\Models\SocialMediaPost;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
-class CreateSocialMediaPostRequest extends FormRequest
+class ApproveSocialMediaPostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,23 +29,9 @@ class CreateSocialMediaPostRequest extends FormRequest
     public function rules()
     {
         return [
-            'description' => ['required', 'string', 'between:3,255'],
-            'body' => ['required', 'string', 'between:3,1000'],
+            'id' => ['required' , 'exists:'.SocialMediaPost::getTableName().',id'],
         ];
     }
 
-    public function validated()
-    {
-        return  [
-            'body' => [
-                'ar' => [
-                    'value' =>  $this->body,
-                    'proofread' => false,
-                    'auto_generated' => false,
-                ],
-            ],
-            'description'=>$this->description 
-        ];
-    }
 
 }

@@ -32,6 +32,7 @@ class UpdateSocialMediaPostRequest extends FormRequest
             'id' => ['required' , 'exists:'.SocialMediaPost::getTableName().',id'],
             'body' => ['required', 'array'],
             'body.ar.value' => ['required', 'string', 'between:3,1000'],
+            'description' => ['required', 'string', 'between:3,255'],
         ];
     }
 
@@ -45,6 +46,7 @@ class UpdateSocialMediaPostRequest extends FormRequest
                     'auto_generated' => false,
                 ],
             ],
+            'description'=>$this->description 
         ];
     }
 

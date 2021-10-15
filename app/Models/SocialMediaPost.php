@@ -17,6 +17,8 @@ class SocialMediaPost extends BaseModel
         'published_at' =>  'datetime:Y-m-d H:i:s',
         'created_at' =>  'datetime:Y-m-d H:i:s',
         'updated_at' =>  'datetime:Y-m-d H:i:s',
+        'approved_at' =>  'datetime:Y-m-d H:i:s',
+        'rejected_at' =>  'datetime:Y-m-d H:i:s',
     ];
 
     public function getProofreadableAttribute()

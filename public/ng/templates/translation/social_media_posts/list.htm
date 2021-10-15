@@ -6,7 +6,7 @@
         <thead>
             <tr>
                 <th class="text-center">#</th>
-                <th class="text-center">المحتوى العربي</th>
+                <th class="text-center">العنوان</th>
                 <th class="text-center">الإنكليزية</th>
                 <th class="text-center">تم تدقيقها لغويا</th>
                 <th class="text-center">خيارات</th>
@@ -16,7 +16,7 @@
         <tbody>
             <tr ng-repeat="post in posts.data">
                 <td class="align-middle text-center">{{ post.id }}</td>
-                <td class="align-middle text-center">{{ post.body.ar.value }}</td>
+                <td class="align-middle text-center">{{ post.description }}</td>
                 <td class="align-middle text-center" ng-if="post.body.en"><span class="text-success">نعم</span></td>
                 <td class="align-middle text-center" ng-if="!post.body.en"><span class="text-danger">لا</span></td>
                 <td class="align-middle text-center" ng-if="post.body.en.proofread"><span class="text-success">نعم</span></td>

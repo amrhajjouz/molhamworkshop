@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Dashboard\Media\SocialMediaPost;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Media\SocialMediaPost\{ProofreadSocialMediaPostRequest , CreateSocialMediaPostRequest , UpdateSocialMediaPostRequest};
+use App\Http\Requests\Media\SocialMediaPost\{ApproveSocialMediaPostRequest, ProofreadSocialMediaPostRequest , CreateSocialMediaPostRequest , RejectSocialMediaPostRequest, UpdateSocialMediaPostRequest};
 use App\Models\{SocialMediaPost};
 
 class SocialMediaPostController extends Controller
@@ -51,6 +51,7 @@ class SocialMediaPostController extends Controller
         try {
             $socialMediaPost = SocialMediaPost::findOrFail($request->id);
             $socialMediaPost->updateContentFields($request->validated());
+            $socialMediaPost->update(['description' => $request->validated()['description']]);
             return response()->json($socialMediaPost);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -61,6 +62,23 @@ class SocialMediaPostController extends Controller
     {
         try {
             return response()->json(SocialMediaPost::findOrFail($id)->markAsProofread('ar'));
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+  
+    public function markAsRejected(RejectSocialMediaPostRequest $request, $id)
+    {
+        try {
+            return response()->json(SocialMediaPost::findOrFail($id)->update(['status' => 'rejected' , 'rejected_at' => date('Y-m-d H:i:s' , time()) , 'rejected_by'=>auth()->id() ]));
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+    public function markAsApproved(ApproveSocialMediaPostRequest $request, $id)
+    {
+        try {
+            return response()->json(SocialMediaPost::findOrFail($id)->update(['status' => 'approved' , 'approved_at' => date('Y-m-d H:i:s' , time()) , 'approved_by'=>auth()->id() ]));
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
