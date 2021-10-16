@@ -6,6 +6,7 @@ use App\Models\Account;
 use App\Models\Donation;
 use App\Models\Journals;
 use App\Models\Payment;
+use App\Models\Transaction;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -23,7 +24,7 @@ class ManualTransactionService extends TransactionService
             DB::beginTransaction();
 
             foreach ($donations as $donation) {
-                $this->manualDonationTransactionHandler($payment, $donation, $journal);
+                $this->donationTransactionHandler($payment, $donation, $journal);
             }
 
             DB::commit();
@@ -33,7 +34,34 @@ class ManualTransactionService extends TransactionService
         }
     }
 
-    private function manualDonationTransactionHandler(Payment $payment, Donation $donation, Journals $journal)
+    /**
+     * @throws Exception
+     */
+    public function processEPayment(Journals $journal)
+    {
+        try {
+            $payment = $journal->journalable;
+            $donations = $payment->donations;
+
+            DB::beginTransaction();
+
+            foreach ($donations as $donation) {
+                $this->donationTransactionHandler($payment, $donation, $journal);
+            }
+
+
+            DB::commit();
+        } catch (Exception  $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    private function EPaymentFeeTransactionsHandler(){
+
+    }
+
+    private function donationTransactionHandler(Payment $payment, Donation $donation, Journals $journal)
     {
         $paymentAccount = Account::find($payment->account_id);
 
@@ -43,20 +71,23 @@ class ManualTransactionService extends TransactionService
 
         $amountDetails = $this->calculateAmountAndDeductionRatio($donation->amount, $deductionRatio->ratio);
 
+        $debitCreditDetails = $paymentAccount->getIncomeAmountArray($amountDetails["netAmount"]);
         //create net transaction to atef account
         $assetNetTransaction = $journal->transactions()->create([
-            "amount" => $amountDetails["netAmount"],
+            "debit" => $debitCreditDetails["debit"],
+            "credit" => $debitCreditDetails["credit"],
             "currency" => $donation->currency,
             "fx_rate" => $payment->fx_rate,
             "method" => $payment->method,
-            "account_id" => $payment->account_id, //Atef account id
+            "account_id" => $payment->account_id
         ]);
 
-        $paymentAccount->income($payment->amount);
+        $paymentAccount->income($paymentAccount->amount);
 
         //create deduction transaction to atef account
         $assetDeductedTransaction = $journal->transactions()->create([
-            "amount" => $amountDetails["deductedAmount"],
+            "debit" => $debitCreditDetails["debit"],
+            "credit" => $debitCreditDetails["credit"],
             "currency" => $donation->currency,
             "fx_rate" => $payment->fx_rate,
             "method" => $payment->method,
@@ -65,15 +96,17 @@ class ManualTransactionService extends TransactionService
 
         $paymentAccount->income($amountDetails["deductedAmount"]); //todo: check this again with amr
 
-        $purposeAccountId = $donation->purpose->account_id;
+        $purposeAccount = $donation->purpose->account;
 
+        $debitCreditDetails = $purposeAccount->getIncomeAmountArray($amountDetails["netAmount"]);
         //create normal transaction
         $liabilityNetTransaction = $journal->transactions()->create([
-            "amount" => $amountDetails["netAmount"],
+            "debit" => $debitCreditDetails["debit"],
+            "credit" => $debitCreditDetails["credit"],
             "currency" => $donation->currency,
             "fx_rate" => $payment->fx_rate,
             "method" => $payment->method,
-            "account_id" => $purposeAccountId, //purpose account id
+            "account_id" => $purposeAccount->id, //purpose account id
             "section_id" => $donation->section_id,
             "program_id" => $donation->program_id,
             "related_to" => $assetNetTransaction->id,
@@ -81,7 +114,8 @@ class ManualTransactionService extends TransactionService
 
         //create deduction transaction
         $liabilityDeductedTransaction = $journal->transactions()->create([
-            "amount" => $amountDetails["deductedAmount"],
+            "debit" => $debitCreditDetails["debit"],
+            "credit" => $debitCreditDetails["credit"],
             "currency" => $donation->currency,
             "fx_rate" => $payment->fx_rate,
             "method" => $payment->method,

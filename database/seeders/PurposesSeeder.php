@@ -35,7 +35,6 @@ class PurposesSeeder extends Seeder
 
         for ($i = 0; $i <= 1; $i++) {
             $account = Account::where("currency","usd")->inRandomOrder()->firstOrFail(); //todo: confirm the currency part with amr
-
             $section = Section::inRandomOrder()->first();
             $program = Program::inRandomOrder()->first();
 

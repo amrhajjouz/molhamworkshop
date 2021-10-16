@@ -12,7 +12,7 @@ class Transaction extends Model
     use HasFactory;
     use HasAppendablePagination;
 
-    protected $fillable = ["amount", "currency", "fx_rate", "method", "account_id", "section_id", "program_id", "related_to"];
+    protected $fillable = ["debit", "credit", "currency", "fx_rate", "method", "account_id", "section_id", "program_id", "related_to"];
 
     public function getProgramNameAttribute()
     {
@@ -41,12 +41,12 @@ class Transaction extends Model
 
     public function getJournalTypeAttribute()
     {
-       switch ($this->journal->journalable_type ) {
-           case "App\Models\Payment":
-               return "Payment";
-           default:
-               return "--";
-       }
+        switch ($this->journal->journalable_type) {
+            case "App\Models\Payment":
+                return "Payment";
+            default:
+                return "--";
+        }
     }
 
     public function section(): BelongsTo

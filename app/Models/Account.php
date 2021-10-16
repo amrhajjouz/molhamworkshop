@@ -9,12 +9,10 @@ class Account extends BaseModel
 {
     use HasFactory;
 
-    protected $fillable = ["name",  "description", "branch_id",  "default_deduction_ratio_id", "currency", "code", "income", "outcome", "balance"];
-    protected $guarded = ["code"];
-
     public static $countryCodeDefault = "TR";
     public static $currencyDefault = "USD";
-
+    protected $fillable = ["name", "description", "branch_id", "default_deduction_ratio_id", "currency", "code", "income", "outcome", "balance"];
+    protected $guarded = ["code"];
     protected $casts = [
         'name' => 'array',
         'description' => 'array',
@@ -46,10 +44,11 @@ class Account extends BaseModel
 
     public function accountCurrency(): BelongsTo
     {
-        return $this->BelongsTo(Currency::class, "currency","code");
+        return $this->BelongsTo(Currency::class, "currency", "code");
     }
 
-    public function getMainNameAccountBranchAttribute(){
+    public function getMainNameAccountBranchAttribute()
+    {
         return $this->parentAccountBranch->name;
     }
 
@@ -62,7 +61,7 @@ class Account extends BaseModel
 
     public function scopeSearchByPrefixCodeList($query, $list)
     {
-        if($list == null){
+        if ($list == null) {
             return null;
         }
 
@@ -71,5 +70,51 @@ class Account extends BaseModel
                 $query->orwhere('code', 'like', $item . '%');
             }
         });
+    }
+
+    public function getIncomeAmountArray($amount)
+    {
+        $code = $this->code;
+        $debit = 0;
+        $credit = 0;
+        switch ($code) {
+            case preg_match('/1-*/', $code) :
+            case preg_match('/4-*/', $code) :
+                $debit = $amount;
+                break;
+            case preg_match('/2-*/', $code) :
+            case preg_match('/3-*/', $code) :
+            case preg_match('/5-*/', $code) :
+                $credit = $amount;
+                break;
+        }
+
+        return [
+            "debit" => $debit,
+            "credit" => $credit
+        ];
+    }
+
+    public function getOutcomeAmountArray($amount)
+    {
+        $code = $this->code;
+        $debit = 0;
+        $credit = 0;
+        switch ($code) {
+            case preg_match('/1-*/', $code) :
+            case preg_match('/4-*/', $code) :
+            $credit = $amount;
+                break;
+            case preg_match('/2-*/', $code) :
+            case preg_match('/3-*/', $code) :
+            case preg_match('/5-*/', $code) :
+            $debit = $amount;
+                break;
+        }
+
+        return [
+            "debit" => $debit,
+            "credit" => $credit
+        ];
     }
 }

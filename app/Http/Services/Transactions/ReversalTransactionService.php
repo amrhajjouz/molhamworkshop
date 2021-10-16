@@ -41,9 +41,10 @@ class ReversalTransactionService extends TransactionService
 
         $reversalJournal = $journal->replicate()->fill([
             'notes' => $note,
-            'type' => "reversal",
             'related_to' => $journal->id,
         ]);
+
+        $reversalJournal->type = "reversal";
 
         $reversalJournal->save();
 

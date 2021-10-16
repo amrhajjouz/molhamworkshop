@@ -16,7 +16,8 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('journal_id');
-            $table->decimal('amount', $precision = 12, $scale = 2);
+            $table->decimal('debit', $precision = 12, $scale = 2);
+            $table->decimal('credit', $precision = 12, $scale = 2);
             $table->string("currency", 10);
             $table->decimal('fx_rate', $precision = 12, $scale = 2)->default(0);
             $table->enum('method', ["cash", "transfer", "card(stripe)", "paypal(paypal)", "ideal", "giropay", "sofort"]);

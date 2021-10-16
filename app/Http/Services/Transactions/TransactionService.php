@@ -9,6 +9,5 @@ class TransactionService
         $deductedAmount = ($amount * $deductionRatioRate) / 100;
 
         return ["deductedAmount" => $deductedAmount, "netAmount" => $amount - $deductedAmount];
-
     }
 }
