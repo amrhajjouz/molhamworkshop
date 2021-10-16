@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Dashboard\Media\SocialMediaPost;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Media\SocialMediaPost\{ApproveSocialMediaPostRequest, ProofreadSocialMediaPostRequest , CreateSocialMediaPostRequest , RejectSocialMediaPostRequest, UpdateSocialMediaPostRequest};
+use App\Http\Requests\Media\SocialMediaPost\{ApproveSocialMediaPostRequest, ProofreadSocialMediaPostRequest, CreateSocialMediaPostRequest, RejectSocialMediaPostRequest, UpdateSocialMediaPostPublishingOptions, UpdateSocialMediaPostRequest};
 use App\Models\{SocialMediaPost};
 
 class SocialMediaPostController extends Controller
@@ -66,11 +66,11 @@ class SocialMediaPostController extends Controller
             return ['error' => $e->getMessage()];
         }
     }
-  
+
     public function markAsRejected(RejectSocialMediaPostRequest $request, $id)
     {
         try {
-            return response()->json(SocialMediaPost::findOrFail($id)->update(['status' => 'rejected' , 'rejected_at' => date('Y-m-d H:i:s' , time()) , 'rejected_by'=>auth()->id() ]));
+            return response()->json(SocialMediaPost::findOrFail($id)->update(['status' => 'rejected', 'rejected_at' => date('Y-m-d H:i:s', time()), 'rejected_by' => auth()->id()]));
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
@@ -78,10 +78,20 @@ class SocialMediaPostController extends Controller
     public function markAsApproved(ApproveSocialMediaPostRequest $request, $id)
     {
         try {
-            return response()->json(SocialMediaPost::findOrFail($id)->update(['status' => 'approved' , 'approved_at' => date('Y-m-d H:i:s' , time()) , 'approved_by'=>auth()->id() ]));
+            return response()->json(SocialMediaPost::findOrFail($id)->update(['status' => 'approved', 'approved_at' => date('Y-m-d H:i:s', time()), 'approved_by' => auth()->id()]));
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
 
+    public function updateSocialMediaPostPublishingOptions(UpdateSocialMediaPostPublishingOptions $request, $id)
+    {
+        $post = SocialMediaPost::findOrFail($id);
+        foreach ($request->validated()['publishing'] as $type => $value) {
+            if($value==true) $post->$type = date('Y-m-d H:i:s', time());
+            else $post->$type = null;
+        }
+        $post->save();
+        return response()->json(null);
+    }
 }

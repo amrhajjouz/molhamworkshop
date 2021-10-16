@@ -61,6 +61,12 @@ class SocialMediaPost extends BaseModel
             $this->$field = $fieldNewValue;
         }
         // if en + ar proofread then set as ready to publish
+        if(isset($this->$field['ar']['value']) && isset($this->$field['en']['value'])){
+            $this->ready_to_publish = true;
+        }else{
+            $this->ready_to_publish = false;
+        }
+        
         $this->save();
         foreach ($contentsFields as $field) {
             $this->contents()->where('name', $field)->where('locale', $targetLocale)->orderBy('id', 'desc')->firstOrFail()->update(['proofread' => true]);

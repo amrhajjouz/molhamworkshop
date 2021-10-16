@@ -4,6 +4,7 @@ async function listSocialMediaPostsControllerInit($datalist) {
 
 function listSocialMediaPostsController($scope, $init, $apiRequest, $page) {
     $scope.posts = $init;
+    $scope.selectedSocialMediaPost = {publishing:[]};
 
     $scope.canProofread = (postObject) => {
         let canProofread = true;
@@ -35,5 +36,37 @@ function listSocialMediaPostsController($scope, $init, $apiRequest, $page) {
                 $page.reload();
             }).send();
     };
+  
 
+    $scope.openPublishingModalOptions = (post)=>{
+        $('#publish-modal').modal('show');
+        post.publishing = {
+            published_facebook_at:post.published_facebook_at != null ,
+            published_twitter_at:post.published_twitter_at != null ,
+            published_youtube_at:post.published_youtube_at != null ,
+            published_instagram_at:post.published_instagram_at != null ,
+        };
+        $scope.updatePublishingOptionsRequest.config.url = `dashboard/api/media/social_media_posts/${post.id}/publishing`;
+        $scope.updatePublishingOptionsRequest.config.data = post;
+
+        $scope.selectedSocialMediaPost = post;
+        
+    }
+
+    $scope.updatePublishingOptionsRequest = $apiRequest.config(
+        {
+          method: "PUT",
+          url:  `media/social_media_posts/${$scope.selectedSocialMediaPost.id}/publishing`,
+          data: $scope.selectedSocialMediaPost,
+        },
+        function (response, data) {
+          $("#publish-modal").on("hidden.bs.modal", function (e) {
+            $page.reload();
+          });
+    
+          $("#publish-modal").modal("hide");
+    
+          $scope.selectedSocialMediaPost = {publishing:[]};
+        }
+      );
 }

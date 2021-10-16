@@ -9,7 +9,8 @@
                 <th class="text-center">#</th>
                 <th class="text-center">العنوان</th>
                 <th class="text-center">الحالة</th>
-                <th class="text-center">تم النشر</th>
+                <th class="text-center"> جاهز للنشر</th>
+                <th class="text-center">تم تدقيقها</th>
 
                 <th class="text-center">خيارات</th>
             </tr>
@@ -20,13 +21,13 @@
                 <td class="align-middle text-center">{{ post.id }}</td>
                 <td class="align-middle text-center">{{ post.description}}</td>
                 <td class="align-middle text-center">
-                    <div ng-if="post.status=='pending'"><span class=""> قيد الإنتظار </div>
-                    <div ng-if="post.status=='approved'"><span class="text-success">تمت الموافقة</div>
-                    <div ng-if="post.status=='rejected'"><span class="text-danger">تم الرفض</div>
-
-                </span></td>
+                    <div ng-if="post.status=='pending'"><span class=""> قيد الإنتظار </span></div>
+                    <div ng-if="post.status=='approved'"><span class="text-success">تمت الموافقة</span></div>
+                    <div ng-if="post.status=='rejected'"><span class="text-danger">تم الرفض</span></div>
+                </td>
                 <td class="align-middle text-center" ng-if="post.ready_to_publish"><span class="text-success">نعم</span></td>
                 <td class="align-middle text-center" ng-if="!post.ready_to_publish"><span class="text-danger">لا</span></td>
+
                 <td class="align-middle text-center" ng-if=" post.body.ar.proofread"><span class="text-success">نعم</span></td>
                 <td class="align-middle text-center" ng-if="! post.body.ar.proofread"><span class="text-danger">لا</span></td>
                 <td class="align-middle text-center h2">
@@ -36,9 +37,41 @@
                         <dropdown-item href="#" ng-show="canProofread(post)" ng-click="proofreadPostRequest(post.id)"><i class="fe fe-terminal"></i>  تعيين كتم تدقيقها</dropdown-item>
                         <dropdown-item href="#" ng-show="post.status == 'pending' || post.status == 'rejected'" ng-click="approvePostRequest(post.id)"><i class="fe fe-check"></i>قبول</dropdown-item>
                         <dropdown-item href="#"ng-show="post.status == 'pending' || post.status == 'approved'"  ng-click="rejectPostRequest(post.id)"><i class="fe fe-x"></i>رفض</dropdown-item>
+                        <dropdown-item href="#"  ng-click="openPublishingModalOptions(post)"><i class="fe fe-check-square"></i>خيارات النشر</dropdown-item>
                     </dropdown>
                 </td>
             </tr>
         </tbody>
     </table>
 </datatable>
+
+<modal id="publish-modal">
+    <modal-title>
+      <span>
+          <i class="fe fe-plus-circle"></i>&nbsp;خيارات النشر
+      </span>
+    </modal-title>
+    <div>
+      <modal-body>
+        <form name="updatePublishingOptionsForm" request="updatePublishingOptionsRequest" id="myForm">
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="form-group">
+                <input type="checkbox" ng-value="true" id="facebook" name="facebook" ng-model="selectedSocialMediaPost.publishing['published_facebook_at']" ng-checked="selectedSocialMediaPost.published_facebook_at != null">
+                <label for="facebook"> facebook</label><br>
+                <input type="checkbox" ng-value="true" id="youtube" name="youtube" ng-model="selectedSocialMediaPost.publishing['published_youtube_at']" ng-checked="selectedSocialMediaPost.published_youtube_at != null">
+                <label for="youtube"> youtube</label><br>
+                <input type="checkbox" ng-value="true" id="twitter" name="twitter" ng-model="selectedSocialMediaPost.publishing['published_twitter_at']" ng-checked="selectedSocialMediaPost.published_twitter_at != null">
+                <label for="twitter"> twitter</label><br>
+                <input type="checkbox" ng-value="true" id="instagram" name="instagram" ng-model="selectedSocialMediaPost.publishing['published_instagram_at']" ng-checked="selectedSocialMediaPost.published_instagram_at != null">
+                <label for="instagram"> instagram</label><br>
+              </div>
+            </div>
+          </div>
+
+          <submit-button form="updatePublishingOptionsForm" icon="fe fe-plus">تعديل</submit-button
+          >
+        </form>
+      </modal-body>
+    </div>
+  </modal>
