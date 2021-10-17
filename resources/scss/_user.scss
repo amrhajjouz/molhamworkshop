@@ -1,0 +1,122 @@
+//
+// user.scss
+// Use this to write your custom SCSS
+//
+
+[dir="rtl"] body {
+    font-family: "Tajawal", sans-serif;
+}
+
+/* Buttons */
+
+@each $color, $value in $theme-colors {
+    .btn-#{$color}-soft {
+        background-color: tint-color($value, 75%);
+        border: $btn-border-width solid tint-color($value, 75%);
+        color: $value;
+        &:hover,&:focus{
+            background-color: tint-color($value, 65%);
+            border: $btn-border-width solid tint-color($value, 65%);
+            color: $value;
+        }
+    }
+}
+
+.btn > i{
+    position: relative;
+    top: 2px;
+}
+
+/* Tables */
+
+.table>:not(:first-child) {
+    border-top: 2px solid $lighter;
+}
+
+.table-filters{
+    .badge{
+        padding: 0.125rem 0.5rem;
+        font-size: 0.8125rem;
+        border-radius: 0.25rem;
+        line-height: 1.85;
+        .btn-close{
+            margin-top: 3px;
+        }
+    }
+}
+
+/* Cropper */
+
+.cropper-container{
+    position: relative;
+    width: 100% !important;
+    height: 0 !important;
+    overflow: hidden;
+    padding-bottom: 56.25%;
+}
+
+/* Dropzone */
+
+.dropzone-square-imgs{
+    flex-direction: row;
+    .dz-default{
+        width: 120px;
+        height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .preview-images{
+        display: flex;
+        .preview-images-item{
+            width: 120px;
+            height: auto;
+            .avatar{
+                width: 120px;
+                height: 120px;
+                margin-bottom: 10px;
+                >.btn{
+                    position: absolute;
+                    top: -10px;
+                    left: -10px;
+                }
+            }
+        }
+    }
+
+    &.dropzone-square-imgs-lg{
+        .dz-default{
+            width: 160px;
+            height: 160px;
+        }
+        .preview-images{
+            display: flex;
+            .preview-images-item{
+                width: 160px;
+                .avatar{
+                    width: 160px;
+                    height: 160px;
+                }
+            }
+        }
+    }
+
+    &.dropzone-square-imgs-sm{
+        .dz-default{
+            width: 90px;
+            height: 90px;
+        }
+        .preview-images{
+            display: flex;
+            .preview-images-item{
+                width: 90px;
+                .avatar{
+                    width: 90px;
+                    height: 90px;
+                    margin-bottom: 5px;
+                }
+            }
+        }
+    }
+}

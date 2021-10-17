@@ -14,16 +14,21 @@
                 <th class="text-center">خيارات</th>
             </tr>
         </thead>
-        
+
         <tbody>
             <tr ng-repeat="u in users.data">
                 <td class="align-middle text-center">{{ u.id }}</td>
                 <td class="align-middle text-center">{{ u.name }}</td>
                 <td class="align-middle text-center">{{ u.email }}</td>
-                <td class="align-middle text-center h2">
+                <td class="align-middle text-center d-flex align-items-center justify-content-center">
+                    <a href="#" class="btn btn-flush text-danger btn-lg me-2 p-0">
+                        <span class="fe fe-trash-2"></span>
+                    </a>
                     <dropdown>
-                        <dropdown-item href="{{ $r('users.overview', {id: u.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
-                        <dropdown-item href="{{ $r('users.edit', {id: u.id}) }}"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
+                        <dropdown-item href="{{ $r('users.overview', {id: u.id}) }}"><i class="fe fe-eye"></i> نظرة عامة
+                        </dropdown-item>
+                        <dropdown-item href="{{ $r('users.edit', {id: u.id}) }}"><i class="fe fe-edit-2"></i> تعديل
+                        </dropdown-item>
                     </dropdown>
                 </td>
             </tr>

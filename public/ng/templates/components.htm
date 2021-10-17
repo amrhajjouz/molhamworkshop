@@ -1,0 +1,340 @@
+<page-header title="العناصر" pretitle="العناصر"></page-header>
+
+<!-- .row -->
+<div class="row">
+    <div class="col-12">
+        <!-- Heading -->
+        <h2 class="mb-4">
+            Upload Multiple Files
+        </h2>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 col-12">
+                        <!-- Dropzone -->
+                        <div class="dropzone dropzone-multiple" data-dropzone='{"url": "https://"}'>
+                            <!-- Fallback -->
+                            <div class="fallback">
+                                <div class="custom-file">
+                                    <input type="file" class="form-control" id="customFileUploadMultiple" multiple>
+                                    <label class="form-label" for="customFileUploadMultiple">Choose file</label>
+                                </div>
+                            </div>
+                            <!-- Preview -->
+                            <div class="list-group list-group-flush dz-preview dz-preview-multiple">
+                                <div class="list-group-item">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <!-- Title -->
+                                            <div class="d-flex align-items-center">
+                                                <i class="fe fe-paperclip pe-2 text-primary"></i>
+                                                <h5 class="mb-0" data-dz-name>...</h5>
+                                            </div>
+                                            <!-- Size 
+                                    <small class="small text-muted" data-dz-size>...</small>-->
+                                        </div>
+                                        <div class="col-auto">
+                                            <a href="#" class="text-danger" data-dz-remove>
+                                                <i class="fe fe-trash"></i>
+                                            </a>
+                                        </div>
+                                    </div> <!-- / .row -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <hr class="my-5">
+
+        <!-- Heading -->
+        <h2 class="mb-4">
+            Upload Single Files
+        </h2>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col">
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+
+                                <!-- Avatar -->
+                                <div class="avatar avatar-sm">
+                                    <div class="avatar-title fs-lg bg-primary-soft rounded-circle text-primary">
+                                        <i class="fe fe-file-text"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col ms-n2">
+
+                                <!-- Heading -->
+                                <h4 class="mb-1">
+                                    يرجى رفع السيرة الذاتية
+                                </h4>
+
+                                <!-- Text -->
+                                <small class="text-muted">
+                                    لا يزيد حجم الملف Word أو PDF عن 20 ميغا.
+                                </small>
+
+                            </div>
+                        </div> <!-- / .row -->
+                    </div>
+                    <div class="col-auto">
+
+                        <!-- Button -->
+                        <button class="btn btn-sm btn-success-soft me-2">
+                            رفع الملف
+                        </button>
+
+                        <!-- Button -->
+                        <button class="btn btn-sm btn-danger-soft me-2">
+                            حذف الملف
+                        </button>
+
+                        <!-- Button -->
+                        <button class="btn btn-sm btn-primary-soft">
+                            تعديل الملف
+                        </button>
+
+                    </div>
+                </div> <!-- / .row -->
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <hr class="my-5">
+
+        <!-- Heading -->
+        <h2 class="mb-4">
+            Toasts
+        </h2>
+
+        <div class="card">
+            <div class="card-body">
+
+                <button type="button" class="btn btn-primary" id="myBtn1">إشعار عادي</button>
+                <button type="button" class="btn btn-success" id="myBtn2">حفظ التعديلات</button>
+
+                <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
+                    <!-- Normal -->
+                    <div class="toast" id="myToast1" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-header">
+                            <strong class="me-auto">إشعار عادي</strong>
+                            <small>منذ 11 دقيقة</small>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">
+                            هذا مثال عن إشعار عادي
+                        </div>
+                    </div>
+
+                    <!-- Normal -->
+                    <div id="myToast2" class="toast align-items-center text-white bg-success border-0" role="alert"
+                        aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                تم حفظ التعديلات
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                                aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Divider -->
+        <hr class="my-5">
+
+        <!-- Heading -->
+        <h2 class="mb-4">
+            Upload Single Image
+        </h2>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row justify-content-between align-items-center">
+                    <div class="col">
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+
+                                <!-- Avatar -->
+                                <div class="avatar">
+                                    <img class="avatar-img rounded-circle"
+                                        src="https://molhamteam.com/assets//img/molhamteam/11.jpg" alt="...">
+                                </div>
+
+                            </div>
+                            <div class="col ms-n2">
+
+                                <!-- Heading -->
+                                <h4 class="mb-1">
+                                    صورتك الشخصية
+                                </h4>
+
+                                <!-- Text -->
+                                <small class="text-muted">
+                                    لا يزيد عرض وطول PNG أو JPG عن 1000 بكسل.
+                                </small>
+
+                            </div>
+                        </div> <!-- / .row -->
+                    </div>
+                    <div class="col-auto">
+
+                        <!-- Button -->
+                        <button class="btn btn-sm btn-success-soft me-2">
+                            رفع صورة
+                        </button>
+
+                        <!-- Button -->
+                        <button class="btn btn-sm btn-danger-soft me-2">
+                            حذف الصورة
+                        </button>
+
+                        <!-- Button -->
+                        <button class="btn btn-sm btn-primary-soft">
+                            تعديل الصورة
+                        </button>
+
+                    </div>
+                </div> <!-- / .row -->
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <hr class="my-5">
+        <!-- Heading -->
+        <h2 class="mb-4">
+            Upload Multiple Files
+        </h2>
+
+        <div class="card">
+            <div class="card-body">
+                <!-- Dropzone -->
+                <div class="dropzone dropzone-multiple dropzone-square-imgs" data-dropzone='{"url": "https://"}'>
+                    <!-- Message -->
+                    <div class="dz-default dz-message" data-dz-message><i class="fe fe-upload fs-2"></i><span>اختيار
+                            الصور</span></div>
+                    <!-- Fallback -->
+                    <div class="fallback">
+                        <div class="custom-file">
+                            <input type="file" class="form-control" id="customFileUploadMultiple" multiple>
+                            <label class="form-label" for="customFileUploadMultiple">Choose file</label>
+                        </div>
+                    </div>
+                    <!-- Preview -->
+                    <div class="preview-images dz-preview dz-preview-multiple">
+                        <div class="preview-images-item ms-4">
+                            <!-- Image -->
+                            <div class="avatar">
+                                <img class="avatar-img rounded" src="data:image/svg+xml,%3csvg3c/svg%3e" alt="..."
+                                    data-dz-thumbnail>
+                                <a href="#" class="btn btn-sm btn-rounded-circle btn-danger" data-dz-remove>
+                                    <i class="fe fe-trash"></i>
+                                </a>
+                            </div>
+                            <!-- Heading -->
+                            <h5 class="mb-1" data-dz-name>...</h5>
+                            <!-- Text -->
+                            <small class="text-muted" data-dz-size>...</small>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <hr class="my-5">
+        <!-- Heading -->
+        <h2 class="mb-4">
+            Upload Multiple Files Large
+        </h2>
+
+        <div class="card">
+            <div class="card-body">
+                <!-- Dropzone -->
+                <div class="dropzone dropzone-multiple dropzone-square-imgs dropzone-square-imgs-lg" data-dropzone='{"url": "https://"}'>
+                    <!-- Message -->
+                    <div class="dz-default dz-message" data-dz-message><i class="fe fe-upload fs-2"></i><span>اختيار
+                            الصور</span></div>
+                    <!-- Fallback -->
+                    <div class="fallback">
+                        <div class="custom-file">
+                            <input type="file" class="form-control" id="customFileUploadMultiple" multiple>
+                            <label class="form-label" for="customFileUploadMultiple">Choose file</label>
+                        </div>
+                    </div>
+                    <!-- Preview -->
+                    <div class="preview-images dz-preview dz-preview-multiple">
+                        <div class="preview-images-item ms-4">
+                            <!-- Image -->
+                            <div class="avatar">
+                                <img class="avatar-img rounded" src="data:image/svg+xml,%3csvg3c/svg%3e" alt="..."
+                                    data-dz-thumbnail>
+                                <a href="#" class="btn btn-sm btn-rounded-circle btn-danger" data-dz-remove>
+                                    <i class="fe fe-trash"></i>
+                                </a>
+                            </div>
+                            <!-- Heading -->
+                            <h5 class="mb-1" data-dz-name>...</h5>
+                            <!-- Text -->
+                            <small class="text-muted" data-dz-size>...</small>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+        <!-- Divider -->
+        <hr class="my-5">
+        <!-- Heading -->
+        <h2 class="mb-4">
+            Upload Multiple Files Small
+        </h2>
+
+        <div class="card">
+            <div class="card-body">
+                <!-- Dropzone -->
+                <div class="dropzone dropzone-multiple dropzone-square-imgs dropzone-square-imgs-sm" data-dropzone='{"url": "https://"}'>
+                    <!-- Message -->
+                    <div class="dz-default dz-message" data-dz-message><i class="fe fe-upload fs-2"></i></div>
+                    <!-- Fallback -->
+                    <div class="fallback">
+                        <div class="custom-file">
+                            <input type="file" class="form-control" id="customFileUploadMultiple" multiple>
+                            <label class="form-label" for="customFileUploadMultiple">Choose file</label>
+                        </div>
+                    </div>
+                    <!-- Preview -->
+                    <div class="preview-images dz-preview dz-preview-multiple">
+                        <div class="preview-images-item ms-4">
+                            <!-- Image -->
+                            <div class="avatar">
+                                <img class="avatar-img rounded" src="data:image/svg+xml,%3csvg3c/svg%3e" alt="..."
+                                    data-dz-thumbnail>
+                                <a href="#" class="btn btn-sm btn-rounded-circle btn-danger" data-dz-remove>
+                                    <i class="fe fe-trash"></i>
+                                </a>
+                            </div>
+                            <!-- Heading -->
+                            <h5 class="mb-1" data-dz-name>...</h5>
+                            <!-- Text -->
+                            <small class="text-muted" data-dz-size>...</small>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,4 @@
+function profileNotificationsController ($scope, $route) {
+    
+    
+}
