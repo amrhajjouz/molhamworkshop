@@ -30,4 +30,10 @@ return [
     'places.edit' => ['places/:id/edit', 'places/editPlaceController', 'places.single.edit'],
     'places' => ['places', 'places/listPlacesController', 'places.list'],
 
+    //Member Routes
+    'members' => ['members', 'members/listMembersController', 'members.list'],
+    'members.add' => ['members/add', 'members/addMemberController', 'members.add'],
+    'members.overview' => ['members/:id', 'members/overviewMemberController', 'members.single.overview'],
+    'members.edit' => ['members/:id/edit', 'members/editMemberController', 'members.single.edit'],
+
 ];

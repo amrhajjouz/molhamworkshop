@@ -7,6 +7,7 @@ use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\DonorController;
 use App\Http\Controllers\Dashboard\PlaceController;
 use App\Http\Controllers\Dashboard\CountryController;
+use App\Http\Controllers\Dashboard\MemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,4 +49,12 @@ Route::middleware('auth')->group(function ()  {
     // Country Routes
     Route::get('/countries', [CountryController::class, 'list']);
     Route::get('/countries/search', [CountryController::class, 'search']);
+
+    // Member Routes
+    Route::get('/members', [MemberController::class, 'list']);
+    Route::post('/members', [MemberController::class, 'create']);
+    Route::put('/members', [MemberController::class, 'update']);
+    Route::get('/members/search', [MemberController::class, 'search']);
+    Route::get('/members/{id}', [MemberController::class, 'retrieve']);
+    Route::delete('/members/{id}', [MemberController::class, 'delete']);
 });

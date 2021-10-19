@@ -25,6 +25,7 @@
             </ul>
         </div>
     </li>
+    
     <li class="nav-item">
         <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#donors-navs" role="button" aria-expanded="false">
             <i class="fe fe-book"></i> المتبرعون
@@ -66,6 +67,27 @@
                 <li class="nav-item">
                     <a href="{{ $r('places') }}" class="nav-link">
                         قائمة الأماكن
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    
+    <!--Members-->
+    <li class="nav-item">
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#members-navs" role="button" aria-expanded="false">
+            <i class="fe fe-users"></i> الأعضاء
+        </a>
+        <div class="collapse" id="members-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('members.add') }}" class="nav-link">
+                        عضو جديد
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('members') }}" class="nav-link">
+                        قائمة الأعضاء
                     </a>
                 </li>
             </ul>
