@@ -18,17 +18,11 @@
     
     
     <!-- Theme CSS -->
-<<<<<<< Updated upstream
     
-    <link rel="stylesheet" href="{{ asset('css/theme.rtl.min.css') }}" id="stylesheetLight">
-    <link rel="stylesheet" href="{{ asset('css/custom.css') }}" id="stylesheetLight">    
-    
-=======
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
     <link rel="stylesheet" href="{{ asset('css/theme-rtl.css?t=1') }}" id="styleMode">
     <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
-
->>>>>>> Stashed changes
+    
     <base href="{{ $appUrl }}/">
     
     <title>ورشة عمل فريق ملهم</title>
@@ -50,14 +44,8 @@
     
 </head>
 
-<<<<<<< Updated upstream
-<body dir="rtl" class="d-flex align-items-center cursor-wait" ng-class="{'cursor-wait' : $page.loading || $page.sendingHttpRequest}">
-    
-=======
-<body class="d-flex align-items-center cursor-wait"
-    ng-class="{'cursor-wait' : $page.loading || $page.sendingHttpRequest}">
+<body class="d-flex align-items-center cursor-wait" ng-class="{'cursor-wait' : $page.loading || $page.sendingHttpRequest}">
 
->>>>>>> Stashed changes
     <div id="loading-bar" class="bg-primary" ng-show="$page.loading"></div>
     
     <div id="page-spinner" class="container-fluid text-center">
@@ -919,27 +907,7 @@
             </div>
         </div>
     </div>
-<<<<<<< Updated upstream
-    <!-- End Photo Viewer Modal -->    
-    
-    <script src="{{ asset('libs/jquery/dist/jquery.min.js') }}"></script>
-    <script src="{{ asset('libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-    
-    <script src="{{ asset('libs/chart-js/dist/Chart.min.js') }}"></script>
-    <script src="{{ asset('libs/highlightjs/highlight.pack.min.js') }}"></script>
-    <script src="{{ asset('libs/flatpickr/dist/flatpickr.min.js') }}"></script>
-    <script src="{{ asset('libs/jquery-mask-plugin/dist/jquery.mask.min.js') }}"></script>
-    <script src="{{ asset('libs/list-js/dist/list.min.js') }}"></script>
-    <script src="{{ asset('libs/quill/dist/quill.min.js') }}"></script>
-    <script src="{{ asset('libs/dropzone/dist/min/dropzone.min.js') }}"></script>
-    <script src="{{ asset('libs/select2/dist/js/select2.min.js') }}"></script>
-    <script src="{{ asset('libs/chart-js/Chart.extension.min.js') }}"></script>
-    
-    
-    <script src="{{ asset('js/theme.min.js') }}"></script>
-    <script src="{{ asset('js/custom.js') }}"></script>
-    
-=======
+
     <!-- End Photo Viewer Modal -->
 
     <!-- Currency Modal -->
@@ -1206,7 +1174,6 @@
     <script src="{{ asset('js/theme.js?v=7') }}"></script>
     <!-- <script src="{{ asset('js/custom.js') }}"></script> -->
 
->>>>>>> Stashed changes
     <script src="{{ asset('js/angular.min.js') }}"></script>
     <script src="{{ asset('js/angular-route.js') }}"></script>
     
@@ -1435,13 +1402,8 @@
             return {
                 restrict: 'E',
                 transclude: true,
-<<<<<<< Updated upstream
-                replace : false,
-                template: '<div class="header mb-5"><div class="header-body"><div class="row align-items-center"><div class="col"><ul id="volunteer-tabs" class="nav nav-tabs nav-overflow header-tabs" ng-transclude></ul></div></div></div></div>',
-=======
                 replace: false,
                 template: '<div class="header mt-0 mb-5"><div class="header-body pt-1"><div class="row align-items-center"><div class="col"><ul id="volunteer-tabs" class="nav nav-tabs nav-overflow header-tabs" ng-transclude></ul></div></div></div></div>',
->>>>>>> Stashed changes
             };
         });
         
@@ -2068,15 +2030,9 @@
             return {
                 restrict: 'E',
                 transclude: true,
-<<<<<<< Updated upstream
-                scope : {},
-                replace : true,
-                template : '<div class="dropdown"><a href="javascript:;" class="color-black mr-2" role="button" data-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical"></i></a><div class="dropdown-menu" ng-transclude></div></div>',
-=======
                 scope: {},
                 replace: true,
                 template: '<div class="dropdown"><a href="javascript:;" class="color-black mr-2" role="button" data-bs-toggle="dropdown" data-bs-boundary="window" aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical"></i></a><div class="dropdown-menu" ng-transclude></div></div>',
->>>>>>> Stashed changes
             };
         });
         
@@ -2126,66 +2082,6 @@
                     });
                     
                 },
-<<<<<<< Updated upstream
-                template : '<div>' +
-                                '<div class="card">' +
-                                    '<div class="card-header">' +
-                                        '<div class="row align-items-center">' +
-                                            '<div class="col">' +
-                                                '<div class="input-group input-group-flush input-group-merge">' +
-                                                    '<input type="search" class="form-control form-control-prepended search" placeholder="اكتب كلمة للبحث ثم اضغط Enter  ...">'+
-                                                    '<div class="input-group-prepend">' +
-                                                        '<div class="input-group-text">' +
-                                                            '<span ng-show="!datalist.searching" class="fe fe-search"></span>' +
-                                                            '<span ng-show="datalist.searching" class="spinner-border spinner-border-sm"></span>' +
-                                                        '</div>' +
-                                                    '</div>' +
-                                                '</div>'+
-                                            '</div>'+
-                                            '<div class="col-auto">' +
-                                                '<button ng-show="datalist.nextPageUrl" ng-click="datalist.nextPage();" class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top" title="الصفحة التالية">' +
-                                                    '<i class="fe fe-arrow-right"></i>' +
-                                                '</button>'+
-                                                '<button ng-show="datalist.prevPageUrl" ng-click="datalist.prevPage();" class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top" title="الصفحة السابقة">' +
-                                                    '<i class="fe fe-arrow-left"></i>' +
-                                                '</button>  '+
-                                                //'<button class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top" title="خيارات الفلترة والعرض">' +
-                                                //    '<i class="fe fe-sliders"></i>' +
-                                                //'</button> ' +
-                                                //'<button class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top" title="تصدير القائمة الى ملف CSV">' +
-                                                //    '<i class="fe fe-download"></i>' +
-                                                //'</button>' +
-                                            '</div>' +
-                                        '</div>' +
-                                    '</div>' +
-                                    '<div class="table-responsive">' +
-                                        '<ng-transclude></ng-transclude>' +
-                                        '<table>' +
-                                            '<tbody ng-show="datalist.data.length == 0">' +
-                                                '<tr>' +
-                                                    '<td class="text-center">' +
-                                                        '<div class="pt-3 pb-2 h4" ng-show="datalist.data.length == 0">لا يوجد أية عناصر في هذه القائمة</div>' +
-                                                    '</td>' +
-                                                '</tr>' +
-                                            '</tbody>' +
-                                        '</table>' +
-                                    '</div>' +
-                                    '<div class="card-footer d-flex justify-content-between" ng-hide="datalist.data.length == 0">' +
-                                        '<div class="col my-0">' +
-                                            '<div class="text-right h4 mt-2">العدد الكلي : @{{ datalist.total }}</div>' +
-                                        '</div>' +
-                                        '<div class="col-auto form-group my-0">' +
-                                            '<select class="form-control form-control-sm page-select">' +
-                                                '<option ng-repeat="p in datalist.pages" value="@{{ p }}" ng-selected="(p == datalist.currentPage)">الصفحة @{{ p }}</option>' +
-                                            '</select>' +
-                                        '</div>' +
-                                        '<div class="col my-0">' +
-                                            '<div class="text-left h4 mt-2">النتائج : <span dir="ltr">@{{ datalist.from }} <i class="fe fe-arrow-right"></i> @{{ datalist.to }}</span></div>' +
-                                        '</div>' +
-                                    '</div>' +
-                                '</div>'+
-                            '</div>'
-=======
                 template: '<div>' +
                     '<div class="card">' +
                     '<div class="card-header">' +
@@ -2282,7 +2178,6 @@
                     '</div>' +
                     '</div>' +
                     '</div>'
->>>>>>> Stashed changes
             };
         });
         
