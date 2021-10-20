@@ -37,7 +37,7 @@
                         <dropdown-item href="#" ng-show="canProofread(post)" ng-click="proofreadPostRequest(post.id)"><i class="fe fe-terminal"></i>  تعيين كتم تدقيقها</dropdown-item>
                         <dropdown-item href="#" ng-show="post.status == 'pending' || post.status == 'rejected'" ng-click="approvePostRequest(post.id)"><i class="fe fe-check"></i>قبول</dropdown-item>
                         <dropdown-item href="#"ng-show="post.status == 'pending' || post.status == 'approved'"  ng-click="rejectPostRequest(post.id)"><i class="fe fe-x"></i>رفض</dropdown-item>
-                        <dropdown-item href="#"  ng-click="openPublishingModalOptions(post)"><i class="fe fe-check-square"></i>خيارات النشر</dropdown-item>
+                        <dropdown-item href="#" ng-show="post.ready_to_publish == true"  ng-click="openPublishingModalOptions(post)"><i class="fe fe-check-square"></i>خيارات النشر</dropdown-item>
                     </dropdown>
                 </td>
             </tr>
