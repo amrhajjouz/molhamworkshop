@@ -1,0 +1,39 @@
+//
+// Theme
+//
+// Custom variables followed by theme variables followed by Bootstrap variables
+// to ensure cascade of styles.
+//
+
+// Bootstrap functions
+@import '~bootstrap/scss/functions';
+
+// Custom variables
+@import "theme/rtl/user-variables";
+
+// Dark mode variables
+@import 'theme/dark/variables-dark';
+
+// Theme variables
+@import 'theme/variables';
+
+// Theme RTL variables
+@import "theme/rtl/variables";
+
+// RTL Bootstrap Utilities
+@import "theme/rtl/utilities";
+
+// Bootstrap core
+@import '~bootstrap/scss/bootstrap';
+
+// Theme core
+@import 'theme/theme';
+
+// Dark mode overrides
+@import 'theme/dark/overrides-dark';
+
+// RTL
+@import 'theme/rtl/theme-rtl';
+
+// Custom core
+@import 'user';

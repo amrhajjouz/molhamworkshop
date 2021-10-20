@@ -1,0 +1,117 @@
+// 
+// popover.scss
+// Extended from Bootstrap
+//
+
+// 
+// RTL Bootstrap Overrides =====================================
+//
+
+.bs-popover-end {
+  > .popover-arrow {
+    left: auto;
+    right: subtract(-$popover-arrow-height, $popover-border-width);
+
+    &::before {
+      left: auto;
+      right: 0;
+      border-width: ($popover-arrow-width / 2) 0 ($popover-arrow-width / 2) $popover-arrow-height;
+      border-right-color: unset;
+      border-left-color: $popover-arrow-outer-color;
+    }
+
+    &::after {
+      left: auto;
+      right: $popover-border-width;
+      border-width: ($popover-arrow-width / 2) 0 ($popover-arrow-width / 2) $popover-arrow-height;
+      border-right-color: unset;
+      border-left-color: $popover-arrow-color;
+    }
+  }
+}
+
+.bs-popover-start {
+  > .popover-arrow {
+    right: auto;
+    left: subtract(-$popover-arrow-height, $popover-border-width);
+
+    &::before {
+      right: auto;
+      left: 0;
+      border-width: ($popover-arrow-width / 2) $popover-arrow-height ($popover-arrow-width / 2) 0;
+      border-left-color: unset;
+      border-right-color: $popover-arrow-outer-color;
+    }
+
+    &::after {
+      right: auto;
+      left: $popover-border-width;
+      border-width: ($popover-arrow-width / 2) $popover-arrow-height ($popover-arrow-width / 2) 0;
+      border-left-color: unset;
+      border-right-color: $popover-arrow-color;
+    }
+  }
+}
+
+.bs-popover-auto {
+  &[data-popper-placement^="top"] {
+    @extend .bs-popover-top;
+  }
+  &[data-popper-placement^="right"] {
+    @extend .bs-popover-end;
+  }
+  &[data-popper-placement^="bottom"] {
+    @extend .bs-popover-bottom;
+  }
+  &[data-popper-placement^="left"] {
+    @extend .bs-popover-start;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.popover-body-indicator {
+  margin-right: unset;
+  margin-left: .25rem;
+}
+
+
+
+// Dark
+
+.popover-dark.bs-popover-right .popover-arrow {
+
+  &::before {
+    border-right-color: unset;
+    border-left-color: $popover-dark-border-color;
+  }
+
+  &::after {
+    border-right-color: unset;
+    border-left-color: $popover-dark-bg;
+  }
+}
+
+.popover-dark.bs-popover-left .popover-arrow {
+
+  &::before {
+    border-left-color: unset;
+    border-right-color: $popover-dark-border-color;
+  }
+
+  &::after {
+    border-left-color: unset;
+    border-right-color: $popover-dark-bg;
+  }
+}

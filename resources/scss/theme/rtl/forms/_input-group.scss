@@ -1,0 +1,174 @@
+//
+// input-group.scss
+// Extended from Bootstrap
+//
+
+//
+// RTL overrides ===================================
+//
+
+// Rounded corners
+//
+// These rulesets must come after the sizing ones to properly override sm and lg
+// border-radius values when extending. They're more specific than we'd like
+// with the `.input-group >` part, but without it, we cannot override the sizing.
+
+// stylelint-disable-next-line no-duplicate-selectors
+.input-group {
+  &:not(.has-validation) {
+    > :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu),
+    > .dropdown-toggle:nth-last-child(n + 3) {
+      @include border-end-radius($input-border-radius);
+      @include border-start-radius(0);
+    }
+  }
+
+  &.has-validation {
+    > :nth-last-child(n + 3):not(.dropdown-toggle):not(.dropdown-menu),
+    > .dropdown-toggle:nth-last-child(n + 4) {
+      @include border-end-radius($input-border-radius);
+      @include border-start-radius(0);
+    }
+  }
+
+  $validation-messages: "";
+  @each $state in map-keys($form-validation-states) {
+    $validation-messages: $validation-messages + ":not(." + unquote($state) + "-tooltip)" + ":not(." + unquote($state) + "-feedback)";
+  }
+
+  > :not(:first-child):not(.dropdown-menu)#{$validation-messages} {
+    margin-left: unset;
+    margin-right: -$input-border-width;
+    @include border-start-radius($input-border-radius);
+    @include border-end-radius(0);
+  }
+}
+
+
+//
+// Theme ===================================
+//
+
+.input-group-merge > .form-control {
+  border-right-width: $input-border-width;
+  border-left-width: 0;
+}
+
+.input-group-merge > .input-group-text {
+  border-left-width: $input-border-width;
+  border-right-width: 0;
+}
+
+.input-group > :not(:first-child):not(.dropdown-menu) {
+  margin-left: unset;
+  margin-right: 0;
+}
+
+
+// Reverse
+
+.input-group-merge.input-group-reverse > .form-control {
+  padding-right: 0;
+  padding-left: $input-padding-x;
+  border-right-width: 0;
+  border-left-width: $input-border-width;
+}
+
+.input-group-merge.input-group-reverse > .input-group-text {
+  border-left-width: 0;
+  border-right-width: $input-border-width;
+}
+
+.input-group-merge.input-group-reverse:not(.input-group-rounded) > :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: $input-border-radius;
+  border-bottom-left-radius: $input-border-radius;
+}
+
+.input-group-merge.input-group-reverse:not(.input-group-rounded) > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: $input-border-radius;
+  border-bottom-right-radius: $input-border-radius;
+}
+
+
+// Sizing
+
+.input-group-sm.input-group-merge.input-group-reverse > .form-control {
+  padding-right: 0;
+  padding-left: $input-padding-x-sm;
+}
+
+.input-group-sm.input-group-merge.input-group-reverse:not(.input-group-rounded) > :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: $input-border-radius-sm;
+  border-bottom-left-radius: $input-border-radius-sm;
+}
+
+.input-group-sm.input-group-merge.input-group-reverse:not(.input-group-rounded) > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: $input-border-radius-sm;
+  border-bottom-right-radius: $input-border-radius-sm;
+}
+
+.input-group-lg.input-group-merge.input-group-reverse > .form-control {
+  padding-right: 0;
+  padding-left: $input-padding-x-lg;
+}
+
+.input-group-lg.input-group-merge.input-group-reverse:not(.input-group-rounded) > :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: $input-border-radius-lg;
+  border-bottom-left-radius: $input-border-radius-lg;
+}
+
+.input-group-lg.input-group-merge.input-group-reverse:not(.input-group-rounded) > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: $input-border-radius-lg;
+  border-bottom-right-radius: $input-border-radius-lg;
+}
+
+
+// Rounded
+
+.input-group-rounded.input-group-merge > .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: $border-radius-pill;
+  border-bottom-right-radius: $border-radius-pill;
+}
+
+.input-group-rounded.input-group-merge > .input-group-text {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: $border-radius-pill;
+  border-bottom-left-radius: $border-radius-pill;
+}
+
+.input-group-rounded.input-group-merge.input-group-reverse > .form-control {
+  border-radius: $border-radius-pill 0 0 $border-radius-pill !important;
+}
+
+.input-group-rounded.input-group-merge.input-group-reverse > .input-group-text {
+  border-radius: 0 $border-radius-pill $border-radius-pill 0 !important;
+}
+
+
+
+// Flush
+
+.input-group-flush.input-group-merge:not(.input-group-reverse) > .input-group-text {
+  padding-right: $input-group-addon-padding-x;
+  padding-left: 0;
+}
+
+.input-group-flush.input-group-merge.input-group-reverse > .input-group-text {
+  padding-left: $input-group-addon-padding-x;
+  padding-right: 0;
+}

@@ -1,0 +1,34 @@
+//
+// Form-select.scss
+// Extended from Bootstrap
+//
+
+//
+// RTL Overrides =====================================
+//
+
+.form-select {
+  padding: $form-select-padding-y $form-select-padding-x $form-select-padding-y $form-select-indicator-padding;
+
+
+  &[multiple],
+  &[size]:not([size="1"]) {
+    padding-right: $form-select-indicator-padding;
+    padding-left: $form-select-padding-x;
+  }
+
+}
+
+.form-select-sm {
+  padding-top: $form-select-padding-y-sm;
+  padding-bottom: $form-select-padding-y-sm;
+  padding-left: $form-select-indicator-padding;
+  padding-right: $form-select-padding-x-sm;
+}
+
+.form-select-lg {
+  padding-top: $form-select-padding-y-lg;
+  padding-bottom: $form-select-padding-y-lg;
+  padding-left: $form-select-indicator-padding;
+  padding-right: $form-select-padding-x-lg;
+}

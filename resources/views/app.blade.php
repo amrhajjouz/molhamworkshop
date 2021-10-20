@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ar" ng-app="app">
+<html lang="ar" dir="rtl" ng-app="app">
 
 <head>
     <meta charset="utf-8">
@@ -15,130 +15,1174 @@
     <link rel="stylesheet" href="{{ asset('libs/select2/dist/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/flatpickr/dist/flatpickr.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
-    
-    
+
+
     <!-- Theme CSS -->
-    
-    <link rel="stylesheet" href="{{ asset('css/theme.rtl.min.css') }}" id="stylesheetLight">
-    <link rel="stylesheet" href="{{ asset('css/custom.css') }}" id="stylesheetLight">    
-    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+    <link rel="stylesheet" href="{{ asset('css/theme-rtl.css?t=1') }}" id="styleMode">
+    <!-- <link rel="stylesheet" href="{{ asset('css/custom.css') }}"> -->
+
     <base href="{{ $appUrl }}/">
-    
+
     <title>ورشة عمل فريق ملهم</title>
-    
+
     <style>
-    
-    #loading-bar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 0px;
-        height: 3px;
-        z-index: 9999;
-        box-shadow: 0px 0px 15px 0px #eee;
-        border-radius: 100px;
-    }
-    
+        #loading-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0px;
+            height: 3px;
+            z-index: 9999;
+            box-shadow: 0px 0px 15px 0px #eee;
+            border-radius: 100px;
+        }
+
     </style>
-    
+
 </head>
 
-<body dir="rtl" class="d-flex align-items-center cursor-wait" ng-class="{'cursor-wait' : $page.loading || $page.sendingHttpRequest}">
-    
+<body class="d-flex align-items-center cursor-wait"
+    ng-class="{'cursor-wait' : $page.loading || $page.sendingHttpRequest}">
+
     <div id="loading-bar" class="bg-primary" ng-show="$page.loading"></div>
-    
+
     <div id="page-spinner" class="container-fluid text-center">
         <div class="mb-4">
             <img src="{{ asset('img/logo.png') }}" class="mx-auto" height="50">
         </div>
         <hr style="width:80px;">
         <div class="spinner-border text-primary mt-2" role="status">
-            <span class="sr-only">Loading...</span>
         </div>
     </div>
-    
-    <nav id="page-sidebar" class="navbar navbar-vertical fixed-right navbar-expand-md navbar-light d-none">
+
+    <!-- Offcanvas: Notifications -->
+    <div class="offcanvas offcanvas-start" id="sidebarOffcanvasActivity" tabindex="-1">
+        <div class="offcanvas-header">
+
+            <!-- Title -->
+            <h4 class="offcanvas-title">
+                Notifications
+            </h4>
+
+            <!-- Navs -->
+            <ul class="nav nav-tabs nav-tabs-sm modal-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#modalActivityAction">Action</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#modalActivityUser">User</a>
+                </li>
+            </ul>
+
+        </div>
+        <div class="offcanvas-body">
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="modalActivityAction">
+
+                    <!-- List group -->
+                    <div class="list-group list-group-flush list-group-activity my-n3">
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm">
+                                        <div class="avatar-title fs-lg bg-primary-soft rounded-circle text-primary">
+                                            <i class="fe fe-mail"></i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        Launchday 1.4.0 update email sent
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        Sent to all 1,851 subscribers over a 24 hour period
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        2m ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm">
+                                        <div class="avatar-title fs-lg bg-primary-soft rounded-circle text-primary">
+                                            <i class="fe fe-archive"></i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        New project "Goodkit" created
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        Looks like there might be a new theme soon.
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        2h ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm">
+                                        <div class="avatar-title fs-lg bg-primary-soft rounded-circle text-primary">
+                                            <i class="fe fe-code"></i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        Dashkit 1.5.0 was deployed.
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        A successful to deploy to production was executed.
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        2m ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm">
+                                        <div class="avatar-title fs-lg bg-primary-soft rounded-circle text-primary">
+                                            <i class="fe fe-git-branch"></i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        "Update Dependencies" branch was created.
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        This branch was created off of the "master" branch.
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        2m ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm">
+                                        <div class="avatar-title fs-lg bg-primary-soft rounded-circle text-primary">
+                                            <i class="fe fe-mail"></i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        Launchday 1.4.0 update email sent
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        Sent to all 1,851 subscribers over a 24 hour period
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        2m ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm">
+                                        <div class="avatar-title fs-lg bg-primary-soft rounded-circle text-primary">
+                                            <i class="fe fe-archive"></i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        New project "Goodkit" created
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        Looks like there might be a new theme soon.
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        2h ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm">
+                                        <div class="avatar-title fs-lg bg-primary-soft rounded-circle text-primary">
+                                            <i class="fe fe-code"></i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        Dashkit 1.5.0 was deployed.
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        A successful to deploy to production was executed.
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        2m ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm">
+                                        <div class="avatar-title fs-lg bg-primary-soft rounded-circle text-primary">
+                                            <i class="fe fe-git-branch"></i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        "Update Dependencies" branch was created.
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        This branch was created off of the "master" branch.
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        2m ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm">
+                                        <div class="avatar-title fs-lg bg-primary-soft rounded-circle text-primary">
+                                            <i class="fe fe-mail"></i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        Launchday 1.4.0 update email sent
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        Sent to all 1,851 subscribers over a 24 hour period
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        2m ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm">
+                                        <div class="avatar-title fs-lg bg-primary-soft rounded-circle text-primary">
+                                            <i class="fe fe-archive"></i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        New project "Goodkit" created
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        Looks like there might be a new theme soon.
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        2h ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm">
+                                        <div class="avatar-title fs-lg bg-primary-soft rounded-circle text-primary">
+                                            <i class="fe fe-code"></i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        Dashkit 1.5.0 was deployed.
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        A successful to deploy to production was executed.
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        2m ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm">
+                                        <div class="avatar-title fs-lg bg-primary-soft rounded-circle text-primary">
+                                            <i class="fe fe-git-branch"></i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        "Update Dependencies" branch was created.
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        This branch was created off of the "master" branch.
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        2m ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                    </div>
+
+                </div>
+                <div class="tab-pane fade" id="modalActivityUser">
+
+                    <!-- List group -->
+                    <div class="list-group list-group-flush list-group-activity my-n3">
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm avatar-online">
+                                        <img class="avatar-img rounded-circle"
+                                            src="./assets/img/avatars/profiles/avatar-1.jpg" alt="..." />
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        Dianna Smiley
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        Uploaded the files "Launchday Logo" and "New Design".
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        2m ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm avatar-online">
+                                        <img class="avatar-img rounded-circle"
+                                            src="./assets/img/avatars/profiles/avatar-2.jpg" alt="..." />
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        Ab Hadley
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        Shared the "Why Dashkit?" post with 124 subscribers.
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        1h ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm avatar-offline">
+                                        <img class="avatar-img rounded-circle"
+                                            src="./assets/img/avatars/profiles/avatar-3.jpg" alt="..." />
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        Adolfo Hess
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        Exported sales data from Launchday's subscriber data.
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        3h ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm avatar-online">
+                                        <img class="avatar-img rounded-circle"
+                                            src="./assets/img/avatars/profiles/avatar-1.jpg" alt="..." />
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        Dianna Smiley
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        Uploaded the files "Launchday Logo" and "New Design".
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        2m ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm avatar-online">
+                                        <img class="avatar-img rounded-circle"
+                                            src="./assets/img/avatars/profiles/avatar-2.jpg" alt="..." />
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        Ab Hadley
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        Shared the "Why Dashkit?" post with 124 subscribers.
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        1h ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm avatar-offline">
+                                        <img class="avatar-img rounded-circle"
+                                            src="./assets/img/avatars/profiles/avatar-3.jpg" alt="..." />
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        Adolfo Hess
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        Exported sales data from Launchday's subscriber data.
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        3h ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm avatar-online">
+                                        <img class="avatar-img rounded-circle"
+                                            src="./assets/img/avatars/profiles/avatar-1.jpg" alt="..." />
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        Dianna Smiley
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        Uploaded the files "Launchday Logo" and "New Design".
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        2m ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm avatar-online">
+                                        <img class="avatar-img rounded-circle"
+                                            src="./assets/img/avatars/profiles/avatar-2.jpg" alt="..." />
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        Ab Hadley
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        Shared the "Why Dashkit?" post with 124 subscribers.
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        1h ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm avatar-offline">
+                                        <img class="avatar-img rounded-circle"
+                                            src="./assets/img/avatars/profiles/avatar-3.jpg" alt="..." />
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        Adolfo Hess
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        Exported sales data from Launchday's subscriber data.
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        3h ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm avatar-online">
+                                        <img class="avatar-img rounded-circle"
+                                            src="./assets/img/avatars/profiles/avatar-1.jpg" alt="..." />
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        Dianna Smiley
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        Uploaded the files "Launchday Logo" and "New Design".
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        2m ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm avatar-online">
+                                        <img class="avatar-img rounded-circle"
+                                            src="./assets/img/avatars/profiles/avatar-2.jpg" alt="..." />
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        Ab Hadley
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        Shared the "Why Dashkit?" post with 124 subscribers.
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        1h ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                        <a class="list-group-item text-reset" href="#!">
+                            <div class="row">
+                                <div class="col-auto">
+
+                                    <!-- Avatar -->
+                                    <div class="avatar avatar-sm avatar-offline">
+                                        <img class="avatar-img rounded-circle"
+                                            src="./assets/img/avatars/profiles/avatar-3.jpg" alt="..." />
+                                    </div>
+
+                                </div>
+                                <div class="col ms-n2">
+
+                                    <!-- Heading -->
+                                    <h5 class="mb-1">
+                                        Adolfo Hess
+                                    </h5>
+
+                                    <!-- Text -->
+                                    <p class="small text-gray-700 mb-0">
+                                        Exported sales data from Launchday's subscriber data.
+                                    </p>
+
+                                    <!-- Time -->
+                                    <small class="text-muted">
+                                        3h ago
+                                    </small>
+
+                                </div>
+                            </div> <!-- / .row -->
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav id="page-sidebar" class="navbar navbar-vertical fixed-start navbar-expand-md navbar-light d-none">
         <div class="container-fluid">
-            
+
             <!-- Toggler -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenavCollapse" aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidenavCollapse"
+                aria-controls="sidenavCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            
+
             <!-- Brand -->
             <a class="navbar-brand" href="javascript:;" ng-click="$page.reload()">
                 <img src="{{ asset('img/logo.png') }}" class="navbar-brand-img mx-auto" alt="...">
             </a>
-            
+
             <!-- User (xs) -->
             <div class="navbar-user d-md-none">
-                
+
                 <!-- Dropdown -->
-                <div class="dropdown">
-                    
+                <div>
+
                     <!-- Toggle -->
                     <a href="#">
                         <div class="avatar avatar-sm avatar-online">
                             <img src="{{ asset('img/avatar.png') }}" class="avatar-img rounded-circle" alt="...">
                         </div>
                     </a>
-                    
+
                 </div>
-                
+
             </div>
-            
+
             <!-- Collapse -->
             <div class="collapse navbar-collapse" id="sidenavCollapse">
                 @include('sidenav')
             </div>
             <!-- / .navbar-collapse -->
-            
+
         </div>
     </nav>
 
-    <div id="page-content" class="main-content py-md-6 pt-3 pb-5 d-none">
-        <div class="row justify-content-center mx-0">
-            <div class="col-lg-11" ng-view></div>
-        </div>
+    <div id="page-content" class="main-content d-none">
+        @include('topnav')
+        <div class="container-fluid" ng-view></div>
     </div>
-    
+
     <!-- Photo Viewer Modal -->
-    <div class="modal fade" id="image-lightbox-modal" tabindex="-1" role="dialog" aria-labelledby="image-lightbox-modal" aria-hidden="true">
-        <a href="javascript:;" class="modal-dismiss-icon display-4" data-dismiss="modal"><i class="fe fe-x"></i></a>
+    <div class="modal fade" id="image-lightbox-modal" tabindex="-1" role="dialog"
+        aria-labelledby="image-lightbox-modal" aria-hidden="true">
+        <a href="javascript:;" class="modal-dismiss-icon display-4" data-dismiss="modal"><i
+                class="fe fe-x"></i></a>
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-body px-0 py-0">
                     <img class="w-100 img-fluid">
-                </div> 
+                </div>
             </div>
         </div>
     </div>
-    <!-- End Photo Viewer Modal -->    
-    
-    <script src="{{ asset('libs/jquery/dist/jquery.min.js') }}"></script>
-    <script src="{{ asset('libs/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-    
-    <script src="{{ asset('libs/chart-js/dist/Chart.min.js') }}"></script>
-    <script src="{{ asset('libs/highlightjs/highlight.pack.min.js') }}"></script>
-    <script src="{{ asset('libs/flatpickr/dist/flatpickr.min.js') }}"></script>
-    <script src="{{ asset('libs/jquery-mask-plugin/dist/jquery.mask.min.js') }}"></script>
-    <script src="{{ asset('libs/list-js/dist/list.min.js') }}"></script>
-    <script src="{{ asset('libs/quill/dist/quill.min.js') }}"></script>
-    <script src="{{ asset('libs/dropzone/dist/min/dropzone.min.js') }}"></script>
-    <script src="{{ asset('libs/select2/dist/js/select2.min.js') }}"></script>
-    <script src="{{ asset('libs/chart-js/Chart.extension.min.js') }}"></script>
-    
-    
-    <script src="{{ asset('js/theme.min.js') }}"></script>
-    <script src="{{ asset('js/custom.js') }}"></script>
-    
+    <!-- End Photo Viewer Modal -->
+
+    <!-- Currency Modal -->
+    <div class="modal fade" id="modalCurrency" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-lighter">
+                <div class="modal-body">
+                    <!-- Currency exchange card -->
+                    <div class="row">
+                        <div class="col">
+                            <!-- Title -->
+                            <h2 class="mb-4">
+                                تحويل العملات
+                            </h2>
+                        </div>
+                        <div class="col-auto">
+                            <!-- Close -->
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                    </div> <!-- / .row -->
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="form-group">
+                                        <label for="amount1" class="form-label">القيمة</label>
+                                        <input type="text" class="form-control" id="amount1">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="currency1" class="form-label">من</label>
+                                        <select class="form-select mb-3" data-choices id="currency1">
+                                            <option>US USD Dollar</option>
+                                            <option>EUR - Euro</option>
+                                            <option>GBP - British Pound</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="currency2" class="form-label">الى</label>
+                                        <select class="form-select mb-3" data-choices id="currency2">
+                                            <option>US USD Dollar</option>
+                                            <option>EUR - Euro</option>
+                                            <option>GBP - British Pound</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- Divider -->
+                                <hr class="my-4">
+                                <div class="col-12">
+                                    <h4 class="text-muted">1.00 دولار بريطاني =</h4>
+                                    <h1>1.1762438 يورو</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- / Currency exchange card -->
+
+                    <!-- Divider -->
+                    <hr class="my-4">
+
+                    <!-- Currencies card -->
+                    <div class="row">
+                        <div class="col">
+                            <!-- Title -->
+                            <h2 class="mb-4">
+                                العملات
+                            </h2>
+                        </div>
+                    </div> <!-- / .row -->
+                    <div class="card mb-0">
+                        <div class="card-header">
+                            <!-- Form -->
+                            <form>
+                                <div class="input-group input-group-flush input-group-merge input-group-reverse">
+                                    <input class="form-control list-search" type="search" placeholder="بحث عن عملة">
+                                    <div class="input-group-text">
+                                        <span class="fe fe-search"></span>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                        <div class="card-body p-0">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>العملة</th>
+                                        <th>القيمة</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td class="align-middle">ERUO</td>
+                                        <td class="align-middle">0.86392</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">British Pound</td>
+                                        <td class="align-middle">0.73459</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle">Canadian Dollar</td>
+                                        <td class="align-middle">1.2474</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- / Currencies card -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / Currency Modal -->
+
+
+    <!-- Filters Modal -->
+    <div class="modal fade" id="modalFilters" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-lighter">
+                <div class="modal-card card">
+                    <!-- Upload card -->
+                    <div class="card-header">
+                        <!-- Title -->
+                        <h4 class="card-header-title">
+                            الفلاتر
+                        </h4>
+                        <!-- Close -->
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="card-header">
+                        <!-- Form -->
+                        <form>
+                            <div class="input-group input-group-flush input-group-merge input-group-reverse">
+                                <input class="form-control list-search" type="search" placeholder="بحث عن فلتر">
+                                <div class="input-group-text">
+                                    <span class="fe fe-search"></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-body">
+                        <!-- List group -->
+                        <ul class="list-group list-group-lg list-group-flush list my-n4">
+
+                            <li class="list-group-item py-3">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <!-- Avatar -->
+                                        <a href="#!" class="avatar avatar-sm">
+                                            <span
+                                                class="avatar-title fs-lg bg-secondary-soft rounded-circle text-secondary">
+                                                <span class="fe fe-filter"></span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="col ms-n2">
+                                        <!-- Title -->
+                                        <h4 class="mb-0 name">
+                                            <a href="#!">حسب التاريخ</a>
+                                        </h4>
+                                    </div>
+                                </div> <!-- / .row -->
+                            </li>
+                            <li class="list-group-item py-3">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <!-- Avatar -->
+                                        <a href="#!" class="avatar avatar-sm">
+                                            <span
+                                                class="avatar-title fs-lg bg-secondary-soft rounded-circle text-secondary">
+                                                <span class="fe fe-filter"></span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="col ms-n2">
+                                        <!-- Title -->
+                                        <h4 class="mb-0 name">
+                                            <a href="#!">حسب التاريخ</a>
+                                        </h4>
+                                    </div>
+                                </div> <!-- / .row -->
+                            </li>
+                            <li class="list-group-item py-3">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <!-- Avatar -->
+                                        <a href="#!" class="avatar avatar-sm">
+                                            <span
+                                                class="avatar-title fs-lg bg-secondary-soft rounded-circle text-secondary">
+                                                <span class="fe fe-filter"></span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="col ms-n2">
+                                        <!-- Title -->
+                                        <h4 class="mb-0 name">
+                                            <a href="#!">حسب التاريخ</a>
+                                        </h4>
+                                    </div>
+                                </div> <!-- / .row -->
+                            </li>
+                            <li class="list-group-item py-3">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <!-- Avatar -->
+                                        <a href="#!" class="avatar avatar-sm">
+                                            <span
+                                                class="avatar-title fs-lg bg-secondary-soft rounded-circle text-secondary">
+                                                <span class="fe fe-filter"></span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="col ms-n2">
+                                        <!-- Title -->
+                                        <h4 class="mb-0 name">
+                                            <a href="#!">حسب التاريخ</a>
+                                        </h4>
+                                    </div>
+                                </div> <!-- / .row -->
+                            </li>
+                            <li class="list-group-item py-3">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <!-- Avatar -->
+                                        <a href="#!" class="avatar avatar-sm">
+                                            <span
+                                                class="avatar-title fs-lg bg-secondary-soft rounded-circle text-secondary">
+                                                <span class="fe fe-filter"></span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="col ms-n2">
+                                        <!-- Title -->
+                                        <h4 class="mb-0 name">
+                                            <a href="#!">حسب التاريخ</a>
+                                        </h4>
+                                    </div>
+                                </div> <!-- / .row -->
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">اغلاق</button>
+                        <button type="button" class="btn btn-success">حفظ التعديلات</button>
+                    </div>
+                    <!-- / Upload card -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / Filters Modal -->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+    <script src="{{ asset('js/theme.js?v=7') }}"></script>
+    <!-- <script src="{{ asset('js/custom.js') }}"></script> -->
+
     <script src="{{ asset('js/angular.min.js') }}"></script>
     <script src="{{ asset('js/angular-route.js') }}"></script>
-    
-    <script src='https://cdn.tiny.cloud/1/4kk8tz5ese5e7gxt6eh30b4z20xcv4wzbw3ynq2qzqzr07j6/tinymce/5/tinymce.min.js' referrerpolicy="origin"></script>
-    
+
+    <script src='https://cdn.tiny.cloud/1/4kk8tz5ese5e7gxt6eh30b4z20xcv4wzbw3ynq2qzqzr07j6/tinymce/5/tinymce.min.js'
+        referrerpolicy="origin"></script>
+
     @foreach ($routes as $r)
-    <script src="{{ asset('ng/controllers/' . $r['controller_path'] . '?t=' . time()) }}"></script>
+        <script src="{{ asset('ng/controllers/' . $r['controller_path'] . '?t=' . time()) }}"></script>
     @endforeach
 
     <script>
@@ -315,9 +1359,9 @@
                 
                 $(function () {
                     //$('.nav-link').removeClass('active');
-                    $('[data-toggle=dropdown]').dropdown();
-                    $('[data-toggle=tooltip]').tooltip();
-                    /*$('[data-toggle="collapse"]').click(function(e) {
+                    $('[data-bs-toggle=dropdown]').dropdown();
+                    $('[data-bs-toggle=tooltip]').tooltip();
+                    /*$('[data-bs-toggle="collapse"]').click(function(e) {
                         $('.collapse').collapse('hide');
                     });*/
                 });
@@ -348,7 +1392,7 @@
                         var currentPageHeader = element[0];
                         element[0].classList.add('mb-0');
                         element[0].children[0].classList.add('pb-0');
-                        element[0].children[0].classList.add('border-none');
+                        element[0].children[0].classList.add('border-0');
                     }
                     element[0].removeAttribute('title');
                     element[0].removeAttribute('pretitle');
@@ -360,8 +1404,8 @@
             return {
                 restrict: 'E',
                 transclude: true,
-                replace : false,
-                template: '<div class="header mb-5"><div class="header-body"><div class="row align-items-center"><div class="col"><ul id="volunteer-tabs" class="nav nav-tabs nav-overflow header-tabs" ng-transclude></ul></div></div></div></div>',
+                replace: false,
+                template: '<div class="header mt-0 mb-5"><div class="header-body pt-1"><div class="row align-items-center"><div class="col"><ul id="volunteer-tabs" class="nav nav-tabs nav-overflow header-tabs" ng-transclude></ul></div></div></div></div>',
             };
         });
         
@@ -988,9 +2032,9 @@
             return {
                 restrict: 'E',
                 transclude: true,
-                scope : {},
-                replace : true,
-                template : '<div class="dropdown"><a href="javascript:;" class="color-black mr-2" role="button" data-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical"></i></a><div class="dropdown-menu" ng-transclude></div></div>',
+                scope: {},
+                replace: true,
+                template: '<div class="dropdown"><a href="javascript:;" class="color-black mr-2" role="button" data-bs-toggle="dropdown" data-bs-boundary="window" aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical"></i></a><div class="dropdown-menu" ng-transclude></div></div>',
             };
         });
         
@@ -1040,64 +2084,102 @@
                     });
                     
                 },
-                template : '<div>' +
-                                '<div class="card">' +
-                                    '<div class="card-header">' +
-                                        '<div class="row align-items-center">' +
-                                            '<div class="col">' +
-                                                '<div class="input-group input-group-flush input-group-merge">' +
-                                                    '<input type="search" class="form-control form-control-prepended search" placeholder="اكتب كلمة للبحث ثم اضغط Enter  ...">'+
-                                                    '<div class="input-group-prepend">' +
-                                                        '<div class="input-group-text">' +
-                                                            '<span ng-show="!datalist.searching" class="fe fe-search"></span>' +
-                                                            '<span ng-show="datalist.searching" class="spinner-border spinner-border-sm"></span>' +
-                                                        '</div>' +
-                                                    '</div>' +
-                                                '</div>'+
-                                            '</div>'+
-                                            '<div class="col-auto">' +
-                                                '<button ng-show="datalist.nextPageUrl" ng-click="datalist.nextPage();" class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top" title="الصفحة التالية">' +
-                                                    '<i class="fe fe-arrow-right"></i>' +
-                                                '</button>'+
-                                                '<button ng-show="datalist.prevPageUrl" ng-click="datalist.prevPage();" class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top" title="الصفحة السابقة">' +
-                                                    '<i class="fe fe-arrow-left"></i>' +
-                                                '</button>  '+
-                                                //'<button class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top" title="خيارات الفلترة والعرض">' +
-                                                //    '<i class="fe fe-sliders"></i>' +
-                                                //'</button> ' +
-                                                //'<button class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top" title="تصدير القائمة الى ملف CSV">' +
-                                                //    '<i class="fe fe-download"></i>' +
-                                                //'</button>' +
-                                            '</div>' +
-                                        '</div>' +
-                                    '</div>' +
-                                    '<div class="table-responsive">' +
-                                        '<ng-transclude></ng-transclude>' +
-                                        '<table>' +
-                                            '<tbody ng-show="datalist.data.length == 0">' +
-                                                '<tr>' +
-                                                    '<td class="text-center">' +
-                                                        '<div class="pt-3 pb-2 h4" ng-show="datalist.data.length == 0">لا يوجد أية عناصر في هذه القائمة</div>' +
-                                                    '</td>' +
-                                                '</tr>' +
-                                            '</tbody>' +
-                                        '</table>' +
-                                    '</div>' +
-                                    '<div class="card-footer d-flex justify-content-between" ng-hide="datalist.data.length == 0">' +
-                                        '<div class="col my-0">' +
-                                            '<div class="text-right h4 mt-2">العدد الكلي : @{{ datalist.total }}</div>' +
-                                        '</div>' +
-                                        '<div class="col-auto form-group my-0">' +
-                                            '<select class="form-control form-control-sm page-select">' +
-                                                '<option ng-repeat="p in datalist.pages" value="@{{ p }}" ng-selected="(p == datalist.currentPage)">الصفحة @{{ p }}</option>' +
-                                            '</select>' +
-                                        '</div>' +
-                                        '<div class="col my-0">' +
-                                            '<div class="text-left h4 mt-2">النتائج : <span dir="ltr">@{{ datalist.from }} <i class="fe fe-arrow-right"></i> @{{ datalist.to }}</span></div>' +
-                                        '</div>' +
-                                    '</div>' +
-                                '</div>'+
-                            '</div>'
+                template: '<div>' +
+                    '<div class="card">' +
+                    '<div class="card-header">' +
+                    '<div class="row align-items-center">' +
+                    '<div class="col">' +
+                    '<div class="input-group input-group-flush input-group-merge input-group-reverse">' +
+                    '<input type="search" class="form-control form-control-prepended search" placeholder="اكتب كلمة للبحث ثم اضغط Enter  ...">' +
+                    //'<div class="input-group-prepend">' +
+                    '<div class="input-group-text">' +
+                    '<span ng-show="!datalist.searching" class="fe fe-search"></span>' +
+                    '<span ng-show="datalist.searching" class="spinner-border spinner-border-sm"></span>' +
+                    '</div>' +
+                    //'</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="col-auto">' +
+                    '<button ng-show="datalist.nextPageUrl" ng-click="datalist.nextPage();" class="btn btn-sm btn-white" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="الصفحة التالية">' +
+                    '<i class="fe fe-arrow-right"></i>' +
+                    '</button>' +
+                    '<button ng-show="datalist.prevPageUrl" ng-click="datalist.prevPage();" class="btn btn-sm btn-white" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="الصفحة السابقة">' +
+                    '<i class="fe fe-arrow-left"></i>' +
+                    '</button>  ' +
+                    //'<button class="btn btn-sm btn-white" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="خيارات الفلترة والعرض">' +
+                    //    '<i class="fe fe-sliders"></i>' +
+                    //'</button> ' +
+                    //'<button class="btn btn-sm btn-white" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="تصدير القائمة الى ملف CSV">' +
+                    //    '<i class="fe fe-download"></i>' +
+                    //'</button>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    // Filters Area
+                    `<div class="card-header">
+                        <div class="table-filters">
+                            <span class="badge bg-primary-soft me-1">فلتر حسب التاريخ <span class="btn-close"></span></span>
+                            <a href="#" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modalFilters"><i class="fe fe-plus me-1"></i>اضافة فلتر</a>
+                        </div>
+                    </div>` +
+                    // End Filters Area
+                    '<div class="table-responsive">' +
+                    '<ng-transclude></ng-transclude>' +
+                    '<table>' +
+                    '<tbody ng-show="datalist.data.length == 0">' +
+                    '<tr>' +
+                    '<td class="text-center">' +
+                    '<div class="pt-3 pb-2 h4" ng-show="datalist.data.length == 0">لا يوجد أية عناصر في هذه القائمة</div>' +
+                    '</td>' +
+                    '</tr>' +
+                    '</tbody>' +
+                    '</table>' +
+                    '</div>' +
+                    // Pagination Area
+                    `<div class="card-footer d-flex justify-content-between" ng-hide="datalist.data.length == 0">
+                        
+                        <!-- Pagination (next) -->
+                        <ul class="list-pagination-next pagination pagination-tabs card-pagination" ng-show="datalist.nextPageUrl">
+                            <li class="page-item">
+                                <a class="page-link pe-4 ps-0 border-start" href="javascript:;" ng-click="datalist.nextPage();">
+                                    <i class="fe fe-arrow-right ms-1"></i> التالي
+                                </a>
+                            </li>
+                        </ul>
+
+                        <!-- Pagination -->
+                        <ul class="list-pagination pagination pagination-tabs card-pagination">
+                            <li ng-class="{active: p == datalist.currentPage}" ng-repeat="p in datalist.pages">
+                                <a class="page" href="#">@{{ p }}</a>
+                            </li>
+                        </ul>
+
+                        <!-- Pagination (prev) -->
+                        <ul class="list-pagination-prev pagination pagination-tabs card-pagination" ng-show="datalist.prevPageUrl">
+                            <li class="page-item">
+                                <a class="page-link pe-0 ps-4 border-end" href="javascript:;" ng-click="datalist.prevPage();">
+                                    السابق <i class="fe fe-arrow-left me-1"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>    
+                    ` +
+                    // End Pagination Area
+                    '<div class="card-footer d-flex justify-content-between" ng-hide="datalist.data.length == 0">' +
+                    '<div class="col my-0">' +
+                    '<div class="text-right h4 mt-2">العدد الكلي : @{{ datalist . total }}</div>' +
+                    '</div>' +
+                    '<div class="col-auto form-group my-0">' +
+                    '<select class="form-control form-control-sm page-select">' +
+                    '<option ng-repeat="p in datalist.pages" value="@{{ p }}" ng-selected="(p == datalist.currentPage)">الصفحة @{{ p }}</option>' +
+                    '</select>' +
+                    '</div>' +
+                    '<div class="col my-0">' +
+                    '<div class="text-left h4 mt-2">النتائج : <span dir="ltr">@{{ datalist . from }} <i class="fe fe-arrow-right"></i> @{{ datalist . to }}</span></div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>'
             };
         });
         
@@ -1169,16 +2251,16 @@
                                                 '</div>'+
                                             '</div>'+
                                             '<div class="col-auto">' +
-                                                //'<button ng-show="datalist.nextPageUrl" ng-click="datalist.nextPage();" class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top" title="الصفحة التالية">' +
+                                                //'<button ng-show="datalist.nextPageUrl" ng-click="datalist.nextPage();" class="btn btn-sm btn-white" type="button" data-bs-toggle="tooltip" data-placement="top" title="الصفحة التالية">' +
                                                 //    '<i class="fe fe-arrow-right"></i>' +
                                                 //'</button>'+
-                                                //'<button ng-show="datalist.prevPageUrl" ng-click="datalist.prevPage();" class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top" title="الصفحة السابقة">' +
+                                                //'<button ng-show="datalist.prevPageUrl" ng-click="datalist.prevPage();" class="btn btn-sm btn-white" type="button" data-bs-toggle="tooltip" data-placement="top" title="الصفحة السابقة">' +
                                                 //    '<i class="fe fe-arrow-left"></i>' +
                                                 //'</button>  '+
-                                                //'<button class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top" title="خيارات الفلترة والعرض">' +
+                                                //'<button class="btn btn-sm btn-white" type="button" data-bs-toggle="tooltip" data-placement="top" title="خيارات الفلترة والعرض">' +
                                                 //    '<i class="fe fe-sliders"></i>' +
                                                 //'</button> ' +
-                                                //'<button class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top" title="تصدير القائمة الى ملف CSV">' +
+                                                //'<button class="btn btn-sm btn-white" type="button" data-bs-toggle="tooltip" data-placement="top" title="تصدير القائمة الى ملف CSV">' +
                                                 //    '<i class="fe fe-download"></i>' +
                                                 //'</button>' +
                                             '</div>' +
@@ -1481,7 +2563,7 @@
         });
         
     </script>
-    
+
 </body>
 
 </html>

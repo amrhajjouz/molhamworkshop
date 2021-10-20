@@ -1,0 +1,55 @@
+// 
+// form-check.scss
+// Extended from Bootstrap
+//
+
+//
+// RTL Bootstrap Overrides ===================================
+//
+
+.form-check {
+  padding-left: unset;
+  padding-right: $form-check-padding-start;
+
+  .form-check-input {
+    float: right;
+    margin-left: unset;
+    margin-right: $form-check-padding-start * -1;
+  }
+}
+
+//
+// Switch
+//
+
+.form-switch {
+  padding-left: unset;
+  padding-right: $form-switch-padding-start;
+
+  .form-check-input {
+    margin-left: unset;
+    margin-right: $form-switch-padding-start * -1;
+  }
+}
+
+.form-check-inline {
+  margin-right: unset;
+  margin-left: $form-check-inline-margin-end;
+}
+
+
+//
+// Theme ===================================
+//
+
+// Circle
+
+.form-check-circle {
+  padding-left: unset;
+  padding-right: $form-check-circle-padding-start;
+}
+
+.form-check-circle > .form-check-input {
+  margin-left: unset;
+  margin-right: -$form-check-circle-padding-start;
+}

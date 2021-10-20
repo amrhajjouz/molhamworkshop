@@ -1,0 +1,25 @@
+// 
+// tables.scss
+// Extended from Bootstrap
+//
+
+// 
+// RTL Bootstrap Overrides =====================================
+//
+
+
+//
+// Theme =====================================
+//
+
+
+// Sort
+//
+// Adds sorting icons
+
+.table [data-sort] {
+  &::after {
+    margin-left: unset;
+    margin-right: .25rem;
+  }
+}

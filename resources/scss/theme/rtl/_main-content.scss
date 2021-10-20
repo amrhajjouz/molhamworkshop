@@ -1,0 +1,61 @@
+//
+// main-content.scss
+// Dashkit component
+//
+
+// 
+// RTL Overrides =====================================
+//
+
+
+// Main content offset
+//
+// Offsets the main content depending on the sidebar positioning
+
+.navbar-vertical.navbar-expand {
+  
+  @each $breakpoint, $value in $grid-breakpoints {
+    &-#{$breakpoint} {
+      @include media-breakpoint-up(#{$breakpoint}) {
+
+        // Left
+
+        &.fixed-start:not([style*="display: none"]) ~ .main-content {
+          margin-left: unset;
+          margin-right: $navbar-vertical-width;
+        }
+
+        // Right
+
+        &.fixed-end:not([style*="display: none"]) ~ .main-content {
+          margin-right: unset;
+          margin-left: $navbar-vertical-width;
+        }
+      }
+    }
+  }
+}
+
+.navbar-vertical-sm.navbar-expand {
+  
+  @each $breakpoint, $value in $grid-breakpoints {
+    &-#{$breakpoint} {
+      @include media-breakpoint-up(#{$breakpoint}) {
+
+        // Left
+
+        &.fixed-start:not([style*="display: none"]) ~ .main-content {
+          margin-left: unset;
+          margin-right: $navbar-vertical-width-sm;
+        }
+
+        // Right
+
+        &.fixed-end:not([style*="display: none"]) ~ .main-content {
+          margin-right: unset;
+          margin-left: $navbar-vertical-width-sm;
+        }
+      }
+    }
+  }
+}

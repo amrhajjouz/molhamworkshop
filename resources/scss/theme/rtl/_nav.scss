@@ -1,0 +1,42 @@
+// 
+// nav.scss
+// Extended from Bootstrap
+//
+
+// 
+// RTL Bootstrap Overrides =====================================
+//
+
+.nav {
+  padding-left: unset;
+  padding-right: 0;
+}
+
+// Changing nav tabs to be bottom highlight style
+
+.nav-tabs {
+  .nav-item:first-child {
+    margin-left: $nav-tabs-link-margin-x; 
+    margin-right: 0;
+  }
+
+  .nav-item:last-child {
+    margin-right: $nav-tabs-link-margin-x;
+    margin-left: 0;
+  }
+
+}
+
+// Creates a small version of the .nav-tabs
+
+.nav-tabs-sm {
+  .nav-item:first-child {
+    margin-left: $nav-tabs-sm-link-margin-x; 
+    margin-right: 0;
+  }
+
+  .nav-item:last-child {
+    margin-right: $nav-tabs-sm-link-margin-x;
+    margin-left: 0;
+  }
+}

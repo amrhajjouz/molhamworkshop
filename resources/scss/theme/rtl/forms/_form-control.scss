@@ -1,0 +1,19 @@
+//
+// RTL overrides ===================================
+//
+
+// Form control flush
+//
+// Removes borders and paddings from inputs and text areas
+
+.form-control {
+  &:not(.form-select) {
+    padding-right: $input-btn-padding-x;
+    padding-left : 0;
+  }
+
+  &.form-control-flush {
+    padding-left : inherit;
+    padding-right: 0;
+  }
+}

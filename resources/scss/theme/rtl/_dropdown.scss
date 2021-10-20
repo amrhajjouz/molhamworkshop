@@ -1,0 +1,52 @@
+//
+// dropdown.scss
+// Extended from Bootstrap
+//
+
+//
+// RTL Overrides =====================================
+//
+
+// The dropdown wrapper (`<div>`)
+.dropdown-toggle {
+  // Generate the caret automatically
+  @include caret();
+}
+
+// The dropdown menu
+.dropdown-menu {
+  text-align: right; // Ensures proper alignment if parent has it changed (e.g., modal footer)
+}
+
+// Allow for dropdowns to go bottom up (aka, dropup-menu)
+// Just add .dropup after the standard .dropdown class and you're set.
+.dropup {
+  .dropdown-toggle {
+    @include caret(up);
+  }
+}
+
+.dropend {
+  .dropdown-menu[data-bs-popper] {
+    left: auto;
+    right: 100%;
+    margin-left: unset;
+    margin-right: $dropdown-spacer;
+  }
+  .dropdown-toggle {
+    @include caret(end);
+  }
+}
+
+.dropstart {
+  .dropdown-menu[data-bs-popper] {
+    right: 100%;
+    left: auto;
+    margin-right: unset;
+    margin-left: $dropdown-spacer;
+  }
+
+  .dropdown-toggle {
+    @include caret(start);
+  }
+}

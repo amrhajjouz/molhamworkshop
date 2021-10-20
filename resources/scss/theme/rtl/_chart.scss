@@ -1,0 +1,23 @@
+//
+// chart.scss
+// Dashkit component
+//
+
+// RTL Chart Overrides
+
+// Legend
+//
+// Custom legend
+
+
+.chart-legend-item {
+  + .chart-legend-item {
+    margin-left: unset;
+    margin-right: 1rem;
+  }
+}
+
+.chart-legend-indicator {
+  margin-right: unset;
+  margin-left: 0.375rem;
+}

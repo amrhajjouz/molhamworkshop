@@ -27,7 +27,7 @@
 <div class="navbar-user d-none d-md-flex" id="sidenavUser">
 
     <!-- Dropup -->
-    <div class="dropup text-center">
+    <div class="text-center">
 
         <!-- Toggle -->
         <a href="{{ $r('profile.info') }}">

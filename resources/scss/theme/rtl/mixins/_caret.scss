@@ -1,0 +1,26 @@
+//
+// caret.scss
+// Extended from Bootstrap
+//
+
+//
+// RTL Overrides =====================================
+//
+
+// scss-docs-start caret-mixins
+@mixin caret($direction: down) {
+  @if $enable-caret {
+    &::after {
+      margin-left: unset;
+      margin-right: $caret-spacing;
+    }
+
+    @if $direction == start {
+      &::before {
+        margin-right: unset;
+        margin-left: $caret-spacing;
+      }
+    }
+  }
+}
+// scss-docs-end caret-mixins

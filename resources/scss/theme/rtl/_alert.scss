@@ -1,0 +1,14 @@
+// 
+// RTL Overrides =====================================
+//
+
+.alert {
+  &.alert-dismissible {
+    padding-right: inherit;
+    padding-left: 3.75rem;
+    .btn-close {
+      right: auto;
+      left : 0;
+    }
+  }
+}
