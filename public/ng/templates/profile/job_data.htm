@@ -1,0 +1,27 @@
+<include-header/>
+
+<form class="row" name="myForm" request="updateJobData">
+
+    <div class="col-12 alert alert-danger fade show" role="alert" ng-show="updateJobData.error != ''">
+        {{ updateJobData.error }}
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="job_number">الرقم الوظيفي</label>
+            <input type="text" class="form-control" id="job_number" ng-model="profile.job_number" ng-init="profile.job_number = auth.job_number" ng-change="updateJobData.error = ''" placeholder="الرقم الوظيفي">
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="job_title">المسمى الوظيفي</label>
+            <input type="text" class="form-control" id="job_title" ng-model="profile.job_title" ng-init="profile.job_title = auth.job_title" ng-change="updateJobData.error = ''" placeholder="المسمى الوظيفي">
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+
+</form>

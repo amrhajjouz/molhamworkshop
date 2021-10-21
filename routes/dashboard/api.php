@@ -26,9 +26,14 @@ Route::middleware('auth')->group(function ()  {
         return $request->user();
     });
 
+    // profile Routes
     Route::post('/profile', [ProfileController::class, 'update_info']);
     Route::post('/profile/password', [ProfileController::class, 'change_password']);
-    
+    Route::post('/profile/job_data', [ProfileController::class, 'job_data']);
+    Route::post('/profile/national_data', [ProfileController::class, 'national_data']);
+    Route::post('/profile/housing_data', [ProfileController::class, 'housing_data']);
+    Route::post('/profile/education_record', [ProfileController::class, 'education_record']);
+
     Route::get('/users', [UserController::class, 'list']);
     Route::post('/users', [UserController::class, 'create']);
     Route::put('/users', [UserController::class, 'update']);

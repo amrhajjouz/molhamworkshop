@@ -11,6 +11,10 @@ return [
     // Profile Routes
     'profile.info' => ['/profile/info', 'profile/profileInfoController', 'profile.info'],
     'profile.password' => ['/profile/password', 'profile/profilePasswordController', 'profile.password'],
+    'profile.job-data' => ['/profile/job-data', 'profile/profileJobDataController', 'profile.job_data'],
+    'profile.national-data' => ['/profile/national-data', 'profile/profileNationalDataController', 'profile.national_data'],
+    'profile.housing-data' => ['/profile/housing-data', 'profile/profileHousingDataController', 'profile.housing_data'],
+    'profile.education-record' => ['/profile/education-record', 'profile/profileEducationRecordController', 'profile.education_record'],
 
     // Users Routes
     'users.add' => ['users/add', 'users/addUserController', 'users.add'],

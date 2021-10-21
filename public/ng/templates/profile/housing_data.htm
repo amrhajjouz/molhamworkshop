@@ -1,0 +1,41 @@
+<include-header/>
+
+<form class="row" name="myForm" request="updateHousingData">
+
+    <div class="col-12 alert alert-danger fade show" role="alert" ng-show="updateHousingData.error != ''">
+        {{ updateHousingData.error }}
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="country">الدولة</label>
+            <input type="text" class="form-control" id="country" ng-model="profile.country" ng-init="profile.country = auth.country" ng-change="updateHousingData.error = ''" placeholder="الدولة">
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="governorate">المحافظة</label>
+            <input type="text" class="form-control" id="governorate" ng-model="profile.governorate" ng-init="profile.governorate = auth.governorate" ng-change="updateHousingData.error = ''" placeholder="المحافظةي">
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="city">المدينة</label>
+            <input type="text" class="form-control" id="city" ng-model="profile.city" ng-init="profile.city = auth.city" ng-change="updateHousingData.error = ''" placeholder="المدينة">
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="detailed_address">العنوان التفصيلي</label>
+            <input type="text" class="form-control" id="detailed_address" ng-model="profile.detailed_address" ng-init="profile.detailed_address = auth.detailed_address" ng-change="updateHousingData.error = ''" placeholder="العنوان التفصيلي">
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+
+</form>

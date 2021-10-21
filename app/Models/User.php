@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
 
-    protected $dates = ['deleted_at','contract_starting_date'];
+    protected $dates = ['deleted_at','contract_starting_date', 'graduation_year'];
 
     /*protected $fillable = [
         'name',
@@ -46,5 +46,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'contract_starting_date' => 'date:Y-m-d',
+        'graduation_year' => 'date:Y-m-d',
     ];
 }

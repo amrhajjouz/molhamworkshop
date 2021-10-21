@@ -16,9 +16,11 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            //info data
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password')->default(Hash::make('12345678'));
+            //members data
             $table->enum('job_type', ['ceo', 'manager', 'coordinator', 'senior_officer', 'officer', 'assistant', 'volunteer']);
             $table->enum('contract_type', ['full_time', 'part_time']);
             $table->enum('section', ['finance', 'programmes', 'hr']);
@@ -26,6 +28,20 @@ class CreateUsersTable extends Migration
             $table->enum('office', ['turkey', 'jordan', 'syria', 'Lebanon']);
             $table->enum('job_descriptions', ['financial_coordinator', 'assistant']);
             $table->date('contract_starting_date')->nullable();
+            //profile/job_data
+            $table->string('job_number')->nullable();
+            $table->string('job_title')->nullable();
+            //profile/national_data
+            $table->string('nationality')->nullable();
+            $table->string('document_type')->nullable();
+            //profile/housing_data
+            $table->string('country')->nullable();
+            $table->string('governorate')->nullable();
+            $table->string('city')->nullable();
+            $table->string('detailed_address')->nullable();
+            //profile/education_record
+            $table->string('education_level')->nullable();
+            $table->date('graduation_year')->nullable();
             $table->enum('locale' , ['ar' , 'en'])->default('ar');
             $table->text('bio')->nullable();
             $table->rememberToken();
