@@ -24,7 +24,6 @@
                 <td class="align-middle text-center h2">
                     <dropdown>
                         <dropdown-item href="{{ $r('translation.social_media_posts.overview', {id: post.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
-                        <dropdown-item href="{{ $r('translation.social_media_posts.edit', {id: post.id}) }}"><i class="fe fe-edit-2"></i> تعديل المعلومات</dropdown-item>
                         <dropdown-item href="#" ng-show="canProofread(post)" ng-click="proofreadPostRequest(post.id)"><i class="fe fe-terminal"></i>  تعيين كتم تدقيقها</dropdown-item>
                     </dropdown>
                 </td>

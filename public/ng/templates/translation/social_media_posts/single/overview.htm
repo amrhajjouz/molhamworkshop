@@ -17,7 +17,7 @@
                 <td class="py-3 pr-3">{{socialMediaPost.description}}</td>
             </tr>
             <tr>
-                <td class="text-muted py-3">المحتوى العربي <a href="#" ng-click="openUpdateModal('ar')"> / نعديل</a> </td>
+                <td class="text-muted py-3">المحتوى العربي</td>
                 <td class="py-3 pr-3">{{ socialMediaPost.body.ar.value}}</td>
             </tr>
             <tr>
@@ -35,7 +35,7 @@
     <div class="col-12 col-lg-6">
         <table>
             <tr>
-                <td class="text-muted py-3">المحتوى الانكليزي <a href="#" ng-click="openUpdateModal('en')"> / نعديل</a> </td>
+                <td class="text-muted py-3">المحتوى الانكليزي <a href="#" ng-click="openUpdateModal('en' , 'body')"> / نعديل</a> </td>
                 <td ng-if="socialMediaPost.body.en.value" class="py-3 pr-3">{{ socialMediaPost.body.en.value}}</td>
                 <td ng-if="!socialMediaPost.body.en.value"class="py-3 pr-3 text-danger">لا يوجد بعد</td>
             </tr>
@@ -80,8 +80,8 @@
           <div class="row">
             <div class="col-12">
                 <div class="form-group">
-                    <label for="body">محتوى المنشور</label>
-                    <textarea id="description" class="form-control" type="text" ng-model="updateableSocialMediaPost.body[lang].value"></textarea>
+                    <label for="value">محتوى المنشور</label>
+                    <textarea id="vale" class="form-control" type="text" ng-model="updateableSocialMediaPostContent.value"></textarea>
                     <!-- <tiny-editor id="body" dir="rtl" model="selectedValue" placeholder="ادخل محتوى المنشور باللغة العربية...">{{selectedValue}} </tiny-editor> -->
                 </div>
             </div>

@@ -27,71 +27,28 @@ class UpdateTranslationSocialMediaPostRequest extends FormRequest
      */
     public function rules()
     {
-        // dd( $this->body['en']['value']);
         $rules =  [
-            // 'locale' => ['required' , Rule::in(['en' , 'ar'])],
-            // 'body' => ['required', 'string', 'between:3,100'],
-            'body' => ['required', 'array' ],
-            'body.ar' => ['required', 'array' ],
-            'body.ar.value' => ['required', 'string', 'between:3,100' ],
-            'body.en' => ['sometimes', 'array' ],
-            'body.en.value' => ['sometimes', 'string', 'between:3,100' ],
-
-
             'field_name'=>['required' , 'string', 'in:body'] ,
-            'locale' => ['required' , 'in:ar,en'] ,
-            
-            
+            'locale' => ['required' , 'in:en'] ,
         ];
-
 
         if($this->field_name =='body'){
             $rules['value'] = ['required' , 'string' , 'between:1,1000'];
         }
+        return $rules;
     }
 
     public function validated()
     {
         $validated =   [
             $this->field_name => [
-                $this->locale => [
-                    'value' =>  $this->body['ar']['value'],
+                $this->all()['locale'] => [
+                    'value' =>  $this->value,
                     'proofread' => false,
                     'auto_generated' => false,
                 ],
             ],
         ];
-        
-        if(isset($this->body['en']['value'])){
-            $validated['body']['en'] = [
-                'value' =>  $this->body['en']['value'],
-                'proofread' => false,
-                'auto_generated' => false,
-            ];
-        }
-        return $validated;
+        return  $validated ;
     }
-
-    // public function validated()
-    // {
-    //     $validated =   [
-    //         'body' => [
-    //             'ar' => [
-    //                 'value' =>  $this->body['ar']['value'],
-    //                 'proofread' => false,
-    //                 'auto_generated' => false,
-    //             ],
-    //         ],
-    //     ];
-        
-    //     if(isset($this->body['en']['value'])){
-    //         $validated['body']['en'] = [
-    //             'value' =>  $this->body['en']['value'],
-    //             'proofread' => false,
-    //             'auto_generated' => false,
-    //         ];
-    //     }
-    //     return $validated;
-    // }
-
 }

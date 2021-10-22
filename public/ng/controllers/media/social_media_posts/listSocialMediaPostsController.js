@@ -41,15 +41,27 @@ function listSocialMediaPostsController($scope, $init, $apiRequest, $page) {
     $scope.openPublishingModalOptions = (post)=>{
         $('#publish-modal').modal('show');
         post.publishing = {
-            published_facebook_at:post.published_facebook_at != null ,
-            published_twitter_at:post.published_twitter_at != null ,
-            published_youtube_at:post.published_youtube_at != null ,
-            published_instagram_at:post.published_instagram_at != null ,
+            published_on_facebook_at:post.published_on_facebook_at != null ,
+            published_on_twitter_at:post.published_on_twitter_at != null ,
+            published_on_youtube_at:post.published_on_youtube_at != null ,
+            published_on_instagram_at:post.published_on_instagram_at != null ,
         };
+        post.isScheduled = {
+            scheduled_on_facebook_at:post.scheduled_on_facebook_at != null ,
+            scheduled_on_twitter_at:post.scheduled_on_twitter_at != null ,
+            scheduled_on_youtube_at:post.scheduled_on_youtube_at != null ,
+            scheduled_on_instagram_at:post.scheduled_on_instagram_at != null ,
+        };
+        post.scheduled_on_facebook_at =post.scheduled_on_facebook_at ? new Date(post.scheduled_on_facebook_at): null ,
+        post.scheduled_on_twitter_at =post.scheduled_on_twitter_at ? new Date(post.scheduled_on_twitter_at): null ,
+        post.scheduled_on_youtube_at =post.scheduled_on_youtube_at ? new Date(post.scheduled_on_youtube_at): null ,
+        post.scheduled_on_instagram_at =post.scheduled_on_instagram_at ? new Date(post.scheduled_on_instagram_at): null ,
+        
         $scope.updatePublishingOptionsRequest.config.url = `dashboard/api/media/social_media_posts/${post.id}/publishing`;
         $scope.updatePublishingOptionsRequest.config.data = post;
 
         $scope.selectedSocialMediaPost = post;
+        
         
     }
 
@@ -69,4 +81,13 @@ function listSocialMediaPostsController($scope, $init, $apiRequest, $page) {
           $scope.selectedSocialMediaPost = {publishing:[]};
         }
       );
+
+      $scope.handleChangeInput = (name , action)=>{
+          if(action=='published'){
+            $scope.selectedSocialMediaPost.isScheduled['scheduled_on_'+name+'_at'] = null;
+            $scope.selectedSocialMediaPost['scheduled_on_'+name+'_at'] = null;
+        }else{
+            $scope.selectedSocialMediaPost.publishing['published_on_'+name+'_at'] = false;
+        }
+      }
 }

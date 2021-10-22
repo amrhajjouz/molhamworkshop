@@ -3,26 +3,23 @@ function overviewTranslationSocialMediaPostControllerInit($apiRequest, $page) {
 }
 
 function overviewTranslationSocialMediaPostController($scope, $page, $apiRequest, $init) {
+  $scope.updateableSocialMediaPostContent ={field_name:null , lang:null , value:null };
   $scope.socialMediaPost = $init;
-  $scope.updateableSocialMediaPost = angular.copy($init);
 
 
 
-$scope.openUpdateModal = (lang)=>{
-  $scope.lang =lang;
-  $scope.$evalAsync();
+$scope.openUpdateModal = (locale , field)=>{
+  $scope.updateableSocialMediaPostContent ={field_name:field , locale:locale , value:$scope.socialMediaPost[field][locale] ? $scope.socialMediaPost[field][locale].value : "" , id:$init.id}
+  $scope.updateSocialMediaPostRequest.config.data = $scope.updateableSocialMediaPostContent;
   $('#edit-modal').modal('show');
   
 }
-
-
-
 
 $scope.updateSocialMediaPostRequest = $apiRequest.config(
   {
       method: 'PUT',
       url: 'translation/social_media_posts',
-      data: $scope.updateableSocialMediaPost,
+      data: $scope.updateableSocialMediaPostContent,
   },
   function (response, data) {
     $("#edit-modal").on("hidden.bs.modal", function (e) {
@@ -32,5 +29,4 @@ $scope.updateSocialMediaPostRequest = $apiRequest.config(
     $("#edit-modal").modal("hide");
   }
 );
-
 }

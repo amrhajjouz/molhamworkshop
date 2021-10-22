@@ -52,19 +52,62 @@
       </span>
     </modal-title>
     <div>
+
+
       <modal-body>
         <form name="updatePublishingOptionsForm" request="updatePublishingOptionsRequest" id="myForm">
           <div class="row">
             <div class="col-12 col-md-6">
               <div class="form-group">
-                <input type="checkbox" ng-value="true" id="facebook" name="facebook" ng-model="selectedSocialMediaPost.publishing['published_facebook_at']" ng-checked="selectedSocialMediaPost.published_facebook_at != null">
+                <input type="checkbox" ng-value="true" id="facebook" name="facebook" ng-model="selectedSocialMediaPost.publishing['published_on_facebook_at']" ng-checked="selectedSocialMediaPost.published_on_facebook_at != null" ng-change="handleChangeInput('facebook' , 'published' )">
                 <label for="facebook"> facebook</label><br>
-                <input type="checkbox" ng-value="true" id="youtube" name="youtube" ng-model="selectedSocialMediaPost.publishing['published_youtube_at']" ng-checked="selectedSocialMediaPost.published_youtube_at != null">
+                <input type="checkbox" ng-value="true" id="youtube" name="youtube" ng-model="selectedSocialMediaPost.publishing['published_on_youtube_at']" ng-checked="selectedSocialMediaPost.published_on_youtube_at != null" ng-change="handleChangeInput('youtube' , 'published' )">
                 <label for="youtube"> youtube</label><br>
-                <input type="checkbox" ng-value="true" id="twitter" name="twitter" ng-model="selectedSocialMediaPost.publishing['published_twitter_at']" ng-checked="selectedSocialMediaPost.published_twitter_at != null">
+                <input type="checkbox" ng-value="true" id="twitter" name="twitter" ng-model="selectedSocialMediaPost.publishing['published_on_twitter_at']" ng-checked="selectedSocialMediaPost.published_on_twitter_at != null" ng-change="handleChangeInput('twitter' , 'published' )">
                 <label for="twitter"> twitter</label><br>
-                <input type="checkbox" ng-value="true" id="instagram" name="instagram" ng-model="selectedSocialMediaPost.publishing['published_instagram_at']" ng-checked="selectedSocialMediaPost.published_instagram_at != null">
+                <input type="checkbox" ng-value="true" id="instagram" name="instagram" ng-model="selectedSocialMediaPost.publishing['published_on_instagram_at']" ng-checked="selectedSocialMediaPost.published_on_instagram_at != null" ng-change="handleChangeInput('instagram' , 'published' )">
                 <label for="instagram"> instagram</label><br>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <input type="checkbox" ng-value="true" id="facebook_scheduling" name="facebook" ng-model="selectedSocialMediaPost.isScheduled['scheduled_on_facebook_at']" ng-checked="selectedSocialMediaPost.scheduled_on_facebook_at != null" ng-change="handleChangeInput('facebook' , 'scheduled' )">
+                <label for="facebook_scheduling"> facebook</label><br>
+              </div>
+              <div class="form-group">
+                <input type="checkbox" ng-value="true" id="youtube_scheduling" name="youtube" ng-model="selectedSocialMediaPost.isScheduled['scheduled_on_youtube_at']" ng-checked="selectedSocialMediaPost.scheduled_on_youtube_at != null" ng-change="handleChangeInput('youtube' , 'scheduled' )">
+                <label for="youtube_scheduling"> youtube</label><br>
+              </div>
+              <div class="form-group">
+                <input type="checkbox" ng-value="true" id="twitter_scheduling" name="twitter" ng-model="selectedSocialMediaPost.isScheduled['scheduled_on_twitter_at']" ng-checked="selectedSocialMediaPost.scheduled_on_twitter_at != null" ng-change="handleChangeInput('twitter' , 'scheduled' )">
+                <label for="twitter_scheduling"> twitter</label><br>
+              </div>
+              <div class="form-group">
+                <input type="checkbox" ng-value="true" id="instagram_scheduling" name="instagram" ng-model="selectedSocialMediaPost.isScheduled['scheduled_on_instagram_at']" ng-checked="selectedSocialMediaPost.scheduled_on_instagram_at != null" ng-change="handleChangeInput('instagram' , 'scheduled' )">
+                <label for="instagram_scheduling"> instagram</label><br>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                 <div ng-show="selectedSocialMediaPost.isScheduled['scheduled_on_facebook_at']">
+                  <input type="datetime-local" id="facebook_scheduled_at" ng-model="selectedSocialMediaPost['scheduled_on_facebook_at']">
+                  <label for="instagram"> facebook</label><br>
+                 </div>
+                 <div ng-show="selectedSocialMediaPost.isScheduled['scheduled_on_youtube_at']">
+                  <input type="datetime-local" id="youtube_scheduled_at" ng-model="selectedSocialMediaPost['scheduled_on_youtube_at']">
+                  <label for="instagram"> youtube</label><br>
+                 </div>
+                 <div ng-show="selectedSocialMediaPost.isScheduled['scheduled_on_twitter_at']">
+                  <input type="datetime-local" id="twitter_scheduled_at" ng-model="selectedSocialMediaPost['scheduled_on_twitter_at']">
+                  <label for="instagram"> twitter</label><br>
+                 </div>
+                 <div ng-show="selectedSocialMediaPost.isScheduled['scheduled_on_instagram_at']">
+                  <input type="datetime-local" id="instagram_scheduled_at" ng-model="selectedSocialMediaPost['scheduled_on_instagram_at']">
+                  <label for="instagram"> instagram</label><br>
+                 </div>
+                </div>
               </div>
             </div>
           </div>

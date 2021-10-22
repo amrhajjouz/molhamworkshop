@@ -24,10 +24,14 @@ class CreateSocialMediaPostsTable extends Migration
             $table->datetime('rejected_at')->nullable();
             $table->bigInteger('approved_by')->nullable();
             $table->datetime('approved_at')->nullable();
-            $table->datetime('published_facebook_at')->nullable();
-            $table->datetime('published_twitter_at')->nullable();
-            $table->datetime('published_instagram_at')->nullable();
-            $table->datetime('published_youtube_at')->nullable();
+            $table->datetime('published_on_facebook_at')->nullable();
+            $table->datetime('published_on_twitter_at')->nullable();
+            $table->datetime('published_on_instagram_at')->nullable();
+            $table->datetime('published_on_youtube_at')->nullable();
+            $table->datetime('scheduled_on_facebook_at')->nullable();
+            $table->datetime('scheduled_on_twitter_at')->nullable();
+            $table->datetime('scheduled_on_instagram_at')->nullable();
+            $table->datetime('scheduled_on_youtube_at')->nullable();
             $table->timestamps();
         });
     }

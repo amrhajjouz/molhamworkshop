@@ -45,7 +45,6 @@ return [
     
     'translation.social_media_posts' => ['translation/social-media-posts', 'translation/social_media_posts/listTranslationSocialMediaPostsController', 'translation.social_media_posts.list'],
     'translation.social_media_posts.overview' => ['translation/social-media-posts/:id', 'translation/social_media_posts/overviewTranslationSocialMediaPostController', 'translation.social_media_posts.single.overview'],
-    'translation.social_media_posts.edit' => ['translation/social-media-posts/:id/edit', 'translation/social_media_posts/editTranslationSocialMediaPostController', 'translation.social_media_posts.single.edit'],
   
     //////////////////////// Publishing Routes //////////////////////
     'publishing.cases' => ['publishing/cases', 'publishing/cases/listCasesPublishingController', 'publishing.cases.list'],

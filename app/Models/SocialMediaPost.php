@@ -16,9 +16,17 @@ class SocialMediaPost extends BaseModel
         'body' => 'json',
         'published_at' =>  'datetime:Y-m-d H:i:s',
         'created_at' =>  'datetime:Y-m-d H:i:s',
-        'updated_at' =>  'datetime:Y-m-d H:i:s',
         'approved_at' =>  'datetime:Y-m-d H:i:s',
         'rejected_at' =>  'datetime:Y-m-d H:i:s',
+        'updated_at' =>  'datetime:Y-m-d H:i:s',
+        'published_on_facebook_at' =>  'datetime:Y-m-d H:i:s',
+        'scheduled_on_facebook_at' =>  'datetime:Y-m-d H:i:s',
+        'published_on_youtube_at' =>  'datetime:Y-m-d H:i:s',
+        'scheduled_on_youtube_at' =>  'datetime:Y-m-d H:i:s',
+        'published_on_instagram_at' =>  'datetime:Y-m-d H:i:s',
+        'scheduled_on_instagram_at' =>  'datetime:Y-m-d H:i:s',
+        'published_on_twitter_at' =>  'datetime:Y-m-d H:i:s',
+        'scheduled_on_twitter_at' =>  'datetime:Y-m-d H:i:s',
     ];
 
     public function getProofreadableAttribute()

@@ -88,7 +88,11 @@ class SocialMediaPostController extends Controller
     {
         $post = SocialMediaPost::findOrFail($id);
         foreach ($request->validated()['publishing'] as $type => $value) {
-            if($value==true) $post->$type = date('Y-m-d H:i:s', time());
+            if($value==true && $post->$type == null) $post->$type = date('Y-m-d H:i:s', time());
+            else $post->$type = null;
+        }
+        foreach ($request->validated()['scheduling'] as $type => $value) {
+            if($value ) $post->$type = $value;
             else $post->$type = null;
         }
         $post->save();

@@ -2,12 +2,8 @@
 
 namespace App\Http\Requests\Media\SocialMediaPost;
 
-use App\Models\Cases;
-use App\Models\Place;
 use App\Models\SocialMediaPost;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
 
 class UpdateSocialMediaPostPublishingOptions extends FormRequest
 {
@@ -29,14 +25,35 @@ class UpdateSocialMediaPostPublishingOptions extends FormRequest
     public function rules()
     {
         return [
-            'id' => ['required' , 'exists:'.SocialMediaPost::getTableName().',id'],
-            'publishing' => ['required' , 'array'] ,
-            'publishing.published_facebook_at' => ['sometimes' , 'boolean'] ,
-            'publishing.published_twitter_at' => ['sometimes' , 'boolean'] ,
-            'publishing.published_youtube_at' => ['sometimes' , 'boolean'] ,
-            'publishing.published_instagram_at' => ['sometimes' , 'boolean'] ,
+            'id' => ['required', 'exists:' . SocialMediaPost::getTableName() . ',id'],
+            'publishing' => ['required', 'array'],
+            'publishing.published_on_facebook_at' => ['sometimes', 'boolean'],
+            'publishing.published_on_twitter_at' => ['sometimes', 'boolean'],
+            'publishing.published_on_youtube_at' => ['sometimes', 'boolean'],
+            'publishing.published_on_instagram_at' => ['sometimes', 'boolean'],
+            'scheduling' => ['required', 'array'],
+            'scheduling.scheduled_on_facebook_at' => ['nullable', 'date_format:Y-m-d H:i:s' , ],
+            'scheduling.scheduled_on_twitter_at' => ['nullable', 'date_format:Y-m-d H:i:s' , ],
+            'scheduling.scheduled_on_youtube_at' => ['nullable', 'date_format:Y-m-d H:i:s' , ],
+            'scheduling.scheduled_on_instagram_at' => ['nullable', 'date_format:Y-m-d H:i:s' , ],
         ];
     }
 
-
+    protected function prepareForValidation()
+    {
+        $scheduling = ['scheduled_on_facebook_at' => null , 'scheduled_on_twitter_at' => null , 'scheduled_on_youtube_at' => null , 'scheduled_on_instagram_at' => null , ];
+        if($this->scheduled_on_facebook_at != null){
+            $scheduling['scheduled_on_facebook_at'] =  date('Y-m-d H:i:s' , strtotime($this->scheduled_on_facebook_at));
+        }
+        if($this->scheduled_on_twitter_at != null){
+            $scheduling['scheduled_on_twitter_at'] =  date('Y-m-d H:i:s' , strtotime($this->scheduled_on_twitter_at));
+        }
+        if($this->scheduled_on_youtube_at != null){
+            $scheduling['scheduled_on_youtube_at'] =  date('Y-m-d H:i:s' , strtotime($this->scheduled_on_youtube_at));
+        }
+        if($this->scheduled_on_instagram_at != null){
+            $scheduling['scheduled_on_instagram_at'] =  date('Y-m-d H:i:s' , strtotime($this->scheduled_on_instagram_at));
+        }
+        $this->merge(['scheduling' => $scheduling]);
+    }
 }

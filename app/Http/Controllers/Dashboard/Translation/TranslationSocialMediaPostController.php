@@ -41,7 +41,6 @@ class TranslationSocialMediaPostController extends Controller
     {
         try {
             $socialMediaPost = SocialMediaPost::findOrFail($request->id);
-            // dd($request->validated());
             $socialMediaPost->updateContentFields($request->validated());
             return response()->json($socialMediaPost);
         } catch (\Exception $e) {
