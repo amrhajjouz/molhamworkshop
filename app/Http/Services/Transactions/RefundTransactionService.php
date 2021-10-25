@@ -9,37 +9,38 @@ class RefundTransactionService extends ReversalTransactionService
 {
     protected $paymentTypeAfterTransaction = 'refunded';
     protected $journalStatusAfterTransaction = 'refund';
-    private $allowLose = false;
+    protected $withLose = false;
 
     /**
      * @throws \Exception
      */
     public function processRefundTransaction (Journals $journal, $note, $allowLose){
-        $this->allowLose =  $allowLose;
+        $this->withLose =  $allowLose;
         $this->processTransaction($journal,$note);
     }
 
     public function afterJournalsHandler(Journals $journal){
         $originalPayment = $journal->journalable;
 
-        if(!$this->allowLose || $originalPayment->fee == 0){
+        if(!$this->withLose || $originalPayment->fee == 0){
             return;
         }
 
-        $this->refundJournalProcess($journal);
+        $this->refundWithLoseProcess($journal);
     }
 
     /**
      * @param Journals $journal
      * @param $originalPayment
      */
-    protected function refundJournalProcess(Journals $journal): void
+    protected function refundWithLoseProcess(Journals $journal): void
     {
         $originalPayment = $journal->journalable;
-        $journalLoseFee = $journal->replicate()->create([
+        $journalLoseFee = $journal->replicate()->fill([
             'related_to' => $journal->id,
             'type' => "refund_losses_auto_journal",
         ]);
+        $journalLoseFee->save();
 
         $configuredAccount = Account::find(1); //todo: this should be configuration later;
         $debitCreditDetails = $configuredAccount->getIncomeAmountArray($originalPayment->fee);

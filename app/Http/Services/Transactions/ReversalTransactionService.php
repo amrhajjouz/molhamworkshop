@@ -25,8 +25,8 @@ class ReversalTransactionService extends BaseTransactionService
             $payment->status = $this->paymentTypeAfterTransaction; //todo: dynamic
             $payment->save();
 
-            $this->deleteSelectedDonations($donations);
 
+            $this->deleteSelectedDonations($donations);
             $this->journalsHandler($journal, $note);
 
             DB::commit();

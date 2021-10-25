@@ -84,7 +84,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/refund/{id}', function ($id) {
         convertToEPayment($id);
         $transaction = new RefundTransactionService();
-        $transaction->processRefundTransaction(Journals::findOrFail($id), "test", true);
+        $transaction->processRefundTransaction(Journals::findOrFail($id), "test", false);
     });
 
     Route::get('/partial-refund/{id}', function ($id) {

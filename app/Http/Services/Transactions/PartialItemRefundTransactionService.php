@@ -5,7 +5,7 @@ namespace App\Http\Services\Transactions;
 use App\Models\Journals;
 use Exception;
 
-class PartialRefundTransactionService extends RefundTransactionService
+class  PartialItemRefundTransactionService extends RefundTransactionService
 {
     protected $paymentTypeAfterTransaction = 'refunded';
     protected $journalStatusAfterTransaction = 'refund';
@@ -24,11 +24,13 @@ class PartialRefundTransactionService extends RefundTransactionService
 
     protected function deleteSelectedDonations($donations): void
     {
-        foreach ($donations as $donation) {
-            if (in_array($donation->id, $this->donationsToRefund)) {
-                $donation->delete();
-            }
-        }
+        parent::deleteSelectedDonations($donations);
+
+        $this->reInsertTheNewPartialRefund();
+    }
+
+    private function reInsertTheNewPartialRefund(){
+
     }
 
     public function afterJournalsHandler(Journals $journal)
