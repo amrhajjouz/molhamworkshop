@@ -21,6 +21,10 @@ class CreateUsersTable extends Migration
             $table->enum('locale' , ['ar' , 'en'])->default('ar');
             $table->text('bio')->nullable();
             $table->rememberToken();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->foreign('created_by')->references('id')->on('users');
+            $table->foreign('updated_by')->references('id')->on('users');
             $table->timestamps();
         });
     }

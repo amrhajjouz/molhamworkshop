@@ -15,7 +15,7 @@ class CreateDonorTable extends Migration
     {
         Schema::create('donors', function (Blueprint $table) {
             $table->id();
-            $table->string("name",30);
+            $table->string("name");
             $table->string("email",155);
             $table->text("password");
             $table->string("phone",20)->nullable();
@@ -25,7 +25,12 @@ class CreateDonorTable extends Migration
             $table->boolean("verified")->default(false);
             $table->boolean("blocked")->default(false);
             $table->boolean("closed")->default(false);
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
+            $table->foreign('created_by')->references('id')->on('users');
+            $table->foreign('updated_by')->references('id')->on('users');
+
         });
     }
 
@@ -36,6 +41,6 @@ class CreateDonorTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('donor');
+        Schema::dropIfExists('donors');
     }
 }

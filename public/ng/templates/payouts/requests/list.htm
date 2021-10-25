@@ -1,0 +1,67 @@
+<page-header title="قائمة طلبات الصرف" pretitle="القسم المالي">
+    <a href="{{ $r('payouts.requests.add') }}" class="btn btn-primary">
+        <i class="fe fe-plus"></i>&nbsp;طلب صرف جديد
+    </a>
+</page-header>
+
+<datatable datalist="payout">
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">المبلغ</th>
+                <th class="text-center">العملة</th>
+                <th class="text-center">تاريخ الإضافة</th>
+                <th class="text-center">الغاية</th>
+                <th class="text-center">الدولة</th>
+                <th class="text-center">الحالة</th>
+                <th class="text-center">المراجعة الحالية</th>
+                <th class="text-center">التفاصيل</th>
+                <th class="text-center">الخيارات</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="d in payout.data">
+                <td class="align-middle text-center">{{ d.id }}</td>
+                <td class="align-middle text-center">{{ d.amount }}</td>
+                <td class="align-middle text-center">{{ d.currency }}</td>
+                <td class="align-middle text-center datatable-date">{{ d.created_at }}</td>
+                <td class="align-middle text-center">{{ d.transaction_purpose_name }}</td>
+                <td class="align-middle text-center">{{ d.country_name }}</td>
+                <td class="align-middle text-center font-weight-bold" ng-class="{'text-warning': d.status == 'pending' ,'text-danger': d.status == 'rejected' ,'text-success': d.status == 'approved' }">{{ statusToText(d.status) }}</td>
+                <td class="align-middle text-center">{{ d.next_review_name }}</td>
+                <td class="align-middle text-center">
+                    <a ng-show="d.details!=null" href="javascript:;" data-toggle="popover" data-content="{{ d.details }}">التفاصيل</a>
+                </td>
+                <td class="align-middle text-center h2">
+                    <dropdown>
+                        <dropdown-item href="{{ $r('payouts.requests.reviews', {requestId: d.id}) }}"><i class="fa fa-tasks"></i> المراجعات</dropdown-item>
+                        <dropdown-item ng-show="d.status == 'approved' && d.has_voucher == false" href="javascript:;"  ng-click="showCreateVoucherModel(d)"><i class="fe fe-printer ml-1"></i>إصدار سند صرف</dropdown-item>
+                        <dropdown-item ng-show="d.has_voucher" href="javascript:;"  ng-click="directToVoucher(d)"><i class="fa fa-tasks"></i>عرض سند الصرف</dropdown-item>
+                    </dropdown>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</datatable>
+
+<div class="modal fade" id="voucher-modal">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>الحساب</label>
+                            <select2 model="voucher.account_id" placeholder="إسم الحساب" ajax-url="accounts/search"
+                                     ajax-data="{currency:selectedRequest.currency}"
+                                     error-model="voucher.errors.account_id" required></select2>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-success float-right" ng-click="createVoucher()">إصدار سند صرف</button>
+            </div>
+        </div>
+    </div>
+</div>

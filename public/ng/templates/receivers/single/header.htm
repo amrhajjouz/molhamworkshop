@@ -1,0 +1,14 @@
+<page-header title="المستلم {{ $routeParams.id }}" pretitle="المستلمون">
+
+    <button type="button" class="btn btn-primary" ng-show="$routeName == 'receivers.accounts'" ng-click="showAccountModal('add');">
+        <i class="fe fe-plus"></i>&nbsp; حساب جديد
+    </button>
+
+</page-header>
+
+<page-nav>
+    <page-nav-item route="receivers.overview" params="{id: $routeParams.id}">نظرة عامة</page-nav-item>
+    <page-nav-item route="receivers.edit" params="{id: $routeParams.id}">تعديل المعلومات</page-nav-item>
+    <page-nav-item route="receivers.accounts" params="{id: $routeParams.id}">الحسابات</page-nav-item>
+    <page-nav-item route="receivers.transactions" params="{id: $routeParams.id}">المدفوعات</page-nav-item>
+</page-nav>

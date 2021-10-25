@@ -1,0 +1,53 @@
+<page-header title="طلب صرف" pretitle="القسم المالي"></page-header>
+<form class="row" name="PayoutForm" request="createPayout" model="payout">
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label>مبلغ الصرف</label>
+            <input ng-model="payout.amount" ng-min="1" class="form-control" placeholder="مبلغ الصرف" required>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label>العملة</label>
+            <select2 model="payout.currency" required error-model="payout.errors.currency">
+                <option ng-repeat="currency in currencies" ng-value="currency.code">{{currency.code}}</option>
+            </select2>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label>الغاية من الصرف</label>
+            <select2 model="payout.purpose_type">
+                <option value="general_fund">الصندوق العام</option>
+                <option value="administrative_support">الدعم الإداري</option>
+            </select2>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label>الدولة</label>
+            <select2 model="payout.country_id" required error-model="payout.errors.country_id">
+                <option ng-repeat="country in countries" ng-value="country.id">{{country.name}}</option>
+            </select2>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label>المتسلم</label>
+            <select2 model="payout.assignee_id" placeholder="إسم المستلم" ajax-url="users/search"
+                     ajax-data="{currency:payment.currency}"
+                     error-model="payment.errors.account_id"></select2>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label>ملاحظة</label>
+            <textarea class="form-control" ng-model="payout.details" placeholder="تفاصيل"></textarea>
+        </div>
+    </div>
+    <div class="col-12">
+        <submit-button form="PayoutForm" icon="fe fe-plus">اضافة طلب
+        </submit-button>
+    </div>
+</form>
+

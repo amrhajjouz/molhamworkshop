@@ -1,9 +1,7 @@
-function listUsersControllerInit ($datalist, $location) {
+function listUsersControllerInit ($datalist) {
     return $datalist('users', true).load();
 }
 
-function listUsersController ($scope, $init, $datalist) {
-
+function listUsersController ($scope, $init) {
     $scope.users = $init;
-    
 }

@@ -24,8 +24,8 @@ class UpdateDonorRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required' ,'string', 'between:3,30'],
-            'email' => ['required' , 'email' , 'unique:donors,email,'.$this->input('id')],
+            'name' => ['required', 'string', 'between:3,30'],
+            'email' => ['required', 'email', 'unique:donors,email,' . $this->input('id')],
             'password' => ['string', 'min:8'],
             'phone' => ['string', 'between:5,20'],
             'whatsapp_number' => ['string', 'between:5,20'],

@@ -1,0 +1,22 @@
+<page-header title="مستلم جديد" pretitle="المستلمون"></page-header>
+<form class="row" name="myForm" request="createReceiver">
+     <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">الاسم</label>
+            <input type="text" class="form-control" ng-class="(createReceiver.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="receiver.name" ng-change="createReceiver.errors.name = null" placeholder="الاسم .." required>
+            <div ng-show="createReceiver.errors.name != null" class="invalid-feedback">{{ createReceiver.errors.name[0] }}</div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label>المدينة</label>
+            <div ng-show="createReceiver.errors.country_id != null" class="invalid-feedback">{{ createReceiver.errors.country_id[0] }}</div>
+            <select2 model="receiver.country_id"  required>
+                <option ng-repeat="country in countries" ng-value="country.id">{{country.name}}</option>
+            </select2>
+        </div>
+    </div>
+    <div class="col-12">
+        <submit-button form="myForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>

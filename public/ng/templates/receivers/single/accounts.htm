@@ -1,0 +1,163 @@
+<include-header/>
+
+<div class="text-center h4 mt-4 mb-4">
+    العدد الكلي : {{ accounts.length }}
+</div>
+<div class="card">
+    <div class="card-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <div class="input-group input-group-flush input-group-merge">
+                    <input type="search" ng-model="search" class="form-control form-control-prepended search" placeholder="اكتب كلمة للبحث ثم اضغط Enter  ...">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <span class="fe fe-search"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-auto">
+
+                <!-- Button -->
+                <button class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top" title="خيارات الفلترة والعرض">
+                    <i class="fe fe-sliders"></i>
+                </button>
+
+                <button class="btn btn-sm btn-white" type="button" data-toggle="tooltip" data-placement="top" title="تصدير القائمة الى ملف CSV">
+                    <i class="fe fe-download"></i>
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-sm card-table">
+            <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">الإسم</th>
+                <th class="text-center">العملة</th>
+                <th class="text-center">الرصيد الافتتاحي</th>
+                <th class="text-center">الداخل</th>
+                <th class="text-center">الخارج</th>
+                <th class="text-center">المتبقي</th>
+                <th class="text-center">خيارات</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-show="accounts.length == 0">
+                <td colspan="10" class="text-center">
+                    <div class="pt-3 pb-2 h4" ng-show="accounts.length == 0">لا يوجد أية عناصر في هذه القائمة</div>
+                </td>
+            </tr>
+            <tr ng-repeat="u in accounts | filter : search">
+                <td class="align-middle text-center">{{ u.id }}</td>
+                <td class="align-middle text-center">{{ u.name }}</td>
+                <td class="align-middle text-center">{{ u.currency }}</td>
+                <td class="align-middle text-center">{{ u.initial_balance }}</td>
+                <td class="align-middle text-center">{{ u.income }}</td>
+                <td class="align-middle text-center">{{ u.outcome }}</td>
+                <td class="align-middle text-center">{{ u.left }}</td>
+
+                <td class="align-middle text-center h2">
+                    <dropdown>
+                        <dropdown-item href="javascript:;" ng-click="showAccountModal('edit', u);"><i class="fe fe-edit"></i> تعديل</dropdown-item>
+                        <dropdown-item href="javascript:;" ng-click="showTransactionModel(u,'exchange');"><i class="fa fa-exchange"></i> تصريف </dropdown-item>
+                        <dropdown-item href="javascript:;" ng-click="showTransactionModel(u,'transfer');"><i class="fa fa-paper-plane"></i> تحويل </dropdown-item>
+                    </dropdown>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <modal id="transaction-modal">
+        <modal-title>
+            <span ><i class="fe fe-plus-circle"></i>&nbsp;
+                <span ng-show="transaction.type=='exchange'">تصريف من </span>
+                <span ng-show="transaction.type=='transfer'">تحويل من </span>
+                {{selectedAccount.name}}
+            </span>
+        </modal-title>
+        <modal-body>
+            <form name="transactionModalForm" request="createTransaction" model="transaction">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label>إلى حساب</label>
+                            <select ng-hide="transaction.type=='transfer'"  class="form-control" ng-model="transaction.to" ng-error="createTransaction.errors.to" required>
+                                <option ng-repeat="account in accounts" ng-value="account.id" ng-hide="account.currency == selectedAccount.currency">{{account.name}}</option>
+                            </select>
+                            <div ng-show="transaction.type=='transfer'">
+                                <select2 model="transaction.to" ajax-url="accounts/search" ajax-data="{except_receiver:selectedAccount.receiver_id, currency:selectedAccount.currency}" error-model="transaction.errors.to" ></select2>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="amount">المبلغ</label>
+                            <input type="number" class="form-control" id="amount" ng-model="transaction.amount" ng-error="createTransaction.errors.amount" placeholder="المبلغ  .." required>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <label for="notes">ملاحظة</label>
+                            <textarea id="notes" class="form-control"  ng-model="transaction.notes" ng-error="createTransaction.errors.notes" placeholder="ملاحظة  .." rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <submit-button  form="transactionModalForm" icon="fe fe-plus">اضافة</submit-button>
+
+            </form>
+
+        </modal-body>
+    </modal>
+    <modal id="account-modal">
+            <modal-title>
+                <span ng-show="currentAccountModalAction == 'add'"><i class="fe fe-plus-circle"></i>&nbsp; اضافة حساب جديد</span>
+                <span ng-show="currentAccountModalAction == 'edit'"><i class="fe fe-edit"></i>&nbsp; تعديل الحساب {{ account.id }}</span>
+            </modal-title>
+            <modal-body>
+                <form name="accountModalForm" request="createUpdateAccount" model="account">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="name">الاسم</label>
+                                <input type="text" class="form-control" id="name" ng-model="account.name" ng-error="createUpdateAccount.errors.name" placeholder="الاسم .." required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="initial_balance">المبلغ المبدئي</label>
+                                <input type="number" class="form-control"  id="initial_balance" ng-model="account.initial_balance" ng-error="createUpdateAccount.errors.initial_balance" placeholder="المبلغ المبدئي .." required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6" ng-hide="currentAccountModalAction == 'edit'">
+                            <div class="form-group">
+                                <label for="currency">العملة</label>
+                                <select class="form-control" id="currency" ng-model="account.currency" ng-error="createUpdateAccount.errors.currency" required>
+                                    <option ng-repeat="currency in currencies" ng-value="currency.code">{{currency.code}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="type_id">تصنيف الحساب</label>
+                                <select class="form-control" id="type_id" ng-model="account.type_id" required>
+                                    <option ng-repeat="type in accountsTypes" ng-value="type.id">{{type.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <submit-button ng-show="currentAccountModalAction == 'add'" form="accountModalForm" icon="fe fe-plus">اضافة</submit-button>
+                    <submit-button ng-show="currentAccountModalAction == 'edit'" form="accountModalForm" icon="fe fe-edit">تعديل</submit-button>
+                </form>
+
+            </modal-body>
+        </modal>
+
+</div>

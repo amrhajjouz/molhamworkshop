@@ -1,0 +1,202 @@
+<page-header title="دفعة جديدة" pretitle="القسم المالي"></page-header>
+<form class="row" name="PaymentForm" request="createPayment" model="payment">
+
+    <div class="col-12 col-md-4">
+        <div class="form-group">
+            <label>العملة</label>
+            <select2 model="payment.currency" required error-model="payment.errors.currency">
+                <option ng-repeat="currency in currencies" ng-value="currency.code">{{currency.code}}</option>
+            </select2>
+        </div>
+    </div>
+    <div class="col-12 col-md-4">
+        <div class="form-group">
+            <label>سعر الصرف </label>
+            <input class="form-control" ng-model="payment.usd_rate" ng-error="createPayment.errors.usd_rate"
+                   placeholder="سعر الصرف من الدولار إلى العملة المختارة" required>
+        </div>
+    </div>
+    <div class="col-12 col-md-4">
+        <div class="form-group">
+            <label>تاريخ وصول الدفعة</label>
+            <input type="date" class="form-control" ng-model="payment.received_at"
+                   ng-error="createPayment.errors.received_at" placeholder="تاريخ وصول الدفعة  .." required>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+        <div class="form-group">
+            <label>مصدر التبرع</label>
+            <select2 model="payment.country_id" required error-model="payment.errors.country_id">
+                <option ng-repeat="country in countries" ng-value="country.id">{{country.name}}</option>
+            </select2>
+        </div>
+    </div>
+    <div class="col-12 col-md-4">
+        <div class="form-group">
+            <label>طريقة الإستلام</label>
+            <select2 model="payment.payment_method" required error-model="payment.errors.payment_method">
+                <option ng-value="cash">إستلام باليد</option>
+                <option ng-value="transfer">حوالة</option>
+            </select2>
+        </div>
+    </div>
+    <div class="col-12 col-md-4">
+        <div class="form-group">
+            <label>لغة السند</label>
+            <select2 model="payment.language" required error-model="payment.errors.language">
+                <option ng-repeat="language in languages" ng-value="language.code">{{language.name}}</option>
+            </select2>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label>المتبرع</label>
+            <select2 model="payment.donor_id" placeholder="فاعل خير او قم باختيار متبرع" ajax-url="donors/search"
+                     error-model="payment.errors.donor_id"></select2>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label>المتسلم</label>
+            <select2 model="payment.account_id" placeholder="إسم المتطوع المستلم" ajax-url="accounts/search"
+                     ajax-data="{currency:payment.currency}"
+                     error-model="payment.errors.account_id"></select2>
+        </div>
+    </div>
+    <div class="col-12 col-md-12">
+        <div class="form-group">
+            <label>ملاحظة</label>
+            <textarea class="form-control" ng-model="payment.notes" placeholder="ملاحظة"></textarea>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="row" ng-repeat=" x in payment.purposes track by $index">
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label>{{$index + 1}} - الغاية من التبرع</label>
+                    <select2 model="x.purpose_type">
+                        <option value="general_fund">الصندوق العام</option>
+                        <option value="administrative_support">الدعم الإداري</option>
+                    </select2>
+                </div>
+            </div>
+            <div class="col-12 col-md-5">
+                <div class="form-group">
+                    <label>مبلغ التبرع</label>
+                    <input ng-model="x.amount" ng-min="1" ng-change="calculateTotalAmount()" class="form-control"
+                           placeholder="مبلغ التبرع" required>
+                </div>
+            </div>
+            <div class="col-12 col-md-1 align-self-sm-center">
+                <a href="javascript:" class="btn btn-white my-2" ng-click="deletePurpose(x)">
+                    <span class="fe fe-trash"></span>
+                </a>
+            </div>
+        </div>
+        <a href="javascript:" class="btn btn-white my-2" ng-click="addNewPurpose()">
+            <span class="fe fe-plus-square"></span>
+        </a>
+    </div>
+    <div class="col-12">
+        <submit-button disabled="payment.purposes.length==0" form="PaymentForm" icon="fe fe-plus">اضافة تبرع
+        </submit-button>
+        <button data-toggle="modal" data-target="#invoice"></button>
+    </div>
+</form>
+
+<div class="modal fade" id="invoice">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col text-center">
+                            <img src="http://127.0.0.1:8000/img/logo.png" class="img-fluid mb-4"
+                                 style="max-width: 2.5rem;">
+                            <h2 class="mb-2">
+                                فاتورة دفعة جديدة
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-6 text-md-center">
+                            <h6 class="text-uppercase text-muted">
+                                المرسل
+                            </h6>
+                            <p class="text-muted mb-4">
+                                <strong class="text-body"> بدر شيخ سالم تيست</strong>
+                            <h6 class="text-uppercase text-muted">
+                                مصدر التبرع : {{payment.country_id}}
+                            </h6>
+                            </p>
+                        </div>
+                        <div class="col-12 col-md-6 text-md-center">
+                            <h6 class="text-uppercase text-muted">
+                                المستلم
+                            </h6>
+                            <p class="text-muted mb-4">
+                                <strong class="text-body">عمر حجوز كمان تيست</strong> <br>
+                            </p>
+                            <h6 class="text-uppercase text-muted">
+                                تاريخ الإستلام
+                                <time datetime="2018-04-23">{{payment.received_at | date:'MM/dd/yyyy'}}</time>
+
+                            </h6>
+                            <p class="text-muted">
+                                {{payment.payment_method}}
+                            </p>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <table class="table my-4">
+                                    <thead>
+                                    <tr>
+                                        <th class="px-0 bg-transparent border-top-0">
+                                            <span class="h6">شرح</span>
+                                        </th>
+                                        <th class="px-0 bg-transparent border-top-0 text-right">
+                                            <span class="h6">المبلغ المتبرع به</span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody ng-show="totalAmount>0">
+                                    <tr ng-repeat=" x in payment.purposes track by $index">
+                                        <td class="px-0">
+                                            {{x.purpose_type}}
+                                        </td>
+
+                                        <td class="px-0 text-right">
+                                            {{x.amount}} {{payment.currency}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-0 border-top border-top-2">
+                                            <strong>المبلغ الكامل </strong>
+                                        </td>
+                                        <td colspan="2" class="px-0 text-right border-top border-top-2">
+                            <span class="h3">
+                              {{totalAmount}} {{payment.currency}}
+                            </span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr class="my-5">
+                            <h6 class="text-uppercase">
+                                وصف
+                            </h6>
+                            <p class="text-muted mb-0">
+                                {{payment.notes}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<include-header/>
+
+<form class="row" name="myForm" request="updateReceiver">
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">الاسم</label>
+            <input type="text" class="form-control" ng-class="(updateReceiver.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="receiver.name" ng-change="updateReceiver.errors.name = null" placeholder="الاسم .." required>
+            <div ng-show="updateReceiver.errors.name != null" class="invalid-feedback">{{ updateReceiver.errors.name[0] }}</div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">المدينة</label>
+            <div ng-show="updateReceiver.errors.country_id != null" class="invalid-feedback">{{ updateReceiver.errors.country_id[0] }}</div>
+            <select class="form-control" ng-model="receiver.country_id">
+                <option ng-repeat="country in countries" ng-value="country.id">{{country.name}}</option>
+            </select>
+
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">الحالة</label>
+            <div ng-show="updateReceiver.errors.status != null" class="invalid-feedback">{{ updateReceiver.errors.status[0] }}</div>
+            <select class="form-control" ng-model="receiver.status">
+                <option ng-selected="receiver.status == status" ng-repeat="status in statuses" ng-value="status">{{status}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-12">
+        <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+</form>

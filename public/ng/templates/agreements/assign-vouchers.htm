@@ -1,0 +1,96 @@
+<page-header title="إضافة إتفاقية" pretitle="إضافة سندات للإتفاقية"></page-header>
+<form class="row" name="AgreementVouchersForm" request="AssignVouchers">
+
+    <div class="col-12 col-md-4">
+        <div class="form-group">
+            <label>سند الصرف</label>
+            <select2 model="voucher.id" ajax-url="payouts/vouchers/search" ajax-data="{voucherId: $routeParams.id,matchWithAgreementCurrency:true}"  ></select2>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6 align-self-center">
+        <submit-button ng-click="AssignVouchers();" class="mt-2" form="AgreementVouchersForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>
+
+<div class="row">
+    <div class="col-12 col-lg-6 col-xl">
+        <div class="card">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h6 class="text-uppercase text-muted mb-2 text-center">
+                            المبلغ المطلوب
+                        </h6>
+                        <div class="h2 mb-0 text-center">
+                            {{agreement.amount}}
+                        </div>
+                    </div>
+                </div> <!-- / .row -->
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6 col-xl">
+        <div class="card">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h6 class="text-uppercase text-muted mb-2 text-center">
+                            المصاريف الإدارية
+                        </h6>
+                        <div class="h2 mb-0 text-center">
+                          {{agreement.admin_costs_percentage}}%
+                        </div>
+                    </div>
+                </div> <!-- / .row -->
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6 col-xl">
+        <div class="card">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h6 class="text-uppercase text-muted mb-2 text-center">
+                            المبلغ المجموع
+                        </h6>
+                        <div class="h2 mb-0 text-center">
+                            {{totalVoucherAmount}}
+                        </div>
+                    </div>
+                </div> <!-- / .row -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<datatable datalist="vouchers" >
+    <table>
+        <thead>
+        <tr>
+            <th class="text-center">رقم السند</th>
+            <th class="text-center">المبلغ</th>
+            <th class="text-center">العملة</th>
+            <th class="text-center">إلغاء</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-show="vouchers.length == 0">
+            <td colspan="10" class="text-center">
+                <div class="pt-3 pb-2 h4" ng-show="vouchers.length == 0">لا يوجد أية عناصر في هذه القائمة</div>
+            </td>
+        </tr>
+        <tr ng-repeat="d in vouchers.data">
+            <td class="align-middle text-center">{{ d.id }}</td>
+            <td class="align-middle text-center">{{ d.amount }}</td>
+            <td class="align-middle text-center">{{ d.currency }}</td>
+            <td class="align-middle text-center">
+                <a href="javascript:;" ng-click="removeFromVoucher(d)" class="badge badge-soft-danger">
+                    إلغاء الربط
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</datatable>
+

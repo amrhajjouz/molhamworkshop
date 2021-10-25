@@ -1,0 +1,36 @@
+<page-header title="نقل دفعة" pretitle="القسم المالي"></page-header>
+<form class="row" name="transferForm" request="transferTransaction" model="transfer">
+    <div class="col-12 col-md-4">
+        <div class="form-group">
+            <label>نقل من</label>
+            <select2 model="transfer.from" >
+                <option value="general_fund">الصندوق العام</option>
+                <option value="administrative_support">الدعم الإداري</option>
+            </select2>
+        </div>
+    </div>
+    <div class="col-12 col-md-4">
+        <div class="form-group">
+            <label>نقل إلى</label>
+            <select2 model="transfer.to" >
+                <option value="administrative_support">الدعم الإداري</option>
+                <option value="general_fund">الصندوق العام</option>
+            </select2>
+        </div>
+    </div>
+    <div class="col-12 col-md-4">
+        <div class="form-group">
+            <label>مبلغ التحويل</label>
+            <input ng-model="transfer.amount" ng-min="1" class="form-control" placeholder="مبلغ التحويل" required>
+        </div>
+    </div>
+    <div class="col-12 col-md-12">
+        <div class="form-group">
+            <label>ملاحظة</label>
+            <textarea class="form-control" ng-model="transfer.notes" placeholder="ملاحظة" ></textarea>
+        </div>
+    </div>
+    <div class="col-12">
+        <submit-button form="transferForm" icon="fa fa-exchange">نقل دفعة</submit-button>
+    </div>
+</form>

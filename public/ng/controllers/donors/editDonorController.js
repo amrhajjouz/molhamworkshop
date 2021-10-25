@@ -1,6 +1,7 @@
 function editDonorControllerInit ($page, $apiRequest) {
     return $apiRequest.config('donors/' + $page.routeParams.id).getData();
 }
+
 function editDonorController ($scope, $page, $apiRequest, $init) {
     $scope.donor = $init;
     $scope.updateDonor = $apiRequest.config({
