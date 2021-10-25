@@ -2,12 +2,167 @@
 
 namespace App\Http\Services\Transactions;
 
-class TransactionService
-{
-    public function calculateAmountAndDeductionRatio($amount, $deductionRatioRate): array
-    {
-        $deductedAmount = ($amount * $deductionRatioRate) / 100;
+use App\Models\Account;
+use App\Models\Donation;
+use App\Models\Journals;
+use App\Models\Payment;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
-        return ["deductedAmount" => $deductedAmount, "netAmount" => $amount - $deductedAmount];
+class TransactionService extends BaseTransactionService
+{
+    /**
+     * @throws Exception
+     */
+    public function processManualPayment(Journals $journal)
+    {
+        $this->processPayment($journal, false);
     }
+
+    public function processEPayment(Journals $journal)
+    {
+        $this->processPayment($journal, true);
+    }
+
+    public function donationTransactionHandler(Payment $payment, Donation $donation, Journals $journal)
+    {
+        $paymentAccount = Account::find($payment->account_id);
+        $purposeAccount = $donation->purpose->account;
+        $deductionRatio = $donation->deductionRatio;
+
+        /**
+         * first we create two net transactions one to Atef and the second to the purpose account id
+         **/
+
+        $amountDetails = $this->calculateAmountAndDeductionRatio($donation->amount, $deductionRatio->ratio);
+        $debitCreditDetails = $paymentAccount->getIncomeAmountArray($amountDetails["netAmount"]);
+        $assetNetTransaction = $journal->transactions()->create([
+            "debit" => $debitCreditDetails["debit"],
+            "credit" => $debitCreditDetails["credit"],
+            "currency" => $donation->currency,
+            "fx_rate" => $payment->fx_rate,
+            "method" => $payment->method,
+            "account_id" => $payment->account_id
+        ]);
+
+        //create normal transaction
+        $debitCreditDetails = $purposeAccount->getIncomeAmountArray($amountDetails["netAmount"]);
+        $liabilityNetTransaction = $journal->transactions()->create([
+            "debit" => $debitCreditDetails["debit"],
+            "credit" => $debitCreditDetails["credit"],
+            "currency" => $donation->currency,
+            "fx_rate" => $payment->fx_rate,
+            "method" => $payment->method,
+            "account_id" => $purposeAccount->id, //purpose account id
+            "section_id" => $donation->section_id,
+            "program_id" => $donation->program_id,
+            "related_to" => $assetNetTransaction->id,
+        ]);
+        $assetNetTransaction->related_to = $liabilityNetTransaction->id;
+        $assetNetTransaction->save();
+
+        /**
+         *  we create two deducted transactions one to Atef and the second to the deducted account id
+         **/
+        //create deduction transaction to atef account
+        $debitCreditDetails = $paymentAccount->getIncomeAmountArray($amountDetails["deductedAmount"]);
+        $assetDeductedTransaction = $journal->transactions()->create([
+            "debit" => $debitCreditDetails["debit"],
+            "credit" => $debitCreditDetails["credit"],
+            "currency" => $donation->currency,
+            "fx_rate" => $payment->fx_rate,
+            "method" => $payment->method,
+            "account_id" => $payment->account_id, //Atef account id
+        ]);
+
+        //create deduction transaction
+        $debitCreditDetails = $purposeAccount->getIncomeAmountArray($amountDetails["deductedAmount"]);
+        $liabilityDeductedTransaction = $journal->transactions()->create([
+            "debit" => $debitCreditDetails["debit"],
+            "credit" => $debitCreditDetails["credit"],
+            "currency" => $donation->currency,
+            "fx_rate" => $payment->fx_rate,
+            "method" => $payment->method,
+            "account_id" => $donation->deduction_account_id, //Deduction account id
+            "section_id" => $donation->section_id,
+            "program_id" => $donation->program_id,
+            "related_to" => $assetDeductedTransaction->id,
+        ]);
+        $assetDeductedTransaction->related_to = $liabilityDeductedTransaction->id;
+        $assetDeductedTransaction->save();
+
+        $payment->update(["handled_at" => now()]);
+    }
+
+    private function processPayment(Journals $journal, bool $isEPayment)
+    {
+        try {
+            $payment = $journal->journalable;
+            $donations = $payment->donations;
+
+            DB::beginTransaction();
+
+            //we don't have any new journal inside here
+            foreach ($donations as $donation) {
+                $this->donationTransactionHandler($payment, $donation, $journal);
+            }
+
+            if ($isEPayment) {
+                //we create 1 journal here
+                $this->handleEPaymentExtraFee($journal);
+            }
+
+            DB::commit();
+        } catch (Exception  $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    private function handleEPaymentExtraFee(Journals $journal)
+    {
+        $payment = $journal->journalable;
+
+        $journalExtraFee = $journal->replicate()->fill([
+            'related_to' => $journal->id,
+            'type' => "auto_fee",
+        ]);
+        $journalExtraFee->save();
+
+        foreach ($payment->donations as $donation) {
+            $purposeAccount = $donation->purpose->account;
+            $amountDetails = $this->calculateAmountAndDeductionRatio($donation->amount, $donation->getEPaymentExtraFee());
+            $debitCreditDetails = $purposeAccount->getIncomeAmountArray($amountDetails["deductedAmount"]);
+            //create deduction transaction
+            $deductedTransaction = $journalExtraFee->transactions()->create([
+                "debit" => $debitCreditDetails["debit"],
+                "credit" => $debitCreditDetails["credit"],
+                "currency" => $donation->currency,
+                "fx_rate" => $payment->fx_rate,
+                "method" => "transfer",
+                "account_id" => $donation->deduction_account_id, //Deduction account id
+                "section_id" => $donation->section_id,
+                "program_id" => $donation->program_id,
+            ]);
+
+            //the next line is wrong , just temporary solution
+            $liabilitiesAccount = $donation->purpose->account; //todo: I should do a special query here to get the extra account we need
+            $debitCreditDetails = $liabilitiesAccount->getIncomeAmountArray($amountDetails["deductedAmount"]);
+            $liabilityDeductedTransaction = $journalExtraFee->transactions()->create([
+                "debit" => $debitCreditDetails["debit"],
+                "credit" => $debitCreditDetails["credit"],
+                "currency" => $donation->currency,
+                "fx_rate" => $payment->fx_rate,
+                "method" => "transfer",
+                "account_id" => $liabilitiesAccount->id,
+                "section_id" => $donation->section_id,
+                "program_id" => $donation->program_id,
+                "related_to" => $deductedTransaction->id
+            ]);
+
+            $deductedTransaction->related_to = $liabilityDeductedTransaction->id;
+            $deductedTransaction->save();
+        }
+    }
+
 }

@@ -9,8 +9,7 @@ class Journals extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["notes"];
-    protected $guarded = ["type"];
+    protected $fillable = ["notes","type","related_to","journalable_type","journalable_id"];
 
     public function journalable()
     {
@@ -20,5 +19,13 @@ class Journals extends Model
     public function transactions()
     {
         return $this->hasMany(Transaction::class,"journal_id","id");
+    }
+
+    public function relatedTo(){
+        return $this->belongsTo(Journals::class,'related_to');
+    }
+
+    public function childJournal(){
+        return $this->hasOne(Journals::class,"related_to");
     }
 }

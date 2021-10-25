@@ -16,7 +16,7 @@ class Donation extends Model
     use SoftDeletes;
     use HasAppendablePagination;
 
-    protected $fillable = ["reference", "method", "payment_id", "donor_id", "country_code", "locale", "amount", "currency", "received_at", "fee",  "section_id", "targetable_id", "program_id","transaction_id", "purpose_id", "usd_amount", "deduction_ratio_id", "deduction_account_id"];
+    protected $fillable = ["reference", "method", "payment_id", "donor_id", "country_code", "locale", "amount", "currency", "received_at", "fee", "section_id", "targetable_id", "program_id", "transaction_id", "purpose_id", "usd_amount", "deduction_ratio_id", "deduction_account_id"];
 
     protected $casts = [
         'created_at' => 'datetime:Y-m-d h:i',
@@ -52,11 +52,24 @@ class Donation extends Model
 
     public function getDonorNameAttribute()
     {
-        return ["name"=>$this->donor->name,"email"=>$this->donor->email];
+        return ["name" => $this->donor->name, "email" => $this->donor->email];
     }
 
     public function getCountryNameAttribute()
     {
         return $this->country->name;
+    }
+
+    public function getEPaymentExtraFee()
+    {
+        $method = $this->method;
+        switch ($method) {
+            case "card(stripe)":
+                return "5";
+            case "card(paypal)":
+                return "4";
+            default:
+                return 0;
+        }
     }
 }

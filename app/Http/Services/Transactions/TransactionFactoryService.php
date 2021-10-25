@@ -8,11 +8,11 @@ use Exception;
 class TransactionFactoryService
 {
     /**
-     * @var ManualTransactionService
+     * @var TransactionService
      */
     private $manualTransactionService;
 
-    public function __construct(ManualTransactionService $manualTransactionService)
+    public function __construct(TransactionService $manualTransactionService)
     {
         $this->manualTransactionService = $manualTransactionService;
     }

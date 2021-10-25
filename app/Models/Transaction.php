@@ -49,6 +49,19 @@ class Transaction extends Model
         }
     }
 
+    public function getAmountAttribute()
+    {
+        if ($this->debit > 0) {
+            return $this->debit;
+        }
+        return $this->credit;
+    }
+
+    public function account(): BelongsTo
+    {
+        return $this->belongsTo(Account::class);
+    }
+
     public function section(): BelongsTo
     {
         return $this->belongsTo(Section::class);

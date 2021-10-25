@@ -5,6 +5,7 @@ use App\Http\Controllers\Dashboard\AccountController;
 use App\Http\Controllers\Dashboard\CountryController;
 use App\Http\Controllers\Dashboard\CurrencyController;
 use App\Http\Controllers\Dashboard\DeductionRatiosController;
+use App\Http\Controllers\Dashboard\DonationController;
 use App\Http\Controllers\Dashboard\DonorController;
 use App\Http\Controllers\Dashboard\PaymentController;
 use App\Http\Controllers\Dashboard\PlaceController;
@@ -12,8 +13,16 @@ use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\PurposeController;
 use App\Http\Controllers\Dashboard\TransactionController;
 use App\Http\Controllers\Dashboard\UserController;
-use App\Http\Controllers\Dashboard\DonationController;
+use App\Http\Services\Transactions\Model\JournalReversalProcessInput;
+use App\Http\Services\Transactions\PartialRefundTransactionService;
+use App\Http\Services\Transactions\RefundTransactionService;
+use App\Http\Services\Transactions\TransactionService;
+use App\Models\Donation;
+use App\Models\Journals;
+use App\Models\Payment;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,10 +36,61 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/**
+ * @param $id
+ */
+function convertToEPayment($id): void
+{
+    $manualTransactionService = new TransactionService();
+
+    $payment = Payment::find($id);
+
+    $payment->method = "paypal(paypal)";
+    $payment->fee = $payment->amount * 8 / 100;
+    $payment->reversed_amount = 0;
+    $payment->status = "paid";
+    $payment->save();
+
+    $donations = Donation::withTrashed()->wherePaymentId($id)->get();
+
+    foreach ($donations as $donation) {
+        $donation->restore();
+        $donation->method = "card(paypal)";
+        $donation->save();
+    }
+
+    $journal = $payment->journal->replicate()->fill([
+        "type" => "e_payment"
+    ]);
+
+    DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+    Transaction::truncate();
+    Journals::truncate();
+    DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+    $journal->save();
+    $manualTransactionService->processEPayment($journal);
+}
+
 Route::middleware('auth')->group(function () {
 
     Route::get('/auth', function (Request $request) {
         return $request->user();
+    });
+
+    Route::get('/to/e-payment/{id}', function ($id) {
+        convertToEPayment($id);
+    });
+
+    Route::get('/refund/{id}', function ($id) {
+        convertToEPayment($id);
+        $transaction = new RefundTransactionService();
+        $transaction->processRefundTransaction(Journals::findOrFail($id), "test", true);
+    });
+
+    Route::get('/partial-refund/{id}', function ($id) {
+        convertToEPayment($id);
+        $transaction = new PartialRefundTransactionService();
+        $transaction->processPartialRefundTransaction(Journals::findOrFail($id), "test", [1], true);
     });
 
     Route::post('/profile', [ProfileController::class, 'update_info']);

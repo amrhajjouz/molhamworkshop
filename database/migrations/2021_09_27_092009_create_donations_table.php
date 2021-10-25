@@ -16,7 +16,7 @@ class CreateDonationsTable extends Migration
         Schema::create('donations', function (Blueprint $table) {
             $table->id();
             $table->string('reference');
-            $table->enum('method', ["cash", "transfer", "card(stripe)", "paypal(paypal)", "ideal", "giropay", "sofort"]);
+            $table->enum('method', ["cash", "transfer", "card(stripe)", "card(paypal)", "ideal", "giropay", "sofort"]);
             $table->decimal('amount', $precision = 12, $scale = 2);
             $table->decimal('usd_amount', $precision = 12, $scale = 2);
             $table->decimal('fee', $precision = 12, $scale = 2)->default(0);

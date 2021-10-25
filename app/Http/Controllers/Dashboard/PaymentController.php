@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\Transactions\ReversalTransactionService;
 use App\Http\Requests\Payment\{CreatePaymentRequest,
     ListPaymentRequest,
     RetrievePaymentRequest,
     ReversePaymentRequest,
-    UpdatePaymentRequest
-};
+    UpdatePaymentRequest};
 use App\Http\Services\Payments\PaymentService;
-use App\Http\Services\Transactions\ReversalTransactionService;
 use App\Models\Account;
 use App\Models\Payment;
 use Exception;
@@ -50,7 +49,7 @@ class PaymentController extends Controller
                 ->paidOnly()
                 ->firstOrFail();
 
-            $this->reversalTransactionService->processReversalTransaction($payment->journal, $request->notes);
+            $this->reversalTransactionService->processTransaction($payment->journal, $request->notes);
         } catch (Exception $e) {
             return response(['error' => $e->getMessage()], 500);
         }

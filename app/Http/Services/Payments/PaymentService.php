@@ -3,7 +3,7 @@
 namespace App\Http\Services\Payments;
 
 use App\Http\Services\Transactions\TransactionFactoryService;
-use App\Http\Services\Transactions\TransactionService;
+use App\Http\Services\Transactions\BaseTransactionService;
 use App\Models\Account;
 use App\Models\DeductionRatios;
 use App\Models\Payment;
@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
 class PaymentService
 {
     /**
-     * @var TransactionService
+     * @var BaseTransactionService
      */
     private $transactionService;
 
