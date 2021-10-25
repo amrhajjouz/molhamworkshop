@@ -1,0 +1,44 @@
+<include-header />
+<datatable  datalist="payments">
+    <table class="table table-sm card-table">
+        <thead>
+        <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">المبلغ</th>
+            <th class="text-center">رسوم الدفع</th>
+            <th class="text-center">العملة</th>
+            <th class="text-center">الحالة</th>
+            <th class="text-center">المتبرع</th>
+            <th class="text-center">تاريخ الاستقبال</th>
+            <th class="text-center">تاريخ الاضافة</th>
+            <th class="text-center">ملاحظات</th>
+            <th class="text-center">خيارات</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-show="payments.length == 0">
+            <td colspan="10" class="text-center">
+                <div class="pt-3 pb-2 h4" ng-show="payments.length == 0">لا يوجد أية عناصر في هذه القائمة</div>
+            </td>
+        </tr>
+        <tr ng-repeat="u in payments.data" >
+            <td class="align-middle text-center" >{{ u.id }}</td>
+            <td class="align-middle text-center">{{ u.amount }}</td>
+            <td class="align-middle text-center">{{ u.fee }}</td>
+            <td class="align-middle text-center">{{ u.currency }}</td>
+            <td class="align-middle text-center">{{ u.status }}</td>
+            <td class="align-middle text-center">{{ u.donor_name.name }}<br>{{ u.donor_name.email }}</td>
+            <td class="align-middle text-center datatable-date">{{ u.received_at }}</td>
+            <td class="align-middle text-center datatable-date">{{ u.created_at }}</td>
+            <td class="align-middle text-center">
+                <a ng-show="u.notes!=null" href="javascript:;" data-toggle="popover" data-content="{{ u.notes }}">ملاحظة</a>
+            </td>
+            <td class="align-middle text-center h2">
+                <dropdown>
+                    <dropdown-item href="javascript:;" ng-click="deletePayment(u);"><i class="fe fe-trash"></i> حذف</dropdown-item>
+                </dropdown>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</datatable>

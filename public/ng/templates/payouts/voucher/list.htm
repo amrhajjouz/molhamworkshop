@@ -1,0 +1,49 @@
+<page-header title="قائمة سندات الصرف" pretitle="القسم المالي">
+</page-header>
+
+<datatable datalist="vouchers">
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">المبلغ</th>
+                <th class="text-center">العملة</th>
+                <th class="text-center">تاريخ الإضافة</th>
+                <th class="text-center">الغاية</th>
+                <th class="text-center">الدولة</th>
+                <th class="text-center">المسؤول عن الاستلام 1 </th>
+                <th class="text-center">المسؤول عن الاستلام 2 </th>
+                <th class="text-center">تاريخ الصرف</th>
+                <th class="text-center">تاريخ التوصيل</th>
+                <th class="text-center">التفاصيل</th>
+                <th class="text-center">خيارات</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="d in vouchers.data">
+                <td class="align-middle text-center">{{ d.id }}</td>
+                <td class="align-middle text-center">{{ d.amount }}</td>
+                <td class="align-middle text-center">{{ d.currency }}</td>
+                <td class="align-middle text-center datatable-date">{{ d.created_at }}</td>
+                <td class="align-middle text-center">{{ d.transaction_purpose_name }}</td>
+                <td class="align-middle text-center">{{ d.country_name }}</td>
+                <td class="align-middle text-center">{{ d.assignee.name }} <br> {{ d.assignee.email }}</td>
+                <td class="align-middle text-center">{{ d.account.name }} <br> {{ d.account.email }}</td>
+                <td class="align-middle text-center">{{ d.spent_at || "لم يتم الصرف بعد" }} </td>
+                <td class="align-middle text-center">{{ d.delivered_at || "لم يتم التوصيل بعد" }} </td>
+                <td class="align-middle text-center">
+                    <a ng-show="d.details!=null" href="javascript:;" data-toggle="popover" data-content="{{ d.details }}">التفاصيل</a>
+                </td>
+                <td class="align-middle text-center h2">
+                    <dropdown ng-hide="d.spent_at != null && d.delivered_at != null ">
+                        <dropdown-item ng-show="d.spent_at == null" href="javascript:;"  ng-click="setSpentAt(d)">تعيين كتمّ الصرف</dropdown-item>
+                        <dropdown-item ng-show="d.spent_at != null && d.delivered_at == null" href="javascript:;"  ng-click="setDeliveredAt(d)">تعيين كتمّ التوصيل</dropdown-item>
+                    </dropdown>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</datatable>
+
+

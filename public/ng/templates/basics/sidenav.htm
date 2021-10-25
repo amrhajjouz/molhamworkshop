@@ -46,29 +46,83 @@
     </li>
 
     <li class="nav-item">
-        <a
-            class="nav-link"
-            href="javascript:;"
-            data-toggle="collapse"
-            data-target="#places-navs"
-            role="button"
-            aria-expanded="false"
-        >
-            <i class="fe fe-map"></i> الأماكن
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#receivers-navs" role="button" aria-expanded="false">
+            <i class="fe fe-award"></i> المستلمون
         </a>
-        <div class="collapse" id="places-navs">
+        <div class="collapse" id="receivers-navs">
             <ul class="nav nav-sm flex-column">
                 <li class="nav-item">
-                    <a href="{{ $r('places.add') }}" class="nav-link">
-                        مكان جديد
+                    <a href="{{ $r('receivers.add') }}" class="nav-link">
+                        مستلم جديد
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ $r('places') }}" class="nav-link">
-                        قائمة الأماكن
+                    <a href="{{ $r('receivers') }}" class="nav-link">
+                        قائمة المستلمين
                     </a>
                 </li>
             </ul>
         </div>
     </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#money-navs" role="button" aria-expanded="false">
+            <i class="fa fa-money ml-3"></i>القسم المالي
+        </a>
+        <div class="collapse" id="money-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('payments.add') }}" class="nav-link">
+                       تبرع جديد
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('payments.transfer') }}" class="nav-link">
+                       نقل دفعة
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('payouts.requests.add') }}" class="nav-link">
+                      طلب صرف جديد
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('payouts.requests.list') }}" class="nav-link">
+                      طلبات الصرف
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('payouts.vouchers.list') }}" class="nav-link">
+                     سندات الصرف
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('agreements.list') }}" class="nav-link">
+                        الاتفاقيات
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('transactions.admin_support') }}" class="nav-link">
+                       الدعم الإداري
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('transactions.general_fund') }}" class="nav-link">
+                      الصندوق العام
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('donations.list') }}" class="nav-link">
+                      التبرعات
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('payments.received.list') }}" class="nav-link">
+                        المدفوعات
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+
 </ul>

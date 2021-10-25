@@ -72,3 +72,12 @@ body {
 .flex-none {
     flex: none;
 }
+
+.datatable-date{
+    width:125px;
+}
+
+
+.ltr{
+    direction: ltr!important;
+}

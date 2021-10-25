@@ -1,0 +1,61 @@
+<page-header title="إضافة إتفاقية" pretitle="إضافة إتفاقية جديدة"></page-header>
+<form class="row" name="AgreementForm" request="createAgreement">
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label>  عنوان الاتفاقية</label>
+            <input class="form-control" ng-model="agreement.title" ng-error="createAgreement.errors.title"
+                   placeholder="  عنوان الاتفاقية" required>
+        </div>
+    </div>
+    <div class="col-12 col-md-3">
+        <div class="form-group">
+            <label>المبلغ</label>
+            <input class="form-control" ng-model="agreement.amount" ng-error="createAgreement.errors.amount"
+                   placeholder="المبلغ" required>
+        </div>
+    </div>
+    <div class="col-12 col-md-3">
+        <div class="form-group">
+            <label>نسبة المصاريف الإدارية (%)</label>
+            <input class="form-control" ng-model="agreement.admin_costs_percentage" ng-error="createAgreement.errors.admin_costs_percentage"
+                   placeholder="نسبة المصاريف الإدارية" required>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+        <div class="form-group">
+            <label>العملة</label>
+            <select2 model="agreement.currency" required error-model="agreement.errors.currency">
+                <option ng-repeat="currency in currencies" ng-value="currency.code">{{currency.code}}</option>
+            </select2>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-4">
+        <div class="form-group">
+            <label> تاريخ بداية التنفيذ</label>
+            <input type="date" class="form-control" ng-model="agreement.starting_date" ng-error="createAgreement.errors.starting_date"
+                   placeholder=" تاريخ بداية التنفيذ" required>
+        </div>
+    </div>
+    <div class="col-12 col-md-4">
+        <div class="form-group">
+            <label> تاريخ انتهاء التنفيذ</label>
+            <input type="date" class="form-control" ng-model="agreement.ending_date" ng-error="createAgreement.errors.ending_date"
+                   placeholder=" تاريخ انتهاء التنفيذ" required>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-12">
+        <div class="form-group">
+            <label> تفاصيل  الاتفاقية</label>
+            <textarea class="form-control" ng-model="agreement.details" ng-error="createAgreement.errors.details"
+                      placeholder=" تفاصيل  الاتفاقية" required></textarea>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="AgreementForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>

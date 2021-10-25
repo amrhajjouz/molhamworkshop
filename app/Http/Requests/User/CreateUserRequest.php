@@ -3,7 +3,6 @@
 namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class CreateUserRequest extends FormRequest
 {
@@ -16,7 +15,7 @@ class CreateUserRequest extends FormRequest
     {
         return true;
     }
-    
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,12 +23,12 @@ class CreateUserRequest extends FormRequest
      */
     public function rules()
     {
-        
+
         return [
-            'name' => ['required' ,'string', 'between:3,20'],
+            'name' => ['required', 'string', 'between:3,20'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8'],
         ];
     }
-    
+
 }

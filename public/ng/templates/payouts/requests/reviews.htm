@@ -1,0 +1,128 @@
+<page-header title="قائمة المراجعات " pretitle="القسم المالي"></page-header>
+
+<div class="row">
+    <div class="col-12 col-lg-6 col-xl">
+        <div class="card">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h6 class="text-uppercase text-muted mb-2 text-center">
+                            المبلغ المطلوب
+                        </h6>
+                        <div class="h2 mb-0 text-center">
+                            {{payoutRequest.currency}} {{payoutRequest.amount}}
+                    </div>
+                    </div>
+                </div> <!-- / .row -->
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6 col-xl">
+        <div class="card">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h6 class="text-uppercase text-muted mb-2 text-center">
+                           الغاية
+                        </h6>
+                        <div class="h2 mb-0 text-center">
+                            {{payoutRequest.transaction_purpose_name}}
+                    </div>
+                    </div>
+                </div> <!-- / .row -->
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6 col-xl">
+        <div class="card">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h6 class="text-uppercase text-muted mb-2 text-center">
+                           تم الطلب بواسطة
+                        </h6>
+                        <div class="h2 mb-0 text-center">
+                            {{payoutRequest.created_by_name.name}}
+                    </div>
+                    </div>
+                </div> <!-- / .row -->
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6 col-xl">
+        <div class="card">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h6 class="text-uppercase text-muted mb-2 text-center">
+                         تاريخ الطلب
+                        </h6>
+                        <div class="h3 mb-0 text-center">
+                            {{payoutRequest.created_at}}
+                    </div>
+                    </div>
+                </div> <!-- / .row -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<datatable datalist="reviews">
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">رقم المراجعة</th>
+                <th class="text-center">المراجع</th>
+                <th class="text-center">بواسطة</th>
+                <th class="text-center">تاريخ المراجعة</th>
+                <th class="text-center">الحالة</th>
+                <th class="text-center">ملاحظات</th>
+                <th class="text-center" >الخيارات</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="d in reviews.data">
+                <td class="align-middle text-center">{{ d.id }}</td>
+                <td class="align-middle text-center">{{ d.required_role }}</td>
+                <td class="align-middle text-center">{{ d.reviewed_by_name || "لايوجد"}}</td>
+                <td class="align-middle text-center datatable-date">{{ d.updated_at || "لايوجد"}}</td>
+                <td class="align-middle text-center font-weight-bold" ng-class=>
+                    <div class="badge" ng-class="{'badge-soft-warning': d.status == 'pending' ,'badge-soft-danger': d.status == 'rejected' ,'badge-soft-success': d.status == 'approved' }">
+                        {{ statusToText(d.status)}}
+                    </div>
+                </td>
+                <td class="align-middle text-center">
+                    <a ng-show="u.notes!=null" href="javascript:;" data-toggle="popover" data-content="{{ u.notes }}">ملاحظة</a>
+                <span ng-show="u.notes==null" >لا يوجد</span>
+                </td>
+                <td class="align-middle text-center h2" >
+                    <button class="btn btn-white" ng-show="d.is_approvable" ng-click="showApprovalModel(d)">
+                        <span class="fe fe-file-text"></span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</datatable>
+
+
+
+<div class="modal fade" id="approval-modal">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="notes">ملاحظة</label>
+                    <textarea id="notes" class="form-control"  ng-model="review.notes" ng-error="createTransaction.errors.notes" placeholder="ملاحظة  .." rows="3"></textarea>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-success float-right" ng-click="addApproveState('approved')">قبول</button>
+        <button type="button" class="btn btn-danger float-left" ng-click="addApproveState('rejected')" >رفض</button>
+    </div>
+</div>
+    </div>
+</div>

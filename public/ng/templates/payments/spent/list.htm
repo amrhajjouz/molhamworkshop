@@ -1,0 +1,30 @@
+<include-header/>
+<datatable  datalist="payments">
+    <table class="table table-sm card-table">
+        <thead>
+        <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">المبلغ</th>
+            <th class="text-center">العملة</th>
+            <th class="text-center">الغاية</th>
+            <th class="text-center">الدولة</th>
+            <th class="text-center">تاريخ الاضافة</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-show="payments.length == 0">
+            <td colspan="10" class="text-center">
+                <div class="pt-3 pb-2 h4" ng-show="payments.length == 0">لا يوجد أية عناصر في هذه القائمة</div>
+            </td>
+        </tr>
+        <tr ng-repeat="u in payments.data" >
+            <td class="align-middle text-center" >{{ u.id }}</td>
+            <td class="align-middle text-center">{{ u.amount }}</td>
+            <td class="align-middle text-center">{{ u.currency }}</td>
+            <td class="align-middle text-center datatable-date">{{ u.purpose_name }}</td>
+            <td class="align-middle text-center datatable-date">{{ u.country_name }}</td>
+            <td class="align-middle text-center datatable-date">{{ u.created_at }}</td>
+        </tr>
+        </tbody>
+    </table>
+</datatable>
