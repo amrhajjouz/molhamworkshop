@@ -9,6 +9,12 @@
     font-family: "Tajawal", sans-serif;
 }
 
+/* Link */
+
+a{
+    transition: all 0.15s ease-in-out
+}
+
 /* Buttons */
 
 @each $color, $value in $theme-colors {
@@ -119,6 +125,18 @@
                     margin-bottom: 5px;
                 }
             }
+        }
+    }
+}
+
+/* Tasks */
+
+.tasks{
+    .title{
+        display: block;
+        color: inherit;
+        &:hover,&:focus{
+            color: $primary;
         }
     }
 }

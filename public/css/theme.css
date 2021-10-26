@@ -20025,6 +20025,11 @@ ol.organizational-chart > li > ol > li:last-of-type:not(:only-of-type):after {
   font-family: "Tajawal", sans-serif;
 }
 
+/* Link */
+a {
+  transition: all 0.15s ease-in-out;
+}
+
 /* Buttons */
 .btn-primary-soft {
   background-color: #cadef9;
@@ -20211,4 +20216,13 @@ ol.organizational-chart > li > ol > li:last-of-type:not(:only-of-type):after {
   width: 90px;
   height: 90px;
   margin-bottom: 5px;
+}
+
+/* Tasks */
+.tasks .title {
+  display: block;
+  color: inherit;
+}
+.tasks .title:hover, .tasks .title:focus {
+  color: #2C7BE5;
 }

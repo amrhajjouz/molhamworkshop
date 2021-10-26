@@ -37,6 +37,10 @@ return [
     // Files Routes
     'files' => ['files', 'files/listFilesController', 'files.list'],
     
-    // Files Routes
+    // Components Routes
     'components' => ['components', 'componentsController', 'components'],
+        
+    // Tasks Routes
+    'tasks' => ['tasks', 'tasks/listTasksController', 'tasks.list'],
+    'tasks.overview' => ['tasks/:id', 'tasks/overviewTasksController', 'tasks.single.overview'],
 ];
