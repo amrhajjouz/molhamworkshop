@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap);
 @charset "UTF-8";
 /* beautify ignore:start */
 /* beautify ignore:end */
@@ -20071,7 +20072,7 @@ ol.organizational-chart > li > ol > li:last-of-type:not(:only-of-type):after {
 }
 
 [dir=rtl] body {
-  font-family: "Tajawal", sans-serif;
+  font-family: "Almarai", sans-serif;
 }
 
 /* Link */
