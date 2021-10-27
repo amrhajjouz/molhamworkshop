@@ -28,9 +28,17 @@ class UpdateMemberRequest extends FormRequest
         return [
             'id' => ['required', 'exists:users'],
             'name' => ['string', 'between:3,20'],
-            'surname' => ['string', 'between:3,20'],
             'email' => ['email', Rule::unique('users', 'email')->ignore($this->input('id'))],
             'password' => ['string', 'min:8'],
+            'surname' => ['string', 'between:3,20'],
+            'career_level' => ['required'],
+            'section' => ['required'],
+            'direct_manager' => ['required'],
+            'job_title' => ['required'],
+            'office' => ['required'],
+            'job_descriptions' => ['required'],
+            'main_tasks' => ['required'],
+            'additional_tasks' => ['required'],
             'contract_type' => ['required' ,'string'],
             'contract_starting_date' => ['required' ,'date'],
         ];

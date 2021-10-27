@@ -71,6 +71,15 @@
         </div>
     </div>
 
+    <!--direct manager-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="direct_manager">المدير المباشر</label>
+            <input type="text" class="form-control" ng-class="(createMember.errors.direct_manager != null) ? 'is-invalid' : ''" id="direct_manager" ng-model="member.direct_manager" ng-change="createMember.errors.direct_manager = null" placeholder="المدير المباشر .." required>
+            <div ng-show="createMember.errors.direct_manager != null" class="invalid-feedback">{{ createMember.errors.direct_manager[0] }}</div>
+        </div>
+    </div>
+
     <!--office-->
     <div class="col-12 col-md-6">
         <div class="form-group">
@@ -105,8 +114,8 @@
         </div>
     </div>
 
-    <!--job_descriptions-->
-    <div class="col-12 col-md-6" ng-hide="member.career_level == 'ceo'">
+    <!--job descriptions-->
+    <div class="col-12 col-md-6"> <!--ng-hide="member.career_level == 'ceo'"-->
         <div class="form-group">
             <label for="job_descriptions">التوصيف الوظيفي</label>
             <select class="form-control" ng-class="(createMember.errors.job_descriptions != null) ? 'is-invalid' : ''" id="job_descriptions" ng-model="member.job_descriptions" ng-change="createMember.errors.job_descriptions = null">

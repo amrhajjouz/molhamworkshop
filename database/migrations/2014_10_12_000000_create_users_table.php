@@ -29,6 +29,7 @@ class CreateUsersTable extends Migration
             $table->enum('degree', ['1', '2', '3']);
             $table->enum('contract_type', ['full_time', 'part_time']);
             $table->date('contract_starting_date')->nullable();
+            $table->string('direct_manager')->nullable();
             $table->enum('job_descriptions', ['financial_coordinator', 'assistant']);
             $table->string('main_tasks')->nullable();
             $table->string('additional_tasks')->nullable();

@@ -10,30 +10,86 @@
 
 <div class="row">
 
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-4">
 
         <table>
+            <!--name-->
             <tr>
                 <td class="text-muted py-3">الاسم</td>
                 <td class="py-3 pr-3">{{ member.name }}</td>
             </tr>
+            <!--surname-->
+            <tr>
+                <td class="text-muted py-3">اللقب</td>
+                <td class="py-3 pr-3">{{ member.surname }}</td>
+            </tr>
+            <!--email-->
             <tr>
                 <td class="text-muted py-3">البريد الالكتروني</td>
                 <td class="py-3 pr-3">{{ member.email }}</td>
             </tr>
+            <!--Section-->
             <tr>
-                <td class="text-muted py-3">نوع الوظيفة</td>
+                <td class="text-muted py-3">القسم</td>
+                <td class="py-3 pr-3">{{ member.section }}</td>
+            </tr>
+            <!--Career level-->
+            <tr>
+                <td class="text-muted py-3">المستوى الوظيفي</td>
+                <td class="py-3 pr-3">{{ member.career_level }}</td>
+            </tr>
+            <!--Job title-->
+            <tr>
+                <td class="text-muted py-3">المسمى الوظيفي</td>
                 <td class="py-3 pr-3">{{ member.job_title }}</td>
             </tr>
+            <!--direct manager-->
             <tr>
-                <td class="text-muted py-3">نوع العقد</td>
-                <td class="py-3 pr-3">{{ member.contract_type }}</td>
+                <td class="text-muted py-3">المدير المباشر</td>
+                <td class="py-3 pr-3">{{ member.direct_manager }}</td>
             </tr>
         </table>
 
     </div>
 
-    <div class="col-12 col-lg-6">
+    <div class="col-12 col-lg-4">
+
+        <table>
+            <!--office-->
+            <tr>
+                <td class="text-muted py-3">المكتب</td>
+                <td class="py-3 pr-3">{{ member.office }}</td>
+            </tr>
+            <!--Contract type-->
+            <tr>
+                <td class="text-muted py-3">نوع العقد</td>
+                <td class="py-3 pr-3">{{ member.contract_type }}</td>
+            </tr>
+            <!--Contract starting date-->
+            <tr>
+                <td class="text-muted py-3">تاريخ بداية العقد</td>
+                <td class="py-3 pr-3">{{ member.contract_starting_date }}</td>
+            </tr>
+            <!--job descriptions-->
+            <tr>
+                <td class="text-muted py-3">التوصيف الوظيفي</td>
+                <td class="py-3 pr-3">{{ member.job_descriptions }}</td>
+            </tr>
+            <!--main tasks-->
+            <tr>
+                <td class="text-muted py-3">المهام الرئيسية</td>
+                <td class="py-3 pr-3">{{ member.main_tasks }}</td>
+            </tr>
+            <!--additional tasks-->
+            <tr>
+                <td class="text-muted py-3">المهام الإضافية</td>
+                <td class="py-3 pr-3">{{ member.additional_tasks }}</td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div class="col-12 col-lg-4">
 
         <table>
             <tr>

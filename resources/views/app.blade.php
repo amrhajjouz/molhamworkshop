@@ -40,7 +40,7 @@
     }
     
     </style>
-    
+
 </head>
 
 <body dir="rtl" class="d-flex align-items-center cursor-wait" ng-class="{'cursor-wait' : $page.loading || $page.sendingHttpRequest}">
@@ -1490,7 +1490,7 @@
         });
         
     </script>
-    
+
 </body>
 
 </html>
