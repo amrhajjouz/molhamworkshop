@@ -42,16 +42,16 @@ class UpdateSocialMediaPostPublishingOptions extends FormRequest
     protected function prepareForValidation()
     {
         $scheduling = ['scheduled_on_facebook_at' => null , 'scheduled_on_twitter_at' => null , 'scheduled_on_youtube_at' => null , 'scheduled_on_instagram_at' => null , ];
-        if($this->scheduled_on_facebook_at != null){
+        if($this->scheduled_on_facebook_at != null &&$this->isScheduled['scheduled_on_facebook_at']){
             $scheduling['scheduled_on_facebook_at'] =  date('Y-m-d H:i:s' , strtotime($this->scheduled_on_facebook_at));
         }
-        if($this->scheduled_on_twitter_at != null){
+        if($this->scheduled_on_twitter_at != null &&$this->isScheduled['scheduled_on_twitter_at'] ){
             $scheduling['scheduled_on_twitter_at'] =  date('Y-m-d H:i:s' , strtotime($this->scheduled_on_twitter_at));
         }
-        if($this->scheduled_on_youtube_at != null){
+        if($this->scheduled_on_youtube_at != null &&$this->isScheduled['scheduled_on_youtube_at']){
             $scheduling['scheduled_on_youtube_at'] =  date('Y-m-d H:i:s' , strtotime($this->scheduled_on_youtube_at));
         }
-        if($this->scheduled_on_instagram_at != null){
+        if($this->scheduled_on_instagram_at != null &&$this->isScheduled['scheduled_on_instagram_at']){
             $scheduling['scheduled_on_instagram_at'] =  date('Y-m-d H:i:s' , strtotime($this->scheduled_on_instagram_at));
         }
         $this->merge(['scheduling' => $scheduling]);

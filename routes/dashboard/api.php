@@ -76,6 +76,7 @@ Route::middleware('auth')->group(function () {
      Route::post('/media/social_media_posts/{id}/proofread', [SocialMediaPostController::class, 'markAsProofread']);
      Route::post('/media/social_media_posts/{id}/approve', [SocialMediaPostController::class, 'markAsApproved']);
      Route::post('/media/social_media_posts/{id}/reject', [SocialMediaPostController::class, 'markAsRejected']);
+     Route::post('/media/social_media_posts/{id}/archive', [SocialMediaPostController::class, 'markAsArchived']);
      Route::put('/media/social_media_posts/{id}/publishing', [SocialMediaPostController::class, 'updateSocialMediaPostPublishingOptions']);
 
 

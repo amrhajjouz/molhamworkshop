@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Dashboard\Media\SocialMediaPost;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Media\SocialMediaPost\{ApproveSocialMediaPostRequest, ProofreadSocialMediaPostRequest, CreateSocialMediaPostRequest, RejectSocialMediaPostRequest, UpdateSocialMediaPostPublishingOptions, UpdateSocialMediaPostRequest};
+use App\Http\Requests\Media\SocialMediaPost\{ApproveSocialMediaPostRequest, ProofreadSocialMediaPostRequest, CreateSocialMediaPostRequest, RejectSocialMediaPostRequest, UpdateSocialMediaPostPublishingOptions, UpdateSocialMediaPostRequest , ArchiveSocialMediaPostRequest};
 use App\Models\{SocialMediaPost};
+use Illuminate\Support\Facades\Schema;
 
 class SocialMediaPostController extends Controller
 {
@@ -20,6 +21,21 @@ class SocialMediaPostController extends Controller
             return response()->json(SocialMediaPost::orderBy('id', 'desc')->where(function ($q) use ($request) {
                 if ($request->has('q')) {
                     $q->where('body->ar->value', 'like', '%' . $request->q . '%');
+                }
+                foreach($request->all() as $key=>$value){
+                    if(Schema::hasColumn(SocialMediaPost::getTableName(), $key)){
+                        $q->whereNotNull($key);
+                    }
+                    if($key == 'proofread' && $value == true){
+                        $q->where('body->ar->proofread' , true);
+                        $q->where('body->en->proofread' , true);
+                    }
+                    if($key == 'status' && $value != 'all'){
+                        $q->where('status' , $value);
+                    }
+                    if($key == 'ready_to_publish' && $value = true){
+                        $q->where('ready_to_publish' ,1);
+                    }
                 }
             })->paginate(10)->withQueryString());
         } catch (\Exception $e) {
@@ -83,19 +99,31 @@ class SocialMediaPostController extends Controller
             return ['error' => $e->getMessage()];
         }
     }
-
+   
     public function updateSocialMediaPostPublishingOptions(UpdateSocialMediaPostPublishingOptions $request, $id)
     {
         $post = SocialMediaPost::findOrFail($id);
         foreach ($request->validated()['publishing'] as $type => $value) {
-            if($value==true && $post->$type == null) $post->$type = date('Y-m-d H:i:s', time());
-            else $post->$type = null;
+            if($value==true && $post->$type == null){
+                $post->$type = date('Y-m-d H:i:s', time());
+            }elseif($value==false){
+                $post->$type = null;
+            }
         }
-        foreach ($request->validated()['scheduling'] as $type => $value) {
-            if($value ) $post->$type = $value;
-            else $post->$type = null;
+        foreach ($request->validated()['scheduling'] as $key => $val) {
+            if($val) $post->$key = $val;
+            else $post->$key = null;
         }
         $post->save();
         return response()->json(null);
+    }
+
+    public function markAsArchived(ArchiveSocialMediaPostRequest $request, $id)
+    {
+        try {
+            return response()->json(SocialMediaPost::findOrFail($id)->update(['archived_at' => date('Y-m-d H:i:s', time())]));
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
     }
 }
