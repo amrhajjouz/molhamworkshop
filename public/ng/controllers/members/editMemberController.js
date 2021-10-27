@@ -3,6 +3,14 @@ async function editMemberControllerInit($http, $page, $apiRequest) {
 }
 
 function editMemberController($scope, $page, $apiRequest, $init) {
+
     $scope.member = $init;
-    $scope.updateMember = $apiRequest.config({ method: "PUT", url: "members", data: $scope.member, }, function (response, data) { });
+
+    $scope.updateMember = $apiRequest.config({
+        method: "PUT",
+        url: "members",
+        data: $scope.member,
+    }, function (response, data) {
+
+    });
 }

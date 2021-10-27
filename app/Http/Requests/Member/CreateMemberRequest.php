@@ -28,7 +28,7 @@ class CreateMemberRequest extends FormRequest
         return [
             'name' => ['required' ,'string', 'between:3,20'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'job_type' => ['required' ,'string'],
+            'job_title' => ['required' ,'string'],
             'contract_type' => ['required' ,'string'],
             'contract_starting_date' => ['required' ,'date'],
 

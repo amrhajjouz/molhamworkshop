@@ -6,8 +6,17 @@
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="name">الاسم</label>
-            <input type="text" class="form-control" ng-class="(createMember.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="member.name" ng-change="createMember.errors.name = null" memberholder="الاسم .." required>
+            <input type="text" class="form-control" ng-class="(createMember.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="member.name" ng-change="createMember.errors.name = null" placeholder="الاسم .." required>
             <div ng-show="createMember.errors.name != null" class="invalid-feedback">{{ createMember.errors.name[0] }}</div>
+        </div>
+    </div>
+
+    <!--surname-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="surname">اللقب</label>
+            <input type="text" class="form-control" ng-class="(createMember.errors.surname != null) ? 'is-invalid' : ''" id="surname" ng-model="member.surname" ng-change="createMember.errors.surname = null" placeholder="اللقب .." required>
+            <div ng-show="createMember.errors.surname != null" class="invalid-feedback">{{ createMember.errors.surname[0] }}</div>
         </div>
     </div>
 
@@ -15,16 +24,29 @@
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="email">البريد الالكتروني</label>
-            <input type="email" class="form-control" ng-class="(createMember.errors.email != null) ? 'is-invalid' : ''" id="email" ng-model="member.email" ng-change="createMember.errors.email = null" memberholder="البريد الالكتروني .." autofocus="off" autocomplete="off" required>
+            <input type="email" class="form-control" ng-class="(createMember.errors.email != null) ? 'is-invalid' : ''" id="email" ng-model="member.email" ng-change="createMember.errors.email = null" placeholder="البريد الالكتروني .." autofocus="off" autocomplete="off" required>
             <div ng-show="createMember.errors.email != null" class="invalid-feedback">{{ createMember.errors.email[0] }}</div>
         </div>
     </div>
 
-    <!--Job type-->
+    <!--Section-->
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="job_type">نوع الوظيفة</label>
-            <select class="form-control" ng-class="(createMember.errors.job_type != null) ? 'is-invalid' : ''" id="job_type" ng-model="member.job_type" ng-change="createMember.errors.job_type = null">
+            <label for="section">القسم</label>
+            <select class="form-control" ng-class="(createMember.errors.section != null) ? 'is-invalid' : ''" id="section" ng-model="member.section" ng-change="createMember.errors.section = null">
+                <option value="finance">مالية</option>
+                <option value="programmes">البرامج</option>
+                <option value="hr">موارد بشرية</option>
+            </select>
+            <div ng-show="createMember.errors.section != null" class="invalid-feedback">{{ createMember.errors.section[0] }}</div>
+        </div>
+    </div>
+
+    <!--Career level-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="career_level">المستوى الوظيفي</label>
+            <select class="form-control" ng-class="(createMember.errors.career_level != null) ? 'is-invalid' : ''" id="career_level" ng-model="member.career_level" ng-change="memberAction(member.career_level, member.office, member.section)">
                 <option value="ceo">مدير تنفيذي</option>
                 <option value="manager">مدير قسم</option>
                 <option value="coordinator">منسق</option>
@@ -33,7 +55,33 @@
                 <option value="assistant">مساعد</option>
                 <option value="volunteer">متطوع</option>
             </select>
-            <div ng-show="createMember.errors.job_type != null" class="invalid-feedback">{{ createMember.errors.job_type[0] }}</div>
+            <div ng-show="createMember.errors.career_level != null" class="invalid-feedback">{{ createMember.errors.career_level[0] }}</div>
+        </div>
+    </div>
+
+    <!--Job title-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="job_title">المسمى الوظيفي</label>
+            <select class="form-control" ng-class="(createMember.errors.job_title != null) ? 'is-invalid' : ''" id="job_title" ng-model="member.job_title" ng-change="createMember.errors.job_title = null">
+                <option value="administrative">إداري</option>
+                <option value="department_assistant">مساعد قسم</option>
+            </select>
+            <div ng-show="createMember.errors.job_title != null" class="invalid-feedback">{{ createMember.errors.job_title[0] }}</div>
+        </div>
+    </div>
+
+    <!--office-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="office">المكتب</label>
+            <select class="form-control" ng-class="(createMember.errors.office != null) ? 'is-invalid' : ''" id="office" ng-model="member.office" ng-change="createMember.errors.office = null">
+                <option value="turkey">تركيا</option>
+                <option value="syria">سوريا</option>
+                <option value="lebanon">لبنان</option>
+                <option value="jordan">الأردن</option>
+            </select>
+            <div ng-show="createMember.errors.office != null" class="invalid-feedback">{{ createMember.errors.office[0] }}</div>
         </div>
     </div>
 
@@ -57,48 +105,8 @@
         </div>
     </div>
 
-    <!--Section-->
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="section">القسم</label>
-            <select class="form-control" ng-class="(createMember.errors.section != null) ? 'is-invalid' : ''" id="section" ng-model="member.section" ng-change="createMember.errors.section = null">
-                <option value="finance">مالية</option>
-                <option value="programmes">البرامج</option>
-                <option value="hr">موارد بشرية</option>
-            </select>
-            <div ng-show="createMember.errors.section != null" class="invalid-feedback">{{ createMember.errors.section[0] }}</div>
-        </div>
-    </div>
-
-    <!--Degree-->
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="degree">الدرجة</label>
-            <select class="form-control" ng-class="(createMember.errors.degree != null) ? 'is-invalid' : ''" id="degree" ng-model="member.degree" ng-change="createMember.errors.degree = null">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-            </select>
-            <div ng-show="createMember.errors.degree != null" class="invalid-feedback">{{ createMember.errors.degree[0] }}</div>
-        </div>
-    </div>
-
-    <!--office-->
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="office">المكتب</label>
-            <select class="form-control" ng-class="(createMember.errors.office != null) ? 'is-invalid' : ''" id="office" ng-model="member.office" ng-change="createMember.errors.office = null">
-                <option value="turkey">تركيا</option>
-                <option value="syria">سوريا</option>
-                <option value="lebanon">لبنان</option>
-                <option value="jordan">الأردن</option>
-            </select>
-            <div ng-show="createMember.errors.office != null" class="invalid-feedback">{{ createMember.errors.office[0] }}</div>
-        </div>
-    </div>
-
     <!--job_descriptions-->
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-6" ng-hide="member.career_level == 'ceo'">
         <div class="form-group">
             <label for="job_descriptions">التوصيف الوظيفي</label>
             <select class="form-control" ng-class="(createMember.errors.job_descriptions != null) ? 'is-invalid' : ''" id="job_descriptions" ng-model="member.job_descriptions" ng-change="createMember.errors.job_descriptions = null">
@@ -106,6 +114,24 @@
                 <option value="assistant">مسؤول</option>
             </select>
             <div ng-show="createMember.errors.job_descriptions != null" class="invalid-feedback">{{ createMember.errors.job_descriptions[0] }}</div>
+        </div>
+    </div>
+
+    <!--main tasks-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="main_tasks">المهام الرئيسية</label>
+            <input type="text" class="form-control" ng-class="(createMember.errors.main_tasks != null) ? 'is-invalid' : ''" id="main_tasks" ng-model="member.main_tasks" ng-change="createMember.errors.main_tasks = null" placeholder="المهام الرئيسية .." required>
+            <div ng-show="createMember.errors.main_tasks != null" class="invalid-feedback">{{ createMember.errors.main_tasks[0] }}</div>
+        </div>
+    </div>
+
+    <!--additional tasks-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="additional_tasks">المهام الإضافية</label>
+            <input type="text" class="form-control" ng-class="(createMember.errors.additional_tasks != null) ? 'is-invalid' : ''" id="additional_tasks" ng-model="member.additional_tasks" ng-change="createMember.errors.additional_tasks = null" placeholder="المهام الإضافية .." required>
+            <div ng-show="createMember.errors.additional_tasks != null" class="invalid-feedback">{{ createMember.errors.additional_tasks[0] }}</div>
         </div>
     </div>
 

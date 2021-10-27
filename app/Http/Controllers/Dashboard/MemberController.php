@@ -17,8 +17,6 @@ class MemberController extends Controller
     public function create (CreateMemberRequest $request) {
 
         try {
-
-            // Create User
             $user = User::create($request->validated());
 
             return response()->json($user);
@@ -36,6 +34,7 @@ class MemberController extends Controller
             $user = User::findOrFail($request->id);
 
             // Update User
+            //dd($request->all());
             $user->update($request->validated());
 
             return response()->json($user);
