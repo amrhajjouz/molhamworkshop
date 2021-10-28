@@ -1,7 +1,23 @@
-<page-header title="قائمة المهام" pretitle="المهام"></page-header>
+<page-header title="قائمة المهام" pretitle="المهام">
+    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalFilters"><i
+            class="fe fe-plus me-1"></i>اضافة فلتر</a>
+</page-header>
 
 <div class="row">
     <div class="col-12">
+
+        <!-- Filters Area -->
+        <div class="card card-sm mb-3">
+            <div class="card-body">
+                <div class="filters">
+                    <span class="badge bg-primary-soft me-1">فلتر حسب التاريخ <span class="btn-close"></span></span>
+                    <a href="#" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                        data-bs-target="#modalFilters"><i class="fe fe-plus me-1"></i>اضافة فلتر</a>
+                </div>
+            </div>
+        </div>
+        <!-- End Filters Area -->
+
         <!-- Category -->
         <div class="kanban-category tasks">
             <!-- Card -->

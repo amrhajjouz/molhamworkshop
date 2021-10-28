@@ -14,8 +14,10 @@ const mix = require('laravel-mix');
  mix.sass("resources/scss/libs.scss", "public/css")
  .sass("resources/scss/theme.scss", "public/css")
  .sass("resources/scss/theme-dark.scss", "public/css")
+ .sass("resources/scss/theme-pink.scss", "public/css")
  .sass("resources/scss/theme-rtl.scss", "public/css")
- .sass("resources/scss/theme-rtl-dark.scss", "public/css").sourceMaps();
+ .sass("resources/scss/theme-rtl-dark.scss", "public/css")
+ .sass("resources/scss/theme-rtl-pink.scss", "public/css").sourceMaps();
  
  mix.js("resources/js/theme.js", "public/js").sourceMaps();
  

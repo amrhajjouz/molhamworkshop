@@ -10,6 +10,12 @@
     font-family: "Almarai", sans-serif;
 }
 
+/* Colors */
+
+.text-pink{
+    color: $pink;
+}
+
 /* Link */
 
 a{
@@ -138,6 +144,20 @@ a{
         color: inherit;
         &:hover,&:focus{
             color: $primary;
+        }
+    }
+}
+
+/* Filters */
+
+.filters{
+    .badge{
+        padding: 0.125rem 0.5rem;
+        font-size: 0.8125rem;
+        border-radius: 0.25rem;
+        line-height: 1.85;
+        .btn-close{
+            margin-top: 3px;
         }
     }
 }

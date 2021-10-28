@@ -219,20 +219,27 @@
           </span>
         </a>
 
+        <!-- Icon -->
+        <a class="navbar-user-link me-4 d-none d-md-flex" data-bs-toggle="offcanvas" href="#quickMenu" aria-controls="quickMenu">
+          <span class="icon">
+            <i class="fe fe-plus-square"></i>
+          </span>
+        </a>
+
         <!-- Dropdown -->
         <div class="dropdown">
   
           <!-- Toggle -->
           <a href="#" class="avatar avatar-sm avatar-online dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img src="{{ asset('img/avatars/profiles/avatar-1.jpg') }}" alt="..." class="avatar-img rounded-circle" />
+            <img src="<?php print asset('img/avatar.png'); ?>" alt="..." class="avatar-img rounded-circle" />
           </a>
   
           <!-- Menu -->
           <div class="dropdown-menu">
-            <a href="#" class="dropdown-item">Profile</a>
-            <a href="#" class="dropdown-item">Settings</a>
+            <a href="#" class="dropdown-item">معلومات حسابك</a>
+            <a href="#" class="dropdown-item">الإعدادات</a>
             <hr class="dropdown-divider" />
-            <a href="#" class="dropdown-item">Logout</a>
+            <a href="javascript:;" onclick="var c = confirm('هل أنت متأكد أنك تريد الخروج من حسابك ؟'); if (c) window.location.href = '<?php print route('logout'); ?>';" class="dropdown-item text-danger">تسجيل الخروج</a>
           </div>
   
         </div>
