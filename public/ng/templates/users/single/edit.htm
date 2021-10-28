@@ -1,7 +1,7 @@
 <include-header/>
 
 <form class="row" name="myForm" request="updateUser">
-    
+
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="name">الاسم</label>
@@ -9,7 +9,7 @@
             <div ng-show="updateUser.errors.name != null" class="invalid-feedback">{{ updateUser.errors.name[0] }}</div>
         </div>
     </div>
-    
+
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="email">البريد الالكتروني</label>
@@ -17,17 +17,27 @@
             <div ng-show="updateUser.errors.email != null" class="invalid-feedback">{{ updateUser.errors.email[0] }}</div>
         </div>
     </div>
-    
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="password">كلمة المرور</label>
-            <input type="password" class="form-control" ng-class="{'is-invalid' : updateUser.errors.password != null}" id="password" ng-model="user.password" ng-change="updateUser.errors.password = null" placeholder="كلمة المرور .." autofocus="off" autocomplete="off" required>
-            <div ng-show="updateUser.errors.password != null" class="invalid-feedback">{{ updateUser.errors.password[0] }}</div>
-        </div>
-    </div>
-    
-    <div class="col-12">        
+
+          <div class="col-12 col-md-6">
+                    <div class="form-group">
+                              <label for="office_id">المركز</label>
+                              <select class="form-control select2" ng-class="(updateUser.errors.office_id != null) ? 'is-invalid' : ''" id="office_id" ng-model="user.office_id" ng-change="updateUser.errors.office_id = null" required>
+                                        <option ng-repeat="x in offices.$$state.value.data" ng-value="{{x.id}}">{{x.name}}</option>
+                              </select>
+                              <div ng-show="updateUser.errors.office_id != null" class="invalid-feedback">{{ updateUser.errors.office_id[0] }}</div>
+                    </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+                    <div class="form-group">
+                              <label for="timesheet_passcode">PIN</label>
+                              <input type="text" class="form-control" ng-class="{'is-invalid' : updateUser.errors.timesheet_passcode != null}" id="timesheet_passcode" ng-model="user.timesheet_passcode" ng-change="updateUser.errors.timesheet_passcode = null" placeholder="PIN" autofocus="off" autocomplete="off" required>
+                              <div ng-show="updateUser.errors.timesheet_passcode != null" class="invalid-feedback">{{ updateUser.errors.timesheet_passcode[0] }}</div>
+                    </div>
+          </div>
+
+    <div class="col-12">
         <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
-    </div>    
-    
+    </div>
+
 </form>

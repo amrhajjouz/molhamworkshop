@@ -30,4 +30,9 @@ return [
     'places.edit' => ['places/:id/edit', 'places/editPlaceController', 'places.single.edit'],
     'places' => ['places', 'places/listPlacesController', 'places.list'],
 
+    'offices' => ['offices', 'office/listOfficeController', 'office.list'],
+    'offices.add' => ['offices/add', 'office/addOfficeController', 'office.add'],
+    'offices.overview' => ['offices/:id', 'office/overviewOfficeController', 'office.single.overview'],
+    'offices.edit' => ['offices/:id/edit', 'office/editOfficeController', 'office.single.edit'],
+
 ];

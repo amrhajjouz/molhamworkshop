@@ -16,7 +16,7 @@ class CreateUserRequest extends FormRequest
     {
         return true;
     }
-    
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,12 +24,14 @@ class CreateUserRequest extends FormRequest
      */
     public function rules()
     {
-        
+
         return [
             'name' => ['required' ,'string', 'between:3,20'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8'],
+            'office_id' => ['required', 'integer'],
+            'timesheet_passcode' => ['required', 'integer'],
         ];
     }
-    
+
 }

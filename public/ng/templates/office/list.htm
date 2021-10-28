@@ -1,0 +1,34 @@
+<page-header title="قائمة المراكز" pretitle="المراكز">
+    <a href="{{ $r('offices.add') }}" class="btn btn-primary">
+        <i class="fe fe-plus"></i>&nbsp;مركز جديد
+    </a>
+</page-header>
+
+<datatable datalist="offices">
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                      <th class="text-center">الاسم</th>
+                      <th class="text-center">خط العرض</th>
+                      <th class="text-center">خط الطول</th>
+                <th class="text-center">خيارات</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="x in offices.data">
+                <td class="align-middle text-center">{{ x.id }}</td>
+                      <td class="align-middle text-center">{{ x.name }}</td>
+                      <td class="align-middle text-center">{{ x.lat }}</td>
+                      <td class="align-middle text-center">{{ x.lng }}</td>
+                <td class="align-middle text-center h2">
+                    <dropdown>
+                        <dropdown-item href="{{ $r('offices.overview', {id: x.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
+                        <dropdown-item href="{{ $r('offices.edit', {id: x.id}) }}"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
+                    </dropdown>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</datatable>

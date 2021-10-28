@@ -1,0 +1,32 @@
+<page-header title="مركز جديد" pretitle="المراكز"></page-header>
+
+<form class="row" name="officeForm" request="createOffice">
+
+          <div class="col-12 col-md-6">
+                    <div class="form-group">
+                              <label for="name">الاسم</label>
+                              <input type="text" class="form-control" ng-class="(createOffice.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="office.name" ng-change="createOffice.errors.name = null" placeholder="الاسم .." required>
+                              <div ng-show="createOffice.errors.name != null" class="invalid-feedback">{{ createOffice.errors.name[0] }}</div>
+                    </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+                    <div class="form-group">
+                              <label for="lng">خط الطول</label>
+                              <input type="text" class="form-control" ng-class="(createOffice.errors.lng != null) ? 'is-invalid' : ''" id="lng" ng-model="office.lng" ng-change="createOffice.errors.lng = null" placeholder="خط الطول" required>
+                              <div ng-show="createOffice.errors.lng != null" class="invalid-feedback">{{ createOffice.errors.lng[0] }}</div>
+                    </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+                    <div class="form-group">
+                              <label for="lat">خط العرض</label>
+                              <input type="text" class="form-control" ng-class="(createOffice.errors.lat != null) ? 'is-invalid' : ''" id="lat" ng-model="office.lat" ng-change="createOffice.errors.lat = null" placeholder="خط العرض" required>
+                              <div ng-show="createOffice.errors.lat != null" class="invalid-feedback">{{ createOffice.errors.lat[0] }}</div>
+                    </div>
+          </div>
+
+    <div class="col-12">
+        <submit-button form="officeForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>

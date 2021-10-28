@@ -7,6 +7,7 @@ use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\DonorController;
 use App\Http\Controllers\Dashboard\PlaceController;
 use App\Http\Controllers\Dashboard\CountryController;
+use App\Http\Controllers\Dashboard\OfficeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,19 +21,22 @@ use App\Http\Controllers\Dashboard\CountryController;
 */
 
 Route::middleware('auth')->group(function ()  {
-    
+
     Route::get('/auth', function (Request $request) {
         return $request->user();
     });
 
     Route::post('/profile', [ProfileController::class, 'update_info']);
     Route::post('/profile/password', [ProfileController::class, 'change_password']);
-    
+    Route::get('/profile/timesheet', [ProfileController::class, 'timesheet']);
+    Route::get('/profile/generate-qr-code', [ProfileController::class, 'generateQrCode']);
+
     Route::get('/users', [UserController::class, 'list']);
     Route::post('/users', [UserController::class, 'create']);
     Route::put('/users', [UserController::class, 'update']);
+    Route::delete('/users/delete-user-device/{id}', [UserController::class, 'deleteUserDevice']);
     Route::get('/users/{id}', [UserController::class, 'retrieve']);
-    
+
     Route::get('/donors', [DonorController::class, 'list']);
     Route::post('/donors', [DonorController::class, 'create']);
     Route::put('/donors', [DonorController::class, 'update']);
@@ -48,4 +52,10 @@ Route::middleware('auth')->group(function ()  {
     // Country Routes
     Route::get('/countries', [CountryController::class, 'list']);
     Route::get('/countries/search', [CountryController::class, 'search']);
+
+    // Branches Routes
+    Route::get('/offices', [OfficeController::class, 'list']);
+    Route::post('/offices', [OfficeController::class, 'create']);
+    Route::put('/offices', [OfficeController::class, 'update']);
+    Route::get('/offices/{id}', [OfficeController::class, 'retrieve']);
 });

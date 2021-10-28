@@ -16,7 +16,7 @@ class UpdateUserRequest extends FormRequest
     {
         return true;
     }
-    
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,13 +24,15 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules()
     {
-        
+
         return [
             'id' => ['required', 'exists:users'],
             'name' => ['string', 'between:3,20'],
             'email' => ['email', Rule::unique('users', 'email')->ignore($this->input('id'))],
             'password' => ['string', 'min:8'],
+            'office_id' => ['required', 'integer'],
+            'timesheet_passcode' => ['required', 'integer'],
         ];
     }
-    
+
 }

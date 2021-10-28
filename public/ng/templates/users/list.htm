@@ -14,7 +14,7 @@
                 <th class="text-center">خيارات</th>
             </tr>
         </thead>
-        
+
         <tbody>
             <tr ng-repeat="u in users.data">
                 <td class="align-middle text-center">{{ u.id }}</td>
@@ -24,6 +24,7 @@
                     <dropdown>
                         <dropdown-item href="{{ $r('users.overview', {id: u.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
                         <dropdown-item href="{{ $r('users.edit', {id: u.id}) }}"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
+                              <dropdown-item ng-if="u.timesheet_device_id" ng-click="deleteUserDevice(u.id)"><i class="fe fe-edit-2"></i>حذف جهاز المستخدم</dropdown-item>
                     </dropdown>
                 </td>
             </tr>
