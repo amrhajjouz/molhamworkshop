@@ -25,7 +25,10 @@ class CreateTransactionsTable extends Migration
             $table->unsignedBigInteger('section_id')->nullable();
             $table->unsignedBigInteger('program_id')->nullable();;
             $table->unsignedBigInteger('related_to')->nullable();;
-            $table->timestamps();//todo: add forign-keys
+            $table->timestamps();
+            $table->foreign('related_to')->references('id')->on('transactions');
+            $table->foreign('journal_id')->references('id')->on('journals');
+            //todo: add the missing foreign-keys
         });
     }
 

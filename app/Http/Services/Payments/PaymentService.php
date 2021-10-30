@@ -2,6 +2,8 @@
 
 namespace App\Http\Services\Payments;
 
+use App\Enums\BalanceTransactionEnums;
+use App\Enums\PaymentStatusEnums;
 use App\Http\Services\Transactions\TransactionFactoryService;
 use App\Http\Services\Transactions\BaseTransactionService;
 use App\Models\Account;
@@ -50,6 +52,7 @@ class PaymentService
             $payment["method"] = "cash"; //todo later with the correct one
             $payment["status"] = "paid";
             $payment["amount"] = collect($purposes)->sum("amount");
+            $payment["reference"] = Str::uuid();
 
             DB::beginTransaction();
 
@@ -79,14 +82,14 @@ class PaymentService
                 ));
             }
 
-            $journal = $paymentResult->journal()->create([
-                "type" => "manual_payment", //todo later with the correct one
+            $balanceTransaction = $paymentResult->balanceTransactions()->create([
+                "type" => BalanceTransactionEnums::MANUAL_PAYMENT,
                 "notes" => $paymentResult->notes,
             ]);
 
             DB::commit();
 
-            $this->transactionService->Process($journal->id);
+            $this->transactionService->Process($balanceTransaction->id);
 
         } catch (Exception  $e) {
             DB::rollBack();

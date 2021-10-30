@@ -2,7 +2,9 @@
 
 namespace App\Http\Services\Transactions;
 
+use App\Enums\JournalEnums;
 use App\Models\Account;
+use App\Models\BalanceTransaction;
 use App\Models\Donation;
 use App\Models\Journals;
 use App\Models\Payment;
@@ -14,14 +16,32 @@ class TransactionService extends BaseTransactionService
     /**
      * @throws Exception
      */
-    public function processManualPayment(Journals $journal)
+    public function processPayment(BalanceTransaction $balanceTransaction)
     {
-        $this->processPayment($journal, false);
-    }
+        try {
+            $payment = $balanceTransaction->transactionable;
+            $donations = $payment->donations;
 
-    public function processEPayment(Journals $journal)
-    {
-        $this->processPayment($journal, true);
+            DB::beginTransaction();
+
+            $journal = $this->createNewJournal($balanceTransaction, JournalEnums::PAYMENT);
+
+            //we don't have any new journal inside here
+            foreach ($donations as $donation) {
+                $this->donationTransactionHandler($payment, $donation, $journal);
+            }
+
+            if ($payment->fee > 0) {
+                $this->handleEPaymentExtraFee($balanceTransaction);
+            }
+
+            $balanceTransaction->update(["handled_at" => now()]);
+
+            DB::commit();
+        } catch (Exception  $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
     }
 
     public function donationTransactionHandler(Payment $payment, Donation $donation, Journals $journal)
@@ -33,7 +53,6 @@ class TransactionService extends BaseTransactionService
         /**
          * first we create two net transactions one to Atef and the second to the purpose account id
          **/
-
         $amountDetails = $this->calculateAmountAndDeductionRatio($donation->amount, $deductionRatio->ratio);
         $debitCreditDetails = $paymentAccount->getIncomeAmountArray($amountDetails["netAmount"]);
         $assetNetTransaction = $journal->transactions()->create([
@@ -90,44 +109,13 @@ class TransactionService extends BaseTransactionService
         ]);
         $assetDeductedTransaction->related_to = $liabilityDeductedTransaction->id;
         $assetDeductedTransaction->save();
-
-        $payment->update(["handled_at" => now()]);
     }
 
-    private function processPayment(Journals $journal, bool $isEPayment)
+    private function handleEPaymentExtraFee(BalanceTransaction $balanceTransaction)
     {
-        try {
-            $payment = $journal->journalable;
-            $donations = $payment->donations;
+        $payment = $balanceTransaction->transactionable;
 
-            DB::beginTransaction();
-
-            //we don't have any new journal inside here
-            foreach ($donations as $donation) {
-                $this->donationTransactionHandler($payment, $donation, $journal);
-            }
-
-            if ($isEPayment) {
-                //we create 1 journal here
-                $this->handleEPaymentExtraFee($journal);
-            }
-
-            DB::commit();
-        } catch (Exception  $e) {
-            DB::rollBack();
-            throw new Exception($e->getMessage());
-        }
-    }
-
-    private function handleEPaymentExtraFee(Journals $journal)
-    {
-        $payment = $journal->journalable;
-
-        $journalExtraFee = $journal->replicate()->fill([
-            'related_to' => $journal->id,
-            'type' => "auto_fee",
-        ]);
-        $journalExtraFee->save();
+        $journalExtraFee = $this->createNewJournal($balanceTransaction, JournalEnums::AUTO_FEE);
 
         foreach ($payment->donations as $donation) {
             $purposeAccount = $donation->purpose->account;
@@ -164,5 +152,4 @@ class TransactionService extends BaseTransactionService
             $deductedTransaction->save();
         }
     }
-
 }

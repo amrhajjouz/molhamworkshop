@@ -13,10 +13,11 @@ use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\PurposeController;
 use App\Http\Controllers\Dashboard\TransactionController;
 use App\Http\Controllers\Dashboard\UserController;
-use App\Http\Services\Transactions\Model\JournalReversalProcessInput;
+use App\Http\Services\Transactions\PartialItemRefundTransactionService;
 use App\Http\Services\Transactions\PartialRefundTransactionService;
 use App\Http\Services\Transactions\RefundTransactionService;
 use App\Http\Services\Transactions\TransactionService;
+use App\Models\BalanceTransaction;
 use App\Models\Donation;
 use App\Models\Journals;
 use App\Models\Payment;
@@ -24,7 +25,7 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Collection;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -37,13 +38,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 /**
- * @param $id
+ * @param $paymentId
  */
-function convertToEPayment($id): void
+function convertToEPayment($paymentId): void
 {
     $manualTransactionService = new TransactionService();
 
-    $payment = Payment::find($id);
+    $payment = Payment::find($paymentId);
 
     $payment->method = "paypal(paypal)";
     $payment->fee = $payment->amount * 8 / 100;
@@ -51,7 +52,7 @@ function convertToEPayment($id): void
     $payment->status = "paid";
     $payment->save();
 
-    $donations = Donation::withTrashed()->wherePaymentId($id)->get();
+    $donations = Donation::withTrashed()->wherePaymentId($paymentId)->get();
 
     foreach ($donations as $donation) {
         $donation->restore();
@@ -59,16 +60,17 @@ function convertToEPayment($id): void
         $donation->save();
     }
 
-    $journal = $payment->journal->replicate()->fill([
+    $balance = $payment->balanceTransactions[0]->replicate()->fill([
         "type" => "e_payment"
     ]);
 
     DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+    BalanceTransaction::truncate();
     Transaction::truncate();
     Journals::truncate();
     DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-    $journal->save();
-    $manualTransactionService->processEPayment($journal);
+    $balance->save();
+    $manualTransactionService->processEPayment($balance);
 }
 
 Route::middleware('auth')->group(function () {
@@ -84,13 +86,41 @@ Route::middleware('auth')->group(function () {
     Route::get('/refund/{id}', function ($id) {
         convertToEPayment($id);
         $transaction = new RefundTransactionService();
-        $transaction->processRefundTransaction(Journals::findOrFail($id), "test", false);
+        $payment = Payment::with("balanceTransaction.journals.transactions", "donations")
+            ->whereId($id)
+            ->where("status", "paid")
+            ->paidOnly()
+            ->firstOrFail();
+
+        $transaction->processRefundTransaction($payment, "test", false);
     });
 
     Route::get('/partial-refund/{id}', function ($id) {
         convertToEPayment($id);
         $transaction = new PartialRefundTransactionService();
-        $transaction->processPartialRefundTransaction(Journals::findOrFail($id), "test", [1], true);
+
+        $payment = Payment::with("balanceTransaction.journals.transactions", "donations")
+            ->whereId($id)
+            ->where("status", "paid")
+            ->paidOnly()
+            ->firstOrFail();
+
+        $transaction->processPartialRefundTransaction($payment, "test", [1], true);
+    });
+
+    Route::get('/partial-item-refund/{id}', function ($id) {
+        convertToEPayment($id);
+        $transaction = new PartialItemRefundTransactionService();
+
+        $payment = Payment::with("balanceTransaction.journals.transactions", "donations")
+            ->whereId($id)
+            ->where("status", "paid")
+            ->paidOnly()
+            ->firstOrFail();
+
+        $itemsToRefund = [["id" => 1, "refund" => 50]];
+
+        $transaction->processPartialRefundTransaction($payment, "test", $itemsToRefund, true);
     });
 
     Route::post('/profile', [ProfileController::class, 'update_info']);

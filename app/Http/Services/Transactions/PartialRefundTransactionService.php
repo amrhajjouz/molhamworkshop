@@ -2,53 +2,72 @@
 
 namespace App\Http\Services\Transactions;
 
-use App\Models\Journals;
+use App\Enums\BalanceTransactionEnums;
+use App\Enums\PaymentStatusEnums;
+use App\Models\BalanceTransaction;
+use App\Models\Donation;
+use App\Models\Payment;
 use Exception;
 
 class PartialRefundTransactionService extends RefundTransactionService
 {
-    protected $paymentTypeAfterTransaction = 'refunded';
-    protected $journalStatusAfterTransaction = 'refund';
-    protected $withLose = false;
-    protected $donationsToRefund = [];
+    protected $paymentTypeAfterTransaction = PaymentStatusEnums::PARTIALLY_REFUNDED;
+    protected $balanceTransactionStarterStatus = BalanceTransactionEnums::E_PAYMENT_FULL_REFUND;
+    protected $donationsIdsToRefund = [];
 
     /**
      * @throws Exception
      */
-    public function processPartialRefundTransaction(Journals $journal, $note, array $donationsToRefund, $withLose)
+    public function processPartialRefundTransaction(Payment $payment, $note, array $donationsToRefund, $withLose)
     {
         $this->withLose = $withLose;
-        $this->donationsToRefund = $donationsToRefund;
-        $this->processTransaction($journal, $note);
+        $this->donationsIdsToRefund = $donationsToRefund;
+        $this->processTransaction($payment, $note);
+    }
+
+    public function afterJournalsHandler(BalanceTransaction $balanceTransaction)
+    {
+        parent::afterJournalsHandler($balanceTransaction); // I might override this again in case of issue
+
+        $this->reInsertPaymentTransactions($balanceTransaction);
+    }
+
+    ///
+
+    protected function updatedPaymentAfterTransaction(Payment $payment)
+    {
+        $donations = Donation::withTrashed()->whereIn("id", $this->donationsIdsToRefund);
+        $reversedAmount = $donations->sum("amount");
+        $reversedFee = 0;
+        if ($this->withLose) {
+            $reversedFee = $donations->sum("fee");
+        }
+        $payment->update([
+            "reversed_amount" => $payment->reversed_amount + $reversedAmount,
+            "reversed_fee" => $payment->reversed_fee + $reversedFee
+        ]);
     }
 
     protected function deleteSelectedDonations($donations): void
     {
         foreach ($donations as $donation) {
-            if (in_array($donation->id, $this->donationsToRefund)) {
+            if (in_array($donation->id, $this->donationsIdsToRefund)) {
                 $donation->delete();
             }
         }
     }
 
-    public function afterJournalsHandler(Journals $journal)
-    {
-        parent::afterJournalsHandler($journal); // I might override this again in case of issue
-
-        $this->reInsertPaymentTransactions($journal);
-    }
-
-    private function reInsertPaymentTransactions($journal)
+    protected function reInsertPaymentTransactions($balanceTransaction)
     {
         $TransactionService = new TransactionService();
-        $payment = $journal->journalable;
+        $payment = $balanceTransaction->transactionable;
 
         //Create new Journal
-        $journal = $payment->journal()->create([
-            "type" => "e_payment", //todo later with the correct one if necessary
-            "notes" => $journal->notes,
+        $newBalanceTransaction = $payment->balanceTransactions()->create([
+            "type" => BalanceTransactionEnums::E_PAYMENT,
+            "notes" => $balanceTransaction->notes,
         ]);
 
-        $TransactionService->processEPayment($journal);
+        $TransactionService->processEPayment($newBalanceTransaction);
     }
 }

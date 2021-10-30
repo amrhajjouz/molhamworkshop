@@ -2,6 +2,9 @@
 
 namespace App\Http\Services\Transactions;
 
+use App\Enums\BalanceTransactionEnums;
+use App\Enums\PaymentStatusEnums;
+use App\Models\BalanceTransaction;
 use App\Models\Journals;
 use Exception;
 
@@ -20,12 +23,12 @@ class TransactionFactoryService
     /**
      * @throws Exception
      */
-    public function Process($journalId)
+    public function Process($balanceTransactionId)
     {
-        $journal = Journals::find($journalId);
-        switch ($journal->type) {
-            case "manual_payment":
-                $this->manualTransactionService->processManualPayment($journal);
+        $balanceTransaction = BalanceTransaction::find($balanceTransactionId);
+        switch ($balanceTransaction->type) {
+            case BalanceTransactionEnums::MANUAL_PAYMENT:
+                $this->manualTransactionService->processPayment($balanceTransaction);
         }
     }
 }

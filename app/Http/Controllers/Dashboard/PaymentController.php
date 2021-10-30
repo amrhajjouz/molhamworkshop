@@ -43,13 +43,13 @@ class PaymentController extends Controller
     public function reverse($paymentId, ReversePaymentRequest $request)
     {
         try {
-            $payment = Payment::with("journal")
+            $payment = Payment::with("balanceTransaction.journals.transactions","donations")
                 ->whereId($paymentId)
                 ->where("status", "paid")
                 ->paidOnly()
                 ->firstOrFail();
 
-            $this->reversalTransactionService->processTransaction($payment->journal, $request->notes);
+            $this->reversalTransactionService->processTransaction($payment, $request->notes);
         } catch (Exception $e) {
             return response(['error' => $e->getMessage()], 500);
         }

@@ -21,12 +21,12 @@ class CreatePaymentsTable extends Migration
             $table->decimal('amount', $precision = 12, $scale = 2);
             $table->decimal('reversed_amount', $precision = 12, $scale = 2)->default(0);
             $table->decimal('fee', $precision = 12, $scale = 2)->default(0);
+            $table->decimal('reversed_fee', $precision = 12, $scale = 2)->default(0);
             $table->decimal('fx_rate', $precision = 12, $scale = 2)->default(0);
             $table->string("currency", 10);
             $table->text("notes")->nullable();
             $table->foreign('donor_id')->references('id')->on('donors');
             $table->datetime('received_at');
-            $table->datetime('handled_at')->nullable();
             $table->enum('locale', ["ar", "en", "fr", "de", "tr", "es"]);
             $table->softDeletes();
             $table->timestamps();

@@ -2,45 +2,65 @@
 
 namespace App\Http\Services\Transactions;
 
+use App\Enums\BalanceTransactionEnums;
+use App\Enums\JournalEnums;
+use App\Enums\PaymentStatusEnums;
 use App\Models\Account;
-use App\Models\Journals;
+use App\Models\BalanceTransaction;
+use App\Models\Payment;
+use Exception;
 
 class RefundTransactionService extends ReversalTransactionService
 {
-    protected $paymentTypeAfterTransaction = 'refunded';
-    protected $journalStatusAfterTransaction = 'refund';
+    protected $paymentTypeAfterTransaction = PaymentStatusEnums::REFUNDED;
+    protected $journalStatusAfterTransaction = JournalEnums::PAYMENT_REVERSAL;
+    protected $balanceTransactionStarterStatus = BalanceTransactionEnums::E_PAYMENT_FULL_REFUND;
     protected $withLose = false;
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
-    public function processRefundTransaction (Journals $journal, $note, $allowLose){
-        $this->withLose =  $allowLose;
-        $this->processTransaction($journal,$note);
-    }
-
-    public function afterJournalsHandler(Journals $journal){
-        $originalPayment = $journal->journalable;
-
-        if(!$this->withLose || $originalPayment->fee == 0){
-            return;
-        }
-
-        $this->refundWithLoseProcess($journal);
+    public function processRefundTransaction(Payment $payment, $note, $allowLose)
+    {
+        $this->withLose = $allowLose;
+        $this->processTransaction($payment, $note);
     }
 
     /**
-     * @param Journals $journal
-     * @param $originalPayment
+     * @param BalanceTransaction $balanceTransaction
+     * @return BalanceTransaction
+     * @throws Exception
      */
-    protected function refundWithLoseProcess(Journals $journal): void
+    public function StartNewTransactionBalanceProcess(BalanceTransaction $balanceTransaction): BalanceTransaction
     {
-        $originalPayment = $journal->journalable;
-        $journalLoseFee = $journal->replicate()->fill([
-            'related_to' => $journal->id,
-            'type' => "refund_losses_auto_journal",
-        ]);
-        $journalLoseFee->save();
+        $newTransactionBalance = $balanceTransaction->replicate()->fill(
+            ["type" => $this->balanceTransactionStarterStatus]
+        );
+        $newTransactionBalance->save();
+        return $newTransactionBalance;
+    }
+
+    public function afterJournalsHandler(BalanceTransaction $balanceTransaction)
+    {
+        $originalPayment = $balanceTransaction->transactionable;
+
+        if (!$this->withLose || $originalPayment->fee == 0) {
+            return;
+        }
+
+        $this->refundWithLoseProcess($balanceTransaction);
+
+        $this->updatedPaymentAfterTransaction($originalPayment);
+    }
+
+    /**
+     * @param BalanceTransaction $balanceTransaction
+     */
+    protected function refundWithLoseProcess(BalanceTransaction $balanceTransaction): void
+    {
+        $originalPayment = $balanceTransaction->transactionable;
+
+        $journalLoseFee = $this->createNewJournal($balanceTransaction, JournalEnums::FEE_LOSS);
 
         $configuredAccount = Account::find(1); //todo: this should be configuration later;
         $debitCreditDetails = $configuredAccount->getIncomeAmountArray($originalPayment->fee);

@@ -2,32 +2,39 @@
 
 namespace App\Http\Services\Transactions;
 
+use App\Enums\BalanceTransactionEnums;
+use App\Enums\JournalEnums;
+use App\Enums\PaymentStatusEnums;
+use App\Models\BalanceTransaction;
 use App\Models\Journals;
+use App\Models\Payment;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
 class ReversalTransactionService extends BaseTransactionService
 {
-    protected $paymentTypeAfterTransaction = 'reversal';
-    protected $journalStatusAfterTransaction = 'reversal';
+    protected $paymentTypeAfterTransaction = PaymentStatusEnums::REVERSED;
+    protected $journalStatusAfterTransaction = JournalEnums::PAYMENT_REVERSAL;
 
     /**
      * @throws Exception
      */
-    public function processTransaction(Journals $journal, $note)
+    public function processTransaction(Payment $payment, $note)
     {
         try {
-            $payment = $journal->journalable;
             $donations = $payment->donations;
+
+            //todo: check this with amr, we might need to do some flagging to not get wrong balance
+            $balanceTransactions = $payment->balanceTransactions->where("type", BalanceTransactionEnums::E_PAYMENT)->last(); //TODO : GET THE FIRST BALANCE TRANSACTION OF TYPE PAYMENT THEN REFUND
 
             DB::beginTransaction();
 
             $payment->status = $this->paymentTypeAfterTransaction; //todo: dynamic
             $payment->save();
 
-
             $this->deleteSelectedDonations($donations);
-            $this->journalsHandler($journal, $note);
+
+            $this->balanceTransactionHandler($balanceTransactions, $note);
 
             DB::commit();
         } catch (Exception  $e) {
@@ -36,8 +43,36 @@ class ReversalTransactionService extends BaseTransactionService
         }
     }
 
-    public function afterJournalsHandler(Journals $journal)
+    /**
+     * @param BalanceTransaction $balanceTransaction
+     * @return BalanceTransaction
+     * @throws Exception
+     */
+    public function StartNewTransactionBalanceProcess(BalanceTransaction $balanceTransaction): BalanceTransaction
     {
+        if ($balanceTransaction->type == BalanceTransactionEnums::MANUAL_PAYMENT) {
+            $newBalanceTransactionStatus = BalanceTransactionEnums::MANUAL_PAYMENT_REVERSAL;
+        } else if ($balanceTransaction->type == BalanceTransactionEnums::E_PAYMENT) {
+            $newBalanceTransactionStatus = BalanceTransactionEnums::E_PAYMENT_PAYMENT_REVERSAL;
+        } else {
+            throw new Exception("unexpected balance transaction type {$balanceTransaction->type} for {$balanceTransaction->id}");
+        }
+
+        $newTransactionBalance = $balanceTransaction->replicate()->fill(
+            ["type" => $newBalanceTransactionStatus]
+        );
+        $newTransactionBalance->save();
+        return $newTransactionBalance;
+    }
+
+    protected function afterJournalsHandler(BalanceTransaction $balanceTransaction)
+    {
+        $this->updatedPaymentAfterTransaction($balanceTransaction->transactionable);
+    }
+
+    protected function updatedPaymentAfterTransaction(Payment $payment)
+    {
+        $payment->update(["reversed_amount" => $payment->amount]);
     }
 
     /**
@@ -50,17 +85,21 @@ class ReversalTransactionService extends BaseTransactionService
         }
     }
 
-    private function journalsHandler(Journals $journal, string $note)
+    /**
+     * @throws Exception
+     */
+    private function balanceTransactionHandler(BalanceTransaction $balanceTransaction, string $note)
     {
-        $childJournal = $journal->childJournal;
+        $journals = $balanceTransaction->journals;
 
-        if ($childJournal != null) {
-            $this->processJournal($childJournal, $note);
+        $newTransactionBalance = $this->StartNewTransactionBalanceProcess($balanceTransaction);
+
+        //todo:check if we can reverse the array at the bottom
+        foreach ($journals as $journal) { //start from the bottom to the top
+            $this->processJournal($journal, $newTransactionBalance);
         }
 
-        $this->processJournal($journal, $note);
-
-        $this->afterJournalsHandler($journal);
+        $this->afterJournalsHandler($newTransactionBalance);
     }
 
     /**
@@ -69,26 +108,20 @@ class ReversalTransactionService extends BaseTransactionService
      * @param $transactions
      * @param $originalPayment
      */
-    private function processJournal(Journals $journal, string $note): void
+    private function processJournal(Journals $journal, BalanceTransaction $newTransactionBalance): void
     {
         $transactions = $journal->transactions;
-        $originalPayment = $journal->journalable;
+        $originalPayment = $newTransactionBalance->transactionable;
 
-        if ($journal->type == "auto_fee") {
-            $journalType = "auto_fees_reversal";
+        if ($journal->type == JournalEnums::AUTO_FEE) {
+            $journalType = JournalEnums::AUTO_FEE_REVERSAL;
         } else {
             $journalType = $this->journalStatusAfterTransaction;
         }
 
-        $reversalJournal = $journal->replicate()->fill([
-            'notes' => $note,
-            'related_to' => $journal->id,
-            "type" => $journalType
-        ]);
-        $reversalJournal->save();
+        $reversalJournal = $this->createNewJournal($newTransactionBalance, $journalType);
 
         foreach ($transactions as $transaction) {
-            $originalPayment->reversed_amount += $transaction->amount;
             $debitCreditDetails = $transaction->account->getOutcomeAmountArray($transaction->amount);
 
             $reversalTransaction = $transaction->replicate()->fill([
@@ -101,8 +134,5 @@ class ReversalTransactionService extends BaseTransactionService
 
             $reversalJournal->transactions()->save($reversalTransaction);
         }
-
-        $originalPayment->status = "partially_refunded"; //todo: move this to the top before deleting transactions
-        $originalPayment->save();
     }
 }

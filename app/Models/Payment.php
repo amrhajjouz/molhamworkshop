@@ -20,9 +20,9 @@ class Payment extends BaseModel
         'fee' => 'float',
     ];
 
-    public function journal()
+    public function balanceTransactions()
     {
-        return $this->morphOne(Journals::class, 'journalable');
+        return $this->morphMany(BalanceTransaction::class, 'transactionable');
     }
 
     public function donations()
