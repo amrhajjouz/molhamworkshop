@@ -4,70 +4,78 @@ namespace App\Http\Services\Transactions;
 
 use App\Enums\BalanceTransactionEnums;
 use App\Enums\PaymentStatusEnums;
-use App\Models\BalanceTransaction;
 use App\Models\Donation;
 use App\Models\Payment;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class PartialRefundTransactionService extends RefundTransactionService
 {
     protected $paymentTypeAfterTransaction = PaymentStatusEnums::PARTIALLY_REFUNDED;
-    protected $balanceTransactionStarterStatus = BalanceTransactionEnums::E_PAYMENT_FULL_REFUND;
-    protected $donationsIdsToRefund = [];
+    protected $newBalanceTransactionStatus = BalanceTransactionEnums::E_PAYMENT_PARTIAL_REFUND;
+    private $donationsToRefund = [];
 
     /**
      * @throws Exception
      */
-    public function processPartialRefundTransaction(Payment $payment, $note, array $donationsToRefund, $withLose)
+    public function processPartialRefundTransaction(Payment $payment, $note, array $donationsIdsToRefund, $withLose)
     {
-        $this->withLose = $withLose;
-        $this->donationsIdsToRefund = $donationsToRefund;
-        $this->processTransaction($payment, $note);
-    }
+        try {
+            DB::beginTransaction();
 
-    public function afterJournalsHandler(BalanceTransaction $balanceTransaction)
-    {
-        parent::afterJournalsHandler($balanceTransaction); // I might override this again in case of issue
+            $allowedStatus = [PaymentStatusEnums::PAID, PaymentStatusEnums::PARTIALLY_REFUNDED];
 
-        $this->reInsertPaymentTransactions($balanceTransaction);
-    }
+            if (in_array($payment->type, $allowedStatus)) {
+                throw new Exception("Partial refund for payment id {$payment->id} is not allowed, the type of the required payment is {$payment->type}");
+            }
 
-    ///
+            $this->withLose = $withLose;
+            $donationsToRefund = Donation::whereIn("id", $donationsIdsToRefund)->get();
+            $this->donationsToRefund = $donationsToRefund;
 
-    protected function updatedPaymentAfterTransaction(Payment $payment)
-    {
-        $donations = Donation::withTrashed()->whereIn("id", $this->donationsIdsToRefund);
-        $reversedAmount = $donations->sum("amount");
-        $reversedFee = 0;
-        if ($this->withLose) {
-            $reversedFee = $donations->sum("fee");
+            /**
+             * Start reversing all journals and [fees ( if required )]
+             */
+            $newBalanceTransaction = $this->processTransaction($payment, $note); // until this point we did reverse all original payment (only )
+
+            $reversedFee = 0;
+            $reversed_amount = $donationsToRefund->sum("amount");
+            if ($this->withLose && $payment->fee > 0) {
+                $this->processFeeLoseTransactions($newBalanceTransaction);
+                $reversedFee = $donationsToRefund->sum("fee");
+            }
+            /**
+             * End processing all transactions and fees
+             * At this point we did reversed everything, and we are still missing re-inserting the new journals  again
+             */
+
+            //Update the payment with the refunded fees and amount
+            $payment->update([
+                "reversed_amount" => $payment->reversed_amount + $reversed_amount,
+                "reversed_fee" => $payment->reversed_fee + $reversedFee,
+                "status" => PaymentStatusEnums::PARTIALLY_REFUNDED
+            ]);
+
+            /**
+             * We have to re-process the balance transaction with the new journals and values again now
+             */
+            $TransactionService = new TransactionService();
+            $TransactionService->processPayment($newBalanceTransaction);
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
         }
-        $payment->update([
-            "reversed_amount" => $payment->reversed_amount + $reversedAmount,
-            "reversed_fee" => $payment->reversed_fee + $reversedFee
-        ]);
     }
 
     protected function deleteSelectedDonations($donations): void
     {
+        $ids = $this->donationsToRefund->pluck('id')->toArray();
         foreach ($donations as $donation) {
-            if (in_array($donation->id, $this->donationsIdsToRefund)) {
+            if (in_array($donation->id, $ids)) {
                 $donation->delete();
             }
         }
-    }
-
-    protected function reInsertPaymentTransactions($balanceTransaction)
-    {
-        $TransactionService = new TransactionService();
-        $payment = $balanceTransaction->transactionable;
-
-        //Create new Journal
-        $newBalanceTransaction = $payment->balanceTransactions()->create([
-            "type" => BalanceTransactionEnums::E_PAYMENT,
-            "notes" => $balanceTransaction->notes,
-        ]);
-
-        $TransactionService->processEPayment($newBalanceTransaction);
     }
 }

@@ -49,6 +49,7 @@ function convertToEPayment($paymentId): void
     $payment->method = "paypal(paypal)";
     $payment->fee = $payment->amount * 8 / 100;
     $payment->reversed_amount = 0;
+    $payment->reversed_fee = 0;
     $payment->status = "paid";
     $payment->save();
 
@@ -57,6 +58,7 @@ function convertToEPayment($paymentId): void
     foreach ($donations as $donation) {
         $donation->restore();
         $donation->method = "card(paypal)";
+        $donation->fee = $donation->amount * 8 / 100;
         $donation->save();
     }
 
@@ -70,7 +72,7 @@ function convertToEPayment($paymentId): void
     Journals::truncate();
     DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     $balance->save();
-    $manualTransactionService->processEPayment($balance);
+    $manualTransactionService->processPayment($balance);
 }
 
 Route::middleware('auth')->group(function () {
@@ -83,6 +85,10 @@ Route::middleware('auth')->group(function () {
         convertToEPayment($id);
     });
 
+    Route::get('/test', function () {
+
+    });
+
     Route::get('/refund/{id}', function ($id) {
         convertToEPayment($id);
         $transaction = new RefundTransactionService();
@@ -92,7 +98,7 @@ Route::middleware('auth')->group(function () {
             ->paidOnly()
             ->firstOrFail();
 
-        $transaction->processRefundTransaction($payment, "test", false);
+        $transaction->processRefundTransaction($payment, "test", true);
     });
 
     Route::get('/partial-refund/{id}', function ($id) {

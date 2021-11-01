@@ -14,29 +14,22 @@ use Illuminate\Support\Facades\DB;
 class ReversalTransactionService extends BaseTransactionService
 {
     protected $paymentTypeAfterTransaction = PaymentStatusEnums::REVERSED;
-    protected $journalStatusAfterTransaction = JournalEnums::PAYMENT_REVERSAL;
+    protected $defaultStatusForNewJournals = JournalEnums::PAYMENT_REVERSAL;
 
     /**
      * @throws Exception
      */
-    public function processTransaction(Payment $payment, $note)
+    public function processReversalTransaction(Payment $payment, $note)
     {
         try {
-            $donations = $payment->donations;
-
-            //todo: check this with amr, we might need to do some flagging to not get wrong balance
-            $balanceTransactions = $payment->balanceTransactions->where("type", BalanceTransactionEnums::E_PAYMENT)->last(); //TODO : GET THE FIRST BALANCE TRANSACTION OF TYPE PAYMENT THEN REFUND
-
             DB::beginTransaction();
 
-            $payment->status = $this->paymentTypeAfterTransaction; //todo: dynamic
-            $payment->save();
+            $newBalanceTransaction = $this->processTransaction($payment, $note);
 
-            $this->deleteSelectedDonations($donations);
-
-            $this->balanceTransactionHandler($balanceTransactions, $note);
+            $this->updatedPaymentAfterTransaction($newBalanceTransaction->transactionable);
 
             DB::commit();
+
         } catch (Exception  $e) {
             DB::rollBack();
             throw new Exception($e->getMessage());
@@ -44,35 +37,35 @@ class ReversalTransactionService extends BaseTransactionService
     }
 
     /**
-     * @param BalanceTransaction $balanceTransaction
-     * @return BalanceTransaction
      * @throws Exception
      */
-    public function StartNewTransactionBalanceProcess(BalanceTransaction $balanceTransaction): BalanceTransaction
+    public function processTransaction(Payment $payment, $note): BalanceTransaction
     {
-        if ($balanceTransaction->type == BalanceTransactionEnums::MANUAL_PAYMENT) {
-            $newBalanceTransactionStatus = BalanceTransactionEnums::MANUAL_PAYMENT_REVERSAL;
-        } else if ($balanceTransaction->type == BalanceTransactionEnums::E_PAYMENT) {
-            $newBalanceTransactionStatus = BalanceTransactionEnums::E_PAYMENT_PAYMENT_REVERSAL;
-        } else {
-            throw new Exception("unexpected balance transaction type {$balanceTransaction->type} for {$balanceTransaction->id}");
-        }
+        $donations = $payment->donations;
 
-        $newTransactionBalance = $balanceTransaction->replicate()->fill(
-            ["type" => $newBalanceTransactionStatus]
-        );
-        $newTransactionBalance->save();
-        return $newTransactionBalance;
-    }
+        $originBalanceTransaction = $this->getOriginBalanceTransactionFromPayment($payment);
 
-    protected function afterJournalsHandler(BalanceTransaction $balanceTransaction)
-    {
-        $this->updatedPaymentAfterTransaction($balanceTransaction->transactionable);
+        $this->deleteSelectedDonations($donations);
+
+        return $this->balanceTransactionHandler($originBalanceTransaction, $note);
     }
 
     protected function updatedPaymentAfterTransaction(Payment $payment)
     {
-        $payment->update(["reversed_amount" => $payment->amount]);
+        $payment->update([
+            "reversed_amount" => $payment->amount,
+            "status" => $this->paymentTypeAfterTransaction
+        ]);
+    }
+
+    /**
+     * @param Payment $payment
+     * @return mixed
+     * @todo: check this with amr, we might need to do some flagging to not get wrong balance
+     */
+    protected function getOriginBalanceTransactionFromPayment(Payment $payment)
+    {
+        return $payment->balanceTransactions->where("type", BalanceTransactionEnums::E_PAYMENT)->last();
     }
 
     /**
@@ -88,35 +81,58 @@ class ReversalTransactionService extends BaseTransactionService
     /**
      * @throws Exception
      */
-    private function balanceTransactionHandler(BalanceTransaction $balanceTransaction, string $note)
+    private function balanceTransactionHandler(BalanceTransaction $originBalanceTransaction, string $note): BalanceTransaction
     {
-        $journals = $balanceTransaction->journals;
+        $originalJournals = $originBalanceTransaction->journals->reverse(); // we reverse to start from the bottom to the top
 
-        $newTransactionBalance = $this->StartNewTransactionBalanceProcess($balanceTransaction);
+        $newTransactionBalance = $this->StartNewTransactionBalanceProcess($originBalanceTransaction, $note); // create new balance transaction to group all the process from here
 
-        //todo:check if we can reverse the array at the bottom
-        foreach ($journals as $journal) { //start from the bottom to the top
+        //reverse the status of all origin journals
+        foreach ($originalJournals as $journal) {
             $this->processJournal($journal, $newTransactionBalance);
         }
 
-        $this->afterJournalsHandler($newTransactionBalance);
+        return $newTransactionBalance;
+    }
+
+    /**
+     * @param BalanceTransaction $balanceTransaction
+     * @param string $note
+     * @return BalanceTransaction
+     * @throws Exception
+     */
+    public function StartNewTransactionBalanceProcess(BalanceTransaction $balanceTransaction, string $note): BalanceTransaction
+    {
+        if ($balanceTransaction->type == BalanceTransactionEnums::MANUAL_PAYMENT) {
+            $newBalanceTransactionStatus = BalanceTransactionEnums::MANUAL_PAYMENT_REVERSAL;
+        } else if ($balanceTransaction->type == BalanceTransactionEnums::E_PAYMENT) {
+            $newBalanceTransactionStatus = BalanceTransactionEnums::E_PAYMENT_PAYMENT_REVERSAL;
+        } else {
+            throw new Exception("unexpected balance transaction type {$balanceTransaction->type} for {$balanceTransaction->id}");
+        }
+
+        $newTransactionBalance = $balanceTransaction->replicate()->fill([
+            "type" => $newBalanceTransactionStatus,
+            "notes" => $note,
+            "handled_at"=>now()
+        ]);
+        $newTransactionBalance->save();
+        return $newTransactionBalance;
     }
 
     /**
      * @param Journals $journal
-     * @param string $note
-     * @param $transactions
-     * @param $originalPayment
+     * @param BalanceTransaction $newTransactionBalance
+     * @note we do [reverse,refund] each journal in a row . and then we assign the value to the new created [balance_transaction]
      */
     private function processJournal(Journals $journal, BalanceTransaction $newTransactionBalance): void
     {
         $transactions = $journal->transactions;
-        $originalPayment = $newTransactionBalance->transactionable;
 
         if ($journal->type == JournalEnums::AUTO_FEE) {
             $journalType = JournalEnums::AUTO_FEE_REVERSAL;
         } else {
-            $journalType = $this->journalStatusAfterTransaction;
+            $journalType = $this->defaultStatusForNewJournals;
         }
 
         $reversalJournal = $this->createNewJournal($newTransactionBalance, $journalType);
@@ -128,9 +144,8 @@ class ReversalTransactionService extends BaseTransactionService
                 "related_to" => null,
                 "debit" => -1 * $debitCreditDetails["debit"],
                 "credit" => -1 * $debitCreditDetails["credit"],
+                "journal_id" => $reversalJournal->id
             ]);
-
-            $reversalTransaction->journal_id = $reversalJournal->id;
 
             $reversalJournal->transactions()->save($reversalTransaction);
         }

@@ -9,58 +9,62 @@ use App\Models\Account;
 use App\Models\BalanceTransaction;
 use App\Models\Payment;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class RefundTransactionService extends ReversalTransactionService
 {
-    protected $paymentTypeAfterTransaction = PaymentStatusEnums::REFUNDED;
-    protected $journalStatusAfterTransaction = JournalEnums::PAYMENT_REVERSAL;
-    protected $balanceTransactionStarterStatus = BalanceTransactionEnums::E_PAYMENT_FULL_REFUND;
-    protected $withLose = false;
+    protected $defaultStatusForNewJournals = JournalEnums::PAYMENT_REVERSAL;
+    protected $newBalanceTransactionStatus = BalanceTransactionEnums::E_PAYMENT_FULL_REFUND;
 
     /**
      * @throws Exception
      */
     public function processRefundTransaction(Payment $payment, $note, $allowLose)
     {
-        $this->withLose = $allowLose;
-        $this->processTransaction($payment, $note);
-    }
+        try {
 
-    /**
-     * @param BalanceTransaction $balanceTransaction
-     * @return BalanceTransaction
-     * @throws Exception
-     */
-    public function StartNewTransactionBalanceProcess(BalanceTransaction $balanceTransaction): BalanceTransaction
-    {
-        $newTransactionBalance = $balanceTransaction->replicate()->fill(
-            ["type" => $this->balanceTransactionStarterStatus]
-        );
-        $newTransactionBalance->save();
-        return $newTransactionBalance;
-    }
+            DB::beginTransaction();
 
-    public function afterJournalsHandler(BalanceTransaction $balanceTransaction)
-    {
-        $originalPayment = $balanceTransaction->transactionable;
+            $allowedStatus = [PaymentStatusEnums::PAID, PaymentStatusEnums::PARTIALLY_REFUNDED];
+            if (in_array($payment->type, $allowedStatus)) {
+                throw new Exception("Full refund for payment id {$payment->id} is not allowed, the type of the required payment is {$payment->type}");
+            }
 
-        if (!$this->withLose || $originalPayment->fee == 0) {
-            return;
+            /**
+             * Start reversing all journals and [fees ( if required )]
+             */
+             $newBalanceTransaction = $this->processTransaction($payment, $note);
+
+            $reversed_fee = 0;
+            if ($allowLose && $payment->fee > 0) {
+                $this->processFeeLoseTransactions($newBalanceTransaction);
+                $reversed_fee = $payment->fee;
+            }
+            /**
+             * End processing all transactions and fees
+             * At this point we did reversed everything, and we are still missing re-inserting the new journals  again
+             */
+
+            $payment->update([
+                "reversed_amount" => $payment->amount,
+                "reversed_fee" => $reversed_fee,
+                "status" => PaymentStatusEnums::REFUNDED
+            ]);
+
+            DB::commit();
+        } catch (Exception  $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
         }
-
-        $this->refundWithLoseProcess($balanceTransaction);
-
-        $this->updatedPaymentAfterTransaction($originalPayment);
     }
 
     /**
-     * @param BalanceTransaction $balanceTransaction
+     * @param BalanceTransaction $newBalanceTransaction
      */
-    protected function refundWithLoseProcess(BalanceTransaction $balanceTransaction): void
+    protected function processFeeLoseTransactions(BalanceTransaction $newBalanceTransaction): void
     {
-        $originalPayment = $balanceTransaction->transactionable;
-
-        $journalLoseFee = $this->createNewJournal($balanceTransaction, JournalEnums::FEE_LOSS);
+        $journalLoseFee = $this->createNewJournal($newBalanceTransaction, JournalEnums::FEE_LOSS);
+        $originalPayment = $newBalanceTransaction->transactionable;
 
         $configuredAccount = Account::find(1); //todo: this should be configuration later;
         $debitCreditDetails = $configuredAccount->getIncomeAmountArray($originalPayment->fee);
@@ -86,5 +90,22 @@ class RefundTransactionService extends ReversalTransactionService
         ]);
         $transactionLose1->related_to = $transactionLose2->id;
         $transactionLose1->save();
+    }
+
+    /**
+     * @param BalanceTransaction $balanceTransaction
+     * @param string $note
+     * @return BalanceTransaction
+     * @throws Exception
+     */
+    public function StartNewTransactionBalanceProcess(BalanceTransaction $balanceTransaction, string $note): BalanceTransaction
+    {
+        $newTransactionBalance = $balanceTransaction->replicate()->fill([
+            "type" => $this->newBalanceTransactionStatus,
+            "notes" => $note,
+            "handled_at" => now()
+        ]);
+        $newTransactionBalance->save();
+        return $newTransactionBalance;
     }
 }

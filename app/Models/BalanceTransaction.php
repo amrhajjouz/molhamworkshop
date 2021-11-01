@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class BalanceTransaction extends Model
 {
     use HasFactory;
-    protected $fillable = ["type","notes"];
+    protected $fillable = ["type","notes","handled_at"];
 
     public function journals()
     {

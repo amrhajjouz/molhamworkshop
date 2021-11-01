@@ -18,15 +18,14 @@ class  PartialItemRefundTransactionService extends PartialRefundTransactionServi
     {
         $this->withLose = $withLose;
         $this->donationsIdsToRefund = $this->donationsIdsToRefund->pluck("id")->toArray();
-
         $this->donationsToRefund = Donation::whereIn("id", $this->donationsIdsToRefund)->get();
 
         $this->processTransaction($payment, $note);
     }
 
-    public function afterJournalsHandler(balanceTransaction $balanceTransaction)
+    public function afterProcessTransaction(balanceTransaction $balanceTransaction)
     {
-        parent::afterJournalsHandler($balanceTransaction); // I might override this again in case of issue
+        parent::afterProcessTransaction($balanceTransaction); // I might override this again in case of issue
 
         $this->reInsertPaymentTransactions($balanceTransaction);
     }
