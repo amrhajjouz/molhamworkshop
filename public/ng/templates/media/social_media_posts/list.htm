@@ -1,0 +1,214 @@
+<page-header title="قائمة المنشورات" pretitle="منشورات وسائل التواصل">
+   <a href="{{ $r('media.social_media_posts.add') }}" class="btn btn-primary"> <i class="fe fe-plus"></i>&nbsp; منشور جديد </a>
+   <a href="#" ng-click="openFilterModal()" class="btn btn-primary"> <i class="fe fe-filter"></i>&nbsp; فلترة </a>
+</page-header>
+
+<datatable datalist="posts">
+   <table>
+      <thead>
+         <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">العنوان</th>
+            <th class="text-center">تمت الأرشفة</th>
+            <th class="text-center">الحالة</th>
+            <th class="text-center"> جاهز للنشر</th>
+            <th class="text-center">تم تدقيقها</th>
+
+            <th class="text-center">خيارات</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr ng-repeat="post in posts.data">
+            <td class="align-middle text-center">{{ post.id }}</td>
+            <td class="align-middle text-center">{{ post.description}}</td>
+            <td class="align-middle text-center">
+               <div ng-if="post.archived_at"><span class="text-success">نعم </span></div>
+               <div ng-if="!post.archived_at"><span class="text-danger">لا </span></div>
+            </td>
+            <td class="align-middle text-center">
+               <div ng-if="post.status=='pending'"><span class=""> قيد الإنتظار </span></div>
+               <div ng-if="post.status=='approved'"><span class="text-success">تمت الموافقة</span></div>
+               <div ng-if="post.status=='rejected'"><span class="text-danger">تم الرفض</span></div>
+            </td>
+            <td class="align-middle text-center" ng-if="post.ready_to_publish"><span class="text-success">نعم</span></td>
+            <td class="align-middle text-center" ng-if="!post.ready_to_publish"><span class="text-danger">لا</span></td>
+
+            <td class="align-middle text-center" ng-if=" post.body.ar.proofread"><span class="text-success">نعم</span></td>
+            <td class="align-middle text-center" ng-if="! post.body.ar.proofread"><span class="text-danger">لا</span></td>
+            <td class="align-middle text-center h2">
+               <dropdown>
+                  <dropdown-item href="{{ $r('media.social_media_posts.overview', {id: post.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
+                  <dropdown-item href="{{ $r('media.social_media_posts.edit', {id: post.id}) }}"><i class="fe fe-edit-2"></i> تعديل المعلومات</dropdown-item>
+                  <dropdown-item href="{{ $r('media.social_media_posts.images', {id: post.id}) }}"><i class="fe fe-image"></i> الصور</dropdown-item>
+                  <dropdown-item href="#" ng-show="canProofread(post)" ng-click="proofreadPostRequest(post.id)"><i class="fe fe-terminal"></i> تعيين كتم تدقيقها</dropdown-item>
+                  <dropdown-item href="#" ng-show="post.archived_at == null" ng-click="archivePostRequest(post.id)"><i class="fe fe-archive"></i>أرشفة</dropdown-item>
+                  <dropdown-item href="#" ng-show="post.status == 'pending' || post.status == 'rejected'" ng-click="approvePostRequest(post.id)"><i class="fe fe-check"></i>قبول</dropdown-item>
+                  <dropdown-item href="#" ng-show="post.status == 'pending' || post.status == 'approved'" ng-click="rejectPostRequest(post.id)"><i class="fe fe-x"></i>رفض</dropdown-item>
+                  
+                  <dropdown-item href="#" ng-show="post.ready_to_publish == true" ng-click="openPublishingModalOptions(post)"><i class="fe fe-check-square"></i>خيارات النشر</dropdown-item>
+               </dropdown>
+            </td>
+         </tr>
+      </tbody>
+   </table>
+</datatable>
+
+<modal id="publish-modal">
+   <modal-title>
+      <span> <i class="fe fe-plus-circle"></i>&nbsp;خيارات النشر </span>
+   </modal-title>
+   <div>
+      <modal-body>
+         <form name="updatePublishingOptionsForm" request="updatePublishingOptionsRequest" id="myForm">
+            <div class="row">
+               <div class="col-12 col-md-6">
+                  <h3 class="">publishing</h3>
+                  <hr />
+                  <div class="form-group">
+                     <input
+                        type="checkbox"
+                        ng-value="true"
+                        id="facebook"
+                        name="facebook"
+                        ng-model="selectedSocialMediaPost.publishing['published_on_facebook_at']"
+                        ng-checked="selectedSocialMediaPost.published_on_facebook_at != null"
+                        ng-change="handleChangeInput('facebook' , 'published' )"
+                     />
+                     <label for="facebook"> facebook</label><br />
+                     <input
+                        type="checkbox"
+                        ng-value="true"
+                        id="youtube"
+                        name="youtube"
+                        ng-model="selectedSocialMediaPost.publishing['published_on_youtube_at']"
+                        ng-checked="selectedSocialMediaPost.published_on_youtube_at != null"
+                        ng-change="handleChangeInput('youtube' , 'published' )"
+                     />
+                     <label for="youtube"> youtube</label><br />
+                     <input
+                        type="checkbox"
+                        ng-value="true"
+                        id="twitter"
+                        name="twitter"
+                        ng-model="selectedSocialMediaPost.publishing['published_on_twitter_at']"
+                        ng-checked="selectedSocialMediaPost.published_on_twitter_at != null"
+                        ng-change="handleChangeInput('twitter' , 'published' )"
+                     />
+                     <label for="twitter"> twitter</label><br />
+                     <input
+                        type="checkbox"
+                        ng-value="true"
+                        id="instagram"
+                        name="instagram"
+                        ng-model="selectedSocialMediaPost.publishing['published_on_instagram_at']"
+                        ng-checked="selectedSocialMediaPost.published_on_instagram_at != null"
+                        ng-change="handleChangeInput('instagram' , 'published' )"
+                     />
+                     <label for="instagram"> instagram</label><br />
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <h3 class="">scheduling</h3>
+                  <hr />
+                  <div class="form-group">
+                     <input
+                        type="checkbox"
+                        ng-value="true"
+                        id="facebook_scheduling"
+                        name="facebook"
+                        ng-model="selectedSocialMediaPost.isScheduled['scheduled_on_facebook_at']"
+                        ng-checked="selectedSocialMediaPost.scheduled_on_facebook_at != null"
+                        ng-change="handleChangeInput('facebook' , 'scheduled' )"
+                     />
+                     <label for="facebook_scheduling"> facebook</label><br />
+                  </div>
+                  <div class="form-group">
+                     <input
+                        type="checkbox"
+                        ng-value="true"
+                        id="youtube_scheduling"
+                        name="youtube"
+                        ng-model="selectedSocialMediaPost.isScheduled['scheduled_on_youtube_at']"
+                        ng-checked="selectedSocialMediaPost.scheduled_on_youtube_at != null"
+                        ng-change="handleChangeInput('youtube' , 'scheduled' )"
+                     />
+                     <label for="youtube_scheduling"> youtube</label><br />
+                  </div>
+                  <div class="form-group">
+                     <input
+                        type="checkbox"
+                        ng-value="true"
+                        id="twitter_scheduling"
+                        name="twitter"
+                        ng-model="selectedSocialMediaPost.isScheduled['scheduled_on_twitter_at']"
+                        ng-checked="selectedSocialMediaPost.scheduled_on_twitter_at != null"
+                        ng-change="handleChangeInput('twitter' , 'scheduled' )"
+                     />
+                     <label for="twitter_scheduling"> twitter</label><br />
+                  </div>
+                  <div class="form-group">
+                     <input
+                        type="checkbox"
+                        ng-value="true"
+                        id="instagram_scheduling"
+                        name="instagram"
+                        ng-model="selectedSocialMediaPost.isScheduled['scheduled_on_instagram_at']"
+                        ng-checked="selectedSocialMediaPost.scheduled_on_instagram_at != null"
+                        ng-change="handleChangeInput('instagram' , 'scheduled' )"
+                     />
+                     <label for="instagram_scheduling"> instagram</label><br />
+                  </div>
+               </div>
+
+               <div class="row">
+                  <div class="col-12 col-md-6">
+                     <div class="form-group">
+                        <div ng-show="selectedSocialMediaPost.isScheduled['scheduled_on_facebook_at']">
+                           <input type="datetime-local" id="facebook_scheduled_at" ng-model="selectedSocialMediaPost['scheduled_on_facebook_at']" />
+                           <label for="instagram"> facebook</label><br />
+                        </div>
+                        <div ng-show="selectedSocialMediaPost.isScheduled['scheduled_on_youtube_at']">
+                           <input type="datetime-local" id="youtube_scheduled_at" ng-model="selectedSocialMediaPost['scheduled_on_youtube_at']" />
+                           <label for="instagram"> youtube</label><br />
+                        </div>
+                        <div ng-show="selectedSocialMediaPost.isScheduled['scheduled_on_twitter_at']">
+                           <input type="datetime-local" id="twitter_scheduled_at" ng-model="selectedSocialMediaPost['scheduled_on_twitter_at']" />
+                           <label for="instagram"> twitter</label><br />
+                        </div>
+                        <div ng-show="selectedSocialMediaPost.isScheduled['scheduled_on_instagram_at']">
+                           <input type="datetime-local" id="instagram_scheduled_at" ng-model="selectedSocialMediaPost['scheduled_on_instagram_at']" />
+                           <label for="instagram"> instagram</label><br />
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <submit-button form="updatePublishingOptionsForm" icon="fe fe-plus">تعديل</submit-button>
+         </form>
+      </modal-body>
+   </div>
+</modal>
+
+<modal id="filter-modal">
+   <modal-title>
+      <span> <i class="fe fe-plus-circle"></i>&nbsp;خيارات الفلاتر </span>
+   </modal-title>
+   <div>
+      <modal-body>
+            <div class="row">
+               <div class="col-12 col-md-6" ng-repeat="i in filters">
+                     <input type="checkbox" id="{{i.key}}" ng-model="filters[$index].value" />
+                     <label for="{{i.key}}"> {{i.title}}</label><br />
+               </div>
+               <div> الحالة:</div>
+               <div class="col-12 col-md-6" ng-repeat="i in statuses" ng-init="filters['status'].value = 'all'">
+                     <input type="radio" id="{{i.key}}" ng-model="filters['status'].value" value="{{i.value}}"/>
+                     <label for="{{i.key}}"> {{i.title}}</label><br />
+               </div>
+            </div>
+
+            <button ng-click="filterRequest()" class="btn btn-primary" icon="fe fe-plus">موافق</button>
+      </modal-body>
+   </div>
+</modal>

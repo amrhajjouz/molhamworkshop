@@ -26,3 +26,15 @@ function getCombinedCsv ($csvPath, $header = null) {
 function getCsvRows ($csvPath) {
     return array_map('str_getcsv', file($csvPath));
 }
+
+function getAvailableLocales()
+{
+    return [
+        'ar' => 'عربي',
+        'en' => 'انجليزي',
+        'fr' => 'فرنسي',
+        'de' => 'ألماني',
+        'tr' => 'تركي',
+        'es' => 'اسباني',
+    ];
+}

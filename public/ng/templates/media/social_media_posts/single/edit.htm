@@ -1,0 +1,22 @@
+<include-header />
+
+<form class="row" name="updateSocialMediaPostForm" request="updateSocialMediaPostRequest">
+
+    <div class="col-12">
+        <div class="form-group">
+            <label for="description">عنوان المنشور</label>
+            <input id="description" class="form-control" type="text" dir="rtl" ng-model="socialMediaPost.description" placeholder="ادخل عنوان المنشور باللغة العربية..." ng-error="updateSocialMediaPostRequest.errors.description" required>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div class="form-group">
+            <label for="body">محتوى المنشور</label>
+            <tiny-editor id="body" dir="rtl" model="socialMediaPost.body.ar.value" placeholder="ادخل محتوى المنشور باللغة العربية..."> {{ socialMediaPost.body.ar.value }} </tiny-editor>
+        </div>
+    </div>
+   
+    <div class="col-12">
+        <submit-button form="updateSocialMediaPostForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+</form>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\DonorController;
 use App\Http\Controllers\Dashboard\PlaceController;
 use App\Http\Controllers\Dashboard\CountryController;
+use App\Http\Controllers\Dashboard\Media\SocialMediaPost\SocialMediaPostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,4 +49,27 @@ Route::middleware('auth')->group(function ()  {
     // Country Routes
     Route::get('/countries', [CountryController::class, 'list']);
     Route::get('/countries/search', [CountryController::class, 'search']);
+
+    // Media Routes
+    Route::get('/media/social_media_posts', [SocialMediaPostController::class, 'list']);
+    Route::post('/media/social_media_posts', [SocialMediaPostController::class, 'create']);
+    Route::put('/media/social_media_posts', [SocialMediaPostController::class, 'update']);
+    Route::get('/media/social_media_posts/{id}', [SocialMediaPostController::class, 'retrieve']);
+    Route::post('/media/social_media_posts/{id}/proofread', [SocialMediaPostController::class, 'markAsProofread']);
+    Route::post('/media/social_media_posts/{id}/approve', [SocialMediaPostController::class, 'markAsApproved']);
+    Route::post('/media/social_media_posts/{id}/reject', [SocialMediaPostController::class, 'markAsRejected']);
+    Route::post('/media/social_media_posts/{id}/archive', [SocialMediaPostController::class, 'markAsArchived']);
+    Route::put('/media/social_media_posts/{id}/publishing', [SocialMediaPostController::class, 'updateSocialMediaPostPublishingOptions']);
+    Route::get('/media/social_media_posts/{id}/images', [SocialMediaPostController::class, 'listSocialMediaPostImages']);
+    Route::post('/media/social_media_posts/{id}/images', [SocialMediaPostController::class, 'createSocialMediaPostImage']);
+    Route::delete('/media/social_media_posts/{id}/images/{image_id}', [SocialMediaPostController::class, 'deleteSocialMediaPostImage']);
+
+    Route::group(['namespace' => 'App\Http\Controllers\Dashboard',], function () {
+        //Translation -> SocialMedia
+        Route::get('/translation/social_media_posts' , 'Translation\TranslationSocialMediaPostController@list');
+        Route::get('/translation/social_media_posts/{id}' , 'Translation\TranslationSocialMediaPostController@retrieve');
+        Route::put('/translation/social_media_posts' , 'Translation\TranslationSocialMediaPostController@update');
+        Route::post('/translation/social_media_posts/{id}/proofread' , 'Translation\TranslationSocialMediaPostController@markAsProofread');
+    });
+
 });
