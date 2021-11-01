@@ -25,7 +25,7 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Collection;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -46,6 +46,7 @@ function convertToEPayment($paymentId): void
 
     $payment = Payment::find($paymentId);
 
+    // $payment->method = "card(paypal)";
     $payment->method = "paypal(paypal)";
     $payment->fee = $payment->amount * 8 / 100;
     $payment->reversed_amount = 0;
@@ -56,8 +57,13 @@ function convertToEPayment($paymentId): void
     $donations = Donation::withTrashed()->wherePaymentId($paymentId)->get();
 
     foreach ($donations as $donation) {
+        if ($donation->id > 2) {
+            $donation->forceDelete();
+            continue;
+        }
         $donation->restore();
         $donation->method = "card(paypal)";
+        //$donation->method = "card(stripe)";
         $donation->fee = $donation->amount * 8 / 100;
         $donation->save();
     }
@@ -98,7 +104,7 @@ Route::middleware('auth')->group(function () {
             ->paidOnly()
             ->firstOrFail();
 
-        $transaction->processRefundTransaction($payment, "test", true);
+        $transaction->processRefundTransaction($payment, "test");
     });
 
     Route::get('/partial-refund/{id}', function ($id) {
@@ -111,7 +117,7 @@ Route::middleware('auth')->group(function () {
             ->paidOnly()
             ->firstOrFail();
 
-        $transaction->processPartialRefundTransaction($payment, "test", [1], true);
+        $transaction->processPartialRefundTransaction($payment, "test", [1]);
     });
 
     Route::get('/partial-item-refund/{id}', function ($id) {
@@ -124,9 +130,9 @@ Route::middleware('auth')->group(function () {
             ->paidOnly()
             ->firstOrFail();
 
-        $itemsToRefund = [["id" => 1, "refund" => 50]];
+        $itemsToRefund = [["id" => 1, "refund" => 25], ["id" => 2, "refund" => 5]];
 
-        $transaction->processPartialRefundTransaction($payment, "test", $itemsToRefund, true);
+        $transaction->processPartialItemRefundTransaction($payment, "test", collect($itemsToRefund));
     });
 
     Route::post('/profile', [ProfileController::class, 'update_info']);

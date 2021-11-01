@@ -11,14 +11,13 @@ use Illuminate\Support\Facades\DB;
 
 class PartialRefundTransactionService extends RefundTransactionService
 {
-    protected $paymentTypeAfterTransaction = PaymentStatusEnums::PARTIALLY_REFUNDED;
     protected $newBalanceTransactionStatus = BalanceTransactionEnums::E_PAYMENT_PARTIAL_REFUND;
-    private $donationsToRefund = [];
+    protected $donationsToRefund = [];
 
     /**
      * @throws Exception
      */
-    public function processPartialRefundTransaction(Payment $payment, $note, array $donationsIdsToRefund, $withLose)
+    public function processPartialRefundTransaction(Payment $payment, $note, array $donationsIdsToRefund)
     {
         try {
             DB::beginTransaction();
@@ -29,7 +28,6 @@ class PartialRefundTransactionService extends RefundTransactionService
                 throw new Exception("Partial refund for payment id {$payment->id} is not allowed, the type of the required payment is {$payment->type}");
             }
 
-            $this->withLose = $withLose;
             $donationsToRefund = Donation::whereIn("id", $donationsIdsToRefund)->get();
             $this->donationsToRefund = $donationsToRefund;
 
@@ -40,7 +38,7 @@ class PartialRefundTransactionService extends RefundTransactionService
 
             $reversedFee = 0;
             $reversed_amount = $donationsToRefund->sum("amount");
-            if ($this->withLose && $payment->fee > 0) {
+            if ($payment->isFeeRefundable()) { //todo: check this with amr
                 $this->processFeeLoseTransactions($newBalanceTransaction);
                 $reversedFee = $donationsToRefund->sum("fee");
             }

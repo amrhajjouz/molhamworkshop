@@ -72,4 +72,15 @@ class Donation extends Model
                 return 0;
         }
     }
+
+    public function isFeeRefundable(): bool
+    {
+        $method = $this->method;
+        switch ($method) {
+            case "card(stripe)":
+                return false;
+            default:
+                return true;
+        }
+    }
 }

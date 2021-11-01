@@ -19,7 +19,7 @@ class RefundTransactionService extends ReversalTransactionService
     /**
      * @throws Exception
      */
-    public function processRefundTransaction(Payment $payment, $note, $allowLose)
+    public function processRefundTransaction(Payment $payment, $note)
     {
         try {
 
@@ -36,7 +36,7 @@ class RefundTransactionService extends ReversalTransactionService
              $newBalanceTransaction = $this->processTransaction($payment, $note);
 
             $reversed_fee = 0;
-            if ($allowLose && $payment->fee > 0) {
+            if ($payment->isFeeRefundable()) {
                 $this->processFeeLoseTransactions($newBalanceTransaction);
                 $reversed_fee = $payment->fee;
             }
@@ -107,5 +107,11 @@ class RefundTransactionService extends ReversalTransactionService
         ]);
         $newTransactionBalance->save();
         return $newTransactionBalance;
+    }
+
+    protected function isPaymentRequiredLoseFeeTransaction(Payment $payment): bool
+    {
+        $expectedReversedFee = ($payment->reversed_amount * $payment->amount) / $payment->fee;
+        return $expectedReversedFee != $payment->reversed_fee;
     }
 }
