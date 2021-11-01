@@ -1,0 +1,37 @@
+<page-header title="قائمة  نسب الاقتطاع" pretitle="  نسب الاقتطاع">
+    <a href="{{ $r('deduction-ratios.add') }}" class="btn btn-primary">
+        <i class="fe fe-plus"></i>&nbsp; نسبة اقتطاع جديدة
+    </a>
+</page-header>
+
+<simple-datatable data="deductionRatios">
+    <table>
+        <thead>
+        <tr>
+            <th class="text-center">الرقم</th>
+            <th class="text-center">الإسم</th>
+            <th class="text-center">النسبة</th>
+            <th class="text-center">الحساب المرتبط</th>
+            <th class="text-center">خيارات</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="d in deductionRatios">
+            <td class="align-middle text-center">{{ d.id }}</td>
+            <td class="align-middle text-center">{{ d.name }}</td>
+            <td class="align-middle text-center">{{ d.ratio }}</td>
+            <td class="align-middle text-center">{{ d.account_name }}</td>
+            <td class="align-middle text-center h2">
+                <dropdown>
+                    <dropdown-item href="{{ $r('deduction-ratios.edit', {id: d.id}) }}"><i class="fe fe-edit-2"></i>
+                        تعديل
+                    </dropdown-item>
+                    <dropdown-item href="javascript::;" ng-click="cancelDeductionRatios(d.id)"><i class="fe fe-trash-2"></i>
+                        إلغاء
+                    </dropdown-item>
+                </dropdown>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</simple-datatable>

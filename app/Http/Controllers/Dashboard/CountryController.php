@@ -23,7 +23,7 @@ class CountryController extends Controller
             return response()->json(['error' => $e->getMessage()]);
         }
     }
-    
+
     public function search(Request $request)
     {
         try {
@@ -33,7 +33,7 @@ class CountryController extends Controller
                     $q->orWhere('name->en', 'like', '%' . $request->q . '%');
                 }
             })->take(10)->get()->map(function($country) {
-                return ['id'=> $country->code, 'text' => $country->name[app()->getLocale()]]; 
+                return ['id'=> $country->code, 'text' => $country->name[app()->getLocale()]];
             });
             return response()->json($countries);
         } catch (\Exception $e) {

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCountriesTable extends Migration
+class AddRateColumnToCurrenciesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateCountriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('countries', function (Blueprint $table) {
-           $table->string('code')->primary();
-           $table->json('name');
-           $table->json('nationality');
-           $table->string('dial_code')->index();
+        Schema::table('currencies', function (Blueprint $table) {
+            $table->decimal('rate', $precision = 12, $scale = 2)->default(0);
         });
     }
 
@@ -28,6 +25,8 @@ class CreateCountriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('countries');
+        Schema::table('currencies', function (Blueprint $table) {
+            $table->dropColumn('rate');
+        });
     }
 }

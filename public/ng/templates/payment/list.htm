@@ -1,0 +1,86 @@
+<page-header title="قائمة الدفعات" pretitle="الدفعات">
+    <a href="{{ $r('payments.add') }}" class="btn btn-primary">
+        <i class="fe fe-plus"></i>&nbsp; دفعة جديدة
+    </a>
+</page-header>
+
+<datatable datalist="payments">
+    <table class="table table-sm card-table">
+        <thead>
+        <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">المبلغ</th>
+            <th class="text-center">العملة</th>
+            <th class="text-center">رسوم الدفع</th>
+            <th class="text-center">الحالة</th>
+            <th class="text-center">المتبرع</th>
+            <th class="text-center">تاريخ الاستقبال</th>
+            <th class="text-center">تاريخ الاضافة</th>
+            <th class="text-center">ملاحظات</th>
+            <th class="text-center">خيارات</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-show="payments.length == 0">
+            <td colspan="10" class="text-center">
+                <div class="pt-3 pb-2 h4" ng-show="payments.length == 0">لا يوجد أية عناصر في هذه القائمة</div>
+            </td>
+        </tr>
+        <tr ng-repeat="u in payments.data">
+            <td class="align-middle text-center">{{ u.id }}</td>
+            <td class="align-middle text-center">{{ u.amount }}</td>
+            <td class="align-middle text-center">{{ u.currency }}</td>
+            <td class="align-middle text-center">{{ u.fee }}</td>
+            <td class="align-middle text-center">{{ u.status }}</td>
+            <td class="align-middle text-center">{{ u.donor_name.name }}<br>{{ u.donor_name.email }}</td>
+            <td class="align-middle text-center datatable-date">{{ u.received_at }}</td>
+            <td class="align-middle text-center datatable-date">{{ u.created_at }}</td>
+            <td class="align-middle text-center">
+                <a ng-show="u.notes!=null" href="javascript:" data-toggle="popover"
+                   data-content="{{ u.notes }}">ملاحظة</a>
+            </td>
+            <td class="align-middle text-center h2">
+                <dropdown>
+                    <dropdown-item ng-click="showReversalModal(u.id)" href="javascript:;" ng-show="u.status == 'paid'">
+                        <i class="fe fe-x-circle text-danger"></i> Cancel Payment
+                    </dropdown-item>
+                    <dropdown-item href="javascript:;" ng-show="u.status == 'paid'">
+                        <i class="fe fe-rotate-ccw text-danger"></i> Refund Payment
+                    </dropdown-item>
+                </dropdown>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</datatable>
+
+<modal id="payment-confirmation">
+    <modal-title>
+        <span>هل انت متأكد من إلغاء الدفعة</span>
+    </modal-title>
+    <modal-body>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label>إكتب رقم الدفعة مرة أخرى للتأكيد</label>
+                    <input ng-model="payment.confirmation" ng-minlength="1" class="form-control"
+                           placeholder="رقم الدفعة"
+                           required>
+                </div>
+            </div>
+            <div class="col-12 ">
+                <div class="form-group">
+                    <label>سبب إلغاء الدفعة</label>
+                    <textarea ng-model="payment.notes" class="form-control"
+                              placeholder="سبب إلغاء الدفعة">
+                </textarea>
+                </div>
+            </div>
+            <div class="col-12 ">
+                <button ng-click="reverse()" type="button" class="btn btn-danger btn-block" ng-disabled="payment.confirmation != payment.paymentId || payment.confirmation== undefined">
+                     إلغاء الدفعة
+                </button>
+            </div>
+        </div>
+    </modal-body>
+</modal>

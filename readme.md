@@ -5,6 +5,10 @@
 
         php artisan migrate
         php artisan db:seed
+  
+- If you want to delete the database and run it again run 
+
+     php artisan migrate:refresh --seed // DO NOT USE THIS ON PRODUCTION
 
 - For non Windows users, give read and write permession to the your web server for storage, cache directories: 
 

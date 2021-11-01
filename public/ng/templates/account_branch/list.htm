@@ -1,0 +1,162 @@
+<page-header title="قائمة الفروع" pretitle="الحسابات">
+    <a href="javascript:;" ng-click="showAccountBranchModal('add');" class="btn btn-primary">
+        <i class="fe fe-plus"></i>&nbsp; حساب جديد
+    </a>
+</page-header>
+<simple-datatable data="accountBranches">
+    <table>
+        <thead>
+        <tr>
+            <th class="text-center">رقم الحساب</th>
+            <th class="text-center">رمز الحساب</th>
+            <th class="text-center">اسم الحساب</th>
+            <th class="text-center">الرصيد الحالي</th>
+            <th class="text-center">الحساب الأب</th>
+            <th class="text-center">خيارات</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="d in accountBranches">
+            <td class="align-middle text-center">{{ d.id }}</td>
+            <td class="align-middle text-center">{{ d.code }}</td>
+            <td class="align-middle text-center">{{ d.name.ar }} <br>{{ d.name.en }}</td>
+            <td class="align-middle text-center">{{ d.balance }}</td>
+            <td class="align-middle text-center">{{ d.title_name }}</td>
+            <td class="align-middle text-center h2">
+                <dropdown>
+                    <dropdown-item href="{{ $r('account-branches.overview', {id: d.id}) }}"><i class="fe fe-eye"></i>
+                        نظرة عامة
+                    </dropdown-item>
+                    <dropdown-item  href="javascript:;" ng-click="showAccountBranchModal('edit',d);" ><i class="fe fe-edit-2"></i>
+                        تعديل
+                    </dropdown-item>
+                    <dropdown-item href="javascript:;" ng-click="showAccountCreationModal(d);"><i
+                        class="fe fe-edit"></i> إنشاء حساب
+                    </dropdown-item>
+                </dropdown>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</simple-datatable>
+<modal id="account-branch-modal">
+    <modal-title>
+        <span ng-show="currentAccountBranchModalAction == 'add'"><i class="fe fe-plus-circle"></i>&nbsp; اضافة فرع جديد</span>
+        <span ng-show="currentAccountBranchModalAction == 'edit'"><i class="fe fe-edit"></i>&nbsp; تعديل فرع {{ accountBranch.id }}</span>
+    </modal-title>
+    <modal-body>
+        <form name="AccountBranchForm" request="createUpdateAccountBranch" model="accountBranch">
+            <div class="row">
+                <div class="col-lg col-md-6"  ng-hide="currentAccountBranchModalAction == 'edit'">
+                    <div class="form-group">
+                        <label>نوع الحساب</label>
+                        <select2
+                            model="accountBranch.parent_id"
+                            placeholder="نوع الحساب"
+                            ajax-url="account_branches/search"
+                            ajax-data="{type: 'title'}"
+                            select-callback="onSelected(selections)">
+                        </select2>
+                        <div class="text-muted mt-1" ng-show="nextExpectedSubCode != null">
+                            الرمز المتوقع لهذا الحساب: <span
+                            style="text-decoration:underline" dir="rtl">{{nextExpectedSubCode}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg col-md-6">
+                    <div class="form-group">
+                        <label>الإسم بالعربي</label>
+                        <input ng-model="accountBranch.name.ar" ng-minlength="1" class="form-control" placeholder="الإسم بالعربي"
+                               required>
+                    </div>
+                </div>
+                <div class="col-lg col-md-6">
+                    <div class="form-group">
+                        <label>الإسم بالإنجليزي</label>
+                        <input ng-model="accountBranch.name.en" ng-minlength="1" class="form-control" placeholder="الإسم بالإنجليزي"
+                               required>
+                    </div>
+                </div>
+            </div>
+            <submit-button ng-show="currentAccountBranchModalAction == 'add'" form="AccountBranchForm" icon="fe fe-plus">اضافة</submit-button>
+            <submit-button ng-show="currentAccountBranchModalAction == 'edit'" form="AccountBranchForm" icon="fe fe-edit">تعديل</submit-button>
+        </form>
+    </modal-body>
+</modal>
+<modal id="account-create-modal">
+    <modal-title>
+        <span><i class="fe fe-plus-circle"></i>&nbsp; اضافة حساب جديد</span>
+    </modal-title>
+
+    <modal-body>
+        <form name="accountModalForm" request="createAccount" model="account">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label>اسم الحساب الفرعي (عربي)</label>
+                        <input ng-model="account.name.ar" ng-minlength="1" class="form-control"
+                               placeholder="الإسم بالعربي"
+                               required>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label>اسم الحساب الفرعي (إنجليزي)</label>
+                        <input ng-model="account.name.en" ng-minlength="1" class="form-control"
+                               placeholder="الإسم بالإنجليزي"
+                               required>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label>وصف الحساب الفرعي بالعربي</label>
+                        <textarea ng-model="account.description.ar" class="form-control"
+                                  placeholder="وصف الحساب الفرعي بالعربي">
+                </textarea>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label>وصف الحساب الفرعي بالإنجليزي</label>
+                        <textarea ng-model="account.description.en" class="form-control"
+                                  placeholder="وصف الحساب الفرعي بالإنجليزي">
+                </textarea>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label>نسبة الاقتطاع الافتراضية</label>
+                        <select2
+                            model="account.default_deduction_ratio_id"
+                            placeholder="نسبة الاقتطاع الافتراضية"
+                            ajax-url="deduction_ratios/search">
+                        </select2>
+                    </div>
+                </div>
+                <div class="col row"  ng-show="selectedMainAccount.is_child_of_main_title == true">
+                <div class="col-12 col-md-6" >
+                    <div class="form-group">
+                        <label>عملة الحساب الفرعي</label>
+                        <select2 model="account.currency" error-model="createAccount.errors.currency" ng-init="0">
+                            <option disabled selected></option>
+                            <option ng-repeat="currency in currencies" ng-value="currency.code">{{currency.code}}
+                            </option>
+                        </select2>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label>الدولة</label>
+                        <select2 model="account.country_code" error-model="createAccount.errors.country_code" ng-init="0">
+                            <option disabled selected></option>
+                            <option ng-repeat="country in countries" ng-value="country.code">{{country.code}}
+                            </option>
+                        </select2>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <submit-button form="accountModalForm" icon="fe fe-plus">اضافة</submit-button>
+        </form>
+    </modal-body>
+</modal>

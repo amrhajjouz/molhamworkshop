@@ -44,6 +44,42 @@
             </ul>
         </div>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#accounts-navs" role="button" aria-expanded="false">
+            <i class="fe fe-award"></i> قسم الحسابات
+        </a>
+        <div class="collapse" id="accounts-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('account-branches.main') }}" class="nav-link">
+                        قائمة الفروع
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('accounts') }}" class="nav-link">
+                        قائمة الحسابات
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('deduction-ratios') }}" class="nav-link">
+                        قائمة نسب الإقتطاع
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('payments') }}" class="nav-link">
+                        قائمة الدفعات
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('donations') }}" class="nav-link">
+                        قائمة التبرعات
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </li>
+
 
     <li class="nav-item">
         <a
