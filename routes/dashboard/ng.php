@@ -43,20 +43,10 @@ return [
     'translation.cases.overview' => ['translation/cases/:id', 'translation/cases/overviewCaseTranslationController', 'translation.cases.single.overview'],
     'translation.cases.edit' => ['translation/cases/:id/edit', 'translation/cases/editCaseTranslationController', 'translation.cases.single.edit'],
     
-    'translation.social_media_posts' => ['translation/social-media-posts', 'translation/social_media_posts/listTranslationSocialMediaPostsController', 'translation.social_media_posts.list'],
-    'translation.social_media_posts.overview' => ['translation/social-media-posts/:id', 'translation/social_media_posts/overviewTranslationSocialMediaPostController', 'translation.social_media_posts.single.overview'],
-  
+   
     //////////////////////// Publishing Routes //////////////////////
     'publishing.cases' => ['publishing/cases', 'publishing/cases/listCasesPublishingController', 'publishing.cases.list'],
     'publishing.cases.overview' => ['publishing/cases/:id', 'publishing/cases/overviewCasePublishingController', 'publishing.cases.single.overview'],
     'publishing.cases.edit' => ['publishing/cases/:id/edit', 'publishing/cases/editCasePublishingController', 'publishing.cases.single.edit'],
 
-    //////////////////////// Media Routes //////////////////////
-    'media.social_media_posts.add' => ['media/social-media-posts/add', 'media/social_media_posts/addSocialMediaPostController', 'media.social_media_posts.add'],
-    'media.social_media_posts.overview' => ['media/social-media-posts/:id', 'media/social_media_posts/overviewSocialMediaPostController', 'media/social_media_posts.single.overview'],
-    'media.social_media_posts.edit' => ['media/social-media-posts/:id/edit', 'media/social_media_posts/editSocialMediaPostController', 'media/social_media_posts.single.edit'],
-    'media.social_media_posts' => ['media/social-media-posts', 'media/social_media_posts/listSocialMediaPostsController', 'media/social_media_posts.list'],
-    // 'media.social_media_posts.contents' => ['media/social-media-posts/:id/contents', 'media/social_media_posts/contentSocialMediaControllerController', 'media/social_media_posts.single.contents'],
-
-    
 ];

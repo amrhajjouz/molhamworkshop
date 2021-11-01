@@ -68,17 +68,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/programs/medical/cases/{id}/ready_to_publish', [CaseController::class, 'markAsReadyToPublish']);
     Route::put('/programs/medical/cases/{id}/contents', [CaseController::class, 'updateCaseContents']);
 
-     // Media Routes
-     Route::get('/media/social_media_posts', [SocialMediaPostController::class, 'list']);
-     Route::post('/media/social_media_posts', [SocialMediaPostController::class, 'create']);
-     Route::put('/media/social_media_posts', [SocialMediaPostController::class, 'update']);
-     Route::get('/media/social_media_posts/{id}', [SocialMediaPostController::class, 'retrieve']);
-     Route::post('/media/social_media_posts/{id}/proofread', [SocialMediaPostController::class, 'markAsProofread']);
-     Route::post('/media/social_media_posts/{id}/approve', [SocialMediaPostController::class, 'markAsApproved']);
-     Route::post('/media/social_media_posts/{id}/reject', [SocialMediaPostController::class, 'markAsRejected']);
-     Route::post('/media/social_media_posts/{id}/archive', [SocialMediaPostController::class, 'markAsArchived']);
-     Route::put('/media/social_media_posts/{id}/publishing', [SocialMediaPostController::class, 'updateSocialMediaPostPublishingOptions']);
-
+     
 
     Route::group(['namespace' => 'App\Http\Controllers\Dashboard',], function () {
         //Translation -> Cases
@@ -86,12 +76,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/translation/cases/{id}' , 'Translation\CaseController@retrieve');
         Route::put('/translation/cases' , 'Translation\CaseController@update');
         Route::post('/translation/cases/{id}/proofread' , 'Translation\CaseController@markAsProofread');
-        
-        //Translation -> SocialMedia
-        Route::get('/translation/social_media_posts' , 'Translation\TranslationSocialMediaPostController@list');
-        Route::get('/translation/social_media_posts/{id}' , 'Translation\TranslationSocialMediaPostController@retrieve');
-        Route::put('/translation/social_media_posts' , 'Translation\TranslationSocialMediaPostController@update');
-        Route::post('/translation/social_media_posts/{id}/proofread' , 'Translation\TranslationSocialMediaPostController@markAsProofread');
        
         //Publishing -> Cases
         Route::get('/publishing/cases' , 'Publishing\CaseController@list');
