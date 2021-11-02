@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\{DonorController , AuthDonorController , FeedbackController, PaymentMethodController, SubscriptionController , ReviewController , SavedItemController};
 use App\Http\Controllers\Api\PaymentProvider\Stripe\{SetupIntentController};
 use App\Http\Controllers\Api\Targetable\CaseController;
+use App\Http\Controllers\Api\TargetableController;
 
 //use Stripe\StripeClient;
 
@@ -21,7 +22,9 @@ use App\Http\Controllers\Api\Targetable\CaseController;
 |
 */
 
-Route::get('/test', function () {
+Route::get('/test', function () {    
+    
+    return listDummyTargetables('cases', 10);
     
     $cardExistsForAuth = false;
     return \App\Models\StripeCard::with('paymentMethod')->where('fingerprint', 'HYumAOu91ekiPONh')->get();
@@ -63,10 +66,9 @@ Route::group([], function () {
     Route::post('/donors/verify_email' , [DonorController::class, 'verifyEmail'])->name('api.donors.verify_email'); 
     Route::get('/reviews' , [ReviewController::class, 'list'])->name('api.reviews.list'); 
     
-    //Cases
-    Route::get('/cases' , [CaseController::class, 'list'])->name('api.cases.list'); 
-    Route::get('/cases/{id}' , [CaseController::class, 'retrieve'])->name('api.cases.retrieve');
-
+    // Targetables
+    Route::get('/targetables/{type}' , [TargetableController::class, 'list'])->name('api.targetables.list'); 
+    Route::get('/targetables/{type}/{id}' , [TargetableController::class, 'retrieve'])->name('api.targetables.retrieve');
 });
 
 Route::group(['middleware' => 'auth_donor'], function () {
