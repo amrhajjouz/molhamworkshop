@@ -16,6 +16,7 @@ class CreateDaysTimesheetJustificationsTable extends Migration
         Schema::create('days_timesheet_justifications', function (Blueprint $table) {
             $table->id();
             $table->foreignId('days_timesheet_id')->constrained('days_timesheet');
+            $table->enum('reason', ['late_entry', 'working_hours']);
             $table->float('working_hours')->nullable();
             $table->text('details')->nullable();
             $table->enum('status', ['pending', 'expired', 'needs_approval', 'approved', 'rejected'])->default('pending');

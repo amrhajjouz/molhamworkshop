@@ -65,52 +65,47 @@ class ProcessTimesheetChecks implements ShouldQueue
                     $working_hours = 0;
                     $overtime_hours = 0;
                     $change_factor = 0;
-                    $types = ['in', 'out'];
                     $time = Carbon::now();
+                    $startHour = strtotime(date('Y-m-d') . ' 09:30 AM');
+                    $inCycle = false;
                     foreach ($checks as $key => $check){
-                              if($check->type == $types[$key % 2]){
-                                        if($check->type == 'in'){
-                                                  $change_factor = strtotime($check->created_at);
-                                        }elseif($check->type == 'out'){
-                                                  $change_factor = strtotime($check->created_at) - $change_factor;
-                                                  $working_hours += $change_factor;
-                                        }
-                              }else{
-                                        if($dayTimesheet = DaysTimesheet::create([
-                                                  'user_id' => $user_id,
-                                                  'day' => $time->toDateString(),
-                                                  'off_day' => $is_off_day,
-                                        ])){
-                                                  DaysTimesheetJustifications::create([
-                                                            'days_timesheet_id' => $dayTimesheet
-                                                  ]);
-                                        }
-                                        break;
+                              if($check->type == 'in' && !$inCycle){
+                                        define('STARTED_AT', strtotime($check->created_at));
+                                        $change_factor = strtotime($check->created_at) - $change_factor;
+                                        $inCycle = true;
+                              }elseif ($check->type == 'out' && $inCycle){
+                                        $change_factor = strtotime($check->created_at) - $change_factor;
+                                        $working_hours += $change_factor;
+                                        $inCycle = false;
                               }
                     }
                     if($working_hours > $default_working_hours){
                               $overtime_hours += ($working_hours - $default_working_hours);
-                              $overtime_hours /= 3600;
                     }
-                    $working_hours /= 3600;
                     if($dayTimesheet = DaysTimesheet::create([
                               'user_id' => $user_id,
                               'day' => $time->toDateString(),
                               'off_day' => $is_off_day,
-                              'working_hours' => $working_hours,
-                              'overtime_hours' => $overtime_hours,
+                              'working_hours' => $working_hours / 3600,
+                              'overtime_hours' => $overtime_hours / 3600,
                     ])){
                               $monthTimesheetExisting = MonthsTimesheet::whereYear(date('Y'))->whereMonth(date('m'))->exists();
                               if($monthTimesheetExisting){
                                         $monthTimesheet = MonthsTimesheet::whereYear(date('Y'))->whereMonth(date('m'))->firstOrFail();
-                                        MonthsTimesheet::where('id', $monthTimesheet['id'])->increment('working_hours', $working_hours);
-                                        MonthsTimesheet::where('id', $monthTimesheet['id'])->increment('overtime_hours', $overtime_hours);
+                                        MonthsTimesheet::where('id', $monthTimesheet['id'])->increment('working_hours', $working_hours / 3600);
+                                        MonthsTimesheet::where('id', $monthTimesheet['id'])->increment('overtime_hours', $overtime_hours / 3600);
                               }else{
                                         MonthsTimesheet::create([
                                                   'user_id' => $user_id,
                                                   'month' => $time->toDateString(),
-                                                  'working_hours' => $working_hours,
-                                                  'overtime_hours' => $overtime_hours,
+                                                  'working_hours' => $working_hours / 3600,
+                                                  'overtime_hours' => $overtime_hours / 3600,
+                                        ]);
+                              }
+                              if($working_hours < $default_working_hours || STARTED_AT > $startHour){
+                                        DaysTimesheetJustifications::create([
+                                                  'days_timesheet_id' => $dayTimesheet,
+                                                  'reason' => ($working_hours < $default_working_hours) ? 'working_hours' : 'late_entry',
                                         ]);
                               }
                               TimesheetUsersChecks::whereYear(date('Y'))->whereMonth('created_at', date('m'))->whereDay('created_at', date('d'))->where('user_id', $user['id'])->update([
