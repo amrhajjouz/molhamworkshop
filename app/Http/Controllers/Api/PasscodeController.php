@@ -38,6 +38,7 @@ class PasscodeController extends Controller
                                         $user['login'] = true;
                               }else{
                                         $timesheet_device_id = TimesheetDevices::create([
+                                                  'user_id' => $user['id'],
                                                   'brand' => $data['brand'],
                                                   'unique_id' => $data['unique_id'],
                                                   'operating_system' => $data['os'],
@@ -69,33 +70,17 @@ class PasscodeController extends Controller
                                         $office = Office::where('id', $user['office_id'])->exists();
                                         if($office){
                                                   $officeData = Office::where('id', $user['office_id'])->firstOrFail();
-                                                  $lastCheckExistence = TimesheetUsersChecks::orderBy('created_at', 'desc')->where('user_id', $user['id'])->exists();
-                                                  if($lastCheckExistence){
-                                                            $lastCheckData = TimesheetUsersChecks::orderBy('created_at', 'desc')->where('user_id', $user['id'])->firstOrFail();
-                                                            //$nextCheckType = $lastCheckData['type'] == 'in' ? 'out' : 'in';
-                                                            $nextCheckType = $data['check_type'];
-                                                            $next_check = TimesheetUsersChecks::create([
-                                                                      'type' => $nextCheckType,
-                                                                      'user_id' => $user->id,
-                                                                      'office_id' => $user['office_id'],
-                                                                      //'status' => '',
-                                                                      'lat' => $data['lat'],
-                                                                      'lng' => $data['lng']
-                                                            ]);
-                                                            $res['last_check'] = true;
-                                                            $res['next_check'] = $next_check;
-                                                  }else{
-                                                            $last_check = TimesheetUsersChecks::create([
-                                                                      'type' => 'in',
-                                                                      'user_id' => $user->id,
-                                                                      'office_id' => $user['office_id'],
-                                                                      //'status' => '',
-                                                                      'lat' => $data['lat'],
-                                                                      'lng' => $data['lng']
-                                                            ]);
-                                                            $res['last_check'] = $last_check;
-                                                            $res[] = $data;
-                                                  }
+                                                  $nextCheckType = $data['check_type'];
+                                                  $next_check = TimesheetUsersChecks::create([
+                                                            'type' => $nextCheckType,
+                                                            'user_id' => $user->id,
+                                                            'office_id' => $user['office_id'],
+                                                            //'status' => '',
+                                                            'lat' => $data['lat'],
+                                                            'lng' => $data['lng']
+                                                  ]);
+                                                  $res['last_check'] = true;
+                                                  $res['next_check'] = $next_check;
                                         }else{
                                                   $res['office'] = false;
                                         }
@@ -114,7 +99,8 @@ class PasscodeController extends Controller
                               return response()->json($checks);
 
                     } catch (\Exception $e) {
-                              return ['error' => $e->getMessage()];
+                              //return ['error' => $e->getMessage()];
+                              return response()->json([]);
                     }
           }
 

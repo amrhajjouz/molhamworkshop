@@ -1,0 +1,32 @@
+<include-header/>
+
+
+          <div class="row">
+                    <div class="col-12 col-lg-12 text-center">
+                              <img src="data:image/png;base64,{{qr.$$state.value.qr}}">
+                    </div>
+          </div>
+<div class="mt-5">
+<datatable datalist="timesheet">
+          <table>
+                    <thead>
+                    <tr>
+                              <th class="text-center">التاريخ</th>
+                              <th class="text-center">النوع</th>
+                              <th class="text-center">الحالة</th>
+                              <th class="text-center">خيارات</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr ng-repeat="u in timesheet.data">
+                              <td><span ng-bind="u.created_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td>
+                              <td class="align-middle text-center">{{ u.type === 'in' ? 'دخول' : 'خروج' }}</td>
+                              <td class="align-middle text-center"></td>
+                              <td class="align-middle text-center h2">
+                              </td>
+                    </tr>
+                    </tbody>
+          </table>
+</datatable>
+</div>

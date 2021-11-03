@@ -15,7 +15,7 @@ use App\Http\Controllers\Api\PasscodeController;
 |
 */
 
-Route::middleware('auth')->group(function () {
+Route::group([], function () {
           Route::post('/passcode/verification', [PasscodeController::class, 'verification'])->name('api.passcode.verification');
           Route::post('/passcode/check', [PasscodeController::class, 'check'])->name('api.passcode.check');
           Route::get('/passcode/timesheet/{id}', [PasscodeController::class, 'timesheet']);

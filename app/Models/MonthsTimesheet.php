@@ -6,14 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class TimesheetDevices extends Model
+class MonthsTimesheet extends Model
 {
           use HasFactory, Notifiable;
-          protected $table = "timesheet_devices";
+          protected $table = "months_timesheet";
           protected $fillable = [
                     'user_id',
-                    'brand',
-                    'unique_id',
-                    'operating_system',
+                    'month',
+                    'working_hours',
+                    'overtime_hours',
+                    'rejection_details',
+                    'reviewed_by',
           ];
 }

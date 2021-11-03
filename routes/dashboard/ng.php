@@ -11,6 +11,7 @@ return [
     // Profile Routes
     'profile.info' => ['/profile/info', 'profile/profileInfoController', 'profile.info'],
     'profile.password' => ['/profile/password', 'profile/profilePasswordController', 'profile.password'],
+    'profile.timesheet' => ['/profile/timesheet', 'profile/profileTimesheetController', 'profile.timesheet'],
 
     // Users Routes
     'users.add' => ['users/add', 'users/addUserController', 'users.add'],
