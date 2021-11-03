@@ -25,6 +25,7 @@ class CreateUsersChecksTable extends Migration
             $table->text('rejection_details')->nullable();
             $table->double('lat')->nullable();
             $table->double('lng')->nullable();
+            $table->boolean('handled')->nullable()->default(false);
             $table->timestamps();
         });
     }

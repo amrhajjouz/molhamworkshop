@@ -113,6 +113,9 @@ class ProcessTimesheetChecks implements ShouldQueue
                                                   'overtime_hours' => $overtime_hours,
                                         ]);
                               }
+                              TimesheetUsersChecks::whereYear(date('Y'))->whereMonth('created_at', date('m'))->whereDay('created_at', date('d'))->where('user_id', $user['id'])->update([
+                                        'handled' => true,
+                              ]);
                     }
           }
 }
