@@ -23,7 +23,22 @@ class CreateSocialMediaPostImageRequest extends FormRequest
      */
     public function rules()
     {
-        return ['images' => ['required', 'array']];
-        return ['images.*' => ['required', 'image', 'max:3000']];
+        return [
+            'images' => ['required', 'array'] ,
+            'images.*' => ['required', 'image', 'max:3000']
+        ];
+    }
+
+    protected function prepareForValidation()
+    {
+        $images = [];
+        if(isset($this->images) && is_array($this->images)){
+            foreach ($this->images as $val) {
+                if(is_file($val)){
+                    $images[] = $val;
+                }
+            }
+        }
+        $this->merge(['images' => $images]);
     }
 }
