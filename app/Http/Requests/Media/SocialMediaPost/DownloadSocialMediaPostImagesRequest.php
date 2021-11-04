@@ -2,16 +2,21 @@
 
 namespace App\Http\Requests\Media\SocialMediaPost;
 
+use App\Models\Cases;
+use App\Models\Place;
+use App\Models\SocialMediaPost;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
-class CreateSocialMediaPostImageRequest extends FormRequest
+class DownloadSocialMediaPostImagesRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize(): bool
+    public function authorize()
     {
         return true;
     }
@@ -23,7 +28,11 @@ class CreateSocialMediaPostImageRequest extends FormRequest
      */
     public function rules()
     {
-        return ['images' => ['required', 'array']];
-        return ['images.*' => ['required', 'image', 'max:3000']];
+        return [
+            'images' => ['required' , 'array'],
+            'images.*' => ['required' , 'numeric'],
+        ];
     }
+
+
 }

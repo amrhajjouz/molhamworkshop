@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function ()  {
     Route::get('/media/social_media_posts/{id}/images', [SocialMediaPostController::class, 'listSocialMediaPostImages']);
     Route::post('/media/social_media_posts/{id}/images', [SocialMediaPostController::class, 'createSocialMediaPostImage']);
     Route::delete('/media/social_media_posts/{id}/images/{image_id}', [SocialMediaPostController::class, 'deleteSocialMediaPostImage']);
+    Route::post('/media/social_media_posts/{id}/images/download', [SocialMediaPostController::class, 'downloadImages']);
 
     Route::group(['namespace' => 'App\Http\Controllers\Dashboard',], function () {
         //Translation -> SocialMedia

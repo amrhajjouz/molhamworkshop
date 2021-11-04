@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Dashboard\Media\SocialMediaPost;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Media\SocialMediaPost\{ApproveSocialMediaPostRequest, ProofreadSocialMediaPostRequest, CreateSocialMediaPostRequest, RejectSocialMediaPostRequest, UpdateSocialMediaPostPublishingOptions, UpdateSocialMediaPostRequest, ArchiveSocialMediaPostRequest, CreateSocialMediaPostImageRequest, DeleteSocialMediaPostImageRequest};
+use App\Http\Requests\Media\SocialMediaPost\{DownloadSocialMediaPostImagesRequest , ApproveSocialMediaPostRequest, ProofreadSocialMediaPostRequest, CreateSocialMediaPostRequest, RejectSocialMediaPostRequest, UpdateSocialMediaPostPublishingOptions, UpdateSocialMediaPostRequest, ArchiveSocialMediaPostRequest, CreateSocialMediaPostImageRequest, DeleteSocialMediaPostImageRequest};
 use App\Models\{SocialMediaPost};
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
+use ZipArchive;
 
 class SocialMediaPostController extends Controller
 {
@@ -138,8 +140,10 @@ class SocialMediaPostController extends Controller
     {
         try {
             $socialMediaPost = SocialMediaPost::findOrFail($id);
-            $image = $socialMediaPost->images()->create(["image" => $request->validated()["image"], "type" => "image"]);
-            return response()->json($image->url);
+            foreach ($request->validated()['images'] as $image) {
+                $socialMediaPost->images()->create(["image" => $image, "type" => "image"]);
+            }
+            return response()->json(null);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
@@ -150,6 +154,40 @@ class SocialMediaPostController extends Controller
         try {
             SocialMediaPost::findOrFail($id)->images()->where('id', $image_id)->delete();
             return response()->json(null);
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+    public function downloadImages(DownloadSocialMediaPostImagesRequest $request, $id)
+    {
+        try {
+            
+            $socialMediaPost = SocialMediaPost::findOrFail($id);
+            $time = time();
+            $tempFolderPath = 'temp/media_'.$socialMediaPost->id .'_'.$time;
+
+            $foldePath = storage_path('app/'.$tempFolderPath);
+            $zipFolder = storage_path('app/public/'.$tempFolderPath.'.zip');
+            foreach ($request->validated()['images'] as $image_id) {
+                $image = $socialMediaPost->images()->where('id', $image_id)->first();
+                $images[] = $image;
+                Storage::disk('local')->put('temp/media_'.$socialMediaPost->id.'_'.$time.'/' . $image->reference . '.jpg' , file_get_contents(Storage::url('images/'.$image->reference.'.jpg')));
+            }
+            $zip = new ZipArchive();
+
+            if ($zip->open($zipFolder, ZipArchive::CREATE) === TRUE) {
+                foreach(glob($foldePath.'/*.jpg') as $file)
+                {
+                    if (! $zip->addFile($file, basename($file))) {
+                        echo 'Could not add file to ZIP: ' . $file;
+                    }
+                }
+                $zip->close();
+            } else {
+            } 
+            Storage::disk('local')->deleteDirectory($tempFolderPath );
+            return response()->json(['url' => Storage::disk('local')->url($tempFolderPath . '.zip')]);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
