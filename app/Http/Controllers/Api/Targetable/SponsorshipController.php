@@ -4,13 +4,11 @@ namespace App\Http\Controllers\Api\Targetable;
 
 use App\Exceptions\ApiErrorException;
 use App\Http\Controllers\Api\Controller;
+use App\Http\Resources\Api\Targetable\Sponsorship\{RetrievingSponsorshipResource , ListingSponsorshipResource};
 use Illuminate\Http\Request;
-use App\Http\Requests\Api\Donor\{UpdateDonorRequest, ChangeDonorEmailRequest, ChangeDonorPasswordRequest, UpdateDonorNotificationPreferences, ChangeDonorAvatarRequest};
-use App\Http\Resources\Api\Targetable\Cases\{ListingCaseResource , RetrievingCaseResource};
-use App\Models\{Cases, Token, NotificationPreference};
-use Illuminate\Support\Facades\Hash;
+use App\Models\{Sponsorship};
 
-class CaseController extends Controller
+class SponsorshipController extends Controller
 {
     public function __construct()
     {
@@ -20,10 +18,9 @@ class CaseController extends Controller
     public function list(Request $request)
     {
         try {
-            return response()->json(new ListingCaseResource(Cases::with('target')->orderBy('id', 'desc')->where(function ($q) use ($request) {
+            return response()->json(new ListingSponsorshipResource(Sponsorship::with('target')->orderBy('id', 'desc')->where(function ($q) use ($request) {
                 if ($request->has('q')) {
                     $q->where('beneficiary_name', 'like', '%' . $request->q . '%');
-                    $q->orWhere('serial_number', 'like', '%' . $request->q . '%');
                 }
             })->paginate(10)->withQueryString()));
         } catch (\Exception $e) {
@@ -34,7 +31,7 @@ class CaseController extends Controller
     public function retrieve(Request $request , $id)
     {
         try {
-            return response()->json(new RetrievingCaseResource(Cases::findOrFail($id)));
+            return response()->json(new RetrievingSponsorshipResource(Sponsorship::findOrFail($id)));
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }

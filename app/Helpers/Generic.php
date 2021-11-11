@@ -15,6 +15,19 @@ function getLocaleName($locale)
     }
 }
 
+
+function getAvailableLocales()
+{
+    return [
+        'ar' => 'عربي',
+        'en' => 'انجليزي',
+        'fr' => 'فرنسي',
+        'de' => 'ألماني',
+        'tr' => 'تركي',
+        'es' => 'اسباني',
+    ];
+}
+
 function handleResponse($response)
 {
     if (is_array($response) && isset($response['error'])) {

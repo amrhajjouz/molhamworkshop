@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Models;
+
+use App\Models\{Country, BaseTargetModel};
+use App\Traits\HasPlace;
+
+class Cases extends BaseTargetModel
+{
+     use HasPlace;
+     
+     protected $table = 'programs_cases';
+     protected $guarded = [];
+
+     public function country()
+     {
+          return $this->belongsTo(Country::class, 'country_code', 'code');
+     }
+
+     public function save(array $options = [])
+     {
+         $isNewCase = !$this->exists;
+          //extract target fields from this 
+          $options['target'] = [];
+          foreach (['required', 'beneficiaries_count',  'is_hidden', 'category_id'] as $field) {
+               if (isset($this->$field)) {
+                    $options['target'][$field] = $this->$field;
+                    unset($this->$field);
+               }
+          }
+          $placeId = $this->place_id;
+          unset($this->place_id);
+          if ($isNewCase) {
+               $this->serial_number = $this->getCaseSerialNumber();
+          } else {
+               unset($options['target']['category']);
+          }
+          $case = parent::save(['target' => $options['target']]);
+          $this->places()->sync([$placeId]);
+          return $case;
+
+     }
+
+     private function getCaseSerialNumber()
+     {
+          $year = date("Y");
+          $month = date("m");
+          $casesInThisMonth = Cases::whereYear('created_at', $year)->whereMonth('created_at', $month)->count();
+          return $year . $month . ($casesInThisMonth + 1);
+     }
+
+}

@@ -21,17 +21,21 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('12345678'),
         ]);
 
-        DB::table('users')->insert([
-            'name' => 'Mohammed Ghannoum',
-            'email' => 'mohamd@admin.com',
-            'password' => Hash::make('123123'),
-        ]);
-
         $this->call([
             UserSeeder::class,
             NotificationPrefernceSeeder::class,
             DonorSeeder::class,
             CountrySeeder::class,
+            CategorySeeder::class,
+            PlaceSeeder::class,
+            ProjectSeeder::class,
+            SmallProjectSeeder::class,
+            SponsorshipSeeder::class,
+            ScholarshipSeeder::class,
+            EventSeeder::class,
+            FundraiserSeeder::class,
+            CampaignSeeder::class,
+            CasesSeeder::class,
         ]);
     }
 }

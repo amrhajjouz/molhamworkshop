@@ -6,7 +6,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\{DonorController , AuthDonorController , FeedbackController, PaymentMethodController, SubscriptionController , ReviewController , SavedItemController};
 use App\Http\Controllers\Api\PaymentProvider\Stripe\{SetupIntentController};
-use App\Http\Controllers\Api\Targetable\CaseController;
+use App\Http\Controllers\Api\Targetable\{CaseController , CampaignController , FundraiserController , EventController , ScholarshipController , SponsorshipController , ProjectController , SmallProjectController};
 use App\Http\Controllers\Api\TargetableController;
 
 //use Stripe\StripeClient;
@@ -67,11 +67,12 @@ Route::group([], function () {
     Route::get('/reviews' , [ReviewController::class, 'list'])->name('api.reviews.list'); 
     
     // Targetables
-    Route::get('/targetables/{type}' , [TargetableController::class, 'list'])->name('api.targetables.list'); 
-    Route::get('/targetables/{type}/{id}' , [TargetableController::class, 'retrieve'])->name('api.targetables.retrieve');
+    // Route::get('/targetables/{type}' , [TargetableController::class, 'list'])->name('api.targetables.list'); 
+    // Route::get('/targetables/{type}/{id}' , [TargetableController::class, 'retrieve'])->name('api.targetables.retrieve');
 });
 
-Route::group(['middleware' => 'auth_donor'], function () {
+// Route::group(['middleware' => 'auth_donor'], function () {
+Route::group([], function () {
     Route::get('/donors/auth' , [AuthDonorController::class, 'retrieve'])->name('api.donors.auth.retrieve'); 
     Route::post('/donors/auth/logout' , [AuthDonorController::class, 'logout'])->name('api.donors.auth.logout'); 
     Route::post('/donors/auth' , [AuthDonorController::class, 'update'])->name('api.donors.auth.update'); 
@@ -113,4 +114,34 @@ Route::group(['middleware' => 'auth_donor'], function () {
     // Stripe Routes
     Route::post('/payment_providers/stripe/setup_intents' , [SetupIntentController::class, 'create'])->name('api.payment_providers.stripe.setup_intent.create'); 
 
+    //Cases
+    Route::get('/targetables/cases' , [CaseController::class, 'list'])->name('api.cases.list'); 
+    Route::get('/targetables/cases/{id}' , [CaseController::class, 'retrieve'])->name('api.cases.retrieve');
+   
+    //Campaigns
+    Route::get('/targetables/campaigns' , [CampaignController::class, 'list'])->name('api.campaigns.list'); 
+    Route::get('/targetables/campaigns/{id}' , [CampaignController::class, 'retrieve'])->name('api.campaigns.retrieve');
+    
+    //Fundraiser
+    Route::get('/targetables/fundraisers' , [FundraiserController::class, 'list'])->name('api.fundraisers.list'); 
+    Route::get('/targetables/fundraisers/{id}' , [FundraiserController::class, 'retrieve'])->name('api.fundraisers.retrieve');
+    
+    //Event
+    Route::get('/targetables/events' , [EventController::class, 'list'])->name('api.events.list'); 
+    Route::get('/targetables/events/{id}' , [EventController::class, 'retrieve'])->name('api.events.retrieve');
+    
+    //Scholarship
+    Route::get('/targetables/scholarships' , [ScholarshipController::class, 'list'])->name('api.scholarships.list'); 
+    Route::get('/targetables/scholarships/{id}' , [ScholarshipController::class, 'retrieve'])->name('api.scholarships.retrieve');
+    
+    //Sponsorship
+    Route::get('/targetables/sponsorships' , [SponsorshipController::class, 'list'])->name('api.sponsorships.list'); 
+    Route::get('/targetables/sponsorships/{id}' , [SponsorshipController::class, 'retrieve'])->name('api.sponsorships.retrieve');
+   
+    //Project
+    Route::get('/targetables/projects' , [ProjectController::class, 'list'])->name('api.projects.list'); 
+    Route::get('/targetables/projects/{id}' , [ProjectController::class, 'retrieve'])->name('api.projects.retrieve');
+    //Small Project
+    Route::get('/targetables/small_projects' , [SmallProjectController::class, 'list'])->name('api.small_projects.list'); 
+    Route::get('/targetables/small_projects/{id}' , [SmallProjectController::class, 'retrieve'])->name('api.small_projects.retrieve');
 });

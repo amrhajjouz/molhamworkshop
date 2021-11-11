@@ -269,8 +269,8 @@ class CountrySeeder extends Seeder
         foreach ($countries as $country) {
             Country::create([
                 'code' => $country['code'],
-                'name' => $country['name'],
-                'nationality' => $country['nationality'],
+                'name' => json_decode($country['name'] , true),
+                'nationality' => json_decode($country['nationality'] , true),
                 'dial_code' => $country['dial_code']
             ]);
         }

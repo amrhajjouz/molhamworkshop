@@ -94,7 +94,7 @@ function retrieveDummySingleTargetable ($type, $id, $options = []) {
 
 function generateSingleTargetable ($type, $id, $fullDetails = false, $options = []) {
     
-    $faker = Faker\Factory::create();    
+    $faker = \Faker\Factory::create();    
     
     $targetable = [];
     
