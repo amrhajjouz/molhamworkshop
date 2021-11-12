@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\Targetable;
 
-use App\Exceptions\ApiErrorException;
 use App\Http\Controllers\Api\Controller;
 use App\Http\Resources\Api\Targetable\Event\{RetrievingEventResource , ListingEventResource};
 use Illuminate\Http\Request;

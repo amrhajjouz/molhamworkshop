@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\Targetable;
 
-use App\Exceptions\ApiErrorException;
 use App\Http\Controllers\Api\Controller;
 use App\Http\Resources\Api\Targetable\Fundraiser\{RetrievingFundraiserResource , ListingFundraiserResource};
 use Illuminate\Http\Request;
@@ -18,11 +17,7 @@ class FundraiserController extends Controller
     public function list(Request $request)
     {
         try {
-            return response()->json(new ListingFundraiserResource(Fundraiser::with('target')->orderBy('id', 'desc')->where(function ($q) use ($request) {
-                // if ($request->has('q')) {
-                //     $q->where('name', 'like', '%' . $request->q . '%');
-                // }
-            })->paginate(10)->withQueryString()));
+            return response()->json(new ListingFundraiserResource(Fundraiser::with('target')->orderBy('id', 'desc')->paginate(10)->withQueryString()));
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }

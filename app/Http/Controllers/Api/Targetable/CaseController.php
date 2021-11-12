@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers\Api\Targetable;
 
-use App\Exceptions\ApiErrorException;
 use App\Http\Controllers\Api\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\Api\Donor\{UpdateDonorRequest, ChangeDonorEmailRequest, ChangeDonorPasswordRequest, UpdateDonorNotificationPreferences, ChangeDonorAvatarRequest};
 use App\Http\Resources\Api\Targetable\Cases\{ListingCaseResource , RetrievingCaseResource};
-use App\Models\{Cases, Token, NotificationPreference};
-use Illuminate\Support\Facades\Hash;
+use App\Models\{Cases};
 
 class CaseController extends Controller
 {

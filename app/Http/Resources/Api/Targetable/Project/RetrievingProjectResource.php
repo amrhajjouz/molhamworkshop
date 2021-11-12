@@ -21,7 +21,7 @@ class RetrievingProjectResource extends JsonResource
         return [
             'id' => $this->id,
             'contents' => $this->transformContentField($target),
-            'amounts' =>  generateRandomTargetableAmounts('campaigns', $this->funded), //TEMPORARY
+            'amounts' =>  generateRandomTargetableAmounts('projects', $this->funded), //TEMPORARY
             "liked_by_auth" => $faker->boolean(), //TEMPORARY
             "funded_by_auth" => $faker->boolean(), //TEMPORARY
             "saved_by_auth" => $faker->boolean(), //TEMPORARY
