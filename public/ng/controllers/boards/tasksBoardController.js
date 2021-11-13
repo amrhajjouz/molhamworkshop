@@ -7,7 +7,7 @@ function tasksBoardControllerInit($apiRequest, $page) {
 function tasksBoardController($scope, $init, $page, $apiRequest) {
     $scope.priorityColors = (priority) => {
         return {
-            none: "#F8F9FA",
+            none: "#6C757D",
             low: "#28A745",
             medium: "#17A2B8",
             high: "#FFC107",
@@ -27,11 +27,11 @@ function tasksBoardController($scope, $init, $page, $apiRequest) {
         return {
             backlog: "#F8F9FA",
             open: "#6C757D",
-            "in progress": "#007BFF",
+            "in progress": "#17A2B8",
             done: "#28A745",
             returned: "#FFC107",
             verified: "#007BFF",
-            canceled: "#343A40",
+            canceled: "#DC3545",
         }[status];
     };
     $scope.statusTranslations = (status) => {

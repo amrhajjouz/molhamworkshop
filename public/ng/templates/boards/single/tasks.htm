@@ -76,7 +76,7 @@
                 <div class="form-group">
                     <label for="name">تلخيص المهمة</label>
                     <input
-                        id="title"
+                        id="addtitle"
                         class="form-control"
                         type="text"
                         ng-model="task.title"
@@ -90,7 +90,7 @@
                 <div class="form-group">
                     <label for="name">الشرح</label>
                     <input
-                        id="description"
+                        id="adddescription"
                         class="form-control"
                         type="multiline"
                         ng-model="task.description"
@@ -123,7 +123,7 @@
                 <div class="form-group">
                     <label for="asignee_id">المعين للعمل</label>
                     <select2
-                        id="asignee_id"
+                        id="addasignee_id"
                         model="task.asignee_id"
                         ajax-url="users/search"
                         error-model="createTask.errors.asignee_id"
@@ -134,7 +134,7 @@
                 <div class="form-group">
                     <label for="reporter_id">المدون</label>
                     <select2
-                        id="reporter_id"
+                        id="addreporter_id"
                         model="task.reporter_id"
                         ajax-url="users/search"
                         error-model="createTask.errors.reporter_id"
@@ -145,17 +145,46 @@
                 <div class="form-group">
                     <label for="status">الحالة</label>
                     <select2
-                        id="status"
+                        id="addstatus"
                         model="task.status"
                         error-model="createTask.errors.status"
                     >
-                        <option value="backlog">تراكم</option>
-                        <option value="open">مفتوحة</option>
-                        <option value="in progress">في تقدم</option>
-                        <option value="done">تم</option>
-                        <option value="returned">مرجعة</option>
-                        <option value="verified">مؤكدة</option>
-                        <option value="canceled">مبطلة</option>
+                        <option
+                            style="background-color: #f8f9fa"
+                            value="backlog"
+                        >
+                            تراكم
+                        </option>
+                        <option style="background-color: #6c757d" value="open">
+                            مفتوحة
+                        </option>
+                        <option
+                            style="background-color: #17a2b8"
+                            value="in progress"
+                        >
+                            في تقدم
+                        </option>
+                        <option style="background-color: #28a745" value="done">
+                            تم
+                        </option>
+                        <option
+                            style="background-color: #ffc107"
+                            value="returned"
+                        >
+                            مرجعة
+                        </option>
+                        <option
+                            style="background-color: #007bff"
+                            value="verified"
+                        >
+                            مؤكدة
+                        </option>
+                        <option
+                            style="background-color: #dc3545"
+                            value="canceled"
+                        >
+                            مبطلة
+                        </option>
                     </select2>
                 </div>
             </div>
@@ -163,15 +192,31 @@
                 <div class="form-group">
                     <label for="priority">الاولوية</label>
                     <select2
-                        id="priority"
+                        id="addpriority"
                         model="task.priority"
                         error-model="createTask.errors.priority"
                     >
-                        <option value="none">لا اولوية</option>
-                        <option value="low">ضئيلة</option>
-                        <option value="medium">متوسطة</option>
-                        <option value="high">عالية</option>
-                        <option value="urgent">عاجل</option>
+                        <option style="background-color: #f8f9fa" value="none">
+                            لا اولوية
+                        </option>
+                        <option style="background-color: #28a745" value="low">
+                            ضئيلة
+                        </option>
+                        <option
+                            style="background-color: #17a2b8"
+                            value="medium"
+                        >
+                            متوسطة
+                        </option>
+                        <option style="background-color: #ffc107" value="high">
+                            عالية
+                        </option>
+                        <option
+                            style="background-color: #dc3545"
+                            value="urgent"
+                        >
+                            عاجل
+                        </option>
                     </select2>
                 </div>
             </div>
@@ -180,7 +225,7 @@
                 <div class="form-group">
                     <label for="start_date">تاريخ البداية</label>
                     <input
-                        id="start_date"
+                        id="addstart_date"
                         class="form-control"
                         type="text"
                         date-picker
@@ -195,7 +240,7 @@
                 <div class="form-group">
                     <label for="due_date">تاريخ الانهاء</label>
                     <input
-                        id="due_date"
+                        id="adddue_date"
                         class="form-control"
                         type="text"
                         date-picker
@@ -223,7 +268,7 @@
                 <div class="form-group">
                     <label for="title">تلخيص المهمة</label>
                     <input
-                        id="title"
+                        id="updatetitle"
                         class="form-control"
                         type="text"
                         ng-model="oldTask.title"
@@ -237,7 +282,7 @@
                 <div class="form-group">
                     <label for="description">الشرح</label>
                     <input
-                        id="description"
+                        id="updatedescription"
                         class="form-control"
                         type="multiline"
                         ng-model="oldTask.description"
@@ -267,7 +312,7 @@
                 <div class="form-group">
                     <label for="asignee_id">المعين للعمل</label>
                     <select2
-                        id="asignee_id"
+                        id="updateasignee_id"
                         model="oldTask.asignee_id"
                         ajax-url="users/search"
                         error-model="updateTask.errors.asignee_id"
@@ -278,7 +323,7 @@
                 <div class="form-group">
                     <label for="reporter_id">المدون</label>
                     <select2
-                        id="reporter_id"
+                        id="updatereporter_id"
                         model="oldTask.reporter_id"
                         ajax-url="users/search"
                         error-model="updateTask.errors.reporter_id"
@@ -289,17 +334,46 @@
                 <div class="form-group">
                     <label for="status">الحالة</label>
                     <select2
-                        id="status"
+                        id="updatestatus"
                         model="oldTask.status"
                         error-model="updateTask.errors.status"
                     >
-                        <option value="backlog">تراكم</option>
-                        <option value="open">مفتوحة</option>
-                        <option value="in progress">في تقدم</option>
-                        <option value="done">تم</option>
-                        <option value="returned">مرجعة</option>
-                        <option value="verified">مؤكدة</option>
-                        <option value="canceled">مبطلة</option>
+                        <option
+                            style="background-color: #f8f9fa"
+                            value="backlog"
+                        >
+                            تراكم
+                        </option>
+                        <option style="background-color: #6c757d" value="open">
+                            مفتوحة
+                        </option>
+                        <option
+                            style="background-color: #17a2b8"
+                            value="in progress"
+                        >
+                            في تقدم
+                        </option>
+                        <option style="background-color: #28a745" value="done">
+                            تم
+                        </option>
+                        <option
+                            style="background-color: #ffc107"
+                            value="returned"
+                        >
+                            مرجعة
+                        </option>
+                        <option
+                            style="background-color: #007bff"
+                            value="verified"
+                        >
+                            مؤكدة
+                        </option>
+                        <option
+                            style="background-color: #dc3545"
+                            value="canceled"
+                        >
+                            مبطلة
+                        </option>
                     </select2>
                 </div>
             </div>
@@ -307,15 +381,31 @@
                 <div class="form-group">
                     <label for="priority">الاولوية</label>
                     <select2
-                        id="priority"
+                        id="updatepriority"
                         model="oldTask.priority"
                         error-model="updateTask.errors.priority"
                     >
-                        <option value="none">لا اولوية</option>
-                        <option value="low">ضئيلة</option>
-                        <option value="medium">متوسطة</option>
-                        <option value="high">عالية</option>
-                        <option value="urgent">عاجل</option>
+                        <option style="background-color: #f8f9fa" value="none">
+                            لا اولوية
+                        </option>
+                        <option style="background-color: #28a745" value="low">
+                            ضئيلة
+                        </option>
+                        <option
+                            style="background-color: #17a2b8"
+                            value="medium"
+                        >
+                            متوسطة
+                        </option>
+                        <option style="background-color: #ffc107" value="high">
+                            عالية
+                        </option>
+                        <option
+                            style="background-color: #dc3545"
+                            value="urgent"
+                        >
+                            عاجل
+                        </option>
                     </select2>
                 </div>
             </div>
@@ -324,7 +414,7 @@
                 <div class="form-group">
                     <label for="start_date">تاريخ البداية</label>
                     <input
-                        id="start_date"
+                        id="updatestart_date"
                         class="form-control"
                         type="text"
                         date-picker
@@ -339,7 +429,7 @@
                 <div class="form-group">
                     <label for="due_date">تاريخ الانهاء</label>
                     <input
-                        id="due_date"
+                        id="updatedue_date"
                         class="form-control"
                         type="text"
                         date-picker
