@@ -13,7 +13,7 @@ class UpdateLabelRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class UpdateLabelRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'id' => ['required', 'exists:labels'],
+            'name' => ['required', 'string', 'between:3,30'],
+            'color' => ['required', 'string', 'between:3,30'],
         ];
     }
 }

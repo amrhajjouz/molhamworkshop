@@ -1,0 +1,167 @@
+<include-header />
+
+<form class="row" name="boardForm" request="updateBoard">
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">اسم اللوحة</label>
+            <input
+                id="name"
+                class="form-control"
+                type="text"
+                ng-model="board.name"
+                placeholder="الاسم.."
+                ng-error="updateBoard.errors.name"
+                required
+            />
+        </div>
+    </div>
+
+    <div class="col-12 mb-5">
+        <submit-button form="boardForm" icon="fe fe-plus">تعديل</submit-button>
+    </div>
+</form>
+<div class="col-12 mb-5">
+    <div>
+        <label for="name">الاصناف</label>
+        <div ng-repeat="label in board.labels" class="row mb-2">
+            <div
+                ng-style="{'background-color':label.color}"
+                class="rounded mb-1 px-2 py-1 text-center col-2 offset-1"
+            >
+                {{ label.name }}
+            </div>
+            <button
+                type="button"
+                class="btn btn-info col-2 offset-1"
+                data-toggle="modal"
+                data-target="#updateLabelModal"
+                ng-click="setLabel(label.id,label.name,label.color)"
+            >
+                تعديل
+            </button>
+            <button
+                type="button"
+                class="btn btn-danger col-2 offset-1"
+                data-toggle="modal"
+                data-target="#deleteLabelModal"
+                ng-click="setLabel(label.id,label.name,label.color)"
+            >
+                مسح
+            </button>
+        </div>
+    </div>
+</div>
+
+<a
+    href="javascript:;"
+    data-toggle="modal"
+    data-target="#addLabelModal"
+    class="btn btn-primary"
+>
+    <i class="fe fe-plus"></i>&nbsp; صنف جديد
+</a>
+<modal id="addLabelModal">
+    <modal-title>اضافة صنف</modal-title>
+    <modal-body>
+        <form class="row" name="addLabelForm" request="createLabel">
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="name">اسم الصنف</label>
+                    <input
+                        id="name"
+                        class="form-control"
+                        type="text"
+                        ng-model="newLabel.name"
+                        placeholder="الاسم.."
+                        ng-error="createLabel.errors.name"
+                        required
+                    />
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="color">لون الصنف</label>
+                    <input
+                        id="color"
+                        class="form-control"
+                        type="color"
+                        ng-model="newLabel.color"
+                        placeholder="اللون.."
+                        ng-error="createLabel.errors.color"
+                        required
+                    />
+                </div>
+            </div>
+
+            <div class="col-12">
+                <submit-button form="addLabelForm" icon="fe fe-plus"
+                    >اضافة</submit-button
+                >
+            </div>
+        </form>
+    </modal-body>
+</modal>
+
+<modal id="updateLabelModal">
+    <modal-title>تعديل صنف</modal-title>
+    <modal-body>
+        <form class="row" name="updateLabelForm" request="updateLabel">
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="name">اسم الصنف</label>
+                    <input
+                        id="name"
+                        class="form-control"
+                        type="text"
+                        ng-model="oldLabel.name"
+                        placeholder="الاسم.."
+                        ng-error="updateLabel.errors.name"
+                        required
+                    />
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="color">لون الصنف</label>
+                    <input
+                        id="color"
+                        class="form-control"
+                        type="color"
+                        ng-model="oldLabel.color"
+                        placeholder="اللون.."
+                        ng-error="updateLabel.errors.color"
+                        required
+                    />
+                </div>
+            </div>
+
+            <div class="col-12">
+                <submit-button form="updateLabelForm" icon="fe fe-plus"
+                    >تعديل</submit-button
+                >
+            </div>
+        </form>
+    </modal-body>
+</modal>
+<modal id="deleteLabelModal">
+    <modal-title>هل انت متاكد من انك تريد مسح الصنف؟</modal-title>
+    <modal-body>
+        <div class="row">
+            <button
+                type="button"
+                class="btn btn-primary col-2 offset-8"
+                data-toggle="modal"
+                data-target="#deleteLabelModal"
+            >
+                الغاء
+            </button>
+            <button
+                type="button"
+                class="btn btn-danger col-2"
+                ng-click="deleteLabel()"
+            >
+                مسح
+            </button>
+        </div>
+    </modal-body>
+</modal>

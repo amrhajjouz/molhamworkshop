@@ -1,5 +1,4 @@
 <ul class="navbar-nav">
-
     <li class="nav-item">
         <a id="home-nav" class="nav-link" href="{{ $r('home') }}">
             <i class="fe fe-home"></i> البداية
@@ -7,7 +6,14 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#users-navs" role="button" aria-expanded="false">
+        <a
+            class="nav-link"
+            href="javascript:;"
+            data-toggle="collapse"
+            data-target="#users-navs"
+            role="button"
+            aria-expanded="false"
+        >
             <i class="fe fe-users"></i> المستخدمون
         </a>
         <div class="collapse" id="users-navs">
@@ -26,7 +32,14 @@
         </div>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#donors-navs" role="button" aria-expanded="false">
+        <a
+            class="nav-link"
+            href="javascript:;"
+            data-toggle="collapse"
+            data-target="#donors-navs"
+            role="button"
+            aria-expanded="false"
+        >
             <i class="fe fe-book"></i> المتبرعون
         </a>
         <div class="collapse" id="donors-navs">
@@ -70,5 +83,10 @@
                 </li>
             </ul>
         </div>
+    </li>
+    <li class="nav-item">
+        <a href="{{ $r('boards') }}" class="nav-link">
+            <i class="fe fe-check-square"></i> لوحات العمل
+        </a>
     </li>
 </ul>

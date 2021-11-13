@@ -1,0 +1,46 @@
+<page-header title="" pretitle=""></page-header>
+
+<form class="row" name="labelForm" request="createLabel">
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">اسم الصنف</label>
+            <input
+                id="name"
+                class="form-control"
+                type="text"
+                ng-model="label.name"
+                placeholder="الاسم.."
+                ng-error="createLabel.errors.name"
+                required
+            />
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">لون الصنف</label>
+            <input
+                id="color"
+                class="form-control"
+                type="color"
+                ng-model="label.color"
+                placeholder="اللون.."
+                ng-error="createLabel.errors.color"
+                required
+            />
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="board_id">اللوحة</label>
+            <select2
+                id="board_id"
+                model="label.board_id"
+                ajax-url="boards/search"
+                error-model="createLabel.errors.board_id"
+            ></select2>
+        </div>
+    </div>
+    <div class="col-12">
+        <submit-button form="labelForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>

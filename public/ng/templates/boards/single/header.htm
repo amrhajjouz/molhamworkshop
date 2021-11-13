@@ -1,0 +1,12 @@
+<page-header title=" {{ board.name }}" pretitle="اللوحات"></page-header>
+<page-nav>
+    <page-nav-item route="boards.tasks" params="{id: $routeParams.id}"
+        >المهام</page-nav-item
+    >
+    <page-nav-item route="boards.overview" params="{id: $routeParams.id}"
+        >نظرة عامة</page-nav-item
+    >
+    <page-nav-item route="boards.edit" params="{id: $routeParams.id}"
+        >تعديل المعلومات</page-nav-item
+    >
+</page-nav>

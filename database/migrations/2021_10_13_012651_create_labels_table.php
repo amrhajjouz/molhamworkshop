@@ -15,7 +15,7 @@ class CreateLabelsTable extends Migration
     {
         Schema::create('labels', function (Blueprint $table) {
             $table->id();
-            $table->string('value');
+            $table->string('name');
             $table->string('color');
             $table->foreignId('board_id')->nullable()->constrained();
             $table->timestamps();

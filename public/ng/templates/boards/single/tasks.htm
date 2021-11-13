@@ -1,0 +1,390 @@
+<include-header />
+<a
+    href="javascript:;"
+    data-toggle="modal"
+    data-target="#addTaskModal"
+    class="btn btn-primary"
+>
+    <i class="fe fe-plus"></i>&nbsp; مهمة جديد
+</a>
+
+<table class="table table-striped table-responsive mt-5">
+    <thead>
+        <tr>
+            <th scope="col">الملخص</th>
+            <th scope="col">الاصناف</th>
+            <th scope="col">المعين للعمل</th>
+            <th scope="col">المدون</th>
+            <th scope="col">الحالة</th>
+            <th scope="col">الاولوية</th>
+            <th scope="col">تاريخ البداية</th>
+            <th scope="col">تاريخ الانهاء</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="task in board.tasks">
+            <th scope="row">
+                <a
+                    href="javascript:;"
+                    data-toggle="modal"
+                    data-target="#updateTaskModal"
+                    ng-click="setTask(task)"
+                    >{{task.title}}</a
+                >
+            </th>
+            <td>
+                <div class="d-flex">
+                    <div ng-repeat="label in task.labels" class="ml-2">
+                        <div
+                            ng-style="{'background-color': '{{label.color}}'}"
+                            class="px-2 py-1 mb-1 rounded text-center"
+                        >
+                            {{ label.name }}
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td>{{task.asignee.name}}</td>
+            <td>{{task.reporter.name}}</td>
+            <td>
+                <div
+                    ng-style="{'background-color': statusColors(task.status)}"
+                    class="px-2 py-1 mb-1 rounded text-center"
+                >
+                    {{statusTranslations(task.status)}}
+                </div>
+            </td>
+            <td>
+                <div
+                    ng-style="{'background-color': priorityColors(task.priority)}"
+                    class="px-2 py-1 mb-1 rounded text-center"
+                >
+                    {{priorityTranslations(task.priority)}}
+                </div>
+            </td>
+            <td>{{task.start_date}}</td>
+            <td>{{task.due_date}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<modal id="addTaskModal">
+    <modal-title>اضافة مهمة</modal-title>
+    <modal-body
+        ><form class="row" name="taskForm" request="createTask">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="name">تلخيص المهمة</label>
+                    <input
+                        id="title"
+                        class="form-control"
+                        type="text"
+                        ng-model="task.title"
+                        placeholder="تلخيص.."
+                        ng-error="createTask.errors.title"
+                        required
+                    />
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="name">الشرح</label>
+                    <input
+                        id="description"
+                        class="form-control"
+                        type="multiline"
+                        ng-model="task.description"
+                        placeholder="الشرح.."
+                        ng-error="createTask.errors.description"
+                        required
+                    />
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="labels">الاصناف</label>
+                    <div class="row">
+                        <div
+                            ng-repeat="label in board.labels"
+                            class="col-12 col-md-3 my-2"
+                        >
+                            <a
+                                href="javascript:;"
+                                ng-click="toggleLabel(label)"
+                                ng-style="labelStyle{{label.id}}"
+                            >
+                                {{ label.name }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="asignee_id">المعين للعمل</label>
+                    <select2
+                        id="asignee_id"
+                        model="task.asignee_id"
+                        ajax-url="users/search"
+                        error-model="createTask.errors.asignee_id"
+                    ></select2>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="reporter_id">المدون</label>
+                    <select2
+                        id="reporter_id"
+                        model="task.reporter_id"
+                        ajax-url="users/search"
+                        error-model="createTask.errors.reporter_id"
+                    ></select2>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="status">الحالة</label>
+                    <select2
+                        id="status"
+                        model="task.status"
+                        error-model="createTask.errors.status"
+                    >
+                        <option value="backlog">تراكم</option>
+                        <option value="open">مفتوحة</option>
+                        <option value="in progress">في تقدم</option>
+                        <option value="done">تم</option>
+                        <option value="returned">مرجعة</option>
+                        <option value="verified">مؤكدة</option>
+                        <option value="canceled">مبطلة</option>
+                    </select2>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="priority">الاولوية</label>
+                    <select2
+                        id="priority"
+                        model="task.priority"
+                        error-model="createTask.errors.priority"
+                    >
+                        <option value="none">لا اولوية</option>
+                        <option value="low">ضئيلة</option>
+                        <option value="medium">متوسطة</option>
+                        <option value="high">عالية</option>
+                        <option value="urgent">عاجل</option>
+                    </select2>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="start_date">تاريخ البداية</label>
+                    <input
+                        id="start_date"
+                        class="form-control"
+                        type="text"
+                        date-picker
+                        ng-model="task.start_date"
+                        placeholder="تاريخ البداية.."
+                        ng-error="createTask.errors.start_date"
+                        required
+                    />
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="due_date">تاريخ الانهاء</label>
+                    <input
+                        id="due_date"
+                        class="form-control"
+                        type="text"
+                        date-picker
+                        ng-model="task.due_date"
+                        placeholder="تاريخ الانهاء.."
+                        ng-error="createTask.errors.due_date"
+                        required
+                    />
+                </div>
+            </div>
+            <div class="col-12">
+                <submit-button form="taskForm" icon="fe fe-plus"
+                    >اضافة</submit-button
+                >
+            </div>
+        </form></modal-body
+    >
+</modal>
+
+<modal id="updateTaskModal">
+    <modal-title>تعديل مهمة</modal-title>
+    <modal-body
+        ><form class="row" name="updateTaskForm" request="updateTask">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="title">تلخيص المهمة</label>
+                    <input
+                        id="title"
+                        class="form-control"
+                        type="text"
+                        ng-model="oldTask.title"
+                        placeholder="تلخيص.."
+                        ng-error="updateTask.errors.title"
+                        required
+                    />
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="description">الشرح</label>
+                    <input
+                        id="description"
+                        class="form-control"
+                        type="multiline"
+                        ng-model="oldTask.description"
+                        placeholder="الشرح.."
+                        ng-error="updateTask.errors.description"
+                        required
+                    />
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="labels">الاصناف</label>
+                    <div class="row">
+                        <div ng-repeat="label in board.labels" class="col-1">
+                            <a
+                                href="javascript:;"
+                                ng-click="toggleOldLabel(label)"
+                                ng-style="oldLabelStyle{{label.id}}"
+                            >
+                                {{ label.name }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="asignee_id">المعين للعمل</label>
+                    <select2
+                        id="asignee_id"
+                        model="oldTask.asignee_id"
+                        ajax-url="users/search"
+                        error-model="updateTask.errors.asignee_id"
+                    ></select2>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="reporter_id">المدون</label>
+                    <select2
+                        id="reporter_id"
+                        model="oldTask.reporter_id"
+                        ajax-url="users/search"
+                        error-model="updateTask.errors.reporter_id"
+                    ></select2>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="status">الحالة</label>
+                    <select2
+                        id="status"
+                        model="oldTask.status"
+                        error-model="updateTask.errors.status"
+                    >
+                        <option value="backlog">تراكم</option>
+                        <option value="open">مفتوحة</option>
+                        <option value="in progress">في تقدم</option>
+                        <option value="done">تم</option>
+                        <option value="returned">مرجعة</option>
+                        <option value="verified">مؤكدة</option>
+                        <option value="canceled">مبطلة</option>
+                    </select2>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="priority">الاولوية</label>
+                    <select2
+                        id="priority"
+                        model="oldTask.priority"
+                        error-model="updateTask.errors.priority"
+                    >
+                        <option value="none">لا اولوية</option>
+                        <option value="low">ضئيلة</option>
+                        <option value="medium">متوسطة</option>
+                        <option value="high">عالية</option>
+                        <option value="urgent">عاجل</option>
+                    </select2>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="start_date">تاريخ البداية</label>
+                    <input
+                        id="start_date"
+                        class="form-control"
+                        type="text"
+                        date-picker
+                        ng-model="oldTask.start_date"
+                        placeholder="تاريخ البداية.."
+                        ng-error="updateTask.errors.start_date"
+                        required
+                    />
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group">
+                    <label for="due_date">تاريخ الانهاء</label>
+                    <input
+                        id="due_date"
+                        class="form-control"
+                        type="text"
+                        date-picker
+                        ng-model="oldTask.due_date"
+                        placeholder="تاريخ الانهاء.."
+                        ng-error="updateTask.errors.due_date"
+                        required
+                    />
+                </div>
+            </div>
+            <div class="col-12">
+                <submit-button form="updateTaskForm" icon="fe fe-plus"
+                    >تعديل</submit-button
+                >
+                <button
+                    class="btn btn-danger"
+                    data-toggle="modal"
+                    data-target="#deleteTaskModal"
+                >
+                    مسح
+                </button>
+            </div>
+        </form></modal-body
+    >
+</modal>
+
+<modal id="deleteTaskModal">
+    <modal-title>هل انت متاكد من انك تريد مسح المهمة؟</modal-title>
+    <modal-body>
+        <div class="row">
+            <button
+                type="button"
+                class="btn btn-primary col-2 offset-8"
+                data-toggle="modal"
+                data-target="#deleteTaskModal"
+            >
+                الغاء
+            </button>
+            <button
+                type="button"
+                class="btn btn-danger col-2"
+                ng-click="deleteTask()"
+            >
+                مسح
+            </button>
+        </div>
+    </modal-body>
+</modal>

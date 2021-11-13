@@ -1,0 +1,12 @@
+<page-header
+    title="الصنف {{ $routeParams.id }}"
+    pretitle="الاصناف"
+></page-header>
+<page-nav>
+    <page-nav-item route="label.overview" params="{id: $routeParams.id}"
+        >نظرة عامة</page-nav-item
+    >
+    <page-nav-item route="label.edit" params="{id: $routeParams.id}"
+        >تعديل المعلومات</page-nav-item
+    >
+</page-nav>

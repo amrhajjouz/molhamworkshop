@@ -17,7 +17,6 @@ class CreateLabelTaskTable extends Migration
             $table->id();
             $table->foreignId('label_id')->constrained();
             $table->foreignId('task_id')->constrained();
-            $table->timestamps();
         });
     }
 

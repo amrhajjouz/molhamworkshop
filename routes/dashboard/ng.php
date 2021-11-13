@@ -30,4 +30,17 @@ return [
     'places.edit' => ['places/:id/edit', 'places/editPlaceController', 'places.single.edit'],
     'places' => ['places', 'places/listPlacesController', 'places.list'],
 
+    /////////////////////// Boards /////////////////////////
+    'boards.add' => ['boards/add', 'boards/addBoardController', 'boards.add'],
+    'boards.overview' => ['boards/:id', 'boards/overviewBoardController', 'boards.single.overview'],
+    'boards.tasks' => ['boards/:id/tasks', 'boards/tasksBoardController', 'boards.single.tasks'],
+    'boards.edit' => ['boards/:id/edit', 'boards/editBoardController', 'boards.single.edit'],
+    'boards' => ['boards', 'boards/listBoardsController', 'boards.list'],
+
+    /////////////////////// Labels /////////////////////////
+    'labels.add' => ['labels/add', 'labels/addLabelController', 'labels.add'],
+    'labels.overview' => ['labels/:id', 'labels/overviewLabelController', 'labels.single.overview'],
+    'labels.edit' => ['labels/:id/edit', 'labels/editLabelController', 'labels.single.edit'],
+    'labels' => ['labels', 'labels/listLabelsController', 'labels.list'],
+
 ];

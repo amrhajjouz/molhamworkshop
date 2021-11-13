@@ -13,7 +13,7 @@ class UpdateBoardRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class UpdateBoardRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'id' => ['required', 'exists:boards'],
+            'name' => ['required', 'string', 'between:3,30'],
         ];
     }
 }

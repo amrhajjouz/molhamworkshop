@@ -13,7 +13,7 @@ class CreateLabelRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class CreateLabelRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required', 'string', 'between:3,30'],
+            'color' => ['required', 'string', 'between:3,30'],
+            'board_id' => ['required', 'numeric', 'exists:boards,id'],
         ];
     }
 }
