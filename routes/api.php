@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\{DonorController , AuthDonorController , FeedbackController, PaymentMethodController, SubscriptionController , ReviewController , SavedItemController};
 use App\Http\Controllers\Api\PaymentProvider\Stripe\{SetupIntentController};
 use App\Http\Controllers\Api\Targetable\{CaseController , CampaignController , FundraiserController , EventController , ScholarshipController , SponsorshipController , ProjectController , SmallProjectController};
-use App\Http\Controllers\Api\TargetableController;
+use App\Http\Controllers\Api\{LikeController};
 
 //use Stripe\StripeClient;
 
@@ -141,7 +141,14 @@ Route::group([], function () {
     //Project
     Route::get('/targetables/projects' , [ProjectController::class, 'list'])->name('api.projects.list'); 
     Route::get('/targetables/projects/{id}' , [ProjectController::class, 'retrieve'])->name('api.projects.retrieve');
+   
     //Small Project
     Route::get('/targetables/small_projects' , [SmallProjectController::class, 'list'])->name('api.small_projects.list'); 
     Route::get('/targetables/small_projects/{id}' , [SmallProjectController::class, 'retrieve'])->name('api.small_projects.retrieve');
+  
+    //Like
+    Route::post('/likes' , [LikeController::class, 'create'])->name('api.likes.create'); 
+    Route::delete('/likes/{id}' , [LikeController::class, 'delete'])->name('api.likes.delete');
+
+
 });

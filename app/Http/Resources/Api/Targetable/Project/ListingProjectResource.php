@@ -20,7 +20,7 @@ class ListingProjectResource extends JsonResource
                 'id' => $project->id,
                 'contents' => $this->transformContentField($project->target) ,
                 'amounts' =>  generateRandomTargetableAmounts('projects', $project->funded), //TEMPORARY
-                "liked_by_auth" => $faker->boolean(), //TEMPORARY
+                "liked_by_auth" => authDonor()->likes()->where(['likeable_type' => 'project' , 'likeable_id' => $project->id])->exists(),
                 "funded_by_auth" => $faker->boolean(),//TEMPORARY
                 "saved_by_auth" => $faker->boolean(),//TEMPORARY
                 "likes_count" => $faker->numberBetween(0 , 1000),//TEMPORARY

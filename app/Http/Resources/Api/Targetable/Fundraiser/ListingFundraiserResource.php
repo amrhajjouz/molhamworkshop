@@ -15,18 +15,18 @@ class ListingFundraiserResource extends JsonResource
     public function toArray($request)
     {
         $faker = \Faker\Factory::create();    
-        $this->resource->getCollection()->transform(function ($campaign) use($faker) {
+        $this->resource->getCollection()->transform(function ($fundraiser) use($faker) {
             return [
-                'id' => $campaign->id,
-                'contents' => $this->transformContentField($campaign->target) ,
-                'amounts' =>  generateRandomTargetableAmounts('fundraisers', $campaign->funded), //TEMPORARY
-                "liked_by_auth" => $faker->boolean(), //TEMPORARY
+                'id' => $fundraiser->id,
+                'contents' => $this->transformContentField($fundraiser->target) ,
+                'amounts' =>  generateRandomTargetableAmounts('fundraisers', $fundraiser->funded), //TEMPORARY
+                "liked_by_auth" => authDonor()->likes()->where(['likeable_type' => 'fundraiser' , 'likeable_id' => $fundraiser->id])->exists(),
                 "funded_by_auth" => $faker->boolean(),//TEMPORARY
                 "saved_by_auth" => $faker->boolean(),//TEMPORARY
                 "likes_count" => $faker->numberBetween(0 , 1000),//TEMPORARY
                 "comments_count" => $faker->numberBetween(0 , 200),//TEMPORARY
                 "shares_count" => $faker->numberBetween(0 , 10),//TEMPORARY
-                'published_at' => $campaign->target->published_at,
+                'published_at' => $fundraiser->target->published_at,
                 "preview_images" => null,//TEMPORARY
             ];
         });

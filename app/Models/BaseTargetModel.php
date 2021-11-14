@@ -98,4 +98,9 @@ class BaseTargetModel extends BaseModel
         }   
         return true;
     }
+
+    public function likes()
+    {
+        return $this->morphMany('App\Models\Like', 'likeable');
+    }
 }

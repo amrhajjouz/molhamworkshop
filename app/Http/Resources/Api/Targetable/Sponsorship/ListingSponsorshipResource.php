@@ -15,19 +15,19 @@ class ListingSponsorshipResource extends JsonResource
     public function toArray($request)
     {
         $faker = \Faker\Factory::create();    
-        $this->resource->getCollection()->transform(function ($sponsorships) use($faker) {
+        $this->resource->getCollection()->transform(function ($sponsorship) use($faker) {
             return [
-                'id' => $sponsorships->id,
-                'contents' => $this->transformContentField($sponsorships->target) ,
-                'amounts' =>  generateRandomTargetableAmounts('sponsorships', $sponsorships->funded), //TEMPORARY
-                "liked_by_auth" => $faker->boolean(), //TEMPORARY
+                'id' => $sponsorship->id,
+                'contents' => $this->transformContentField($sponsorship->target) ,
+                'amounts' =>  generateRandomTargetableAmounts('sponsorships', $sponsorship->funded), //TEMPORARY
+                "liked_by_auth" => authDonor()->likes()->where(['likeable_type' => 'sponsorship' , 'likeable_id' => $sponsorship->id])->exists(),
                 "funded_by_auth" => $faker->boolean(),//TEMPORARY
                 "saved_by_auth" => $faker->boolean(),//TEMPORARY
                 "likes_count" => $faker->numberBetween(0 , 1000),//TEMPORARY
                 "comments_count" => $faker->numberBetween(0 , 200),//TEMPORARY
                 "shares_count" => $faker->numberBetween(0 , 10),//TEMPORARY
                 "preview_images" => null,//TEMPORARY
-                'published_at' => $sponsorships->target->published_at,
+                'published_at' => $sponsorship->target->published_at,
             ];
         });
         return  $this->resource;

@@ -68,4 +68,9 @@ class Donor extends Model
     {
         return $this->hasMany('App\Models\Feedback', 'donor_id');
     }
+
+    public function likes()
+    {
+        return $this->morphMany('App\Models\Like', 'liker');
+    }
 }

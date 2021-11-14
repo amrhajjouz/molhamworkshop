@@ -15,19 +15,19 @@ class ListingScholarshipResource extends JsonResource
     public function toArray($request)
     {
         $faker = \Faker\Factory::create();    
-        $this->resource->getCollection()->transform(function ($scholraship) use($faker) {
+        $this->resource->getCollection()->transform(function ($scholarship) use($faker) {
             return [
-                'id' => $scholraship->id,
-                'contents' => $this->transformContentField($scholraship->target) ,
-                'amounts' =>  generateRandomTargetableAmounts('scholarships', $scholraship->funded), //TEMPORARY
-                "liked_by_auth" => $faker->boolean(), //TEMPORARY
+                'id' => $scholarship->id,
+                'contents' => $this->transformContentField($scholarship->target) ,
+                'amounts' =>  generateRandomTargetableAmounts('scholarships', $scholarship->funded), //TEMPORARY
+                "liked_by_auth" => authDonor()->likes()->where(['likeable_type' => 'scholarship' , 'likeable_id' => $scholarship->id])->exists(),
                 "funded_by_auth" => $faker->boolean(),//TEMPORARY
                 "saved_by_auth" => $faker->boolean(),//TEMPORARY
                 "likes_count" => $faker->numberBetween(0 , 1000),//TEMPORARY
                 "comments_count" => $faker->numberBetween(0 , 200),//TEMPORARY
                 "shares_count" => $faker->numberBetween(0 , 10),//TEMPORARY
                 "preview_images" => null,//TEMPORARY
-                'published_at' => $scholraship->target->published_at,
+                'published_at' => $scholarship->target->published_at,
             ];
         });
         return  $this->resource;

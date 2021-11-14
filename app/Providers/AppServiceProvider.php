@@ -26,6 +26,14 @@ class AppServiceProvider extends ServiceProvider
             'stripe_sepa_account' => 'App\Models\StripeSepaAccount',
             'stripe_giropay_account' => 'App\Models\StripeGiropayAccount',
             'paypal_subscription' => 'App\Models\PaypalSubscription',
+            'cases' => 'App\Models\Cases',
+            'campaign' => 'App\Models\Campaign',
+            'fundraiser' => 'App\Models\Fundraiser',
+            'sponsorship' => 'App\Models\Sponsorship',
+            'project' => 'App\Models\Project',
+            'small_project' => 'App\Models\SmallProject',
+            'event' => 'App\Models\Event',
+            'scholarship' => 'App\Models\Scholarship',
         ]);
     }
 

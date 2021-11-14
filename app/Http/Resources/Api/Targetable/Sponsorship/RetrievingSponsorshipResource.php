@@ -22,7 +22,7 @@ class RetrievingSponsorshipResource extends JsonResource
             'id' => $this->id,
             'contents' => $this->transformContentField($target),
             'amounts' =>  generateRandomTargetableAmounts('sponsorships', $this->funded), //TEMPORARY
-            "liked_by_auth" => $faker->boolean(), //TEMPORARY
+            "liked_by_auth" => authDonor()->likes()->where(['likeable_type' => 'sponsorship' , 'likeable_id' => $this->id])->exists(),
             "funded_by_auth" => $faker->boolean(), //TEMPORARY
             "saved_by_auth" => $faker->boolean(), //TEMPORARY
             "likes_count" => $faker->numberBetween(0, 1000), //TEMPORARY
