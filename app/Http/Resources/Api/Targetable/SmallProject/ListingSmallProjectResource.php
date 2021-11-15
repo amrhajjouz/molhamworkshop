@@ -24,7 +24,7 @@ class ListingSmallProjectResource extends JsonResource
                 "funded_by_auth" => $faker->boolean(),//TEMPORARY
                 "saved_by_auth" => $faker->boolean(),//TEMPORARY
                 "likes_count" => $faker->numberBetween(0 , 1000),//TEMPORARY
-                "comments_count" => $faker->numberBetween(0 , 200),//TEMPORARY
+                "comments_count" => $smallProject->comments()->count() , 
                 "shares_count" => $faker->numberBetween(0 , 10),//TEMPORARY
                 'published_at' => $smallProject->target->published_at,
                 "preview_images" => null,//TEMPORARY

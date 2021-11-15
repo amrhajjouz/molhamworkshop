@@ -103,4 +103,9 @@ class BaseTargetModel extends BaseModel
     {
         return $this->morphMany('App\Models\Like', 'likeable');
     }
+  
+    public function comments()
+    {
+        return $this->morphMany('App\Models\Comment', 'commentable');
+    }
 }

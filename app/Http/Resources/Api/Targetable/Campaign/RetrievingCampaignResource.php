@@ -26,7 +26,7 @@ class RetrievingCampaignResource extends JsonResource
             "funded_by_auth" => $faker->boolean(), //TEMPORARY
             "saved_by_auth" => $faker->boolean(), //TEMPORARY
             "likes_count" => $faker->numberBetween(0, 1000), //TEMPORARY
-            "comments_count" => $faker->numberBetween(0, 200), //TEMPORARY
+            "comments_count" => $this->comments()->count() , 
             "shares_count" => $faker->numberBetween(0, 10), //TEMPORARY
             "funded" => $this->funded,
             'published_at' => $target->published_at,

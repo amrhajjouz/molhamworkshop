@@ -24,7 +24,7 @@ class ListingSponsorshipResource extends JsonResource
                 "funded_by_auth" => $faker->boolean(),//TEMPORARY
                 "saved_by_auth" => $faker->boolean(),//TEMPORARY
                 "likes_count" => $faker->numberBetween(0 , 1000),//TEMPORARY
-                "comments_count" => $faker->numberBetween(0 , 200),//TEMPORARY
+                "comments_count" => $sponsorship->comments()->count() , 
                 "shares_count" => $faker->numberBetween(0 , 10),//TEMPORARY
                 "preview_images" => null,//TEMPORARY
                 'published_at' => $sponsorship->target->published_at,

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\{DonorController , AuthDonorController , FeedbackController, PaymentMethodController, SubscriptionController , ReviewController , SavedItemController};
 use App\Http\Controllers\Api\PaymentProvider\Stripe\{SetupIntentController};
 use App\Http\Controllers\Api\Targetable\{CaseController , CampaignController , FundraiserController , EventController , ScholarshipController , SponsorshipController , ProjectController , SmallProjectController};
-use App\Http\Controllers\Api\{LikeController};
+use App\Http\Controllers\Api\{LikeController , CommentController};
 
 //use Stripe\StripeClient;
 
@@ -149,6 +149,10 @@ Route::group([], function () {
     //Like
     Route::post('/likes' , [LikeController::class, 'create'])->name('api.likes.create'); 
     Route::delete('/likes/{id}' , [LikeController::class, 'delete'])->name('api.likes.delete');
+  
+    //Comment
+    Route::post('/comments' , [CommentController::class, 'create'])->name('api.comments.create'); 
+    Route::delete('/comments/{id}' , [CommentController::class, 'delete'])->name('api.comments.delete');
 
 
 });
