@@ -16,7 +16,7 @@ class CreateMemberRequest extends FormRequest
     {
         return true;
     }
-    
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,23 +24,20 @@ class CreateMemberRequest extends FormRequest
      */
     public function rules()
     {
-        
-        return [
-            'name' => ['required' ,'string', 'between:3,20'],
-            'email' => ['required', 'email', 'unique:users,email'],
-            'surname' => ['string', 'between:3,20'],
-            'career_level' => ['required'],
-            'section' => ['required'],
-            'office' => ['required'],
-            'direct_manager' => ['required'],
-            'job_descriptions' => ['required'],
-            'main_tasks' => ['required'],
-            'additional_tasks' => ['required'],
-            'job_title' => ['required' ,'string'],
-            'contract_type' => ['required' ,'string'],
-            'contract_starting_date' => ['required' ,'date'],
 
+        return [
+            'first_name.ar' => ['required', 'string'],
+            'first_name.en' => ['required', 'string'],
+            'last_name.ar' => ['required', 'string'],
+            'last_name.en' => ['required', 'string'],
+            'father_name.ar' => ['required', 'string'],
+            'father_name.en' => ['required', 'string'],
+            'mother_name.ar' => ['required', 'string'],
+            'mother_name.en' => ['required', 'string'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'nationality_code' => ['required', 'string'],
+            'birth_date' => ['required', 'date'],
         ];
     }
-    
+
 }

@@ -17,9 +17,7 @@ class MemberController extends Controller
     public function create (CreateMemberRequest $request) {
 
         try {
-            $user = User::create($request->validated());
-
-            return response()->json($user);
+            return response()->json(User::create($request->validated()));
 
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
@@ -46,6 +44,8 @@ class MemberController extends Controller
 
     public function retrieve ($id) {
 
+        //$x = User::find(3)->member_contract;
+        //dd($x);
         try {
 
             // Fetch User and Return

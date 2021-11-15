@@ -1,0 +1,41 @@
+<include-header />
+
+<form class="row" name="userFamilyMemberForm" request="updateUserFamilyMember">
+
+    <!--relative relation-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="relative_relation">صلة القرابة</label>
+            <select class="custom-select" ng-class="(updateUserFamilyMember.errors.relative_relation != null) ? 'is-invalid' : ''" id="relative_relation" ng-model="userFamilyMember.relative_relation" ng-change="updateUserFamilyMember.errors.relative_relation = null">
+                <option value="father">أب</option>
+                <option value="mother">أم</option>
+                <option value="brother">أخ</option>
+                <option value="sister">أخت</option>
+                <option value="child">طفل</option>
+            </select>
+            <div ng-show="updateUserFamilyMember.errors.relative_relation != null" class="invalid-feedback">{{ updateUserFamilyMember.errors.relative_relation[0] }}</div>
+        </div>
+    </div>
+
+    <!--name-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">الاسم</label>
+            <input type="text" class="form-control" ng-class="(updateUserFamilyMember.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="userFamilyMember.name" ng-change="updateUserFamilyMember.errors.name = null" placeholder="الاسم .." required>
+            <div ng-show="updateUserFamilyMember.errors.name != null" class="invalid-feedback">{{ updateUserFamilyMember.errors.name[0] }}</div>
+        </div>
+    </div>
+
+    <!--surname-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="surname">اللقب</label>
+            <input type="text" class="form-control" ng-class="(updateUserFamilyMember.errors.surname != null) ? 'is-invalid' : ''" id="surname" ng-model="userFamilyMember.surname" ng-change="updateUserFamilyMember.errors.surname = null" placeholder="اللقب .." required>
+            <div ng-show="updateUserFamilyMember.errors.surname != null" class="invalid-feedback">{{ updateUserFamilyMember.errors.surname[0] }}</div>
+        </div>
+    </div>
+    
+    <div class="col-12">
+        <submit-button form="userFamilyMemberForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+</form>

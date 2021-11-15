@@ -1,0 +1,79 @@
+<include-header/>
+
+<div class="header">
+    <div class="header-body">
+        <h1 class="header-title h3 font-weight-bold">
+           معلومات طلب السفر
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-lg-4">
+        <table>
+            <tr>
+                <td class="text-muted py-3">صاحب الطلب</td>
+                <td class="py-3 pr-3">{{ travelRequest.user.name }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ الإنطلاق</td>
+                <td class="py-3 pr-3">{{ travelRequest.start_date }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ العودة</td>
+                <td class="py-3 pr-3">{{ travelRequest.end_date }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">الإقامة</td>
+                <td class="py-3 pr-3">{{ travelRequest.residence }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">وسيلة السفر</td>
+                <td class="py-3 pr-3">{{ travelRequest.means_of_travel }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">الوجهة</td>
+                <td class="py-3 pr-3">{{ travelRequest.travel_destination }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">عدد الأيام</td>
+                <td class="py-3 pr-3">{{ travelRequest.days }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-12 col-lg-4">
+        <table>
+            <tr>
+                <td class="text-muted py-3">مجموع بدل الإطعام</td>
+                <td class="py-3 pr-3">{{ travelRequest.total_food_allowance }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">مجموع بدل الإقامة</td>
+                <td class="py-3 pr-3">{{ travelRequest.total_subsistence_allowance }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">مجموع بدل النقل</td>
+                <td class="py-3 pr-3">{{ travelRequest.total_transportation_allowance }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تعویضات السفر</td>
+                <td class="py-3 pr-3">{{ travelRequest.travel_compensation }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-12 col-lg-4">
+        <table>
+            <tr>
+                <td class="text-muted py-3">تاريخ الاضافة</td>
+                <td class="py-3 pr-3"><td class="py-3 pr-3"><span ng-bind="travelRequest.created_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td></td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ اخر تعديل</td>
+                <td class="py-3 pr-3"><td class="py-3 pr-3"><span ng-bind="travelRequest.updated_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<hr>
+

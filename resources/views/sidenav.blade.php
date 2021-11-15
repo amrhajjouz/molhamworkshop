@@ -7,13 +7,27 @@
 <ul class="navbar-nav">
 
     <li class="nav-item">
-        <a class="nav-link nav-link" href="{{ $r('profile.info') }}">
-            <i class="fe fe-user"></i> معلومات حسابك
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#profile-navs" role="button" aria-expanded="false">
+            <i class="fe fe-user"></i>  معلومات حسابك
         </a>
+        <div class="collapse" id="profile-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('profile.info') }}" class="nav-link">
+                        الملف الشخصي
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('user-family-members') }}" class="nav-link">
+                        أفراد العائلة
+                    </a>
+                </li>
+            </ul>
+        </div>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link " href="javascript:;" onclick="var c = confirm('هل أنت متأكد أنك تريد الخروج من حسابك ؟'); if (c) window.location.href = '<?php print route('logout'); ?>';">
+        <a class="nav-link" href="javascript:;" onclick="var c = confirm('هل أنت متأكد أنك تريد الخروج من حسابك ؟'); if (c) window.location.href = '<?php print route('logout'); ?>';">
             <i class="fe fe-power"></i> تسجيل الخروج
         </a>
     </li>

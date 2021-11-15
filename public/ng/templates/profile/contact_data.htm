@@ -1,0 +1,70 @@
+<include-header/>
+
+<form class="row" name="myForm" request="updateContactData">
+
+    <div class="col-12 alert alert-danger fade show" role="alert" ng-show="updateContactData.error != ''">
+        {{ updateContactData.error }}
+    </div>
+
+    <!--phone-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="phone">رقم الهاتف</label>
+            <input type="text" class="form-control" id="phone" ng-model="profile.phone" ng-init="profile.phone = auth.phone" ng-change="updateContactData.error = ''" placeholder="رقم الهاتف">
+        </div>
+    </div>
+
+    <!--whatsapp-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="whatsapp">رقم الوتس أب</label>
+            <input type="text" class="form-control" id="whatsapp" ng-model="profile.whatsapp" ng-init="profile.whatsapp = auth.whatsapp" ng-change="updateContactData.error = ''" placeholder="رقم الوتس أب">
+        </div>
+    </div>
+
+    <!--reference person name-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="reference_person_name">اسم شخص مقرب</label>
+            <input type="text" class="form-control" id="reference_person_name" ng-model="profile.reference_person_name" ng-init="profile.reference_person_name = auth.reference_person_name" ng-change="updateContactData.error = ''" placeholder="اسم شخص مقرب">
+        </div>
+    </div>
+
+    <!--reference person phone-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="reference_person_phone">رقم هاتف الشخص</label>
+            <input type="text" class="form-control" id="reference_person_phone" ng-model="profile.reference_person_phone" ng-init="profile.reference_person_phone = auth.reference_person_phone" ng-change="updateContactData.error = ''" placeholder="رقم تواصل الشخص">
+        </div>
+    </div>
+
+    <!--reference person relation type-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="reference_person_relation_type">صلة القرابة</label>
+            <input type="text" class="form-control" id="reference_person_relation_type" ng-model="profile.reference_person_relation_type" ng-init="profile.reference_person_relation_type = auth.reference_person_relation_type" ng-change="updateContactData.error = ''" placeholder="صلة القرابة">
+        </div>
+    </div>
+
+    <!--facebook-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="facebook">رابط صفحتك على فيسبوك</label>
+            <input type="text" class="form-control" id="facebook" ng-model="profile.facebook" ng-init="profile.facebook = auth.facebook" ng-change="updateContactData.error = ''" placeholder="رابط صفحتك على فيسبوك">
+        </div>
+    </div>
+
+    <!--instagram-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="instagram">رابط حسابك على الإنستغرام</label>
+            <input type="text" class="form-control" id="instagram" ng-model="profile.instagram" ng-init="profile.instagram = auth.instagram" ng-change="updateContactData.error = ''" placeholder="رابط حسابك على الإنستغرام">
+        </div>
+    </div>
+
+
+    <div class="col-12">
+        <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+
+</form>

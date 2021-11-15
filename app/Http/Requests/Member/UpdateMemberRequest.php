@@ -27,20 +27,17 @@ class UpdateMemberRequest extends FormRequest
         
         return [
             'id' => ['required', 'exists:users'],
-            'name' => ['string', 'between:3,20'],
             'email' => ['email', Rule::unique('users', 'email')->ignore($this->input('id'))],
-            'password' => ['string', 'min:8'],
-            'surname' => ['string', 'between:3,20'],
-            'career_level' => ['required'],
-            'section' => ['required'],
-            'direct_manager' => ['required'],
-            'job_title' => ['required'],
-            'office' => ['required'],
-            'job_descriptions' => ['required'],
-            'main_tasks' => ['required'],
-            'additional_tasks' => ['required'],
-            'contract_type' => ['required' ,'string'],
-            'contract_starting_date' => ['required' ,'date'],
+            'first_name.ar' => ['required', 'string'],
+            'first_name.en' => ['required', 'string'],
+            'last_name.ar' => ['required', 'string'],
+            'last_name.en' => ['required', 'string'],
+            'father_name.ar' => ['required', 'string'],
+            'father_name.en' => ['required', 'string'],
+            'mother_name.ar' => ['required', 'string'],
+            'mother_name.en' => ['required', 'string'],
+            'nationality_code' => ['required', 'string'],
+            'birth_date' => ['required', 'date'],
         ];
     }
     

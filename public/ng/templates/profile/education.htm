@@ -1,0 +1,89 @@
+<include-header/>
+
+<form class="row" name="myForm" request="updateEducation">
+
+    <!--education level-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="education_level">المستوى التعليمي</label>
+            <input type="text" class="form-control" id="education_level" ng-model="profile.education_level" ng-init="profile.education_level = auth.education_level" ng-change="updateEducation.error = ''" ng-error="updateEducation.errors.education_level" placeholder="المستوى التعليمي">
+        </div>
+    </div>
+
+    <!--education section-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="education_section">الفرع</label>
+            <input type="text" class="form-control" id="education_section" ng-model="profile.education_section" ng-init="profile.education_section = auth.education_section" ng-change="updateEducation.error = ''" ng-error="updateEducation.errors.education_section" placeholder="الفرع">
+        </div>
+    </div>
+
+    <!--educational facility-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="educational_facility">المنشأة التعليمية</label>
+            <input type="text" class="form-control" id="educational_facility" ng-model="profile.educational_facility" ng-init="profile.educational_facility = auth.educational_facility" ng-change="updateEducation.error = ''" ng-error="updateEducation.errors.educational_facility" placeholder="المنشأة التعليمية">
+        </div>
+    </div>
+
+    <!--educational country-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="educational_country">البلد</label>
+            <input type="text" class="form-control" id="educational_country" ng-model="profile.educational_country" ng-init="profile.educational_country = auth.educational_country" ng-change="updateEducation.error = ''" ng-error="updateEducation.errors.educational_country" placeholder="البلد">
+        </div>
+    </div>
+
+    <!--educational language-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="educational_language">لغة الدراسة</label>
+            <input type="text" class="form-control" id="educational_language" ng-model="profile.educational_language" ng-init="profile.educational_language = auth.educational_language" ng-change="updateEducation.error = ''" ng-error="updateEducation.errors.educational_language" placeholder="لغة الدراسة">
+        </div>
+    </div>
+
+    <!--educational status-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="educational_status">الحالة الدراسية</label>
+            <input type="text" class="form-control" id="educational_status" ng-model="profile.educational_status" ng-init="profile.educational_status = auth.educational_status" ng-change="updateEducation.error = ''" ng-error="updateEducation.errors.educational_status" placeholder="الحالة الدراسية">
+        </div>
+    </div>
+
+    <!--graduation year-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="graduation_year">سنة التخرج</label>
+            <input id="graduation_year" date-picker class="form-control" ng-model="profile.graduation_year" ng-init="profile.graduation_year = auth.graduation_year" ng-error="updateEducation.errors.graduation_year" placeholder="سنة التخرج">
+        </div>
+    </div>
+
+    <!--average-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="average">المعدل</label>
+            <input type="text" id="average" class="form-control" ng-model="profile.average" ng-init="profile.average = auth.average" ng-error="updateEducation.errors.average" placeholder="المعدل">
+        </div>
+    </div>
+
+    <!--native language-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="native_language">اللغة الأم</label>
+            <input type="text" class="form-control" id="native_language" ng-model="profile.native_language" ng-init="profile.native_language = auth.native_language" ng-change="updateEducation.error = ''" ng-error="updateEducation.errors.native_language" placeholder="اللغة الأم">
+        </div>
+    </div>
+
+    <!--other languages-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="other_languages">لغات اخرى</label>
+            <input type="text" class="form-control" id="other_languages" ng-model="profile.other_languages" ng-init="profile.other_languages = auth.other_languages" ng-change="updateEducation.error = ''" ng-error="updateEducation.errors.other_languages" placeholder="لغات اخرى">
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+
+</form>

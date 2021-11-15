@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -15,16 +16,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'name' => 'Developer User',
-            'email' => 'admin@admin.com',
+        User::create([
+            'first_name' => ['ar'=>'Developer User' , 'en'=>"Developer User"],
+            //'section_id' => 1,
+            'email' => "admin@admin.com",
             'password' => Hash::make('12345678'),
         ]);
 
 
         $this->call([
-            CountrySeeder::class , 
-            PlaceSeeder::class , 
+            CountrySeeder::class ,
+            PlaceSeeder::class ,
+            UserSectionSeeder::class ,
         ]);
     }
 }

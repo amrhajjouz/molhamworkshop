@@ -1,0 +1,43 @@
+<page-header title="طلب قرض" pretitle="القروض"></page-header>
+
+<form class="row" name="loanRequestForm" request="createLoanRequest">
+
+    <!--amount-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="amount">مقدار القرض بالدولار</label>
+            <input type="number" class="form-control" ng-class="(createLoanRequest.errors.amount != null) ? 'is-invalid' : ''" id="amount" ng-model="loanRequest.amount" ng-change="createLoanRequest.errors.amount = null" placeholder="مقدار القرض بالدولار .." required>
+            <div ng-show="createLoanRequest.errors.amount != null" class="invalid-feedback">{{ createLoanRequest.errors.amount[0] }}</div>
+        </div>
+    </div>
+
+    <!--receiving date-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="receiving_date">تاريخ استلام القرض</label>
+            <input id="receiving_date" date-picker class="form-control" ng-model="loanRequest.receiving_date" placeholder="تاريخ استلام القرض.." ng-error="createLoanRequest.errors.receiving_date" required>
+        </div>
+    </div>
+
+    <!--return date-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="return_date">تاريخ ارجاع القرض</label>
+            <input date-picker class="form-control" ng-class="(createLoanRequest.errors.return_date != null) ? 'is-invalid' : ''" id="return_date" ng-model="loanRequest.return_date" ng-change="createLoanRequest.errors.return_date = null" placeholder="تاريخ استرجاع القرض .." required>
+            <div ng-show="createLoanRequest.errors.return_date != null" class="invalid-feedback">{{ createLoanRequest.errors.return_date[0] }}</div>
+        </div>
+    </div>
+
+    <!--details-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="details">سبب القرض</label>
+            <textarea rows="5" cols="5" class="form-control" ng-class="(createLoanRequest.errors.details != null) ? 'is-invalid' : ''" id="details" ng-model="loanRequest.details" ng-change="createLoanRequest.errors.details = null" placeholder="سبب القرض .." required></textarea>
+            <div ng-show="createLoanRequest.errors.details != null" class="invalid-feedback">{{ createLoanRequest.errors.details[0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="loanRequestForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>

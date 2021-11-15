@@ -13,40 +13,40 @@
     <div class="col-12 col-lg-4">
 
         <table>
-            <!--name-->
+            <!--first name ar-->
             <tr>
-                <td class="text-muted py-3">الاسم</td>
-                <td class="py-3 pr-3">{{ member.name }}</td>
+                <td class="text-muted py-3">الاسم باللغة العربية</td>
+                <td class="py-3 pr-3">{{ member.first_name.ar }}</td>
             </tr>
-            <!--surname-->
+            <!--first name ar-->
             <tr>
-                <td class="text-muted py-3">اللقب</td>
-                <td class="py-3 pr-3">{{ member.surname }}</td>
+                <td class="text-muted py-3">الإسم باللغة الإنكليزية</td>
+                <td class="py-3 pr-3">{{ member.first_name.en }}</td>
             </tr>
             <!--email-->
             <tr>
                 <td class="text-muted py-3">البريد الالكتروني</td>
                 <td class="py-3 pr-3">{{ member.email }}</td>
             </tr>
-            <!--Section-->
+            <!--last name ar-->
             <tr>
-                <td class="text-muted py-3">القسم</td>
-                <td class="py-3 pr-3">{{ member.section }}</td>
+                <td class="text-muted py-3">اللقب باللغة العربية</td>
+                <td class="py-3 pr-3">{{ member.last_name.ar }}</td>
             </tr>
-            <!--Career level-->
+            <!--last name en-->
             <tr>
-                <td class="text-muted py-3">المستوى الوظيفي</td>
-                <td class="py-3 pr-3">{{ member.career_level }}</td>
+                <td class="text-muted py-3">اللقب باللغة الإنكليزية</td>
+                <td class="py-3 pr-3">{{ member.last_name.en }}</td>
             </tr>
-            <!--Job title-->
+            <!--father name ar-->
             <tr>
-                <td class="text-muted py-3">المسمى الوظيفي</td>
-                <td class="py-3 pr-3">{{ member.job_title }}</td>
+                <td class="text-muted py-3">اسم الأب باللغة العربية</td>
+                <td class="py-3 pr-3">{{ member.father_name.ar }}</td>
             </tr>
-            <!--direct manager-->
+            <!--father name en-->
             <tr>
-                <td class="text-muted py-3">المدير المباشر</td>
-                <td class="py-3 pr-3">{{ member.direct_manager }}</td>
+                <td class="text-muted py-3">اسم الأب باللغة الإنكليزية</td>
+                <td class="py-3 pr-3">{{ member.father_name.en }}</td>
             </tr>
         </table>
 
@@ -55,36 +55,51 @@
     <div class="col-12 col-lg-4">
 
         <table>
-            <!--office-->
+            <!--mother name ar-->
             <tr>
-                <td class="text-muted py-3">المكتب</td>
-                <td class="py-3 pr-3">{{ member.office }}</td>
+                <td class="text-muted py-3">اسم الأم باللغة العربية</td>
+                <td class="py-3 pr-3">{{ member.mother_name.ar }}</td>
             </tr>
-            <!--Contract type-->
+            <!--mother name en-->
             <tr>
-                <td class="text-muted py-3">نوع العقد</td>
-                <td class="py-3 pr-3">{{ member.contract_type }}</td>
+                <td class="text-muted py-3">اسم الأم باللغة الإنكليزية</td>
+                <td class="py-3 pr-3">{{ member.mother_name.en }}</td>
             </tr>
-            <!--Contract starting date-->
+            <!--birth date-->
             <tr>
-                <td class="text-muted py-3">تاريخ بداية العقد</td>
-                <td class="py-3 pr-3">{{ member.contract_starting_date }}</td>
+                <td class="text-muted py-3">تاريخ الميلاد</td>
+                <td class="py-3 pr-3">{{ member.birth_date }}</td>
             </tr>
-            <!--job descriptions-->
+            <!--&lt;!&ndash;employment level&ndash;&gt;
             <tr>
-                <td class="text-muted py-3">التوصيف الوظيفي</td>
-                <td class="py-3 pr-3">{{ member.job_descriptions }}</td>
+                <td class="text-muted py-3">المستوى الوظيفي</td>
+                <td class="py-3 pr-3">{{ member.member_translate_words[0] }}</td>
             </tr>
-            <!--main tasks-->
+            &lt;!&ndash;employment degree&ndash;&gt;
             <tr>
-                <td class="text-muted py-3">المهام الرئيسية</td>
-                <td class="py-3 pr-3">{{ member.main_tasks }}</td>
+                <td class="text-muted py-3">الدرجة(المحفظة)</td>
+                <td class="py-3 pr-3">{{ member.employment_degree }}</td>
             </tr>
-            <!--additional tasks-->
+            &lt;!&ndash;document type&ndash;&gt;
             <tr>
-                <td class="text-muted py-3">المهام الإضافية</td>
-                <td class="py-3 pr-3">{{ member.additional_tasks }}</td>
+                <td class="text-muted py-3">نوع الوثيقة</td>
+                <td class="py-3 pr-3">{{ member.document_type }}</td>
             </tr>
+            &lt;!&ndash;document number&ndash;&gt;
+            <tr>
+                <td class="text-muted py-3">رقم الوثيقة</td>
+                <td class="py-3 pr-3">{{ member.document_number }}</td>
+            </tr>
+            &lt;!&ndash;document issuance date&ndash;&gt;
+            <tr>
+                <td class="text-muted py-3">تاريخ اصدار الوثيقة</td>
+                <td class="py-3 pr-3">{{ member.document_issuance_date }}</td>
+            </tr>
+            &lt;!&ndash;document expiration date&ndash;&gt;
+            <tr>
+                <td class="text-muted py-3">تاريخ انتهاء الوثيقة</td>
+                <td class="py-3 pr-3">{{ member.document_expiration_date }}</td>
+            </tr>-->
         </table>
 
     </div>

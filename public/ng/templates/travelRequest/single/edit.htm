@@ -1,0 +1,95 @@
+<include-header/>
+
+<form class="row" name="travelRequestForm" request="updateTravelRequest">
+
+    <!--start date-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="start_date">تاريخ الإنطلاق</label>
+            <input id="start_date" date-picker class="form-control" ng-model="travelRequest.start_date" placeholder="تاريخ الإنطلاق.." ng-error="updateTravelRequest.errors.start_date" required>
+        </div>
+    </div>
+
+    <!--end date-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="end_date">تاريخ العودة</label>
+            <input date-picker class="form-control" ng-class="(updateTravelRequest.errors.end_date != null) ? 'is-invalid' : ''" id="end_date" ng-model="travelRequest.end_date" ng-change="updateTravelRequest.errors.end_date = null" placeholder="تاريخ العودة .." required>
+            <div ng-show="updateTravelRequest.errors.end_date != null" class="invalid-feedback">{{ updateTravelRequest.errors.end_date[0] }}</div>
+        </div>
+    </div>
+
+    <!--travel destination-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="travel_destination">الوجهة</label>
+            <select class="custom-select" ng-class="(updateTravelRequest.errors.travel_destination != null) ? 'is-invalid' : ''" id="travel_destination" ng-model="travelRequest.travel_destination" ng-change="fillFinancialCompensation(travelRequest.travel_destination,travelRequest.means_of_travel)">
+                <option value="syria">سوريا</option>
+                <option value="istanbul">اسطنبول</option>
+                <option value="gaziantep">غازي عنتاب</option>
+            </select>
+            <div ng-show="updateTravelRequest.errors.travel_destination != null" class="invalid-feedback">{{ updateTravelRequest.errors.travel_destination[0] }}</div>
+        </div>
+    </div>
+
+    <!--means of travel-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="means_of_travel">وسیلة السفر</label>
+            <select class="custom-select" ng-class="(updateTravelRequest.errors.means_of_travel != null) ? 'is-invalid' : ''" id="means_of_travel" ng-model="travelRequest.means_of_travel" ng-change="updateTravelRequest.errors.means_of_travel = null">
+                <option value="car">سيارة</option>
+                <option value="train">قطار</option>
+                <option value="plane">طائرة</option>
+            </select>
+            <div ng-show="updateTravelRequest.errors.means_of_travel != null" class="invalid-feedback">{{ updateTravelRequest.errors.means_of_travel[0] }}</div>
+        </div>
+    </div>
+
+    <!--residence-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="residence">الإقامة</label>
+            <select class="custom-select" ng-class="(updateTravelRequest.errors.residence != null) ? 'is-invalid' : ''" id="residence" ng-model="travelRequest.residence" ng-change="updateTravelRequest.errors.residence = null">
+                <option value="hotel">فندق</option>
+                <option value="friend">صديق</option>
+            </select>
+            <div ng-show="updateTravelRequest.errors.residence != null" class="invalid-feedback">{{ updateTravelRequest.errors.residence[0] }}</div>
+        </div>
+    </div>
+
+    <!--total food allowance-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="total_food_allowance">مجموع بدل الإطعام</label>
+            <input type="text" class="form-control" ng-class="(updateTravelRequest.errors.total_food_allowance != null) ? 'is-invalid' : ''" id="total_food_allowance" ng-model="travelRequest.total_food_allowance" ng-change="updateTravelRequest.errors.total_food_allowance = null" placeholder="مجموع بدل الإطعام .." disabled>
+        </div>
+    </div>
+
+    <!--total subsistence allowance-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="total_subsistence_allowance">مجموع بدل الإقامة</label>
+            <input type="text" class="form-control" ng-class="(updateTravelRequest.errors.total_subsistence_allowance != null) ? 'is-invalid' : ''" id="total_subsistence_allowance" ng-model="travelRequest.total_subsistence_allowance" ng-change="updateTravelRequest.errors.total_subsistence_allowance = null" placeholder="مجموع بدل الإقامة .." disabled>
+        </div>
+    </div>
+
+    <!--total transportation allowance-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="total_transportation_allowance">مجموع بدل النقل</label>
+            <input type="text" class="form-control" ng-class="(updateTravelRequest.errors.total_transportation_allowance != null) ? 'is-invalid' : ''" id="total_transportation_allowance" ng-model="travelRequest.total_transportation_allowance" ng-change="updateTravelRequest.errors.total_transportation_allowance = null" placeholder="مجموع بدل النقل .." disabled>
+        </div>
+    </div>
+
+    <!--travel compensation-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="travel_compensation">تعویضات السفر</label>
+            <input type="text" class="form-control" ng-class="(updateTravelRequest.errors.travel_compensation != null) ? 'is-invalid' : ''" id="travel_compensation" ng-model="travelRequest.travel_compensation" ng-change="updateTravelRequest.errors.travel_compensation = null" placeholder="تعویضات السفر .." disabled>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="travelRequestForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+</form>

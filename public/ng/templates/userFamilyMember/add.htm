@@ -1,0 +1,29 @@
+<page-header title="فرد جديد" pretitle="أفراد العائلة"></page-header>
+
+<form class="row" name="userFamilyMemberForm" request="createUserFamilyMember">
+
+    <!--relative relation-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="relative_relation">صلة القرابة</label>
+            <select class="custom-select" ng-class="(createUserFamilyMember.errors.relative_relation != null) ? 'is-invalid' : ''" id="relative_relation" ng-model="userFamilyMember.relative_relation" ng-change="createUserFamilyMember.errors.relative_relation = null">
+                <option value="child">طفل</option>
+                <option value="partner">زوج/ة</option>
+            </select>
+            <div ng-show="createUserFamilyMember.errors.relative_relation != null" class="invalid-feedback">{{ createUserFamilyMember.errors.relative_relation[0] }}</div>
+        </div>
+    </div>
+
+    <!--name-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">الاسم</label>
+            <input type="text" class="form-control" ng-class="(createUserFamilyMember.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="userFamilyMember.name" ng-change="createUserFamilyMember.errors.name = null" placeholder="الاسم .." required>
+            <div ng-show="createUserFamilyMember.errors.name != null" class="invalid-feedback">{{ createUserFamilyMember.errors.name[0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="userFamilyMemberForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>

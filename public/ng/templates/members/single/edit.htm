@@ -2,21 +2,67 @@
 
 <form class="row" name="updateMemberForm" request="updateMember">
 
-    <!--name-->
+    <!--first name ar-->
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="name">الاسم</label>
-            <input type="text" class="form-control" ng-class="(updateMember.errors.name != null) ? 'is-invalid' : ''" id="name" ng-model="member.name" ng-change="updateMember.errors.name = null" placeholder="الاسم .." required>
-            <div ng-show="updateMember.errors.name != null" class="invalid-feedback">{{ updateMember.errors.name[0] }}</div>
+            <label for="first_name_ar">الإسم باللغة العربية</label>
+            <input id="first_name_ar" class="form-control" type="text" ng-model="member.first_name.ar" placeholder="الإسم باللغة العربية.." ng-error="updateMember.errors.first_name.ar" required>
         </div>
     </div>
 
-    <!--surname-->
+    <!--first name en-->
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="surname">اللقب</label>
-            <input type="text" class="form-control" ng-class="(updateMember.errors.surname != null) ? 'is-invalid' : ''" id="surname" ng-model="member.surname" ng-change="updateMember.errors.surname = null" placeholder="اللقب .." required>
-            <div ng-show="updateMember.errors.surname != null" class="invalid-feedback">{{ updateMember.errors.surname[0] }}</div>
+            <label for="first_name_en">الإسم باللغة الإنكليزية</label>
+            <input id="first_name_en" class="form-control" type="text" ng-model="member.first_name.en" placeholder="الإسم باللغة الإنكليزية.." ng-error="updateMember.errors.first_name.en" required>
+        </div>
+    </div>
+
+    <!--last name ar-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="last_name_ar">اللقب باللغة العربية</label>
+            <input id="last_name_ar" class="form-control" type="text" ng-model="member.last_name.ar" placeholder="اللقب باللغة العربية.." ng-error="updateMember.errors.last_name.ar" required>
+        </div>
+    </div>
+
+    <!--last name en-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="last_name_en">اللقب باللغة الإنكليزية</label>
+            <input id="last_name_en" class="form-control" type="text" ng-model="member.last_name.en" placeholder="اللقب باللغة الإنكليزية.." ng-error="updateMember.errors.last_name.en" required>
+        </div>
+    </div>
+
+    <!--father name ar-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="father_name_ar">اسم الأب باللغة العربية</label>
+            <input id="father_name_ar" class="form-control" type="text" ng-model="member.father_name.ar" placeholder="اسم الأب باللغة العربية.." ng-error="updateMember.errors.father_name.ar" required>
+        </div>
+    </div>
+
+    <!--father name en-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="father_name_en">اسم الأب باللغة الإنكليزية</label>
+            <input id="father_name_en" class="form-control" type="text" ng-model="member.father_name.en" placeholder="اسم الأب باللغة الإنكليزية.." ng-error="updateMember.errors.father_name.en" required>
+        </div>
+    </div>
+
+    <!--mother name ar-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="mother_name_ar">اسم الأم باللغة العربية</label>
+            <input id="mother_name_ar" class="form-control" type="text" ng-model="member.mother_name.ar" placeholder="اسم الأم باللغة العربية.." ng-error="updateMember.errors.mother_name.ar" required>
+        </div>
+    </div>
+
+    <!--mother name en-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="mother_name_en">اسم الأم باللغة الإنكليزية</label>
+            <input id="mother_name_en" class="form-control" type="text" ng-model="member.mother_name.en" placeholder="اسم الأم باللغة الإنكليزية.." ng-error="updateMember.errors.mother_name.en" required>
         </div>
     </div>
 
@@ -25,28 +71,31 @@
         <div class="form-group">
             <label for="email">البريد الالكتروني</label>
             <input type="email" class="form-control" ng-class="(updateMember.errors.email != null) ? 'is-invalid' : ''" id="email" ng-model="member.email" ng-change="updateMember.errors.email = null" placeholder="البريد الالكتروني .." autofocus="off" autocomplete="off" required>
-            <div ng-show="updateMember.errors.email != null" class="invalid-feedback">{{ updateMember.errors.email[0] }}</div>
+            <!--<div ng-show="updateMember.errors.email != null" class="invalid-feedback">{{ updateMember.errors.email[0] }}</div>-->
         </div>
     </div>
 
-    <!--Section-->
+    <!--birth date-->
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="section">القسم</label>
-            <select class="form-control" ng-class="(updateMember.errors.section != null) ? 'is-invalid' : ''" id="section" ng-model="member.section" ng-change="updateMember.errors.section = null">
-                <option value="finance">مالية</option>
-                <option value="programmes">البرامج</option>
-                <option value="hr">موارد بشرية</option>
-            </select>
-            <div ng-show="updateMember.errors.section != null" class="invalid-feedback">{{ updateMember.errors.section[0] }}</div>
+            <label for="birth_date">تاريخ الميلاد</label>
+            <input id="birth_date" class="form-control" date-picker ng-model="member.birth_date" placeholder="تاريخ الميلاد.." ng-error="updateMember.errors.birth_date" required>
         </div>
     </div>
 
-    <!--Career level-->
+    <!--nationality code-->
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="career_level">المستوى الوظيفي</label>
-            <select class="form-control" ng-class="(updateMember.errors.career_level != null) ? 'is-invalid' : ''" id="career_level" ng-model="member.career_level" ng-change="memberAction(member.career_level, member.office, member.section)">
+            <label for="nationality_code">الجنسية</label>
+            <input id="nationality_code" class="form-control" type="text" ng-model="member.nationality_code" placeholder="الجنسية.." ng-error="updateMember.errors.nationality_code" required>
+        </div>
+    </div>
+
+    <!--&lt;!&ndash;employment level&ndash;&gt;
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="employment_level">المستوى الوظيفي</label>
+            <select class="custom-select" ng-class="(updateMember.errors.employment_level != null) ? 'is-invalid' : ''" id="employment_level" ng-model="member.employment_level" ng-change="memberAction(member.employment_level)">
                 <option value="ceo">مدير تنفيذي</option>
                 <option value="manager">مدير قسم</option>
                 <option value="coordinator">منسق</option>
@@ -55,94 +104,58 @@
                 <option value="assistant">مساعد</option>
                 <option value="volunteer">متطوع</option>
             </select>
-            <div ng-show="updateMember.errors.career_level != null" class="invalid-feedback">{{ updateMember.errors.career_level[0] }}</div>
+            &lt;!&ndash;<div ng-show="updateMember.errors.employment_level != null" class="invalid-feedback">{{ updateMember.errors.employment_level[0] }}</div>&ndash;&gt;
         </div>
     </div>
 
-    <!--Job title-->
+    &lt;!&ndash;document type&ndash;&gt;
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="job_title">المسمى الوظيفي</label>
-            <select class="form-control" ng-class="(updateMember.errors.job_title != null) ? 'is-invalid' : ''" id="job_title" ng-model="member.job_title" ng-change="updateMember.errors.job_title = null">
-                <option value="administrative">إداري</option>
-                <option value="department_assistant">مساعد قسم</option>
+            <label for="document_type">نوع الوثيقة</label>
+            <input type="text" class="form-control" ng-class="(updateMember.errors.document_type != null) ? 'is-invalid' : ''" id="document_type" ng-model="member.document_type" ng-change="updateMember.errors.document_type = null" placeholder="نوع الوثيقة .." required>
+            &lt;!&ndash;<div ng-show="updateMember.errors.document_type != null" class="invalid-feedback">{{ updateMember.errors.document_type[0] }}</div>&ndash;&gt;
+        </div>
+    </div>
+
+    &lt;!&ndash;document number&ndash;&gt;
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="document_number">رقم الوثيقة</label>
+            <input type="text" class="form-control" ng-class="(updateMember.errors.document_number != null) ? 'is-invalid' : ''" id="document_number" ng-model="member.document_number" ng-change="updateMember.errors.document_number = null" placeholder="نوع الوثيقة .." required>
+            &lt;!&ndash;<div ng-show="updateMember.errors.document_number != null" class="invalid-feedback">{{ updateMember.errors.document_number[0] }}</div>&ndash;&gt;
+        </div>
+    </div>
+
+    &lt;!&ndash;document issuance date&ndash;&gt;
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="document_issuance_date">تاريخ اصدار الوثيقة</label>
+            <input date-picker class="form-control" ng-class="(updateMember.errors.document_issuance_date != null) ? 'is-invalid' : ''" id="document_issuance_date" ng-model="member.document_issuance_date" placeholder="تاريخ اصدار الوثيقة .." required>
+            &lt;!&ndash;<div ng-show="updateMember.errors.document_issuance_date != null" class="invalid-feedback">{{ updateMember.errors.document_issuance_date[0] }}</div>&ndash;&gt;
+        </div>
+    </div>
+
+    &lt;!&ndash;document expiration date&ndash;&gt;
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="document_expiration_date">تاريخ انتهاء الوثيقة</label>
+            <input date-picker class="form-control" ng-class="(updateMember.errors.document_expiration_date != null) ? 'is-invalid' : ''" id="document_expiration_date" ng-model="member.document_expiration_date" placeholder="تاريخ انتهاء الوثيقة .." required>
+            &lt;!&ndash;<div ng-show="updateMember.errors.document_expiration_date != null" class="invalid-feedback">{{ updateMember.errors.document_expiration_date[0] }}</div>&ndash;&gt;
+        </div>
+    </div>
+
+    &lt;!&ndash;employment degree&ndash;&gt;
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="employment_degree">الدرجة</label>
+            <select class="custom-select" ng-class="(updateMember.errors.employment_degree != null) ? 'is-invalid' : ''" id="employment_degree" ng-model="member.employment_degree">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
             </select>
-            <div ng-show="updateMember.errors.job_title != null" class="invalid-feedback">{{ updateMember.errors.job_title[0] }}</div>
+            <div ng-show="updateMember.errors.employment_degree != null" class="invalid-feedback">{{ updateMember.errors.employment_degree[0] }}</div>
         </div>
-    </div>
-
-    <!--direct manager-->
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="direct_manager">المدير المباشر</label>
-            <input type="text" class="form-control" ng-class="(updateMember.errors.direct_manager != null) ? 'is-invalid' : ''" id="direct_manager" ng-model="member.direct_manager" ng-change="updateMember.errors.direct_manager = null" placeholder="المدير المباشر .." required>
-            <div ng-show="updateMember.errors.direct_manager != null" class="invalid-feedback">{{ updateMember.errors.direct_manager[0] }}</div>
-        </div>
-    </div>
-
-    <!--office-->
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="office">المكتب</label>
-            <select class="form-control" ng-class="(updateMember.errors.office != null) ? 'is-invalid' : ''" id="office" ng-model="member.office" ng-change="updateMember.errors.office = null">
-                <option value="turkey">تركيا</option>
-                <option value="syria">سوريا</option>
-                <option value="lebanon">لبنان</option>
-                <option value="jordan">الأردن</option>
-            </select>
-            <div ng-show="updateMember.errors.office != null" class="invalid-feedback">{{ updateMember.errors.office[0] }}</div>
-        </div>
-    </div>
-
-    <!--Contract type-->
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="contract_type">نوع العقد</label>
-            <select class="form-control" ng-class="(updateMember.errors.contract_type != null) ? 'is-invalid' : ''" id="contract_type" ng-model="member.contract_type" ng-change="updateMember.errors.contract_type = null">
-                <option value="full_time">دوام كامل</option>
-                <option value="part_time">نصف دوام</option>
-            </select>
-            <div ng-show="updateMember.errors.contract_type != null" class="invalid-feedback">{{ updateMember.errors.contract_type[0] }}</div>
-        </div>
-    </div>
-
-    <!--Contract starting date-->
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="contract_starting_date">تاريخ بداية العقد</label>
-            <input id="contract_starting_date" date-picker class="form-control" ng-model="member.contract_starting_date" placeholder="تاريخ بداية العقد" ng-error="updateMember.errors.contract_starting_date" required>
-        </div>
-    </div>
-
-    <!--job descriptions-->
-    <div class="col-12 col-md-6"> <!--ng-hide="member.career_level == 'ceo'"-->
-        <div class="form-group">
-            <label for="job_descriptions">التوصيف الوظيفي</label>
-            <select class="form-control" ng-class="(updateMember.errors.job_descriptions != null) ? 'is-invalid' : ''" id="job_descriptions" ng-model="member.job_descriptions" ng-change="updateMember.errors.job_descriptions = null">
-                <option value="financial_coordinator">مساعد مالي</option>
-                <option value="assistant">مسؤول</option>
-            </select>
-            <div ng-show="updateMember.errors.job_descriptions != null" class="invalid-feedback">{{ updateMember.errors.job_descriptions[0] }}</div>
-        </div>
-    </div>
-
-    <!--main tasks-->
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="main_tasks">المهام الرئيسية</label>
-            <input type="text" class="form-control" ng-class="(updateMember.errors.main_tasks != null) ? 'is-invalid' : ''" id="main_tasks" ng-model="member.main_tasks" ng-change="updateMember.errors.main_tasks = null" placeholder="المهام الرئيسية .." required>
-            <div ng-show="updateMember.errors.main_tasks != null" class="invalid-feedback">{{ updateMember.errors.main_tasks[0] }}</div>
-        </div>
-    </div>
-
-    <!--additional tasks-->
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="additional_tasks">المهام الإضافية</label>
-            <input type="text" class="form-control" ng-class="(updateMember.errors.additional_tasks != null) ? 'is-invalid' : ''" id="additional_tasks" ng-model="member.additional_tasks" ng-change="updateMember.errors.additional_tasks = null" placeholder="المهام الإضافية .." required>
-            <div ng-show="updateMember.errors.additional_tasks != null" class="invalid-feedback">{{ updateMember.errors.additional_tasks[0] }}</div>
-        </div>
-    </div>
+    </div>-->
 
     <div class="col-12">
         <submit-button form="updateMemberForm" icon="fe fe-edit">تعديل</submit-button>

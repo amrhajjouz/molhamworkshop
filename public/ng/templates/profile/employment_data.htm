@@ -1,0 +1,29 @@
+<include-header/>
+
+<form class="row"> <!--name="myForm" request="updateJobData"-->
+
+    <!--<div class="col-12 alert alert-danger fade show" role="alert" ng-show="updateJobData.error != ''">
+        {{ updateJobData.error }}
+    </div>-->
+
+    <!--employment level-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="employment_level">المستوى الوظيفي</label>
+            <input type="text" class="form-control" id="employment_level" ng-model="profile.employment_level" ng-init="profile.employment_level = auth.employment_level" ng-change="updateJobData.error = ''" placeholder="المستوى الوظيفي" disabled>
+        </div>
+    </div>
+
+    <!--employment degree-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="employment_degree">الدرجة</label>
+            <input type="text" class="form-control" id="employment_degree" ng-model="profile.employment_degree" ng-init="profile.employment_degree = auth.employment_degree" ng-change="updateJobData.error = ''" placeholder="الدرجة" disabled>
+        </div>
+    </div>
+
+    <!--<div class="col-12">
+        <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>-->
+
+</form>

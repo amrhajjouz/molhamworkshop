@@ -1,0 +1,62 @@
+<include-header/>
+
+<form class="row" name="advancePaymentRequestForm" request="updateAdvancePaymentRequest">
+
+    <!--amount-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="amount">مقدار السلفة بالدولار</label>
+            <input type="number" class="form-control" ng-class="(updateAdvancePaymentRequest.errors.amount != null) ? 'is-invalid' : ''" id="amount" ng-model="advancePaymentRequest.amount" ng-change="updateAdvancePaymentRequest.errors.amount = null" placeholder="مقدار السلفة بالدولار .." required>
+            <div ng-show="updateAdvancePaymentRequest.errors.amount != null" class="invalid-feedback">{{ updateAdvancePaymentRequest.errors.amount[0] }}</div>
+        </div>
+    </div>
+
+    <!--receiving date-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="receiving_date">تاريخ استلام السلفة</label>
+            <input id="receiving_date" date-picker class="form-control" ng-model="advancePaymentRequest.receiving_date" placeholder="تاريخ استلام السلفة.." ng-error="updateAdvancePaymentRequest.errors.receiving_date" required>
+        </div>
+    </div>
+
+    <!--status-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="status">حالة السلفة</label>
+            <select class="custom-select" ng-class="(updateAdvancePaymentRequest.errors.status != null) ? 'is-invalid' : ''" id="status" ng-model="advancePaymentRequest.status" ng-change="updateAdvancePaymentRequest.errors.status = null">
+                <option value="pending">قيد الإنتظار</option>
+                <option value="under_review">قيد المراجعة</option>
+                <option value="accepted">مقبول</option>
+            </select>
+            <div ng-show="updateAdvancePaymentRequest.errors.status != null" class="invalid-feedback">{{ updateAdvancePaymentRequest.errors.status[0] }}</div>
+        </div>
+    </div>
+
+    <!--percentage to salary-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="percentage_to_salary">نسبة السلفة من الراتب الأساسي</label>
+            <select class="custom-select" ng-class="(updateAdvancePaymentRequest.errors.percentage_to_salary != null) ? 'is-invalid' : ''" id="percentage_to_salary" ng-model="advancePaymentRequest.percentage_to_salary" ng-change="updateAdvancePaymentRequest.errors.percentage_to_salary = null">
+                <option value="10%">10%</option>
+                <option value="20%">20%</option>
+                <option value="30%">30%</option>
+                <option value="40%">40%</option>
+                <option value="50%">50%</option>
+            </select>
+            <div ng-show="updateAdvancePaymentRequest.errors.status != null" class="invalid-feedback">{{ updateAdvancePaymentRequest.errors.percentage_to_salary[0] }}</div>
+        </div>
+    </div>
+
+    <!--details-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="details">سبب السلفة</label>
+            <textarea rows="5" cols="5" class="form-control" ng-class="(updateAdvancePaymentRequest.errors.details != null) ? 'is-invalid' : ''" id="details" ng-model="advancePaymentRequest.details" ng-change="updateAdvancePaymentRequest.errors.details = null" placeholder="سبب السلفة .." required></textarea>
+            <div ng-show="updateAdvancePaymentRequest.errors.details != null" class="invalid-feedback">{{ updateAdvancePaymentRequest.errors.details[0] }}</div>
+        </div>
+    </div>
+    
+    <div class="col-12">
+        <submit-button form="advancePaymentRequestForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+</form>

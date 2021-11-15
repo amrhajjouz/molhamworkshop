@@ -1,0 +1,57 @@
+<include-header/>
+
+<form class="row" name="myForm" request="updateAdditionalData">
+
+    <!--blood type-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="blood_type">زمرة الدم</label>
+            <input type="text" class="form-control" id="blood_type" ng-model="profile.blood_type" ng-init="profile.blood_type = auth.blood_type" ng-change="updateAdditionalData.error = ''" placeholder="زمرة الدم">
+        </div>
+    </div>
+
+    <!--physical disability-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="physical_disability">هل يوجد إعاقة جسدية؟</label>
+            <select class="custom-select" ng-class="(updateAdditionalData.errors.physical_disability != null) ? 'is-invalid' : ''" id="physical_disability" ng-init="profile.physical_disability = auth.physical_disability" ng-model="profile.physical_disability" ng-change="updateAdditionalData.errors.physical_disability = null">
+                <option value="yes">نعم</option>
+                <option value="no">لا</option>
+            </select>
+            <div ng-show="updateAdditionalData.errors.physical_disability != null" class="invalid-feedback">{{ updateAdditionalData.errors.physical_disability[0] }}</div>
+        </div>
+    </div>
+
+    <!--physical disability description-->
+    <div class="col-12 col-md-6" ng-show="profile.physical_disability == 'yes'">
+        <div class="form-group">
+            <label for="physical_disability_description">ما هي الإعاقة الجسدية؟</label>
+            <input type="text" class="form-control" id="physical_disability_description" ng-model="profile.physical_disability_description" ng-init="profile.physical_disability_description = auth.physical_disability_description" ng-change="updateAdditionalData.error = ''" placeholder="ما هي الإعاقة الجسدية..">
+        </div>
+    </div>
+
+    <!--communicable diseases-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="communicable_diseases">هل يوجد أمراض سارية؟</label>
+            <select class="custom-select" ng-class="(updateAdditionalData.errors.communicable_diseases != null) ? 'is-invalid' : ''" id="communicable_diseases" ng-init="profile.communicable_diseases = auth.communicable_diseases" ng-model="profile.communicable_diseases">
+                <option value="yes">نعم</option>
+                <option value="no">لا</option>
+            </select>
+            <div ng-show="updateAdditionalData.errors.communicable_diseases != null" class="invalid-feedback">{{ updateAdditionalData.errors.communicable_diseases[0] }}</div>
+        </div>
+    </div>
+
+    <!--communicable diseases description-->
+    <div class="col-12 col-md-6" ng-show="profile.communicable_diseases == 'yes'">
+        <div class="form-group">
+            <label for="communicable_diseases_description">ما هي الأمراض السارية؟</label>
+            <input type="text" class="form-control" id="communicable_diseases_description" ng-model="profile.communicable_diseases_description" ng-init="profile.communicable_diseases_description = auth.communicable_diseases_description" ng-change="updateAdditionalData.error = ''" placeholder="ما هي الأمراض السارية..">
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+
+</form>

@@ -13,7 +13,10 @@ function profileInfoController ($scope, $init, $apiRequest) {
         url : 'profile',
         data : $scope.profile,
     }, function (response, data) {
-        $('.auth-name').text($scope.profile.name);
+        if (data != null && !('error' in data)) {
+            alert('تم تحديث البيانات الشخصية !');
+            $route.reload();
+        }
     });
     
 }

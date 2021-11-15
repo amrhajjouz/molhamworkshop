@@ -1,0 +1,61 @@
+<include-header/>
+
+<form class="row" name="myForm" request="updateResidenceData">
+
+    <div class="col-12 alert alert-danger fade show" role="alert" ng-show="updateResidenceData.error != ''">
+        {{ updateResidenceData.error }}
+    </div>
+
+    <!--place of birth-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="place_of_birth">مكان الولادة</label>
+            <input type="text" class="form-control" id="place_of_birth" ng-model="profile.place_of_birth" ng-init="profile.place_of_birth = auth.place_of_birth" ng-change="updateResidenceData.error = ''" placeholder="مكان الولادة">
+        </div>
+    </div>
+
+    <!--document type-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="document_type">نوع الوثيقة</label>
+            <input type="text" class="form-control" id="document_type" ng-model="profile.document_type" ng-init="profile.document_type = auth.document_type" ng-change="updateResidenceData.error = ''" placeholder="نوع الوثيقة">
+        </div>
+    </div>
+
+    <!--document number-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="document_number">رقم الوثيقة</label>
+            <input type="text" class="form-control" id="document_number" ng-model="profile.document_number" ng-init="profile.document_number = auth.document_number" ng-change="updateResidenceData.error = ''" placeholder="رقم الوثيقة">
+        </div>
+    </div>
+
+    <!--document issuance date-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="document_issuance_date">تاريخ اصدار الوثيقة</label>
+            <input date-picker class="form-control" id="document_issuance_date" ng-model="profile.document_issuance_date" ng-init="profile.document_issuance_date = auth.document_issuance_date" ng-change="updateResidenceData.error = ''" placeholder="تاريخ اصدار الوثيقة">
+        </div>
+    </div>
+
+    <!--document expiration date-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="document_expiration_date">تاريخ انتهاء الوثيقة</label>
+            <input date-picker class="form-control" id="document_expiration_date" ng-model="profile.document_expiration_date" ng-init="profile.document_expiration_date = auth.document_expiration_date" ng-change="updateResidenceData.error = ''" placeholder="تاريخ انتهاء الوثيقة">
+        </div>
+    </div>
+
+    <!--current residence-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="current_residence">بلد الإقامة الحالي</label>
+            <input type="text" class="form-control" id="current_residence" ng-model="profile.current_residence" ng-init="profile.current_residence = auth.current_residence" ng-change="updateResidenceData.error = ''" placeholder="رقم الموظف">
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+
+</form>

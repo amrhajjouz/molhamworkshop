@@ -7,47 +7,66 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            //info data
-            $table->string('name');
-            $table->string('surname')->nullable();
+            $table->foreignId('section_id')->nullable()->constrained('user_sections')->cascadeOnDelete();
+            $table->foreignId('contract_id')->nullable()->constrained('user_contracts')->cascadeOnDelete();
+            $table->json('first_name')->nullable();
+            $table->json('last_name')->nullable();
+            $table->json('father_name')->nullable();
+            $table->json('mother_name')->nullable();
             $table->string('email')->unique();
-            $table->string('password')->default(Hash::make('12345678'));
-            //members data
-            $table->enum('career_level', ['ceo', 'manager', 'coordinator', 'senior_officer', 'officer', 'assistant', 'volunteer']);
-            $table->enum('section', ['finance', 'programmes', 'hr']);
-            $table->enum('office', ['turkey', 'jordan', 'syria', 'Lebanon']);
-            $table->enum('job_title', ['administrative', 'department_assistant']);
-            $table->enum('degree', ['1', '2', '3']);
-            $table->enum('contract_type', ['full_time', 'part_time']);
-            $table->date('contract_starting_date')->nullable();
-            $table->string('direct_manager')->nullable();
-            $table->enum('job_descriptions', ['financial_coordinator', 'assistant']);
-            $table->string('main_tasks')->nullable();
-            $table->string('additional_tasks')->nullable();
-            //profile/job_data
-            $table->string('job_number')->nullable();
-            //profile/national_data
-            $table->string('nationality')->nullable();
-            $table->string('document_type')->nullable();
-            //profile/housing_data
-            $table->string('country')->nullable();
-            $table->string('governorate')->nullable();
-            $table->string('city')->nullable();
-            $table->string('detailed_address')->nullable();
-            //profile/education_record
-            $table->string('education_level')->nullable();
-            $table->date('graduation_year')->nullable();
             $table->enum('locale' , ['ar' , 'en'])->default('ar');
             $table->text('bio')->nullable();
+            $table->string('nationality_code')->nullable();
+            $table->text('image')->nullable();
+            $table->enum('gender', ['male', 'female']);
+            $table->date('birth_date')->nullable();
+            $table->string('password')->default(Hash::make('12345678'));
+            //members data || profile/job data
+            //$table->enum('employment_level', ['ceo', 'manager', 'coordinator', 'senior_officer', 'officer', 'assistant', 'volunteer']);
+            //$table->enum('employment_degree', ['1', '2', '3']);
+            //profile/contact data
+            //$table->string('phone')->nullable();
+            //$table->string('whatsapp')->nullable();
+            //$table->string('reference_person_name')->nullable();
+            //$table->string('reference_person_phone')->nullable();
+            //$table->string('reference_person_relation_type')->nullable();
+            //$table->string('facebook')->nullable();
+            //$table->string('instagram')->nullable();
+            //profile/residence data
+            //$table->string('place_of_birth')->nullable();
+            //$table->string('document_type')->nullable();
+            //$table->string('document_number')->nullable();
+            //$table->date('document_issuance_date')->nullable();
+            //$table->date('document_expiration_date')->nullable();
+            //$table->string('current_residence')->nullable();
+            //profile/experiences and skills
+            //$table->string('previous_work')->nullable();
+            //$table->string('employer')->nullable();
+            //$table->string('country_worked_in')->nullable();
+            //$table->string('job_title_worked_in')->nullable();
+            //$table->string('start_date_worked_in')->nullable();
+            //$table->string('end_date_worked_in')->nullable();
+            //profile/additional data
+            /*$table->string('blood_type')->nullable();
+            $table->string('physical_disability')->nullable();
+            $table->string('physical_disability_description')->nullable();
+            $table->string('communicable_diseases')->nullable();
+            $table->string('communicable_diseases_description')->nullable();*/
+            //profile/education
+            /*$table->string('education_level')->nullable();
+            $table->string('education_section')->nullable();
+            $table->string('educational_facility')->nullable();
+            $table->string('educational_country')->nullable();
+            $table->string('educational_language')->nullable();
+            $table->string('educational_status')->nullable();
+            $table->date('graduation_year')->nullable();
+            $table->string('average')->nullable();
+            $table->string('native_language')->nullable();
+            $table->string('other_languages')->nullable();*/
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

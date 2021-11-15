@@ -1,0 +1,66 @@
+<include-header/>
+
+<form class="row" name="myForm" request="updateExperiencesAndSkills">
+
+    <!--previous work-->
+    <div class="col-12 col-md-6"> <!--ng-hide="member.career_level == 'ceo'"-->
+        <div class="form-group">
+            <label for="previous_work">هل عملت من قبل؟</label>
+            <select class="custom-select" ng-class="(updateExperiencesAndSkills.errors.previous_work != null) ? 'is-invalid' : ''" id="previous_work" ng-init="profile.previous_work = auth.previous_work" ng-model="profile.previous_work" ng-change="updateExperiencesAndSkills.errors.previous_work = null">
+                <option value="yes">نعم</option>
+                <option value="no">لا</option>
+            </select>
+            <div ng-show="updateExperiencesAndSkills.errors.previous_work != null" class="invalid-feedback">{{ updateExperiencesAndSkills.errors.previous_work[0] }}</div>
+        </div>
+    </div>
+
+    <!--employer-->
+    <div class="col-12 col-md-6" ng-show="profile.previous_work == 'yes'">
+        <div class="form-group">
+            <label for="employer">جهة العمل</label>
+            <input type="text" class="form-control" id="employer" ng-model="profile.employer" ng-init="profile.employer = auth.employer" ng-change="updateExperiencesAndSkills.error = ''" placeholder="جهة العمل">
+            <div ng-show="updateExperiencesAndSkills.errors.employer != null" class="invalid-feedback">{{ updateExperiencesAndSkills.errors.employer[0] }}</div>
+        </div>
+    </div>
+
+    <!--country worked in-->
+    <div class="col-12 col-md-6" ng-show="profile.previous_work == 'yes'">
+        <div class="form-group">
+            <label for="country_worked_in">البلد</label>
+            <input type="text" class="form-control" id="country_worked_in" ng-model="profile.country_worked_in" ng-init="profile.country_worked_in = auth.country_worked_in" ng-change="updateExperiencesAndSkills.error = ''" placeholder="البلد">
+            <div ng-show="updateExperiencesAndSkills.errors.country_worked_in != null" class="invalid-feedback">{{ updateExperiencesAndSkills.errors.country_worked_in[0] }}</div>
+        </div>
+    </div>
+
+    <!--job title worked in-->
+    <div class="col-12 col-md-6" ng-show="profile.previous_work == 'yes'">
+        <div class="form-group">
+            <label for="job_title_worked_in">المسمى الوظيفي</label>
+            <input type="text" class="form-control" id="job_title_worked_in" ng-model="profile.job_title_worked_in" ng-init="profile.job_title_worked_in = auth.job_title_worked_in" ng-change="updateExperiencesAndSkills.error = ''" placeholder="المسمى الوظيفي">
+            <div ng-show="updateExperiencesAndSkills.errors.job_title_worked_in != null" class="invalid-feedback">{{ updateExperiencesAndSkills.errors.job_title_worked_in[0] }}</div>
+        </div>
+    </div>
+
+    <!--start date worked in-->
+    <div class="col-12 col-md-6" ng-show="profile.previous_work == 'yes'">
+        <div class="form-group">
+            <label for="start_date_worked_in">تاريخ البداية</label>
+            <input date-picker class="form-control" id="start_date_worked_in" ng-model="profile.start_date_worked_in" ng-init="profile.start_date_worked_in = auth.start_date_worked_in" ng-change="updateExperiencesAndSkills.error = ''" placeholder="تاريخ البداية">
+            <div ng-show="updateExperiencesAndSkills.errors.start_date_worked_in != null" class="invalid-feedback">{{ updateExperiencesAndSkills.errors.start_date_worked_in[0] }}</div>
+        </div>
+    </div>
+
+    <!--end date worked in-->
+    <div class="col-12 col-md-6" ng-show="profile.previous_work == 'yes'">
+        <div class="form-group">
+            <label for="end_date_worked_in">تاريخ النهاية</label>
+            <input date-picker class="form-control" id="end_date_worked_in" ng-model="profile.end_date_worked_in" ng-init="profile.end_date_worked_in = auth.end_date_worked_in" ng-change="updateExperiencesAndSkills.error = ''" placeholder="تاريخ النهاية">
+            <div ng-show="updateExperiencesAndSkills.errors.end_date_worked_in != null" class="invalid-feedback">{{ updateExperiencesAndSkills.errors.end_date_worked_in[0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+
+</form>

@@ -17,13 +17,12 @@
       <tbody>
         <tr ng-repeat="member in members.data">
           <td class="align-middle text-center">{{ member.id }}</td>
-          <td class="align-middle text-center">{{ member.name }}</td>
+          <td class="align-middle text-center">{{ member.first_name.ar }}</td>
           <td class="align-middle text-center">{{ member.email }}</td>
           <td class="align-middle text-center h2">
-
-
             <dropdown>
               <dropdown-item href="{{ $r('members.overview', {id: member.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
+              <dropdown-item href="{{ $r('user-contracts.add', {id: member.id}) }}"><i class="fas fa-file-signature"></i>عقد العمل</dropdown-item>
               <dropdown-item href="{{ $r('members.edit', {id: member.id}) }}"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
               <dropdown-item href="#" ng-click="deleteMemberController(member.id)"><i class="fe fe-delete"></i> حذف</dropdown-item>
             </dropdown>

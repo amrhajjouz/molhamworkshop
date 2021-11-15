@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
     {
         for ($i=1; $i<=500; $i++) {
             DB::table('users')->insert([
-                'name' => 'Test User ' . $i,
+                'first_name' => ['ar'=>'Developer user' , 'en'=>"Developer user"],
                 'email' => 'test' . $i . '@test.com',
                 'password' => Hash::make('12345678'),
                 'locale' => 'ar',

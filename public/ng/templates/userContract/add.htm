@@ -1,0 +1,22 @@
+<page-header title="" pretitle=""></page-header>
+
+<form class="row" name="userContractForm" request="createUserContract">
+
+    <!--contract type-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="contract_type">نوع العقد</label>
+            <select class="form-control" ng-class="(createUserContract.errors.contract_type != null) ? 'is-invalid' : ''" id="contract_type" ng-model="userContract.contract_type" ng-change="createUserContract.errors.contract_type = null">
+                <option value="full_time">دوام كامل</option>
+                <option value="part_time">نصف دوام</option>
+                <option value="volunteer">متطوع</option>
+            </select>
+            <div ng-show="createUserContract.errors.status != null" class="invalid-feedback">{{ createUserContract.errors.contract_type[0] }}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="UserContractForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>

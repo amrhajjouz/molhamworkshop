@@ -6,20 +6,106 @@
         {{ updateProfile.error }}
     </div>
     
+    <!--first name ar-->
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="name">الاسم</label>
-            <input type="text" class="form-control" id="name" ng-model="profile.name" ng-init="profile.name = auth.name" ng-change="updateProfile.error = ''" placeholder="الاسم الخاص بالحساب ..">
+            <label for="first_name_ar">الإسم باللغة العربية</label>
+            <input id="first_name_ar" class="form-control" type="text" ng-init="profile.first_name.ar = auth.first_name.ar" ng-model="profile.first_name.ar" placeholder="الإسم باللغة العربية.." ng-error="updateProfile.errors.first_name.ar">
+        </div>
+    </div>
+
+    <!--first name en-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="first_name_en">الإسم باللغة الإنكليزية</label>
+            <input id="first_name_en" class="form-control" type="text" ng-init="profile.first_name.en = auth.first_name.en" ng-model="profile.first_name.en" placeholder="الإسم باللغة العربية.." ng-error="updateProfile.errors.first_name.en">
+        </div>
+    </div>
+
+    <!--last name ar-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="last_name_ar">اللقب باللغة العربية</label>
+            <input id="last_name_ar" class="form-control" type="text" ng-init="profile.last_name.ar = auth.last_name.ar" ng-model="profile.last_name.ar" placeholder="الإسم باللغة العربية.." ng-error="updateProfile.errors.last_name.ar">
+        </div>
+    </div>
+
+    <!--last name en-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="last_name_en">اللقب باللغة الإنكليزية</label>
+            <input id="last_name_en" class="form-control" type="text" ng-init="profile.last_name.en = auth.last_name.en" ng-model="profile.last_name.en" placeholder="الإسم باللغة العربية.." ng-error="updateProfile.errors.last_name.en">
+        </div>
+    </div>
+
+    <!--father name ar-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="father_name_ar">اسم الأب باللغة العربية</label>
+            <input id="father_name_ar" class="form-control" type="text" ng-init="profile.father_name.ar = auth.father_name.ar" ng-model="profile.father_name.ar" placeholder="الإسم باللغة العربية.." ng-error="updateProfile.errors.father_name.ar">
+        </div>
+    </div>
+
+    <!--father name en-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="father_name_en">اسم الأب باللغة الإنكليزية</label>
+            <input id="father_name_en" class="form-control" type="text" ng-init="profile.father_name.en = auth.father_name.en" ng-model="profile.father_name.en" placeholder="الإسم باللغة العربية.." ng-error="updateProfile.errors.father_name.en">
+        </div>
+    </div>
+
+    <!--mother name ar-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="mother_name_ar">اسم الأم باللغة العربية</label>
+            <input id="mother_name_ar" class="form-control" type="text" ng-init="profile.mother_name.ar = auth.mother_name.ar" ng-model="profile.mother_name.ar" placeholder="الإسم باللغة العربية.." ng-error="updateProfile.errors.mother_name.ar">
+        </div>
+    </div>
+
+    <!--mother name en-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="mother_name_en">اسم الأم باللغة الإنكليزية</label>
+            <input id="mother_name_en" class="form-control" type="text" ng-init="profile.mother_name.en = auth.mother_name.en" ng-model="profile.mother_name.en" placeholder="الإسم باللغة العربية.." ng-error="updateProfile.errors.mother_name.en">
         </div>
     </div>
     
+    <!--email-->
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="email">البريد الالكتروني</label>
-            <input type="email" class="form-control" id="email" ng-model="profile.email" ng-init="profile.email = auth.email" ng-change="updateProfile.error = ''" placeholder="البريد الالكتروني الخاص بالحساب .." autofocus="off" autocomplete="off">
+            <input type="email" class="form-control" id="email" ng-model="profile.email" ng-init="profile.email = auth.email" ng-change="updateProfile.error = ''" placeholder="البريد الالكتروني الخاص بالحساب .." autofocus="off" autocomplete="off" disabled>
         </div>
     </div>
-    
+
+    <!--gender-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="gender">الجنس</label>
+            <select id="gender" class="custom-select" name="gender" ng-model="profile.gender" ng-init="profile.gender = auth.gender" ng-change="updateProfile.errors.gender = null">
+                <option value="male">ذكر</option>
+                <option value="female">أنثى</option>
+            </select>
+        </div>
+    </div>
+
+    <!--birth date-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="birth_date">تاريخ الميلاد</label>
+            <input id="birth_date" date-picker class="form-control" ng-model="profile.birth_date" ng-init="profile.birth_date = auth.birth_date" placeholder="تاريخ الميلاد .." ng-error="updateProfile.errors.birth_date" required>
+        </div>
+    </div>
+
+    <!--nationality code-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="nationality_code">كود الجنسية</label>
+            <input type="text" class="form-control" id="nationality_code" ng-model="profile.nationality_code" ng-init="profile.nationality_code = auth.nationality_code" ng-change="updateProfile.error = ''" placeholder="كود الجنسية ..">
+        </div>
+    </div>
+
+    <!--locale-->
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="locale">لغة العرض</label>
@@ -31,14 +117,14 @@
         </div>
     </div>
     
-    <div class="col-12">
+    <!--<div class="col-12">
         <div class="form-group">
             <label for="bio">السيرة الذاتية</label>
             <tiny-editor id="bio" dir="rtl" model="profile.bio" placeholder="نبذة عن سيرتك الذاتية ..">
                 {{ auth.bio }}
             </tiny-editor>
         </div>
-    </div>
+    </div>-->
     
     <div class="col-12">        
         <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
