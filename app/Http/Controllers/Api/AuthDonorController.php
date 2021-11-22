@@ -166,4 +166,9 @@ class AuthDonorController extends Controller
     {
         return response()->json(authDonor()->feedbacks()->get(['id', 'content', 'title', 'reviewed', 'created_at']));
     }
+    
+    public function listCartItems(Request $request)
+    {
+        return response()->json(authDonor()->cartItems);
+    }
 }

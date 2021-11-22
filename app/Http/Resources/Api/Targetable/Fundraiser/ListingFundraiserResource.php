@@ -15,12 +15,13 @@ class ListingFundraiserResource extends JsonResource
     public function toArray($request)
     {
         $faker = \Faker\Factory::create();    
-        $this->resource->getCollection()->transform(function ($fundraiser) use($faker) {
+        $donor = auth('donor')->user();
+        $this->resource->getCollection()->transform(function ($fundraiser) use($faker , $donor) {
             return [
                 'id' => $fundraiser->id,
                 'contents' => $this->transformContentField($fundraiser->target) ,
                 'amounts' =>  generateRandomTargetableAmounts('fundraisers', $fundraiser->funded), //TEMPORARY
-                "liked_by_auth" => authDonor()->likes()->where(['likeable_type' => 'fundraiser' , 'likeable_id' => $fundraiser->id])->exists(),
+                "liked_by_auth" => $donor ? $donor->likes()->where(['likeable_type' => 'fundraiser' , 'likeable_id' => $fundraiser->id])->exists() : false,
                 "funded_by_auth" => $faker->boolean(),//TEMPORARY
                 "saved_by_auth" => $faker->boolean(),//TEMPORARY
                 "likes_count" => $faker->numberBetween(0 , 1000),//TEMPORARY

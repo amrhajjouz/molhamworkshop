@@ -15,13 +15,14 @@ class ListingCaseResource extends JsonResource
     public function toArray($request)
     {
         $faker = \Faker\Factory::create();    
-        $this->resource->getCollection()->transform(function ($case) use($faker) {
+        $donor = auth('donor')->user();
+        $this->resource->getCollection()->transform(function ($case) use($faker , $donor) {
             return [
                 'id' => $case->id,
                 'published_at' => $case->target->published_at,
                 'amounts' =>  generateRandomTargetableAmounts('cases', $case->funded), //TEMPORARY
                 'contents' => $this->transformContentField($case->target) ,
-                "liked_by_auth" => authDonor()->likes()->where(['likeable_type' => 'cases' , 'likeable_id' => $case->id])->exists(),
+                "liked_by_auth" => $donor ? $donor->likes()->where(['likeable_type' => 'cases' , 'likeable_id' => $case->id])->exists() : false,
                 "funded_by_auth" => $faker->boolean(),//TEMPORARY
                 "saved_by_auth" => $faker->boolean(),//TEMPORARY
                 "likes_count" => $faker->numberBetween(0 , 1000),//TEMPORARY

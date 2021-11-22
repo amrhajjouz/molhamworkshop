@@ -29,6 +29,7 @@ class BaseTargetModel extends BaseModel
             //  $options['target'] : required field in all purposeable models must pass it in options
             $target = $this->target()->create($options['target']);
             $this->target_id = $target->id;
+            $this->purpose()->create();
         } else {
             $this->target()->update($options['target']);
         }
@@ -99,13 +100,15 @@ class BaseTargetModel extends BaseModel
         return true;
     }
 
+    public function purpose()
+    {
+        return $this->morphOne('App\Models\Purpose', 'purposable');
+    }
+   
     public function likes()
     {
         return $this->morphMany('App\Models\Like', 'likeable');
     }
   
-    public function comments()
-    {
-        return $this->morphMany('App\Models\Comment', 'commentable');
-    }
+  
 }

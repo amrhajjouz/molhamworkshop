@@ -15,12 +15,13 @@ class ListingSmallProjectResource extends JsonResource
     public function toArray($request)
     {
         $faker = \Faker\Factory::create();    
-        $this->resource->getCollection()->transform(function ($smallProject) use($faker) {
+        $donor = auth('donor')->user();
+        $this->resource->getCollection()->transform(function ($smallProject) use($faker , $donor) {
             return [
                 'id' => $smallProject->id,
                 'contents' => $this->transformContentField($smallProject->target) ,
                 'amounts' =>  generateRandomTargetableAmounts('small_projects', $smallProject->funded), //TEMPORARY
-                "liked_by_auth" => authDonor()->likes()->where(['likeable_type' => 'small_project' , 'likeable_id' => $smallProject->id])->exists(),
+                "liked_by_auth" => $donor ? $donor->likes()->where(['likeable_type' => 'small_project' , 'likeable_id' => $smallProject->id])->exists() : false,
                 "funded_by_auth" => $faker->boolean(),//TEMPORARY
                 "saved_by_auth" => $faker->boolean(),//TEMPORARY
                 "likes_count" => $faker->numberBetween(0 , 1000),//TEMPORARY

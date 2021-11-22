@@ -15,12 +15,13 @@ class ListingEventResource extends JsonResource
     public function toArray($request)
     {
         $faker = \Faker\Factory::create();    
-        $this->resource->getCollection()->transform(function ($event) use($faker) {
+        $donor = auth('donor')->user();
+        $this->resource->getCollection()->transform(function ($event) use($faker , $donor) {
             return [
                 'id' => $event->id,
                 'contents' => $this->transformContentField($event->target) ,
                 'amounts' =>  generateRandomTargetableAmounts('events', $event->funded), //TEMPORARY
-                "liked_by_auth" => authDonor()->likes()->where(['likeable_type' => 'event' , 'likeable_id' => $event->id])->exists(),
+                "liked_by_auth" => $donor ? $donor->likes()->where(['likeable_type' => 'event' , 'likeable_id' => $event->id])->exists() : false,
                 "funded_by_auth" => $faker->boolean(),//TEMPORARY
                 "saved_by_auth" => $faker->boolean(),//TEMPORARY
                 "likes_count" => $faker->numberBetween(0 , 1000),//TEMPORARY

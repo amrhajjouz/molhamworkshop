@@ -11,7 +11,7 @@ class EventController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('auth_donor');
+        $this->middleware('auth_donor:optional');
     }
 
     public function list(Request $request)

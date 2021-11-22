@@ -15,12 +15,13 @@ class ListingScholarshipResource extends JsonResource
     public function toArray($request)
     {
         $faker = \Faker\Factory::create();    
-        $this->resource->getCollection()->transform(function ($scholarship) use($faker) {
+        $donor = auth('donor')->user();
+        $this->resource->getCollection()->transform(function ($scholarship) use($faker , $donor) {
             return [
                 'id' => $scholarship->id,
                 'contents' => $this->transformContentField($scholarship->target) ,
                 'amounts' =>  generateRandomTargetableAmounts('scholarships', $scholarship->funded), //TEMPORARY
-                "liked_by_auth" => authDonor()->likes()->where(['likeable_type' => 'scholarship' , 'likeable_id' => $scholarship->id])->exists(),
+                "liked_by_auth" => $donor ? $donor->likes()->where(['likeable_type' => 'scholarship' , 'likeable_id' => $scholarship->id])->exists() : false,
                 "funded_by_auth" => $faker->boolean(),//TEMPORARY
                 "saved_by_auth" => $faker->boolean(),//TEMPORARY
                 "likes_count" => $faker->numberBetween(0 , 1000),//TEMPORARY

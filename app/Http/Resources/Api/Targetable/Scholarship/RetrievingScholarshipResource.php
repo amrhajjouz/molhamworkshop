@@ -18,11 +18,12 @@ class RetrievingScholarshipResource extends JsonResource
     {
         $target = $this->target;
         $faker = \Faker\Factory::create();
+        $donor = auth('donor')->user();
         return [
             'id' => $this->id,
             'contents' => $this->transformContentField($target),
             'amounts' =>  generateRandomTargetableAmounts('scholarships', $this->funded), //TEMPORARY
-            "liked_by_auth" => authDonor()->likes()->where(['likeable_type' => 'scholarship' , 'likeable_id' => $this->id])->exists(),
+            "liked_by_auth" => $donor ? $donor->likes()->where(['likeable_type' => 'scholarship' , 'likeable_id' => $this->id])->exists() : false,
             "funded_by_auth" => $faker->boolean(), //TEMPORARY
             "saved_by_auth" => $faker->boolean(), //TEMPORARY
             "likes_count" => $faker->numberBetween(0, 1000), //TEMPORARY

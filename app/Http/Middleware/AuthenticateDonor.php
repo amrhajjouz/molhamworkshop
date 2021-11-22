@@ -15,11 +15,20 @@ class AuthenticateDonor
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next , $params = null)
     {
         $token = Token::where('access_token', $request->bearerToken())->first();
-        if (!$token || !$request->user()) return $this->unauthenticated($request);
-        app()->setlocale($request->user()->locale);
+        if($params && $params == 'optional')
+        {
+            if ($token && $request->user()){
+                app()->setlocale($request->user()->locale);
+            }
+        }else{
+            if (!$token || !$request->user()) return $this->unauthenticated($request);
+            app()->setlocale($request->user()->locale);
+
+        }
+
         return $next($request);
     }
 

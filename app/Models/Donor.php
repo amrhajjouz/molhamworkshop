@@ -53,6 +53,11 @@ class Donor extends Model
     {
         return $this->hasMany('App\Models\SavedItem', 'donor_id');
     }
+  
+    public function cartItems()
+    {
+        return $this->hasMany('App\Models\CartItem', 'donor_id');
+    }
 
     public function subscriptions()
     {

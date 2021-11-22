@@ -26,6 +26,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+        $token = null;
         if (request()->bearerToken() != null) {
             
             $token = Token::where('access_token', request()->bearerToken())->first();
@@ -38,11 +39,11 @@ class AuthServiceProvider extends ServiceProvider
                         return null;
                     });
                     
-                    Auth::viaRequest('custom-token', function ($request) use($token){
-                        return $token->tokenable ??  null;
-                    });
                 });
             }
         }
+        Auth::viaRequest('custom-token', function ($request) use($token){
+            return $token ? $token->tokenable :  null;
+        });
     }
 }
