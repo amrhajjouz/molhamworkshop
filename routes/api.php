@@ -157,5 +157,9 @@ Route::group(['middleware' => 'auth_donor'], function () {
     Route::post('/likes' , [LikeController::class, 'create'])->name('api.likes.create'); 
     Route::delete('/likes/{id}' , [LikeController::class, 'delete'])->name('api.likes.delete');
   
+    //Comment
+    Route::post('/comments' , [CommentController::class, 'create'])->name('api.comments.create'); 
+    Route::delete('/comments/{id}' , [CommentController::class, 'delete'])->name('api.comments.delete');
+
 
 });
