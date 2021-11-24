@@ -24,9 +24,9 @@ class CreateCommentRequest extends FormRequest
      */
     public function rules()
     {
-        $likeableModels = ['cases' , 'campaign' , 'sponsorship' , 'project' , 'small_project' , 'scholarshop' , 'fundraiser' ,'event'];
+        $commentableModels = ['cases' , 'campaign' , 'sponsorship' , 'project' , 'small_project' , 'scholarshop' , 'fundraiser' ,'event'];
         return [
-            'commentable_type' => ['required', 'string', Rule::in($likeableModels)],
+            'commentable_type' => ['required', 'string', Rule::in($commentableModels)],
             'commentable_id' => ['required', 'numeric'],
             'content' => ['required', 'string' , 'max:1024'],
         ];

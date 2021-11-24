@@ -23,7 +23,7 @@ class ListingFundraiserResource extends JsonResource
                 'amounts' =>  generateRandomTargetableAmounts('fundraisers', $fundraiser->funded), //TEMPORARY
                 "liked_by_auth" => $donor ? $donor->likes()->where(['likeable_type' => 'fundraiser' , 'likeable_id' => $fundraiser->id])->exists() : false,
                 "funded_by_auth" => $faker->boolean(),//TEMPORARY
-                "saved_by_auth" => $faker->boolean(),//TEMPORARY
+                "saved_by_auth" => $donor ? $donor->savedItems()->where(['saveable_type' => 'fundraiser' , 'saveable_id' => $fundraiser->id])->exists() : false,
                 "likes_count" => $faker->numberBetween(0 , 1000),//TEMPORARY
                 "comments_count" => $fundraiser->comments()->count() , 
                 "shares_count" => $faker->numberBetween(0 , 10),//TEMPORARY

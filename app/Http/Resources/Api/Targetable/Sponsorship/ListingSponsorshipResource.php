@@ -23,7 +23,7 @@ class ListingSponsorshipResource extends JsonResource
                 'amounts' =>  generateRandomTargetableAmounts('sponsorships', $sponsorship->funded), //TEMPORARY
                 "liked_by_auth" => $donor ? $donor->likes()->where(['likeable_type' => 'sponsorship' , 'likeable_id' => $sponsorship->id])->exists() : false,
                 "funded_by_auth" => $faker->boolean(),//TEMPORARY
-                "saved_by_auth" => $faker->boolean(),//TEMPORARY
+                "saved_by_auth" => $donor ? $donor->savedItems()->where(['saveable_type' => 'sponsorship' , 'saveable_id' => $sponsorship->id])->exists() : false,
                 "likes_count" => $faker->numberBetween(0 , 1000),//TEMPORARY
                 "comments_count" => $sponsorship->comments()->count() , 
                 "shares_count" => $faker->numberBetween(0 , 10),//TEMPORARY

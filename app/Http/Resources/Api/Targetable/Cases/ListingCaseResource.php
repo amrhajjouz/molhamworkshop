@@ -16,6 +16,7 @@ class ListingCaseResource extends JsonResource
     {
         $faker = \Faker\Factory::create();    
         $donor = auth('donor')->user();
+        // dd($donor->savedItems);
         $this->resource->getCollection()->transform(function ($case) use($faker , $donor) {
             return [
                 'id' => $case->id,
@@ -24,7 +25,7 @@ class ListingCaseResource extends JsonResource
                 'contents' => $this->transformContentField($case->target) ,
                 "liked_by_auth" => $donor ? $donor->likes()->where(['likeable_type' => 'cases' , 'likeable_id' => $case->id])->exists() : false,
                 "funded_by_auth" => $faker->boolean(),//TEMPORARY
-                "saved_by_auth" => $faker->boolean(),//TEMPORARY
+                "saved_by_auth" => $donor ? $donor->savedItems()->where(['saveable_type' => 'cases' , 'saveable_id' => $case->id])->exists() : false,
                 "likes_count" => $faker->numberBetween(0 , 1000),//TEMPORARY
                 "comments_count" => $case->comments()->count() , 
                 "shares_count" => $faker->numberBetween(0 , 10),//TEMPORARY

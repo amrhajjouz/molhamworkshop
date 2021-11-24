@@ -23,7 +23,7 @@ class ListingEventResource extends JsonResource
                 'amounts' =>  generateRandomTargetableAmounts('events', $event->funded), //TEMPORARY
                 "liked_by_auth" => $donor ? $donor->likes()->where(['likeable_type' => 'event' , 'likeable_id' => $event->id])->exists() : false,
                 "funded_by_auth" => $faker->boolean(),//TEMPORARY
-                "saved_by_auth" => $faker->boolean(),//TEMPORARY
+                "saved_by_auth" => $donor ? $donor->savedItems()->where(['saveable_type' => 'event' , 'saveable_id' => $event->id])->exists() : false,
                 "likes_count" => $faker->numberBetween(0 , 1000),//TEMPORARY
                 "comments_count" => $event->comments()->count() , 
                 "shares_count" => $faker->numberBetween(0 , 10),//TEMPORARY

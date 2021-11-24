@@ -23,7 +23,7 @@ class ListingSmallProjectResource extends JsonResource
                 'amounts' =>  generateRandomTargetableAmounts('small_projects', $smallProject->funded), //TEMPORARY
                 "liked_by_auth" => $donor ? $donor->likes()->where(['likeable_type' => 'small_project' , 'likeable_id' => $smallProject->id])->exists() : false,
                 "funded_by_auth" => $faker->boolean(),//TEMPORARY
-                "saved_by_auth" => $faker->boolean(),//TEMPORARY
+                "saved_by_auth" => $donor ? $donor->savedItems()->where(['saveable_type' => 'small_project' , 'saveable_id' => $smallProject->id])->exists() : false,
                 "likes_count" => $faker->numberBetween(0 , 1000),//TEMPORARY
                 "comments_count" => $smallProject->comments()->count() , 
                 "shares_count" => $faker->numberBetween(0 , 10),//TEMPORARY
