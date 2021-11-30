@@ -18,8 +18,12 @@ class AuthDonorController extends Controller
     public function update(UpdateDonorRequest $request)
     {
         try {
-            if (empty($request->validated())) return handleResponse(null);
-            $request->user()->update($request->validated());
+            $data = $request->validated();
+            if (empty($data)) return handleResponse(null);
+            if (isset($data['currency']) && $request->user()->currency != $data['currency'] && sizeof($request->user()->cartItems) > 0) {
+                throw new ApiErrorException('you have to empty cart before update your currency');
+            }
+            $request->user()->update($data);
             return handleResponse(null);
         } catch (\Exception $e) {
             throw new ApiErrorException($e->getMessage());
@@ -166,7 +170,7 @@ class AuthDonorController extends Controller
     {
         return response()->json(authDonor()->feedbacks()->get(['id', 'content', 'title', 'reviewed', 'created_at']));
     }
-    
+
     public function listCartItems(Request $request)
     {
         return response()->json(authDonor()->cartItems);

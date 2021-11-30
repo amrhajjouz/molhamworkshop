@@ -14,9 +14,8 @@ class CartItem extends BaseModel
     public function save($options = []){
         if(!$this->exists){
             $this->created_at = \Carbon\Carbon::now();
-
-            return parent::save($options);
         }
+        return parent::save($options);
     }
     public function donor()
     {

@@ -15,7 +15,10 @@ class CartItemController extends Controller
     public function create(CreateCartItemRequest $request)
     {
         try {
-            authDonor()->cartItems()->firstOrCreate($request->validated());
+            $donor = authDonor();
+            $data = $request->validated();
+            $data['currency'] = $donor->currency;
+            $donor->cartItems()->firstOrCreate($data);
             return handleResponse(null);
         } catch (\Exception $e) {
             throw new ApiErrorException($e->getMessage());
@@ -27,6 +30,16 @@ class CartItemController extends Controller
         try {
             authDonor()->cartItems()->where('id' , $id)->delete();
 
+            return handleResponse(null);
+        } catch (\Exception $e) {
+            throw new ApiErrorException($e->getMessage());
+        }
+    }
+
+    public function deleteCartItems(DeleteCartItemRequest $request)
+    {
+        try {
+            authDonor()->cartItems()->delete();
             return handleResponse(null);
         } catch (\Exception $e) {
             throw new ApiErrorException($e->getMessage());

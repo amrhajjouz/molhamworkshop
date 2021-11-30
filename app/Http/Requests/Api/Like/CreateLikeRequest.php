@@ -24,9 +24,8 @@ class CreateLikeRequest extends FormRequest
      */
     public function rules()
     {
-        $likeableModels = ['cases' , 'campaign' , 'sponsorship' , 'project' , 'small_project' , 'scholarshop' , 'fundraiser' ,'event'];
         return [
-            'likeable_type' => ['required', 'string', Rule::in($likeableModels)],
+            'likeable_type' => ['required', 'string', Rule::in(config('custom.likeableTypes'))],
             'likeable_id' => ['required', 'numeric'],
         ];
     }

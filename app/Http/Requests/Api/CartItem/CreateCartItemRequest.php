@@ -25,7 +25,7 @@ class CreateCartItemRequest extends FormRequest
     public function rules()
     {
         return [
-            'currency' => ['required', 'string', 'between:1,3'],
+            // 'currency' => ['required', 'string', 'between:1,3'],
             'amount' => ['required', 'numeric' , 'between:1,10000000'],
             'purpose_id' => ['required', 'exists:'.Purpose::getTableName().',id'],
         ];

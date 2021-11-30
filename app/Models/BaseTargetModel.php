@@ -33,6 +33,8 @@ class BaseTargetModel extends BaseModel
         } else {
             $this->target()->update($options['target']);
         }
+        $this->target->purpose_id = $this->purpose->id;
+        $this->target->save();
 
         return parent::save();
     }

@@ -98,7 +98,9 @@ Route::group(['middleware' => 'auth_donor:optional'], function () {
     //Small Project
     Route::get('/targetables/small_projects' , [SmallProjectController::class, 'list'])->name('api.small_projects.list'); 
     Route::get('/targetables/small_projects/{id}' , [SmallProjectController::class, 'retrieve'])->name('api.small_projects.retrieve');
-  
+    
+    //Comments
+    Route::get('/comments' , [CommentController::class, 'list'])->name('api.comments.list');
     // Targetables
     // Route::get('/targetables/{type}' , [TargetableController::class, 'list'])->name('api.targetables.list'); 
     // Route::get('/targetables/{type}/{id}' , [TargetableController::class, 'retrieve'])->name('api.targetables.retrieve');
@@ -130,6 +132,7 @@ Route::group(['middleware' => 'auth_donor'], function () {
     //CartItem
     Route::post('/cart_items' , [CartItemController::class, 'create'])->name('api.cart_items.create'); 
     Route::delete('/cart_items/{id}' , [CartItemController::class, 'delete'])->name('api.cart_items.delete'); 
+    Route::delete('/cart_items' , [CartItemController::class, 'deleteCartItems'])->name('api.cart_items.deleteCartItems'); 
 
      //Review
      Route::post('/reviews' , [ReviewController::class, 'create'])->name('api.reviews.create'); 
@@ -160,6 +163,7 @@ Route::group(['middleware' => 'auth_donor'], function () {
     //Comment
     Route::post('/comments' , [CommentController::class, 'create'])->name('api.comments.create'); 
     Route::delete('/comments/{id}' , [CommentController::class, 'delete'])->name('api.comments.delete');
+    
 
 
 });

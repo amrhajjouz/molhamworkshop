@@ -41,6 +41,11 @@ class Target extends BaseModel
     {
         return $this->belongsTo(Program::class, 'program_id', 'id');
     }
+   
+    public function purpose()
+    {
+        return $this->belongsTo(Purpose::class, 'purpose_id', 'id');
+    }
 
     public function save(array $options = [])
     {
@@ -52,9 +57,9 @@ class Target extends BaseModel
             $this->code = $this->getApproriateCode();
             $this->available_locales = ['ar' => false, 'en' => false, 'de' => false, 'tr' => false, 'fr' => false, 'es' => false,];
         } else {
+            $this->purpose->update(['title'=>$this->attributes['title']]);
         }
         $target = parent::save($options);
-
         return $target;
     }
 

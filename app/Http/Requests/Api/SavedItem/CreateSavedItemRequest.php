@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\SavedItem;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateSavedItemRequest extends FormRequest
 {
@@ -24,7 +25,7 @@ class CreateSavedItemRequest extends FormRequest
     public function rules()
     {
         return [
-            'saveable_type' => ['required', 'string', 'between:3,30'],
+            'saveable_type' => ['required', 'string', Rule::in(config('custom.saveablesTypes'))],
             'saveable_id' => ['required', 'numeric'],
         ];
     }

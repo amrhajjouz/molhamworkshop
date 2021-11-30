@@ -6,7 +6,7 @@ namespace App\Models;
 class Purpose extends BaseModel
 {
     protected $table = 'purposes';
-    protected $casts = ['created_at' => 'datetime:Y-m-d H:i:s'];
+    protected $casts = ['created_at' => 'datetime:Y-m-d H:i:s' , 'title' => 'json',];
     protected $guarded = [];
 
     public $timestamps = false;
@@ -15,13 +15,19 @@ class Purpose extends BaseModel
     {
         if (!$this->exists) {
             $this->created_at = \Carbon\Carbon::now();
-
-            return parent::save($options);
+            parent::save($options);
         }
+        return parent::save($options);
     }
 
     public function purposable()
     {
         return $this->morphTo();
     }
+
+    // public function target()
+    // {
+    //     return $this->belongsTo(Target::class , 'purpose_id' , 'id' );
+    // }
+
 }

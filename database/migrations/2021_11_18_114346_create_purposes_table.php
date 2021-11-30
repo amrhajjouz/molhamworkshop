@@ -16,6 +16,7 @@ class CreatePurposesTable extends Migration
         Schema::create('purposes', function (Blueprint $table) {
             $table->id();
             $table->morphs('purposable');
+            $table->json('title')->nullable();
             $table->timestamp('created_at')->nullable();
         });
     }

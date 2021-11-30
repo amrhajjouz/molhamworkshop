@@ -5,7 +5,7 @@ namespace App\Http\Requests\Api\Comment;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CreateCommentRequest extends FormRequest
+class ListCommentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +26,7 @@ class CreateCommentRequest extends FormRequest
     {
         return [
             'commentable_type' => ['required', 'string', Rule::in(config('custom.commentableTypes'))],
-            'commentable_id' => ['required', 'numeric'],
-            'body' => ['required', 'string' , 'max:1024'],
+            'commentable_id' => ['required', 'numeric' , 'exists:comments,commentable_id'],
         ];
     }
 }

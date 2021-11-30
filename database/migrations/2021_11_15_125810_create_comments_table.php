@@ -17,7 +17,7 @@ class CreateCommentsTable extends Migration
             $table->id();
             $table->morphs('commenter');
             $table->morphs('commentable');
-            $table->text('content');
+            $table->text('body');
             $table->timestamps();
         });
     }

@@ -19,6 +19,7 @@ class CreateProgramsTargets extends Migration
             $table->string('code' , 20)->unique()->nullable(); 
             $table->morphs('targetable');
             $table->bigInteger('program_id')->index()->nullable();
+            $table->bigInteger('purpose_id')->index()->nullable();
             $table->bigInteger('category_id')->index()->nullable();
             $table->integer('required')->index()->default(0);
             $table->integer('received')->index()->default(0);
