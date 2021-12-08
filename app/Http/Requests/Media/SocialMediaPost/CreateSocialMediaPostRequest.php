@@ -29,7 +29,7 @@ class CreateSocialMediaPostRequest extends FormRequest
     {
         return [
             'description' => ['required', 'string', 'between:3,255'],
-            'body' => ['required', 'string', 'between:3,1000'],
+            'body' => ['required', 'string'],
         ];
     }
 

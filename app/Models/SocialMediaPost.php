@@ -7,6 +7,7 @@ use App\Traits\HasContents;
 class SocialMediaPost extends BaseModel
 {
     use HasContents;
+    
     protected $contentFields = ['body'];
     protected $appends = ['proofreadable'];
     protected $table = "social_media_posts";
@@ -15,10 +16,10 @@ class SocialMediaPost extends BaseModel
         'ready_to_publish' => 'boolean',
         'body' => 'json',
         'created_at' =>  'datetime:Y-m-d H:i:s',
+        'updated_at' =>  'datetime:Y-m-d H:i:s',
         'approved_at' =>  'datetime:Y-m-d H:i:s',
         'rejected_at' =>  'datetime:Y-m-d H:i:s',
         'archived_at' =>  'datetime:Y-m-d H:i:s',
-        'updated_at' =>  'datetime:Y-m-d H:i:s',
         'published_on_facebook_at' =>  'datetime:Y-m-d H:i:s',
         'scheduled_on_facebook_at' =>  'datetime:Y-m-d H:i:s',
         'published_on_youtube_at' =>  'datetime:Y-m-d H:i:s',
@@ -33,13 +34,13 @@ class SocialMediaPost extends BaseModel
     {
         $proofreadable = [];
         foreach (getAvailableLocales() as $locale => $arName) {
-            $proofreaded = true;
+            $proofread = true;
             foreach ($this->contentFields as $field) {
-                if (!isset($this->$field[$locale]) || !$this->$field[$locale]['value']) {
-                    $proofreaded = false;
+                if (!isset($this->$field[$locale]) || empty(strip_tags($this->$field[$locale]['value']))) {
+                    $proofread = false;
                 }
             }
-            $proofreadable[$locale] = $proofreaded;
+            $proofreadable[$locale] = $proofread;
         }
         return $proofreadable;
     }
@@ -68,10 +69,11 @@ class SocialMediaPost extends BaseModel
             }
             $this->$field = $fieldNewValue;
         }
+        
         // if en + ar proofread then set as ready to publish
-        if(isset($this->$field['ar']['value']) && isset($this->$field['en']['value'])){
+        if (isset($this->$field['ar']['value']) && isset($this->$field['en']['value'])) {
             $this->ready_to_publish = true;
-        }else{
+        } else {
             $this->ready_to_publish = false;
         }
         
