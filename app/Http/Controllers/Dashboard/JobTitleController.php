@@ -43,7 +43,7 @@ class JobTitleController extends Controller {
 
     public function list (Request $request) {
         try {
-            return response()->json(JobTitle::orderBy('id', 'desc')->where(function($q) use ($request) {
+            return response()->json(JobTitle::orderBy('id', 'asc')->where(function($q) use ($request) {
                 if ($request->has('q')) {
                     $q->where('name->ar', 'like', '%' . $request->q . '%');
                     $q->orWhere('name->en', 'like', '%' . $request->q . '%');
