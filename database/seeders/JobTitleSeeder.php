@@ -118,10 +118,23 @@ class JobTitleSeeder extends Seeder
         JobTitle::create(['name' => ['ar'=>"مساعد مسائلة وتعلم" , 'en'=>"Accountability & Learning Assistant"]]);
         JobTitle::create(['name' => ['ar'=>"مدير برنامج المأوى" , 'en'=>"Shelter Program Manager"]]);
         JobTitle::create(['name' => ['ar'=>"منسق برنامج المأوى" , 'en'=>"Shelter Program Coordinator"]]);
-        JobTitle::create(['name' => ['ar'=>"مدير" , 'en'=>"Chief"]]);
-        JobTitle::create(['name' => ['ar'=>"مدير" , 'en'=>"Chief"]]);
-        JobTitle::create(['name' => ['ar'=>"مدير" , 'en'=>"Chief"]]);
-        JobTitle::create(['name' => ['ar'=>"مدير" , 'en'=>"Chief"]]);
-        JobTitle::create(['name' => ['ar'=>"مدير" , 'en'=>"Chief"]]);
+        JobTitle::create(['name' => ['ar'=>"مسؤول برنامج مأوى رئيسي" , 'en'=>"Senior Shelter Program Officer"]]);
+        JobTitle::create(['name' => ['ar'=>"مسؤول برنامج مأوى" , 'en'=>"Shelter Program Officer"]]);
+        JobTitle::create(['name' => ['ar'=>"مساعد برنامج مأوى" , 'en'=>"Shelter Program Assistant"]]);
+        JobTitle::create(['name' => ['ar'=>"مدير برنامج الطبي" , 'en'=>"Medical Program Manager"]]);
+        JobTitle::create(['name' => ['ar'=>"منسق برنامج الطبي" , 'en'=>"Medical Program Coordinator"]]);
+        JobTitle::create(['name' => ['ar'=>"مسؤول برنامج طبي رئيسي" , 'en'=>"Senior Medical Program Officer"]]);
+        JobTitle::create(['name' => ['ar'=>"مسؤول برنامج طبي" , 'en'=>"Medical Program Officer"]]);
+        JobTitle::create(['name' => ['ar'=>"مساعد برنامج طبي" , 'en'=>"Medical Program Assistant"]]);
+        JobTitle::create(['name' => ['ar'=>"مدير التدقيق الداخلي" , 'en'=>"Internal Audit Manager"]]);
+        JobTitle::create(['name' => ['ar'=>"منسق التدقيق الداخلي" , 'en'=>"Internal Audit Coordinator"]]);
+        JobTitle::create(['name' => ['ar'=>"مسؤول تدقيق داخلي رئيسي" , 'en'=>"Senior Internal Audit Officer"]]);
+        JobTitle::create(['name' => ['ar'=>"مسؤول تدقيق داخلي" , 'en'=>"Internal Audit Officer"]]);
+        JobTitle::create(['name' => ['ar'=>"مساعد تدقيق داخلي" , 'en'=>"Internal Audit Assistant"]]);
+        JobTitle::create(['name' => ['ar'=>"مدير تقانة المعلومات" , 'en'=>"Information TechnologyManager"]]);
+        JobTitle::create(['name' => ['ar'=>"منسق تقانة المعلومات" , 'en'=>"Information TechnologyCoordinator"]]);
+        JobTitle::create(['name' => ['ar'=>"مسؤول تقانة معلومات رئيسي" , 'en'=>"Senior Information TechnologyOfficer"]]);
+        JobTitle::create(['name' => ['ar'=>"مسؤول تقانة معلومات" , 'en'=>"Information TechnologyOfficer"]]);
+        JobTitle::create(['name' => ['ar'=>"مساعد تقانة معلومات" , 'en'=>"Information TechnologyAssistant"]]);
     }
 }
