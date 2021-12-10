@@ -27,6 +27,14 @@
         </div>
     </div>
 
+    <!--current residence-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="residence_file">ملف الإقامة</label>
+            <input type="text" class="form-control" id="residence_file" ng-model="profile.residence_file" ng-init="profile.residence_file = auth.residence_file" ng-change="updateResidenceData.error = ''" placeholder="بلد الإقامة الحالي ...">
+        </div>
+    </div>
+
     <div class="col-12">
         <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>
     </div>

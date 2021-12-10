@@ -16,9 +16,7 @@
             <label for="type">نوع المكتب</label>
             <select class="custom-select" ng-class="(createTeamOffice.errors.type != null) ? 'is-invalid' : ''" id="type" ng-model="teamOffice.type">
                 <option value="head_office">مكتب رئيسي</option>
-                <option value="department">قسم</option>
-                <option value="unit">وحدة</option>
-                <option value="sub_unit">وحدة فرعية</option>
+                <option value="branch_office">مكتب فرعي</option>
             </select>
             <div ng-show="createTeamOffice.errors.type != null" class="invalid-feedback">{{ createTeamOffice.errors.type[0] }}</div>
         </div>

@@ -19,7 +19,7 @@ class CreateTeamOfficesTable extends Migration
             $table->foreign('office_manager')->references('id')->on('users')->onDelete('cascade');
             $table->string('name');
             $table->string('address');
-            $table->enum('type', ['head_office', 'department', 'unit', 'sub_unit']);
+            $table->enum('type', ['head_office', 'branch_office']);
             $table->unsignedBigInteger('place_id');
             $table->foreign('place_id')->references('id')->on('places')->onDelete('cascade');
             $table->timestamps();

@@ -42,7 +42,7 @@ class TeamOfficeController extends Controller {
     public function list () {
 
         try {
-            $team_office = TeamOffice::with('user', 'place')->orderBy('id', 'desc')->paginate(5);
+            $team_office = TeamOffice::with('user', 'place')->orderBy('id', 'asc')->paginate(5);
 
             return response()->json($team_office);
 
