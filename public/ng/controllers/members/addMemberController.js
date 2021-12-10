@@ -1,5 +1,5 @@
 async function addMemberControllerInit($apiRequest) {
-
+    //console.log($apiRequest)
 }
 
 function addMemberController($scope, $location, $apiRequest, $page, $init) {

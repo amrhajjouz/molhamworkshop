@@ -17,8 +17,8 @@ class TravelRequestController extends Controller {
     public function create (CreateTravelRequestRequest $request) {
         $request->merge(['user_id'=>auth()->id()]);
         try {
-            $travelRequest = TravelRequest::create($request->all());
-            return response()->json($travelRequest);
+            $travel_request = TravelRequest::create($request->all());
+            return response()->json($travel_request);
         } catch (\Exception $e) {
             return response(['error' => $e->getMessage()], 500);
         }
@@ -26,9 +26,9 @@ class TravelRequestController extends Controller {
 
     public function update (UpdateTravelRequestRequest $request) {
         try {
-            $travelRequest = TravelRequest::findOrFail($request->id);
-            $travelRequest->update($request->validated());
-            return response()->json($travelRequest);
+            $travel_request = TravelRequest::findOrFail($request->id);
+            $travel_request->update($request->validated());
+            return response()->json($travel_request);
         } catch (\Exception $e) {
             return response(['error' => $e->getMessage()], 500);
         }
@@ -36,12 +36,9 @@ class TravelRequestController extends Controller {
 
     public function retrieve ($id) {
 
-        //$x = TravelRequest::find(1)->days;
-        //dd($x);
         try {
-            $travelRequest = TravelRequest::with(['user'])->where('id', $id)->firstOrFail();
-            //dd($travelRequest->days);
-            return response()->json($travelRequest);
+            $travel_request = TravelRequest::with(['user'])->where('id', $id)->firstOrFail();
+            return response()->json($travel_request);
         } catch (\Exception $e) {
             return response(['error' => $e->getMessage()], 500);
         }
@@ -49,8 +46,8 @@ class TravelRequestController extends Controller {
 
     public function list (Request $request) {
         try {
-            $travelRequests = TravelRequest::with('user')->orderBy('id', 'desc')->paginate(5);
-            return response()->json($travelRequests);
+            $travel_requests = TravelRequest::with('user')->orderBy('id', 'desc')->paginate(5);
+            return response()->json($travel_requests);
         } catch (\Exception $e) {
             return response(['error' => $e->getMessage()], 500);
         }
@@ -58,8 +55,8 @@ class TravelRequestController extends Controller {
 
     public function delete($id){
         try {
-            $travel_requests =  TravelRequest::find($id)->delete();
-            return response()->json($travel_requests);
+            $travel_request =  TravelRequest::find($id)->delete();
+            return response()->json($travel_request);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
         }

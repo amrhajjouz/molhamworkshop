@@ -1,0 +1,30 @@
+<page-header title="مهارة جديدة" pretitle="المهارات"></page-header>
+
+<form class="row" name="userSkillForm" request="createUserSkill">
+
+    <!--skill type-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="skill_type">نوع المهارة</label>
+            <input id="skill_type" class="form-control" type="text" ng-model="userSkill.skill_type" placeholder="ادخل نوع المهارة.." ng-error="createUserSkill.errors.skill_type" required>
+        </div>
+    </div>
+
+    <!--skill level-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="skill_level">مستواك فيها</label>
+            <select class="form-control" ng-class="(createUserSkill.errors.skill_level != null) ? 'is-invalid' : ''" id="skill_level" ng-model="userSkill.skill_level" ng-change="createUserSkill.errors.skill_level = null">
+                <option value="good">جيد</option>
+                <option value="average">متوسط</option>
+                <option value="excellent">ممتاز</option>
+            </select>
+            <div ng-show="createUserSkill.errors.skill_level != null" class="invalid-feedback">{{ createUserSkill.errors.skill_level[0] }}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="userSkillForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>

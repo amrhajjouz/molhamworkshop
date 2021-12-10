@@ -1,0 +1,92 @@
+<include-header/>
+
+<form class="row" name="userContractForm" request="updateUserContract">
+
+    <!--contract type-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="contract_type">نوع العقد</label>
+            <select class="form-control"
+                    ng-class="(updateUserContract.errors.contract_type != null) ? 'is-invalid' : ''" id="contract_type"
+                    ng-model="userContract.contract_type" ng-change="updateUserContract.errors.contract_type = null">
+                <option value="indefinite">غير محددة الأجل</option>
+                <option value="full_time">دوام كامل</option>
+                <option value="part_time">دوام جزئي</option>
+                <option value="freelance">عقود العمل الحر</option>
+                <option value="consultant_contracts">عقود المستشارين</option>
+                <option value="field_work">عقود العمل الميداني</option>
+                <option value="project_employee_contracts">عقود موظفي المشاريع</option>
+            </select>
+            <div ng-show="updateUserContract.errors.contract_type != null" class="invalid-feedback">
+                {{ updateUserContract.errors.contract_type[0] }}
+            </div>
+        </div>
+    </div>
+
+    <!--contract start date-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="contract_start_date">تاريخ بداية العقد</label>
+            <input id="contract_start_date" date-picker class="form-control" ng-model="userContract.contract_start_date"
+                   placeholder="تاريخ بداية العقد.." ng-error="updateUserContract.errors.contract_start_date" required>
+        </div>
+    </div>
+
+    <!--contract end date-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="contract_end_date">تاريخ انتهاء العقد</label>
+            <input id="contract_end_date" date-picker class="form-control" ng-model="userContract.contract_end_date"
+                   placeholder="تاريخ انتهاء العقد.." ng-error="updateUserContract.errors.contract_end_date" required>
+        </div>
+    </div>
+
+    <!--job title-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="job_title_id">المسمى الوظيفي</label>
+            <select2 id="job_title_id" model="userContract.job_title_id" ajax-url="job_titles/search" error-model="updateUserContract.errors.job_title_id"></select2>
+        </div>
+    </div>
+
+    <!--workplace-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="workplace">الدوام</label>
+            <select class="form-control" ng-class="(updateUserContract.errors.workplace != null) ? 'is-invalid' : ''" id="workplace" ng-model="userContract.workplace" ng-change="updateUserContract.errors.workplace = null">
+                <option value="remotely">اونلاين</option>
+                <option value="physically">مكتبي</option>
+            </select>
+            <div ng-show="updateUserContract.errors.workplace != null" class="invalid-feedback">{{ updateUserContract.errors.workplace[0] }}
+            </div>
+        </div>
+    </div>
+
+    <!--office-->
+    <div class="col-12 col-md-6" ng-show="userContract.workplace == 'physically'">
+        <div class="form-group">
+            <label for="office_id">المكتب</label>
+            <select2 id="office_id" model="userContract.office_id" ajax-url="team_offices/search" error-model="updateUserContract.errors.office_id"></select2>
+        </div>
+    </div>
+
+    <!--salary-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="salary">الراتب</label>
+            <input id="salary" class="form-control" type="text" ng-model="userContract.salary" placeholder="الراتب.." ng-error="updateUserContract.errors.salary" required>
+        </div>
+    </div>
+
+    <!--working_hours-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="working_hours"> ساعات العمل</label>
+            <input id="working_hours" class="form-control" type="text" ng-model="userContract.working_hours" placeholder=" ساعات العمل.." ng-error="updateUserContract.errors.working_hours" required>
+        </div>
+    </div>
+    
+    <div class="col-12">
+        <submit-button form="userContractForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+</form>

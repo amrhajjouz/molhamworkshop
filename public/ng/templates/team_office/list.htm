@@ -1,0 +1,36 @@
+<page-header title="قائمة مكاتب الفريق" pretitle="مكاتب الفريق">
+    <a href="{{ $r('team_offices.add') }}" class="btn btn-primary">
+        <i class="fe fe-plus"></i>&nbsp;جديد
+    </a>
+</page-header>
+
+<datatable datalist="teamOffices">
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">اسم المكتب</th>
+                <th class="text-center">مدير المكتب</th>
+                <th class="text-center">نوع المكتب</th>
+                <th class="text-center">موقع المكتب</th>
+                <th class="text-center">خيارات</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="x in teamOffices.data">
+                <td class="align-middle text-center">{{ x.id }}</td>
+                <td class="align-middle text-center">{{ x.name }}</td>
+                <td class="align-middle text-center">{{ x.user.first_name.ar }} {{ x.user.last_name.ar }}</td>
+                <td class="align-middle text-center">{{ x.type }}</td>
+                <td class="align-middle text-center">{{ x.place.fullname.ar }}</td>
+                <td class="align-middle text-center h2">
+                    <dropdown>
+                        <dropdown-item href="{{ $r('team_offices.overview', {id: x.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
+                        <dropdown-item href="{{ $r('team_offices.edit', {id: x.id}) }}"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
+                    </dropdown>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</datatable>

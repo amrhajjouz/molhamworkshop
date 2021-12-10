@@ -1,0 +1,32 @@
+<page-header title="قائمة بالأماكن التي عملت بها" pretitle="أماكن العمل السابقة">
+    <a href="{{ $r('user_work_experiences.add') }}" class="btn btn-primary">
+        <i class="fe fe-plus"></i>&nbsp;جديد
+    </a>
+</page-header>
+
+<datatable datalist="userWorkExperiences">
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">جهة العمل</th>
+                <th class="text-center">المسمى الوظيفي</th>
+                <th class="text-center">خيارات</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="x in userWorkExperiences.data">
+                <td class="align-middle text-center">{{ x.id }}</td>
+                <td class="align-middle text-center">{{ x.employer }}</td>
+                <td class="align-middle text-center">{{ x.job_title }}</td>
+                <td class="align-middle text-center h2">
+                    <dropdown>
+                        <dropdown-item href="{{ $r('user_work_experiences.overview', {id: x.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
+                        <dropdown-item href="{{ $r('user_work_experiences.edit', {id: x.id}) }}"><i class="fe fe-edit-2"></i> تعديل</dropdown-item>
+                    </dropdown>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</datatable>

@@ -1,0 +1,54 @@
+<page-header title="مكتب جديد" pretitle="قائمة مكاتب الفريق"></page-header>
+
+<form class="row" name="teamOfficeForm" request="createTeamOffice">
+
+    <!--name-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">اسم المكتب</label>
+            <input id="name" class="form-control" type="text" ng-model="teamOffice.name" placeholder="اسم المكتب.." ng-error="createTeamOffice.errors.name" required>
+        </div>
+    </div>
+
+    <!--type-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="type">نوع المكتب</label>
+            <select class="custom-select" ng-class="(createTeamOffice.errors.type != null) ? 'is-invalid' : ''" id="type" ng-model="teamOffice.type">
+                <option value="head_office">مكتب رئيسي</option>
+                <option value="department">قسم</option>
+                <option value="unit">وحدة</option>
+                <option value="sub_unit">وحدة فرعية</option>
+            </select>
+            <div ng-show="createTeamOffice.errors.type != null" class="invalid-feedback">{{ createTeamOffice.errors.type[0] }}</div>
+        </div>
+    </div>
+
+    <!--head-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="office_manager">مدير المكتب</label>
+            <select2 id="office_manager" model="teamOffice.office_manager" ajax-url="user_contracts/members" error-model="createTeamOffice.errors.office_manager"></select2>
+        </div>
+    </div>
+
+    <!--country code-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="place_id">مكان المكتب</label>
+            <select2 id="place_id" model="teamOffice.place_id" ajax-url="places/search" error-model="createTeamOffice.errors.place_id"></select2>
+        </div>
+    </div>
+
+    <!--address-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="address">العنوان بالتفصيل</label>
+            <textarea id="address" class="form-control" cols="5" rows="5" ng-model="teamOffice.address" placeholder="العنوان بالتفصيل.." ng-error="createTeamOffice.errors.address" required></textarea>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="teamOfficeForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>

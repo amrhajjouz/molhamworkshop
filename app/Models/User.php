@@ -64,7 +64,12 @@ class User extends Authenticatable
         return $member_translate_words;
     }
 
-    public function section(){
-        return $this->belongsTo(UserSection::class);
+    public function userSection() {
+        return $this->belongsTo(UserSection::class,'user_section_id');
     }
+
+    public function manger(){
+        return $this->hasOne(\App\Models\UserSection::class,'user_manager_id');
+    }
+
 }

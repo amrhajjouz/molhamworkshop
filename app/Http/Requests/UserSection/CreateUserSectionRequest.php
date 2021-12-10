@@ -13,7 +13,7 @@ class CreateUserSectionRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class CreateUserSectionRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'section_name.ar' => ['required', 'string'],
+            'section_name.en' => ['required', 'string'],
+            'user_manager_id' => ['required', 'numeric' , 'exists:users,id'],
+            'parent_id' => ['required', 'numeric' ,'exists:user_sections,id'],
         ];
     }
 }

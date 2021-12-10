@@ -1,4 +1,4 @@
-function profileResidenceDataControllerInit ($apiRequest) {
+function profileResidenceDataControllerInit ($page, $apiRequest) {
     return $apiRequest.config('auth').getData();
 }
 

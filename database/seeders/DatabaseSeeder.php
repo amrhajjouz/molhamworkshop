@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\TeamOffice;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -16,18 +17,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
-            'first_name' => ['ar'=>'Developer User' , 'en'=>"Developer User"],
-            //'section_id' => 1,
-            'email' => "admin@admin.com",
-            'password' => Hash::make('12345678'),
-        ]);
-
 
         $this->call([
             CountrySeeder::class ,
             PlaceSeeder::class ,
             UserSectionSeeder::class ,
+            JobTitleSeeder::class ,
         ]);
+
+        User::where('id',1)->update([
+            'user_section_id' => 1,
+        ]);
+
+        $this->call([
+            TeamOfficeSeeder::class ,
+            UserSeeder::class ,
+        ]);
+
     }
 }

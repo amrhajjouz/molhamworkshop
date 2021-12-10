@@ -26,6 +26,7 @@ class CreateMemberRequest extends FormRequest
     {
 
         return [
+            'user_section_id' => ['required'],
             'first_name.ar' => ['required', 'string'],
             'first_name.en' => ['required', 'string'],
             'last_name.ar' => ['required', 'string'],

@@ -1,0 +1,24 @@
+<page-header title="مسمى وظيفي جديد" pretitle=" المسميات الوظيفية"></page-header>
+
+<form class="row" name="jobTitleForm" request="createJobTitle">
+
+    <!--name ar-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name_ar">الإسم باللغة العربية</label>
+            <input id="name_ar" class="form-control" type="text" ng-model="jobTitle.name.ar" placeholder="الإسم باللغة العربية.." ng-error="createJobTitle.errors.name.ar" required>
+        </div>
+    </div>
+
+    <!--name en-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name_en">الإسم باللغة الإنكليزية</label>
+            <input id="name_en" class="form-control" type="text" ng-model="jobTitle.name.en" placeholder="الإسم باللغة الإنكليزية.." ng-error="createJobTitle.errors.name.en" required>
+        </div>
+    </div>
+    
+    <div class="col-12">
+        <submit-button form="jobTitleForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -15,13 +16,6 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        for ($i=1; $i<=500; $i++) {
-            DB::table('users')->insert([
-                'first_name' => ['ar'=>'Developer user' , 'en'=>"Developer user"],
-                'email' => 'test' . $i . '@test.com',
-                'password' => Hash::make('12345678'),
-                'locale' => 'ar',
-            ]);
-        }
+        User::factory()->count(29)->create();
     }
 }

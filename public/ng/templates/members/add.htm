@@ -2,6 +2,14 @@
 
 <form class="row" name="createMemberForm" request="createMember">
 
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="user_section_id">القسم(المحفظة)</label>
+            <select2 id="user_section_id" model="member.user_section_id" ajax-url="user_sections/search"
+                     error-model="createMember.errors.user_section_id"></select2>
+        </div>
+    </div>
+
     <!--first name ar-->
     <div class="col-12 col-md-6">
         <div class="form-group">

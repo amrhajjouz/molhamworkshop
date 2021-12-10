@@ -13,6 +13,12 @@ use App\Http\Controllers\Dashboard\AdvancePaymentRequestController;
 use App\Http\Controllers\Dashboard\TravelRequestController;
 use App\Http\Controllers\Dashboard\UserFamilyMemberController;
 use App\Http\Controllers\Dashboard\UserContractController;
+use App\Http\Controllers\Dashboard\UserSectionController;
+use App\Http\Controllers\Dashboard\UserWorkExperienceController;
+use App\Http\Controllers\Dashboard\UserSkillController;
+use App\Http\Controllers\Dashboard\UserResidenceController;
+use App\Http\Controllers\Dashboard\TeamOfficeController;
+use App\Http\Controllers\Dashboard\JobTitleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +46,7 @@ Route::middleware('auth')->group(function ()  {
     Route::post('/profile/experiences_and_skills', [ProfileController::class, 'experiences_and_skills']);
     Route::post('/profile/additional_data', [ProfileController::class, 'additional_data']);
     Route::post('/profile/education', [ProfileController::class, 'education']);
+    Route::get('/profile/contracts', [ProfileController::class, 'contracts']);
 
     Route::get('/users', [UserController::class, 'list']);
     Route::post('/users', [UserController::class, 'create']);
@@ -67,7 +74,9 @@ Route::middleware('auth')->group(function ()  {
     Route::post('/members', [MemberController::class, 'create']);
     Route::put('/members', [MemberController::class, 'update']);
     Route::get('/members/search', [MemberController::class, 'search']);
+    Route::get('/members/user_sections', [MemberController::class, 'user_sections']);
     Route::get('/members/{id}', [MemberController::class, 'retrieve']);
+    Route::get('/members/contracts/{id}', [MemberController::class, 'contracts']);
     Route::delete('/members/{id}', [MemberController::class, 'delete']);
 
     // Loan Requests Routes
@@ -104,9 +113,50 @@ Route::middleware('auth')->group(function ()  {
 
     // User Contracts Routes
     Route::get('/user_contracts', [UserContractController::class, 'list']);
-    Route::post('/user_contracts', [UserContractController::class, 'create']);
+    Route::post('/user_contracts/{id}', [UserContractController::class, 'create']);
     Route::put('/user_contracts', [UserContractController::class, 'update']);
     Route::get('/user_contracts/search', [UserContractController::class, 'search']);
+    Route::get('/user_contracts/members', [UserContractController::class, 'members']);
     Route::get('/user_contracts/{id}', [UserContractController::class, 'retrieve']);
     Route::delete('/user_contracts/{id}', [UserContractController::class, 'delete']);
+
+    // User Sections Routes
+    Route::get('/user_sections', [UserSectionController::class, 'list']);
+    Route::post('/user_sections', [UserSectionController::class, 'create']);
+    Route::put('/user_sections', [UserSectionController::class, 'update']);
+    Route::get('/user_sections/search', [UserSectionController::class, 'search']);
+    Route::get('/user_sections/{id}', [UserSectionController::class, 'retrieve']);
+    Route::delete('/user_sections/{id}', [UserSectionController::class, 'delete']);
+
+    // User Work Experience Routes
+    Route::get('/user_work_experiences', [UserWorkExperienceController::class, 'list']);
+    Route::post('/user_work_experiences', [UserWorkExperienceController::class, 'create']);
+    Route::put('/user_work_experiences', [UserWorkExperienceController::class, 'update']);
+    Route::get('/user_work_experiences/search', [UserWorkExperienceController::class, 'search']);
+    Route::get('/user_work_experiences/{id}', [UserWorkExperienceController::class, 'retrieve']);
+    Route::delete('/user_work_experiences/{id}', [UserWorkExperienceController::class, 'delete']);
+
+    // User Skills Routes
+    Route::get('/user_skills', [UserSkillController::class, 'list']);
+    Route::post('/user_skills', [UserSkillController::class, 'create']);
+    Route::put('/user_skills', [UserSkillController::class, 'update']);
+    Route::get('/user_skills/search', [UserSkillController::class, 'search']);
+    Route::get('/user_skills/{id}', [UserSkillController::class, 'retrieve']);
+    Route::delete('/user_skills/{id}', [UserSkillController::class, 'delete']);
+
+    // Team Offices Routes
+    Route::get('/team_offices', [TeamOfficeController::class, 'list']);
+    Route::post('/team_offices', [TeamOfficeController::class, 'create']);
+    Route::put('/team_offices', [TeamOfficeController::class, 'update']);
+    Route::get('/team_offices/search', [TeamOfficeController::class, 'search']);
+    Route::get('/team_offices/{id}', [TeamOfficeController::class, 'retrieve']);
+    Route::delete('/team_offices/{id}', [TeamOfficeController::class, 'delete']);
+
+    // Job Titles Routes
+    Route::get('/job_titles', [JobTitleController::class, 'list']);
+    Route::post('/job_titles', [JobTitleController::class, 'create']);
+    Route::put('/job_titles', [JobTitleController::class, 'update']);
+    Route::get('/job_titles/search', [JobTitleController::class, 'search']);
+    Route::get('/job_titles/{id}', [JobTitleController::class, 'retrieve']);
+    Route::delete('/job_titles/{id}', [JobTitleController::class, 'delete']);
 });

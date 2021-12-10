@@ -1,0 +1,39 @@
+<include-header></include-header>
+
+
+<form class="row" name="teamOfficeForm" request="updateTeamOffice">
+
+    <!--name-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="name">اسم المكتب</label>
+            <input id="name" class="form-control" type="text" ng-model="teamOffice.name" placeholder="اسم المكتب.." ng-error="updateTeamOffice.errors.name" required>
+        </div>
+    </div>
+
+    <!--type-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="type">نوع المكتب</label>
+            <select class="custom-select" ng-class="(updateTeamOffice.errors.type != null) ? 'is-invalid' : ''" id="type" ng-model="teamOffice.type">
+                <option value="head_office">مكتب رئيسي</option>
+                <option value="department">قسم</option>
+                <option value="unit">وحدة</option>
+                <option value="sub_unit">وحدة فرعية</option>
+            </select>
+            <div ng-show="updateTeamOffice.errors.type != null" class="invalid-feedback">{{ updateTeamOffice.errors.type[0] }}</div>
+        </div>
+    </div>
+
+    <!--address-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="address">العنوان بالتفصيل</label>
+            <textarea id="address" class="form-control" cols="5" rows="5" ng-model="teamOffice.address" placeholder="العنوان بالتفصيل.." ng-error="updateTeamOffice.errors.address" required></textarea>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="teamOfficeForm" icon="fe fe-plus">تعديل</submit-button>
+    </div>
+</form>

@@ -18,8 +18,18 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ $r('user-family-members') }}" class="nav-link">
+                    <a href="{{ $r('user_family_members') }}" class="nav-link">
                         أفراد العائلة
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('user_work_experiences') }}" class="nav-link">
+                        خبرات العمل
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('user_skills') }}" class="nav-link">
+                        المهارات
                     </a>
                 </li>
             </ul>

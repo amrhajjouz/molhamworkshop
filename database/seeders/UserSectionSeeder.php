@@ -14,7 +14,10 @@ class UserSectionSeeder extends Seeder
      */
     public function run()
     {
-        UserSection::create(['section_name' => 'HR',]);
-        UserSection::create(['section_name' => 'Finance',]);
+        UserSection::create(['section_name' => ['ar'=>'موارد بشرية' , 'en'=>"Human resources"], 'user_manager_id' => 1]);
+        UserSection::create(['section_name' => ['ar'=>'المالية' , 'en'=>"Finance"], 'user_manager_id' => 1]);
+        UserSection::create(['section_name' => ['ar'=>'برامج' , 'en'=>"Programs"], 'user_manager_id' => 1]);
+        UserSection::create(['section_name' => ['ar'=>'حالات' , 'en'=>"cases"], 'user_manager_id' => 1]);
+        UserSection::create(['section_name' => ['ar'=>'الفريق التقني' , 'en'=>"The technical team"], 'user_manager_id' => 1]);
     }
 }

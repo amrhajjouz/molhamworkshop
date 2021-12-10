@@ -1,0 +1,26 @@
+<page-header title="إضافة جديد" pretitle="أماكن العمل السابقة"></page-header>
+
+<form class="row" name="userWorkExperienceForm" request="createUserWorkExperience">
+
+    <!--employer-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="employer">جهة العمل</label>
+            <input type="text" class="form-control" ng-class="(createUserWorkExperience.errors.employer != null) ? 'is-invalid' : ''" id="employer" ng-model="userWorkExperience.employer" ng-change="createUserWorkExperience.errors.employer = null" placeholder="جهة العمل .." required>
+            <div ng-show="createUserWorkExperience.errors.employer != null" class="invalid-feedback">{{ createUserWorkExperience.errors.employer[0] }}</div>
+        </div>
+    </div>
+
+    <!--job title-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="job_title">المسمى الوظيفي</label>
+            <input type="text" class="form-control" ng-class="(createUserWorkExperience.errors.job_title != null) ? 'is-invalid' : ''" id="job_title" ng-model="userWorkExperience.job_title" ng-change="createUserWorkExperience.errors.job_title = null" placeholder="المسمى الوظيفي .." required>
+            <div ng-show="createUserWorkExperience.errors.job_title != null" class="invalid-feedback">{{ createUserWorkExperience.errors.job_title[0] }}</div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="userWorkExperienceForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>

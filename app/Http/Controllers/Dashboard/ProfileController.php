@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\UserContract;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use App\Models\UserResidence;
+use App\Http\Requests\UserResidence\{CreateUserResidenceRequest, UpdateUserResidenceRequest,ListUserResidenceRequest,DeleteUserResidenceRequest,RetrieveUserResidenceRequest};
 
 use App;
 use Validator;
@@ -89,20 +92,15 @@ class ProfileController extends Controller {
         try {
 
             $messages = [
-                'place_of_birth.required' => 'مكان الولادة حقل مطلوب',
-                'document_type.required' => 'نوع الوثيقة حقل مطلوب',
-                'document_number.required' => 'رقم الوثيقة حقل مطلوب',
-                'document_number.numeric' => 'رقم الوثيقة يجب ان يكون رقم',
-                'document_expiration_date.required' => 'تاريخ الصلاحية حقل مطلوب',
-                'current_residence.required' => 'بلد الإقامة الحالي حقل مطلوب',
+                'current_residence.required' => 'بلد الاقامة الحالي حقل مطلوب',
+                'residence_type.required' => 'نوع الوثيقة حقل مطلوب',
+                //'residence_file.required' => 'ملف الوثيقة حقل مطلوب',
             ];
 
             $rules = [
-                'place_of_birth' => 'required|string',
-                'document_type' => 'required|string',
-                'document_number' => 'required|numeric',
-                'document_expiration_date' => 'required|date',
                 'current_residence' => 'required|string',
+                'residence_type' => 'required|string',
+                //'residence_file' => 'required|numeric',
             ];
 
             //dd($request->all());
@@ -113,11 +111,10 @@ class ProfileController extends Controller {
             }
 
             $user = Auth::user();
-            $user->place_of_birth = $request->input('place_of_birth');
-            $user->document_type = $request->input('document_type');
-            $user->document_number = $request->input('document_number');
-            $user->document_expiration_date = $request->input('document_expiration_date');
             $user->current_residence = $request->input('current_residence');
+            $user->residence_type = $request->input('residence_type');
+            $user->residence_file = $request->input('residence_file');
+
             $user->save();
 
             return response()->json([]);
@@ -180,6 +177,7 @@ class ProfileController extends Controller {
     }
 
     public function employment_data (Request $request) {
+
 
 
         /*try {
@@ -255,14 +253,10 @@ class ProfileController extends Controller {
 
             $messages = [
                 'blood_type.required' => 'زمرة الدم حقل مطلوب',
-                'physical_disability.required' => 'الاعاقة الجسدية حقل مطلوب',
-                'communicable_diseases.required' => 'الامراض السارية حقل مطلوب',
             ];
 
             $rules = [
                 'blood_type' => 'required',
-                'physical_disability' => 'required',
-                'communicable_diseases' => 'required',
             ];
 
             $validator = Validator::make ($request->all(), $rules, $messages);
@@ -275,8 +269,6 @@ class ProfileController extends Controller {
             $user->blood_type = $request->input('blood_type');
             $user->physical_disability = $request->input('physical_disability');
             $user->communicable_diseases = $request->input('communicable_diseases');
-            $user->physical_disability_description = $request->input('physical_disability_description');
-            $user->communicable_diseases_description = $request->input('communicable_diseases_description');
             $user->save();
 
             return response()->json([]);
@@ -293,28 +285,28 @@ class ProfileController extends Controller {
             $messages = [
                 'education_level.required' => 'المستوى التعليمي حقل مطلوب',
                 'education_section.required' => 'الفرع حقل مطلوب',
-                'educational_facility.required' => 'المنشأة التعليمية حقل مطلوب',
+                /*'educational_facility.required' => 'المنشأة التعليمية حقل مطلوب',
                 'educational_country.required' => 'البلد حقل مطلوب',
                 'educational_language.required' => 'لغة الدراسة حقل مطلوب',
                 'educational_status.required' => 'الحالة الدراسية حقل مطلوب',
                 'graduation_year.required' => 'سنة التخرج حقل مطلوب',
                 'average.required' => 'المعدل حقل مطلوب',
                 'native_language.required' => 'اللغة الام حقل مطلوب',
-                'other_languages.required' => 'لغات اخرى حقل مطلوب',
+                'other_languages.required' => 'لغات اخرى حقل مطلوب',*/
 
             ];
 
             $rules = [
                 'education_level' => 'required',
                 'education_section' => 'required',
-                'educational_facility' => 'required',
+                /*'educational_facility' => 'required',
                 'educational_country' => 'required',
                 'educational_language' => 'required',
                 'educational_status' => 'required',
                 'graduation_year' => 'required',
                 'average' => 'required',
                 'native_language' => 'required',
-                'other_languages' => 'required',
+                'other_languages' => 'required',*/
             ];
 
             $validator = Validator::make ($request->all(), $rules, $messages);
@@ -326,20 +318,33 @@ class ProfileController extends Controller {
             $user = Auth::user();
             $user->education_level = $request->input('education_level');
             $user->education_section = $request->input('education_section');
-            $user->educational_facility = $request->input('educational_facility');
+            /*$user->educational_facility = $request->input('educational_facility');
             $user->educational_country = $request->input('educational_country');
             $user->educational_language = $request->input('educational_language');
             $user->educational_status = $request->input('educational_status');
             $user->graduation_year = $request->input('graduation_year');
             $user->average = $request->input('average');
             $user->native_language = $request->input('native_language');
-            $user->other_languages = $request->input('other_languages');
+            $user->other_languages = $request->input('other_languages');*/
             $user->save();
 
             return response()->json([]);
 
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
+        }
+    }
+
+    public function contracts () {
+
+        try {
+            $userContracts = UserContract::with('user')->where('user_id', auth()->id())->orderBy('id', 'desc')->paginate(5);
+
+            //dd($userContracts);
+            return response()->json($userContracts);
+
+        } catch (\Exception $e) {
+            return response(['error' => $e->getMessage()], 500);
         }
     }
 

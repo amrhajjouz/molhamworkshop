@@ -16,8 +16,8 @@ class LoanRequestController extends Controller {
 
     public function create (CreateLoanRequestRequest $request) {
         try {
-            $loanRequest = LoanRequest::create(array_merge($request->validated(), ['user_id' => auth()->id()]));
-            return response()->json($loanRequest);
+            $loan_request = LoanRequest::create(array_merge($request->validated(), ['user_id' => auth()->id()]));
+            return response()->json($loan_request);
         } catch (\Exception $e) {
             return response(['error' => $e->getMessage()], 500);
         }
@@ -25,9 +25,9 @@ class LoanRequestController extends Controller {
 
     public function update (UpdateLoanRequestRequest $request) {
         try {
-            $loanRequest = LoanRequest::findOrFail($request->id);
-            $loanRequest->update($request->validated());
-            return response()->json($loanRequest);
+            $loan_request = LoanRequest::findOrFail($request->id);
+            $loan_request->update($request->validated());
+            return response()->json($loan_request);
         } catch (\Exception $e) {
             return response(['error' => $e->getMessage()], 500);
         }
@@ -35,8 +35,8 @@ class LoanRequestController extends Controller {
 
     public function retrieve ($id) {
         try {
-            $loanRequest = LoanRequest::with('user')->where('id', $id)->firstOrFail();
-            return response()->json($loanRequest);
+            $loan_request = LoanRequest::with('user')->where('id', $id)->firstOrFail();
+            return response()->json($loan_request);
         } catch (\Exception $e) {
             return response(['error' => $e->getMessage()], 500);
         }
@@ -44,8 +44,8 @@ class LoanRequestController extends Controller {
 
     public function list (Request $request) {
         try {
-            $loanRequests = LoanRequest::with('user')->orderBy('id', 'desc')->paginate(5);
-            return response()->json($loanRequests);
+            $loan_request = LoanRequest::with('user')->orderBy('id', 'desc')->paginate(5);
+            return response()->json($loan_request);
         } catch (\Exception $e) {
             return response(['error' => $e->getMessage()], 500);
         }
@@ -53,8 +53,8 @@ class LoanRequestController extends Controller {
 
     public function delete($id){
         try {
-            $loan_requests =  LoanRequest::find($id)->delete();
-            return response()->json($loan_requests);
+            $loan_request =  LoanRequest::find($id)->delete();
+            return response()->json($loan_request);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
         }

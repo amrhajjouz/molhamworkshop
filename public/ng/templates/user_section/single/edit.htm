@@ -1,0 +1,24 @@
+<include-header/>
+
+<form class="row" name="userSectionForm" request="updateUserSection">
+
+    <!--section name ar-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="section_name_ar">اسم القسم (المحفظة) باللغة العربية</label>
+            <input id="section_name_ar" class="form-control" type="text" ng-model="userSection.section_name.ar" placeholder="ادخل اسم القسم (المحفظة) باللغة العربية.." ng-error="updateUserSection.errors.section_name.ar" required>
+        </div>
+    </div>
+
+    <!--section name ar-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="section_name_en">اسم القسم (المحفظة) باللغة الانكليزية</label>
+            <input id="section_name_en" class="form-control" type="text" ng-model="userSection.section_name.en" placeholder="ادخل اسم القسم (المحفظة) باللغة الانكليزية.." ng-error="updateUserSection.errors.section_name.en" required>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="userSectionForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+</form>

@@ -13,7 +13,7 @@ class UpdateUserSectionRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class UpdateUserSectionRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'section_name.ar' => ['required', 'string'],
+            'section_name.en' => ['required', 'string'],
+            'user_manager_id' => ['required'],
         ];
     }
 }

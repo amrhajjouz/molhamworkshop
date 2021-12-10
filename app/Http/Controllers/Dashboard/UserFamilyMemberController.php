@@ -16,9 +16,9 @@ class UserFamilyMemberController extends Controller {
 
     public function create (CreateUserFamilyMemberRequest $request) {
         try {
-            $userFamilyMember = UserFamilyMember::create(array_merge($request->validated(), ['user_id' => auth()->id()]));
+            $user_family_member = UserFamilyMember::create(array_merge($request->validated(), ['user_id' => auth()->id()]));
 
-            return response()->json($userFamilyMember);
+            return response()->json($user_family_member);
         } catch (\Exception $e) {
             return response(['error' => $e->getMessage()], 500);
         }
@@ -26,11 +26,11 @@ class UserFamilyMemberController extends Controller {
 
     public function update (UpdateUserFamilyMemberRequest $request) {
         try {
-            $userFamilyMember = UserFamilyMember::findOrFail($request->id);
+            $user_family_member = UserFamilyMember::findOrFail($request->id);
 
-            $userFamilyMember->update($request->validated());
+            $user_family_member->update($request->validated());
 
-            return response()->json($userFamilyMember);
+            return response()->json($user_family_member);
         } catch (\Exception $e) {
             return response(['error' => $e->getMessage()], 500);
         }
@@ -47,9 +47,9 @@ class UserFamilyMemberController extends Controller {
     public function list (Request $request) {
 
         try {
-            $userFamilyMembers = UserFamilyMember::orderBy('id', 'desc')->paginate(5);
+            $user_family_members = UserFamilyMember::where('user_id', auth()->id())->orderBy('id', 'asc')->paginate(5);
 
-            return response()->json($userFamilyMembers);
+            return response()->json($user_family_members);
 
         } catch (\Exception $e) {
             return response(['error' => $e->getMessage()], 500);
@@ -58,8 +58,8 @@ class UserFamilyMemberController extends Controller {
 
     public function delete($id){
         try {
-            $userFamilyMembers =  UserFamilyMember::find($id)->delete();
-            return response()->json($userFamilyMembers);
+            $user_family_member =  UserFamilyMember::find($id)->delete();
+            return response()->json($user_family_member);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
         }

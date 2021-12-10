@@ -13,7 +13,7 @@ class UpdateUserContractRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,15 @@ class UpdateUserContractRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'contract_type' => ['required', 'string'],
+            'contract_start_date' => ['required', 'date'],
+            'contract_end_date' => ['required' ,'date', 'after:contract_start_date'],
+            //'job_title' => ['required', 'string'],
+            'job_title_id' => ['required', 'numeric' , 'exists:job_titles,id'],
+            'workplace' => ['required', 'string'],
+            'office_id' => ['string', 'nullable', 'sometimes', 'exists:team_offices,id'],
+            'salary' => ['required'],
+            'working_hours' => ['required'],
         ];
     }
 }

@@ -29,7 +29,7 @@ class UserController extends Controller {
         }
     }
     
-    public function update (UpdateUserRequest $request) {
+    public function update (CreateUserRequest $request) {
         
         try {
             

@@ -1,0 +1,38 @@
+<include-header/>
+<div class="header">
+    <div class="header-body">
+        <h1 class="header-title h3 font-weight-bold">
+           معلومات العمل السابق
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-lg-6">
+        <table>
+            <tr>
+                <td class="text-muted py-3">جهة العمل</td>
+                <td class="py-3 pr-3">{{ userWorkExperience.employer }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">المسمى الوظيفي</td>
+                <td class="py-3 pr-3">{{ userWorkExperience.job_title }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-12 col-lg-6">
+        <table>
+            <tr>
+                <td class="text-muted py-3">تاريخ الاضافة</td>
+                <td class="py-3 pr-3"><td class="py-3 pr-3"><span ng-bind="userWorkExperience.created_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td></td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ اخر تعديل</td>
+                <td class="py-3 pr-3"><td class="py-3 pr-3"><span ng-bind="userWorkExperience.updated_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<hr>
+

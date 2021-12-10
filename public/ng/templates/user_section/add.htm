@@ -1,0 +1,40 @@
+<page-header title="قسم جديد" pretitle="الأقسام"></page-header>
+
+<form class="row" name="userSectionForm" request="createUserSection">
+
+    <!--section name ar-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="section_name_ar">اسم القسم (المحفظة) باللغة العربية</label>
+            <input id="section_name_ar" class="form-control" type="text" ng-model="userSection.section_name.ar" placeholder="ادخل اسم القسم (المحفظة) باللغة العربية.." ng-error="createUserSection.errors.section_name.ar" required>
+        </div>
+    </div>
+
+    <!--section name ar-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="section_name_en">اسم القسم (المحفظة) باللغة الانكليزية</label>
+            <input id="section_name_en" class="form-control" type="text" ng-model="userSection.section_name.en" placeholder="ادخل اسم القسم (المحفظة) باللغة الانكليزية.." ng-error="createUserSection.errors.section_name.en" required>
+        </div>
+    </div>
+
+    <!--member-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="user_manager_id">مدير القسم</label>
+            <select2 id="user_manager_id" model="userSection.user_manager_id" ajax-url="user_contracts/members" error-model="createUserSection.errors.user_manager_id"></select2>
+        </div>
+    </div>
+
+    <!--parent id-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="parent_id">القسم الرئيسي</label>
+            <select2 id="parent_id" model="userSection.parent_id" ajax-url="user_sections/search" error-model="createUserSection.errors.parent_id"></select2>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="userSectionForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>

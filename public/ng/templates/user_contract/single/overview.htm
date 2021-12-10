@@ -1,0 +1,66 @@
+<include-header/>
+
+<div class="header">
+    <div class="header-body">
+        <h1 class="header-title h3 font-weight-bold">
+            معلومات عقد العمل للموظف {{ userContract.user.first_name.ar }}
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-lg-6">
+        <table>
+            <!--first name ar-->
+            <tr>
+                <td class="text-muted py-3">اسم الموظف</td>
+                <td class="py-3 pr-3">{{ userContract.user.first_name.ar }}</td>
+            </tr>
+            <!--contract type-->
+            <tr>
+                <td class="text-muted py-3">نوع العقد</td>
+                <td class="py-3 pr-3">{{ userContract.translate_word[0] }}</td>
+            </tr>
+            <!--contract start date-->
+            <tr>
+                <td class="text-muted py-3">تاريخ بداية العقد</td>
+                <td class="py-3 pr-3">{{ userContract.contract_start_date }}</td>
+            </tr>
+            <!--contract start date-->
+            <tr>
+                <td class="text-muted py-3">تاريخ انتهاء العقد</td>
+                <td class="py-3 pr-3">{{ userContract.contract_end_date }}</td>
+            </tr>
+            <!--contract period-->
+            <tr>
+                <td class="text-muted py-3">مدة العقد</td>
+                <td class="py-3 pr-3">{{ userContract.contract_period }} شهر</td>
+            </tr>
+            <!--job title-->
+            <tr>
+                <td class="text-muted py-3">المسمى الوظيفي</td>
+                <td class="py-3 pr-3">{{ userContract.job_title.name.ar }}</td>
+            </tr>
+            <!--office-->
+            <tr>
+                <td class="text-muted py-3">المكتب</td>
+                <td class="py-3 pr-3">{{ userContract.office.name }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-12 col-lg-6">
+        <table>
+            <tr>
+                <td class="text-muted py-3">تاريخ الاضافة</td>
+                <td class="py-3 pr-3"><td class="py-3 pr-3"><span ng-bind="userContract.created_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td></td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ اخر تعديل</td>
+                <td class="py-3 pr-3"><td class="py-3 pr-3"><span ng-bind="userContract.updated_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<hr>
+

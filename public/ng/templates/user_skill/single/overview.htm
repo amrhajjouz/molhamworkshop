@@ -1,0 +1,49 @@
+<include-header/>
+<div class="header">
+    <div class="header-body">
+        <h1 class="header-title h3 font-weight-bold">
+           معلومات المهارة
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-lg-6">
+
+        <table>
+            <tr>
+                <td class="text-muted py-3">نوع المهارة</td>
+                <td class="py-3 pr-3">{{ userSkill.skill_type }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">مستواك فيها</td>
+                <td class="py-3 pr-3">{{ userSkill.skill_level }}</td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div class="col-12 col-lg-6">
+
+        <table>
+            <tr>
+                <td class="text-muted py-3">تاريخ الاضافة</td>
+                <td class="py-3 pr-3">
+                <td class="py-3 pr-3"><span ng-bind="userSkill.created_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span>
+                </td>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ اخر تعديل</td>
+                <td class="py-3 pr-3">
+                <td class="py-3 pr-3"><span ng-bind="userSkill.updated_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span>
+                </td>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+<hr>
+

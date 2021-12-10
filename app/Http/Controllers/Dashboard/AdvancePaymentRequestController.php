@@ -16,9 +16,9 @@ class AdvancePaymentRequestController extends Controller {
 
     public function create (CreateAdvancePaymentRequestRequest $request) {
         try {
-            $advancePaymentRequest = AdvancePaymentRequest::create(array_merge($request->validated(), ['user_id' => auth()->id()]));
+            $advance_payment_request = AdvancePaymentRequest::create(array_merge($request->validated(), ['user_id' => auth()->id()]));
 
-            return response()->json($advancePaymentRequest);
+            return response()->json($advance_payment_request);
         } catch (\Exception $e) {
             return response(['error' => $e->getMessage()], 500);
         }
@@ -26,11 +26,11 @@ class AdvancePaymentRequestController extends Controller {
 
     public function update (UpdateAdvancePaymentRequestRequest $request) {
         try {
-            $advancePaymentRequest = AdvancePaymentRequest::findOrFail($request->id);
+            $advance_payment_request = AdvancePaymentRequest::findOrFail($request->id);
 
-            $advancePaymentRequest->update($request->validated());
+            $advance_payment_request->update($request->validated());
             //dd($advancePaymentRequest);
-            return response()->json($advancePaymentRequest);
+            return response()->json($advance_payment_request);
         } catch (\Exception $e) {
             return response(['error' => $e->getMessage()], 500);
         }
@@ -38,8 +38,8 @@ class AdvancePaymentRequestController extends Controller {
 
     public function retrieve ($id) {
         try {
-            $advancePaymentRequest = AdvancePaymentRequest::with('user')->where('id', $id)->firstOrFail();
-            return response()->json($advancePaymentRequest);
+            $advance_payment_request = AdvancePaymentRequest::with('user')->where('id', $id)->firstOrFail();
+            return response()->json($advance_payment_request);
 
         } catch (\Exception $e) {
             return response(['error' => $e->getMessage()], 500);
@@ -48,8 +48,8 @@ class AdvancePaymentRequestController extends Controller {
 
     public function list (Request $request) {
         try {
-            $advancePaymentRequests = AdvancePaymentRequest::with('user')->orderBy('id', 'desc')->paginate(5);
-            return response()->json($advancePaymentRequests);
+            $advance_payment_requests = AdvancePaymentRequest::with('user')->orderBy('id', 'desc')->paginate(5);
+            return response()->json($advance_payment_requests);
 
         } catch (\Exception $e) {
             return response(['error' => $e->getMessage()], 500);

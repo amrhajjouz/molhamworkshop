@@ -1,0 +1,58 @@
+<include-header/>
+
+<div class="header">
+    <div class="header-body">
+        <h1 class="header-title h3 font-weight-bold">
+           معلومات القسم
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-lg-6">
+
+        <table>
+            <tr>
+                <td class="text-muted py-3">اسم القسم باللغة العربية</td>
+                <td class="py-3 pr-3">{{ userSection.section_name.ar }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">اسم القسم باللغة الانكليزية</td>
+                <td class="py-3 pr-3">{{ userSection.section_name.en }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">مدير القسم</td>
+                <td class="py-3 pr-3">{{ userSection.manger_user.first_name.ar }} {{ userSection.manger_user.last_name.ar }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">القسم الأب</td>
+                <td class="py-3 pr-3">{{ userSection.parent_name[0].section_name.ar }}</td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div class="col-12 col-lg-6">
+
+        <table>
+            <tr>
+                <td class="text-muted py-3">تاريخ الاضافة</td>
+                <td class="py-3 pr-3">
+                <td class="py-3 pr-3"><span ng-bind="userSection.created_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span>
+                </td>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ اخر تعديل</td>
+                <td class="py-3 pr-3">
+                <td class="py-3 pr-3"><span ng-bind="userSection.updated_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span>
+                </td>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+<hr>
+

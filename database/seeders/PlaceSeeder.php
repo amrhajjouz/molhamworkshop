@@ -15,6 +15,7 @@ class PlaceSeeder extends Seeder
     public function run()
     {
         Place::create(['name' => ['ar'=>'ادلب' , 'en'=>"Idlib"], 'country_code' => "SY"]);
+        Place::create(['name' => ['ar'=>'ادلب' , 'en'=>"Idlib"], 'country_code' => "SY"]);
         Place::create(['name' => ['ar'=>'دمشق' , 'en'=>"Damascus"], 'country_code' => "SY"]);
         Place::create(['name' => ['ar'=>'اللاذقية' , 'en'=>"Latakia"], 'country_code' => "SY"]);
         Place::create(['name' => ['ar'=>'حلب' , 'en'=>"Aleppo"], 'country_code' => "SY"]);

@@ -13,7 +13,7 @@ class CreateUserResidenceRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class CreateUserResidenceRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'residence_type' => ['required' ,'string'],
+            'current_residence' => ['required' ,'string'],
         ];
     }
 }

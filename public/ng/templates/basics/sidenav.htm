@@ -73,6 +73,90 @@
         </div>
     </li>
 
+    <!--User Sections-->
+    <li class="nav-item">
+        <a
+                class="nav-link"
+                href="javascript:;"
+                data-toggle="collapse"
+                data-target="#user-sections-navs"
+                role="button"
+                aria-expanded="false"
+        >
+            <i class="fe fe-list"></i> الأقسام(المحفظة)
+        </a>
+        <div class="collapse" id="user-sections-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('user_sections.add') }}" class="nav-link">
+                        قسم جديد
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('user_sections') }}" class="nav-link">
+                        قائمة الأقسام
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+
+    <!--Job Titles-->
+    <li class="nav-item">
+        <a
+                class="nav-link"
+                href="javascript:;"
+                data-toggle="collapse"
+                data-target="#job-titles-navs"
+                role="button"
+                aria-expanded="false"
+        >
+            <i class="fe fe-list"></i> المسميات الوظيفية
+        </a>
+        <div class="collapse" id="job-titles-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('job_titles.add') }}" class="nav-link">
+                        مسمى جديد
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('job_titles') }}" class="nav-link">
+                        قائمة المسميات
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+
+    <!--Team Offices-->
+    <li class="nav-item">
+        <a
+                class="nav-link"
+                href="javascript:;"
+                data-toggle="collapse"
+                data-target="#team-offices-navs"
+                role="button"
+                aria-expanded="false"
+        >
+            <i class="fa fa-building"></i> مكاتب الفريق
+        </a>
+        <div class="collapse" id="team-offices-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('team_offices.add') }}" class="nav-link">
+                        مكتب جديد
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('team_offices') }}" class="nav-link">
+                        قائمة المكاتب
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+
     <!--Members-->
     <li class="nav-item">
         <a id="members-nav" class="nav-link" href="{{ $r('members') }}">
@@ -80,23 +164,30 @@
         </a>
     </li>
 
+    <!--Members-->
+    <li class="nav-item">
+        <a id="user-contracts-nav" class="nav-link" href="{{ $r('user_contracts') }}">
+            <i class="fe fe-file"></i> عقود العمل
+        </a>
+    </li>
+
     <!--Loan Requests-->
     <li class="nav-item">
-        <a id="loan-requests-nav" class="nav-link" href="{{ $r('loan-requests') }}">
+        <a id="loan-requests-nav" class="nav-link" href="{{ $r('loan_requests') }}">
             <i class="fe fe-grid"></i> طلبات القروض
         </a>
     </li>
 
     <!--Advance Payment Requests-->
     <li class="nav-item">
-        <a id="advance-payment-requests-nav" class="nav-link" href="{{ $r('advance-payment-requests') }}">
+        <a id="advance-payment-requests-nav" class="nav-link" href="{{ $r('advance_payment_requests') }}">
             <i class="fe fe-grid"></i>طلبات السلف
         </a>
     </li>
 
     <!--Travel Requests-->
     <li class="nav-item">
-        <a id="travel-requests-nav" class="nav-link" href="{{ $r('travel-requests') }}">
+        <a id="travel-requests-nav" class="nav-link" href="{{ $r('travel_requests') }}">
             <i class="fe fe-grid"></i>طلبات السفر
         </a>
     </li>
