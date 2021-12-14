@@ -9,6 +9,13 @@
                 <th class="text-center">#</th>
                 <th class="text-center">الاسم</th>
                 <th class="text-center">الرقم التسلسلي</th>
+                <th class="text-center">اسم المستفيد</th>
+                <th class="text-center">المكان</th>
+                <th class="text-center">المبلغ المطلوب</th>
+                <th class="text-center">الوارد</th>
+                <th class="text-center">المتبقي</th>
+                <th class="text-center">المصروف</th>
+                <th class="text-center">الباقي</th>
                 <th class="text-center">الحالة</th>
                 <th class="text-center">خيارات</th>
             </tr>
@@ -19,9 +26,16 @@
                 <td class="align-middle text-center">{{ case.id }}</td>
                 <td class="align-middle text-center">{{ case.beneficiary_name }}</td>
                 <td class="align-middle text-center">{{ case.serial_number }}</td>
+                <td class="align-middle text-center">{{ case.beneficiary_name }}</td>
+                <td class="align-middle text-center">{{ case.place.fullname }}</td>
+                <td class="align-middle text-center">{{ case.required }}</td>
+                <td class="align-middle text-center">{{ case.received }}</td>
+                <td class="align-middle text-center">{{ case.left_to_complete }}</td>
+                <td class="align-middle text-center">{{ case.spent }}</td>
+                <td class="align-middle text-center">{{ case.left }}</td>
                 <td class="align-middle text-center">
-                    <span class="badge badge-soft-info" ng-if="case.status =='unfunded'"><i class="fe fe-x"></i>غير مكفولة</span>
-                    <span class="badge badge-soft-success" ng-if="case.status =='funded'"><i class="fe fe-check"></i>تم كفالتها</span>
+                    <span class="badge" style="background-color:orange"  ng-if="case.status =='unfunded'"><i class="fe fe-x"></i>لم يتم تأميينها</span>
+                    <span class="badge badge-soft-success" ng-if="case.status =='funded'"><i class="fe fe-check"></i>تم تأمينها</span>
                     <span class="badge badge-soft-danger" ng-if="case.status =='canceled'"><i class="fe fe-x"></i>ملغاة</span>
                     <span class="badge badge-soft-secondary" ng-if="case.status =='spent'"><i class="fe fe-check"></i>تم صرفها</span>
                 </td>

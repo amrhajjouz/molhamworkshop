@@ -33,6 +33,7 @@ class UpdateMedicalCaseRequest extends FormRequest
             'country_code' => ['required', 'string', 'exists:countries,code', Rule::in(['SY', 'TR', 'LB', 'JO', 'EG'])],
             'beneficiaries_count' => ['required', 'numeric', 'min:1'],
             'place_id' => ['required', 'exists:places,id'],
+            'required' => ['required', 'numeric', 'min:1'],
         ];
     }
 

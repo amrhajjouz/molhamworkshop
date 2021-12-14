@@ -28,6 +28,10 @@ class SingleCaseResource extends JsonResource
             ],
             //target
             'required' => $target->required,
+            'received' => $target->received,
+            'spent' => $target->spent,
+            'left' => $target->left,
+            'left_to_complete' => $target->left_to_complete,
             'beneficiaries_count' => $target->beneficiaries_count,
             'documented' => $target->documented,
             'is_hidden' => $target->is_hidden,
@@ -44,8 +48,9 @@ class SingleCaseResource extends JsonResource
             'place' => [
                 'id' => $place->id,
                 'name' => $place->fullname[$locale],
-            ]
+            ],
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
-
     }
 }

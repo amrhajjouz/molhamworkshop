@@ -37,16 +37,16 @@ class ProfileController extends Controller {
             ];
 
             $validator = Validator::make ($request->all(), $rules, $messages);
-
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()->first(), 'errors' => $validator->errors()]);
             }
-
+            
             $user = Auth::user();
             $user->name = $request->input('name');
             $user->email = $request->input('email');
             $user->locale = $request->input('locale');
             $user->bio = (empty($request->input('bio'))) ? null : html_entity_decode($request->input('bio'));
+            // dd($request->all());
             $user->save();
 
             return response()->json([]);

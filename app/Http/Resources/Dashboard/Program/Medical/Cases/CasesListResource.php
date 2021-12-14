@@ -26,13 +26,20 @@ class CasesListResource extends JsonResource
                 'archived' => $case->target->archived ,
                 'documented' => $case->target->documented ,
                 'required' => $case->target->required ,
+                'received' => $case->target->received ,
+                'spent' => $case->target->spent ,
+                'left' => $case->target->left ,
+                'left_to_complete' => $case->target->left_to_complete ,
                 'published_at' => $case->target->published_at ,
                 'ready_to_publish' => $case->target->ready_to_publish ,
                 'title' => $case->target->title ,
                 'description' => $case->target->description ,
                 'details' => $case->target->details ,
                 'proofreadable' => $case->target->proofreadable ,
-                'available_locales'=>$case->target->available_locales
+                'available_locales'=>$case->target->available_locales , 
+                'place' => [
+                    'fullname' => $case->place->fullname[app()->getLocale()]
+                ]
             ];
         });
 

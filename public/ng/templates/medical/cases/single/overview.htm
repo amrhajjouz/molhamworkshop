@@ -1,118 +1,105 @@
 <include-header />
 
+
 <div class="row">
-    <div class="col-12 col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-header-title">معلومات الحالة</h4>
-            </div>
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">الاسم</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4>{{ case.beneficiary_name }}</h4>
-                    </div>
+
+    <div class="col-12 col-lg-6">
+
+        <table>
+            <tr>
+                <td class="text-muted py-3">اسم المستفيد</td>
+                <td class="py-3 pr-3">{{  case.beneficiary_name  }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">عدد المستفيدين</td>
+                <td class="py-3 pr-3">{{  case.beneficiaries_count }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">الكود</td>
+                <td class="py-3 pr-3">{{ case.code  }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">الصنف</td>
+                <td class="py-3 pr-3">{{ case.category.name  }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تمت أرشفتها</td>
+                <div class="col-auto">
+                    <td class="py-3 pr-3" ng-if="case.archived">نعم</td>
+                    <td class="py-3 pr-3" ng-if="!case.archived">لا</td>
                 </div>
-                <hr />
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">الدولة</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4>{{ case.country.name }}</h4>
-                    </div>
+            </tr>
+            <tr>
+                <td class="text-muted py-3"> تم توثيقها</td>
+                <div class="col-auto">
+                    <td class="py-3 pr-3" ng-if="case.documented">نعم</td>
+                    <td class="py-3 pr-3" ng-if="!case.documented">لا</td>
                 </div>
-                <hr />
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">المكان</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4>{{ case.place.name }}</h4>
-                    </div>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">مخفية</td>
+                <div class="col-auto">
+                    <td class="py-3 pr-3" ng-if="case.is_hidden">نعم</td>
+                    <td class="py-3 pr-3" ng-if="!case.is_hidden">لا</td>
                 </div>
-                <hr />
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">الكود</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4>{{ case.code }}</h4>
-                    </div>
-                </div>
-                <hr />
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">المبلغ المطلوب</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4>{{ case.required }}</h4>
-                    </div>
-                </div>
-                <hr />
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">الصنف</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4>{{ case.category.name }}</h4>
-                    </div>
-                </div>
-                <hr />
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">عدد المستفيدين</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4>{{ case.beneficiaries_count }}</h4>
-                    </div>
-                </div>
-                <hr />
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">تمت أرشفتها</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4 ng-if="case.archived">نعم</h4>
-                        <h4 ng-if="!case.archived">لا</h4>
-                    </div>
-                </div>
-                <hr />
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">تم توثيقها</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4 ng-if="case.documented">نعم</h4>
-                        <h4 ng-if="!case.documented">لا</h4>
-                    </div>
-                </div>
-                <hr />
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">مخفية</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4 ng-if="case.is_hidden">نعم</h4>
-                        <h4 ng-if="!case.is_hidden">لا</h4>
-                    </div>
-                </div>
-                <hr />
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">الحالة</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4 ng-if="case.status == 'spent'">تم صرفها</h4>
-                        <h4 ng-if="case.status == 'funded'">مؤمنة</h4>
-                        <h4 ng-if="case.status == 'unfunded'">غير مؤمنة</h4>
-                        <h4 ng-if="case.status == 'canceled'">ملغاة</h4>
-                    </div>
-                </div>
-                <hr />
-            </div>
-        </div>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">الحالة</td>
+                      <td class="py-3 pr-3" ng-if="case.status == 'spent'">تم صرفها</td>
+                        <td class="py-3 pr-3" ng-if="case.status == 'funded'">مؤمنة</td>
+                        <td class="py-3 pr-3" ng-if="case.status == 'unfunded'">غير مؤمنة</td>
+                        <td class="py-3 pr-3" ng-if="case.status == 'canceled'">ملغاة</td>
+            </tr>
+            
+        </table>
+
     </div>
+
+    <div class="col-12 col-lg-6">
+
+        <table>
+            <tr>
+                <td class="text-muted py-3">الدولة</td>
+                <td class="py-3 pr-3">{{ case.country.name  }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">المكان</td>
+                <td class="py-3 pr-3">{{ case.place.name  }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">المبلغ المطلوب</td>
+                <td class="py-3 pr-3">{{ case.required  }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">المبلغ الوارد</td>
+                <td class="py-3 pr-3">{{ case.received  }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">المبلغ المتبقي</td>
+                <td class="py-3 pr-3">{{ case.left_to_complete  }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">المبلغ المصروف</td>
+                <td class="py-3 pr-3">{{ case.spent  }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">المبلغ الباقي</td>
+                <td class="py-3 pr-3">{{ case.left  }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ الاضافة</td>
+                <td class="py-3 pr-3"><td class="py-3 pr-3"><span ng-bind="case.created_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td></td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ اخر تعديل</td>
+                <td class="py-3 pr-3"><td class="py-3 pr-3"><span ng-bind="case.updated_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td></td>
+            </tr>
+        </table>
+    
+    </div>
+    
 </div>
+
+
+
+

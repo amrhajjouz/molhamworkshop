@@ -41,7 +41,7 @@ class ProfileController extends Controller {
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()->first(), 'errors' => $validator->errors()]);
             }
-
+           
             $user = Auth::user();
             $user->name = $request->input('name');
             $user->email = $request->input('email');
