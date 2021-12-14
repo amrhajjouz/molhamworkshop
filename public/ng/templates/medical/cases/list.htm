@@ -16,6 +16,7 @@
                 <th class="text-center">المتبقي</th>
                 <th class="text-center">المصروف</th>
                 <th class="text-center">الباقي</th>
+                <th class="text-center">تم النشر </th>
                 <th class="text-center">الحالة</th>
                 <th class="text-center">خيارات</th>
             </tr>
@@ -33,6 +34,7 @@
                 <td class="align-middle text-center">{{ case.left_to_complete }}</td>
                 <td class="align-middle text-center">{{ case.spent }}</td>
                 <td class="align-middle text-center">{{ case.left }}</td>
+                <td class="align-middle text-center">{{ case.ready_to_publish ? 'نعم' : "لا" }}</td>
                 <td class="align-middle text-center">
                     <span class="badge" style="background-color:orange"  ng-if="case.status =='unfunded'"><i class="fe fe-x"></i>لم يتم تأميينها</span>
                     <span class="badge badge-soft-success" ng-if="case.status =='funded'"><i class="fe fe-check"></i>تم تأمينها</span>

@@ -7,11 +7,9 @@
             <tr>
                 <th class="text-center">#</th>
                 <th class="text-center">العنوان </th>
-                <th class="text-center">إنكليزي</th>
-                <th class="text-center">فرنسي</th>
-                <th class="text-center">ألماني</th>
-                <th class="text-center">تركي</th>
-                <th class="text-center">إسباني</th>
+                <th class="text-center">الحالة </th>
+                <th class="text-center">تعيين كتم تدقيقها </th>
+                <th class="text-center">تم النشر </th>
                 <th class="text-center">خيارات</th>
             </tr>
         </thead>
@@ -25,11 +23,14 @@
                         لايوجد عنوان بعد
                     </span>
                 </td>
-                <td class="align-middle text-center">{{ case.available_locales.en ? 'نعم' : 'لا'}}</td>
-                <td class="align-middle text-center">{{ case.available_locales.fr ? 'نعم' : 'لا'}}</td>
-                <td class="align-middle text-center">{{ case.available_locales.de ? 'نعم' : 'لا'}}</td>
-                <td class="align-middle text-center">{{ case.available_locales.tr ? 'نعم' : 'لا'}}</td>
-                <td class="align-middle text-center">{{ case.available_locales.es ? 'نعم' : 'لا'}}</td>
+                <td class="align-middle text-center">
+                    <span class="badge" style="background-color:orange"  ng-if="case.status =='unfunded'"><i class="fe fe-x"></i>لم يتم تأميينها</span>
+                    <span class="badge badge-soft-success" ng-if="case.status =='funded'"><i class="fe fe-check"></i>تم تأمينها</span>
+                    <span class="badge badge-soft-danger" ng-if="case.status =='canceled'"><i class="fe fe-x"></i>ملغاة</span>
+                    <span class="badge badge-soft-secondary" ng-if="case.status =='spent'"><i class="fe fe-check"></i>تم صرفها</span>
+                </td>
+                <td class="align-middle text-center">{{ !canProofread(case) ? "تعم" : "لا"}}</td>
+                <td class="align-middle text-center">{{ case.published_at ? "تعم" : "لا"}}</td>
                 <td class="align-middle text-center h2">
                     <dropdown>
                         <dropdown-item href="{{ $r('publishing.cases.overview', {id: case.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>

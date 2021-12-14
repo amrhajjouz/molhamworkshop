@@ -15,6 +15,7 @@ function listCasesPublishingController($scope, $init, $apiRequest, $page)
         return canProofread;
     }
     $scope.proofreadCaseRequest = (caseId) => {
+        if(!confirm('هل تريد التأكيد على تعيين هذه الحالة كتم تدقيقها ؟ ')) return;
         $apiRequest
             .config({ method: 'POST', url: `publishing/cases/${caseId}/proofread`, data: { id: caseId } }, function (response, data) {
                 $page.reload();
@@ -22,6 +23,7 @@ function listCasesPublishingController($scope, $init, $apiRequest, $page)
     };
 
     $scope.publishCaseRequest = (caseId) => {
+        if(!confirm('هل تريد التأكيد على تعيين هذه الحالة كتم نشرها ؟ ')) return;
         $apiRequest
             .config({ method: 'POST', url: `publishing/cases/${caseId}/publish`, data: { id: caseId } }, function (response, data) {
                 $page.reload();
