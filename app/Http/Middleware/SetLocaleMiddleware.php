@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
-class LocaleMiddleware
+class SetLocaleMiddleware
 {
     /**
      * Handle an incoming request.
