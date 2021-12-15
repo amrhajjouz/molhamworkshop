@@ -8,14 +8,12 @@ use Illuminate\Notifications\Notifiable;
 
 class MonthsTimesheet extends Model
 {
-          use HasFactory, Notifiable;
-          protected $table = "months_timesheet";
-          protected $fillable = [
-                    'user_id',
-                    'month',
-                    'working_hours',
-                    'overtime_hours',
-                    'rejection_details',
-                    'reviewed_by',
-          ];
+    use HasFactory, Notifiable;
+    protected $table = "months_timesheet";
+    protected $fillable = [
+        'user_id',
+        'month',
+        'working_hours',
+        'overtime_hours',
+    ];
 }

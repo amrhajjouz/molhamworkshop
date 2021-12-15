@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\User\{CreateUserRequest, UpdateUserRequest};
 
 use App\Models\User;
+use App\Models\TimesheetUsersChecks;
 
 class UserController extends Controller {
 
@@ -78,6 +79,16 @@ class UserController extends Controller {
             return response()->json(['deleted' => false]);
 
         } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+    public function timesheet ($id){
+        try {
+            $data = User::findOrFail($id);
+            $records = TimesheetUsersChecks::orderBy('created_at', 'desc')->where('user_id', $data['id'])->paginate(5);
+            return response()->json($records);
+        } catch (\Exception $e){
             return ['error' => $e->getMessage()];
         }
     }

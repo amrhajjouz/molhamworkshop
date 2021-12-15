@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PasscodeController;
+use App\Http\Controllers\Api\TimesheetExcel;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,4 +21,7 @@ Route::group([], function () {
           Route::post('/passcode/check', [PasscodeController::class, 'check'])->name('api.passcode.check');
           Route::get('/passcode/timesheet/{id}', [PasscodeController::class, 'timesheet']);
           Route::post('/passcode/update-check', [PasscodeController::class, 'updateCheck'])->name('api.passcode.updateCheck');
+          Route::get('/passcode/justifications/{id}', [PasscodeController::class, 'justifications'])->name('api.passcode.justifications');
+          Route::post('/passcode/justification-submit', [PasscodeController::class, 'submitJustification'])->name('api.passcode.submitJustification');
+          Route::get('/timesheet/excel/{id}', [TimesheetExcel::class, 'timesheetExcel']);
 });

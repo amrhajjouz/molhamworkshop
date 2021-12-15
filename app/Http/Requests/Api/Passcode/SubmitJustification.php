@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api\Passcode;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Check extends FormRequest
+class SubmitJustification extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,10 +28,9 @@ class Check extends FormRequest
             'unique_id' => 'required',
             'brand' => 'required',
             'os' => 'required',
-            'lat' => 'required',
-            'lng' => 'required',
-            'distance' => 'required',
-            'check_type' => 'required',
+            'id' => 'required',
+            'details' => 'required',
+            'working_hours' => '',
         ];
     }
 
@@ -42,10 +41,9 @@ class Check extends FormRequest
             'unique_id.required' => 'invalid_unique_id',
             'brand.required' => 'invalid_brand',
             'os.required' => 'invalid_os',
-            'lat.required' => 'invalid_lat',
-            'lng.required' => 'invalid_lng',
-            'distance.required' => 'invalid_distance',
-            'check_type.required' => 'invalid_check_type',
+            'id.required' => 'invalid_id',
+            'details.required' => 'invalid_details',
+            'working_hours.required' => 'invalid_working_hours',
         ];
     }
 }

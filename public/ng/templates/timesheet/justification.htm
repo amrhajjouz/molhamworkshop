@@ -1,0 +1,32 @@
+<page-header title="{{justification.user.name}}" pretitle="التبريرات">
+</page-header>
+
+<table>
+    <tr>
+        <th width="150"><p>التاريخ</p></th>
+        <td><p><span ng-bind="justification.created_at | date:'yyyy-MM-dd'" dir="ltr"></span></p></td>
+    </tr>
+    <tr>
+        <th><p>الحالة</p></th>
+        <td><p>{{status(justification.status)}}</p></td>
+    </tr>
+    <tr>
+        <th><p>السبب</p></th>
+        <td><p>{{x.reason === 'late_entry' ? 'تأخر' : 'ساعات العمل'}}</p></td>
+    </tr>
+    <tr>
+        <th><p>التبرير</p></th>
+        <td><p>{{justification.details}}</p></td>
+    </tr>
+    <tr>
+        <th><p>عدد ساعات العمل</p></th>
+        <td><p>{{justification.working_hours}}</p></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <button class="btn btn-success" ng-click="approve(justification.id)">قبول</button>
+            <button class="btn btn-danger" ng-click="reject(justification.id)">رفض</button>
+        </td>
+    </tr>
+</table>

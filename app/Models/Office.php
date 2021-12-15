@@ -8,11 +8,11 @@ use Illuminate\Notifications\Notifiable;
 
 class Office extends Model
 {
-          use HasFactory, Notifiable;
-          protected $table = "offices";
-          protected $fillable = [
-                    'name',
-                    'lat',
-                    'lng',
-          ];
+    use HasFactory, Notifiable;
+    protected $table = "offices";
+    protected $fillable = [
+        'name',
+        'lat',
+        'lng',
+    ];
 }

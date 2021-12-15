@@ -1,0 +1,21 @@
+<page-header title="{{user_data.$$state.value.name}}" pretitle="{{user_data.name}}"></page-header>
+
+<a class="btn btn-primary" target="_blank" href="/api/timesheet/excel/{{user_data.$$state.value.id}}">Download Timesheet</a>
+
+<datatable datalist="records">
+    <table>
+        <thead>
+        <tr>
+            <th>النوع</th>
+            <th>التاريخ</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="x in records.data">
+            <td>{{x.type === 'in' ? 'In' : 'Out'}}</td>
+            <td><span ng-bind="x.created_at | date:'yyyy-MM-dd HH:mm a'" dir="ltr"></span></td>
+        </tr>
+        </tbody>
+    </table>
+</datatable>

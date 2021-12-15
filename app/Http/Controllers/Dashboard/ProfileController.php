@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Office;
 use App\Models\TimesheetUsersChecks;
+use App\Models\DaysTimesheetJustifications;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -84,33 +85,82 @@ class ProfileController extends Controller {
         return response()->json([]);
     }
 
-          public function timesheet(Request  $request){
-                    try {
+    public function timesheet(Request  $request){
+        try {
 
-                              // Fetch Branch and Return
-                              $id = Auth::id();
-                              $userData = App\Models\User::findOrFail($id);
-                              $data = Office::findOrFail($userData->office_id);
-                              $checks = TimesheetUsersChecks::orderBy('created_at', 'desc')->where('user_id', $id)->paginate(5);;
-                              return response()->json($checks);
+            // Fetch Branch and Return
+            $id = Auth::id();
+            $userData = App\Models\User::findOrFail($id);
+            $data = Office::findOrFail($userData->office_id);
+            $checks = TimesheetUsersChecks::orderBy('created_at', 'desc')->where('user_id', $id)->paginate(5);;
+            return response()->json($checks);
 
-                    } catch (\Exception $e) {
-                              return ['error' => $e->getMessage()];
-                    }
-          }
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
 
-          public function generateQrCode(Request $request){
-                    $id = Auth::id();
-                    $userData = App\Models\User::findOrFail($id);
-                    $data = Office::findOrFail($userData->office_id);
-                    $qrData = [
-                              'lat' => $data['lat'],
-                              'lng' => $data['lng'],
-                    ];
-                    $qrData = json_encode($qrData);
-                    $qr = QrCode::format('png')->size(200)->generate($qrData);
-                    $data['qr'] = base64_encode($qr);
-                    return response()->json($data);
-          }
+    public function generateQrCode(Request $request){
+        $id = Auth::id();
+        $userData = App\Models\User::findOrFail($id);
+        $data = Office::findOrFail($userData->office_id);
+        $qrData = [
+            'lat' => $data['lat'],
+            'lng' => $data['lng'],
+        ];
+        $qrData = json_encode($qrData);
+        $qr = QrCode::format('png')->size(200)->generate($qrData);
+        $data['qr'] = base64_encode($qr);
+        return response()->json($data);
+    }
+
+    public function justificationsList (Request $request) {
+
+        try {
+
+            $id = Auth::id();
+
+            $justifications = DaysTimesheetJustifications::where('user_id', $id)->orderBy('created_at', 'desc')->paginate(20)->withQueryString();
+
+            return response()->json($justifications);
+
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+    public function retriveJustification (Request $request) {
+        try {
+
+            $id = Auth::id();
+
+            $justification = DaysTimesheetJustifications::where('user_id', $id)->findOrFail($request->id);
+
+            return response()->json($justification);
+
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+
+    public function sendJustification (Request $request){
+        try{
+            $res = array();
+            $user_id = Auth::id();
+            if(DaysTimesheetJustifications::where('user_id', $user_id)->where('id', $request->id)->update([
+                'details' => $request->details,
+                'working_hours' => $request->working_hours,
+                'status' => 'needs_approval'
+            ])){
+                $res['done'] = true;
+            }else{
+                $res['done'] = false;
+            }
+            return response()->json($res);
+        }catch (\Exception $e){
+            $res['success'] = false;
+            return response()->json($res);
+        }
+    }
 
 }

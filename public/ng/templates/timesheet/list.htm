@@ -1,0 +1,23 @@
+<page-header title="الموظفين" pretitle="جدول الدوام">
+</page-header>
+
+<datatable datalist="users">
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                      <th>الموظف</th>
+                <th class="text-center">خيارات</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="x in users.data">
+                <td class="align-middle text-center">{{ x.id }}</td>
+                      <td><a href="{{ $r('timesheet.single.overview', {id: x.id}) }}">{{ x.name }}</a></td>
+                <td class="align-middle text-center h2">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</datatable>

@@ -20,8 +20,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-              'office_id',
-              'timesheet_passcode',
+        'office_id',
+        'timesheet_passcode',
     ];
 
     /**
@@ -43,8 +43,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-          public function office()
-          {
-                    return $this->belongsTo("App\Models\Office", 'office_id');
-          }
+    public function office()
+    {
+        return $this->belongsTo("App\Models\Office", 'office_id');
+    }
 }

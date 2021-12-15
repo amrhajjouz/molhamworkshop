@@ -71,23 +71,42 @@
             </ul>
         </div>
     </li>
-          <li class="nav-item">
-                    <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#office-navs" role="button" aria-expanded="false">
-                              <i class="fa fa-building"></i> المراكز
+    <li class="nav-item">
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#office-navs" role="button" aria-expanded="false">
+            <i class="fa fa-building"></i> المراكز
+        </a>
+        <div class="collapse" id="office-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('offices.add') }}" class="nav-link">
+                        مركز جديد
                     </a>
-                    <div class="collapse" id="office-navs">
-                              <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
-                                                  <a href="{{ $r('offices.add') }}" class="nav-link">
-                                                            مركز جديد
-                                                  </a>
-                                        </li>
-                                        <li class="nav-item">
-                                                  <a href="{{ $r('offices') }}" class="nav-link">
-                                                            قائمة المراكز
-                                                  </a>
-                                        </li>
-                              </ul>
-                    </div>
-          </li>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('offices') }}" class="nav-link">
+                        قائمة المراكز
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#timesheet-navs" role="button" aria-expanded="false">
+            <i class="fa fa-calendar"></i> جدول الدوام
+        </a>
+        <div class="collapse" id="timesheet-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('timesheet') }}" class="nav-link">
+                        الموظفين
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('timesheet.justifications') }}" class="nav-link">
+                        التبريرات
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
 </ul>

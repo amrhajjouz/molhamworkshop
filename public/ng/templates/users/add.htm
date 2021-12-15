@@ -39,8 +39,8 @@
           <div class="col-12 col-md-6">
                     <div class="form-group">
                               <label for="timesheet_passcode">PIN</label>
-                              <input type="text" class="form-control" ng-class="{'is-invalid' : updateUser.errors.timesheet_passcode != null}" id="timesheet_passcode" ng-model="user.timesheet_passcode" ng-change="updateUser.errors.timesheet_passcode = null" placeholder="PIN" autofocus="off" autocomplete="off" required>
-                              <div ng-show="updateUser.errors.timesheet_passcode != null" class="invalid-feedback">{{ updateUser.errors.timesheet_passcode[0] }}</div>
+                              <input type="text" class="form-control" ng-class="{'is-invalid' : createUser.errors.timesheet_passcode != null}" id="timesheet_passcode" ng-model="user.timesheet_passcode" ng-change="createUser.errors.timesheet_passcode = null" placeholder="PIN" autofocus="off" autocomplete="off" required>
+                              <div ng-show="createUser.errors.timesheet_passcode != null" class="invalid-feedback">{{ createUser.errors.timesheet_passcode[0] }}</div>
                     </div>
           </div>
 

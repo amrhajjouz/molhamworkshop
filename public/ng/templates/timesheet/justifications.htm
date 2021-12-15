@@ -1,0 +1,32 @@
+<page-header title="التبريرات" pretitle="جدول الدوام">
+</page-header>
+
+<datatable datalist="justifications">
+    <table>
+        <thead>
+            <tr>
+                <th>التاريخ</th>
+                <th>الموظف</th>
+                <th>السبب</th>
+                <th>التبرير</th>
+                <th>ساعات العمل</th>
+                <th>الحالة</th>
+                <th class="text-center">خيارات</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="x in justifications.data">
+                <td><span ng-bind="x.created_at | date:'yyyy-MM-dd'" dir="ltr"></span></td>
+                <td><a href="{{ $r('timesheet.single.overview', {id: x.user.id}) }}">{{ x.user.name }}</a></td>
+                <td>{{x.reason === 'late_entry' ? 'تأخر' : 'ساعات العمل'}}</td>
+                <td>{{x.details}}</td>
+                <td>{{x.working_hours}}</td>
+                <td>{{status(x.status)}}</td>
+                <td class="align-middle text-center h2">
+                    <a class="btn btn-primary" href="{{$r('timesheet.justification', {id: x.id})}}">مراجعة</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</datatable>

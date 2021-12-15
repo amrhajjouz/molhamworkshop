@@ -8,12 +8,12 @@ use Illuminate\Notifications\Notifiable;
 
 class TimesheetDevices extends Model
 {
-          use HasFactory, Notifiable;
-          protected $table = "timesheet_devices";
-          protected $fillable = [
-                    'user_id',
-                    'brand',
-                    'unique_id',
-                    'operating_system',
-          ];
+    use HasFactory, Notifiable;
+    protected $table = "timesheet_devices";
+    protected $fillable = [
+        'user_id',
+        'brand',
+        'unique_id',
+        'operating_system',
+    ];
 }

@@ -1,0 +1,83 @@
+<include-header/>
+
+<div class="mt-5">
+<datatable datalist="justifications">
+          <table>
+                    <thead>
+                    <tr>
+                              <th class="text-center">التاريخ</th>
+                              <th class="text-center">السبب</th>
+                              <th class="text-center">الحالة</th>
+                              <th class="text-center">سبب الرفض (إن وجد)</th>
+                              <th class="text-center">خيارات</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr ng-repeat="u in justifications.data">
+                              <td><span ng-bind="u.created_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td>
+                              <td class="align-middle text-center">{{u.reason === 'late_entry' ? 'تأخر' : 'ساعات العمل'}}</td>
+                              <td class="align-middle text-center">{{status(u.status)}}</td>
+                              <td class="align-middle text-center">{{u.rejection_details}}</td>
+                              <td class="align-middle text-center h2">
+                                    <button type="button" class="btn btn-primary" ng-click="retriveJustification(u.id)" data-toggle="modal" data-target="#justificationModal">التفاصيل</button>
+                              </td>
+                    </tr>
+                    </tbody>
+          </table>
+</datatable>
+</div>
+
+
+<form class="row" name="justificationForm" request="createUser"></form>
+    <div class="modal" id="justificationModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">التبرير</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table>
+                        <tr>
+                            <td>التاريخ:</td>
+                            <td><span ng-bind="justification.created_at | date:'yyyy-MM-dd'" dir="ltr"></span></td>
+                        </tr>
+                        <tr>
+                            <td>السبب:</td>
+                            <td>{{justification.reason === 'late_entry' ? 'تأخر' : 'ساعات العمل'}}</td>
+                        </tr>
+                        <tr>
+                            <td>الحالة:</td>
+                            <td>{{status(justification.status)}}</td>
+                        </tr>
+                        <tr>
+                            <td>التبرير:</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-class="{'is-invalid' : sendJustification.errors.details != null}" id="details" ng-model="justification.details" ng-change="sendJustification.errors.details = null" placeholder="التبرير" autofocus="off" autocomplete="off">
+                                    <div ng-show="sendJustification.errors.details != null" class="invalid-feedback">{{ sendJustification.errors.details[0] }}</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>عدد ساعات الدوام: </td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" ng-class="{'is-invalid' : sendJustification.errors.working_hours != null}" id="working_hours" ng-model="justification.working_hours" ng-change="sendJustification.errors.working_hours = null" placeholder="عدد ساعات العمل" autofocus="off" autocomplete="off">
+                                    <div ng-show="sendJustification.errors.working_hours != null" class="invalid-feedback">{{ sendJustification.errors.working_hours[0] }}</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <submit-button form="justificationForm">إرسال</submit-button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

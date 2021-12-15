@@ -12,6 +12,7 @@ return [
     'profile.info' => ['/profile/info', 'profile/profileInfoController', 'profile.info'],
     'profile.password' => ['/profile/password', 'profile/profilePasswordController', 'profile.password'],
     'profile.timesheet' => ['/profile/timesheet', 'profile/profileTimesheetController', 'profile.timesheet'],
+    'profile.justifications' => ['/profile/justifications', 'profile/profileJustificationsController', 'profile.justifications'],
 
     // Users Routes
     'users.add' => ['users/add', 'users/addUserController', 'users.add'],
@@ -35,5 +36,10 @@ return [
     'offices.add' => ['offices/add', 'office/addOfficeController', 'office.add'],
     'offices.overview' => ['offices/:id', 'office/overviewOfficeController', 'office.single.overview'],
     'offices.edit' => ['offices/:id/edit', 'office/editOfficeController', 'office.single.edit'],
+
+    'timesheet' => ['timesheet', 'timesheet/listTimesheetController', 'timesheet.list'],
+    'timesheet.single.overview' => ['timesheet/single/:id', 'timesheet/overviewTimesheetController', 'timesheet.single.overview'],
+    'timesheet.justifications' => ['timesheet/justifications', 'timesheet/justificationsTimesheetController', 'timesheet.justifications'],
+    'timesheet.justification' => ['timesheet/justifications/:id', 'timesheet/justificationTimesheetController', 'timesheet.justification'],
 
 ];
