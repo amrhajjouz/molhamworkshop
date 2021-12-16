@@ -31,6 +31,7 @@ class RetrievingSponsorshipResource extends JsonResource
             "shares_count" => $faker->numberBetween(0, 10), //TEMPORARY
             'published_at' => $target->published_at,
             "preview_images" => null, //TEMPORARY
+            'purpose_id' => $target->purpose_id,
             "sponsored" => $faker->boolean(), //TEMPORARY
         ];
     }

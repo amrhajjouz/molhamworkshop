@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Exceptions\ApiErrorException;
 use App\Http\Requests\Api\CartItem\{CreateCartItemRequest , DeleteCartItemRequest};
+use App\Models\CartItem;
 
 class CartItemController extends Controller
 {
@@ -16,9 +17,8 @@ class CartItemController extends Controller
     {
         try {
             $donor = authDonor();
-            $data = $request->validated();
-            $data['currency'] = $donor->currency;
-            $donor->cartItems()->firstOrCreate($data);
+            $data = array_merge($request->validated() , ['donor_id' => $donor->id , 'currency' => $donor->currency]);
+            CartItem::firstOrCreate($data);
             return handleResponse(null);
         } catch (\Exception $e) {
             throw new ApiErrorException($e->getMessage());
@@ -28,8 +28,7 @@ class CartItemController extends Controller
     public function delete(DeleteCartItemRequest $request , $id)
     {
         try {
-            authDonor()->cartItems()->where('id' , $id)->delete();
-
+            CartItem::find($id)->delete();
             return handleResponse(null);
         } catch (\Exception $e) {
             throw new ApiErrorException($e->getMessage());
@@ -39,7 +38,7 @@ class CartItemController extends Controller
     public function deleteCartItems(DeleteCartItemRequest $request)
     {
         try {
-            authDonor()->cartItems()->delete();
+            CartItem::where(['donor_id' => authDonor()->id])->delete();
             return handleResponse(null);
         } catch (\Exception $e) {
             throw new ApiErrorException($e->getMessage());

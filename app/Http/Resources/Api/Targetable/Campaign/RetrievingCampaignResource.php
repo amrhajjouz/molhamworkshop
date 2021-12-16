@@ -34,6 +34,7 @@ class RetrievingCampaignResource extends JsonResource
             "urgent" => $this->urgent,
             "funded" => $this->funded,
             "preview_images" => null, //TEMPORARY
+            'purpose_id' => $target->purpose_id,
         ];
     }
 

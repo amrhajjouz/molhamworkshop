@@ -30,6 +30,7 @@ class RetrievingEventResource extends JsonResource
             "comments_count" => $this->comments()->count() , 
             "shares_count" => $faker->numberBetween(0, 10), //TEMPORARY
             'published_at' => $target->published_at,
+            'purpose_id' => $target->purpose_id,
             "preview_images" => null, //TEMPORARY
         ];
     }

@@ -28,6 +28,7 @@ class ListingProjectResource extends JsonResource
                 "comments_count" => $project->comments()->count() , 
                 "shares_count" => $faker->numberBetween(0 , 10),//TEMPORARY
                 'published_at' => $project->target->published_at,
+                'purpose_id' => $project->target->purpose_id,
                 "preview_images" => null,//TEMPORARY
             ];
         });

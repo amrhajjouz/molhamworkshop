@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Like\{CreateLikeRequest , DeleteLikeRequest};
+use App\Http\Requests\Api\Like\{CreateLikeRequest , DislikeRequest};
+use App\Models\Like;
 
 class LikeController extends Controller
 {
@@ -15,17 +16,19 @@ class LikeController extends Controller
     public function create(CreateLikeRequest $request)
     {
         try {
-            authDonor()->likes()->firstOrCreate($request->validated());
+            $data = array_merge($request->validated() , ['liker_id' => authDonor()->id , 'liker_type' => 'donor']);
+            Like::firstOrCreate($data);
             return response()->json(null);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }
     }
 
-    public function delete(DeleteLikeRequest $request, $id)
+    public function dislike(DislikeRequest $request)
     {
         try {
-            authDonor()->likes()->where('id',$id)->delete();
+            $data = $request->validated();
+            Like::where(['likeable_type' => $data['likeable_type'] , 'likeable_id' => $data['likeable_id'] , 'liker_type' => 'donor' , 'liker_id' => authDonor()->id])->firstOrFail()->delete();
             return response()->json(null);
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];

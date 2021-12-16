@@ -32,6 +32,7 @@ class RetrievingScholarshipResource extends JsonResource
             'published_at' => $target->published_at,
             "preview_images" => null, //TEMPORARY
             "funded" => $faker->boolean(), //TEMPORARY
+            'purpose_id' => $target->purpose_id,
             "sponsored" => $faker->boolean(), //TEMPORARY
         ];
     }

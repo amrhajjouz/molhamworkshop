@@ -29,6 +29,7 @@ class ListingSponsorshipResource extends JsonResource
                 "shares_count" => $faker->numberBetween(0 , 10),//TEMPORARY
                 "preview_images" => null,//TEMPORARY
                 'published_at' => $sponsorship->target->published_at,
+                'purpose_id' => $sponsorship->target->purpose_id,
             ];
         });
         return  $this->resource;

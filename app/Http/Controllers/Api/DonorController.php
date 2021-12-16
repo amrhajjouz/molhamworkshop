@@ -61,7 +61,7 @@ class DonorController extends Controller
             if (!$donor)
                 throw new Exception('reset_donor_password_invalid_email');
             
-            if ($donor->resetPasswordRequests()->where([['expires_at', ">", Carbon::now()->toDateTimeString()], ['consumed', 0]])->get()->count() >= 3)
+            if (DonorResetPasswordRequest::where([ ['donor_id' , $donor->id] , ['expires_at', ">", Carbon::now()->toDateTimeString()], ['consumed', 0]])->get()->count() >= 3)
                 throw new ApiErrorException('max_exceed_donor_reset_password_requests');
             
             $donorResetPasswordRequest = $donor->resetPasswordRequests()->create([]);

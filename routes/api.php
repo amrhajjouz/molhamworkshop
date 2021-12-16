@@ -127,7 +127,7 @@ Route::group(['middleware' => 'auth_donor'], function () {
     
     //SavedItem
     Route::post('/saved_items' , [SavedItemController::class, 'create'])->name('api.saved_items.create'); 
-    Route::delete('/saved_items/{id}' , [SavedItemController::class, 'delete'])->name('api.saved_items.delete'); 
+    Route::post('/saved_items/delete' , [SavedItemController::class, 'delete'])->name('api.saved_items.delete'); 
   
     //CartItem
     Route::post('/cart_items' , [CartItemController::class, 'create'])->name('api.cart_items.create'); 
@@ -158,10 +158,11 @@ Route::group(['middleware' => 'auth_donor'], function () {
     
     //Like
     Route::post('/likes' , [LikeController::class, 'create'])->name('api.likes.create'); 
-    Route::delete('/likes/{id}' , [LikeController::class, 'delete'])->name('api.likes.delete');
+    Route::post('/likes/dislike' , [LikeController::class, 'dislike'])->name('api.likes.dislike');
   
     //Comment
     Route::post('/comments' , [CommentController::class, 'create'])->name('api.comments.create'); 
+    Route::put('/comments' , [CommentController::class, 'update'])->name('api.comments.update'); 
     Route::delete('/comments/{id}' , [CommentController::class, 'delete'])->name('api.comments.delete');
     
 

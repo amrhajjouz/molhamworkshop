@@ -28,6 +28,7 @@ class ListingFundraiserResource extends JsonResource
                 "comments_count" => $fundraiser->comments()->count() , 
                 "shares_count" => $faker->numberBetween(0 , 10),//TEMPORARY
                 'published_at' => $fundraiser->target->published_at,
+                'purpose_id' => $fundraiser->target->purpose_id,
                 "preview_images" => null,//TEMPORARY
             ];
         });

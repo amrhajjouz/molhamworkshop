@@ -28,6 +28,7 @@ class ListingEventResource extends JsonResource
                 "comments_count" => $event->comments()->count() , 
                 "shares_count" => $faker->numberBetween(0 , 10),//TEMPORARY
                 'published_at' => $event->target->published_at,
+                'purpose_id' => $event->target->purpose_id,
                 "preview_images" => null,//TEMPORARY
             ];
         });

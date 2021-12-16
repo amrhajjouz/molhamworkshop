@@ -28,6 +28,7 @@ class ListingCampaignResource extends JsonResource
                 "comments_count" => $campaign->comments()->count() , 
                 "shares_count" => $faker->numberBetween(0 , 10),//TEMPORARY
                 'published_at' => $campaign->target->published_at,
+                'purpose_id' => $campaign->target->purpose_id,
                 "preview_images" => null,//TEMPORARY
             ];
         });

@@ -66,7 +66,7 @@ class Target extends BaseModel
     private function getApproriateCode()
     {
         switch ($this->targetable_type) {
-            case "cases":
+            case "case":
                 return "CAS" . $this->targetable_id;
                 break;
 

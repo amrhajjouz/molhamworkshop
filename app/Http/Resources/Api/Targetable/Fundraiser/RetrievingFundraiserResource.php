@@ -31,6 +31,7 @@ class RetrievingFundraiserResource extends JsonResource
             "shares_count" => $faker->numberBetween(0, 10), //TEMPORARY
             "funded" => $this->funded,
             'published_at' => $target->published_at,
+            'purpose_id' => $target->purpose_id,
             "preview_images" => null, //TEMPORARY
         ];
     }

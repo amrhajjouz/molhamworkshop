@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Api\SavedItem;
+namespace App\Http\Requests\Api\Like;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
-class DeleteSavedItemRequest extends FormRequest
+class DislikeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,15 +26,15 @@ class DeleteSavedItemRequest extends FormRequest
     public function rules()
     {
         return [
-            'saveable_type' => ['required', 'string', Rule::in(config('custom.saveablesTypes'))],
-            'saveable_id' => ['required', 'numeric'],
+            'likeable_type' => ['required', 'string', Rule::in(config('custom.likeableTypes'))],
+            'likeable_id' => ['required', 'numeric'],
         ];
     }
 
 
     protected function prepareForValidation()
     {
-        if (!$this->has('saveable_type') || !in_array($this->saveable_type , config('custom.saveablesTypes'))) throw ValidationException::withMessages(['saveable_type' => 'invalid saveable type']);
-        getMorphedModel($this->saveable_type)::findOrFail($this->saveable_id);
+        if (!$this->has('likeable_type') || !in_array($this->likeable_type , config('custom.likeableTypes'))) throw ValidationException::withMessages(['likeable_type' => 'invalid likeable type']);
+        getMorphedModel($this->likeable_type)::findOrFail($this->likeable_id);
     }
 }

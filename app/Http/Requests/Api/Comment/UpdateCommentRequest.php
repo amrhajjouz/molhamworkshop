@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
-class ListCommentRequest extends FormRequest
+class UpdateCommentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,6 +28,7 @@ class ListCommentRequest extends FormRequest
         return [
             'commentable_type' => ['required', 'string', Rule::in(config('custom.commentableTypes'))],
             'commentable_id' => ['required', 'numeric'],
+            'body' => ['required', 'string' , 'max:1024'],
         ];
     }
 

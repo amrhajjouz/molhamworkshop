@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\Comment;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\ValidationException;
 
 class DeleteCommentRequest extends FormRequest
 {
@@ -26,4 +27,5 @@ class DeleteCommentRequest extends FormRequest
         return [
         ];
     }
+
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Exceptions\ApiErrorException;
 use Illuminate\Http\Request;
 use App\Http\Requests\Api\Donor\{UpdateDonorRequest, ChangeDonorEmailRequest, ChangeDonorPasswordRequest, UpdateDonorNotificationPreferences, ChangeDonorAvatarRequest};
-use App\Models\{Token, NotificationPreference};
+use App\Models\{CartItem, Feedback, Token, NotificationPreference, PaymentMethod, Review, SavedItem};
 use Illuminate\Support\Facades\Hash;
 
 class AuthDonorController extends Controller
@@ -98,7 +98,7 @@ class AuthDonorController extends Controller
     public function listNotificationPreferences(Request $request)
     {
         try {
-            return handleResponse($request->user()->notificationPreferences()->pluck('name'));
+            return handleResponse(NotificationPreference::pluck('name'));
         } catch (\Exception $e) {
             throw new ApiErrorException($e->getMessage());
         }
@@ -118,7 +118,7 @@ class AuthDonorController extends Controller
     public function listPaymentMethods(Request $request)
     {
         try {
-            return handleResponse($request->user()->paymentMethods->transform(function ($obj) {
+            return handleResponse(PaymentMethod::where('donor_id' , authDonor()->id)->get()->transform(function ($obj) {
                 return $obj->apiTransform();
             }));
         } catch (\Exception $e) {
@@ -152,7 +152,7 @@ class AuthDonorController extends Controller
         try {
             $dummyTitle = (app()->getLocale() == 'ar') ? 'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى،' : 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';
             return handleResponse(
-                $request->user()->savedItems()->get()->map(function ($item) use ($dummyTitle) {
+                SavedItem::where('donor_id'  , authDonor()->id)->get()->map(function ($item) use ($dummyTitle) {
                     return ['title' => $dummyTitle, 'saveable_type' => $item->saveable_type, 'saveable_id' => $item->saveable_id];
                 })
             );
@@ -163,16 +163,16 @@ class AuthDonorController extends Controller
 
     public function listReviews(Request $request)
     {
-        return response()->json(authDonor()->reviews()->get(['id', 'content', 'created_at']));
+        return response()->json(Review::where('donor_id' , authDonor()->id)->get(['id', 'content', 'created_at']));
     }
 
     public function listFeedbacks(Request $request)
     {
-        return response()->json(authDonor()->feedbacks()->get(['id', 'content', 'title', 'reviewed', 'created_at']));
+        return response()->json(Feedback::where('donor_id' , authDonor()->id)->get(['id', 'content', 'title', 'reviewed', 'created_at']));
     }
 
     public function listCartItems(Request $request)
     {
-        return response()->json(authDonor()->cartItems);
+        return response()->json(CartItem::where('donor_id' , authDonor()->id)->get());
     }
 }

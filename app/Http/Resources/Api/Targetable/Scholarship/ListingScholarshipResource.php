@@ -29,6 +29,7 @@ class ListingScholarshipResource extends JsonResource
                 "shares_count" => $faker->numberBetween(0 , 10),//TEMPORARY
                 "preview_images" => null,//TEMPORARY
                 'published_at' => $scholarship->target->published_at,
+                'purpose_id' => $scholarship->target->purpose_id,
             ];
         });
         return  $this->resource;

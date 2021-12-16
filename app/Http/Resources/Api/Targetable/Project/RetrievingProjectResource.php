@@ -32,6 +32,7 @@ class RetrievingProjectResource extends JsonResource
             "funded" => $this->funded,
             'published_at' => $target->published_at,
             "funded" => $this->funded,
+            'purpose_id' => $target->purpose_id,
             "preview_images" => null, //TEMPORARY
         ];
     }
