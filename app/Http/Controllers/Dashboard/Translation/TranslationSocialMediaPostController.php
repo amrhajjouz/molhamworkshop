@@ -51,7 +51,16 @@ class TranslationSocialMediaPostController extends Controller
     public function markAsProofread(ProofreadTranslationSocialMediaPostRequest $request, $id)
     {
         try {
-            return response()->json(SocialMediaPost::findOrFail($id)->markAsProofread('en'));
+            return response()->json(SocialMediaPost::findOrFail($id)->markAsProofread($request->validated()['language']));
+        } catch (\Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
+    }
+  
+    public function markAsUnProofread(ProofreadTranslationSocialMediaPostRequest $request, $id)
+    {
+        try {
+            return response()->json(SocialMediaPost::findOrFail($id)->markAsUnProofread($request->validated()['language']));
         } catch (\Exception $e) {
             return ['error' => $e->getMessage()];
         }

@@ -34,9 +34,9 @@
     <div class="col-12">
         <div class="form-group">
             <label for="bio">السيرة الذاتية</label>
-            <tiny-editor id="bio" dir="rtl" model="profile.bio" placeholder="نبذة عن سيرتك الذاتية ..">
+            <textarea class="form-control" id="bio" dir="rtl" ng-model="profile.bio" placeholder="نبذة عن سيرتك الذاتية ..">
                 {{ auth.bio }}
-            </tiny-editor>
+            </textarea>
         </div>
     </div>
     

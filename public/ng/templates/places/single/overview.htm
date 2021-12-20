@@ -1,57 +1,57 @@
 <include-header />
+<div class="header">
+    <div class="header-body">
+        <h1 class="header-title h3 font-weight-bold">
+            معلومات المكان
+        </h1>
+    </div>
+</div>
 
 <div class="row">
-    <div class="col-12 col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-header-title">معلومات المكان</h4>
-            </div>
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">اسم المكان العربي</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4>{{ place.name.ar }}</h4>
-                    </div>
-                </div>
-                <hr>
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">اسم المكان الإنكليزي</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4>{{ place.name.en }}</h4>
-                    </div>
-                </div>
-                <hr>
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">اسم المكان الكامل العربي</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4>{{ place.fullname.ar }}</h4>
-                    </div>
-                </div>
-                <hr>
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">اسم المكان الكامل الإنكليزي</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4>{{ place.fullname.en }}</h4>
-                    </div>
-                </div>
-                <hr>
-                <div class="row align-items-center" ng-show="place.country.name">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">الدولة</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4>{{ place.country.name.ar }}</h4>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+    <div class="col-12 col-lg-6">
+
+        <table>
+            <tr>
+                <td class="text-muted py-3">اسم المكان العربي</td>
+                <td class="py-3 pr-3">{{ place.name.ar }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">اسم المكان الإنكليزي</td>
+                <td class="py-3 pr-3" dir="ltr">{{ place.name.en }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">اسم المكان الكامل العربي</td>
+                <td class="py-3 pr-3" dir="ltr">{{ place.fullname.ar  }}</td>
+            </tr>
+            
+            <tr>
+                <td class="text-muted py-3">اسم المكان الكامل الإنكليزي</td>
+                <td class="py-3 pr-3" dir="ltr">{{ place.fullname.en }}</td>
+            </tr>
+        </table>
+
     </div>
+
+    <div class="col-12 col-lg-6">
+
+        <table>
+            
+            <tr>
+                <td class="text-muted py-3">الدولة</td>
+                <td class="py-3 pr-3" dir="ltr">{{ place.country.name.ar }}</td>
+            </tr>
+            
+            <tr>
+                <td class="text-muted py-3">تاريخ الاضافة</td>
+                <td class="py-3 pr-3"><span ng-bind="place.created_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ اخر تعديل</td>
+                <td class="py-3 pr-3"><span ng-bind="place.updated_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td>
+            </tr>
+        </table>
+
+    </div>
+
 </div>

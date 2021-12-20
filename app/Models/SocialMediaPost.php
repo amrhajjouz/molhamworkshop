@@ -28,6 +28,7 @@ class SocialMediaPost extends BaseModel
         'scheduled_on_instagram_at' =>  'datetime:Y-m-d H:i:s',
         'published_on_twitter_at' =>  'datetime:Y-m-d H:i:s',
         'scheduled_on_twitter_at' =>  'datetime:Y-m-d H:i:s',
+        'available_locales' => 'json',
     ];
 
     public function getProofreadableAttribute()
@@ -47,14 +48,15 @@ class SocialMediaPost extends BaseModel
 
     public function save(array $options = [])
     {
-        $newRecord = !$this->exists;
+        $newTarget = !$this->exists;
         $socialMediaPost = parent::save();
-        if ($newRecord) {
+        if ($newTarget) {
             foreach ($this->contentFields as $field) {
                 $this->contents()->create(['name' => $field, 'locale' => 'ar', 'value' => $this->body['ar']['value'], 'auto_generated' => false, 'proofread' => false]);
             }
+            $this->available_locales = ['ar' => true, 'en' => false, 'de' => false, 'tr' => false, 'fr' => false, 'es' => false,];
         }
-        return $socialMediaPost;
+        return parent::save($options);
     }
 
     public function markAsProofread($targetLocale)
@@ -65,6 +67,33 @@ class SocialMediaPost extends BaseModel
             foreach ($this->$field as $locale => $value) {
                 if (isset($this->$field[$targetLocale])) {
                     $fieldNewValue[$targetLocale]['proofread'] = true;
+                }
+            }
+            $this->$field = $fieldNewValue;
+        }
+        
+        // if en + ar proofread then set as ready to publish
+        if (isset($this->$field['ar']['value']) && isset($this->$field['en']['value'])) {
+            $this->ready_to_publish = true;
+        } else {
+            $this->ready_to_publish = false;
+        }
+        
+        $this->save();
+        foreach ($contentsFields as $field) {
+            $this->contents()->where('name', $field)->where('locale', $targetLocale)->orderBy('id', 'desc')->firstOrFail()->update(['proofread' => true]);
+        }
+        return true;
+    }
+    
+    public function markAsUnProofread($targetLocale)
+    {
+        $contentsFields = $this->contentFields;
+        foreach ($contentsFields as $field) {
+            $fieldNewValue = $this->$field;
+            foreach ($this->$field as $locale => $value) {
+                if (isset($this->$field[$targetLocale])) {
+                    $fieldNewValue[$targetLocale]['proofread'] = false;
                 }
             }
             $this->$field = $fieldNewValue;

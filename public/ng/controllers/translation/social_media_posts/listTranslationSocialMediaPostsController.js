@@ -4,6 +4,7 @@ async function listTranslationSocialMediaPostsControllerInit($datalist) {
 
 function listTranslationSocialMediaPostsController($scope, $init, $apiRequest, $page) {
     $scope.posts = $init;
+  
     $scope.canProofread = (postObject) => {
         let canProofread = true;
         if(postObject.proofreadable['en'] == false) canProofread = false;
@@ -12,14 +13,15 @@ function listTranslationSocialMediaPostsController($scope, $init, $apiRequest, $
         };
         return canProofread;
     }
-    $scope.proofreadPostRequest = (postId) => {
-        $apiRequest
-            .config({ method: 'POST', url: `translation/social_media_posts/${postId}/proofread`, data: { id: postId } }, function (response, data) {
-                $page.reload();
-            }).send();
-    };
+
+    // $scope.proofreadPostRequest = (postId) => {
+    //     $apiRequest
+    //         .config({ method: 'POST', url: `translation/social_media_posts/${postId}/proofread`, data: { id: postId } }, function (response, data) {
+    //             $page.reload();
+    //         }).send();
+    // };
 
     
-
+    
 
 }

@@ -28,4 +28,19 @@ function overviewTranslationSocialMediaPostController($scope, $page, $apiRequest
         });
         $("#edit-modal").modal("hide");
     });
+
+
+    $scope.proofreadPostRequest = (postId , language) => {
+        $apiRequest
+            .config({ method: 'POST', url: `translation/social_media_posts/${postId}/proofread`, data: { id: postId , language } }, function (response, data) {
+                $page.reload();
+            }).send();
+    };
+   
+    $scope.unproofreadPostRequest = (postId , language) => {
+        $apiRequest
+            .config({ method: 'POST', url: `translation/social_media_posts/${postId}/unproofread`, data: { id: postId , language } }, function (response, data) {
+                $page.reload();
+            }).send();
+    };
 }

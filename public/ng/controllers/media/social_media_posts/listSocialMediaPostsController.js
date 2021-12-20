@@ -36,6 +36,7 @@ function listSocialMediaPostsController($scope, $init, $apiRequest, $page, $data
    };
 
    $scope.proofreadPostRequest = (postId) => {
+      if(!confirm('هل تريد التأكيد على تعيين هذا المنشور كتم تدقيقه ؟ ')) return;
       $apiRequest
          .config({ method: 'POST', url: `media/social_media_posts/${postId}/proofread`, data: { id: postId } }, function (response, data) {
             $page.reload();
@@ -44,6 +45,7 @@ function listSocialMediaPostsController($scope, $init, $apiRequest, $page, $data
    };
 
    $scope.archivePostRequest = (postId) => {
+      if(!confirm('هل تريد التأكيد على تعيين هذا المنشور كتم أرشفته ؟ ')) return;
       $apiRequest
          .config({ method: 'POST', url: `media/social_media_posts/${postId}/archive`, data: { id: postId } }, function (response, data) {
             $page.reload();
@@ -51,6 +53,7 @@ function listSocialMediaPostsController($scope, $init, $apiRequest, $page, $data
          .send();
    };
    $scope.approvePostRequest = (postId) => {
+      if(!confirm('هل تريد التأكيد على قبول هذا المنشور ؟ ')) return;
       $apiRequest
          .config({ method: 'POST', url: `media/social_media_posts/${postId}/approve`, data: { id: postId } }, function (response, data) {
             $page.reload();
@@ -59,6 +62,7 @@ function listSocialMediaPostsController($scope, $init, $apiRequest, $page, $data
    };
 
    $scope.rejectPostRequest = (postId) => {
+      if(!confirm('هل تريد التأكيد على رفض هذا المنشور ؟ ')) return;
       $apiRequest
          .config({ method: 'POST', url: `media/social_media_posts/${postId}/reject`, data: { id: postId } }, function (response, data) {
             $page.reload();

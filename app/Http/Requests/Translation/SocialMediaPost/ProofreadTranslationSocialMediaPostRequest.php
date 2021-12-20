@@ -4,6 +4,7 @@ namespace App\Http\Requests\Translation\SocialMediaPost;
 
 use App\Models\SocialMediaPost;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ProofreadTranslationSocialMediaPostRequest extends FormRequest
 {
@@ -25,7 +26,8 @@ class ProofreadTranslationSocialMediaPostRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => ['required' , 'exists:'.SocialMediaPost::getTableName() . ',id']
+            'id' => ['required' , 'exists:'.SocialMediaPost::getTableName() . ',id'] ,
+            'language' => ['required'  , Rule::in(['ar' , 'en' , 'de'])],
         ];
     }
 

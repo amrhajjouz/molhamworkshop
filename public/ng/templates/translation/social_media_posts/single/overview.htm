@@ -82,7 +82,8 @@
             <div class="col-auto h2 mb-0">
                 <dropdown>
                     <dropdown-item href="#" ng-click="showUpdateSocialMediaContentModal('en' , 'body');"><i class="fe fe-edit"></i> تعديل الترجمة</dropdown-item>
-                    <dropdown-item href="#"><i class="fe fe-check"></i> تعيين كتم تدقيقها</dropdown-item>
+                    <dropdown-item href="#" ng-show="socialMediaPost.body.en.value && !socialMediaPost.body.en.proofread" ng-click="proofreadPostRequest(socialMediaPost.id , 'en')"><i class="fe fe-terminal"></i>  تعيين كتم تدقيقها</dropdown-item>  
+                    <dropdown-item href="#" ng-show="socialMediaPost.body.en.value && socialMediaPost.body.en.proofread && !socialMediaPost.archived_at" ng-click="unproofreadPostRequest(socialMediaPost.id , 'en')"><i class="fe fe-terminal"></i>  تعيين كغير مدققة</dropdown-item>  
                 </dropdown>
             </div>
         </div>
@@ -121,6 +122,67 @@
             <tr>
                 <td class="py-3 pr-3" ng-if="!socialMediaPost.body.en.value"><span class="badge badge-secondary-soft">لا يوجد نص بعد</span></td>
                 <td class="py-3 pr-3" ng-if="socialMediaPost.body.en.value">{{ socialMediaPost.body.en.value}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<hr/>
+
+<div class="header mb-4">
+    <div class="header-body pt-2 pb-4">
+        <div class="row align-items-end">
+            <div class="col">
+                <h1 class="header-title h3 font-weight-bold">
+                    المحتوى الألماني 
+                    <span class="badge badge-soft-danger" ng-if="!socialMediaPost.body.de.value">بدون نص</span>
+                    <span class="badge badge-soft-warning" ng-if="socialMediaPost.body.de && !socialMediaPost.body.de.proofread">لم يتم تدقيقه</span>
+                    <span class="badge badge-soft-success" ng-if="socialMediaPost.body.de && socialMediaPost.body.de.proofread">تمت الترجمة</span>
+                </h1>
+            </div>
+            <div class="col-auto h2 mb-0">
+                <dropdown>
+                    <dropdown-item href="#" ng-click="showUpdateSocialMediaContentModal('de' , 'body');"><i class="fe fe-edit"></i> تعديل الترجمة</dropdown-item>
+                    <dropdown-item href="#" ng-show="socialMediaPost.body.de.value && !socialMediaPost.body.de.proofread" ng-click="proofreadPostRequest(socialMediaPost.id , 'de')"><i class="fe fe-terminal"></i>  تعيين كتم تدقيقها</dropdown-item>  
+                    <dropdown-item href="#" ng-show="socialMediaPost.body.de.value && socialMediaPost.body.de.proofread && !socialMediaPost.archived_at" ng-click="unproofreadPostRequest(socialMediaPost.id , 'de')"><i class="fe fe-terminal"></i>  تعيين كغير مدققة</dropdown-item>  
+                </dropdown>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    
+    <div class="col-12 col-lg-6">
+        <table>
+            <tr>
+                <td class="text-muted py-3">نوع الترجمة</td>
+                <td class="py-3 pr-3" ng-if="socialMediaPost.body.de.auto_generated">ترجمة آلية</td>
+                <td class="py-3 pr-3" ng-if="!socialMediaPost.body.de.auto_generated">ترجمة يدوية</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="col-12 col-lg-6">
+        <table>
+            <tr>
+                <td class="text-muted py-3">التدقيق اللغوي</td>
+                <td class="py-3 pr-3" ng-if="socialMediaPost.body.de.proofread" class="text-success">تم تدقيقه</td>
+                <td class="py-3 pr-3" ng-if="!socialMediaPost.body.de.proofread" class="text-danger">لم يتم تدقيقه بعد</td>
+            </tr>
+        </table>
+    </div>
+    
+
+    
+    <div class="col-12">
+        <table>
+            <tr>
+                <td class="text-muted py-3">نص المنشور</td>
+            </tr>
+            <tr>
+                <td class="py-3 pr-3" ng-if="!socialMediaPost.body.de.value"><span class="badge badge-secondary-soft">لا يوجد نص بعد</span></td>
+                <td class="py-3 pr-3" ng-if="socialMediaPost.body.de.value">{{ socialMediaPost.body.de.value}}</td>
             </tr>
         </table>
     </div>

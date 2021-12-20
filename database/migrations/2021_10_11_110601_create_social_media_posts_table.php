@@ -32,6 +32,7 @@ class CreateSocialMediaPostsTable extends Migration
             $table->datetime('scheduled_on_twitter_at')->nullable();
             $table->datetime('scheduled_on_instagram_at')->nullable();
             $table->datetime('scheduled_on_youtube_at')->nullable();
+            $table->json('available_locales')->nullable();
             $table->timestamps();
         });
     }

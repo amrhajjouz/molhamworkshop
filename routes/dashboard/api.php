@@ -71,6 +71,7 @@ Route::middleware('auth')->group(function ()  {
         Route::get('/translation/social_media_posts/{id}' , 'Translation\TranslationSocialMediaPostController@retrieve');
         Route::put('/translation/social_media_posts' , 'Translation\TranslationSocialMediaPostController@update');
         Route::post('/translation/social_media_posts/{id}/proofread' , 'Translation\TranslationSocialMediaPostController@markAsProofread');
+        Route::post('/translation/social_media_posts/{id}/unproofread' , 'Translation\TranslationSocialMediaPostController@markAsUnProofread');
     });
 
 });

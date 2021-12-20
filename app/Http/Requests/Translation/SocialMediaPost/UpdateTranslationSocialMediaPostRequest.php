@@ -29,7 +29,7 @@ class UpdateTranslationSocialMediaPostRequest extends FormRequest
     {
         $rules =  [
             'field_name'=>['required' , 'string', 'in:body'] ,
-            'locale' => ['required' , 'in:en'] ,
+            'locale' => ['required' , 'in:en,de'] ,
         ];
 
         if($this->field_name =='body'){

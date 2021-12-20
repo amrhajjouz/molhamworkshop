@@ -9,6 +9,7 @@
          <tr>
             <th class="text-center">#</th>
             <th class="text-center">العنوان</th>
+            <th class="text-center">اللغة الإنكليزية</th>
             <th class="text-center">تمت الأرشفة</th>
             <th class="text-center">الحالة</th>
             <th class="text-center"> جاهز للنشر</th>
@@ -21,6 +22,10 @@
          <tr ng-repeat="post in posts.data">
             <td class="align-middle text-center">{{ post.id }}</td>
             <td class="align-middle text-center">{{ post.description}}</td>
+            <td class="align-middle text-center">
+               <div ng-if="post.body && post.body.en && post.body.en.value"><span class="text-success">نعم </span></div>
+               <div ng-if="!post.body || !post.body.en || ! post.body.en.value"><span class="text-danger">لا </span></div>
+            </td>
             <td class="align-middle text-center">
                <div ng-if="post.archived_at"><span class="text-success">نعم </span></div>
                <div ng-if="!post.archived_at"><span class="text-danger">لا </span></div>
@@ -41,11 +46,11 @@
                   <dropdown-item href="{{ $r('media.social_media_posts.edit', {id: post.id}) }}"><i class="fe fe-edit-2"></i> تعديل المعلومات</dropdown-item>
                   <dropdown-item href="{{ $r('media.social_media_posts.images', {id: post.id}) }}"><i class="fe fe-image"></i> الصور</dropdown-item>
                   <dropdown-item href="#" ng-show="canProofread(post)" ng-click="proofreadPostRequest(post.id)"><i class="fe fe-terminal"></i> تعيين كتم تدقيقها</dropdown-item>
-                  <dropdown-item href="#" ng-show="post.archived_at == null" ng-click="archivePostRequest(post.id)"><i class="fe fe-archive"></i>أرشفة</dropdown-item>
-                  <dropdown-item href="#" ng-show="post.status == 'pending' || post.status == 'rejected'" ng-click="approvePostRequest(post.id)"><i class="fe fe-check"></i>قبول</dropdown-item>
-                  <dropdown-item href="#" ng-show="post.status == 'pending' || post.status == 'approved'" ng-click="rejectPostRequest(post.id)"><i class="fe fe-x"></i>رفض</dropdown-item>
+                  <dropdown-item href="#" ng-show="post.archived_at == null" ng-click="archivePostRequest(post.id)"><i class="fe fe-archive"></i> أرشفة</dropdown-item>
+                  <dropdown-item href="#" ng-show="post.status == 'pending' || post.status == 'rejected'" ng-click="approvePostRequest(post.id)"><i class="fe fe-check"></i> قبول</dropdown-item>
+                  <dropdown-item href="#" ng-show="post.status == 'pending' || post.status == 'approved'" ng-click="rejectPostRequest(post.id)"><i class="fe fe-x"></i> رفض</dropdown-item>
                   
-                  <dropdown-item href="#" ng-show="post.ready_to_publish == true" ng-click="openPublishingModalOptions(post)"><i class="fe fe-check-square"></i>خيارات النشر</dropdown-item>
+                  <dropdown-item href="#" ng-show="post.ready_to_publish == true" ng-click="openPublishingModalOptions(post)"><i class="fe fe-check-square"></i> خيارات النشر</dropdown-item>
                </dropdown>
             </td>
          </tr>

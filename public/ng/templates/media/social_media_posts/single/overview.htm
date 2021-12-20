@@ -1,90 +1,82 @@
 <include-header />
 
-<div class="row">
-    <div class="col-12 col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-header-title">معلومات المنشور</h4>
-            </div>
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">العنوان</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4>{{ socialMediaPost.description }}</h4>
-                    </div>
-                </div>
-                <hr />
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">المحتوى العربي</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4>{{ socialMediaPost.body.ar.value }}</h4>
-                    </div>
-                </div>
-                <hr />
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">تم مراجعته لغويا</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4 ng-if="socialMediaPost.body.ar.proofread" class="text-success">نعم</h4>
-                        <h4 ng-if="!socialMediaPost.body.ar.proofread" class="text-danger">لا</h4>
-                    </div>
-                </div>
-                <hr />
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">تم النشر </h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4 ng-if="socialMediaPost.body.ar.ready_to_publish" class="text-success">نعم</h4>
-                        <h4 ng-if="!socialMediaPost.body.ar.ready_to_publish" class="text-danger">لا</h4>
-                    </div>
-                </div>
-                <hr />
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">المحتوى الانكليزي</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4>{{ socialMediaPost.body.en.value }}</h4>
-                    </div>
-                </div>
-                <hr />
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">تم مراجعته لغويا</h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4 ng-if="socialMediaPost.body.en.proofread" class="text-success">نعم</h4>
-                        <h4 ng-if="!socialMediaPost.body.en.proofread" class="text-danger">لا</h4>
-                    </div>
-                </div>
-                <hr />
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">تم النشر </h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4 ng-if="socialMediaPost.body.en.ready_to_publish" class="text-success">نعم</h4>
-                        <h4 ng-if="!socialMediaPost.body.en.ready_to_publish" class="text-danger">لا</h4>
-                    </div>
-                </div>
-                <hr />
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h4 class="mb-0 text-muted">تاريخ الأرشفة </h4>
-                    </div>
-                    <div class="col-auto">
-                        <h4 ng-if="socialMediaPost.archived_at">{{socialMediaPost.archived_at}}</h4>
-                    </div>
-                </div>
-                <hr />
-            </div>
-            
-        </div>
+<div class="header">
+    <div class="header-body">
+        <h1 class="header-title h3 font-weight-bold">
+            معلومات المنشور
+        </h1>
     </div>
+</div>
+
+<div class="row">
+
+    <div class="col-12 col-lg-6">
+
+        <table>
+            <tr>
+                <td class="text-muted py-3">العنوان</td>
+                <td class="py-3 pr-3">{{ socialMediaPost.description  }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">المحتوى العربي</td>
+                <td class="py-3 pr-3" dir="ltr">{{  socialMediaPost.body.ar.value }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تم مراجعته لغويا</td>
+                <td class="py-3 pr-3" dir="ltr">
+                    <h4 ng-if="socialMediaPost.body.ar.proofread" class="text-success">نعم</h4>
+                    <h4 ng-if="!socialMediaPost.body.ar.proofread" class="text-danger">لا</h4>
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="text-muted py-3">تم النشر</td>
+                <td class="py-3 pr-3" dir="ltr">
+                    <h4 ng-if="socialMediaPost.body.ar.ready_to_publish" class="text-success">نعم</h4>
+                    <h4 ng-if="!socialMediaPost.body.ar.ready_to_publish" class="text-danger">لا</h4>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div class="col-12 col-lg-6">
+
+        <table>
+            
+            <tr>
+                <td class="text-muted py-3">المحتوى الانكليزي</td>
+                <td class="py-3 pr-3" dir="ltr">{{  socialMediaPost.body.en.value  }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تم مراجعته لغويا</td>
+                <td class="py-3 pr-3" dir="ltr">
+                    <h4 ng-if="socialMediaPost.body.en.proofread" class="text-success">نعم</h4>
+                    <h4 ng-if="!socialMediaPost.body.en.proofread" class="text-danger">لا</h4>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تم النشر </td>
+                <td class="py-3 pr-3" dir="ltr">
+                    <h4 ng-if="socialMediaPost.body.en.ready_to_publish" class="text-success">نعم</h4>
+                        <h4 ng-if="!socialMediaPost.body.en.ready_to_publish" class="text-danger">لا</h4>
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="text-muted py-3">تاريخ الأرشفة </td>
+                <td class="py-3 pr-3"><span ng-bind="socialMediaPost.archived_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ الاضافة</td>
+                <td class="py-3 pr-3"><span ng-bind="socialMediaPost.created_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ اخر تعديل</td>
+                <td class="py-3 pr-3"><span ng-bind="socialMediaPost.updated_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td>
+            </tr>
+        </table>
+
+    </div>
+
 </div>
