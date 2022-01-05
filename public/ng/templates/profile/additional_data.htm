@@ -49,6 +49,14 @@
             <input type="text" class="form-control" id="communicable_diseases" ng-model="profile.communicable_diseases" ng-init="profile.communicable_diseases = auth.communicable_diseases" ng-change="updateAdditionalData.error = ''" placeholder="الأمراض السارية إن وجدت..">
         </div>
     </div>
+    
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="chronic_diseases">الأمراض المزمنة إن وجدت</label>
+            <input type="text" class="form-control" id="chronic_diseases" ng-model="profile.chronic_diseases" ng-init="profile.chronic_diseases = auth.chronic_diseases" ng-change="updateAdditionalData.error = ''" placeholder="الأمراض السارية إن وجدت..">
+        </div>
+    </div>
 
     <div class="col-12">
         <submit-button form="myForm" icon="fe fe-edit">تعديل</submit-button>

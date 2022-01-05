@@ -14,7 +14,17 @@
             <!--first name ar-->
             <tr>
                 <td class="text-muted py-3">اسم الموظف</td>
-                <td class="py-3 pr-3">{{ userContract.user.first_name.ar }}</td>
+                <td class="py-3 pr-3">{{ userContract.user.first_name.ar }} {{ userContract.user.last_name.ar }}</td>
+            </tr>
+            <!--supervisor-->
+            <tr>
+                <td class="text-muted py-3">المدير المباشر</td>
+                <td class="py-3 pr-3">{{ userContract.supervisor.first_name.ar }} {{ userContract.supervisor.last_name.ar }}</td>
+            </tr>
+            <!--user section-->
+            <tr>
+                <td class="text-muted py-3">القسم</td>
+                <td class="py-3 pr-3">{{ userContract.user_section.section_name.ar }}</td>
             </tr>
             <!--contract type-->
             <tr>

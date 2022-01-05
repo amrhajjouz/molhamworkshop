@@ -2,6 +2,42 @@
 
 <form class="row" name="userContractForm" request="updateUserContract">
 
+    <!--member-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="user_id">العضو</label>
+            <select2 id="user_id" model="userContract.user_id" ajax-url="user_contracts/members" error-model="updateUserContract.errors.user_id">
+                <option selected value="{{userContract.user.id}}">{{userContract.user.first_name.ar}} {{userContract.user.last_name.ar}}</option>
+            </select2>
+
+        </div>
+    </div>
+
+    <!--supervisor-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="supervisor_id">المدير المباشر</label>
+            <select2 id="supervisor_id" model="userContract.supervisor_id" ajax-url="user_contracts/members"
+                     error-model="updateUserContract.errors.supervisor_id">
+                <option selected value="{{userContract.supervisor.id}}">{{userContract.supervisor.first_name.ar}}
+                    {{userContract.supervisor.last_name.ar}}
+                </option>
+            </select2>
+
+        </div>
+    </div>
+
+
+    <!--user section-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="user_section_id">القسم(المحفظة)</label>
+            <select2 id="user_section_id" model="userContract.user_section_id" ajax-url="user_sections/search" error-model="updateUserContract.errors.user_section_id">
+                <option selected value="{{userContract.user_section.id}}">{{userContract.user_section.section_name.ar}}</option>
+            </select2>
+        </div>
+    </div>
+
     <!--contract type-->
     <div class="col-12 col-md-6">
         <div class="form-group">
@@ -45,7 +81,12 @@
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="job_title_id">المسمى الوظيفي</label>
-            <select2 id="job_title_id" model="userContract.job_title_id" ajax-url="job_titles/search" error-model="updateUserContract.errors.job_title_id"></select2>
+            <select2 id="job_title_id" model="userContract.job_title_id" ajax-url="job_titles/search" error-model="updateUserContract.errors.job_title_id">
+                <option selected value="{{userContract.job_title.id}}">
+                    {{userContract.job_title.name.ar}}
+                </option>
+
+            </select2>
         </div>
     </div>
 
@@ -66,7 +107,11 @@
     <div class="col-12 col-md-6" ng-show="userContract.workplace == 'physically'">
         <div class="form-group">
             <label for="office_id">المكتب</label>
-            <select2 id="office_id" model="userContract.office_id" ajax-url="team_offices/search" error-model="updateUserContract.errors.office_id"></select2>
+            <select2 id="office_id" model="userContract.office_id" ajax-url="team_offices/search" error-model="updateUserContract.errors.office_id">
+                <option selected value="{{userContract.office.id}}">
+                    {{userContract.office.name}}
+                </option>
+            </select2>
         </div>
     </div>
 

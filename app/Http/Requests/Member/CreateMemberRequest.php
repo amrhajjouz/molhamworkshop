@@ -26,7 +26,7 @@ class CreateMemberRequest extends FormRequest
     {
 
         return [
-            'user_section_id' => ['required'],
+            //'user_section_id' => ['required'],
             'first_name.ar' => ['required', 'string'],
             'first_name.en' => ['required', 'string'],
             'last_name.ar' => ['required', 'string'],
@@ -36,8 +36,6 @@ class CreateMemberRequest extends FormRequest
             'mother_name.ar' => ['required', 'string'],
             'mother_name.en' => ['required', 'string'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'nationality_code' => ['required', 'string'],
-            'birth_date' => ['required', 'date'],
         ];
     }
 

@@ -1,0 +1,78 @@
+<page-header title="لغة جديدة" pretitle="قائمة اللغات"></page-header>
+
+<form class="row" name="userLanguageForm" request="createUserLanguage">
+
+    <!--language_name-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="language_name">اللغة</label>
+            <input type="text" class="form-control" ng-class="(createUserLanguage.errors.language_name != null) ? 'is-invalid' : ''" id="language_name" ng-model="userLanguage.language_name" ng-change="createUserLanguage.errors.language_name = null" placeholder="اللغة .." required>
+            <div ng-show="createUserFamilyMember.errors.language_name != null" class="invalid-feedback">
+                {{ createUserLanguage.errors.language_name[0] }}
+            </div>
+        </div>
+    </div>
+
+    <!--mother_language-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="mother_language">هل هي اللغة الأم</label>
+            <select class="custom-select" ng-class="(createUserLanguage.errors.mother_language != null) ? 'is-invalid' : ''" id="mother_language" ng-model="userLanguage.mother_language" ng-change="createUserLanguage.errors.mother_language = null">
+                <option value="yes">نعم</option>
+                <option value="no">لا</option>
+            </select>
+            <div ng-show="createUserLanguage.errors.mother_language != null" class="invalid-feedback">
+                {{ createUserLanguage.errors.mother_language[0] }}
+            </div>
+        </div>
+    </div>
+
+    <!--reading-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="reading">مستواك بالقراءة</label>
+            <select class="custom-select" ng-class="(createUserLanguage.errors.reading != null) ? 'is-invalid' : ''" id="reading" ng-model="userLanguage.reading" ng-change="createUserLanguage.errors.reading = null">
+                <option value="good">جيد</option>
+                <option value="average">متوسط</option>
+                <option value="excellent">ممتاز</option>
+            </select>
+            <div ng-show="createUserLanguage.errors.reading != null" class="invalid-feedback">
+                {{ createUserLanguage.errors.reading[0] }}
+            </div>
+        </div>
+    </div>
+
+    <!--writing-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="writing">مستواك بالكتابة</label>
+            <select class="custom-select" ng-class="(createUserLanguage.errors.writing != null) ? 'is-invalid' : ''" id="writing" ng-model="userLanguage.writing" ng-change="createUserLanguage.errors.writing = null">
+                <option value="good">جيد</option>
+                <option value="average">متوسط</option>
+                <option value="excellent">ممتاز</option>
+            </select>
+            <div ng-show="createUserLanguage.errors.writing != null" class="invalid-feedback">
+                {{ createUserLanguage.errors.writing[0] }}
+            </div>
+        </div>
+    </div>
+
+    <!--listening-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="listening">مستواك بالإستماع</label>
+            <select class="custom-select" ng-class="(createUserLanguage.errors.listening != null) ? 'is-invalid' : ''" id="listening" ng-model="userLanguage.listening" ng-change="createUserLanguage.errors.listening = null">
+                <option value="good">جيد</option>
+                <option value="average">متوسط</option>
+                <option value="excellent">ممتاز</option>
+            </select>
+            <div ng-show="createUserLanguage.errors.listening != null" class="invalid-feedback">
+                {{ createUserLanguage.errors.listening[0] }}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="userLanguageForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>

@@ -32,6 +32,21 @@
                         المهارات
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ $r('user_languages') }}" class="nav-link">
+                        اللغات
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('user_trainings') }}" class="nav-link">
+                        التدريبات
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('leaves') }}" class="nav-link">
+                        الإجازات
+                    </a>
+                </li>
             </ul>
         </div>
     </li>

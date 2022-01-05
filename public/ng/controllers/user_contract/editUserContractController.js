@@ -1,4 +1,5 @@
 function editUserContractControllerInit ($page, $apiRequest) {
+    console.log($apiRequest.config('user_contracts/' + $page.routeParams.id).getData())
     return $apiRequest.config('user_contracts/' + $page.routeParams.id).getData();
 }
 

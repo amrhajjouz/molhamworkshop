@@ -26,7 +26,8 @@ class UpdateUserSectionRequest extends FormRequest
         return [
             'section_name.ar' => ['required', 'string'],
             'section_name.en' => ['required', 'string'],
-            'user_manager_id' => ['required'],
+            'user_manager_id' => ['required', 'numeric', 'exists:users,id'],
+            'parent_id' => ['required', 'numeric', 'exists:user_sections,id'],
         ];
     }
 }

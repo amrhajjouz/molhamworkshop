@@ -68,8 +68,27 @@ class User extends Authenticatable
         return $this->belongsTo(UserSection::class,'user_section_id');
     }
 
-    public function manger(){
+    public function country()
+    {
+        return $this->belongsTo(Country::class, 'country_code', 'code');
+    }
+
+    public function currentCountry()
+    {
+        return $this->belongsTo(Country::class, 'current_country_code', 'code');
+    }
+
+    public function currentCity()
+    {
+        return $this->belongsTo(Place::class, 'current_city_id', 'id');
+    }
+
+    public function manager(){
         return $this->hasOne(\App\Models\UserSection::class,'user_manager_id');
+    }
+
+    public function calculateTotalExperience($id){
+        $x = UserContract::where('id', $id)->get();
     }
 
 }

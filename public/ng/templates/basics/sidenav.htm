@@ -1,76 +1,24 @@
 <ul class="navbar-nav">
 
+    <!--Home-->
     <li class="nav-item">
         <a id="home-nav" class="nav-link" href="{{ $r('home') }}">
             <i class="fe fe-home"></i> البداية
         </a>
     </li>
 
+    <!--Members-->
     <li class="nav-item">
-        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#users-navs" role="button" aria-expanded="false">
-            <i class="fe fe-users"></i> المستخدمون
+        <a id="members-nav" class="nav-link" href="{{ $r('members') }}">
+            <i class="fe fe-users"></i> الأعضاء
         </a>
-        <div class="collapse" id="users-navs">
-            <ul class="nav nav-sm flex-column">
-                <li class="nav-item">
-                    <a href="{{ $r('users.add') }}" class="nav-link">
-                        مستخدم جديد
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ $r('users') }}" class="nav-link">
-                        قائمة المستخدمين
-                    </a>
-                </li>
-            </ul>
-        </div>
     </li>
 
+    <!--User Contracts-->
     <li class="nav-item">
-        <a class="nav-link" href="javascript:;" data-toggle="collapse" data-target="#donors-navs" role="button" aria-expanded="false">
-            <i class="fe fe-book"></i> المتبرعون
+        <a id="user-contracts-nav" class="nav-link" href="{{ $r('user_contracts') }}">
+            <i class="fe fe-file"></i> عقود العمل
         </a>
-        <div class="collapse" id="donors-navs">
-            <ul class="nav nav-sm flex-column">
-                <li class="nav-item">
-                    <a href="{{ $r('donors.add') }}" class="nav-link">
-                        متبرع جديد
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ $r('donors') }}" class="nav-link">
-                        قائمة المتبرعين
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </li>
-
-    <li class="nav-item">
-        <a
-            class="nav-link"
-            href="javascript:;"
-            data-toggle="collapse"
-            data-target="#places-navs"
-            role="button"
-            aria-expanded="false"
-        >
-            <i class="fe fe-map"></i> الأماكن
-        </a>
-        <div class="collapse" id="places-navs">
-            <ul class="nav nav-sm flex-column">
-                <li class="nav-item">
-                    <a href="{{ $r('places.add') }}" class="nav-link">
-                        مكان جديد
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ $r('places') }}" class="nav-link">
-                        قائمة الأماكن
-                    </a>
-                </li>
-            </ul>
-        </div>
     </li>
 
     <!--User Sections-->
@@ -95,34 +43,6 @@
                 <li class="nav-item">
                     <a href="{{ $r('user_sections') }}" class="nav-link">
                         قائمة الأقسام
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </li>
-
-    <!--Job Titles-->
-    <li class="nav-item">
-        <a
-                class="nav-link"
-                href="javascript:;"
-                data-toggle="collapse"
-                data-target="#job-titles-navs"
-                role="button"
-                aria-expanded="false"
-        >
-            <i class="fe fe-list"></i> المسميات الوظيفية
-        </a>
-        <div class="collapse" id="job-titles-navs">
-            <ul class="nav nav-sm flex-column">
-                <li class="nav-item">
-                    <a href="{{ $r('job_titles.add') }}" class="nav-link">
-                        مسمى جديد
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ $r('job_titles') }}" class="nav-link">
-                        قائمة المسميات
                     </a>
                 </li>
             </ul>
@@ -157,39 +77,94 @@
         </div>
     </li>
 
-    <!--Members-->
+    <!--Leave Types-->
     <li class="nav-item">
-        <a id="members-nav" class="nav-link" href="{{ $r('members') }}">
-            <i class="fe fe-users"></i> الأعضاء
+        <a
+                class="nav-link"
+                href="javascript:;"
+                data-toggle="collapse"
+                data-target="#leave-types-navs"
+                role="button"
+                aria-expanded="false"
+        >
+            <i class="fa fa-sign-out"></i>الاجازات
         </a>
+        <div class="collapse" id="leave-types-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('leave_types') }}" class="nav-link">
+                        أنواع الإجازات
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('members.leaves') }}" class="nav-link">
+                        الإجازات
+                    </a>
+                </li>
+            </ul>
+        </div>
     </li>
 
-    <!--Members-->
+    <!--Job Titles-->
     <li class="nav-item">
-        <a id="user-contracts-nav" class="nav-link" href="{{ $r('user_contracts') }}">
-            <i class="fe fe-file"></i> عقود العمل
+        <a
+          class="nav-link"
+          href="javascript:;"
+          data-toggle="collapse"
+          data-target="#job-titles-navs"
+          role="button"
+          aria-expanded="false"
+        >
+            <i class="fa fa-header"></i> المسميات الوظيفية
         </a>
+        <div class="collapse" id="job-titles-navs">
+            <ul class="nav nav-sm flex-column">
+                <li class="nav-item">
+                    <a href="{{ $r('job_titles.add') }}" class="nav-link">
+                        مسمى جديد
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ $r('job_titles') }}" class="nav-link">
+                        قائمة المسميات
+                    </a>
+                </li>
+            </ul>
+        </div>
     </li>
 
-    <!--Loan Requests-->
+    <!--Requests-->
     <li class="nav-item">
-        <a id="loan-requests-nav" class="nav-link" href="{{ $r('loan_requests') }}">
-            <i class="fe fe-grid"></i> طلبات القروض
+        <a
+          class="nav-link"
+          href="javascript:;"
+          data-toggle="collapse"
+          data-target="#requests-navs"
+          role="button"
+          aria-expanded="false"
+        >
+            <i class="fe fe-grid"></i>الطلبات
         </a>
+        <div class="collapse" id="requests-navs">
+            <ul class="nav nav-sm flex-column">
+                <!--Loan Requests-->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ $r('loan_requests') }}">طلبات القروض</a>
+                </li>
+                <!--Advance Payment Requests-->
+                <li class="nav-item">
+                    <a href="{{ $r('advance_payment_requests') }}" class="nav-link">طلبات السلف</a>
+                </li>
+                <!--Travel Requests-->
+                <li class="nav-item">
+                    <a href="{{ $r('travel_requests') }}" class="nav-link">طلبات السفر</a>
+                </li>
+                <!--Leaves Requests-->
+                <li class="nav-item">
+                    <a href="{{ $r('leaves') }}" class="nav-link">طلبات الإجازات</a>
+                </li>
+            </ul>
+        </div>
     </li>
 
-    <!--Advance Payment Requests-->
-    <li class="nav-item">
-        <a id="advance-payment-requests-nav" class="nav-link" href="{{ $r('advance_payment_requests') }}">
-            <i class="fe fe-grid"></i>طلبات السلف
-        </a>
-    </li>
-
-    <!--Travel Requests-->
-    <li class="nav-item">
-        <a id="travel-requests-nav" class="nav-link" href="{{ $r('travel_requests') }}">
-            <i class="fe fe-grid"></i>طلبات السفر
-        </a>
-    </li>
-    
 </ul>

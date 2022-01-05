@@ -10,6 +10,24 @@
         </div>
     </div>
 
+    <!--supervisor-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="supervisor_id">المدير المباشر</label>
+            <select2 id="supervisor_id" model="userContract.supervisor_id" ajax-url="user_contracts/members"
+                     error-model="createUserContract.errors.supervisor_id"></select2>
+        </div>
+    </div>
+
+    <!--user section-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="user_section_id">القسم(المحفظة)</label>
+            <select2 id="user_section_id" model="userContract.user_section_id" ajax-url="user_sections/search"
+                     error-model="createUserContract.errors.user_section_id"></select2>
+        </div>
+    </div>
+
     <!--contract type-->
     <div class="col-12 col-md-6">
         <div class="form-group">
@@ -32,11 +50,11 @@
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="contract_start_date">تاريخ بداية العقد</label>
-            <input id="contract_start_date" date-picker class="form-control" ng-model="userContract.contract_start_date"
+            <input id="contract_start_date" max="1989-10-29" date-picker class="form-control" ng-model="userContract.contract_start_date"
                    placeholder="تاريخ بداية العقد.." ng-error="createUserContract.errors.contract_start_date" required>
         </div>
     </div>
-    
+
     <!--contract end date-->
     <div class="col-12 col-md-6">
         <div class="form-group">

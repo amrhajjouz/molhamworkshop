@@ -2,14 +2,6 @@
 
 <form class="row" name="createMemberForm" request="createMember">
 
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="user_section_id">القسم(المحفظة)</label>
-            <select2 id="user_section_id" model="member.user_section_id" ajax-url="user_sections/search"
-                     error-model="createMember.errors.user_section_id"></select2>
-        </div>
-    </div>
-
     <!--first name ar-->
     <div class="col-12 col-md-6">
         <div class="form-group">
@@ -84,20 +76,12 @@
     </div>
 
     <!--birth date-->
-    <div class="col-12 col-md-6">
+    <!--<div class="col-12 col-md-6">
         <div class="form-group">
             <label for="birth_date">تاريخ الميلاد</label>
             <input id="birth_date" class="form-control" date-picker ng-model="member.birth_date" placeholder="تاريخ الميلاد.." ng-error="createMember.errors.birth_date" required>
         </div>
-    </div>
-
-    <!--nationality code-->
-    <div class="col-12 col-md-6">
-        <div class="form-group">
-            <label for="nationality_code">الجنسية</label>
-            <input id="nationality_code" class="form-control" type="text" ng-model="member.nationality_code" placeholder="الجنسية.." ng-error="createMember.errors.nationality_code" required>
-        </div>
-    </div>
+    </div>-->
 
     <!--&lt;!&ndash;employment level&ndash;&gt;
     <div class="col-12 col-md-6">

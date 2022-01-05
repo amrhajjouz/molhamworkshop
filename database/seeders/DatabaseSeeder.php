@@ -17,17 +17,28 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call([
+            CountrySeeder::class,
+        ]);
+
+          \App\Models\User::create([
+            'name' => 'admin',
+            'first_name' => ['ar'=>'Developer' , 'en'=>"Developer"],
+            'last_name' => ['ar'=>'User' , 'en'=>"User"],
+            'email' => "admin@admin.com",
+            'password' => Hash::make('12345678'),
+        ]);
 
         $this->call([
-            CountrySeeder::class ,
             PlaceSeeder::class ,
             UserSectionSeeder::class ,
             JobTitleSeeder::class ,
+            LeaveTypeSeeder::class ,
         ]);
 
-        User::where('id',1)->update([
+        /*User::where('id',1)->update([
             'user_section_id' => 1,
-        ]);
+        ]);*/
 
         $this->call([
             TeamOfficeSeeder::class ,

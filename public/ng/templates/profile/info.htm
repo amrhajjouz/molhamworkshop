@@ -44,6 +44,9 @@
             <label for="father_name_ar">اسم الأب باللغة العربية</label>
             <input id="father_name_ar" class="form-control" type="text" ng-init="profile.father_name.ar = auth.father_name.ar" ng-model="profile.father_name.ar" placeholder="الإسم باللغة العربية.." ng-error="updateProfile.errors.father_name.ar">
         </div>
+        <div ng-show="updateProfile.errors.father_name != null" class="invalid-feedback">
+            {{ updateProfile.errors.father_name[0] }}
+        </div>
     </div>
 
     <!--father name en-->
@@ -89,7 +92,7 @@
         </div>
     </div>
 
-    <!--birth date-->
+    <!--birthe date-->
     <div class="col-12 col-md-6">
         <div class="form-group">
             <label for="birth_date">تاريخ الميلاد</label>
@@ -97,11 +100,21 @@
         </div>
     </div>
 
-    <!--nationality code-->
+    <!--country_code-->
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="nationality_code">كود الجنسية</label>
-            <input type="text" class="form-control" id="nationality_code" ng-model="profile.nationality_code" ng-init="profile.nationality_code = auth.nationality_code" ng-change="updateProfile.error = ''" placeholder="كود الجنسية ..">
+            <label for="country_code">كود الجنسية</label>
+            <select2 id="country_code" model="profile.country_code" ajax-url="countries/search" error-model="profile.errors.country_code">
+                <option selected value="{{auth.country_code}}">{{auth.country_code}}</option>
+            </select2>
+        </div>
+    </div>
+
+    <!--total experience-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="total_experience">المدة الإجمالية بالعمل مع الفريق (بالأشهر)</label>
+            <input type="text" class="form-control" id="total_experience" ng-model="profile.total_experience" ng-init="profile.total_experience = auth.total_experience" ng-change="updateProfile.error = ''" disabled>
         </div>
     </div>
 
@@ -114,6 +127,20 @@
                 <option value="en">الإنكليزية</option>
             </select>
             <div ng-show="updateProfile.errors.locale != null" class="invalid-feedback">{{ updateProfile.errors.locale[0] }}</div>
+        </div>
+    </div>
+
+    <!--marital_status-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="marital_status">الحالة الإجتماعية</label>
+            <select id="marital_status" class="custom-select" name="marital_status" ng-model="profile.marital_status" ng-init="profile.marital_status = auth.marital_status" ng-change="updateProfile.errors.marital_status = null">
+                <option value="married">متزوج</option>
+                <option value="single">أعزب</option>
+            </select>
+            <div ng-show="updateProfile.errors.marital_status != null" class="invalid-feedback">
+                {{ updateProfile.errors.marital_status[0] }}
+            </div>
         </div>
     </div>
     

@@ -32,6 +32,7 @@ class ProfileController extends Controller {
                 'mother_name.ar.required' => 'اسم الأم باللغة العربية حقل مطلوب',
                 'mother_name.en.required' => 'اسم الأم باللغة الإنكليزية حقل مطلوب',
                 'father_name.ar.required' => 'اسم الأب باللغة العربية حقل مطلوب',
+                'father_name.ar.between' => 'طول اسم الأب يجب ان يكون بين 3-20 حرف',
                 'father_name.en.required' => 'اسم الأب باللغة الإنكليزية حقل مطلوب',
                 /*'name.string' => 'يجب أن يكون الاسم حقل نصي مؤلف من حروف وأرقام',
                 'name.between' => 'طول اسم المدينة يجب ان يكون بين 3-20 حرف ',*/
@@ -40,7 +41,8 @@ class ProfileController extends Controller {
                 //'email.unique' => 'البريد الالكتروني الذي أدخلته مستخدم من قبل حساب آخر',
                 'gender.required' => 'الجنس حقل مطلوب',
                 'birth_date.required' => 'تاريخ الميلاد حقل مطلوب',
-                'nationality_code.required' => 'كود الجنسية حقل مطلوب',
+                'country_code.required' => 'كود الجنسية حقل مطلوب',
+                'marital_status.required' => 'الحالة الإجتماعية حقل مطلوب',
             ];
 
             $rules = [
@@ -52,10 +54,10 @@ class ProfileController extends Controller {
                 'father_name.en' => 'required|string|between:3,20',
                 'mother_name.ar' => 'required|string|between:3,20',
                 'mother_name.en' => 'required|string|between:3,20',
-                //'email' => ['required', 'email', Rule::unique('users')->ignore(Auth::id())],
                 'gender' => 'required',
                 'birth_date' => 'required|date',
-                'nationality_code' => 'required',
+                'country_code' => 'required',
+                'marital_status' => 'required',
                 'locale' => ['string', Rule::in(['ar', 'en'])],
                 //'bio' => 'nullable|string',
             ];
@@ -74,8 +76,9 @@ class ProfileController extends Controller {
             //$user->email = $request->input('email');
             $user->gender = $request->input('gender');
             $user->birth_date = $request->input('birth_date');
-            $user->nationality_code = $request->input('nationality_code');
+            $user->country_code = $request->input('country_code');
             $user->locale = $request->input('locale');
+            $user->marital_status = $request->input('marital_status');
             //$user->bio = (empty($request->input('bio'))) ? null : html_entity_decode($request->input('bio'));
 
             $user->save();
@@ -92,15 +95,17 @@ class ProfileController extends Controller {
         try {
 
             $messages = [
-                'current_residence.required' => 'بلد الاقامة الحالي حقل مطلوب',
-                'residence_type.required' => 'نوع الوثيقة حقل مطلوب',
-                //'residence_file.required' => 'ملف الوثيقة حقل مطلوب',
+                'current_country_code.required' => 'الدولة حقل مطلوب',
+                'current_city_id.required' => 'المدينة حقل مطلوب',
+                'current_full_address.required' => 'العنوان التفصيلي حقل مطلوب',
+                'current_residence_file.required' => 'وثيقة العنوان حقل مطلوب',
             ];
 
             $rules = [
-                'current_residence' => 'required|string',
-                'residence_type' => 'required|string',
-                //'residence_file' => 'required|numeric',
+                'current_country_code' => 'required|string',
+                'current_city_id' => 'required|string',
+                'current_full_address' => 'required|string',
+                'current_residence_file' => 'required|string',
             ];
 
             //dd($request->all());
@@ -111,9 +116,10 @@ class ProfileController extends Controller {
             }
 
             $user = Auth::user();
-            $user->current_residence = $request->input('current_residence');
-            $user->residence_type = $request->input('residence_type');
-            $user->residence_file = $request->input('residence_file');
+            $user->current_country_code = $request->input('current_country_code');
+            $user->current_city_id = $request->input('current_city_id');
+            $user->current_full_address = $request->input('current_full_address');
+            $user->current_residence_file = $request->input('current_residence_file');
 
             $user->save();
 
@@ -269,6 +275,7 @@ class ProfileController extends Controller {
             $user->blood_type = $request->input('blood_type');
             $user->physical_disability = $request->input('physical_disability');
             $user->communicable_diseases = $request->input('communicable_diseases');
+            $user->chronic_diseases = $request->input('chronic_diseases');
             $user->save();
 
             return response()->json([]);
@@ -285,28 +292,25 @@ class ProfileController extends Controller {
             $messages = [
                 'education_level.required' => 'المستوى التعليمي حقل مطلوب',
                 'education_section.required' => 'الفرع حقل مطلوب',
-                /*'educational_facility.required' => 'المنشأة التعليمية حقل مطلوب',
-                'educational_country.required' => 'البلد حقل مطلوب',
-                'educational_language.required' => 'لغة الدراسة حقل مطلوب',
-                'educational_status.required' => 'الحالة الدراسية حقل مطلوب',
-                'graduation_year.required' => 'سنة التخرج حقل مطلوب',
-                'average.required' => 'المعدل حقل مطلوب',
-                'native_language.required' => 'اللغة الام حقل مطلوب',
-                'other_languages.required' => 'لغات اخرى حقل مطلوب',*/
+                'institution_name.required' => 'المنشأة التعليمية حقل مطلوب',
+                'education_country.required' => 'البلد حقل مطلوب',
+                'study_language.required' => 'لغة الدراسة حقل مطلوب',
+                'education_status.required' => 'الحالة الدراسية حقل مطلوب',
+                'graduated_year.required' => 'سنة التخرج حقل مطلوب',
+                'gpa.required' => 'المعدل التراكمي حقل مطلوب',
 
             ];
 
             $rules = [
                 'education_level' => 'required',
                 'education_section' => 'required',
-                /*'educational_facility' => 'required',
-                'educational_country' => 'required',
-                'educational_language' => 'required',
-                'educational_status' => 'required',
-                'graduation_year' => 'required',
-                'average' => 'required',
-                'native_language' => 'required',
-                'other_languages' => 'required',*/
+                'institution_name' => 'required',
+                'education_country' => 'required',
+                'study_language' => 'required',
+                'education_status' => 'required',
+                'graduated_year' => 'required',
+                'gpa' => 'required',
+
             ];
 
             $validator = Validator::make ($request->all(), $rules, $messages);
@@ -318,14 +322,12 @@ class ProfileController extends Controller {
             $user = Auth::user();
             $user->education_level = $request->input('education_level');
             $user->education_section = $request->input('education_section');
-            /*$user->educational_facility = $request->input('educational_facility');
-            $user->educational_country = $request->input('educational_country');
-            $user->educational_language = $request->input('educational_language');
-            $user->educational_status = $request->input('educational_status');
-            $user->graduation_year = $request->input('graduation_year');
-            $user->average = $request->input('average');
-            $user->native_language = $request->input('native_language');
-            $user->other_languages = $request->input('other_languages');*/
+            $user->institution_name = $request->input('institution_name');
+            $user->education_country = $request->input('education_country');
+            $user->study_language = $request->input('study_language');
+            $user->education_status = $request->input('education_status');
+            $user->graduated_year = $request->input('graduated_year');
+            $user->gpa = $request->input('gpa');
             $user->save();
 
             return response()->json([]);

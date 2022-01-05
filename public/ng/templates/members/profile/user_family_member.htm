@@ -1,0 +1,29 @@
+<include-header/>
+
+
+<datatable datalist="userFamilyMembers">
+
+    <table>
+        <thead>
+        <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">الاسم</th>
+            <th class="text-center">صلة القرابة</th>
+            <th class="text-center">خيارات</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="x in userFamilyMembers.data">
+            <td class="align-middle text-center">{{ x.id }}</td>
+            <td class="align-middle text-center">{{ x.name }}</td>
+            <td class="align-middle text-center">{{ x.relative_relation }}</td>
+            <td class="align-middle text-center h2">
+                <dropdown>
+                    <dropdown-item href="{{ $r('user_family_members.overview', {id: x.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
+                </dropdown>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</datatable>

@@ -1,0 +1,31 @@
+<include-header/>
+
+
+<datatable datalist="userTrainings">
+
+    <table>
+        <thead>
+        <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">عنوان التدريب</th>
+            <th class="text-center">الجهة المنظمة</th>
+            <th class="text-center">تاريخ التدريب</th>
+            <th class="text-center">خيارات</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="x in userTrainings.data">
+            <td class="align-middle text-center">{{ x.id }}</td>
+            <td class="align-middle text-center">{{ x.title }}</td>
+            <td class="align-middle text-center">{{ x.organizer }}</td>
+            <td class="align-middle text-center">{{ x.date }}</td>
+            <td class="align-middle text-center h2">
+                <dropdown>
+                    <dropdown-item href="{{ $r('user_trainings.overview', {id: x.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
+                </dropdown>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</datatable>

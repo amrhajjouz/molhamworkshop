@@ -36,8 +36,6 @@ class UpdateMemberRequest extends FormRequest
             'father_name.en' => ['required', 'string'],
             'mother_name.ar' => ['required', 'string'],
             'mother_name.en' => ['required', 'string'],
-            'nationality_code' => ['required', 'string'],
-            'birth_date' => ['required', 'date'],
         ];
     }
     

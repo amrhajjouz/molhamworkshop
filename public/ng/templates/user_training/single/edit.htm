@@ -1,0 +1,40 @@
+<include-header/>
+
+<form class="row" name="userTrainingForm" request="updateUserTraining">
+
+    <!--title-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="title">عنوان التدريب</label>
+            <input id="title" class="form-control" type="text" ng-model="userTraining.title" placeholder="عنوان التدريب.." ng-error="updateUserTraining.errors.title" required>
+        </div>
+    </div>
+
+    <!--organizer-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="organizer">الجهة المنظمة</label>
+            <input id="organizer" class="form-control" type="text" ng-model="userTraining.organizer" placeholder="الجهة المنظمة.." ng-error="updateUserTraining.errors.organizer" required>
+        </div>
+    </div>
+
+    <!--date-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="date">تاريخ التدريب</label>
+            <input id="date" class="form-control" date-picker ng-model="userTraining.date" placeholder="تاريخ التدريب.." ng-error="updateUserTraining.errors.date" required>
+        </div>
+    </div>
+
+    <!--certificate-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="certificate">الشهادة</label>
+            <input id="certificate" class="form-control" type="text" ng-model="userTraining.certificate" placeholder="الشهادة.." ng-error="updateUserTraining.errors.certificate" required>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="userTrainingForm" icon="fe fe-edit">تعديل</submit-button>
+    </div>
+</form>

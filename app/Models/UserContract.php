@@ -31,40 +31,44 @@ class UserContract extends Model
         return $this->belongsTo(TeamOffice::class, 'office_id');
     }
 
+    public function userSection()
+    {
+        return $this->belongsTo(UserSection::class, 'user_section_id');
+    }
+
     public function jobTitle()
     {
         return $this->belongsTo(JobTitle::class, 'job_title_id');
     }
 
-    public function getContractPeriodAttribute() {
-        $to = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $this->contract_start_date);
-        $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $this->contract_end_date);
-        $diff_in_months = $from->diffInMonths($to);
-        return $diff_in_months;
+    public function supervisor()
+    {
+        return $this->belongsTo(User::class, 'supervisor_id');
     }
 
-    //Contract type
-    public function getTranslateWordAttribute(){
+    public function getContractPeriodAttribute()
+    {
+        $contract_period_in_months = contractPeriod($this->contract_start_date, $this->contract_end_date);
+        return $contract_period_in_months;
+    }
+
+    public function getTranslateWordAttribute()
+    {
 
         $translate_words = [];
-        if ($this->contract_type == 'full_time'){
+        if ($this->contract_type == 'full_time') {
             $translate_words[] = 'دوام كامل';
         } else if ($this->contract_type == 'part_time') {
             $translate_words[] = 'نصف دوام';
-        }
-        else if ($this->contract_type == 'indefinite') {
+        } else if ($this->contract_type == 'indefinite') {
             $translate_words[] = 'غير محددة الأجل';
-        }
-        else if ($this->contract_type == 'freelance') {
+        } else if ($this->contract_type == 'freelance') {
             $translate_words[] = 'عقد العمل الحر';
-        }
-        else if ($this->contract_type == 'consultant_contracts') {
+        } else if ($this->contract_type == 'consultant_contracts') {
             $translate_words[] = 'عقد المستشارين';
-        }
-        else if ($this->contract_type == 'field_work') {
+        } else if ($this->contract_type == 'field_work') {
             $translate_words[] = 'عقد العمل الميداني';
-        }
-        else if ($this->contract_type == 'project_employee_contracts') {
+        } else if ($this->contract_type == 'project_employee_contracts') {
             $translate_words[] = 'نصف دوام';
         }
         return $translate_words;

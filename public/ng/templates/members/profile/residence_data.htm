@@ -1,0 +1,34 @@
+<include-header/>
+
+<div class="row">
+
+    <div class="col-12 col-lg-4">
+
+        <table>
+            <!--current_country_code-->
+            <tr>
+                <td class="text-muted py-3">الدولة</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].current_country.name.ar }}</td>
+            </tr>
+            <!--current_city_id-->
+            <tr>
+                <td class="text-muted py-3">المدينة</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].current_city.name.ar }}</td>
+            </tr>
+            <!--current_full_address-->
+            <tr>
+                <td class="text-muted py-3">العنوان التفصيلي</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].current_full_address }}</td>
+            </tr>
+            <!--current_residence_file-->
+            <tr>
+                <td class="text-muted py-3">وثيقة العنوان</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].current_residence_file }}</td>
+            </tr>
+        </table>
+
+    </div>
+
+</div>
+
+<hr>

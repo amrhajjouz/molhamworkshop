@@ -10,7 +10,7 @@
             <tr>
                 <th class="text-center">#</th>
                 <th class="text-center">اسم القسم باللغة العربية</th>
-                <th class="text-center">عدد الأعضاء بالقسم</th>
+                <th class="text-center">اسم القسم باللغة الإنكليزية</th>
                 <th class="text-center">خيارات</th>
             </tr>
         </thead>
@@ -19,7 +19,7 @@
             <tr ng-repeat="x in userSections.data">
                 <td class="align-middle text-center">{{ x.id }}</td>
                 <td class="align-middle text-center">{{ x.section_name.ar }}</td>
-                <td class="align-middle text-center">{{ x.users_count }}</td>
+                <td class="align-middle text-center">{{ x.section_name.en }}</td>
                 <td class="align-middle text-center h2">
                     <dropdown>
                         <dropdown-item href="{{ $r('user_sections.overview', {id: x.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>

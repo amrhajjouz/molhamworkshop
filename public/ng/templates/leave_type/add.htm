@@ -1,0 +1,24 @@
+<page-header title="إضافة نوع جديد" pretitle="أنواع الإجازات"></page-header>
+
+<form class="row" name="leaveTypeForm" request="createLeaveType">
+
+    <!--leave name-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="leave_name">الإسم</label>
+            <input id="leave_name" class="form-control" type="text" ng-model="leaveType.leave_name" placeholder="الإسم.." ng-error="createLeaveType.errors.leave_name" required>
+        </div>
+    </div>
+
+    <!--details-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="details">تفاصيل الإجازة</label>
+            <input id="details" class="form-control" type="text" ng-model="leaveType.details" placeholder="تفاصيل الإجازة.." ng-error="createLeaveType.errors.details" required>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="leaveTypeForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>

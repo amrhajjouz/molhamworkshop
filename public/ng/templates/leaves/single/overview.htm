@@ -1,0 +1,57 @@
+<include-header></include-header>
+
+<div class="header">
+    <div class="header-body">
+        <h1 class="header-title h3 font-weight-bold">
+            معلومات الإجازة
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-lg-6">
+        <table>
+            <tr>
+                <td class="text-muted py-3">اسم الإجازة</td>
+                <td class="py-3 pr-3">{{ leave.leave_type.leave_name }}</td>
+            </tr>
+            <tr ng-show="{{ leave.reason }}">
+                <td class="text-muted py-3">سبب الإجازة</td>
+                <td class="py-3 pr-3">{{ leave.reason }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ بداية الإجازة</td>
+                <td class="py-3 pr-3">{{ leave.leave_start_date }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ نهاية الإجازة</td>
+                <td class="py-3 pr-3">{{ leave.leave_end_date }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">حالة الإجازة</td>
+                <td class="py-3 pr-3">{{ leave.status }}</td>
+            </tr>
+            <tr ng-show="{{ leave.details }}">
+                <td class="text-muted py-3">التفاصيل</td>
+                <td class="py-3 pr-3">{{ leave.details }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-12 col-lg-6">
+        <table>
+            <tr>
+                <td class="text-muted py-3">تاريخ الاضافة</td>
+                <td class="py-3 pr-3">
+                <td class="py-3 pr-3"><span ng-bind="leave.created_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td></td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ اخر تعديل</td>
+                <td class="py-3 pr-3">
+                <td class="py-3 pr-3"><span ng-bind="leave.updated_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<hr>
+

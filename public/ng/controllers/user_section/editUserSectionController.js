@@ -1,4 +1,7 @@
 function editUserSectionControllerInit ($page, $apiRequest) {
+
+
+console.log($apiRequest.config('user_sections/' + $page.routeParams.id).getData())
     return $apiRequest.config('user_sections/' + $page.routeParams.id).getData();
 }
 

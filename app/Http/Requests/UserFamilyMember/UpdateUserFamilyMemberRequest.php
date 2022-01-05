@@ -25,7 +25,6 @@ class UpdateUserFamilyMemberRequest extends FormRequest
     {
         return [
             'name' => ['required' ,'string', 'between:3,20'],
-            'surname' => ['required' ,'string', 'between:3,20'],
             'relative_relation' => ['required'],
         ];
     }

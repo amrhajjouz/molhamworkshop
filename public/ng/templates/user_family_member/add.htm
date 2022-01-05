@@ -23,6 +23,38 @@
         </div>
     </div>
 
+    <!--gender-->
+    <!--<div class="col-12 col-md-6" ng-show="userFamilyMember.relative_relation == 'child'">
+        <div class="form-group">
+            <label for="gender">جنس الطفل</label>
+            <select class="custom-select" ng-class="(createUserFamilyMember.errors.gender != null) ? 'is-invalid' : ''" id="gender" ng-model="userFamilyMember.gender" ng-change="createUserFamilyMember.errors.gender = null">
+                <option value="male">ذكر</option>
+                <option value="female">أنثى</option>
+            </select>
+            <div ng-show="createUserFamilyMember.errors.gender != null" class="invalid-feedback">
+                {{ createUserFamilyMember.errors.gender[0] }}
+            </div>
+        </div>
+    </div>-->
+
+    <!--date_of_marriage-->
+    <!--<div class="col-12 col-md-6" ng-show="userFamilyMember.relative_relation == 'partner'">
+        <div class="form-group">
+            <label for="date_of_marriage">تاريخ الزواج</label>
+            <input id="date_of_marriage" date-picker class="form-control" ng-model="userFamilyMember.date_of_marriage"
+                   placeholder="تاريخ الزواج.." ng-error="createUserFamilyMember.errors.date_of_marriage" required>
+        </div>
+    </div>-->
+
+    <!--date_of_birth-->
+    <!--<div class="col-12 col-md-6" ng-show="userFamilyMember.relative_relation == 'partner'">
+        <div class="form-group">
+            <label for="date_of_birth">تاريخ ميلاد الزوج/ة</label>
+            <input id="date_of_birth" date-picker class="form-control" ng-model="userFamilyMember.date_of_birth"
+                   placeholder="تاريخ ميلاد الزوج/ة.." ng-error="createUserFamilyMember.errors.date_of_birth" required>
+        </div>
+    </div>-->
+
     <div class="col-12">
         <submit-button form="userFamilyMemberForm" icon="fe fe-plus">اضافة</submit-button>
     </div>

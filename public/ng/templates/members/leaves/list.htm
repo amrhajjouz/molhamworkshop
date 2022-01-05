@@ -1,0 +1,38 @@
+<page-header title="قائمة الإجازات المقدمة" pretitle="الإجازات">
+    <!--<a href="{{ $r('leaves.add') }}" class="btn btn-primary">
+        <i class="fe fe-plus"></i>&nbsp;جديد
+    </a>-->
+</page-header>
+
+<datatable datalist="leaves">
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">الموظف</th>
+                <th class="text-center">نوع الإجازة</th>
+                <th class="text-center">تاريخ بداية الإجازة</th>
+                <th class="text-center">تاريخ نهاية الإجازة</th>
+                <th class="text-center">الحالة</th>
+                <th class="text-center">خيارات</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="x in leaves.data">
+                <td class="align-middle text-center">{{ x.id }}</td>
+                <td class="align-middle text-center">{{ x.user.first_name.ar }}</td>
+                <td class="align-middle text-center">{{ x.leave_type.leave_name }}</td>
+                <td class="align-middle text-center">{{ x.leave_start_date }}</td>
+                <td class="align-middle text-center">{{ x.leave_end_date }}</td>
+                <td class="align-middle text-center">{{ x.status }}</td>
+                <td class="align-middle text-center h2">
+                    <dropdown>
+                        <dropdown-item href="{{ $r('members.leaves.overview', {id: x.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
+                        <dropdown-item href="{{ $r('members.leaves.edit', {id: x.id}) }}"><i class="fe fe-edit-2"></i> تعديل حالة الإجازة</dropdown-item>
+                    </dropdown>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</datatable>

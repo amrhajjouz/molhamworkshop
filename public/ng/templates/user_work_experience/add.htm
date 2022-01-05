@@ -20,6 +20,28 @@
         </div>
     </div>
 
+    <!--start date-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="start_date">تاريخ البداية</label>
+            <input date-picker class="form-control" ng-class="(createUserWorkExperience.errors.start_date != null) ? 'is-invalid' : ''" id="start_date" ng-model="userWorkExperience.start_date" ng-change="createUserWorkExperience.errors.start_date = null" placeholder="تاريخ البداية .." required>
+            <div ng-show="createUserWorkExperience.errors.start_date != null" class="invalid-feedback">
+                {{ createUserWorkExperience.errors.start_date[0] }}
+            </div>
+        </div>
+    </div>
+
+    <!--end date-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="end_date">تاريخ النهاية</label>
+            <input date-picker class="form-control" ng-class="(createUserWorkExperience.errors.end_date != null) ? 'is-invalid' : ''" id="end_date" ng-model="userWorkExperience.end_date" ng-change="createUserWorkExperience.errors.end_date = null" placeholder="تاريخ النهاية .." required>
+            <div ng-show="createUserWorkExperience.errors.end_date != null" class="invalid-feedback">
+                {{ createUserWorkExperience.errors.end_date[0] }}
+            </div>
+        </div>
+    </div>
+
     <div class="col-12">
         <submit-button form="userWorkExperienceForm" icon="fe fe-plus">اضافة</submit-button>
     </div>

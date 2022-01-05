@@ -19,10 +19,6 @@ class UserSection extends Model
 
     protected $casts = ['section_name' => 'json'];
 
-    public function users() {
-      return $this->hasMany(User::class,'user_section_id');
-    }
-
     public function parent()
     {
         return $this->belongsTo(self::class, 'parent_id', 'id');
@@ -34,7 +30,7 @@ class UserSection extends Model
         return $name;
     }
 
-    public function mangerUser(){
+    public function managerUser(){
         return $this->belongsTo(\App\Models\User::class,'user_manager_id');
     }
 

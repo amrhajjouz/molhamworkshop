@@ -6,32 +6,40 @@
         {{ updateResidenceData.error }}
     </div>
 
-
-    <!--current residence-->
+    <!--current_country-->
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="current_residence">بلد الإقامة الحالي</label>
-            <input type="text" class="form-control" id="current_residence" ng-model="profile.current_residence" ng-init="profile.current_residence = auth.current_residence" ng-change="updateResidenceData.error = ''" placeholder="بلد الإقامة الحالي ...">
+            <label for="current_country_code">الدولة</label>
+            <select2 id="current_country_code" model="profile.current_country_code" ajax-url="countries/search" error-model="profile.errors.current_country_code">
+                <option selected value="{{auth.current_country_code}}">{{auth.current_country_code}}</option>
+            </select2>
         </div>
     </div>
 
-    <!--residence type-->
+    <!--current_city-->
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="residence_type">نوع الإقامة</label>
-            <select class="custom-select" ng-class="(updateResidenceData.errors.residence_type != null) ? 'is-invalid' : ''" id="residence_type" ng-model="profile.residence_type" ng-init="profile.residence_type = auth.residence_type">
-                <option value="identification">إقامة</option>
-                <option value="residence">كملك</option>
-            </select>
-            <div ng-show="updateResidenceData.errors.residence_type != null" class="invalid-feedback">{{ updateResidenceData.errors.residence_type[0] }}</div>
+            <label for="current_city_id">المدينة</label>
+            <select2 id="current_city_id" model="profile.current_city_id" ajax-url="places/search"
+                     error-model="profile.errors.current_city_id">
+                <option selected value="{{auth.current_city_id}}">{{auth.current_city_id}}</option>
+            </select2>
         </div>
     </div>
 
-    <!--current residence-->
+    <!--current_full_address-->
     <div class="col-12 col-md-6">
         <div class="form-group">
-            <label for="residence_file">ملف الإقامة</label>
-            <input type="text" class="form-control" id="residence_file" ng-model="profile.residence_file" ng-init="profile.residence_file = auth.residence_file" ng-change="updateResidenceData.error = ''" placeholder="بلد الإقامة الحالي ...">
+            <label for="current_full_address">العنوان التفصيلي</label>
+            <input type="text" class="form-control" id="current_full_address" ng-model="profile.current_full_address" ng-init="profile.current_full_address = auth.current_full_address" ng-change="updateResidenceData.error = ''" placeholder="العنوان التفصيلي ...">
+        </div>
+    </div>
+
+    <!--current_full_address-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="current_residence_file">وثيقة العنوان</label>
+            <input type="text" class="form-control" id="current_residence_file" ng-model="profile.current_residence_file" ng-init="profile.current_residence_file = auth.current_residence_file" ng-change="updateResidenceData.error = ''" placeholder="وثيقة العنوان ...">
         </div>
     </div>
 

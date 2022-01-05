@@ -1,0 +1,49 @@
+<include-header/>
+
+<div class="row">
+
+    <div class="col-12 col-lg-4">
+
+        <table>
+            <!--phone-->
+            <tr>
+                <td class="text-muted py-3">رقم الهاتف</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].phone }}</td>
+            </tr>
+            <!--whatsapp-->
+            <tr>
+                <td class="text-muted py-3">رقم الوتس أب</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].whatsapp }}</td>
+            </tr>
+            <!--facebook-->
+            <tr>
+                <td class="text-muted py-3">رابط صفحتك على فيسبوك</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].facebook }}</td>
+            </tr>
+            <!--instagram-->
+            <tr>
+                <td class="text-muted py-3">رابط حسابك على الإنستغرام</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].instagram }}</td>
+            </tr>
+            <!--reference_person_name-->
+            <tr>
+                <td class="text-muted py-3">اسم شخص مقرب</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].reference_person_name }}</td>
+            </tr>
+            <!--reference_person_phone-->
+            <tr>
+                <td class="text-muted py-3">رقم هاتف الشخص المقرب</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].reference_person_phone }}</td>
+            </tr>
+            <!--reference_person_relation_type-->
+            <tr>
+                <td class="text-muted py-3">صلة القرابة</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].reference_person_relation_type }}</td>
+            </tr>
+        </table>
+
+    </div>
+
+</div>
+
+<hr>

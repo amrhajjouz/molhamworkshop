@@ -26,6 +26,9 @@ class CreateUserFamilyMemberRequest extends FormRequest
         return [
             'name' => ['required' ,'string', 'between:3,20'],
             'relative_relation' => ['required'],
+            'date_of_marriage' => ['date', 'nullable', 'sometimes'],
+            'date_of_birth' => ['date', 'nullable', 'sometimes'],
+
         ];
     }
 }

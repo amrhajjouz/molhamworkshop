@@ -38,12 +38,12 @@ class UserSkillController extends Controller {
         }
     }
 
-    public function list (Request $request) {
+    public function list () {
 
         try {
-            $user_skills = UserSkill::orderBy('id', 'desc')->paginate(5);
-
+            $user_skills = UserSkill::where('user_id', auth()->id())->orderBy('id', 'asc')->paginate(5);
             return response()->json($user_skills);
+
 
         } catch (\Exception $e) {
             return response(['error' => $e->getMessage()], 500);

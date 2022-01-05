@@ -1,0 +1,32 @@
+<page-header title="قائمة الإجازات" pretitle="الإجازات">
+    <a href="{{ $r('leaves.add') }}" class="btn btn-primary">
+        <i class="fe fe-plus"></i>&nbsp;جديد
+    </a>
+</page-header>
+
+<datatable datalist="leaves">
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">نوع الإجازة</th>
+                <th class="text-center">حالة الإجازة</th>
+                <th class="text-center">خيارات</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="x in leaves.data">
+                <td class="align-middle text-center">{{ x.id }}</td>
+                <td class="align-middle text-center">{{ x.leave_type.leave_name }}</td>
+                <td class="align-middle text-center">{{ x.status }}</td>
+                <td class="align-middle text-center h2">
+                    <dropdown>
+                        <dropdown-item href="{{ $r('leaves.overview', {id: x.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
+                        <dropdown-item ng-show="{{(x.status == 'pending')}}" href="#" ng-click="deleteMemberLeaveController(x.id)"><i class="fe fe-delete"></i> حذف</dropdown-item>
+                    </dropdown>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</datatable>

@@ -11,6 +11,8 @@
                 <th class="text-center">#</th>
                 <th class="text-center">اسم الموظف</th>
                 <th class="text-center">مدة العقد</th>
+                <th class="text-center">تاريخ بداية العقد</th>
+                <th class="text-center">تاريخ انتهاء العقد</th>
                 <th class="text-center">خيارات</th>
             </tr>
         </thead>
@@ -20,6 +22,8 @@
                 <td class="align-middle text-center">{{ x.id }}</td>
                 <td class="align-middle text-center">{{ x.user.first_name.ar }}</td>
                 <td class="align-middle text-center">{{ x.contract_period }} شهر</td>
+                <td class="align-middle text-center">{{ x.contract_start_date }}</td>
+                <td class="align-middle text-center">{{ x.contract_end_date }}</td>
                 <td class="align-middle text-center h2">
                     <dropdown>
                         <dropdown-item href="{{ $r('user_contracts.overview', {id: x.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>

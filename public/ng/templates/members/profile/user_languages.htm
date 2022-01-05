@@ -1,0 +1,27 @@
+<include-header/>
+
+
+<datatable datalist="userLanguages">
+
+    <table>
+        <thead>
+        <tr>
+            <th class="text-center">#</th>
+            <th class="text-center">اللغة</th>
+            <th class="text-center">خيارات</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="x in userLanguages.data">
+            <td class="align-middle text-center">{{ x.id }}</td>
+            <td class="align-middle text-center">{{ x.language_name }}</td>
+            <td class="align-middle text-center h2">
+                <dropdown>
+                    <dropdown-item href="{{ $r('user_languages.overview', {id: x.id}) }}"><i class="fe fe-eye"></i> نظرة عامة</dropdown-item>
+                </dropdown>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</datatable>

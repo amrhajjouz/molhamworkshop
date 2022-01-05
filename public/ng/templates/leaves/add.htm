@@ -1,0 +1,43 @@
+<page-header title="طلب إجازة" pretitle="الإجازات"></page-header>
+
+<form class="row" name="leaveForm" request="createLeave">
+
+
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="leave_type_id">نوع الإجازة</label>
+            <select2 id="leave_type_id" model="leave.leave_type_id" ajax-url="leave_types/search" error-model="createLeave.errors.leave_type_id"></select2>
+        </div>
+    </div>
+
+    <!--leave start date-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="leave_start_date">تاريخ بداية الإجازة</label>
+            <input id="leave_start_date" class="form-control" date-picker ng-model="leave.leave_start_date"
+                   placeholder="تاريخ بداية الإجازة.." ng-error="createLeave.errors.leave_start_date" required>
+        </div>
+    </div>
+
+    <!--leave end date-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="leave_end_date">تاريخ نهاية الإجازة</label>
+            <input id="leave_end_date" class="form-control" date-picker ng-model="leave.leave_end_date"
+                   placeholder="تاريخ نهاية الإجازة.." ng-error="createLeave.errors.leave_end_date" required>
+        </div>
+    </div>
+
+    <!--details-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="reason">السبب</label>
+            <input id="reason" class="form-control" type="text" ng-model="leave.reason"
+                   placeholder="السبب.." ng-error="createLeave.errors.reason" required>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <submit-button form="leaveForm" icon="fe fe-plus">اضافة</submit-button>
+    </div>
+</form>

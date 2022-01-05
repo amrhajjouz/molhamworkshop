@@ -39,15 +39,16 @@ class TeamOfficeController extends Controller {
         }
     }
 
-    public function list () {
+    public function list (Request $request) {
 
         try {
-            $team_office = TeamOffice::with('user', 'place')->orderBy('id', 'asc')->paginate(5);
-
-            return response()->json($team_office);
-
+            return response()->json(TeamOffice::with('user', 'place')->orderBy('id', 'desc')->where(function ($q) use ($request) {
+                if ($request->has('q')) {
+                    $q->where('name', 'like', '%' . $request->q . '%');
+                }
+            })->paginate(10)->withQueryString());
         } catch (\Exception $e) {
-            return response(['error' => $e->getMessage()], 500);
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 

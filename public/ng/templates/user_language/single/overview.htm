@@ -1,0 +1,49 @@
+<include-header/>
+
+<div class="header">
+    <div class="header-body">
+        <h1 class="header-title h3 font-weight-bold">
+            معلومات اللغة
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-lg-6">
+        <table>
+            <tr>
+                <td class="text-muted py-3">اسم اللغة</td>
+                <td class="py-3 pr-3">{{ userLanguage.language_name }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">مستوى القراءة</td>
+                <td class="py-3 pr-3">{{ userLanguage.reading }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">مستوى الكتابة</td>
+                <td class="py-3 pr-3">{{ userLanguage.writing }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">مستوى الاستماع</td>
+                <td class="py-3 pr-3">{{ userLanguage.listening }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-12 col-lg-6">
+        <table>
+            <tr>
+                <td class="text-muted py-3">تاريخ الاضافة</td>
+                <td class="py-3 pr-3">
+                <td class="py-3 pr-3"><span ng-bind="userLanguage.created_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td></td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ اخر تعديل</td>
+                <td class="py-3 pr-3">
+                <td class="py-3 pr-3"><span ng-bind="userLanguage.updated_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<hr>
+

@@ -1,4 +1,5 @@
 function profileInfoControllerInit ($apiRequest) {
+    console.log($apiRequest.config('auth').getData())
     return $apiRequest.config('auth').getData();
 }
 

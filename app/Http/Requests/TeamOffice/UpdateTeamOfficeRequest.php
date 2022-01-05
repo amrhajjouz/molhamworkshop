@@ -28,6 +28,8 @@ class UpdateTeamOfficeRequest extends FormRequest
             'name' => ['string', 'between:3,20'],
             'type' => ['required'],
             'address' => ['required'],
+            'office_manager' => ['required'],
+            'place_id' => ['required'],
         ];
     }
 }

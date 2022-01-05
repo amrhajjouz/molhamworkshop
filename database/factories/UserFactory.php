@@ -29,7 +29,7 @@ class UserFactory extends Factory
             'last_name' => ['ar'=>$this->faker->lastName , 'en'=>$this->faker->lastName],
             'father_name' => ['ar'=>$this->faker->name , 'en'=>$this->faker->name],
             'mother_name' => ['ar'=>$this->faker->name , 'en'=>$this->faker->name],
-            'user_section_id' => $this->faker->randomElement([1,2,3,4,5]),
+            //'user_section_id' => $this->faker->randomElement([1,2,3,4,5]),
             'email' => $this->faker->unique()->safeEmail,
             'password' => Hash::make('12345678'),
         ];

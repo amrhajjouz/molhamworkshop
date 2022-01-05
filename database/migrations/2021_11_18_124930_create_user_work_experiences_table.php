@@ -18,6 +18,8 @@ class CreateUserWorkExperiencesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('employer');
             $table->string('job_title');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

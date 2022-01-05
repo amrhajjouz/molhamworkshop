@@ -1,0 +1,113 @@
+<include-header/>
+
+<div class="row">
+
+    <div class="col-12 col-lg-4">
+
+        <table>
+            <!--first name ar-->
+            <tr>
+                <td class="text-muted py-3">الاسم باللغة العربية</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].first_name.ar }}</td>
+            </tr>
+            <!--first name ar-->
+            <tr>
+                <td class="text-muted py-3">الإسم باللغة الإنكليزية</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].first_name.en }}</td>
+            </tr>
+            <!--email-->
+            <tr>
+                <td class="text-muted py-3">البريد الالكتروني</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].email }}</td>
+            </tr>
+            <!--last name ar-->
+            <tr>
+                <td class="text-muted py-3">اللقب باللغة العربية</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].last_name.ar }}</td>
+            </tr>
+            <!--last name en-->
+            <tr>
+                <td class="text-muted py-3">اللقب باللغة الإنكليزية</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].last_name.en }}</td>
+            </tr>
+            <!--father name ar-->
+            <tr>
+                <td class="text-muted py-3">اسم الأب باللغة العربية</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].father_name.ar }}</td>
+            </tr>
+            <!--father name en-->
+            <tr>
+                <td class="text-muted py-3">اسم الأب باللغة الإنكليزية</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].father_name.en }}</td>
+            </tr>
+            <!--email-->
+            <tr>
+                <td class="text-muted py-3">البريد الالكتروني</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].email }}</td>
+            </tr>
+            <!--gender-->
+            <tr>
+                <td class="text-muted py-3">الجنس</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].gender }}</td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div class="col-12 col-lg-4">
+
+        <table>
+            <!--mother name ar-->
+            <tr>
+                <td class="text-muted py-3">اسم الأم باللغة العربية</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].mother_name.ar }}</td>
+            </tr>
+            <!--mother name en-->
+            <tr>
+                <td class="text-muted py-3">اسم الأم باللغة الإنكليزية</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].mother_name.en }}</td>
+            </tr>
+            <!--birthdate-->
+            <tr>
+                <td class="text-muted py-3">تاريخ الميلاد</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].birth_date }}</td>
+            </tr>
+            <!--total_experience-->
+            <tr>
+                <td class="text-muted py-3">مدة العمل مع الفريق(بالأشهر)</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].total_experience }}</td>
+            </tr>
+            <!--marital_status-->
+            <tr>
+                <td class="text-muted py-3">الحالة الإجتماعية</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].marital_status }}</td>
+            </tr>
+            <!--marital_status-->
+            <tr>
+                <td class="text-muted py-3">الجنسية</td>
+                <td class="py-3 pr-3">{{ userInfo.data[0].country.name.ar }}</td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div class="col-12 col-lg-4">
+
+        <table>
+            <tr>
+                <td class="text-muted py-3">تاريخ الاضافة</td>
+                <td class="py-3 pr-3"></td>
+                <td class="py-3 pr-3"><span ng-bind="userInfo.data[0].created_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ اخر تعديل</td>
+                <td class="py-3 pr-3"></td>
+                <td class="py-3 pr-3"><span ng-bind="userInfo.data[0].updated_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td>
+            </tr>
+        </table>
+
+    </div>
+
+</div>
+
+<hr>

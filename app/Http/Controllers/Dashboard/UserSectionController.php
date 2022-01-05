@@ -33,7 +33,7 @@ class UserSectionController extends Controller {
 
     public function retrieve ($id) {
         try {
-            return response()->json(UserSection::with(['users','mangerUser'])->where('id', $id)->firstOrFail());
+            return response()->json(UserSection::with(['managerUser'])->where('id', $id)->firstOrFail());
         } catch (\Exception $e) {
             return response(['error' => $e->getMessage()], 500);
         }
@@ -41,13 +41,23 @@ class UserSectionController extends Controller {
 
     public function list (Request $request) {
 
-        try {
+        /*try {
 
-            $user_sections = UserSection::withCount('users')->orderBy('id', 'desc')->paginate(5);
+            $user_sections = UserSection::orderBy('id', 'desc')->paginate(5);
             return response()->json($user_sections);
 
         } catch (\Exception $e) {
             return response(['error' => $e->getMessage()], 500);
+        }*/
+        try {
+            return response()->json(UserSection::orderBy('id', 'asc')->where(function ($q) use ($request) {
+                if ($request->has('q')) {
+                    $q->where('section_name->ar', 'like', '%' . $request->q . '%');
+                    $q->orWhere('section_name->en', 'like', '%' . $request->q . '%');
+                }
+            })->paginate(10)->withQueryString());
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 

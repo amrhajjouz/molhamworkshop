@@ -1,0 +1,53 @@
+<include-header/>
+<div class="header">
+    <div class="header-body">
+        <h1 class="header-title h3 font-weight-bold">
+            معلومات التدريب
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-lg-6">
+
+        <table>
+            <tr>
+                <td class="text-muted py-3">عنوان التدريب</td>
+                <td class="py-3 pr-3">{{ userTraining.title }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">الجهة المنظمة</td>
+                <td class="py-3 pr-3">{{ userTraining.organizer }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ التدريب</td>
+                <td class="py-3 pr-3">{{ userTraining.date }}</td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">الشهادة</td>
+                <td class="py-3 pr-3">{{ userTraining.certificate }}</td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div class="col-12 col-lg-6">
+
+        <table>
+            <tr>
+                <td class="text-muted py-3">تاريخ الاضافة</td>
+                <td class="py-3 pr-3">
+                <td class="py-3 pr-3"><span ng-bind="userTraining.created_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td>
+            </tr>
+            <tr>
+                <td class="text-muted py-3">تاريخ اخر تعديل</td>
+                <td class="py-3 pr-3">
+                <td class="py-3 pr-3"><span ng-bind="userTraining.updated_at | date:'yyyy-MM-dd hh:mm:ss'" dir="ltr"></span></td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+<hr>
+

@@ -15,6 +15,8 @@ class CreateUserContractsTable extends Migration
     {
         Schema::create('user_contracts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_section_id')->constrained('user_sections')->cascadeOnDelete();
+            $table->foreignId('supervisor_id')->constrained('users')->cascadeOnDelete();
             $table->enum('contract_type', ['indefinite', 'full_time', 'part_time', 'freelance', 'consultant_contracts', 'field_work', 'project_employee_contracts']);
             $table->date('contract_start_date');
             $table->date('contract_end_date');

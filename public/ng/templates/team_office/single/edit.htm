@@ -23,6 +23,26 @@
         </div>
     </div>
 
+    <!--head-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="office_manager">مدير المكتب</label>
+            <select2 id="office_manager" model="teamOffice.office_manager" ajax-url="user_contracts/members" error-model="updateTeamOffice.errors.office_manager">
+                <option selected value="{{teamOffice.user.id}}">{{teamOffice.user.first_name.ar}} {{teamOffice.user.last_name.ar}}</option>
+            </select2>
+        </div>
+    </div>
+
+    <!--country code-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="place_id">مكان المكتب</label>
+            <select2 id="place_id" model="teamOffice.place_id" ajax-url="places/search" error-model="updateTeamOffice.errors.place_id">
+                <option selected value="{{teamOffice.place.id}}">{{teamOffice.place.fullname.ar}}</option>
+            </select2>
+        </div>
+    </div>
+
     <!--address-->
     <div class="col-12 col-md-6">
         <div class="form-group">

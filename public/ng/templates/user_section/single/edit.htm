@@ -18,6 +18,27 @@
         </div>
     </div>
 
+    <!--member-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="user_manager_id">مدير القسم</label>
+            <select2 id="user_manager_id" model="userSection.user_manager_id" ajax-url="user_contracts/members" error-model="updateUserSection.errors.user_manager_id">
+                <option selected value="{{userSection.user_manager_id}}">{{userSection.manager_user.first_name.ar}} {{userSection.manager_user.last_name.ar}}</option>
+            </select2>
+        </div>
+    </div>
+
+    <!--parent id-->
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <label for="parent_id">القسم الرئيسي</label>
+            <select2 id="parent_id" model="userSection.parent_id" ajax-url="user_sections/search" error-model="updateUserSection.errors.parent_id">
+                <option selected value="{{userSection.parent_id}}">{{userSection.parent_name[0].section_name.ar}}
+                </option>
+            </select2>
+        </div>
+    </div>
+
     <div class="col-12">
         <submit-button form="userSectionForm" icon="fe fe-edit">تعديل</submit-button>
     </div>
