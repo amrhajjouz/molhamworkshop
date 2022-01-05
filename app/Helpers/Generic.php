@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\ApiError;
+use App\Models\Scholarship;
+use App\Models\Sponsorship;
 
 function getLocaleName($locale)
 {
@@ -72,5 +74,23 @@ function authDonor () {
 
 function stripeClient () {
     return new \Stripe\StripeClient('sk_test_BQokikJOvBiI2HlWgH4olfQ2');
+}
+
+function getTargetableAmount ($targetable) {
+    
+    // , $type, 
+    $target = $targetable->target;
+    $funded = $targetable->funded;
+    $currencies = ['usd', 'eur', 'try', 'cad', 'sar', 'qar', 'aed'];
+    $amounts = [];
+    
+    foreach ($currencies as $c) {
+        $amounts['required'][$c] = $target->required;
+        if (!in_array($target->targetable_type, ['scholarship' , 'sponsorship'])) {
+            $amounts['received'][$c] = $target->received ;
+            $amounts['left_to_complete'][$c] =  $target->left_to_complete ;
+        }
+    }
+    return $amounts;
 }
 

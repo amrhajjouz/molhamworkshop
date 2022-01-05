@@ -20,11 +20,11 @@ class ListingProjectResource extends JsonResource
             return [
                 'id' => $project->id,
                 'contents' => $this->transformContentField($project->target) ,
-                'amounts' =>  generateRandomTargetableAmounts('projects', $project->funded), //TEMPORARY
+                'amounts' =>  getTargetableAmount($project), 
+                "likes_count" => $project->likes()->count(),
                 "liked_by_auth" => $donor ? $donor->likes()->where(['likeable_type' => 'project' , 'likeable_id' => $project->id])->exists() : false,
                 "funded_by_auth" => $faker->boolean(),//TEMPORARY
                 "saved_by_auth" => $donor ? $donor->savedItems()->where(['saveable_type' => 'project' , 'saveable_id' => $project->id])->exists() : false,
-                "likes_count" => $faker->numberBetween(0 , 1000),//TEMPORARY
                 "comments_count" => $project->comments()->count() , 
                 "shares_count" => $faker->numberBetween(0 , 10),//TEMPORARY
                 'published_at' => $project->target->published_at,

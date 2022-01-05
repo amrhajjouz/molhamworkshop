@@ -20,11 +20,11 @@ class ListingCampaignResource extends JsonResource
             return [
                 'id' => $campaign->id,
                 'contents' => $this->transformContentField($campaign->target) ,
-                'amounts' =>  generateRandomTargetableAmounts('campaigns', $campaign->funded), //TEMPORARY
+                'amounts' =>  getTargetableAmount($campaign), 
+                "likes_count" => $campaign->likes()->count(),
                 "liked_by_auth" => $donor ? $donor->likes()->where(['likeable_type' => 'campaign' , 'likeable_id' => $campaign->id])->exists() : false,
                 "funded_by_auth" => $faker->boolean(),//TEMPORARY
                 "saved_by_auth" => $donor ? $donor->savedItems()->where(['saveable_type' => 'campaign' , 'saveable_id' => $campaign->id])->exists() : false,
-                "likes_count" => $faker->numberBetween(0 , 1000),//TEMPORARY
                 "comments_count" => $campaign->comments()->count() , 
                 "shares_count" => $faker->numberBetween(0 , 10),//TEMPORARY
                 'published_at' => $campaign->target->published_at,

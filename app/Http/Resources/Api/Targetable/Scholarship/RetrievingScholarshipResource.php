@@ -22,11 +22,10 @@ class RetrievingScholarshipResource extends JsonResource
         return [
             'id' => $this->id,
             'contents' => $this->transformContentField($target),
-            'amounts' =>  generateRandomTargetableAmounts('scholarships', $this->funded), //TEMPORARY
-            "liked_by_auth" => $donor ? $donor->likes()->where(['likeable_type' => 'scholarship' , 'likeable_id' => $this->id])->exists() : false,
+            'amounts' =>  getTargetableAmount($this), 
+            "likes_count" => $this->likes()->count(),
             "funded_by_auth" => $faker->boolean(), //TEMPORARY
             "saved_by_auth" => $donor ? $donor->savedItems()->where(['saveable_type' => 'scholarship' , 'saveable_id' => $this->id])->exists() : false,
-            "likes_count" => $faker->numberBetween(0, 1000), //TEMPORARY
             "comments_count" => $this->comments()->count() , 
             "shares_count" => $faker->numberBetween(0, 10), //TEMPORARY
             'published_at' => $target->published_at,

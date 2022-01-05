@@ -22,12 +22,12 @@ class ListingCaseResource extends JsonResource
                 'id' => $case->id,
                 'published_at' => $case->target->published_at,
                 'purpose_id' => $case->target->purpose_id,
-                'amounts' =>  generateRandomTargetableAmounts('cases', $case->funded), //TEMPORARY
+                'amounts' =>  getTargetableAmount($case), 
+                "likes_count" => $case->likes()->count(),
                 'contents' => $this->transformContentField($case->target) ,
                 "liked_by_auth" => $donor ? $donor->likes()->where(['likeable_type' => 'case' , 'likeable_id' => $case->id])->exists() : false,
                 "funded_by_auth" => $faker->boolean(),//TEMPORARY
                 "saved_by_auth" => $donor ? $donor->savedItems()->where(['saveable_type' => 'case' , 'saveable_id' => $case->id])->exists() : false,
-                "likes_count" => $faker->numberBetween(0 , 1000),//TEMPORARY
                 "comments_count" => $case->comments()->count() , 
                 "shares_count" => $faker->numberBetween(0 , 10),//TEMPORARY
                 "preview_images" => null,//TEMPORARY

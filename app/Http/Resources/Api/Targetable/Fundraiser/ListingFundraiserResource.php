@@ -20,11 +20,11 @@ class ListingFundraiserResource extends JsonResource
             return [
                 'id' => $fundraiser->id,
                 'contents' => $this->transformContentField($fundraiser->target) ,
-                'amounts' =>  generateRandomTargetableAmounts('fundraisers', $fundraiser->funded), //TEMPORARY
+                'amounts' =>  getTargetableAmount($fundraiser), 
+                "likes_count" => $fundraiser->likes()->count(),
                 "liked_by_auth" => $donor ? $donor->likes()->where(['likeable_type' => 'fundraiser' , 'likeable_id' => $fundraiser->id])->exists() : false,
                 "funded_by_auth" => $faker->boolean(),//TEMPORARY
                 "saved_by_auth" => $donor ? $donor->savedItems()->where(['saveable_type' => 'fundraiser' , 'saveable_id' => $fundraiser->id])->exists() : false,
-                "likes_count" => $faker->numberBetween(0 , 1000),//TEMPORARY
                 "comments_count" => $fundraiser->comments()->count() , 
                 "shares_count" => $faker->numberBetween(0 , 10),//TEMPORARY
                 'published_at' => $fundraiser->target->published_at,

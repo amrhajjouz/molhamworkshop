@@ -22,11 +22,11 @@ class RetrievingCaseResource extends JsonResource
         return [
             'id' => $this->id,
             'contents' => $this->transformContentField($target),
-            'amounts' =>  generateRandomTargetableAmounts('cases', $this->funded), //TEMPORARY
+            'amounts' =>  getTargetableAmount($this), 
+            "likes_count" => $this->likes()->count(),
             "liked_by_auth" => $donor ? $donor->likes()->where(['likeable_type' => 'case' , 'likeable_id' => $this->id])->exists() : false,
             "funded_by_auth" => $faker->boolean(), //TEMPORARY
             "saved_by_auth" => $donor ? $donor->savedItems()->where(['saveable_type' => 'case' , 'saveable_id' => $this->id])->exists() : false,
-            "likes_count" => $faker->numberBetween(0, 1000), //TEMPORARY
             "comments_count" => $this->comments()->count() , 
             "shares_count" => $faker->numberBetween(0, 10), //TEMPORARY
             "funded" => $this->funded,
@@ -37,6 +37,7 @@ class RetrievingCaseResource extends JsonResource
         ];
     }
 
+    // amounts target recieved all in same currency
     private function transformContentField($target)
     {
         $data = [];

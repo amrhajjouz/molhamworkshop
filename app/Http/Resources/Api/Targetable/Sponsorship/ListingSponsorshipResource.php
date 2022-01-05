@@ -20,11 +20,11 @@ class ListingSponsorshipResource extends JsonResource
             return [
                 'id' => $sponsorship->id,
                 'contents' => $this->transformContentField($sponsorship->target) ,
-                'amounts' =>  generateRandomTargetableAmounts('sponsorships', $sponsorship->funded), //TEMPORARY
+                'amounts' =>  getTargetableAmount($sponsorship), 
+                "likes_count" => $sponsorship->likes()->count(),
                 "liked_by_auth" => $donor ? $donor->likes()->where(['likeable_type' => 'sponsorship' , 'likeable_id' => $sponsorship->id])->exists() : false,
                 "funded_by_auth" => $faker->boolean(),//TEMPORARY
                 "saved_by_auth" => $donor ? $donor->savedItems()->where(['saveable_type' => 'sponsorship' , 'saveable_id' => $sponsorship->id])->exists() : false,
-                "likes_count" => $faker->numberBetween(0 , 1000),//TEMPORARY
                 "comments_count" => $sponsorship->comments()->count() , 
                 "shares_count" => $faker->numberBetween(0 , 10),//TEMPORARY
                 "preview_images" => null,//TEMPORARY

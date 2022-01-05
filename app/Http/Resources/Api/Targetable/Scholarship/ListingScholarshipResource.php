@@ -20,11 +20,11 @@ class ListingScholarshipResource extends JsonResource
             return [
                 'id' => $scholarship->id,
                 'contents' => $this->transformContentField($scholarship->target) ,
-                'amounts' =>  generateRandomTargetableAmounts('scholarships', $scholarship->funded), //TEMPORARY
+                'amounts' =>  getTargetableAmount($scholarship), 
+                "likes_count" => $scholarship->likes()->count(),
                 "liked_by_auth" => $donor ? $donor->likes()->where(['likeable_type' => 'scholarship' , 'likeable_id' => $scholarship->id])->exists() : false,
                 "funded_by_auth" => $faker->boolean(),//TEMPORARY
                 "saved_by_auth" => $donor ? $donor->savedItems()->where(['saveable_type' => 'scholarship' , 'saveable_id' => $scholarship->id])->exists() : false,
-                "likes_count" => $faker->numberBetween(0 , 1000),//TEMPORARY
                 "comments_count" => $scholarship->comments()->count() , 
                 "shares_count" => $faker->numberBetween(0 , 10),//TEMPORARY
                 "preview_images" => null,//TEMPORARY
