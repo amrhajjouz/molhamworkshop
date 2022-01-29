@@ -42,8 +42,9 @@ class ProcessTimesheetChecks implements ShouldQueue
     public function handle()
     {
         try{
+            set_time_limit(300);
             print "start";
-            $users = User::select('id', 'office_id')->get();
+            $users = User::select('id', 'email', 'office_id');
 //                        $users->getCollection()->transform(function ($user, $key){
 //                                  $office = $user->office;
 //                                  return $user;
@@ -51,10 +52,10 @@ class ProcessTimesheetChecks implements ShouldQueue
             foreach ($users as $user){
                 print "user";
                 $is_off_day = in_array(date('D'), $this->off_days[$user->office->off_days_type]);
-                $daysExisting = TimesheetUsersChecks::orderBy('created_at')->whereMonth('created_at', date('m'))->where('user_id', $user['id'])->where('handled', false)->exists();
+                $daysExisting = TimesheetUsersChecks::orderBy('created_at')->whereMonth('created_at', date('m'))->whereDay('created_at', date('d'))->where('user_id', $user['id'])->where('handled', 0)->exists();
                 if($daysExisting){
                     print "day";
-                    $this->checksCalculator($user['id'], $is_off_day);
+                    $this->checksCalculator($user['id'], $user['email'], $is_off_day);
                 }
                 print "\n";
             }
@@ -63,7 +64,40 @@ class ProcessTimesheetChecks implements ShouldQueue
         }
     }
 
-    private function checksCalculator($user_id, $is_off_day){
+    private function sendMessage($message, $email){
+        $content = array(
+            "en" => $message
+        );
+
+        $fields = array(
+            'app_id' => "e9e1e48d-3413-4769-aaf5-1c63f159960e",
+            'include_external_user_ids' => array($email),
+            'channel_for_external_user_ids' => 'push',
+            'data' => array("foo" => "bar"),
+            'contents' => $content
+        );
+
+        $fields = json_encode($fields);
+        //print("\nJSON sent:\n");
+        //print($fields);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://onesignal.com/api/v1/notifications");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json; charset=utf-8',
+                                                   'Authorization: Basic ODNjNzk0M2QtY2RhOS00NDdiLWFjMzQtZGFlNTJjNjVkNjdm'));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_POST, TRUE);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        return $response;
+    }
+
+    private function checksCalculator($user_id, $user_email, $is_off_day){
         print "\n";
         $default_working_hours = 60 * 60 * 8;
         $working_hours = 0;
@@ -73,7 +107,7 @@ class ProcessTimesheetChecks implements ShouldQueue
         $startHour = strtotime(date('Y-m-d') . ' 09:30 AM');
         $inCycle = false;
 
-        $checks = TimesheetUsersChecks::orderBy('created_at')->whereYear('created_at', date('Y'))->whereMonth('created_at', date('m'))->where('user_id', $user_id)->get();
+        $checks = TimesheetUsersChecks::orderBy('created_at')->whereYear('created_at', date('Y'))->whereMonth('created_at', date('m'))->where('user_id', $user_id);
         foreach ($checks as $key => $check){
             if($check['type'] == 'in' && !$inCycle){
                 print "Cycle Start at: " . strtotime($check['created_at']) . "\n";
@@ -123,6 +157,7 @@ class ProcessTimesheetChecks implements ShouldQueue
                     'reason' => ($working_hours < $default_working_hours) ? 'working_hours' : 'late_entry',
                     'status' => 'pending',
                 ]);
+                //$this->sendMessage("You have one justification", $user_email);
             }
             TimesheetUsersChecks::whereYear('created_at', date('Y'))->whereMonth('created_at', date('m'))->where('user_id', $user_id)->update([
                 'handled' => true,

@@ -59,7 +59,7 @@ class OfficeController extends Controller {
                 'lng' => $data['lng'],
             ];
             $qrData = json_encode($qrData);
-            $qr = QrCode::format('png')->size(100)->generate($qrData);
+            $qr = QrCode::format('png')->size(1024)->generate($qrData);
             $data['qr'] = base64_encode($qr);
             return response()->json($data);
 
