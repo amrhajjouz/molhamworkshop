@@ -53,7 +53,7 @@
 
      <li class="nav-item">
           <a class="nav-link" href="{{ $r('profile.my_info') }}">
-                    <i class="fe fe-power"></i>معلومات الحساب
+                    <i class="fe fe-user"></i>معلومات الحساب
           </a>
      </li>
 
