@@ -1,0 +1,498 @@
+<form id="regForm" name="myForm" request="updateProfile">
+
+          <!-- One "tab" for each step in the form: -->
+          <div class="tab">
+                    <h1>المعلومات الشخصية</h1>
+                    <div class="row">
+                              <!--first name ar-->
+                              <div class="col-6 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="first_name_ar">الإسم باللغة العربية</label>
+                                                  <input id="first_name_ar" class="form-control" type="text" ng-init="profile.first_name.ar = auth.first_name.ar" ng-model="profile.first_name.ar" placeholder="الإسم باللغة العربية.." ng-error="updateProfile.errors.first_name.ar">
+                                        </div>
+                              </div>
+                              <!--first name en-->
+                              <div class="col-6 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="first_name_en">الإسم باللغة الإنكليزية</label>
+                                                  <input id="first_name_en" class="form-control" type="text" ng-init="profile.first_name.en = auth.first_name.en" ng-model="profile.first_name.en" placeholder="الإسم باللغة العربية.." ng-error="updateProfile.errors.first_name.en">
+                                        </div>
+                              </div>
+                    </div>
+                    <div class="row">
+                              <!--last name ar-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="last_name_ar">اللقب باللغة العربية</label>
+                                                  <input id="last_name_ar" class="form-control" type="text" ng-init="profile.last_name.ar = auth.last_name.ar" ng-model="profile.last_name.ar" placeholder="الإسم باللغة العربية.." ng-error="updateProfile.errors.last_name.ar">
+                                        </div>
+                              </div>
+
+                              <!--last name en-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="last_name_en">اللقب باللغة الإنكليزية</label>
+                                                  <input id="last_name_en" class="form-control" type="text" ng-init="profile.last_name.en = auth.last_name.en" ng-model="profile.last_name.en" placeholder="الإسم باللغة العربية.." ng-error="updateProfile.errors.last_name.en">
+                                        </div>
+                              </div>
+                    </div>
+                    <div class="row">
+                              <!--father name ar-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="father_name_ar">اسم الأب باللغة العربية</label>
+                                                  <input id="father_name_ar" class="form-control" type="text" ng-init="profile.father_name.ar = auth.father_name.ar" ng-model="profile.father_name.ar" placeholder="الإسم باللغة العربية.." ng-error="updateProfile.errors.father_name.ar">
+                                        </div>
+                                        <div ng-show="updateProfile.errors.father_name != null" class="invalid-feedback">
+                                                  {{ updateProfile.errors.father_name[0] }}
+                                        </div>
+                              </div>
+
+                              <!--father name en-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="father_name_en">اسم الأب باللغة الإنكليزية</label>
+                                                  <input id="father_name_en" class="form-control" type="text" ng-init="profile.father_name.en = auth.father_name.en" ng-model="profile.father_name.en" placeholder="الإسم باللغة العربية.." ng-error="updateProfile.errors.father_name.en">
+                                        </div>
+                              </div>
+                    </div>
+                    <div class="row">
+                              <!--mother name ar-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="mother_name_ar">اسم الأم باللغة العربية</label>
+                                                  <input id="mother_name_ar" class="form-control" type="text" ng-init="profile.mother_name.ar = auth.mother_name.ar" ng-model="profile.mother_name.ar" placeholder="الإسم باللغة العربية.." ng-error="updateProfile.errors.mother_name.ar">
+                                        </div>
+                              </div>
+
+                              <!--mother name en-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="mother_name_en">اسم الأم باللغة الإنكليزية</label>
+                                                  <input id="mother_name_en" class="form-control" type="text" ng-init="profile.mother_name.en = auth.mother_name.en" ng-model="profile.mother_name.en" placeholder="الإسم باللغة العربية.." ng-error="updateProfile.errors.mother_name.en">
+                                        </div>
+                              </div>
+                    </div>
+                    <div class="row">
+                              <!--email-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="email">البريد الالكتروني</label>
+                                                  <input type="email" class="form-control" id="email" ng-model="profile.email" ng-init="profile.email = auth.email" ng-change="updateProfile.error = ''" placeholder="البريد الالكتروني الخاص بالحساب .." autofocus="off" autocomplete="off" disabled>
+                                        </div>
+                              </div>
+
+                              <!--gender-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="gender">الجنس</label>
+                                                  <select id="gender" class="custom-select" name="gender" ng-model="profile.gender" ng-init="profile.gender = auth.gender" ng-change="updateProfile.errors.gender = null">
+                                                            <option value="male">ذكر</option>
+                                                            <option value="female">أنثى</option>
+                                                  </select>
+                                                  <div ng-show="updateProfile.errors.gender != null" class="text-danger">{{ updateProfile.errors.gender[0] }}</div>
+                                        </div>
+                              </div>
+                    </div>
+                    <div class="row">
+                              <!--birthe date-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="birth_date">تاريخ الميلاد</label>
+                                                  <input id="birth_date" date-picker class="form-control" ng-model="profile.birth_date" ng-init="profile.birth_date = auth.birth_date" placeholder="تاريخ الميلاد .." ng-error="updateProfile.errors.birth_date" required>
+                                        </div>
+                              </div>
+
+                              <!--country_code-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="country_code">كود الجنسية</label>
+                                                  <select2 id="country_code" model="profile.country_code" class="form-control" ajax-url="countries/search" error-model="profile.errors.country_code">
+                                                            <option selected value="{{auth.country_code}}">{{auth.country_code}}</option>
+                                                  </select2>
+                                                  <div ng-show="updateProfile.errors.country_code != null" class="text-danger">{{ updateProfile.errors.country_code[0] }}</div>
+                                        </div>
+                              </div>
+                    </div>
+                    <div class="row">
+                              <!--marital_status-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="marital_status">الحالة الإجتماعية</label>
+                                                  <select id="marital_status" class="custom-select" name="marital_status" ng-model="profile.marital_status" ng-init="profile.marital_status = auth.marital_status" ng-change="updateProfile.errors.marital_status = null">
+                                                            <option value="married">متزوج</option>
+                                                            <option value="single">أعزب</option>
+                                                  </select>
+                                                  <div ng-show="updateProfile.errors.marital_status != null" class="text-danger">{{ updateProfile.errors.marital_status[0] }}</div>
+                                        </div>
+                              </div>
+
+                              <!--locale-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="locale">لغة العرض</label>
+                                                  <select id="locale" class="custom-select" name="locale" ng-model="profile.locale" ng-init="profile.locale = auth.locale" ng-change="updateProfile.errors.locale = null">
+                                                            <option value="ar">العربية</option>
+                                                            <option value="en">الإنكليزية</option>
+                                                  </select>
+                                                  <div ng-show="updateProfile.errors.locale != null" class="text-danger">{{ updateProfile.errors.locale[0] }}</div>
+                                        </div>
+                              </div>
+                    </div>
+          </div>
+
+          <div class="tab">
+                    <h1>بيانات السكن</h1>
+                    <div class="row">
+                              <!--current_country-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="current_country_code">الدولة</label>
+                                                  <select2 id="current_country_code" model="profile.current_country_code" ajax-url="countries/search">
+                                                            <option selected value="{{auth.current_country_code}}">{{auth.current_country_code}}</option>
+                                                  </select2>
+                                                  <div ng-show="updateProfile.errors.current_country_code != null" class="text-danger">{{ updateProfile.errors.current_country_code[0] }}</div>
+                                        </div>
+                              </div>
+
+                              <!--current_city-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="current_city_id">المدينة</label>
+                                                  <select2 id="current_city_id" model="profile.current_city_id" aria-label="validation" ajax-url="places/search"
+                                                           error-model="profile.errors.current_city_id">
+                                                            <option selected value="{{auth.current_city_id}}">{{auth.current_city_id}}</option>
+                                                  </select2>
+                                                  <div ng-show="updateProfile.errors.current_city_id != null" class="text-danger">{{ updateProfile.errors.current_city_id[0] }}</div>
+                                        </div>
+                              </div>
+                    </div>
+                    <div class="row">
+                              <!--current_full_address-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="current_full_address">العنوان التفصيلي</label>
+                                                  <input type="text" class="form-control" id="current_full_address" ng-model="profile.current_full_address" ng-init="profile.current_full_address = auth.current_full_address" ng-change="updateResidenceData.error = ''" placeholder="العنوان التفصيلي ...">
+                                                  <div ng-show="updateProfile.errors.current_full_address != null" class="text-danger">{{ updateProfile.errors.current_full_address[0] }}</div>
+                                        </div>
+                              </div>
+
+                              <!--current_full_address-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="current_residence_file">وثيقة العنوان</label>
+                                                  <input type="text" class="form-control" id="current_residence_file" ng-model="profile.current_residence_file" ng-init="profile.current_residence_file = auth.current_residence_file" ng-change="updateResidenceData.error = ''" placeholder="وثيقة العنوان ...">
+                                        </div>
+                              </div>
+                    </div>
+          </div>
+
+          <div class="tab">
+                    <h1>بيانات التواصل</h1>
+                    <div class="row">
+                              <!--phone-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="phone">رقم الهاتف</label>
+                                                  <input type="text" class="form-control" id="phone" ng-model="profile.phone" ng-init="profile.phone = auth.phone" ng-change="updateContactData.error = ''" placeholder="رقم الهاتف">
+                                        </div>
+                              </div>
+
+                              <!--whatsapp-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="whatsapp">رقم الوتس أب</label>
+                                                  <input type="text" class="form-control" id="whatsapp" ng-model="profile.whatsapp" ng-init="profile.whatsapp = auth.whatsapp" ng-change="updateContactData.error = ''" placeholder="رقم الوتس أب">
+                                        </div>
+                              </div>
+                    </div>
+                    <div class="row">
+                              <!--facebook-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="facebook">رابط صفحتك على فيسبوك</label>
+                                                  <input type="text" class="form-control" id="facebook" ng-model="profile.facebook" ng-init="profile.facebook = auth.facebook" ng-change="updateContactData.error = ''" placeholder="رابط صفحتك على فيسبوك">
+                                        </div>
+                              </div>
+
+                              <!--instagram-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="instagram">رابط حسابك على الإنستغرام</label>
+                                                  <input type="text" class="form-control" id="instagram" ng-model="profile.instagram" ng-init="profile.instagram = auth.instagram" ng-change="updateContactData.error = ''" placeholder="رابط حسابك على الإنستغرام">
+                                        </div>
+                              </div>
+                    </div>
+                    <div class="row">
+                              <!--reference person name-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="reference_person_name">اسم شخص مقرب</label>
+                                                  <input type="text" class="form-control" id="reference_person_name" ng-model="profile.reference_person_name" ng-init="profile.reference_person_name = auth.reference_person_name" ng-change="updateContactData.error = ''" placeholder="اسم شخص مقرب">
+                                        </div>
+                              </div>
+
+                              <!--reference person phone-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="reference_person_phone">رقم هاتف الشخص المقرب</label>
+                                                  <input type="text" class="form-control" id="reference_person_phone" ng-model="profile.reference_person_phone" ng-init="profile.reference_person_phone = auth.reference_person_phone" ng-change="updateContactData.error = ''" placeholder="رقم تواصل الشخص">
+                                        </div>
+                              </div>
+                    </div>
+                    <div class="row">
+                              <!--reference person relation type-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="reference_person_relation_type">صلة القرابة</label>
+                                                  <input type="text" class="form-control" id="reference_person_relation_type" ng-model="profile.reference_person_relation_type" ng-init="profile.reference_person_relation_type = auth.reference_person_relation_type" ng-change="updateContactData.error = ''" placeholder="صلة القرابة">
+                                        </div>
+                              </div>
+                    </div>
+          </div>
+
+          <div class="tab">
+                    <h1>التعليم</h1>
+                    <div class="row">
+                              <!--education level-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="education_level">المستوى التعليمي</label>
+                                                  <input type="text" class="form-control" id="education_level" ng-model="profile.education_level" ng-init="profile.education_level = auth.education_level" ng-change="updateEducation.error = ''" ng-error="updateEducation.errors.education_level" placeholder="المستوى التعليمي">
+                                                  <div ng-show="updateProfile.errors.education_level != null" class="text-danger">{{ updateProfile.errors.education_level[0] }}</div>
+                                        </div>
+                              </div>
+
+                              <!--education section-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="education_section">الفرع</label>
+                                                  <input type="text" class="form-control" id="education_section" ng-model="profile.education_section" ng-init="profile.education_section = auth.education_section" ng-change="updateEducation.error = ''" ng-error="updateEducation.errors.education_section" placeholder="الفرع">
+                                                  <div ng-show="updateProfile.errors.education_section != null" class="text-danger">{{ updateProfile.errors.education_section[0] }}</div>
+                                        </div>
+                              </div>
+                    </div>
+                    <div class="row">
+                              <!--study_language-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="study_language">لغة الدراسة</label>
+                                                  <input type="text" class="form-control" id="study_language" ng-model="profile.study_language" ng-init="profile.study_language = auth.study_language" ng-change="updateEducation.error = ''" ng-error="updateEducation.errors.study_language" placeholder="لغة الدراسة">
+                                                  <div ng-show="updateProfile.errors.study_language != null" class="text-danger">{{ updateProfile.errors.study_language[0] }}</div>
+                                        </div>
+                              </div>
+
+                              <!--educational status-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="education_status">الحالة الدراسية</label>
+                                                  <input type="text" class="form-control" id="education_status" ng-model="profile.education_status" ng-init="profile.education_status = auth.education_status" ng-change="updateEducation.error = ''" ng-error="updateEducation.errors.education_status" placeholder="الحالة الدراسية">
+                                                  <div ng-show="updateProfile.errors.education_status != null" class="text-danger">{{ updateProfile.errors.education_status[0] }}</div>
+                                        </div>
+                              </div>
+                    </div>
+                    <div class="row">
+                              <!--graduation year-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="graduated_year">سنة التخرج</label>
+                                                  <input id="graduated_year" date-picker class="form-control" ng-model="profile.graduated_year" ng-init="profile.graduated_year = auth.graduated_year" ng-error="updateEducation.errors.graduated_year" placeholder="سنة التخرج">
+                                                  <div ng-show="updateProfile.errors.graduated_year != null" class="text-danger">{{ updateProfile.errors.graduated_year[0] }}</div>
+                                        </div>
+                              </div>
+
+                              <!--gpa-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="gpa">المعدل التراكمي</label>
+                                                  <input type="text" id="gpa" class="form-control" ng-model="profile.gpa" ng-init="profile.gpa = auth.gpa" ng-error="updateEducation.errors.gpa" placeholder="المعدل التراكمي">
+                                                  <div ng-show="updateProfile.errors.gpa != null" class="text-danger">{{ updateProfile.errors.gpa[0] }}</div>
+                                        </div>
+                              </div>
+                    </div>
+                    <div class="row">
+                              <!--educational country-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="education_country">البلد</label>
+                                                  <input type="text" class="form-control" id="education_country" ng-model="profile.education_country" ng-init="profile.education_country = auth.education_country" ng-change="updateEducation.error = ''" ng-error="updateEducation.errors.education_country" placeholder="البلد">
+                                                  <div ng-show="updateProfile.errors.education_country != null" class="text-danger">{{ updateProfile.errors.education_country[0] }}</div>
+                                        </div>
+                              </div>
+
+                              <!--institution_name-->
+                              <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                                  <label for="institution_name">المنشأة التعليمية</label>
+                                                  <input type="text" class="form-control" id="institution_name" ng-model="profile.institution_name" ng-init="profile.institution_name = auth.institution_name" ng-change="updateEducation.error = ''" ng-error="updateEducation.errors.institution_name" placeholder="المنشأة التعليمية">
+                                                  <div ng-show="updateProfile.errors.institution_name != null" class="text-danger">{{ updateProfile.errors.institution_name[0] }}</div>
+                                        </div>
+                              </div>
+                    </div>
+          </div>
+
+          <div style="overflow:auto;">
+                    <div style="float:right;">
+                              <button type="button" id="prevBtn" onclick="nextPrev(-1)">السابق</button>
+                              <button type="button" id="nextBtn" onclick="nextPrev(1)">التالي</button>
+                              <submit-button form="myForm" id="formDisplay" icon="fe fe-edit">تعديل</submit-button>
+                    </div>
+          </div>
+          <!-- Circles which indicates the steps of the form: -->
+          <div style="text-align:center;margin-top:40px;">
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+          </div>
+</form>
+<style>
+          #regForm {
+                    background-color: #ffffff;
+                    margin: 100px auto;
+
+                    padding: 40px;
+                    width: 70%;
+                    min-width: 300px;
+          }
+
+          h1 {
+                    text-align: center;
+          }
+
+          input {
+                    padding: 10px;
+                    width: 100%;
+                    font-size: 17px;
+
+                    border: 1px solid #aaaaaa;
+          }
+
+          /* Mark input boxes that gets an error on validation: */
+          input.invalid {
+                    background-color: #ffdddd;
+          }
+
+          /* Hide all steps by default: */
+          .tab {
+                    display: none;
+          }
+
+          button {
+                    background-color: #2c7be5;
+                    color: #ffffff;
+                    border: none;
+                    padding: 6px 16px;
+                    font-size: 17px;
+                    cursor: pointer;
+                    border-radius: 8px;
+          }
+
+          button:hover {
+                    opacity: 0.8;
+          }
+
+          #prevBtn {
+                    background-color: #bbbbbb;
+          }
+
+          /* Make circles that indicate the steps of the form: */
+          .step {
+                    height: 15px;
+                    width: 15px;
+                    margin: 0 2px;
+                    background-color: #bbbbbb;
+                    border: none;
+                    border-radius: 50%;
+                    display: inline-block;
+                    opacity: 0.5;
+          }
+
+          .step.active {
+                    opacity: 1;
+          }
+
+          /* Mark the steps that are finished and valid: */
+          .step.finish {
+                    background-color: #2c7be5;
+          }
+</style>
+<script>
+          var currentTab = 0; // Current tab is set to be the first tab (0)
+          showTab(currentTab); // Display the current tab
+
+          function showTab(n) {
+                    // This function will display the specified tab of the form...
+                    var x = document.getElementsByClassName("tab");
+                    x[n].style.display = "block";
+                    //... and fix the Previous/Next buttons:
+                    if (n == 0) {
+                              document.getElementById("prevBtn").style.display = "none";
+                              document.getElementById("formDisplay").style.display = "none";
+                    } else {
+                              document.getElementById("prevBtn").style.display = "inline";
+                    }
+                    if (n == (x.length - 1)) {
+                              //document.getElementById("nextBtn").innerHTML = "إرسال";
+                              document.getElementById("nextBtn").style.display = "none";
+                              document.getElementById("formDisplay").style.display = "inline";
+                    } else {
+                              //document.getElementById("nextBtn").innerHTML = "التالي";
+                              document.getElementById("nextBtn").style.display = "inline";
+                              document.getElementById("formDisplay").style.display = "none";
+                    }
+                    //... and run a function that will display the correct step indicator:
+                    fixStepIndicator(n)
+          }
+
+          function nextPrev(n) {
+                    // This function will figure out which tab to display
+                    var x = document.getElementsByClassName("tab");
+                    // Exit the function if any field in the current tab is invalid:
+                    if (n == 1 && !validateForm()) return false;
+                    // Hide the current tab:
+                    x[currentTab].style.display = "none";
+                    // Increase or decrease the current tab by 1:
+                    currentTab = currentTab + n;
+                    // if you have reached the end of the form...
+                    if (currentTab >= x.length) {
+                              // ... the form gets submitted:
+                              document.getElementById("regForm").submit();
+                              return false;
+                    }
+                    // Otherwise, display the correct tab:
+                    showTab(currentTab);
+          }
+
+          function validateForm() {
+                    // This function deals with validation of the form fields
+                    var x, y, i, valid = true;
+                    x = document.getElementsByClassName("tab");
+                    y = x[currentTab].getElementsByTagName("input");
+                    // A loop that checks every input field in the current tab:
+                    for (i = 0; i < y.length; i++) {
+                              // If a field is empty...
+                              if (y[i].value == "") {
+                                        // add an "invalid" class to the field:
+                                        y[i].className += " invalid";
+                                        // and set the current valid status to false
+                                        valid = false;
+                              }
+                    }
+                    // If the valid status is true, mark the step as finished and valid:
+                    if (valid) {
+                              document.getElementsByClassName("step")[currentTab].className += " finish";
+                    }
+                    return valid; // return the valid status
+          }
+
+          function fixStepIndicator(n) {
+                    // This function removes the "active" class of all steps...
+                    var i, x = document.getElementsByClassName("step");
+                    for (i = 0; i < x.length; i++) {
+                              x[i].className = x[i].className.replace(" active", "");
+                    }
+                    //... and adds the "active" class on the current step:
+                    x[n].className += " active";
+          }
+</script>

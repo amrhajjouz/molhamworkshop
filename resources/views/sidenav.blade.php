@@ -51,11 +51,18 @@
         </div>
     </li>
 
+     <li class="nav-item">
+          <a class="nav-link" href="{{ $r('profile.my_info') }}">
+                    <i class="fe fe-power"></i>معلومات الحساب
+          </a>
+     </li>
+
     <li class="nav-item">
         <a class="nav-link" href="javascript:;" onclick="var c = confirm('هل أنت متأكد أنك تريد الخروج من حسابك ؟'); if (c) window.location.href = '<?php print route('logout'); ?>';">
             <i class="fe fe-power"></i> تسجيل الخروج
         </a>
     </li>
+
 
 </ul>
 

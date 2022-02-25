@@ -73,6 +73,7 @@ return [
 
     // Profile Routes
     'profile.info' => ['/profile/info', 'profile/profileInfoController', 'profile.info'],
+    'profile.my_info' => ['/profile/my-info', 'profile/profileMyInfoController', 'profile.my_info'],
     'profile.password' => ['/profile/password', 'profile/profilePasswordController', 'profile.password'],
     'profile.residence_data' => ['/profile/residence-data', 'profile/profileResidenceDataController', 'profile.residence_data'],
     'profile.contact_data' => ['/profile/contact-data', 'profile/profileContactDataController', 'profile.contact_data'],
@@ -97,7 +98,7 @@ return [
     'user_skills.add' => ['user-skills/add', 'user_skill/addUserSkillController', 'user_skill.add'],
     'user_skills.overview' => ['user-skills/:id', 'user_skill/overviewUserSkillController', 'user_skill.single.overview'],
     'user_skills.edit' => ['user-skills/:id/edit', 'user_skill/editUserSkillController', 'user_skill.single.edit'],
-    
+
     // Leave Types
     'leave_types' => ['leave-types', 'leave_type/listLeaveTypeController', 'leave_type.list'],
     'leave_types.add' => ['leave-types/add', 'leave_type/addLeaveTypeController', 'leave_type.add'],
@@ -115,11 +116,11 @@ return [
     'user_languages.add' => ['user-languages/add', 'user_language/addUserLanguageController', 'user_language.add'],
     'user_languages.overview' => ['user-languages/:id', 'user_language/overviewUserLanguageController', 'user_language.single.overview'],
     'user_languages.edit' => ['user-languages/:id/edit', 'user_language/editUserLanguageController', 'user_language.single.edit'],
-    
+
     // User Trainings Members
     'user_trainings' => ['user-trainings', 'user_training/listUserTrainingController', 'user_training.list'],
     'user_trainings.add' => ['user-trainings/add', 'user_training/addUserTrainingController', 'user_training.add'],
     'user_trainings.overview' => ['user-trainings/:id', 'user_training/overviewUserTrainingController', 'user_training.single.overview'],
     'user_trainings.edit' => ['user-trainings/:id/edit', 'user_training/editUserTrainingController', 'user_training.single.edit'],
-    
+
 ];

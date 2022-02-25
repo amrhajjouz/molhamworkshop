@@ -125,6 +125,7 @@ Route::middleware('auth')->group(function ()  {
 
     // profile Routes
     Route::post('/profile', [ProfileController::class, 'update_info']);
+    Route::post('/profile/my_info', [ProfileController::class, 'my_info']);
     Route::post('/profile/password', [ProfileController::class, 'change_password']);
     Route::post('/profile/employment_data', [ProfileController::class, 'employment_data']);
     Route::post('/profile/residence_data', [ProfileController::class, 'residence_data']);
@@ -157,7 +158,7 @@ Route::middleware('auth')->group(function ()  {
     Route::get('/user_skills/search', [UserSkillController::class, 'search']);
     Route::get('/user_skills/{id}', [UserSkillController::class, 'retrieve']);
     Route::delete('/user_skills/{id}', [UserSkillController::class, 'delete']);
-    
+
     // Leave Types Routes
     Route::get('/leave_types', [LeaveTypeController::class, 'list']);
     Route::post('/leave_types', [LeaveTypeController::class, 'create']);
